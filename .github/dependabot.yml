@@ -9,6 +9,10 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "America/Argentina/Buenos_Aires"
+    ignore:
+      # ESLint 10 todavía no es compatible con eslint-config-next
+      - dependency-name: "eslint"
+        versions: ["10.x"]
     open-pull-requests-limit: 5
     # Agrupa updates relacionados en un solo PR
     groups:
