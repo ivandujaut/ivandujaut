@@ -1,0 +1,30 @@
+{
+  "common": {
+    "navigation": {
+      "home": "Inicio",
+      "blog": "Blog",
+      "projects": "Proyectos",
+      "about": "Acerca de"
+    },
+    "footer": {
+      "rights": "Todos los derechos reservados",
+      "builtWith": "Construido con"
+    }
+  },
+  "home": {
+    "hero": {
+      "name": "Iván Dujaut",
+      "tagline": "Desarrollador full-stack. Aprendiendo, construyendo y documentando.",
+      "cta": {
+        "viewWork": "Ver trabajos",
+        "readBlog": "Leer blog"
+      }
+    },
+    "sections": {
+      "featuredWork": "Trabajos destacados",
+      "stats": "Estadísticas",
+      "recentWriting": "Escritos recientes",
+      "openSource": "Open source"
+    }
+  }
+}
