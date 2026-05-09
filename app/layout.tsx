@@ -30,7 +30,12 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning>
-      <body className={`${figTree.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body
+        suppressHydrationWarning
+        className={`${figTree.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
