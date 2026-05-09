@@ -1,8 +1,10 @@
+import { Footer } from "@/components/layout/footer";
+import { LanguageSuggestionBanner } from "@/components/i18n/language-suggestion-banner";
+import { Navbar } from "@/components/layout/navbar";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { LanguageSuggestionBanner } from "@/components/i18n/language-suggestion-banner";
+import { setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
   // Genera las rutas estáticas para cada locale en build time
@@ -30,7 +32,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider>
       <LanguageSuggestionBanner />
-      {children}
+      <Navbar />
+      <div className="min-h-screen">{children}</div>
+      <Footer />
     </NextIntlClientProvider>
   );
 }
