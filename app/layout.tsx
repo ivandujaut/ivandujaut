@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
+const figTree = Figtree({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${figTree.variable} ${geistMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }
