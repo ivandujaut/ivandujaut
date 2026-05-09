@@ -11,6 +11,10 @@ export const routing = defineRouting({
   // / → español
   // /en → inglés
   localePrefix: "as-needed",
+  // Desactivamos la detección automática de locale del browser.
+  // En su lugar, mostramos un banner de sugerencia (manejado por
+  // nuestro middleware + componente LanguageSuggestionBanner).
+  localeDetection: false,
 });
 
 // Tipo helper para usar en componentes

@@ -2,6 +2,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { LanguageSuggestionBanner } from "@/components/i18n/language-suggestion-banner";
 
 export function generateStaticParams() {
   // Genera las rutas estáticas para cada locale en build time
@@ -26,5 +27,10 @@ export default async function LocaleLayout({
   // Habilitar renderizado estático con el locale activo
   setRequestLocale(locale);
 
-  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
+  return (
+    <NextIntlClientProvider>
+      <LanguageSuggestionBanner />
+      {children}
+    </NextIntlClientProvider>
+  );
 }
