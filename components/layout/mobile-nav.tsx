@@ -28,25 +28,29 @@ export function MobileNav() {
           <HugeiconsIcon icon={Menu01Icon} size={20} strokeWidth={1.5} />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[280px]">
+      <SheetContent
+        side="right"
+        className="w-[280px] data-[state=open]:duration-500 data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out data-[state=open]:slide-in-from-right data-[state=closed]:slide-out-to-right"
+      >
         <SheetHeader>
           <SheetTitle className="text-left font-mono text-sm">ivandujaut</SheetTitle>
         </SheetHeader>
 
         <nav className="mt-6 flex flex-col gap-1 px-4">
-          {navLinks.map((link) => (
+          {navLinks.map((link, index) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              style={{ animationDelay: `${index * 50}ms` }}
+              className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors animate-in fade-in slide-in-from-right-2 duration-300 fill-mode-both"
             >
               {t(link.labelKey)}
             </Link>
           ))}
         </nav>
 
-        <div className="absolute bottom-6 left-4 right-4 flex items-center justify-between border-t border-border pt-4">
+        <div className="absolute bottom-6 left-4 right-4 flex items-center justify-between border-t border-border pt-4 animate-in fade-in duration-500">
           <span className="text-xs text-muted-foreground">{t("openMenu")}</span>
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
