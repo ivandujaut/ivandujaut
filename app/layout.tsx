@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import { Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
+import { Geist_Mono, Figtree } from "next/font/google";
+import { ThemeProvider } from "next-themes";
+import type { Metadata } from "next";
 
 const figTree = Figtree({
   variable: "--font-sans",
@@ -34,7 +35,14 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${figTree.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
