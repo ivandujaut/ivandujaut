@@ -4,11 +4,25 @@
       "home": "Inicio",
       "blog": "Blog",
       "projects": "Proyectos",
-      "about": "Acerca de"
+      "about": "Acerca de",
+      "openMenu": "Abrir menú",
+      "closeMenu": "Cerrar menú"
+    },
+    "language": {
+      "label": "Idioma",
+      "spanish": "Español",
+      "english": "Inglés"
+    },
+    "theme": {
+      "label": "Tema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
     },
     "footer": {
       "rights": "Todos los derechos reservados",
-      "builtWith": "Construido con"
+      "builtWith": "Construido con",
+      "viewSource": "Ver código"
     }
   },
   "home": {
@@ -26,5 +40,17 @@
       "recentWriting": "Escritos recientes",
       "openSource": "Open source"
     }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Pensamientos sobre desarrollo, aprendizaje y vida."
+  },
+  "projects": {
+    "title": "Proyectos",
+    "description": "Casos de estudio y trabajos destacados."
+  },
+  "about": {
+    "title": "Acerca de mí",
+    "description": "Conocé un poco más sobre mí."
   }
 }
