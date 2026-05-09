@@ -9,11 +9,21 @@ translationKey: "hola-mundo"
 Bienvenido a mi blog. Este es el primer post que publico acá, principalmente
 para verificar que todo el setup funciona correctamente.
 
+<Callout type="info">
+  Este post es una prueba de los componentes MDX. Vas a ver varios ejemplos de los bloques que tengo
+  disponibles.
+</Callout>
+
 ## Sobre este blog
 
 Acá voy a documentar mi proceso de aprendizaje en desarrollo de software,
 inglés, IA y otros temas que me interesan. Es tanto un portfolio profesional
 como una bitácora personal.
+
+<Callout type="insight" title="Por qué un blog">
+  Escribir es la mejor forma de internalizar lo que aprendés. Si no podés explicarlo, probablemente
+  no lo entendiste.
+</Callout>
 
 ## Stack
 
@@ -25,5 +35,31 @@ Este sitio está construido con:
 - shadcn/ui
 - next-intl para bilingüismo
 - Velite para procesar MDX
+
+## Ejemplo de código
+
+Acá un snippet de cómo se ve un code block con syntax highlighting:
+
+```ts
+export function getPosts(locale: "es" | "en") {
+  return posts
+    .filter((p) => p.locale === locale)
+    .filter((p) => process.env.NODE_ENV === "development" || !p.draft)
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+}
+```
+
+Notá el botón de copy que aparece al hacer hover en el code block.
+
+## Links
+
+Los links a sitios externos se ven distinto que los internos:
+
+- [Next.js docs](https://nextjs.org/docs) (externo, abre en nueva tab con ícono)
+- [Página About](/about) (interno, navegación cliente)
+
+<Callout type="warning">
+  Esta es una advertencia de prueba. Sirve para destacar info importante pero no crítica.
+</Callout>
 
 Los próximos posts van a tratar sobre cómo armé cada pieza.
