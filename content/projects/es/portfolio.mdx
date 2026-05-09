@@ -5,8 +5,8 @@ description: "Mi portfolio personal construido con Next.js 15, MDX y un sistema 
 year: 2026
 role: "Full-stack"
 status: "in-progress"
-featured: false
-stack: ["Next.js 15", "TypeScript", "Tailwind CSS", "shadcn/ui", "Velite"]
+featured: true
+stack: ["Next.js 15", "TypeScript", "Tailwind CSS", "shadcn/ui", "Velite", "next-intl"]
 repo: "https://github.com/ivandujaut/ivandujaut"
 translationKey: "portfolio"
 ---
@@ -17,14 +17,24 @@ Este es el sitio que estás navegando. Lo armé desde cero con el objetivo
 de tener un portfolio personal que sirva como showcase técnico y a la vez
 como bitácora de aprendizaje.
 
+<Callout type="info" title="En progreso">
+  Este proyecto está activo. Voy sumando features semana a semana.
+</Callout>
+
 ## Decisiones técnicas
 
 Elegí Next.js por App Router y server components. MDX para contenido porque
 me permite escribir posts como archivos en el repo sin necesidad de un CMS.
 next-intl para soporte bilingüe ES/EN.
 
+### Por qué Velite y no otra cosa
+
+Evalué Contentlayer pero está deprecated. Velite lo reemplaza con mejor
+DX, tipos automáticos via Zod, y soporte nativo para MDX en Tailwind v4.
+
 ## Próximos pasos
 
-- Sumar más componentes MDX
+- Sumar más componentes MDX (Steps, MetricGrid, Comparison)
 - Integrar stats de GitHub y LeetCode
-- Sistema de likes y comentarios
+- Sistema de likes y comentarios con Upstash Redis
+- OG images dinámicas con @vercel/og

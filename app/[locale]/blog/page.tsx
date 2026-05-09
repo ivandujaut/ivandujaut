@@ -1,11 +1,23 @@
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { getPosts } from "@/lib/content";
+import { PostListItem } from "@/components/content/post-list-item";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  const t = locale === "es" ? "Blog" : "Blog";
+  return {
+    title: t,
+    description:
+      locale === "es"
+        ? "Pensamientos sobre desarrollo, aprendizaje y vida."
+        : "Thoughts on development, learning and life.",
+  };
+}
 
 export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
@@ -13,32 +25,42 @@ export default async function BlogPage({ params }: Props) {
 
   const posts = getPosts(locale as "es" | "en");
 
+  // Agrupar posts por año
+  const postsByYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
+    const year = new Date(post.date).getFullYear().toString();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(post);
+    return acc;
+  }, {});
+
+  const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
+
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
       <BlogHeader />
 
-      <div className="mt-12 space-y-6">
+      <div className="mt-16 space-y-12">
         {posts.length === 0 ? (
           <p className="text-muted-foreground">No posts yet.</p>
         ) : (
-          posts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="block border-b border-border pb-6 transition-colors hover:bg-muted/30 -mx-6 px-6 rounded-lg"
-            >
-              <article>
-                <h2 className="text-lg font-medium">{post.title}</h2>
-                <p className="mt-1 text-sm text-muted-foreground">{post.description}</p>
-                <p className="mt-2 text-xs text-muted-foreground font-mono">
-                  {new Date(post.date).toLocaleDateString(locale, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </article>
-            </Link>
+          years.map((year) => (
+            <section key={year}>
+              <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                {year}
+              </h2>
+              <div className="space-y-1">
+                {postsByYear[year].map((post) => (
+                  <PostListItem
+                    key={post.slug}
+                    slug={post.slug}
+                    title={post.title}
+                    description={post.description}
+                    date={post.date}
+                    locale={locale}
+                  />
+                ))}
+              </div>
+            </section>
           ))
         )}
       </div>
