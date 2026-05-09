@@ -1,24 +1,90 @@
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { getProjects, getFeaturedProjects } from "@/lib/content";
+import { ProjectListItem } from "@/components/content/project-list-item";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  return {
+    title: locale === "es" ? "Proyectos" : "Projects",
+    description:
+      locale === "es"
+        ? "Casos de estudio y trabajos destacados."
+        : "Case studies and featured work.",
+  };
+}
+
 export default async function ProjectsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <ProjectsContent />;
-}
-
-function ProjectsContent() {
-  const t = useTranslations("projects");
+  const allProjects = getProjects(locale as "es" | "en");
+  const featured = getFeaturedProjects(locale as "es" | "en");
+  const others = allProjects.filter((p) => !p.featured);
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
+      <ProjectsHeader />
+
+      <div className="mt-16 space-y-12">
+        {featured.length > 0 && (
+          <section>
+            <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              {locale === "es" ? "Destacados" : "Featured"}
+            </h2>
+            <div className="space-y-1">
+              {featured.map((project) => (
+                <ProjectListItem
+                  key={project.slug}
+                  slug={project.slug}
+                  title={project.title}
+                  tagline={project.tagline}
+                  year={project.year}
+                  stack={project.stack}
+                  status={project.status}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {others.length > 0 && (
+          <section>
+            <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              {locale === "es" ? "Más proyectos" : "More projects"}
+            </h2>
+            <div className="space-y-1">
+              {others.map((project) => (
+                <ProjectListItem
+                  key={project.slug}
+                  slug={project.slug}
+                  title={project.title}
+                  tagline={project.tagline}
+                  year={project.year}
+                  stack={project.stack}
+                  status={project.status}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {allProjects.length === 0 && <p className="text-muted-foreground">No projects yet.</p>}
+      </div>
+    </main>
+  );
+}
+
+function ProjectsHeader() {
+  const t = useTranslations("projects");
+  return (
+    <>
       <h1 className="text-4xl font-semibold tracking-tight">{t("title")}</h1>
       <p className="mt-3 text-muted-foreground">{t("description")}</p>
-    </main>
+    </>
   );
 }
