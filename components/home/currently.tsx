@@ -10,6 +10,7 @@ export function Currently() {
       </h2>
       <div className="space-y-4 text-foreground leading-relaxed">
         <p>{t("paragraph1")}</p>
+        <p className="font-mono text-sm text-muted-foreground">{t("stack")}</p>
         <p>{t("paragraph2")}</p>
         <p className="text-muted-foreground">{t("paragraph3")}</p>
       </div>

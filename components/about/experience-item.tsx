@@ -8,18 +8,11 @@ interface ExperienceItemProps {
   company: string;
   location?: string;
   parallel?: string;
+  stack?: string;
+  stackLabel?: string;
   children: React.ReactNode;
 }
 
-/**
- * Bloque individual del timeline de experiencia.
- *
- * Layout:
- *   [LOGO] | [fecha]
- *          | [título · empresa]
- *          | [ubicación] [paralelo opcional]
- *          | [descripción]
- */
 export function ExperienceItem({
   logoSrc,
   logoAlt,
@@ -28,6 +21,8 @@ export function ExperienceItem({
   company,
   location,
   parallel,
+  stack,
+  stackLabel = "Stack",
   children,
 }: ExperienceItemProps) {
   return (
@@ -50,6 +45,12 @@ export function ExperienceItem({
         )}
 
         <div className="mt-3 space-y-2 text-sm leading-relaxed text-foreground">{children}</div>
+
+        {stack && (
+          <p className="mt-3 font-mono text-xs text-muted-foreground">
+            {stackLabel}: {stack}
+          </p>
+        )}
       </div>
     </article>
   );

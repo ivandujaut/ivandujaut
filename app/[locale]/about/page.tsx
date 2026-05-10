@@ -57,6 +57,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               title="Product Engineer"
               company="Prizmstack"
               location={locale === "es" ? "Remoto · California" : "Remote · California"}
+              stack="Next.js, TypeScript, PostgreSQL, Supabase, Vercel"
             >
               {locale === "es" ? (
                 <>
@@ -70,9 +71,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     Trabajo en la intersección ingeniería-producto: flujos de usuario, dashboards,
                     marketplace y herramientas internas de administración.
                   </p>
-                  <p className="font-mono text-xs text-muted-foreground">
-                    Stack: Next.js, TypeScript, PostgreSQL, Supabase, Vercel
-                  </p>
                 </>
               ) : (
                 <>
@@ -84,9 +82,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                   <p>
                     Working at the engineering-product intersection: user flows, dashboards,
                     marketplace and internal admin tools.
-                  </p>
-                  <p className="font-mono text-xs text-muted-foreground">
-                    Stack: Next.js, TypeScript, PostgreSQL, Supabase, Vercel
                   </p>
                 </>
               )}
@@ -129,6 +124,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 locale === "es" ? "Trainee → Product Engineer" : "Trainee → Product Engineer"
               }
               location={locale === "es" ? "Remoto" : "Remote"}
+              stack="Next.js, TypeScript, Node.js, ExpressJS, Tailwind CSS, shadcn/ui, MaterialUI, Stripe, PayPal, Figma, JIRA"
             >
               {locale === "es" ? (
                 <>
@@ -190,6 +186,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               company="Tumo (Techstars '24)"
               location={locale === "es" ? "Remoto · Nueva York" : "Remote · New York"}
               parallel={locale === "es" ? "paralelo a Banana" : "parallel to Banana"}
+              stack="Next.js, TypeScript, AWS"
             >
               {locale === "es" ? (
                 <>
@@ -239,6 +236,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               title="Planner Contract Business"
               company="Dräger"
               location={locale === "es" ? "Buenos Aires" : "Buenos Aires"}
+              stack="Microsoft Dynamics NAV, ERP, KPIs"
+              stackLabel={locale === "es" ? "Herramientas" : "Tools"}
             >
               {locale === "es" ? (
                 <>
@@ -371,6 +370,42 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           </div>
         </section>
 
+        {/* Herramientas */}
+        <section>
+          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            {t("sections.tools")}
+          </h2>
+
+          <p className="text-sm leading-relaxed text-foreground">{t("tools.intro")}</p>
+
+          <dl className="mt-6 space-y-3">
+            <ToolCategory
+              label={t("tools.categories.frontend.label")}
+              items={t("tools.categories.frontend.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.backend.label")}
+              items={t("tools.categories.backend.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.payments.label")}
+              items={t("tools.categories.payments.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.productDesign.label")}
+              items={t("tools.categories.productDesign.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.infrastructure.label")}
+              items={t("tools.categories.infrastructure.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.data.label")}
+              items={t("tools.categories.data.items")}
+            />
+          </dl>
+        </section>
+
         {/* Idiomas */}
         <section>
           <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -441,5 +476,14 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </section>
       </div>
     </main>
+  );
+}
+
+function ToolCategory({ label, items }: { label: string; items: string }) {
+  return (
+    <div className="grid grid-cols-1 gap-1 sm:grid-cols-[180px_1fr] sm:gap-4">
+      <dt className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</dt>
+      <dd className="text-sm text-foreground">{items}</dd>
+    </div>
   );
 }
