@@ -28,5 +28,33 @@
       "copyLink": "Copy link to this section",
       "linkCopied": "Copied"
     }
+  },
+  "home": {
+    "hero": {
+      "name": "Iván Dujaut",
+      "tagline": "Full-stack developer. Learning, building and documenting.",
+      "cta": {
+        "viewWork": "View work",
+        "readBlog": "Read blog"
+      }
+    },
+    "sections": {
+      "featuredWork": "Featured work",
+      "stats": "Stats",
+      "recentWriting": "Recent writing",
+      "openSource": "Open source"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Thoughts on development, learning and life."
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Case studies and featured work."
+  },
+  "about": {
+    "title": "About me",
+    "description": "Get to know a bit more about me."
   }
 }
