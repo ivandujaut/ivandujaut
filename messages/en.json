@@ -60,6 +60,10 @@
       "likeCount": "like",
       "likesCount": "likes",
       "maxReached": "Thanks for the love!"
+    },
+    "views": {
+      "singular": "view",
+      "plural": "views"
     }
   },
   "projects": {

@@ -5,6 +5,7 @@ import { getPostBySlug, getPosts } from "@/lib/content";
 import { useMDXComponents } from "@/mdx-components";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { LikeButton } from "@/components/blog/like-button";
+import { PostHero } from "@/components/blog/post-hero";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -24,7 +25,6 @@ export async function generateMetadata({ params }: Props) {
 
   if (!post) return {};
 
-  // Construir URL absoluta para la OG image
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const ogParams = new URLSearchParams({
     title: post.title,
@@ -74,7 +74,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <article className="mx-auto max-w-2xl px-6 py-24">
-      <header className="mb-12">
+      <header className="mb-8">
         <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
         <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
           <time dateTime={post.date}>
@@ -94,6 +94,22 @@ export default async function PostPage({ params }: Props) {
           <ViewCounter slug={slug} />
         </div>
       </header>
+
+      <PostHero
+        title={post.title}
+        date={post.date}
+        locale={locale}
+        cover={
+          post.cover
+            ? {
+                src: post.cover.src,
+                alt: post.title,
+                width: post.cover.width,
+                height: post.cover.height,
+              }
+            : undefined
+        }
+      />
 
       <div className="prose-content">
         <MDXContent code={post.content} />
