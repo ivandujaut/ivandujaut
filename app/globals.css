@@ -161,4 +161,8 @@
   .prose-content li > p {
     @apply mb-0;
   }
+
+  .prose-content a {
+    text-decoration: underline;
+  }
 }
