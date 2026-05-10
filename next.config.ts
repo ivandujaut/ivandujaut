@@ -7,7 +7,9 @@ class VeliteWebpackPlugin {
   static started = false;
 
   apply(compiler: {
-    hooks: { beforeCompile: { tap: (name: string, callback: () => void) => void } };
+    hooks: {
+      beforeCompile: { tap: (name: string, callback: () => void) => void };
+    };
   }) {
     compiler.hooks.beforeCompile.tap("VeliteWebpackPlugin", () => {
       void this.run();
@@ -25,6 +27,22 @@ class VeliteWebpackPlugin {
 }
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "ivandujaut.vercel.app",
+      },
+      {
+        protocol: "https",
+        hostname: "ivandujaut.com",
+      },
+    ],
+  },
   webpack(config) {
     config.plugins.push(new VeliteWebpackPlugin());
     return config;
