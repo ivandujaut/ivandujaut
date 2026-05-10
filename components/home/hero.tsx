@@ -26,7 +26,21 @@ export function Hero() {
   return (
     <section>
       <h1 className="text-4xl font-semibold tracking-tight">{t("name")}</h1>
-      <p className="mt-3 text-lg text-muted-foreground">{t("tagline")}</p>
+
+      <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-muted-foreground">
+        <span>{t("role")}</span>
+        <span aria-hidden>·</span>
+        <span>{t("location")}</span>
+        <span aria-hidden>·</span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+          {t("available")}
+        </span>
+      </div>
+
+      <p className="mt-6 text-lg leading-relaxed text-foreground">{t("tagline")}</p>
+
+      <p className="mt-2 font-mono text-sm text-muted-foreground">{t("credentials")}</p>
 
       <div className="mt-6 flex items-center gap-3">
         {socialLinks.map((link) => (
