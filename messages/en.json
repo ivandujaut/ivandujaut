@@ -32,14 +32,20 @@
   "home": {
     "hero": {
       "name": "Iván Dujaut",
-      "tagline": "Full-stack developer. Learning, building and documenting.",
-      "cta": {
-        "viewWork": "View work",
-        "readBlog": "Read blog"
-      }
+      "role": "Product Engineer",
+      "location": "Argentina",
+      "available": "Available",
+      "tagline": "Building products at the intersection of engineering, product and business.",
+      "credentials": "Bioengineer at ITBA · Techstars W24 alumni"
+    },
+    "currently": {
+      "title": "Currently",
+      "paragraph1": "As a Product Engineer at Prizmstack, I'm building FIJI: a valuation platform for real estate businesses. I work on the migration from no-code to Next.js and build the value simulation engine.",
+      "paragraph2": "In parallel, I teach Digital Techniques at IPSAJ to Electronics students. Combining production code with teaching pushes me to think about how people learn to build software.",
+      "paragraph3": "Looking for opportunities in LATAM (remote preferred) in healthtech, fintech or startups with interesting products."
     },
     "sections": {
-      "featuredWork": "Featured work",
+      "featuredWork": "Featured projects",
       "stats": "Stats",
       "recentWriting": "Recent writing",
       "openSource": "Open source"
