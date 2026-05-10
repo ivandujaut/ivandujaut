@@ -5,6 +5,10 @@ import { Figure } from "@/components/mdx/figure";
 import { Video } from "@/components/mdx/video";
 import { Pre } from "@/components/mdx/code-block";
 import { Anchor, MdxLink } from "@/components/mdx/links";
+import { TechStack } from "./components/mdx/tech-stack";
+import { Metric, MetricGrid } from "./components/mdx/metric";
+import { Comparison } from "./components/mdx/comparison";
+import { Steps } from "./components/mdx/steps";
 
 /**
  * Componentes MDX disponibles en posts y casos de estudio.
@@ -22,6 +26,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Callout,
     Figure,
     Video,
+
+    // Tier 2
+    TechStack,
+    Metric,
+    MetricGrid,
+    Comparison,
+    Steps,
 
     // Overrides de elementos HTML
     a: MdxLink,

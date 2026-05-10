@@ -17,28 +17,49 @@ para verificar que todo el setup funciona correctamente.
 ## Sobre este blog
 
 Acá voy a documentar mi proceso de aprendizaje en desarrollo de software,
-inglés, IA y otros temas que me interesan. Es tanto un portfolio profesional
-como una bitácora personal.
+inglés, IA y otros temas que me interesan.
 
 <Callout type="insight" title="Por qué un blog">
   Escribir es la mejor forma de internalizar lo que aprendés. Si no podés explicarlo, probablemente
   no lo entendiste.
 </Callout>
 
-## Stack
+## Stack del sitio
 
-Este sitio está construido con:
+<TechStack
+  items={["Next.js 15", "TypeScript", "Tailwind CSS", "shadcn/ui", "Velite", "next-intl"]}
+/>
 
-- Next.js 15 con App Router
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- next-intl para bilingüismo
-- Velite para procesar MDX
+## Cómo lo armé
+
+<Steps>
+  ### Setup inicial
+  Arranqué con `create-next-app` y configuré TypeScript, Tailwind y shadcn.
+
+### CI/CD
+
+Sumé GitHub Actions, Husky con lint-staged, y Dependabot para mantener
+las deps al día.
+
+### Bilingüismo
+
+Configuré next-intl con detección de idioma y banner de sugerencia.
+
+### Contenido
+
+Velite con schemas Zod para procesar MDX y generar tipos automáticos.
+
+</Steps>
+
+## Resultados hasta ahora
+
+<MetricGrid>
+  <Metric label="Branches mergeadas" value="10" change="esta semana" trend="up" />
+  <Metric label="Lighthouse" value="100" trend="up" />
+  <Metric label="Bundle inicial" value="~50kb" />
+</MetricGrid>
 
 ## Ejemplo de código
-
-Acá un snippet de cómo se ve un code block con syntax highlighting:
 
 ```ts
 export function getPosts(locale: "es" | "en") {
@@ -49,11 +70,7 @@ export function getPosts(locale: "es" | "en") {
 }
 ```
 
-Notá el botón de copy que aparece al hacer hover en el code block.
-
 ## Links
-
-Los links a sitios externos se ven distinto que los internos:
 
 - [Next.js docs](https://nextjs.org/docs) (externo, abre en nueva tab con ícono)
 - [Página About](/about) (interno, navegación cliente)

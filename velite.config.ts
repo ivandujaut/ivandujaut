@@ -1,7 +1,7 @@
 import { defineConfig, defineCollection, s } from "velite";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+// import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
 
 // ============================================================================
@@ -122,13 +122,13 @@ export default defineConfig({
           keepBackground: false,
         },
       ],
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: "wrap",
-          properties: { className: ["heading-anchor"] },
-        },
-      ],
+      // [
+      //   rehypeAutolinkHeadings,
+      //   {
+      //     behavior: "wrap",
+      //     properties: { className: ["heading-anchor"] },
+      //   },
+      // ],
     ],
   },
 });
