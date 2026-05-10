@@ -1,6 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { setRequestLocale } from "next-intl/server";
-import { useTranslations } from "next-intl";
+import { Hero } from "@/components/home/hero";
+import { FeaturedProjects } from "@/components/home/featured-projects";
+import { StatsGrid } from "@/components/home/stats-grid";
+import { RecentPosts } from "@/components/home/recent-posts";
+import { getAllStats } from "@/lib/stats";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -10,20 +13,23 @@ export default async function Home({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <HomeContent />;
-}
-
-function HomeContent() {
-  const t = useTranslations("home");
+  const stats = await getAllStats(locale as "es" | "en");
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
-      <h1 className="text-4xl font-semibold tracking-tight">{t("hero.name")}</h1>
-      <p className="mt-3 text-muted-foreground">{t("hero.tagline")}</p>
+      <Hero />
 
-      <div className="mt-8 flex flex-wrap gap-3">
-        <Button>{t("hero.cta.viewWork")}</Button>
-        <Button variant="outline">{t("hero.cta.readBlog")}</Button>
+      <div className="mt-20 space-y-16">
+        <FeaturedProjects locale={locale as "es" | "en"} />
+
+        <section>
+          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            {locale === "es" ? "Estadísticas" : "Stats"}
+          </h2>
+          <StatsGrid stats={stats} locale={locale as "es" | "en"} />
+        </section>
+
+        <RecentPosts locale={locale as "es" | "en"} />
       </div>
     </main>
   );
