@@ -3,6 +3,8 @@ import { setRequestLocale } from "next-intl/server";
 import { useMDXComponent } from "@/lib/mdx";
 import { getPostBySlug, getPosts } from "@/lib/content";
 import { useMDXComponents } from "@/mdx-components";
+import { ViewCounter } from "@/components/blog/view-counter";
+import { LikeButton } from "@/components/blog/like-button";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -62,16 +64,22 @@ export default async function PostPage({ params }: Props) {
           </time>
           {post.metadata && (
             <>
-              <span>·</span>
+              <span aria-hidden>·</span>
               <span>{post.metadata.readingTime} min read</span>
             </>
           )}
+          <span aria-hidden>·</span>
+          <ViewCounter slug={slug} />
         </div>
       </header>
 
       <div className="prose-content">
         <MDXContent code={post.content} />
       </div>
+
+      <footer className="mt-16 border-t border-border pt-8">
+        <LikeButton slug={slug} />
+      </footer>
     </article>
   );
 }

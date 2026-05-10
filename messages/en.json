@@ -47,7 +47,13 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Thoughts on development, learning and life."
+    "description": "Thoughts on development, learning and life.",
+    "like": {
+      "like": "Like",
+      "likeCount": "like",
+      "likesCount": "likes",
+      "maxReached": "Thanks for the love!"
+    }
   },
   "projects": {
     "title": "Projects",
