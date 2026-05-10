@@ -47,7 +47,13 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Pensamientos sobre desarrollo, aprendizaje y vida."
+    "description": "Pensamientos sobre desarrollo, aprendizaje y vida.",
+    "like": {
+      "like": "Me gusta",
+      "likeCount": "me gusta",
+      "likesCount": "me gusta",
+      "maxReached": "¡Gracias por el cariño!"
+    }
   },
   "projects": {
     "title": "Proyectos",

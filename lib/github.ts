@@ -1,6 +1,5 @@
 import { unstable_cache } from "next/cache";
 
-const GITHUB_API = "https://api.github.com";
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 const REVALIDATE_SECONDS = 60 * 60 * 6; // 6 horas
 
