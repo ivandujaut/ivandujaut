@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 interface RouteContext {
   params: Promise<{ slug: string }>;
 }
 
-/**
- * GET /api/views/:slug
- * Devuelve el contador actual de views para un post.
- */
 export async function GET(_: Request, context: RouteContext) {
   const { slug } = await context.params;
 
@@ -27,10 +24,6 @@ export async function GET(_: Request, context: RouteContext) {
   }
 }
 
-/**
- * POST /api/views/:slug
- * Incrementa el contador de views para un post.
- */
 export async function POST(_: Request, context: RouteContext) {
   const { slug } = await context.params;
 
