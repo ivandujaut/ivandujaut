@@ -24,9 +24,36 @@ export async function generateMetadata({ params }: Props) {
 
   if (!project) return {};
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const ogParams = new URLSearchParams({
+    title: project.title,
+    date: project.year.toString(),
+    subtitle: locale === "es" ? "Caso de estudio" : "Case study",
+  });
+  const ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
+
   return {
     title: project.title,
     description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      type: "article",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      images: [ogImageUrl],
+    },
   };
 }
 

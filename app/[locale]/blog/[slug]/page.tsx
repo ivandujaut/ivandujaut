@@ -24,6 +24,19 @@ export async function generateMetadata({ params }: Props) {
 
   if (!post) return {};
 
+  // Construir URL absoluta para la OG image
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const ogParams = new URLSearchParams({
+    title: post.title,
+    date: new Date(post.date).toLocaleDateString(locale, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    subtitle: locale === "es" ? "Blog" : "Blog post",
+  });
+  const ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
+
   return {
     title: post.title,
     description: post.description,
@@ -34,11 +47,20 @@ export async function generateMetadata({ params }: Props) {
       publishedTime: post.date,
       modifiedTime: post.updated,
       tags: post.tags,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: [ogImageUrl],
     },
   };
 }
