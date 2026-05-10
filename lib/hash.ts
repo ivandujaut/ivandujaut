@@ -1,26 +1,16 @@
-/**
- * Hashea una IP con un salt para usar como identificador único anónimo.
- * Usa Web Crypto API (compatible con edge runtime).
- */
-export async function hashIp(ip: string): Promise<string> {
+import { createHash } from "crypto";
+
+export function hashIp(ip: string): string {
   const salt = process.env.IP_HASH_SALT;
   if (!salt) {
     throw new Error("IP_HASH_SALT environment variable is required");
   }
 
-  const encoder = new TextEncoder();
-  const data = encoder.encode(ip + salt);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-
-  // Convertir ArrayBuffer a hex string
-  return Array.from(new Uint8Array(hashBuffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+  return createHash("sha256")
+    .update(ip + salt)
+    .digest("hex");
 }
 
-/**
- * Extrae la IP real del request, considerando headers de proxy.
- */
 export function getIpFromRequest(request: Request): string {
   const forwardedFor = request.headers.get("x-forwarded-for");
   if (forwardedFor) {

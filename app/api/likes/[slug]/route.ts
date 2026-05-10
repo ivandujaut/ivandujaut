@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const MAX_CLAPS_PER_USER = 10;
 
@@ -23,7 +24,7 @@ export async function GET(request: Request, context: RouteContext) {
 
   try {
     const ip = getIpFromRequest(request);
-    const ipHash = await hashIp(ip);
+    const ipHash = hashIp(ip);
 
     const [totalLikes, userClaps] = await Promise.all([
       redis.get<number>(`likes:total:${slug}`),
@@ -58,7 +59,7 @@ export async function POST(request: Request, context: RouteContext) {
 
   try {
     const ip = getIpFromRequest(request);
-    const ipHash = await hashIp(ip);
+    const ipHash = hashIp(ip);
     const userKey = `likes:user:${slug}:${ipHash}`;
     const totalKey = `likes:total:${slug}`;
 
