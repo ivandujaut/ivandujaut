@@ -60,6 +60,10 @@
       "likeCount": "me gusta",
       "likesCount": "me gusta",
       "maxReached": "¡Gracias por el cariño!"
+    },
+    "views": {
+      "singular": "vista",
+      "plural": "vistas"
     }
   },
   "projects": {
