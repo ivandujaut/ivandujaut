@@ -67,6 +67,35 @@
   },
   "about": {
     "title": "Acerca de mí",
-    "description": "Conocé un poco más sobre mí."
+    "intro": {
+      "greeting": "Hola, soy Iván",
+      "paragraph1": "Soy Product Engineer, basado en Argentina. Trabajo en la intersección donde se cruzan ingeniería, producto y negocio: construyo herramientas que la gente usa, defino prioridades en función de impacto, y traduzco ambigüedad estratégica en planes ejecutables.",
+      "paragraph2": "Soy bioingeniero del ITBA, un detalle que define cómo abordo problemas: con rigor cuantitativo, foco en métricas y pensamiento sistémico. Empecé como desarrollador frontend hace 4 años y crecí hacia roles donde producto y negocio pesan tanto como el código.",
+      "paragraph3": "Mi objetivo a mediano plazo es liderar equipos de producto donde la decisión técnica y la decisión estratégica se toman juntas. Para eso, hoy sigo construyendo: aprendiendo cómo se diseñan métricas accionables, cómo se prioriza con criterio, y cómo se ejecuta con velocidad sin perder calidad."
+    },
+    "sections": {
+      "experience": "Experiencia",
+      "education": "Educación",
+      "languages": "Idiomas",
+      "lookingFor": "Lo que busco",
+      "contact": "Contacto"
+    },
+    "languages": {
+      "spanish": "Español",
+      "spanishLevel": "Nativo",
+      "english": "Inglés",
+      "englishDescription": "He trabajado con equipos de Estados Unidos desde 2023 (Tumo en Techstars W24 NY, actualmente Prizmstack en California). Mi inglés es funcional para trabajo técnico, comunicación escrita y colaboración asincrónica. Sigo mejorando la fluidez conversacional activamente."
+    },
+    "lookingFor": {
+      "intro": "Oportunidades en LATAM (remoto preferido, abierto a híbrido) en empresas con producto interesante. Me motivan especialmente:",
+      "item1": "Healthtech y fintech: industrias donde la complejidad técnica se cruza con impacto real en la vida de las personas.",
+      "item2": "Startups en crecimiento: lugares donde producto, ingeniería y negocio se discuten en la misma mesa.",
+      "item3": "Empresas establecidas con cultura de producto fuerte: donde el rigor de procesos no mata la velocidad de iteración.",
+      "outro": "No me cierro a otros nichos si el equipo y el problema son interesantes."
+    },
+    "contact": {
+      "intro": "La mejor forma de contactarme es por email:",
+      "alsoFind": "También me podés encontrar en"
+    }
   }
 }
