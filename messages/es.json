@@ -32,14 +32,20 @@
   "home": {
     "hero": {
       "name": "Iván Dujaut",
-      "tagline": "Desarrollador full-stack. Aprendiendo, construyendo y documentando.",
-      "cta": {
-        "viewWork": "Ver trabajos",
-        "readBlog": "Leer blog"
-      }
+      "role": "Product Engineer",
+      "location": "Argentina",
+      "available": "Disponible",
+      "tagline": "Construyo productos en la intersección de ingeniería, producto y negocio.",
+      "credentials": "Bioingeniero ITBA · Ex-Techstars W24"
+    },
+    "currently": {
+      "title": "Actualmente",
+      "paragraph1": "Como Product Engineer en Prizmstack, desarrollo FIJI: una plataforma de valuación para negocios inmobiliarios. Trabajo en la migración de no-code a Next.js, y construyo el motor de simulaciones de valor.",
+      "paragraph2": "En paralelo, enseño Técnicas Digitales en el IPSAJ a estudiantes de Electrónica. Combino código de producción con docencia, y eso me obliga a pensar en cómo se aprende a construir software.",
+      "paragraph3": "Buscando oportunidades en LATAM (remoto preferido) en healthtech, fintech o startups con producto interesante."
     },
     "sections": {
-      "featuredWork": "Trabajos destacados",
+      "featuredWork": "Proyectos destacados",
       "stats": "Estadísticas",
       "recentWriting": "Escritos recientes",
       "openSource": "Open source"

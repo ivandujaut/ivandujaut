@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/home/hero";
+import { Currently } from "@/components/home/currently";
 import { FeaturedProjects } from "@/components/home/featured-projects";
 import { StatsGrid } from "@/components/home/stats-grid";
 import { RecentPosts } from "@/components/home/recent-posts";
@@ -19,7 +20,9 @@ export default async function Home({ params }: Props) {
     <main className="mx-auto max-w-2xl px-6 py-24">
       <Hero />
 
-      <div className="mt-20 space-y-16">
+      <div className="mt-16 space-y-16">
+        <Currently />
+
         <FeaturedProjects locale={locale as "es" | "en"} />
 
         <section>
