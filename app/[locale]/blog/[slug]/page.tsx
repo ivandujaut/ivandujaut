@@ -26,16 +26,32 @@ export async function generateMetadata({ params }: Props) {
   if (!post) return {};
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const ogParams = new URLSearchParams({
-    title: post.title,
-    date: new Date(post.date).toLocaleDateString(locale, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-    subtitle: locale === "es" ? "Blog" : "Blog post",
-  });
-  const ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
+
+  // Si el post tiene cover custom, usarlo para las previews.
+  // Si no, generar la tarjeta dinámica con /api/og.
+  let ogImageUrl: string;
+  let ogImageWidth = 1200;
+  let ogImageHeight = 630;
+  let ogImageAlt: string = post.title;
+
+  if (post.cover) {
+    const { src: image, alt } = post.cover;
+    ogImageUrl = image.src.startsWith("http") ? image.src : `${baseUrl}${image.src}`;
+    ogImageWidth = image.width;
+    ogImageHeight = image.height;
+    ogImageAlt = alt;
+  } else {
+    const ogParams = new URLSearchParams({
+      title: post.title,
+      date: new Date(post.date).toLocaleDateString(locale, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+      subtitle: locale === "es" ? "Blog" : "Blog post",
+    });
+    ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
+  }
 
   return {
     title: post.title,
@@ -50,9 +66,9 @@ export async function generateMetadata({ params }: Props) {
       images: [
         {
           url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
+          width: ogImageWidth,
+          height: ogImageHeight,
+          alt: ogImageAlt,
         },
       ],
     },
@@ -102,10 +118,10 @@ export default async function PostPage({ params }: Props) {
         cover={
           post.cover
             ? {
-                src: post.cover.src,
-                alt: post.title,
-                width: post.cover.width,
-                height: post.cover.height,
+                src: post.cover.src.src,
+                alt: post.cover.alt,
+                width: post.cover.src.width,
+                height: post.cover.src.height,
               }
             : undefined
         }
