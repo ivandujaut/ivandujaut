@@ -10,7 +10,16 @@ import remarkGfm from "remark-gfm";
 
 const slugFromPath = (filePath: string): string => {
   const parts = filePath.split("/");
-  return parts[parts.length - 1].replace(/\.mdx$/, "");
+  const fileName = parts[parts.length - 1];
+
+  // Si el archivo se llama "index.mdx", usar el nombre de la carpeta padre.
+  // Si no, usar el nombre del archivo sin extensión.
+  // Esto soporta tanto la estructura nueva (carpeta/index.mdx)
+  // como la vieja (slug.mdx) para retrocompatibilidad.
+  if (fileName === "index.mdx") {
+    return parts[parts.length - 2];
+  }
+  return fileName.replace(/\.mdx$/, "");
 };
 
 const localeFromPath = (filePath: string): "es" | "en" => {
@@ -37,7 +46,12 @@ const posts = defineCollection({
       translationKey: s.string().optional(),
       tags: s.array(s.string()).default([]),
       draft: s.boolean().default(false),
-      cover: s.image().optional(),
+      cover: s
+        .object({
+          src: s.image(),
+          alt: s.string(),
+        })
+        .optional(),
       // Auto-generados por Velite
       metadata: s.metadata(),
       excerpt: s.excerpt(),
@@ -70,7 +84,12 @@ const projects = defineCollection({
       stack: s.array(s.string()).min(1),
       repo: s.string().url().optional(),
       demo: s.string().url().optional(),
-      cover: s.image().optional(),
+      cover: s
+        .object({
+          src: s.image(),
+          alt: s.string(),
+        })
+        .optional(),
       metrics: s
         .array(
           s.object({
