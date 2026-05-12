@@ -14,9 +14,6 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-// ISR: contenido casi inmutable, regenerar 1 vez por día como margen para edits.
-export const revalidate = 86400;
-
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
