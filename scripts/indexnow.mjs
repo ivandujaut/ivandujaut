@@ -56,6 +56,29 @@ const urls = args.length > 0 ? args : [siteUrl, `${siteUrl}/en`];
 
 const host = new URL(siteUrl).host;
 
+// Guard: IndexNow rechaza URLs que no pertenezcan al host verificado y
+// rate-limitea agresivamente cuando le mandás URLs inválidas. Si tu
+// .env.local apunta a localhost (caso típico durante dev), abortamos
+// antes de quemar el rate limit.
+if (host === "localhost" || host.startsWith("localhost:") || host === "127.0.0.1") {
+  console.error(
+    `Refusing to ping IndexNow with host "${host}".\n` +
+      `IndexNow solo acepta URLs del dominio verificado.\n` +
+      `Pasá URLs de producción como argumentos, o seteá NEXT_PUBLIC_SITE_URL\n` +
+      `temporalmente a tu dominio público:\n\n` +
+      `  NEXT_PUBLIC_SITE_URL=https://tu-dominio.com npm run indexnow\n`,
+  );
+  process.exit(1);
+}
+
+for (const u of urls) {
+  const uHost = new URL(u).host;
+  if (uHost !== host) {
+    console.error(`URL "${u}" no pertenece al host verificado "${host}". IndexNow la rechazaría.`);
+    process.exit(1);
+  }
+}
+
 const body = {
   host,
   key,
