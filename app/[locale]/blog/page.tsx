@@ -9,9 +9,6 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-// ISR: el listado cambia sólo cuando se publica un post nuevo (rebuild + redeploy).
-export const revalidate = 3600;
-
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";

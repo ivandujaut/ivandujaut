@@ -14,10 +14,6 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-// ISR: stats (GitHub/LeetCode) ya tienen su propio cache via `unstable_cache`,
-// así que cachear el HTML 1 hora no estanca los números.
-export const revalidate = 3600;
-
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
