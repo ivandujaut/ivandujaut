@@ -5,7 +5,7 @@ import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { buildDefaultOgUrl } from "@/lib/og";
-import { buildStaticAlternates } from "@/lib/seo";
+import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
@@ -29,14 +29,20 @@ export async function generateMetadata({ params }: Props) {
     locale: locale as "es" | "en",
   });
 
+  const typedLocale = locale as "es" | "en";
+  const pageUrl = `${SITE_URL}${localePath(typedLocale, "/about")}`;
+
   return {
     title,
     description,
-    alternates: buildStaticAlternates(locale as "es" | "en", "/about"),
+    alternates: buildStaticAlternates(typedLocale, "/about"),
     openGraph: {
       title,
       description,
       type: "profile",
+      url: pageUrl,
+      locale: isEs ? "es_AR" : "en_US",
+      alternateLocale: isEs ? ["en_US"] : ["es_AR"],
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {
