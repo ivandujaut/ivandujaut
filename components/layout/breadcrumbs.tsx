@@ -18,22 +18,24 @@ export async function Breadcrumbs({ items, className }: BreadcrumbsProps) {
 
   return (
     <nav aria-label={t("label")} className={className}>
-      <ol className="flex flex-wrap items-center gap-1.5 font-mono text-xs text-muted-foreground">
+      <ol className="flex min-w-0 items-center gap-1.5 font-mono text-xs text-muted-foreground">
         {items.map((item, idx) => {
           const isLast = idx === items.length - 1;
           return (
-            <li key={`${idx}-${item.label}`} className="flex items-center gap-1.5">
+            <li
+              key={`${idx}-${item.label}`}
+              className={
+                isLast
+                  ? "min-w-0 flex-1 truncate text-foreground"
+                  : "flex shrink-0 items-center gap-1.5"
+              }
+            >
               {item.href && !isLast ? (
                 <Link href={item.href} className="transition-colors hover:text-foreground">
                   {item.label}
                 </Link>
               ) : (
-                <span
-                  aria-current={isLast ? "page" : undefined}
-                  className={isLast ? "max-w-[60ch] truncate text-foreground" : undefined}
-                >
-                  {item.label}
-                </span>
+                <span aria-current={isLast ? "page" : undefined}>{item.label}</span>
               )}
               {!isLast && (
                 <HugeiconsIcon
