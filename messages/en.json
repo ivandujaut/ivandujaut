@@ -135,7 +135,7 @@
       "outro": "I'm open to other niches if the team and the problem are interesting."
     },
     "contact": {
-      "intro": "The best way to reach me is via email:",
+      "intro": "The best way to reach me is via <email>email</email>.",
       "alsoFind": "You can also find me on"
     }
   }

@@ -135,7 +135,7 @@
       "outro": "No me cierro a otros nichos si el equipo y el problema son interesantes."
     },
     "contact": {
-      "intro": "La mejor forma de contactarme es por email:",
+      "intro": "La mejor forma de contactarme es por <email>email</email>.",
       "alsoFind": "También me podés encontrar en"
     }
   }
