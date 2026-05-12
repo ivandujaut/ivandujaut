@@ -13,7 +13,7 @@ export const routing = defineRouting({
   localePrefix: "as-needed",
   // Desactivamos la detección automática de locale del browser.
   // En su lugar, mostramos un banner de sugerencia (manejado por
-  // nuestro middleware + componente LanguageSuggestionBanner).
+  // nuestro proxy + componente LanguageSuggestionBanner).
   localeDetection: false,
 });
 

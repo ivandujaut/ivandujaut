@@ -2,8 +2,10 @@ import { NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
-// Middleware base de next-intl (maneja routing por locale)
-const intlMiddleware = createMiddleware(routing);
+// Handler base de next-intl (maneja routing por locale).
+// next-intl sigue exportando este factory como `createMiddleware`,
+// aunque a partir de Next.js 16 la convención del archivo sea `proxy.ts`.
+const intlHandler = createMiddleware(routing);
 
 // Nombres de las cookies que vamos a usar
 const PREFERENCE_COOKIE = "language-preference";
@@ -49,9 +51,9 @@ function getCurrentLocale(pathname: string): "es" | "en" {
   return "es";
 }
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   // 1. Dejar que next-intl maneje el routing primero
-  const response = intlMiddleware(request);
+  const response = intlHandler(request);
 
   // 2. Si el usuario ya tiene una preferencia guardada, no hacemos nada extra
   const userPreference = request.cookies.get(PREFERENCE_COOKIE)?.value;
