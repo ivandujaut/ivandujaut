@@ -1,7 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { useTheme } from "next-themes";
+import { buildPostOgUrl, formatOgDate } from "@/lib/og";
+
 interface PostHeroProps {
   title: string;
   date: string;
-  locale: string;
+  description?: string;
+  readingTime?: number;
+  tags?: string[];
+  locale: "es" | "en";
   cover?: {
     src: string;
     alt: string;
@@ -10,12 +19,32 @@ interface PostHeroProps {
   };
 }
 
-export function PostHero({ title, date, locale, cover }: PostHeroProps) {
-  // Si el post tiene cover custom, usar esa imagen
+/**
+ * Hero image para un post del blog.
+ *
+ * Si el post tiene `cover` en su frontmatter, usa esa imagen directamente.
+ * Si no, genera una dinámicamente usando el endpoint /api/og.
+ *
+ * En el caso generado, detecta el theme del usuario (light/dark) y pide
+ * la imagen correspondiente. La imagen empieza con el theme light por
+ * default (SSR) y next-themes actualiza al theme real una vez hidratado
+ * el cliente.
+ */
+export function PostHero({
+  title,
+  date,
+  description,
+  readingTime,
+  tags,
+  locale,
+  cover,
+}: PostHeroProps) {
+  const { resolvedTheme } = useTheme();
+
+  // Si el post tiene cover custom, usar esa imagen directamente.
   if (cover) {
     return (
       <div className="my-8 overflow-hidden rounded-lg border border-border">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={cover.src}
           alt={cover.alt}
@@ -27,23 +56,30 @@ export function PostHero({ title, date, locale, cover }: PostHeroProps) {
     );
   }
 
-  // Si no, generar automáticamente con /api/og
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const ogParams = new URLSearchParams({
+  // Detectar theme. Si resolvedTheme es undefined (SSR antes de hidratar),
+  // usar "light" por default.
+  const theme: "light" | "dark" = resolvedTheme === "dark" ? "dark" : "light";
+
+  const heroUrl = buildPostOgUrl({
     title,
-    date: new Date(date).toLocaleDateString(locale, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-    subtitle: locale === "es" ? "Blog" : "Blog post",
+    description,
+    date: formatOgDate(date, locale),
+    readingTime,
+    tags,
+    locale,
+    theme,
   });
-  const heroUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
 
   return (
     <div className="my-8 overflow-hidden rounded-lg border border-border">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={heroUrl} alt={title} width={1200} height={630} className="h-auto w-full" />
+      <img
+        src={heroUrl}
+        alt={title}
+        width={1200}
+        height={630}
+        className="h-auto w-full"
+        suppressHydrationWarning
+      />
     </div>
   );
 }

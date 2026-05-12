@@ -4,6 +4,7 @@ import { ExperienceItem } from "@/components/about/experience-item";
 import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import { buildDefaultOgUrl } from "@/lib/og";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -11,12 +12,34 @@ type Props = {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
+  const isEs = locale === "es";
+
+  const title = isEs ? "Sobre mí" : "About me";
+  const description = isEs
+    ? "Bioingeniero ITBA convertido en Product Engineer. Conocé mi experiencia, educación y herramientas."
+    : "Bioengineer from ITBA turned Product Engineer. Learn about my experience, education and tools.";
+
+  const ogImageUrl = buildDefaultOgUrl({
+    title,
+    description,
+    locale: locale as "es" | "en",
+  });
+
   return {
-    title: locale === "es" ? "Acerca de mí" : "About me",
-    description:
-      locale === "es"
-        ? "Conocé un poco más sobre mí, mi experiencia y educación."
-        : "Learn more about me, my experience and education.",
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "profile",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
   };
 }
 

@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getPosts } from "@/lib/content";
 import { PostListItem } from "@/components/content/post-list-item";
+import { buildDefaultOgUrl } from "@/lib/og";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -9,13 +10,33 @@ type Props = {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
-  const t = locale === "es" ? "Blog" : "Blog";
+  const isEs = locale === "es";
+
+  const title = isEs ? "Blog" : "Blog";
+  const description = isEs
+    ? "Pensamientos sobre desarrollo, producto y aprendizaje."
+    : "Thoughts on development, product and learning.";
+
+  const ogImageUrl = buildDefaultOgUrl({
+    title,
+    description,
+    locale: locale as "es" | "en",
+  });
+
   return {
-    title: t,
-    description:
-      locale === "es"
-        ? "Pensamientos sobre desarrollo, aprendizaje y vida."
-        : "Thoughts on development, learning and life.",
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
   };
 }
 
