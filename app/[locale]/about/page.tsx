@@ -8,6 +8,7 @@ import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
+import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -473,13 +474,17 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             {t("sections.contact")}
           </h2>
           <p className="text-sm leading-relaxed">
-            {t("contact.intro")}{" "}
-            <a
-              href="mailto:dujautivan@gmail.com"
-              className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-            >
-              dujautivan@gmail.com
-            </a>
+            {t.rich("contact.intro", {
+              email: (chunks) => (
+                <ObfuscatedEmailTrigger
+                  userReversed="navituajud"
+                  domainReversed="moc.liamg"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </ObfuscatedEmailTrigger>
+              ),
+            })}
           </p>
           <p className="mt-3 text-sm leading-relaxed">
             {t("contact.alsoFind")}{" "}
