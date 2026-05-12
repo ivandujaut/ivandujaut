@@ -1,106 +1,146 @@
 import { ImageResponse } from "next/og";
+import { loadFonts } from "./_components/fonts";
+import { PostTemplate } from "./_components/post-template";
+import { ProjectTemplate } from "./_components/project-template";
+import { DefaultTemplate } from "./_components/default-template";
 
 export const runtime = "edge";
 
 /**
- * GET /api/og?title=...&date=...
+ * GET /api/og?template=...&[params]
  *
- * Genera una imagen OG dinámica para un post o página.
+ * Genera una imagen OG dinámica (1200x630) según el template solicitado.
  *
- * Query params:
- *   - title (required): título del post o página
- *   - date (optional): fecha en formato ISO o legible
- *   - subtitle (optional): texto secundario (ej: "Blog post")
+ * Templates disponibles:
+ *   - post:    para blog posts (title, description, date, readingTime, tags, coverUrl)
+ *   - project: para projects (title, description, stack, status, coverUrl)
+ *   - default: genérico (title, description, label, coverUrl)
  *
- * Ejemplo: /api/og?title=Hola+mundo&date=May+9,+2026&subtitle=Blog+post
+ * Si no se pasa template o es desconocido, usa "default".
+ *
+ * Ejemplos:
+ *   /api/og?template=post&title=Hola&date=Mayo+11&readingTime=5+min
+ *   /api/og?template=project&title=FIJI&status=live&stack=Next.js,TypeScript
+ *   /api/og?title=Iván+Dujaut&description=Product+Engineer
  */
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+  try {
+    const { searchParams } = new URL(request.url);
+    const template = searchParams.get("template") ?? "default";
 
-  const title = searchParams.get("title") ?? "ivandujaut";
-  const date = searchParams.get("date");
-  const subtitle = searchParams.get("subtitle");
+    // Cargar fuentes (FigTree + Geist Mono)
+    const fonts = await loadFonts(new URL(request.url).origin);
 
-  return new ImageResponse(
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "80px",
-        background: "#0a0a0a",
-        fontFamily: "Inter",
-      }}
-    >
-      {/* Header: nombre/branding */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          color: "#a3a3a3",
-          fontSize: "28px",
-          fontFamily: "monospace",
-        }}
-      >
-        <span>ivandujaut</span>
-      </div>
+    // Renderizar el template correspondiente
+    const element = renderTemplate(template, searchParams);
 
-      {/* Centro: título + subtítulo */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        {subtitle && (
-          <div
-            style={{
-              fontSize: "24px",
-              color: "#a3a3a3",
-              fontFamily: "monospace",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-            }}
-          >
-            {subtitle}
-          </div>
-        )}
-        <div
-          style={{
-            fontSize: "72px",
-            fontWeight: 600,
-            color: "#fafafa",
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-            maxWidth: "1000px",
-          }}
-        >
-          {title}
-        </div>
-      </div>
-
-      {/* Footer: fecha + sitio */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          color: "#737373",
-          fontSize: "24px",
-          fontFamily: "monospace",
-        }}
-      >
-        {date && <span>{date}</span>}
-        <span style={{ marginLeft: "auto" }}>ivandujaut.com</span>
-      </div>
-    </div>,
-    {
+    return new ImageResponse(element, {
       width: 1200,
       height: 630,
-    },
-  );
+      fonts,
+    });
+  } catch (error) {
+    console.error("OG image generation failed:", error);
+    return new Response("Failed to generate image", { status: 500 });
+  }
+}
+
+/**
+ * Selecciona y renderiza el template correcto según el param `template`.
+ *
+ * Cada template recibe sus propios parámetros desde searchParams.
+ * Si template es desconocido, cae al default.
+ */
+function renderTemplate(template: string, params: URLSearchParams) {
+  switch (template) {
+    case "post":
+      return (
+        <PostTemplate
+          title={params.get("title") ?? "Untitled"}
+          description={params.get("description") ?? undefined}
+          date={params.get("date") ?? undefined}
+          readingTime={params.get("readingTime") ?? undefined}
+          tags={parseList(params.get("tags"))}
+          coverUrl={params.get("coverUrl") ?? undefined}
+          locale={parseLocale(params.get("locale"))}
+          theme={parseTheme(params.get("theme"))}
+        />
+      );
+
+    case "project":
+      return (
+        <ProjectTemplate
+          title={params.get("title") ?? "Untitled"}
+          description={params.get("description") ?? undefined}
+          stack={parseList(params.get("stack"))}
+          status={parseStatus(params.get("status"))}
+          coverUrl={params.get("coverUrl") ?? undefined}
+          locale={parseLocale(params.get("locale"))}
+          theme={parseTheme(params.get("theme"))}
+        />
+      );
+
+    case "default":
+    default:
+      return (
+        <DefaultTemplate
+          title={params.get("title") ?? "Iván Dujaut"}
+          description={params.get("description") ?? undefined}
+          locale={parseLocale(params.get("locale"))}
+          theme={parseTheme(params.get("theme"))}
+        />
+      );
+  }
+}
+
+/**
+ * Parsea un valor coma-separado en array.
+ *
+ * "react,nextjs,typescript" → ["react", "nextjs", "typescript"]
+ * null → []
+ */
+function parseList(value: string | null): string[] {
+  if (!value) return [];
+  return value
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Valida y parsea el status del project.
+ *
+ * Solo acepta los valores definidos en ProjectTemplate.
+ * Cualquier otro valor retorna undefined.
+ */
+function parseStatus(
+  value: string | null,
+): "shipped" | "in-progress" | "archived" | "concept" | undefined {
+  if (
+    value === "shipped" ||
+    value === "in-progress" ||
+    value === "archived" ||
+    value === "concept"
+  ) {
+    return value;
+  }
+  return undefined;
+}
+
+/**
+ * Valida y parsea el locale.
+ *
+ * Solo acepta "es" o "en". Default es "es".
+ */
+function parseLocale(value: string | null): "es" | "en" {
+  return value === "en" ? "en" : "es";
+}
+
+/**
+ * Valida y parsea el theme.
+ *
+ * Solo acepta "light" o "dark". Default es "light".
+ */
+function parseTheme(value: string | null): "light" | "dark" {
+  return value === "dark" ? "dark" : "light";
 }

@@ -5,10 +5,44 @@ import { FeaturedProjects } from "@/components/home/featured-projects";
 import { StatsGrid } from "@/components/home/stats-grid";
 import { RecentPosts } from "@/components/home/recent-posts";
 import { getAllStats } from "@/lib/stats";
+import { buildDefaultOgUrl } from "@/lib/og";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  const isEs = locale === "es";
+
+  const title = "Iván Dujaut";
+  const description = isEs
+    ? "Product Engineer · Bioingeniero ITBA"
+    : "Product Engineer · Bioengineer ITBA";
+
+  const ogImageUrl = buildDefaultOgUrl({
+    title,
+    description,
+    locale: locale as "es" | "en",
+  });
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
+  };
+}
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;

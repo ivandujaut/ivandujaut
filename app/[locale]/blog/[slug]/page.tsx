@@ -6,6 +6,7 @@ import { useMDXComponents } from "@/mdx-components";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { LikeButton } from "@/components/blog/like-button";
 import { PostHero } from "@/components/blog/post-hero";
+import { buildCoverUrl, buildPostOgUrl, formatOgDate } from "@/lib/og";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -25,33 +26,15 @@ export async function generateMetadata({ params }: Props) {
 
   if (!post) return {};
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
-  // Si el post tiene cover custom, usarlo para las previews.
-  // Si no, generar la tarjeta dinámica con /api/og.
-  let ogImageUrl: string;
-  let ogImageWidth = 1200;
-  let ogImageHeight = 630;
-  let ogImageAlt: string = post.title;
-
-  if (post.cover) {
-    const { src: image, alt } = post.cover;
-    ogImageUrl = image.src.startsWith("http") ? image.src : `${baseUrl}${image.src}`;
-    ogImageWidth = image.width;
-    ogImageHeight = image.height;
-    ogImageAlt = alt;
-  } else {
-    const ogParams = new URLSearchParams({
-      title: post.title,
-      date: new Date(post.date).toLocaleDateString(locale, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-      subtitle: locale === "es" ? "Blog" : "Blog post",
-    });
-    ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
-  }
+  const ogImageUrl = buildPostOgUrl({
+    title: post.title,
+    description: post.description,
+    date: formatOgDate(post.date, locale as "es" | "en"),
+    readingTime: post.metadata?.readingTime,
+    tags: post.tags,
+    coverUrl: buildCoverUrl(post.cover?.src.src),
+    locale: locale as "es" | "en",
+  });
 
   return {
     title: post.title,
@@ -66,9 +49,9 @@ export async function generateMetadata({ params }: Props) {
       images: [
         {
           url: ogImageUrl,
-          width: ogImageWidth,
-          height: ogImageHeight,
-          alt: ogImageAlt,
+          width: 1200,
+          height: 630,
+          alt: post.title,
         },
       ],
     },
@@ -114,7 +97,10 @@ export default async function PostPage({ params }: Props) {
       <PostHero
         title={post.title}
         date={post.date}
-        locale={locale}
+        description={post.description}
+        readingTime={post.metadata?.readingTime}
+        tags={post.tags}
+        locale={locale as "es" | "en"}
         cover={
           post.cover
             ? {
