@@ -45,7 +45,7 @@ export function Anchor({ id, children }: AnchorProps) {
         type="button"
         onClick={handleCopy}
         aria-label={copied ? t("linkCopied") : t("copyLink")}
-        className="ml-2 inline-flex items-center gap-1 align-middle opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+        className="ml-2 inline-flex cursor-pointer items-center gap-1 align-middle opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
       >
         <HugeiconsIcon
           icon={copied ? CheckmarkCircle02Icon : Link04Icon}
