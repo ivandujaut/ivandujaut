@@ -1,7 +1,8 @@
 import "./globals.css";
 import { Geist_Mono, Figtree } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
+import type { Metadata, Viewport } from "next";
 
 const figTree = Figtree({
   variable: "--font-sans",
@@ -23,10 +24,14 @@ export const metadata: Metadata = {
     default: "Iván Dujaut",
     template: "%s · Iván Dujaut",
   },
-  description: "Full-stack developer. Learning, building and documenting.",
+  description:
+    "Product Engineer and Bioengineer from ITBA. Building product with Next.js, TypeScript and a metrics-first lens. Writing about engineering, product and learning.",
+  authors: [{ name: "Iván Dujaut", url: baseUrl }],
+  creator: "Iván Dujaut",
   openGraph: {
     title: "Iván Dujaut",
-    description: "Full-stack developer. Learning, building and documenting.",
+    description:
+      "Product Engineer and Bioengineer from ITBA. Building product with Next.js, TypeScript and a metrics-first lens.",
     url: baseUrl,
     siteName: "Iván Dujaut",
     images: [
@@ -42,18 +47,30 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Iván Dujaut",
-    description: "Full-stack developer.",
+    description:
+      "Product Engineer and Bioengineer from ITBA. Building product with Next.js, TypeScript and a metrics-first lens.",
     images: [`${baseUrl}/api/og?title=Iván+Dujaut&subtitle=Portfolio`],
   },
 };
 
-export default function RootLayout({
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
-    <html suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         suppressHydrationWarning
         className={`${figTree.variable} ${geistMono.variable} antialiased`}

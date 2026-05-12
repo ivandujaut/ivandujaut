@@ -6,6 +6,9 @@ import { StatsGrid } from "@/components/home/stats-grid";
 import { RecentPosts } from "@/components/home/recent-posts";
 import { getAllStats } from "@/lib/stats";
 import { buildDefaultOgUrl } from "@/lib/og";
+import { buildStaticAlternates } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { personSchema } from "@/lib/jsonld";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -17,8 +20,8 @@ export async function generateMetadata({ params }: Props) {
 
   const title = "Iván Dujaut";
   const description = isEs
-    ? "Product Engineer · Bioingeniero ITBA"
-    : "Product Engineer · Bioengineer ITBA";
+    ? "Product Engineer y Bioingeniero del ITBA. Construyo producto end-to-end con Next.js, TypeScript y foco en métricas — desde startups en Techstars hasta proptech."
+    : "Product Engineer and Bioengineer from ITBA. I build end-to-end product with Next.js, TypeScript and a metrics-first lens — from Techstars startups to proptech.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
@@ -27,8 +30,9 @@ export async function generateMetadata({ params }: Props) {
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
+    alternates: buildStaticAlternates(locale as "es" | "en", "/"),
     openGraph: {
       title,
       description,
@@ -52,6 +56,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
+      <JsonLd data={personSchema(locale as "es" | "en")} />
       <Hero />
 
       <div className="mt-16 space-y-16">

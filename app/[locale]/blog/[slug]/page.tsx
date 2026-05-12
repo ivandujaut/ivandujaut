@@ -1,11 +1,16 @@
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useMDXComponent } from "@/lib/mdx";
-import { getPostBySlug, getPosts } from "@/lib/content";
+import { getPostBySlug, getPosts, getPostTranslations, getRelatedPosts } from "@/lib/content";
+import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { blogPostingSchema, breadcrumbSchema } from "@/lib/jsonld";
 import { useMDXComponents } from "@/mdx-components";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { LikeButton } from "@/components/blog/like-button";
 import { PostHero } from "@/components/blog/post-hero";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { RelatedPosts } from "@/components/blog/related-posts";
 import { buildCoverUrl, buildPostOgUrl, formatOgDate } from "@/lib/og";
 
 type Props = {
@@ -36,9 +41,16 @@ export async function generateMetadata({ params }: Props) {
     locale: locale as "es" | "en",
   });
 
+  const translations = getPostTranslations(post);
+
   return {
     title: post.title,
     description: post.description,
+    alternates: buildContentAlternates({
+      current: { locale: locale as "es" | "en", slug: post.slug },
+      translations: translations.map((t) => ({ locale: t.locale, slug: t.slug })),
+      basePath: "/blog",
+    }),
     openGraph: {
       title: post.title,
       description: post.description,
@@ -71,8 +83,55 @@ export default async function PostPage({ params }: Props) {
   const post = getPostBySlug(locale as "es" | "en", slug);
   if (!post) notFound();
 
+  const typedLocale = locale as "es" | "en";
+  const heroImage = post.cover?.src.src
+    ? `${SITE_URL}${post.cover.src.src}`
+    : buildPostOgUrl({
+        title: post.title,
+        description: post.description,
+        date: formatOgDate(post.date, typedLocale),
+        readingTime: post.metadata?.readingTime,
+        tags: post.tags,
+        locale: typedLocale,
+      });
+
+  const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
+  const homeLabel = t("home");
+  const blogLabel = t("blog");
+  const homePath = localePath(typedLocale, "/");
+  const blogIndexPath = localePath(typedLocale, "/blog");
+  const postPath = localePath(typedLocale, `/blog/${post.slug}`);
+
+  const breadcrumbItems = [
+    { label: homeLabel, href: homePath },
+    { label: blogLabel, href: blogIndexPath },
+    { label: post.title },
+  ];
+
+  const jsonLd = [
+    blogPostingSchema({
+      title: post.title,
+      description: post.description,
+      slug: post.slug,
+      locale: typedLocale,
+      datePublished: post.date,
+      dateModified: post.updated,
+      tags: post.tags,
+      image: heroImage,
+    }),
+    breadcrumbSchema([
+      { name: homeLabel, path: homePath },
+      { name: blogLabel, path: blogIndexPath },
+      { name: post.title, path: postPath },
+    ]),
+  ];
+
+  const related = getRelatedPosts({ locale: typedLocale, slug: post.slug, tags: post.tags }, 3);
+
   return (
     <article className="mx-auto max-w-2xl px-6 py-24">
+      <JsonLd data={jsonLd} />
+      <Breadcrumbs items={breadcrumbItems} className="mb-6" />
       <header className="mb-8">
         <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
         <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
@@ -120,6 +179,16 @@ export default async function PostPage({ params }: Props) {
       <footer className="mt-16 border-t border-border pt-8">
         <LikeButton slug={slug} />
       </footer>
+
+      <RelatedPosts
+        posts={related.map((p) => ({
+          slug: p.slug,
+          title: p.title,
+          description: p.description,
+          date: p.date,
+        }))}
+        locale={typedLocale}
+      />
     </article>
   );
 }

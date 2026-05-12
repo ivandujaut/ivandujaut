@@ -27,6 +27,9 @@
     "mdx": {
       "copyLink": "Copy link to this section",
       "linkCopied": "Copied"
+    },
+    "breadcrumbs": {
+      "label": "Breadcrumb"
     }
   },
   "home": {
@@ -64,6 +67,9 @@
     "views": {
       "singular": "view",
       "plural": "views"
+    },
+    "related": {
+      "title": "Related posts"
     }
   },
   "projects": {

@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { getPosts } from "@/lib/content";
 import { PostListItem } from "@/components/content/post-list-item";
 import { buildDefaultOgUrl } from "@/lib/og";
+import { buildStaticAlternates } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title,
     description,
+    alternates: buildStaticAlternates(locale as "es" | "en", "/blog"),
     openGraph: {
       title,
       description,

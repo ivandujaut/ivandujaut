@@ -27,6 +27,9 @@
     "mdx": {
       "copyLink": "Copiar enlace de esta sección",
       "linkCopied": "Copiado"
+    },
+    "breadcrumbs": {
+      "label": "Migas de pan"
     }
   },
   "home": {
@@ -64,6 +67,9 @@
     "views": {
       "singular": "vista",
       "plural": "vistas"
+    },
+    "related": {
+      "title": "Posts relacionados"
     }
   },
   "projects": {

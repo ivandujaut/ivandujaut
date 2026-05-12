@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getProjects, getFeaturedProjects } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
+import { buildStaticAlternates } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -13,8 +14,9 @@ export async function generateMetadata({ params }: Props) {
     title: locale === "es" ? "Proyectos" : "Projects",
     description:
       locale === "es"
-        ? "Casos de estudio y trabajos destacados."
-        : "Case studies and featured work.",
+        ? "Casos de estudio de producto end-to-end: proptech, fintech y herramientas internas construidas con Next.js, TypeScript y stack moderno."
+        : "End-to-end product case studies: proptech, fintech and internal tools built with Next.js, TypeScript and a modern stack.",
+    alternates: buildStaticAlternates(locale as "es" | "en", "/projects"),
   };
 }
 
