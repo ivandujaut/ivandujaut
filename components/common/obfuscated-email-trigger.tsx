@@ -40,7 +40,12 @@ export function ObfuscatedEmailTrigger({
   };
 
   return (
-    <button type="button" onClick={openMail} aria-label={label} className={className}>
+    <button
+      type="button"
+      onClick={openMail}
+      aria-label={label}
+      className={`cursor-pointer ${className ?? ""}`}
+    >
       {children}
     </button>
   );
