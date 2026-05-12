@@ -35,9 +35,9 @@ export function getPostBySlug(locale: Locale, slug: string) {
  * Devuelve las traducciones de un post (matched por translationKey).
  * Útil para el switcher de idioma en páginas de detail.
  */
-export function getPostTranslations(post: { translationKey?: string; slug: string }) {
+export function getPostTranslations(post: { translationKey?: string; locale: Locale }) {
   if (!post.translationKey) return [];
-  return posts.filter((p) => p.translationKey === post.translationKey && p.slug !== post.slug);
+  return posts.filter((p) => p.translationKey === post.translationKey && p.locale !== post.locale);
 }
 
 /**
@@ -81,9 +81,9 @@ export function getProjectBySlug(locale: Locale, slug: string) {
   return projects.find((p) => p.locale === locale && p.slug === slug);
 }
 
-export function getProjectTranslations(project: { translationKey?: string; slug: string }) {
+export function getProjectTranslations(project: { translationKey?: string; locale: Locale }) {
   if (!project.translationKey) return [];
   return projects.filter(
-    (p) => p.translationKey === project.translationKey && p.slug !== project.slug,
+    (p) => p.translationKey === project.translationKey && p.locale !== project.locale,
   );
 }

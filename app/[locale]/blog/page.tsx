@@ -3,7 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { getPosts } from "@/lib/content";
 import { PostListItem } from "@/components/content/post-list-item";
 import { buildDefaultOgUrl } from "@/lib/og";
-import { buildStaticAlternates } from "@/lib/seo";
+import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -24,13 +24,19 @@ export async function generateMetadata({ params }: Props) {
     locale: locale as "es" | "en",
   });
 
+  const typedLocale = locale as "es" | "en";
+  const pageUrl = `${SITE_URL}${localePath(typedLocale, "/blog")}`;
+
   return {
     title,
     description,
-    alternates: buildStaticAlternates(locale as "es" | "en", "/blog"),
+    alternates: buildStaticAlternates(typedLocale, "/blog"),
     openGraph: {
       title,
       description,
+      url: pageUrl,
+      locale: isEs ? "es_AR" : "en_US",
+      alternateLocale: isEs ? ["en_US"] : ["es_AR"],
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {

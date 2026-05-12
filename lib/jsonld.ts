@@ -52,6 +52,18 @@ export function blogPostingSchema(post: BlogPostingInput) {
     sameAs: ["https://linkedin.com/in/ivan-dujaut", "https://github.com/ivandujaut"],
   };
 
+  // Google's Article spec exige `publisher` como Organization. Para un blog
+  // personal usamos el nombre del autor como organización y el icon SVG como logo.
+  const publisher = {
+    "@type": "Organization",
+    name: "Iván Dujaut",
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/icon.svg`,
+    },
+  };
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -61,11 +73,16 @@ export function blogPostingSchema(post: BlogPostingInput) {
     dateModified: post.dateModified ?? post.datePublished,
     inLanguage: post.inLanguage ?? post.locale,
     keywords: post.tags?.join(", "),
-    image: post.image,
+    image: {
+      "@type": "ImageObject",
+      url: post.image,
+      width: 1200,
+      height: 630,
+    },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     url,
     author,
-    publisher: author,
+    publisher,
   };
 }
 

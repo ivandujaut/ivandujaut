@@ -4,7 +4,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
 import { getProjectBySlug, getProjects, getProjectTranslations } from "@/lib/content";
-import { buildContentAlternates, localePath } from "@/lib/seo";
+import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -23,44 +23,6 @@ export function generateStaticParams() {
   }));
 }
 
-// export async function generateMetadata({ params }: Props) {
-//   const { locale, slug } = await params;
-//   const project = getProjectBySlug(locale as "es" | "en", slug);
-
-//   if (!project) return {};
-
-//   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-//   const ogParams = new URLSearchParams({
-//     title: project.title,
-//     date: project.year.toString(),
-//     subtitle: locale === "es" ? "Caso de estudio" : "Case study",
-//   });
-//   const ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`;
-
-//   return {
-//     title: project.title,
-//     description: project.description,
-//     openGraph: {
-//       title: project.title,
-//       description: project.description,
-//       type: "article",
-//       images: [
-//         {
-//           url: ogImageUrl,
-//           width: 1200,
-//           height: 630,
-//           alt: project.title,
-//         },
-//       ],
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title: project.title,
-//       description: project.description,
-//       images: [ogImageUrl],
-//     },
-//   };
-// }
 export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
   const project = getProjectBySlug(locale as "es" | "en", slug);
@@ -77,12 +39,15 @@ export async function generateMetadata({ params }: Props) {
   });
 
   const translations = getProjectTranslations(project);
+  const typedLocale = locale as "es" | "en";
+  const isEs = typedLocale === "es";
+  const pageUrl = `${SITE_URL}${localePath(typedLocale, `/projects/${project.slug}`)}`;
 
   return {
     title: project.title,
     description: project.description,
     alternates: buildContentAlternates({
-      current: { locale: locale as "es" | "en", slug: project.slug },
+      current: { locale: typedLocale, slug: project.slug },
       translations: translations.map((t) => ({ locale: t.locale, slug: t.slug })),
       basePath: "/projects",
     }),
@@ -90,6 +55,9 @@ export async function generateMetadata({ params }: Props) {
       title: project.title,
       description: project.description,
       type: "article",
+      url: pageUrl,
+      locale: isEs ? "es_AR" : "en_US",
+      alternateLocale: isEs ? ["en_US"] : ["es_AR"],
       images: [
         {
           url: ogImageUrl,
