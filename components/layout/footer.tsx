@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 
 const socialLinks = [
   {
@@ -12,11 +13,6 @@ const socialLinks = [
     href: "https://www.linkedin.com/in/ivan-dujaut/",
     label: "LinkedIn",
     icon: LinkedinIcon,
-  },
-  {
-    href: "mailto:dujautivan@gmail.com",
-    label: "Email",
-    icon: Mail01Icon,
   },
 ];
 
@@ -44,6 +40,14 @@ export function Footer() {
               <HugeiconsIcon icon={link.icon} size={16} strokeWidth={1.5} />
             </a>
           ))}
+          <ObfuscatedEmailTrigger
+            userReversed="navituajud"
+            domainReversed="moc.liamg"
+            label="Email"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <HugeiconsIcon icon={Mail01Icon} size={16} strokeWidth={1.5} />
+          </ObfuscatedEmailTrigger>
         </div>
       </div>
     </footer>
