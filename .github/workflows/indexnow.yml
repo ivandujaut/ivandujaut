@@ -1,0 +1,108 @@
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/posts/**/*.mdx"
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "Space-separated URLs to ping (overrides auto-detection)"
+        required: false
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    name: Ping IndexNow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Necesitamos historial para hacer diff entre before/after del push.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Determine URLs to ping
+        id: urls
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.event.after }}
+          MANUAL_URLS: ${{ inputs.urls }}
+          SITE_URL: https://ivandujaut.com
+        run: |
+          set -euo pipefail
+
+          # Modo manual: si dispatch trae URLs, usar esas y skip detección.
+          if [ -n "${MANUAL_URLS:-}" ]; then
+            echo "Using manually provided URLs"
+            echo "urls=${MANUAL_URLS}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Diff entre el commit antes del push y el actual.
+          # Si BEFORE es zero-SHA (primer push al branch), comparar contra HEAD^.
+          if [ "${BEFORE:-}" = "0000000000000000000000000000000000000000" ] || [ -z "${BEFORE:-}" ]; then
+            BEFORE="${AFTER}^"
+          fi
+
+          # Filtrar a posts (es|en) agregados o modificados.
+          changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" \
+            | grep -E '^content/posts/(es|en)/.+\.mdx$' || true)
+
+          if [ -z "$changed" ]; then
+            echo "No post changes detected — skipping"
+            echo "urls=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          urls=""
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            # content/posts/<locale>/<...>
+            locale=$(echo "$file" | cut -d/ -f3)
+            base=$(basename "$file" .mdx)
+            # Soporta tanto <slug>.mdx como <slug>/index.mdx
+            if [ "$base" = "index" ]; then
+              slug=$(basename "$(dirname "$file")")
+            else
+              slug="$base"
+            fi
+            # localePrefix "as-needed": es sin prefijo, otros locales con prefijo.
+            if [ "$locale" = "es" ]; then
+              url="$SITE_URL/blog/$slug"
+            else
+              url="$SITE_URL/$locale/blog/$slug"
+            fi
+            urls="$urls $url"
+          done <<< "$changed"
+
+          urls=$(echo "$urls" | xargs)
+          echo "Detected URLs: $urls"
+          echo "urls=$urls" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for Vercel deployment
+        if: steps.urls.outputs.urls != ''
+        # Vercel suele desplegar en 60–120s. Esperamos antes de pinguear
+        # para que Bing no crawlee la versión anterior del contenido.
+        run: |
+          echo "Waiting 120s for Vercel to publish the new deployment..."
+          sleep 120
+
+      - name: Ping IndexNow
+        if: steps.urls.outputs.urls != ''
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          NEXT_PUBLIC_SITE_URL: https://ivandujaut.com
+          URLS: ${{ steps.urls.outputs.urls }}
+        run: node scripts/indexnow.mjs $URLS
