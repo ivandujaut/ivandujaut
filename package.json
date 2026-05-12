@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "indexnow": "node scripts/indexnow.mjs",
     "prepare": "husky",
     "postinstall": "velite build || true"
   },

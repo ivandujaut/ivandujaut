@@ -51,7 +51,6 @@ export function MobileNav() {
         </nav>
 
         <div className="absolute bottom-6 left-4 right-4 flex items-center justify-between border-t border-border pt-4 animate-in fade-in duration-500">
-          <span className="text-xs text-muted-foreground">{t("openMenu")}</span>
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
             <ThemeToggle />
