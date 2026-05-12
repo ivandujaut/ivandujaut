@@ -40,6 +40,31 @@ export function getPostTranslations(post: { translationKey?: string; slug: strin
   return posts.filter((p) => p.translationKey === post.translationKey && p.slug !== post.slug);
 }
 
+/**
+ * Posts relacionados al actual dentro del mismo locale.
+ * Scoring: cantidad de tags en común (desempate por fecha desc).
+ * Si no hay overlap suficiente, completa con los más recientes del mismo locale.
+ */
+export function getRelatedPosts(
+  current: { locale: Locale; slug: string; tags?: string[] },
+  limit = 3,
+) {
+  const sameLocale = getPosts(current.locale).filter((p) => p.slug !== current.slug);
+  const currentTags = new Set(current.tags ?? []);
+
+  const scored = sameLocale.map((post) => {
+    const overlap = post.tags.filter((tag) => currentTags.has(tag)).length;
+    return { post, overlap };
+  });
+
+  scored.sort((a, b) => {
+    if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+    return +new Date(b.post.date) - +new Date(a.post.date);
+  });
+
+  return scored.slice(0, limit).map((entry) => entry.post);
+}
+
 // ============================================================================
 // Projects
 // ============================================================================

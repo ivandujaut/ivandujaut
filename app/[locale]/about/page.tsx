@@ -5,6 +5,9 @@ import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { buildDefaultOgUrl } from "@/lib/og";
+import { buildStaticAlternates } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { personSchema } from "@/lib/jsonld";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -28,6 +31,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title,
     description,
+    alternates: buildStaticAlternates(locale as "es" | "en", "/about"),
     openGraph: {
       title,
       description,
@@ -55,6 +59,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
+      <JsonLd data={personSchema(locale)} />
       {/* Intro */}
       <section>
         <h1 className="text-4xl font-semibold tracking-tight">{t("intro.greeting")}</h1>

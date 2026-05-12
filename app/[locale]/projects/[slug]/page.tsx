@@ -1,9 +1,13 @@
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
-import { getProjectBySlug, getProjects } from "@/lib/content";
+import { getProjectBySlug, getProjects, getProjectTranslations } from "@/lib/content";
+import { buildContentAlternates, localePath } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/jsonld";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
 
@@ -72,9 +76,16 @@ export async function generateMetadata({ params }: Props) {
     locale: locale as "es" | "en",
   });
 
+  const translations = getProjectTranslations(project);
+
   return {
     title: project.title,
     description: project.description,
+    alternates: buildContentAlternates({
+      current: { locale: locale as "es" | "en", slug: project.slug },
+      translations: translations.map((t) => ({ locale: t.locale, slug: t.slug })),
+      basePath: "/projects",
+    }),
     openGraph: {
       title: project.title,
       description: project.description,
@@ -111,10 +122,30 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProjectBySlug(locale as "es" | "en", slug);
   if (!project) notFound();
 
-  const status = statusLabels[project.status]?.[locale as "es" | "en"] ?? project.status;
+  const typedLocale = locale as "es" | "en";
+  const status = statusLabels[project.status]?.[typedLocale] ?? project.status;
+
+  const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
+  const homePath = localePath(typedLocale, "/");
+  const projectsIndexPath = localePath(typedLocale, "/projects");
+  const projectPath = localePath(typedLocale, `/projects/${project.slug}`);
+
+  const breadcrumbItems = [
+    { label: t("home"), href: homePath },
+    { label: t("projects"), href: projectsIndexPath },
+    { label: project.title },
+  ];
+
+  const jsonLd = breadcrumbSchema([
+    { name: t("home"), path: homePath },
+    { name: t("projects"), path: projectsIndexPath },
+    { name: project.title, path: projectPath },
+  ]);
 
   return (
     <article className="mx-auto max-w-2xl px-6 py-24">
+      <JsonLd data={jsonLd} />
+      <Breadcrumbs items={breadcrumbItems} className="mb-6" />
       <header className="mb-12">
         <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
         <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
