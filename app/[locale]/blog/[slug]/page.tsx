@@ -42,12 +42,15 @@ export async function generateMetadata({ params }: Props) {
   });
 
   const translations = getPostTranslations(post);
+  const typedLocale = locale as "es" | "en";
+  const isEs = typedLocale === "es";
+  const pageUrl = `${SITE_URL}${localePath(typedLocale, `/blog/${post.slug}`)}`;
 
   return {
     title: post.title,
     description: post.description,
     alternates: buildContentAlternates({
-      current: { locale: locale as "es" | "en", slug: post.slug },
+      current: { locale: typedLocale, slug: post.slug },
       translations: translations.map((t) => ({ locale: t.locale, slug: t.slug })),
       basePath: "/blog",
     }),
@@ -55,6 +58,9 @@ export async function generateMetadata({ params }: Props) {
       title: post.title,
       description: post.description,
       type: "article",
+      url: pageUrl,
+      locale: isEs ? "es_AR" : "en_US",
+      alternateLocale: isEs ? ["en_US"] : ["es_AR"],
       publishedTime: post.date,
       modifiedTime: post.updated,
       tags: post.tags,

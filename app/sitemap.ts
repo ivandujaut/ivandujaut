@@ -2,6 +2,14 @@ import type { MetadataRoute } from "next";
 import { getPosts, getProjects } from "@/lib/content";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 
+// Construye URLs absolutas para el sitemap manteniendo la misma forma que
+// los canonicals emitidos por Next.js: el root sin trailing slash, para que
+// Search Console no reporte inconsistencias entre `<loc>` y `rel="canonical"`.
+function absoluteUrl(locale: Locale, pathWithoutLocale: string): string {
+  const path = localePath(locale, pathWithoutLocale);
+  return `${SITE_URL}${path === "/" ? "" : path}`;
+}
+
 type Translatable = { locale: Locale; slug: string; translationKey?: string };
 
 function groupByTranslationKey<T extends Translatable>(items: T[]): T[][] {
@@ -18,7 +26,7 @@ function groupByTranslationKey<T extends Translatable>(items: T[]): T[][] {
 function buildLanguages(group: Translatable[], basePath: "/blog" | "/projects") {
   const byLocale = new Map<Locale, string>();
   for (const item of group) {
-    byLocale.set(item.locale, `${SITE_URL}${localePath(item.locale, `${basePath}/${item.slug}`)}`);
+    byLocale.set(item.locale, absoluteUrl(item.locale, `${basePath}/${item.slug}`));
   }
   const languages: Record<string, string> = {};
   const es = byLocale.get("es");
@@ -47,12 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.flatMap((route) => {
     const languages: Record<string, string> = {
-      es: `${SITE_URL}${localePath("es", route.path)}`,
-      en: `${SITE_URL}${localePath("en", route.path)}`,
-      "x-default": `${SITE_URL}${localePath("es", route.path)}`,
+      es: absoluteUrl("es", route.path),
+      en: absoluteUrl("en", route.path),
+      "x-default": absoluteUrl("es", route.path),
     };
     return locales.map((locale) => ({
-      url: `${SITE_URL}${localePath(locale, route.path)}`,
+      url: absoluteUrl(locale, route.path),
       lastModified: now,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
@@ -65,7 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const postEntries: MetadataRoute.Sitemap = postGroups.flatMap((group) => {
     const languages = buildLanguages(group, "/blog");
     return group.map((post) => ({
-      url: `${SITE_URL}${localePath(post.locale, `/blog/${post.slug}`)}`,
+      url: absoluteUrl(post.locale, `/blog/${post.slug}`),
       lastModified: new Date(post.updated ?? post.date),
       changeFrequency: "monthly" as const,
       priority: 0.6,
@@ -78,7 +86,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const projectEntries: MetadataRoute.Sitemap = projectGroups.flatMap((group) => {
     const languages = buildLanguages(group, "/projects");
     return group.map((project) => ({
-      url: `${SITE_URL}${localePath(project.locale, `/projects/${project.slug}`)}`,
+      url: absoluteUrl(project.locale, `/projects/${project.slug}`),
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.6,
