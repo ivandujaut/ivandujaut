@@ -1,14 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { useRouter, usePathname } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 
-const SUGGESTION_COOKIE = "language-suggestion";
 const PREFERENCE_COOKIE = "language-preference";
 const DISMISSED_COOKIE = "language-banner-dismissed";
+
+function detectBrowserLocale(): "es" | "en" | null {
+  if (typeof navigator === "undefined") return null;
+  const candidates = navigator.languages?.length ? navigator.languages : [navigator.language];
+  for (const raw of candidates) {
+    const lang = raw.toLowerCase().split("-")[0];
+    if (routing.locales.includes(lang as "es" | "en")) {
+      return lang as "es" | "en";
+    }
+  }
+  return null;
+}
 
 const messages = {
   en: {
@@ -33,13 +46,10 @@ function setCookie(name: string, value: string, maxAgeSeconds: number) {
   document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
 }
 
-function deleteCookie(name: string) {
-  document.cookie = `${name}=; max-age=0; path=/`;
-}
-
 export function LanguageSuggestionBanner() {
   const router = useRouter();
   const pathname = usePathname();
+  const currentLocale = useLocale();
   const [suggestedLocale, setSuggestedLocale] = useState<"es" | "en" | null>(null);
 
   useEffect(() => {
@@ -49,16 +59,15 @@ export function LanguageSuggestionBanner() {
     // Si el usuario ya tomó una decisión, no mostramos el banner
     if (preference || dismissed) return;
 
-    // Si hay sugerencia válida, mostrar el banner
-    const suggestion = getCookie(SUGGESTION_COOKIE);
-    if (suggestion === "es" || suggestion === "en") {
-      // Reading cookies is a client-only operation that requires syncing
+    const browserLocale = detectBrowserLocale();
+    if (browserLocale && browserLocale !== currentLocale) {
+      // Reading navigator is a client-only operation that requires syncing
       // server-rendered state (null) with client state. This is the documented
       // pattern in React for hydration-safe client-only data.
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSuggestedLocale(suggestion);
+      setSuggestedLocale(browserLocale);
     }
-  }, []);
+  }, [currentLocale]);
 
   if (!suggestedLocale) return null;
 
@@ -68,7 +77,6 @@ export function LanguageSuggestionBanner() {
     if (!suggestedLocale) return;
 
     setCookie(PREFERENCE_COOKIE, suggestedLocale, 60 * 60 * 24 * 365);
-    deleteCookie(SUGGESTION_COOKIE);
 
     router.replace(pathname, { locale: suggestedLocale });
   }
