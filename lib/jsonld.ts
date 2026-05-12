@@ -41,6 +41,17 @@ export function blogPostingSchema(post: BlogPostingInput) {
   const prefix = post.locale === "en" ? "/en" : "";
   const url = `${SITE_URL}${prefix}/blog/${post.slug}`;
 
+  // Person inline (no como referencia por @id) para que validators que
+  // analizan la página en aislamiento — como Google Rich Results Test —
+  // puedan leer name/url directamente sin resolver referencias entre pages.
+  const author = {
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: "Iván Dujaut",
+    url: SITE_URL,
+    sameAs: ["https://linkedin.com/in/ivan-dujaut", "https://github.com/ivandujaut"],
+  };
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -53,8 +64,8 @@ export function blogPostingSchema(post: BlogPostingInput) {
     image: post.image,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     url,
-    author: { "@id": PERSON_ID },
-    publisher: { "@id": PERSON_ID },
+    author,
+    publisher: author,
   };
 }
 
