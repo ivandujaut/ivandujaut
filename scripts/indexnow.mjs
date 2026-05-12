@@ -25,7 +25,10 @@ function loadEnvLocal() {
       const eqIdx = trimmed.indexOf("=");
       if (eqIdx === -1) continue;
       const k = trimmed.slice(0, eqIdx).trim();
-      const v = trimmed.slice(eqIdx + 1).trim().replace(/^['"]|['"]$/g, "");
+      const v = trimmed
+        .slice(eqIdx + 1)
+        .trim()
+        .replace(/^['"]|['"]$/g, "");
       if (!(k in process.env)) process.env[k] = v;
     }
   } catch {
