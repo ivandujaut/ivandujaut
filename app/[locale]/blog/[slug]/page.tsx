@@ -17,11 +17,6 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
-// ISR: el contenido del post es inmutable después de publicar. Los contadores
-// de views/likes los lee el cliente desde `/api/views` y `/api/likes`, así que
-// no se ven afectados por cachear el HTML.
-export const revalidate = 86400;
-
 export function generateStaticParams() {
   const allPosts = [...getPosts("es"), ...getPosts("en")];
   return allPosts.map((post) => ({

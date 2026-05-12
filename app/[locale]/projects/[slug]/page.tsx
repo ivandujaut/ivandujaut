@@ -15,10 +15,6 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
-// ISR: el contenido del case-study cambia raramente. Re-render asincrónico
-// si se edita el MDX y se redeploya.
-export const revalidate = 86400;
-
 export function generateStaticParams() {
   const allProjects = [...getProjects("es"), ...getProjects("en")];
   return allProjects.map((project) => ({
