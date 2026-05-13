@@ -3,8 +3,11 @@ import { loadFonts } from "./_components/fonts";
 import { PostTemplate } from "./_components/post-template";
 import { ProjectTemplate } from "./_components/project-template";
 import { DefaultTemplate } from "./_components/default-template";
+import { verifyOgQuery } from "@/lib/og-sign";
+import { check, ogRatelimit } from "@/lib/ratelimit";
+import { hashIp, getIpFromRequest } from "@/lib/hash";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 /**
  * GET /api/og?template=...&[params]
@@ -26,6 +29,23 @@ export const runtime = "edge";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+
+    const providedSig = searchParams.get("sig");
+    searchParams.delete("sig");
+    const queryWithoutSig = searchParams.toString();
+    if (!verifyOgQuery(queryWithoutSig, providedSig)) {
+      return new Response("Forbidden", { status: 403 });
+    }
+
+    const ipHash = hashIp(getIpFromRequest(request));
+    const rl = await check(ogRatelimit, ipHash);
+    if (!rl.allowed) {
+      return new Response("Too Many Requests", {
+        status: 429,
+        headers: { "Retry-After": String(Math.max(1, Math.ceil((rl.reset - Date.now()) / 1000))) },
+      });
+    }
+
     const template = searchParams.get("template") ?? "default";
 
     // Cargar fuentes (FigTree + Geist Mono)

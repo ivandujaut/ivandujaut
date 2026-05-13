@@ -15,6 +15,7 @@ function build(name: string, limit: number, windowSeconds: number): Ratelimit | 
 
 export const viewsRatelimit = build("views", 30, 60);
 export const likesRatelimit = build("likes", 10, 60);
+export const ogRatelimit = build("og", 20, 60);
 
 export interface RatelimitResult {
   allowed: boolean;
