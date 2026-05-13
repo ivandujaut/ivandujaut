@@ -118,16 +118,32 @@ export default async function PostPage({ params }: Props) {
       />
     );
   }
+  const heroUrls = post.cover
+    ? undefined
+    : {
+        light: buildPostOgUrl({
+          title: post.title,
+          description: post.description,
+          date: formatOgDate(post.date, typedLocale),
+          readingTime: post.metadata?.readingTime,
+          tags: post.tags,
+          locale: typedLocale,
+          theme: "light",
+        }),
+        dark: buildPostOgUrl({
+          title: post.title,
+          description: post.description,
+          date: formatOgDate(post.date, typedLocale),
+          readingTime: post.metadata?.readingTime,
+          tags: post.tags,
+          locale: typedLocale,
+          theme: "dark",
+        }),
+      };
+
   const heroImage = post.cover?.src.src
     ? `${SITE_URL}${post.cover.src.src}`
-    : buildPostOgUrl({
-        title: post.title,
-        description: post.description,
-        date: formatOgDate(post.date, typedLocale),
-        readingTime: post.metadata?.readingTime,
-        tags: post.tags,
-        locale: typedLocale,
-      });
+    : (heroUrls?.light as string);
 
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const homeLabel = t("home");
@@ -196,11 +212,6 @@ export default async function PostPage({ params }: Props) {
 
         <PostHero
           title={post.title}
-          date={post.date}
-          description={post.description}
-          readingTime={post.metadata?.readingTime}
-          tags={post.tags}
-          locale={locale as "es" | "en"}
           cover={
             post.cover
               ? {
@@ -211,6 +222,7 @@ export default async function PostPage({ params }: Props) {
                 }
               : undefined
           }
+          heroUrls={heroUrls}
         />
 
         <div className="prose-content">
