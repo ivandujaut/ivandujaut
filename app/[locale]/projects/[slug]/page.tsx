@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -115,11 +116,15 @@ export default async function ProjectPage({ params }: Props) {
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={breadcrumbItems} className="mb-6" />
       <header className="mb-12">
-        <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
+        <ViewTransition name={`project-title-${project.slug}`} share="morph">
+          <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
+        </ViewTransition>
         <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
 
         <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
-          <span>{project.year}</span>
+          <ViewTransition name={`project-year-${project.slug}`} share="morph">
+            <span>{project.year}</span>
+          </ViewTransition>
           <span aria-hidden>·</span>
           <span>{project.role}</span>
           <span aria-hidden>·</span>
