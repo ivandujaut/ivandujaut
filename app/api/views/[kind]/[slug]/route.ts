@@ -3,6 +3,7 @@ import { revalidateTag } from "next/cache";
 import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
 import { isViewKind, viewsTag } from "@/lib/views";
+import { check, viewsRatelimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,6 +27,20 @@ export async function POST(request: Request, context: RouteContext) {
 
   try {
     const ipHash = hashIp(getIpFromRequest(request));
+
+    const rl = await check(viewsRatelimit, ipHash);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { views: 0 },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.max(1, Math.ceil((rl.reset - Date.now()) / 1000))),
+          },
+        },
+      );
+    }
+
     const counterKey = keyFor("views", kind, slug);
     const seenKey = keyFor("views", "seen", kind, slug, ipHash);
 
