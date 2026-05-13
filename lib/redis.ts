@@ -18,7 +18,25 @@ function createRedisClient(): Redis | null {
     return null;
   }
 
+  if (!process.env.REDIS_ENV_TAG) {
+    throw new Error(
+      "REDIS_ENV_TAG is required when Upstash Redis is configured. Set it to 'prod' in Production and 'nonprod' in Preview/Development.",
+    );
+  }
+
+  console.info(
+    `Redis configured for env=${process.env.VERCEL_ENV ?? "local"} tag=${process.env.REDIS_ENV_TAG}`,
+  );
+
   return new Redis({ url, token });
 }
 
 export const redis = createRedisClient();
+
+export function keyFor(...parts: [string, ...string[]]): string {
+  const tag = process.env.REDIS_ENV_TAG;
+  if (!tag) {
+    throw new Error("REDIS_ENV_TAG is unset; keyFor cannot build a prefixed key");
+  }
+  return [tag, ...parts].join(":");
+}

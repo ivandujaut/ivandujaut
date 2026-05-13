@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { redis } from "@/lib/redis";
+import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
 
 export const runtime = "nodejs";
@@ -23,8 +23,8 @@ export async function GET(request: Request, context: RouteContext) {
     const ipHash = hashIp(ip);
 
     const [totalLikes, userClaps] = await Promise.all([
-      redis.get<number>(`likes:total:${slug}`),
-      redis.get<number>(`likes:user:${slug}:${ipHash}`),
+      redis.get<number>(keyFor("likes", "total", slug)),
+      redis.get<number>(keyFor("likes", "user", slug, ipHash)),
     ]);
 
     return NextResponse.json({
@@ -52,8 +52,8 @@ export async function POST(request: Request, context: RouteContext) {
   try {
     const ip = getIpFromRequest(request);
     const ipHash = hashIp(ip);
-    const userKey = `likes:user:${slug}:${ipHash}`;
-    const totalKey = `likes:total:${slug}`;
+    const userKey = keyFor("likes", "user", slug, ipHash);
+    const totalKey = keyFor("likes", "total", slug);
 
     const currentUserClaps = (await redis.get<number>(userKey)) ?? 0;
 
