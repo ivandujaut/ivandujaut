@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useMDXComponent } from "@/lib/mdx";
@@ -139,15 +140,19 @@ export default async function PostPage({ params }: Props) {
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={breadcrumbItems} className="mb-6" />
       <header className="mb-8">
-        <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
+        <ViewTransition name={`post-title-${slug}`} share="morph">
+          <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
+        </ViewTransition>
         <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-          <time dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString(locale, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
+          <ViewTransition name={`post-date-${slug}`} share="morph">
+            <time dateTime={post.date}>
+              {new Date(post.date).toLocaleDateString(locale, {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </ViewTransition>
           {post.metadata && (
             <>
               <span aria-hidden>·</span>
