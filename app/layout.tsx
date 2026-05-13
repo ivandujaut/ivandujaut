@@ -2,6 +2,8 @@ import "./globals.css";
 import { Geist_Mono, Figtree } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { getLocale } from "next-intl/server";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 
 const figTree = Figtree({
@@ -83,6 +85,8 @@ export default async function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
