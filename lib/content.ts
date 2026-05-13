@@ -32,6 +32,24 @@ export function getPostBySlug(locale: Locale, slug: string) {
 }
 
 /**
+ * Busca un post por slug ignorando el locale.
+ * Útil para detectar el caso en que el usuario llega con un slug que existe
+ * en otro idioma (por ejemplo, /en/blog/hola-mundo).
+ */
+export function findPostInAnyLocale(slug: string) {
+  return posts.find((p) => p.slug === slug);
+}
+
+/**
+ * Dado un translationKey, busca su versión en el locale solicitado.
+ * Devuelve undefined si no hay traducción en ese idioma.
+ */
+export function findTranslatedPostInLocale(translationKey: string | undefined, locale: Locale) {
+  if (!translationKey) return undefined;
+  return posts.find((p) => p.translationKey === translationKey && p.locale === locale);
+}
+
+/**
  * Devuelve las traducciones de un post (matched por translationKey).
  * Útil para el switcher de idioma en páginas de detail.
  */
@@ -79,6 +97,15 @@ export function getFeaturedProjects(locale: Locale) {
 
 export function getProjectBySlug(locale: Locale, slug: string) {
   return projects.find((p) => p.locale === locale && p.slug === slug);
+}
+
+export function findProjectInAnyLocale(slug: string) {
+  return projects.find((p) => p.slug === slug);
+}
+
+export function findTranslatedProjectInLocale(translationKey: string | undefined, locale: Locale) {
+  if (!translationKey) return undefined;
+  return projects.find((p) => p.translationKey === translationKey && p.locale === locale);
 }
 
 export function getProjectTranslations(project: { translationKey?: string; locale: Locale }) {

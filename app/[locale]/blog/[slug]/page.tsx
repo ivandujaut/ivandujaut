@@ -1,8 +1,16 @@
 import { ViewTransition } from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useMDXComponent } from "@/lib/mdx";
-import { getPostBySlug, getPosts, getPostTranslations, getRelatedPosts } from "@/lib/content";
+import {
+  findPostInAnyLocale,
+  findTranslatedPostInLocale,
+  getPostBySlug,
+  getPosts,
+  getPostTranslations,
+  getRelatedPosts,
+} from "@/lib/content";
+import { TranslationMissingPage } from "@/components/common/translation-missing-page";
 import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/jsonld";
@@ -89,10 +97,27 @@ export default async function PostPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const post = getPostBySlug(locale as "es" | "en", slug);
-  if (!post) notFound();
-
   const typedLocale = locale as "es" | "en";
+  const post = getPostBySlug(typedLocale, slug);
+
+  if (!post) {
+    const cross = findPostInAnyLocale(slug);
+    if (!cross) notFound();
+
+    const translated = findTranslatedPostInLocale(cross.translationKey, typedLocale);
+    if (translated) {
+      redirect(localePath(typedLocale, `/blog/${translated.slug}`));
+    }
+
+    return (
+      <TranslationMissingPage
+        requestedLocale={typedLocale}
+        availableLocale={cross.locale as "es" | "en"}
+        availableHref={`/blog/${cross.slug}`}
+        backHref="/blog"
+      />
+    );
+  }
   const heroImage = post.cover?.src.src
     ? `${SITE_URL}${post.cover.src.src}`
     : buildPostOgUrl({

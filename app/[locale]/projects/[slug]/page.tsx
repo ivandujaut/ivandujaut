@@ -1,10 +1,17 @@
 import { ViewTransition } from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
-import { getProjectBySlug, getProjects, getProjectTranslations } from "@/lib/content";
+import {
+  findProjectInAnyLocale,
+  findTranslatedProjectInLocale,
+  getProjectBySlug,
+  getProjects,
+  getProjectTranslations,
+} from "@/lib/content";
+import { TranslationMissingPage } from "@/components/common/translation-missing-page";
 import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/jsonld";
@@ -85,10 +92,27 @@ export default async function ProjectPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const project = getProjectBySlug(locale as "es" | "en", slug);
-  if (!project) notFound();
-
   const typedLocale = locale as "es" | "en";
+  const project = getProjectBySlug(typedLocale, slug);
+
+  if (!project) {
+    const cross = findProjectInAnyLocale(slug);
+    if (!cross) notFound();
+
+    const translated = findTranslatedProjectInLocale(cross.translationKey, typedLocale);
+    if (translated) {
+      redirect(localePath(typedLocale, `/projects/${translated.slug}`));
+    }
+
+    return (
+      <TranslationMissingPage
+        requestedLocale={typedLocale}
+        availableLocale={cross.locale as "es" | "en"}
+        availableHref={`/projects/${cross.slug}`}
+        backHref="/projects"
+      />
+    );
+  }
 
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
