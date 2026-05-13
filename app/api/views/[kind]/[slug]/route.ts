@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
-import { isViewKind, viewsTag } from "@/lib/views";
+import { isValidSlug, isViewKind, viewsTag } from "@/lib/views";
 import { check, viewsRatelimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -17,7 +17,7 @@ const SEEN_TTL_SECONDS = 60 * 60 * 24;
 export async function POST(request: Request, context: RouteContext) {
   const { kind, slug } = await context.params;
 
-  if (!isViewKind(kind)) {
+  if (!isViewKind(kind) || !isValidSlug(slug)) {
     return NextResponse.json({ views: 0 }, { status: 404 });
   }
 

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
 import { check, likesRatelimit } from "@/lib/ratelimit";
+import { isValidSlug } from "@/lib/views";
 
 async function enforceRatelimit(ipHash: string) {
   const rl = await check(likesRatelimit, ipHash);
@@ -46,6 +47,7 @@ async function readState(slug: string, ipHash: string): Promise<LikesPayload> {
 
 export async function GET(request: Request, context: RouteContext) {
   const { slug } = await context.params;
+  if (!isValidSlug(slug)) return NextResponse.json(EMPTY, { status: 404 });
   if (!redis) return NextResponse.json(EMPTY);
 
   try {
@@ -59,6 +61,7 @@ export async function GET(request: Request, context: RouteContext) {
 
 export async function POST(request: Request, context: RouteContext) {
   const { slug } = await context.params;
+  if (!isValidSlug(slug)) return NextResponse.json(EMPTY, { status: 404 });
   if (!redis) return NextResponse.json(EMPTY);
 
   try {
@@ -76,6 +79,7 @@ export async function POST(request: Request, context: RouteContext) {
 
 export async function DELETE(request: Request, context: RouteContext) {
   const { slug } = await context.params;
+  if (!isValidSlug(slug)) return NextResponse.json(EMPTY, { status: 404 });
   if (!redis) return NextResponse.json(EMPTY);
 
   try {

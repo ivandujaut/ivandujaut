@@ -9,6 +9,12 @@ export function isViewKind(value: string): value is ViewKind {
   return (VIEW_KINDS as string[]).includes(value);
 }
 
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export function isValidSlug(slug: string): boolean {
+  return slug.length > 0 && slug.length <= 100 && SLUG_PATTERN.test(slug);
+}
+
 export function viewsTag(kind: ViewKind, slug: string): string {
   return `views:${kind}:${slug}`;
 }
