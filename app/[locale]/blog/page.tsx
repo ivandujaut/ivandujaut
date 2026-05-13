@@ -65,7 +65,7 @@ export default async function BlogPage({ params }: Props) {
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24">
+    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <BlogHeader />
 
       <div className="mt-16 space-y-12">

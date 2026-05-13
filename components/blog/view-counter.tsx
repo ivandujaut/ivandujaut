@@ -47,7 +47,7 @@ export function ViewCounter({ kind, slug, initialViews, trackView = true }: View
   }, [kind, slug, trackView]);
 
   return (
-    <span className="font-mono text-xs text-muted-foreground">
+    <span aria-live="polite" className="font-mono text-xs text-muted-foreground">
       {views.toLocaleString()} {views === 1 ? t("singular") : t("plural")}
     </span>
   );

@@ -87,7 +87,7 @@ export function LanguageSuggestionBanner() {
   }
 
   return (
-    <div className="border-b border-border bg-muted/40">
+    <div role="region" aria-label={t.text} className="border-b border-border bg-muted/40">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2.5 text-sm">
         <p className="text-muted-foreground">{t.text}</p>
         <div className="flex items-center gap-2">
@@ -95,7 +95,7 @@ export function LanguageSuggestionBanner() {
             {t.accept}
           </Button>
           <Button size="sm" variant="ghost" onClick={handleDismiss} aria-label={t.dismiss}>
-            <HugeiconsIcon icon={Cancel01Icon} size={16} strokeWidth={1.5} />
+            <HugeiconsIcon icon={Cancel01Icon} size={16} strokeWidth={1.5} aria-hidden />
           </Button>
         </div>
       </div>

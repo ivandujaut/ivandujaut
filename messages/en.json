@@ -6,7 +6,11 @@
       "projects": "Projects",
       "about": "About",
       "openMenu": "Open menu",
-      "closeMenu": "Close menu"
+      "closeMenu": "Close menu",
+      "skipToContent": "Skip to content"
+    },
+    "a11y": {
+      "opensInNewTab": "opens in a new tab"
     },
     "language": {
       "label": "Language",

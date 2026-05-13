@@ -42,7 +42,7 @@ export default async function ProjectsPage({ params }: Props) {
   const others = allProjects.filter((p) => !p.featured);
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24">
+    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <ProjectsHeader />
 
       <div className="mt-16 space-y-12">

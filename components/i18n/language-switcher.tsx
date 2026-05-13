@@ -45,13 +45,17 @@ export function LanguageSwitcher() {
         <DropdownMenuItem onClick={() => handleSelect("es")}>
           <span>{t("spanish")}</span>
           {currentLocale === "es" && (
-            <span className="ml-auto text-xs text-muted-foreground">✓</span>
+            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+              ✓
+            </span>
           )}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleSelect("en")}>
           <span>{t("english")}</span>
           {currentLocale === "en" && (
-            <span className="ml-auto text-xs text-muted-foreground">✓</span>
+            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+              ✓
+            </span>
           )}
         </DropdownMenuItem>
       </DropdownMenuContent>

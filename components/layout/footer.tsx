@@ -18,7 +18,9 @@ const socialLinks = [
 
 export function Footer() {
   const t = useTranslations("common.footer");
+  const tA11y = useTranslations("common.a11y");
   const currentYear = new Date().getFullYear();
+  const newTabLabel = tA11y("opensInNewTab");
 
   return (
     <footer className="mt-24 border-t border-border/40">
@@ -31,6 +33,7 @@ export function Footer() {
                 href="https://www.linkedin.com/in/ivan-dujaut/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Iván Dujaut — LinkedIn (${newTabLabel})`}
                 className="underline-offset-2 transition-colors hover:text-foreground hover:underline"
               >
                 {chunks}
@@ -46,7 +49,7 @@ export function Footer() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={link.label}
+              aria-label={`${link.label} (${newTabLabel})`}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <HugeiconsIcon icon={link.icon} size={16} strokeWidth={1.5} />
