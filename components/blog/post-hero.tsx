@@ -2,20 +2,18 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { buildPostOgUrl, formatOgDate } from "@/lib/og";
 
 interface PostHeroProps {
   title: string;
-  date: string;
-  description?: string;
-  readingTime?: number;
-  tags?: string[];
-  locale: "es" | "en";
   cover?: {
     src: string;
     alt: string;
     width: number;
     height: number;
+  };
+  heroUrls?: {
+    light: string;
+    dark: string;
   };
 }
 
@@ -23,25 +21,13 @@ interface PostHeroProps {
  * Hero image para un post del blog.
  *
  * Si el post tiene `cover` en su frontmatter, usa esa imagen directamente.
- * Si no, genera una dinámicamente usando el endpoint /api/og.
- *
- * En el caso generado, detecta el theme del usuario (light/dark) y pide
- * la imagen correspondiente. La imagen empieza con el theme light por
- * default (SSR) y next-themes actualiza al theme real una vez hidratado
- * el cliente.
+ * Si no, usa las URLs OG pre-firmadas en el servidor (light/dark) y selecciona
+ * según el theme actual del cliente. La firma se hace server-side para que
+ * OG_SECRET nunca llegue al bundle del browser.
  */
-export function PostHero({
-  title,
-  date,
-  description,
-  readingTime,
-  tags,
-  locale,
-  cover,
-}: PostHeroProps) {
+export function PostHero({ title, cover, heroUrls }: PostHeroProps) {
   const { resolvedTheme } = useTheme();
 
-  // Si el post tiene cover custom, usar esa imagen directamente.
   if (cover) {
     return (
       <div className="my-8 overflow-hidden rounded-lg border border-border">
@@ -56,19 +42,10 @@ export function PostHero({
     );
   }
 
-  // Detectar theme. Si resolvedTheme es undefined (SSR antes de hidratar),
-  // usar "light" por default.
-  const theme: "light" | "dark" = resolvedTheme === "dark" ? "dark" : "light";
+  if (!heroUrls) return null;
 
-  const heroUrl = buildPostOgUrl({
-    title,
-    description,
-    date: formatOgDate(date, locale),
-    readingTime,
-    tags,
-    locale,
-    theme,
-  });
+  const theme: "light" | "dark" = resolvedTheme === "dark" ? "dark" : "light";
+  const heroUrl = heroUrls[theme];
 
   return (
     <div className="my-8 overflow-hidden rounded-lg border border-border">
