@@ -6,10 +6,23 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
+import { SITE_URL, localePath } from "@/lib/seo";
 
 export function generateStaticParams() {
   // Genera las rutas estáticas para cada locale en build time
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  return {
+    alternates: {
+      types: {
+        "application/rss+xml": `${SITE_URL}${localePath(locale, "/rss.xml")}`,
+      },
+    },
+  };
 }
 
 export default async function LocaleLayout({
