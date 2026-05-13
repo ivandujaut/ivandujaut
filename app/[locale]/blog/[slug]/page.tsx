@@ -169,13 +169,10 @@ export default async function PostPage({ params }: Props) {
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-8">
-          <div className="flex items-start justify-between gap-4">
-            <ViewTransition name={`post-title-${slug}`} share="morph">
-              <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
-            </ViewTransition>
-            <ShareLinkButton url={`${SITE_URL}${postPath}`} className="mt-2" />
-          </div>
-          <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+          <ViewTransition name={`post-title-${slug}`} share="morph">
+            <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
+          </ViewTransition>
+          <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-3 text-sm text-muted-foreground">
             <ViewTransition name={`post-date-${slug}`} share="morph">
               <time dateTime={post.date}>
                 {new Date(post.date).toLocaleDateString(locale, {
@@ -193,6 +190,7 @@ export default async function PostPage({ params }: Props) {
             )}
             <span aria-hidden>·</span>
             <ViewCounter kind="blog" slug={slug} initialViews={initialViews} />
+            <ShareLinkButton url={`${SITE_URL}${postPath}`} className="ml-auto" />
           </div>
         </header>
 
@@ -219,8 +217,9 @@ export default async function PostPage({ params }: Props) {
           <MDXContent code={post.content} />
         </div>
 
-        <footer className="mt-16 border-t border-border pt-8">
+        <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
           <LikeButton slug={slug} />
+          <ShareLinkButton url={`${SITE_URL}${postPath}`} alwaysShowLabel />
         </footer>
 
         <RelatedPosts

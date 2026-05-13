@@ -146,12 +146,9 @@ export default async function ProjectPage({ params }: Props) {
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
           <StatusBadge status={project.status} className="mb-3" />
-          <div className="flex items-start justify-between gap-4">
-            <ViewTransition name={`project-title-${project.slug}`} share="morph">
-              <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
-            </ViewTransition>
-            <ShareLinkButton url={`${SITE_URL}${projectPath}`} className="mt-2" />
-          </div>
+          <ViewTransition name={`project-title-${project.slug}`} share="morph">
+            <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
+          </ViewTransition>
           <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
@@ -162,6 +159,7 @@ export default async function ProjectPage({ params }: Props) {
             <span>{project.role}</span>
             <span aria-hidden>·</span>
             <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
+            <ShareLinkButton url={`${SITE_URL}${projectPath}`} className="ml-auto" />
           </div>
 
           {(project.repo || project.demo) && (
@@ -220,6 +218,10 @@ export default async function ProjectPage({ params }: Props) {
         <div className="prose-content">
           <MDXContent code={project.content} />
         </div>
+
+        <footer className="mt-16 flex border-t border-border pt-8">
+          <ShareLinkButton url={`${SITE_URL}${projectPath}`} alwaysShowLabel />
+        </footer>
       </article>
     </main>
   );
