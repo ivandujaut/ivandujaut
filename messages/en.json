@@ -60,9 +60,9 @@
     "description": "Thoughts on development, learning and life.",
     "like": {
       "like": "Like",
+      "unlike": "Remove like",
       "likeCount": "like",
-      "likesCount": "likes",
-      "maxReached": "Thanks for the love!"
+      "likesCount": "likes"
     },
     "views": {
       "singular": "view",

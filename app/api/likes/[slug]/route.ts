@@ -5,83 +5,72 @@ import { hashIp, getIpFromRequest } from "@/lib/hash";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const MAX_CLAPS_PER_USER = 10;
-
 interface RouteContext {
   params: Promise<{ slug: string }>;
 }
 
+interface LikesPayload {
+  likes: number;
+  liked: boolean;
+}
+
+const EMPTY: LikesPayload = { likes: 0, liked: false };
+
+async function readState(slug: string, ipHash: string): Promise<LikesPayload> {
+  if (!redis) return EMPTY;
+
+  const baselineKey = keyFor("likes", "total", slug);
+  const setKey = keyFor("likes", "set", slug);
+
+  const [baseline, members, liked] = await Promise.all([
+    redis.get<number>(baselineKey),
+    redis.scard(setKey),
+    redis.sismember(setKey, ipHash),
+  ]);
+
+  return {
+    likes: (baseline ?? 0) + (members ?? 0),
+    liked: liked === 1,
+  };
+}
+
 export async function GET(request: Request, context: RouteContext) {
   const { slug } = await context.params;
-
-  if (!redis) {
-    return NextResponse.json({ likes: 0, userClaps: 0, maxClaps: MAX_CLAPS_PER_USER });
-  }
+  if (!redis) return NextResponse.json(EMPTY);
 
   try {
-    const ip = getIpFromRequest(request);
-    const ipHash = hashIp(ip);
-
-    const [totalLikes, userClaps] = await Promise.all([
-      redis.get<number>(keyFor("likes", "total", slug)),
-      redis.get<number>(keyFor("likes", "user", slug, ipHash)),
-    ]);
-
-    return NextResponse.json({
-      likes: totalLikes ?? 0,
-      userClaps: userClaps ?? 0,
-      maxClaps: MAX_CLAPS_PER_USER,
-    });
+    const ipHash = hashIp(getIpFromRequest(request));
+    return NextResponse.json(await readState(slug, ipHash));
   } catch (error) {
     console.error("Failed to get likes:", error);
-    return NextResponse.json({
-      likes: 0,
-      userClaps: 0,
-      maxClaps: MAX_CLAPS_PER_USER,
-    });
+    return NextResponse.json(EMPTY);
   }
 }
 
 export async function POST(request: Request, context: RouteContext) {
   const { slug } = await context.params;
-
-  if (!redis) {
-    return NextResponse.json({ likes: 0, userClaps: 0, maxClaps: MAX_CLAPS_PER_USER });
-  }
+  if (!redis) return NextResponse.json(EMPTY);
 
   try {
-    const ip = getIpFromRequest(request);
-    const ipHash = hashIp(ip);
-    const userKey = keyFor("likes", "user", slug, ipHash);
-    const totalKey = keyFor("likes", "total", slug);
-
-    const currentUserClaps = (await redis.get<number>(userKey)) ?? 0;
-
-    if (currentUserClaps >= MAX_CLAPS_PER_USER) {
-      const totalLikes = (await redis.get<number>(totalKey)) ?? 0;
-      return NextResponse.json({
-        likes: totalLikes,
-        userClaps: currentUserClaps,
-        maxClaps: MAX_CLAPS_PER_USER,
-      });
-    }
-
-    const [newUserClaps, newTotalLikes] = await Promise.all([
-      redis.incr(userKey),
-      redis.incr(totalKey),
-    ]);
-
-    return NextResponse.json({
-      likes: newTotalLikes,
-      userClaps: newUserClaps,
-      maxClaps: MAX_CLAPS_PER_USER,
-    });
+    const ipHash = hashIp(getIpFromRequest(request));
+    await redis.sadd(keyFor("likes", "set", slug), ipHash);
+    return NextResponse.json(await readState(slug, ipHash));
   } catch (error) {
-    console.error("Failed to increment likes:", error);
-    return NextResponse.json({
-      likes: 0,
-      userClaps: 0,
-      maxClaps: MAX_CLAPS_PER_USER,
-    });
+    console.error("Failed to add like:", error);
+    return NextResponse.json(EMPTY);
+  }
+}
+
+export async function DELETE(request: Request, context: RouteContext) {
+  const { slug } = await context.params;
+  if (!redis) return NextResponse.json(EMPTY);
+
+  try {
+    const ipHash = hashIp(getIpFromRequest(request));
+    await redis.srem(keyFor("likes", "set", slug), ipHash);
+    return NextResponse.json(await readState(slug, ipHash));
+  } catch (error) {
+    console.error("Failed to remove like:", error);
+    return NextResponse.json(EMPTY);
   }
 }
