@@ -17,6 +17,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ViewCounter } from "@/components/blog/view-counter";
+import { LikeButton } from "@/components/blog/like-button";
 import { getCachedViews } from "@/lib/views";
 import { StatusBadge } from "@/components/content/status-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
@@ -159,7 +160,11 @@ export default async function ProjectPage({ params }: Props) {
             <span>{project.role}</span>
             <span aria-hidden>·</span>
             <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
-            <ShareLinkButton url={`${SITE_URL}${projectPath}`} className="ml-auto" />
+            <ShareLinkButton
+              url={`${SITE_URL}${projectPath}`}
+              title={project.title}
+              className="ml-auto"
+            />
           </div>
 
           {(project.repo || project.demo) && (
@@ -219,8 +224,13 @@ export default async function ProjectPage({ params }: Props) {
           <MDXContent code={project.content} />
         </div>
 
-        <footer className="mt-16 flex border-t border-border pt-8">
-          <ShareLinkButton url={`${SITE_URL}${projectPath}`} alwaysShowLabel />
+        <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
+          <LikeButton kind="projects" slug={slug} />
+          <ShareLinkButton
+            url={`${SITE_URL}${projectPath}`}
+            title={project.title}
+            alwaysShowLabel
+          />
         </footer>
       </article>
     </main>

@@ -206,7 +206,11 @@ export default async function PostPage({ params }: Props) {
             )}
             <span aria-hidden>·</span>
             <ViewCounter kind="blog" slug={slug} initialViews={initialViews} />
-            <ShareLinkButton url={`${SITE_URL}${postPath}`} className="ml-auto" />
+            <ShareLinkButton
+              url={`${SITE_URL}${postPath}`}
+              title={post.title}
+              className="ml-auto"
+            />
           </div>
         </header>
 
@@ -230,8 +234,8 @@ export default async function PostPage({ params }: Props) {
         </div>
 
         <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
-          <LikeButton slug={slug} />
-          <ShareLinkButton url={`${SITE_URL}${postPath}`} alwaysShowLabel />
+          <LikeButton kind="blog" slug={slug} />
+          <ShareLinkButton url={`${SITE_URL}${postPath}`} title={post.title} alwaysShowLabel />
         </footer>
 
         <RelatedPosts

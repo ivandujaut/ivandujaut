@@ -14,7 +14,13 @@
     },
     "share": {
       "label": "Compartir",
-      "copied": "¡Copiado!"
+      "copied": "¡Copiado!",
+      "menuLabel": "Opciones para compartir",
+      "copyLink": "Copiar enlace",
+      "shareOnX": "Compartir en X",
+      "shareOnLinkedIn": "Compartir en LinkedIn",
+      "shareByEmail": "Compartir por email",
+      "emailSubject": "Mirá esto"
     },
     "notFound": {
       "generic": {
