@@ -1,6 +1,6 @@
 import { ViewTransition } from "react";
-import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { StatusBadge, type ProjectStatus } from "@/components/content/status-badge";
 
 interface ProjectListItemProps {
   slug: string;
@@ -8,7 +8,7 @@ interface ProjectListItemProps {
   tagline: string;
   year: number;
   stack: string[];
-  status: "shipped" | "in-progress" | "archived" | "concept";
+  status: ProjectStatus;
 }
 
 export function ProjectListItem({
@@ -19,14 +19,13 @@ export function ProjectListItem({
   stack,
   status,
 }: ProjectListItemProps) {
-  const t = useTranslations("projects.status");
-
   return (
     <Link
       href={`/projects/${slug}`}
       className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
     >
       <article>
+        <StatusBadge status={status} className="mb-2" />
         <div className="flex items-baseline justify-between gap-4">
           <ViewTransition name={`project-title-${slug}`} share="morph">
             <h3 className="text-base font-medium">{title}</h3>
@@ -37,8 +36,6 @@ export function ProjectListItem({
         </div>
         <p className="mt-1 text-sm text-muted-foreground">{tagline}</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          <span className="font-mono">{t(status)}</span>
-          <span aria-hidden>·</span>
           <span className="font-mono">{stack.slice(0, 3).join(" · ")}</span>
           {stack.length > 3 && <span className="font-mono">+{stack.length - 3}</span>}
         </div>
