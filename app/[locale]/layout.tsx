@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { LanguageSuggestionBanner } from "@/components/i18n/language-suggestion-banner";
 import { Navbar } from "@/components/layout/navbar";
+import { SkipToContent } from "@/components/layout/skip-to-content";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -31,6 +32,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider>
+      <SkipToContent />
       <LanguageSuggestionBanner />
       <Navbar />
       <div className="min-h-screen">{children}</div>

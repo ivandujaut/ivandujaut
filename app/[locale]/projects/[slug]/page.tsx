@@ -97,6 +97,8 @@ export default async function ProjectPage({ params }: Props) {
   const status = statusLabels[project.status]?.[typedLocale] ?? project.status;
 
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
+  const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
+  const newTabLabel = tA11y("opensInNewTab");
   const homePath = localePath(typedLocale, "/");
   const projectsIndexPath = localePath(typedLocale, "/projects");
   const projectPath = localePath(typedLocale, `/projects/${project.slug}`);
@@ -116,77 +118,86 @@ export default async function ProjectPage({ params }: Props) {
   const initialViews = await getCachedViews("projects", slug);
 
   return (
-    <article className="mx-auto max-w-2xl px-6 py-24">
-      <JsonLd data={jsonLd} />
-      <Breadcrumbs items={breadcrumbItems} className="mb-6" />
-      <header className="mb-12">
-        <ViewTransition name={`project-title-${project.slug}`} share="morph">
-          <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
-        </ViewTransition>
-        <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
-
-        <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
-          <ViewTransition name={`project-year-${project.slug}`} share="morph">
-            <span>{project.year}</span>
+    <main id="main">
+      <article className="mx-auto max-w-2xl px-6 py-24">
+        <JsonLd data={jsonLd} />
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
+        <header className="mb-12">
+          <ViewTransition name={`project-title-${project.slug}`} share="morph">
+            <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
           </ViewTransition>
-          <span aria-hidden>·</span>
-          <span>{project.role}</span>
-          <span aria-hidden>·</span>
-          <span>{status}</span>
-          <span aria-hidden>·</span>
-          <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
-        </div>
+          <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
 
-        {(project.repo || project.demo) && (
-          <div className="mt-6 flex flex-wrap gap-3">
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
-              >
-                <span>{locale === "es" ? "Ver demo" : "Live demo"}</span>
-                <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} strokeWidth={1.5} />
-              </a>
-            )}
-            {project.repo && (
-              <a
-                href={project.repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
-              >
-                <HugeiconsIcon icon={GithubIcon} size={14} strokeWidth={1.5} />
-                <span>{locale === "es" ? "Repositorio" : "Repository"}</span>
-              </a>
-            )}
+          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
+            <ViewTransition name={`project-year-${project.slug}`} share="morph">
+              <span>{project.year}</span>
+            </ViewTransition>
+            <span aria-hidden>·</span>
+            <span>{project.role}</span>
+            <span aria-hidden>·</span>
+            <span>{status}</span>
+            <span aria-hidden>·</span>
+            <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
           </div>
-        )}
 
-        <div className="mt-8">
-          <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            Stack
-          </h2>
-          <ul className="flex flex-wrap gap-2">
-            {project.stack.map((tech) => (
-              <li
-                key={tech}
-                className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
-              >
-                {tech}
-              </li>
-            ))}
-          </ul>
+          {(project.repo || project.demo) && (
+            <div className="mt-6 flex flex-wrap gap-3">
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${locale === "es" ? "Ver demo" : "Live demo"} (${newTabLabel})`}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+                >
+                  <span>{locale === "es" ? "Ver demo" : "Live demo"}</span>
+                  <HugeiconsIcon
+                    icon={ArrowUpRight01Icon}
+                    size={14}
+                    strokeWidth={1.5}
+                    aria-hidden
+                  />
+                </a>
+              )}
+              {project.repo && (
+                <a
+                  href={project.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${locale === "es" ? "Repositorio" : "Repository"} (${newTabLabel})`}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+                >
+                  <HugeiconsIcon icon={GithubIcon} size={14} strokeWidth={1.5} aria-hidden />
+                  <span>{locale === "es" ? "Repositorio" : "Repository"}</span>
+                </a>
+              )}
+            </div>
+          )}
+
+          <div className="mt-8">
+            <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              Stack
+            </h2>
+            <ul className="flex flex-wrap gap-2">
+              {project.stack.map((tech) => (
+                <li
+                  key={tech}
+                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
+                >
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </header>
+
+        <hr className="mb-12 border-border" />
+
+        <div className="prose-content">
+          <MDXContent code={project.content} />
         </div>
-      </header>
-
-      <hr className="mb-12 border-border" />
-
-      <div className="prose-content">
-        <MDXContent code={project.content} />
-      </div>
-    </article>
+      </article>
+    </main>
   );
 }
 

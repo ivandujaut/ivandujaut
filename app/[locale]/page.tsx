@@ -64,7 +64,7 @@ export default async function Home({ params }: Props) {
   const stats = await getAllStats(locale as "es" | "en");
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24">
+    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <JsonLd data={personSchema(locale as "es" | "en")} />
       <Hero />
 

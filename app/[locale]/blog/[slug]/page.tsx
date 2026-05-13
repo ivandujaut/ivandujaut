@@ -138,71 +138,73 @@ export default async function PostPage({ params }: Props) {
   const initialViews = await getCachedViews("blog", slug);
 
   return (
-    <article className="mx-auto max-w-2xl px-6 py-24">
-      <JsonLd data={jsonLd} />
-      <Breadcrumbs items={breadcrumbItems} className="mb-6" />
-      <header className="mb-8">
-        <ViewTransition name={`post-title-${slug}`} share="morph">
-          <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
-        </ViewTransition>
-        <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-          <ViewTransition name={`post-date-${slug}`} share="morph">
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString(locale, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+    <main id="main">
+      <article className="mx-auto max-w-2xl px-6 py-24">
+        <JsonLd data={jsonLd} />
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
+        <header className="mb-8">
+          <ViewTransition name={`post-title-${slug}`} share="morph">
+            <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
           </ViewTransition>
-          {post.metadata && (
-            <>
-              <span aria-hidden>·</span>
-              <span>{post.metadata.readingTime} min read</span>
-            </>
-          )}
-          <span aria-hidden>·</span>
-          <ViewCounter kind="blog" slug={slug} initialViews={initialViews} />
+          <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+            <ViewTransition name={`post-date-${slug}`} share="morph">
+              <time dateTime={post.date}>
+                {new Date(post.date).toLocaleDateString(locale, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </ViewTransition>
+            {post.metadata && (
+              <>
+                <span aria-hidden>·</span>
+                <span>{post.metadata.readingTime} min read</span>
+              </>
+            )}
+            <span aria-hidden>·</span>
+            <ViewCounter kind="blog" slug={slug} initialViews={initialViews} />
+          </div>
+        </header>
+
+        <PostHero
+          title={post.title}
+          date={post.date}
+          description={post.description}
+          readingTime={post.metadata?.readingTime}
+          tags={post.tags}
+          locale={locale as "es" | "en"}
+          cover={
+            post.cover
+              ? {
+                  src: post.cover.src.src,
+                  alt: post.cover.alt,
+                  width: post.cover.src.width,
+                  height: post.cover.src.height,
+                }
+              : undefined
+          }
+        />
+
+        <div className="prose-content">
+          <MDXContent code={post.content} />
         </div>
-      </header>
 
-      <PostHero
-        title={post.title}
-        date={post.date}
-        description={post.description}
-        readingTime={post.metadata?.readingTime}
-        tags={post.tags}
-        locale={locale as "es" | "en"}
-        cover={
-          post.cover
-            ? {
-                src: post.cover.src.src,
-                alt: post.cover.alt,
-                width: post.cover.src.width,
-                height: post.cover.src.height,
-              }
-            : undefined
-        }
-      />
+        <footer className="mt-16 border-t border-border pt-8">
+          <LikeButton slug={slug} />
+        </footer>
 
-      <div className="prose-content">
-        <MDXContent code={post.content} />
-      </div>
-
-      <footer className="mt-16 border-t border-border pt-8">
-        <LikeButton slug={slug} />
-      </footer>
-
-      <RelatedPosts
-        posts={related.map((p) => ({
-          slug: p.slug,
-          title: p.title,
-          description: p.description,
-          date: p.date,
-        }))}
-        locale={typedLocale}
-      />
-    </article>
+        <RelatedPosts
+          posts={related.map((p) => ({
+            slug: p.slug,
+            title: p.title,
+            description: p.description,
+            date: p.date,
+          }))}
+          locale={typedLocale}
+        />
+      </article>
+    </main>
   );
 }
 

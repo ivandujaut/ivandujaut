@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { NavLink } from "@/components/layout/nav-link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -28,13 +29,14 @@ export function Navbar() {
         {/* Links desktop */}
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
-            <Link
+            <NavLink
               key={link.href}
               href={link.href}
               className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              activeClassName="text-foreground"
             >
               {t(link.labelKey)}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 
