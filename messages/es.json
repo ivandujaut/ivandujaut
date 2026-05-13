@@ -16,6 +16,37 @@
       "label": "Compartir",
       "copied": "¡Copiado!"
     },
+    "notFound": {
+      "generic": {
+        "title": "Página no encontrada",
+        "description": "La URL que buscás no existe o se movió. ¿Adónde querés ir?"
+      },
+      "post": {
+        "title": "Post no encontrado",
+        "description": "Ese post no existe o cambió de URL. Probá explorar el blog."
+      },
+      "project": {
+        "title": "Proyecto no encontrado",
+        "description": "Ese proyecto no existe o cambió de URL. Mirá el listado completo."
+      },
+      "actions": {
+        "home": "Volver al inicio",
+        "blog": "Ver el blog",
+        "projects": "Ver proyectos"
+      }
+    },
+    "translationMissing": {
+      "title": "Esta versión no está disponible",
+      "description": "Este contenido todavía no está traducido al {locale}. Sí está disponible en {other}.",
+      "actions": {
+        "readInOther": "Leer en {other}",
+        "backToList": "Volver al listado"
+      },
+      "languages": {
+        "es": "español",
+        "en": "inglés"
+      }
+    },
     "language": {
       "label": "Idioma",
       "spanish": "Español",
