@@ -24,7 +24,19 @@ export function Footer() {
     <footer className="mt-24 border-t border-border/40">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-8 md:flex-row md:items-center md:justify-between">
         <p className="text-xs text-muted-foreground">
-          © {currentYear} Iván Dujaut. {t("rights")}.
+          © {currentYear} <span aria-hidden>·</span>{" "}
+          {t.rich("madeBy", {
+            author: (chunks) => (
+              <a
+                href="https://www.linkedin.com/in/ivan-dujaut/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-2 transition-colors hover:text-foreground hover:underline"
+              >
+                {chunks}
+              </a>
+            ),
+          })}
         </p>
 
         <div className="flex items-center gap-3">
