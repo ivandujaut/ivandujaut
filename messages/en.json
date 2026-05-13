@@ -83,7 +83,7 @@
       "role": "Product Engineer",
       "location": "Argentina",
       "available": "Available",
-      "tagline": "Building products at the intersection of engineering, product and business.",
+      "tagline": "I build product end-to-end: code, roadmap decisions, and metrics that matter.",
       "credentials": "Bioengineer at ITBA · Techstars W24 alumni"
     },
     "currently": {
@@ -91,7 +91,7 @@
       "paragraph1": "As a Product Engineer at Prizmstack, I'm building FIJI: a valuation platform for real estate businesses. I work on the migration from no-code to Next.js and build the value simulation engine.",
       "stack": "Current stack: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "In parallel, I teach Digital Techniques at IPSAJ (Instituto Politécnico San Arnoldo Janssen) to Electronics students. Combining production code with teaching pushes me to think about how people learn to build software.",
-      "paragraph3": "Looking for opportunities in LATAM (remote preferred) in healthtech, fintech or startups with interesting products."
+      "paragraph3": "Open to new opportunities in LATAM (remote preferred), ideally in healthtech, fintech, or startups with interesting products. For broader conversations too: email me or book a call."
     },
     "sections": {
       "featuredWork": "Featured projects",
@@ -140,16 +140,20 @@
     "title": "About me",
     "intro": {
       "greeting": "Hi, I'm Iván",
-      "paragraph1": "I'm a Product Engineer based in Argentina. I work at the intersection of engineering, product and business: building tools people use, defining priorities based on impact, and translating strategic ambiguity into executable plans.",
-      "paragraph2": "I'm a bioengineer from ITBA, a detail that shapes how I approach problems: with quantitative rigor, metrics-focused thinking, and a systems mindset. I started as a frontend developer 4 years ago and grew into roles where product and business matter as much as code.",
-      "paragraph3": "My mid-term goal is to lead product teams where technical and strategic decisions are made together. To get there, I'm still building today: learning how to design actionable metrics, how to prioritize with criteria, and how to execute with speed without losing quality."
+      "paragraph1": "Product Engineer with 4 years building product in Next.js + TypeScript. Based in Argentina, working remotely with teams in the US and LATAM. My role sits between code, product decisions and business metrics. I don't just ship features; I decide which ones are worth shipping.",
+      "paragraph2": "My background is atypical: I'm a bioengineer from ITBA, with a thesis on cancer mortality prediction using data from Hospital Italiano de Buenos Aires. That training left me with a quantitative instinct I now apply to modeling features, measuring impact, and prioritizing. I went from frontend to Product Engineer in 4 years: Techstars W24 with a founding team in New York, tech lead on B2B/B2C projects with 1,500+ active users, and now product decisions on roadmap and priorities.",
+      "paragraph3": "I'm open to new opportunities, especially with teams where product, engineering, and business get discussed at the same table: healthtech, fintech, or growing startups. But if it's something else, like a product you're thinking about, a possible collaboration, or just getting to know each other, book a call and we'll talk. If it's about a specific role, you can also email me or grab my CV.",
+      "ctas": {
+        "email": "Email me",
+        "calendly": "Book a call",
+        "cv": "Download CV (PDF)"
+      }
     },
     "sections": {
       "experience": "Experience",
       "education": "Education",
       "tools": "Toolbox",
       "languages": "Languages",
-      "lookingFor": "What I'm looking for",
       "contact": "Contact"
     },
     "tools": {
@@ -185,18 +189,11 @@
       "spanish": "Spanish",
       "spanishLevel": "Native",
       "english": "English",
-      "englishDescription": "I've worked with US-based teams since 2023 (Tumo at Techstars W24 NY, currently Prizmstack in California). My English is functional for technical work, written communication and async collaboration. I continue actively improving conversational fluency."
-    },
-    "lookingFor": {
-      "intro": "Opportunities in LATAM (remote preferred, open to hybrid) at companies with interesting products. I'm especially motivated by:",
-      "item1": "Healthtech and fintech: industries where technical complexity intersects with real impact on people's lives.",
-      "item2": "Growing startups: places where product, engineering and business are discussed at the same table.",
-      "item3": "Established companies with strong product culture: where process rigor doesn't kill iteration speed.",
-      "outro": "I'm open to other niches if the team and the problem are interesting."
+      "englishDescription": "I've worked with teams in New York and California since 2023 (Tumo at Techstars W24, Prizmstack currently). Communication is primarily written and async."
     },
     "contact": {
-      "intro": "The best way to reach me is via <email>email</email>.",
-      "alsoFind": "You can also find me on"
+      "intro": "If you made it this far and want to talk, reach me via <email>email</email>. I reply within 24h.",
+      "alsoFind": "Also on"
     }
   }
 }
