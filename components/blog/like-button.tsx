@@ -11,26 +11,23 @@ interface LikeButtonProps {
 
 interface LikesData {
   likes: number;
-  userClaps: number;
-  maxClaps: number;
+  liked: boolean;
 }
 
 export function LikeButton({ slug }: LikeButtonProps) {
   const [data, setData] = useState<LikesData | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const t = useTranslations("blog.like");
 
-  // Fetch inicial
   useEffect(() => {
     let cancelled = false;
 
     async function fetchLikes() {
       try {
         const res = await fetch(`/api/likes/${slug}`);
-        const json = await res.json();
-        if (!cancelled) {
-          setData(json);
-        }
+        const json = (await res.json()) as LikesData;
+        if (!cancelled) setData(json);
       } catch (error) {
         console.error("Failed to fetch likes:", error);
       }
@@ -42,30 +39,33 @@ export function LikeButton({ slug }: LikeButtonProps) {
     };
   }, [slug]);
 
-  const isMaxed = data ? data.userClaps >= data.maxClaps : false;
-
   async function handleClick() {
-    if (!data || isMaxed) return;
+    if (!data || isPending) return;
 
-    // Animación
-    setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 300);
+    const nextLiked = !data.liked;
+    const method = nextLiked ? "POST" : "DELETE";
 
-    // Optimistic update
+    if (nextLiked) {
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 300);
+    }
+
     const previous = data;
     setData({
-      ...data,
-      likes: data.likes + 1,
-      userClaps: data.userClaps + 1,
+      likes: data.likes + (nextLiked ? 1 : -1),
+      liked: nextLiked,
     });
+    setIsPending(true);
 
     try {
-      const res = await fetch(`/api/likes/${slug}`, { method: "POST" });
-      const json = await res.json();
+      const res = await fetch(`/api/likes/${slug}`, { method });
+      const json = (await res.json()) as LikesData;
       setData(json);
     } catch (error) {
-      console.error("Failed to increment likes:", error);
+      console.error("Failed to toggle like:", error);
       setData(previous);
+    } finally {
+      setIsPending(false);
     }
   }
 
@@ -78,15 +78,14 @@ export function LikeButton({ slug }: LikeButtonProps) {
     );
   }
 
-  const hasLiked = data.userClaps > 0;
-
   return (
     <div className="flex items-center gap-3">
       <button
         type="button"
         onClick={handleClick}
-        disabled={isMaxed}
-        aria-label={isMaxed ? t("maxReached") : t("like")}
+        disabled={isPending}
+        aria-pressed={data.liked}
+        aria-label={data.liked ? t("unlike") : t("like")}
         className={`
           group relative inline-flex h-12 w-12 items-center justify-center
           rounded-full border border-border
@@ -104,26 +103,17 @@ export function LikeButton({ slug }: LikeButtonProps) {
           className={`
             transition-all duration-200
             ${
-              hasLiked
+              data.liked
                 ? "fill-rose-500 text-rose-500"
                 : "text-muted-foreground group-hover:text-rose-500"
             }
           `}
         />
-        {/* Badge con cantidad de claps del usuario */}
-        {data.userClaps > 0 && (
-          <span className="absolute -bottom-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 font-mono text-[10px] font-semibold text-white">
-            {data.userClaps}
-          </span>
-        )}
       </button>
 
-      <div className="flex flex-col">
-        <span className="font-mono text-sm text-foreground">
-          {data.likes.toLocaleString()} {data.likes === 1 ? t("likeCount") : t("likesCount")}
-        </span>
-        {isMaxed && <span className="text-xs text-muted-foreground">{t("maxReached")}</span>}
-      </div>
+      <span className="font-mono text-sm text-foreground">
+        {data.likes.toLocaleString()} {data.likes === 1 ? t("likeCount") : t("likesCount")}
+      </span>
     </div>
   );
 }
