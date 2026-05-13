@@ -6,6 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { FavouriteIcon } from "@hugeicons/core-free-icons";
 
 interface LikeButtonProps {
+  kind: "blog" | "projects";
   slug: string;
 }
 
@@ -14,18 +15,19 @@ interface LikesData {
   liked: boolean;
 }
 
-export function LikeButton({ slug }: LikeButtonProps) {
+export function LikeButton({ kind, slug }: LikeButtonProps) {
   const [data, setData] = useState<LikesData | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const t = useTranslations("blog.like");
+  const endpoint = `/api/likes/${kind}/${slug}`;
 
   useEffect(() => {
     let cancelled = false;
 
     async function fetchLikes() {
       try {
-        const res = await fetch(`/api/likes/${slug}`);
+        const res = await fetch(endpoint);
         const json = (await res.json()) as LikesData;
         if (!cancelled) setData(json);
       } catch (error) {
@@ -37,7 +39,7 @@ export function LikeButton({ slug }: LikeButtonProps) {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [endpoint]);
 
   async function handleClick() {
     if (!data || isPending) return;
@@ -58,7 +60,7 @@ export function LikeButton({ slug }: LikeButtonProps) {
     setIsPending(true);
 
     try {
-      const res = await fetch(`/api/likes/${slug}`, { method });
+      const res = await fetch(endpoint, { method });
       const json = (await res.json()) as LikesData;
       setData(json);
     } catch (error) {
@@ -71,15 +73,15 @@ export function LikeButton({ slug }: LikeButtonProps) {
 
   if (!data) {
     return (
-      <div className="flex items-center gap-3">
-        <div className="h-12 w-12 rounded-full border border-border" />
+      <div className="flex items-center gap-2">
+        <div className="h-6 w-6" />
         <span className="font-mono text-sm text-muted-foreground">—</span>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <button
         type="button"
         onClick={handleClick}
@@ -87,10 +89,9 @@ export function LikeButton({ slug }: LikeButtonProps) {
         aria-pressed={data.liked}
         aria-label={data.liked ? t("unlike") : t("like")}
         className={`
-          group relative inline-flex h-12 w-12 items-center justify-center
-          rounded-full border border-border
-          transition-all duration-200
-          hover:border-rose-300 hover:bg-rose-50 dark:hover:border-rose-900 dark:hover:bg-rose-950/30
+          group inline-flex cursor-pointer items-center justify-center
+          rounded-sm
+          transition-transform duration-200
           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
           disabled:cursor-not-allowed disabled:opacity-60
           ${isAnimating ? "scale-125" : "scale-100"}
@@ -101,7 +102,7 @@ export function LikeButton({ slug }: LikeButtonProps) {
           size={20}
           strokeWidth={1.5}
           className={`
-            transition-all duration-200
+            transition-colors duration-200
             ${
               data.liked
                 ? "fill-rose-500 text-rose-500"

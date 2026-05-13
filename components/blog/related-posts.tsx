@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { localePath, type Locale } from "@/lib/seo";
@@ -29,18 +30,22 @@ export async function RelatedPosts({ posts, locale }: RelatedPostsProps) {
           <li key={post.slug}>
             <Link href={localePath(locale, `/blog/${post.slug}`)} className="group block">
               <div className="flex items-baseline justify-between gap-4">
-                <span className="font-medium transition-colors group-hover:text-foreground">
-                  {post.title}
-                </span>
-                <time
-                  dateTime={post.date}
-                  className="shrink-0 font-mono text-xs text-muted-foreground"
-                >
-                  {new Date(post.date).toLocaleDateString(locale, {
-                    year: "numeric",
-                    month: "short",
-                  })}
-                </time>
+                <ViewTransition name={`post-title-${post.slug}`} share="morph">
+                  <span className="font-medium transition-colors group-hover:text-foreground">
+                    {post.title}
+                  </span>
+                </ViewTransition>
+                <ViewTransition name={`post-date-${post.slug}`} share="morph">
+                  <time
+                    dateTime={post.date}
+                    className="shrink-0 font-mono text-xs text-muted-foreground"
+                  >
+                    {new Date(post.date).toLocaleDateString(locale, {
+                      year: "numeric",
+                      month: "short",
+                    })}
+                  </time>
+                </ViewTransition>
               </div>
               <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{post.description}</p>
             </Link>
