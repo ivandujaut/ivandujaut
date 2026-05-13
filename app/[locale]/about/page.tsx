@@ -127,7 +127,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               logoAlt="IPSAJ"
               dateRange={locale === "es" ? "Oct 2024 – Presente" : "Oct 2024 – Present"}
               title={locale === "es" ? "Profesor" : "Teacher"}
-              company="IPSAJ"
+              company="Instituto Politécnico San Arnoldo Janssen"
               location={locale === "es" ? "Posadas, Misiones" : "Posadas, Argentina"}
               parallel={locale === "es" ? "en paralelo" : "in parallel"}
             >
@@ -318,7 +318,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <EducationItem
               logoSrc="/logos/itba.jpeg"
               logoAlt="ITBA"
-              institution="ITBA"
+              institution="Instituto Tecnológico de Buenos Aires (ITBA)"
               degree={locale === "es" ? "Bioingeniería" : "Biomedical Engineering"}
               location={locale === "es" ? "Buenos Aires" : "Buenos Aires"}
             >
@@ -390,9 +390,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <EducationItem
               logoSrc="/logos/ipsaj.jpeg"
               logoAlt="IPSAJ"
-              institution={
-                locale === "es" ? "IPSAJ (Instituto Politécnico San Arnoldo Janssen)" : "IPSAJ"
-              }
+              institution="Instituto Politécnico San Arnoldo Janssen (IPSAJ)"
               degree={locale === "es" ? "Técnico Electrónico" : "Electronics Technician"}
               location={locale === "es" ? "Posadas, Misiones" : "Posadas, Argentina"}
             >
