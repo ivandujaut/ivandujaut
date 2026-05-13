@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/home/hero";
 import { Currently } from "@/components/home/currently";
 import { FeaturedProjects } from "@/components/home/featured-projects";
@@ -62,6 +62,7 @@ export default async function Home({ params }: Props) {
   setRequestLocale(locale);
 
   const stats = await getAllStats(locale as "es" | "en");
+  const tSections = await getTranslations({ locale, namespace: "home.sections" });
 
   return (
     <main id="main" className="mx-auto max-w-2xl px-6 py-24">
@@ -75,7 +76,7 @@ export default async function Home({ params }: Props) {
 
         <section>
           <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {locale === "es" ? "Estadísticas" : "Stats"}
+            {tSections("stats")}
           </h2>
           <StatsGrid stats={stats} locale={locale as "es" | "en"} />
         </section>

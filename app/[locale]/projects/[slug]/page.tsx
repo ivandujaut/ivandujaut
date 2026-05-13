@@ -79,13 +79,6 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-const statusLabels: Record<string, { es: string; en: string }> = {
-  shipped: { es: "Shipped", en: "Shipped" },
-  "in-progress": { es: "En progreso", en: "In progress" },
-  archived: { es: "Archivado", en: "Archived" },
-  concept: { es: "Concepto", en: "Concept" },
-};
-
 export default async function ProjectPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
@@ -94,11 +87,15 @@ export default async function ProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const typedLocale = locale as "es" | "en";
-  const status = statusLabels[project.status]?.[typedLocale] ?? project.status;
 
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
+  const tProjects = await getTranslations({ locale: typedLocale, namespace: "projects" });
   const newTabLabel = tA11y("opensInNewTab");
+  const status = tProjects(`status.${project.status}`);
+  const demoLabel = tProjects("links.demo");
+  const repoLabel = tProjects("links.repo");
+  const stackLabel = tProjects("sections.stack");
   const homePath = localePath(typedLocale, "/");
   const projectsIndexPath = localePath(typedLocale, "/projects");
   const projectPath = localePath(typedLocale, `/projects/${project.slug}`);
@@ -147,10 +144,10 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${locale === "es" ? "Ver demo" : "Live demo"} (${newTabLabel})`}
+                  aria-label={`${demoLabel} (${newTabLabel})`}
                   className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
                 >
-                  <span>{locale === "es" ? "Ver demo" : "Live demo"}</span>
+                  <span>{demoLabel}</span>
                   <HugeiconsIcon
                     icon={ArrowUpRight01Icon}
                     size={14}
@@ -164,11 +161,11 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${locale === "es" ? "Repositorio" : "Repository"} (${newTabLabel})`}
+                  aria-label={`${repoLabel} (${newTabLabel})`}
                   className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
                 >
                   <HugeiconsIcon icon={GithubIcon} size={14} strokeWidth={1.5} aria-hidden />
-                  <span>{locale === "es" ? "Repositorio" : "Repository"}</span>
+                  <span>{repoLabel}</span>
                 </a>
               )}
             </div>
@@ -176,7 +173,7 @@ export default async function ProjectPage({ params }: Props) {
 
           <div className="mt-8">
             <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              Stack
+              {stackLabel}
             </h2>
             <ul className="flex flex-wrap gap-2">
               {project.stack.map((tech) => (

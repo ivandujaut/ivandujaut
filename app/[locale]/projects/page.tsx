@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getProjects, getFeaturedProjects } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
@@ -40,6 +40,7 @@ export default async function ProjectsPage({ params }: Props) {
   const allProjects = getProjects(locale as "es" | "en");
   const featured = getFeaturedProjects(locale as "es" | "en");
   const others = allProjects.filter((p) => !p.featured);
+  const t = await getTranslations({ locale, namespace: "projects.sections" });
 
   return (
     <main id="main" className="mx-auto max-w-2xl px-6 py-24">
@@ -49,7 +50,7 @@ export default async function ProjectsPage({ params }: Props) {
         {featured.length > 0 && (
           <section>
             <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {locale === "es" ? "Destacados" : "Featured"}
+              {t("featured")}
             </h2>
             <div className="space-y-1">
               {featured.map((project) => (
@@ -70,7 +71,7 @@ export default async function ProjectsPage({ params }: Props) {
         {others.length > 0 && (
           <section>
             <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {locale === "es" ? "Más proyectos" : "More projects"}
+              {t("more")}
             </h2>
             <div className="space-y-1">
               {others.map((project) => (

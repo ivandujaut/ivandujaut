@@ -1,4 +1,5 @@
 import { ViewTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 interface ProjectListItemProps {
@@ -10,13 +11,6 @@ interface ProjectListItemProps {
   status: "shipped" | "in-progress" | "archived" | "concept";
 }
 
-const statusLabels: Record<ProjectListItemProps["status"], string> = {
-  shipped: "Shipped",
-  "in-progress": "In progress",
-  archived: "Archived",
-  concept: "Concept",
-};
-
 export function ProjectListItem({
   slug,
   title,
@@ -25,6 +19,8 @@ export function ProjectListItem({
   stack,
   status,
 }: ProjectListItemProps) {
+  const t = useTranslations("projects.status");
+
   return (
     <Link
       href={`/projects/${slug}`}
@@ -41,7 +37,7 @@ export function ProjectListItem({
         </div>
         <p className="mt-1 text-sm text-muted-foreground">{tagline}</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          <span className="font-mono">{statusLabels[status]}</span>
+          <span className="font-mono">{t(status)}</span>
           <span aria-hidden>·</span>
           <span className="font-mono">{stack.slice(0, 3).join(" · ")}</span>
           {stack.length > 3 && <span className="font-mono">+{stack.length - 3}</span>}
