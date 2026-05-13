@@ -2,65 +2,49 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import type { ViewKind } from "@/lib/views";
 
 interface ViewCounterProps {
+  kind: ViewKind;
   slug: string;
+  initialViews: number;
   trackView?: boolean;
 }
 
-export function ViewCounter({ slug, trackView = true }: ViewCounterProps) {
-  const [views, setViews] = useState<number | null>(null);
+export function ViewCounter({ kind, slug, initialViews, trackView = true }: ViewCounterProps) {
+  const [views, setViews] = useState(initialViews);
   const t = useTranslations("blog.views");
 
   useEffect(() => {
+    if (!trackView || typeof window === "undefined") return;
+
+    const sessionKey = `viewed:${kind}:${slug}`;
+    if (sessionStorage.getItem(sessionKey)) return;
+
     let cancelled = false;
 
-    async function fetchAndIncrement() {
-      const sessionKey = `viewed:${slug}`;
-
+    async function track() {
       try {
-        const alreadyTracked =
-          typeof window !== "undefined" ? sessionStorage.getItem(sessionKey) : null;
+        const res = await fetch(`/api/views/${kind}/${slug}`, { method: "POST" });
+        if (!res.ok) return;
 
-        const url = `/api/views/${slug}`;
-        const method = trackView && !alreadyTracked ? "POST" : "GET";
+        const data = (await res.json()) as { views?: unknown };
+        const value = typeof data.views === "number" ? data.views : null;
 
-        const res = await fetch(url, { method });
-
-        if (!res.ok) {
-          throw new Error(`Failed to fetch views: ${res.status}`);
-        }
-
-        const data = await res.json();
-
-        // Defensa: si por alguna razón llega algo raro, fallback a 0
-        const viewsValue = typeof data.views === "number" ? data.views : 0;
-
-        if (!cancelled) {
-          setViews(viewsValue);
-
-          if (trackView && !alreadyTracked && typeof window !== "undefined") {
-            sessionStorage.setItem(sessionKey, "1");
-          }
+        if (!cancelled && value !== null) {
+          setViews(value);
+          sessionStorage.setItem(sessionKey, "1");
         }
       } catch (error) {
-        console.error("ViewCounter error:", error);
-        if (!cancelled) {
-          setViews(0);
-        }
+        console.error("ViewCounter track error:", error);
       }
     }
 
-    fetchAndIncrement();
-
+    track();
     return () => {
       cancelled = true;
     };
-  }, [slug, trackView]);
-
-  if (views === null) {
-    return <span className="font-mono text-xs text-muted-foreground">— {t("plural")}</span>;
-  }
+  }, [kind, slug, trackView]);
 
   return (
     <span className="font-mono text-xs text-muted-foreground">

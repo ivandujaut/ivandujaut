@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/jsonld";
 import { useMDXComponents } from "@/mdx-components";
 import { ViewCounter } from "@/components/blog/view-counter";
+import { getCachedViews } from "@/lib/views";
 import { LikeButton } from "@/components/blog/like-button";
 import { PostHero } from "@/components/blog/post-hero";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -134,6 +135,7 @@ export default async function PostPage({ params }: Props) {
   ];
 
   const related = getRelatedPosts({ locale: typedLocale, slug: post.slug, tags: post.tags }, 3);
+  const initialViews = await getCachedViews("blog", slug);
 
   return (
     <article className="mx-auto max-w-2xl px-6 py-24">
@@ -160,7 +162,7 @@ export default async function PostPage({ params }: Props) {
             </>
           )}
           <span aria-hidden>·</span>
-          <ViewCounter slug={slug} />
+          <ViewCounter kind="blog" slug={slug} initialViews={initialViews} />
         </div>
       </header>
 
