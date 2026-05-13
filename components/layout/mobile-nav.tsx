@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu01Icon } from "@hugeicons/core-free-icons";
-import { Link } from "@/i18n/navigation";
+import { NavLink } from "@/components/layout/nav-link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -38,15 +38,16 @@ export function MobileNav() {
 
         <nav className="mt-6 flex flex-col gap-1 px-4">
           {navLinks.map((link, index) => (
-            <Link
+            <NavLink
               key={link.href}
               href={link.href}
-              onClick={() => setOpen(false)}
+              onSelect={() => setOpen(false)}
               style={{ animationDelay: `${index * 50}ms` }}
+              activeClassName="bg-muted text-foreground"
               className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors animate-in fade-in slide-in-from-right-2 duration-300 fill-mode-both"
             >
               {t(link.labelKey)}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 

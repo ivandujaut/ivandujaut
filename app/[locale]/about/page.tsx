@@ -65,7 +65,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
   const t = useTranslations("about");
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24">
+    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <JsonLd data={personSchema(locale)} />
       {/* Intro */}
       <section>

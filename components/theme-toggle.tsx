@@ -44,17 +44,29 @@ export function ThemeToggle() {
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <HugeiconsIcon icon={Sun03Icon} size={16} strokeWidth={1.5} />
           <span>{t("light")}</span>
-          {theme === "light" && <span className="ml-auto text-xs text-muted-foreground">✓</span>}
+          {theme === "light" && (
+            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+              ✓
+            </span>
+          )}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <HugeiconsIcon icon={Moon02Icon} size={16} strokeWidth={1.5} />
           <span>{t("dark")}</span>
-          {theme === "dark" && <span className="ml-auto text-xs text-muted-foreground">✓</span>}
+          {theme === "dark" && (
+            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+              ✓
+            </span>
+          )}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <HugeiconsIcon icon={ComputerIcon} size={16} strokeWidth={1.5} />
           <span>{t("system")}</span>
-          {theme === "system" && <span className="ml-auto text-xs text-muted-foreground">✓</span>}
+          {theme === "system" && (
+            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+              ✓
+            </span>
+          )}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
