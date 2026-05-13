@@ -78,7 +78,22 @@
   },
   "projects": {
     "title": "Projects",
-    "description": "Case studies and featured work."
+    "description": "Case studies and featured work.",
+    "sections": {
+      "featured": "Featured",
+      "more": "More projects",
+      "stack": "Stack"
+    },
+    "links": {
+      "demo": "Live demo",
+      "repo": "Repository"
+    },
+    "status": {
+      "shipped": "Shipped",
+      "in-progress": "In progress",
+      "archived": "Archived",
+      "concept": "Concept"
+    }
   },
   "about": {
     "title": "About me",

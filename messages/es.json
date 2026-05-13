@@ -78,7 +78,22 @@
   },
   "projects": {
     "title": "Proyectos",
-    "description": "Casos de estudio y trabajos destacados."
+    "description": "Casos de estudio y trabajos destacados.",
+    "sections": {
+      "featured": "Destacados",
+      "more": "Más proyectos",
+      "stack": "Stack"
+    },
+    "links": {
+      "demo": "Ver demo",
+      "repo": "Repositorio"
+    },
+    "status": {
+      "shipped": "Shipped",
+      "in-progress": "En progreso",
+      "archived": "Archivado",
+      "concept": "Concepto"
+    }
   },
   "about": {
     "title": "Acerca de mí",

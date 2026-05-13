@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
+import { check, likesRatelimit } from "@/lib/ratelimit";
+
+async function enforceRatelimit(ipHash: string) {
+  const rl = await check(likesRatelimit, ipHash);
+  if (rl.allowed) return null;
+  return NextResponse.json(EMPTY, {
+    status: 429,
+    headers: { "Retry-After": String(Math.max(1, Math.ceil((rl.reset - Date.now()) / 1000))) },
+  });
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -53,6 +63,9 @@ export async function POST(request: Request, context: RouteContext) {
 
   try {
     const ipHash = hashIp(getIpFromRequest(request));
+    const blocked = await enforceRatelimit(ipHash);
+    if (blocked) return blocked;
+
     await redis.sadd(keyFor("likes", "set", slug), ipHash);
     return NextResponse.json(await readState(slug, ipHash));
   } catch (error) {
@@ -67,6 +80,9 @@ export async function DELETE(request: Request, context: RouteContext) {
 
   try {
     const ipHash = hashIp(getIpFromRequest(request));
+    const blocked = await enforceRatelimit(ipHash);
+    if (blocked) return blocked;
+
     await redis.srem(keyFor("likes", "set", slug), ipHash);
     return NextResponse.json(await readState(slug, ipHash));
   } catch (error) {
