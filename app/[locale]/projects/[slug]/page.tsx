@@ -11,6 +11,7 @@ import { breadcrumbSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { getCachedViews } from "@/lib/views";
+import { StatusBadge } from "@/components/content/status-badge";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
 
@@ -92,7 +93,6 @@ export default async function ProjectPage({ params }: Props) {
   const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
   const tProjects = await getTranslations({ locale: typedLocale, namespace: "projects" });
   const newTabLabel = tA11y("opensInNewTab");
-  const status = tProjects(`status.${project.status}`);
   const demoLabel = tProjects("links.demo");
   const repoLabel = tProjects("links.repo");
   const stackLabel = tProjects("sections.stack");
@@ -120,6 +120,7 @@ export default async function ProjectPage({ params }: Props) {
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
+          <StatusBadge status={project.status} className="mb-3" />
           <ViewTransition name={`project-title-${project.slug}`} share="morph">
             <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
           </ViewTransition>
@@ -131,8 +132,6 @@ export default async function ProjectPage({ params }: Props) {
             </ViewTransition>
             <span aria-hidden>·</span>
             <span>{project.role}</span>
-            <span aria-hidden>·</span>
-            <span>{status}</span>
             <span aria-hidden>·</span>
             <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
           </div>
