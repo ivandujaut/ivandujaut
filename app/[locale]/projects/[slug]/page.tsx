@@ -9,6 +9,8 @@ import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { ViewCounter } from "@/components/blog/view-counter";
+import { getCachedViews } from "@/lib/views";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
 
@@ -111,6 +113,8 @@ export default async function ProjectPage({ params }: Props) {
     { name: project.title, path: projectPath },
   ]);
 
+  const initialViews = await getCachedViews("projects", slug);
+
   return (
     <article className="mx-auto max-w-2xl px-6 py-24">
       <JsonLd data={jsonLd} />
@@ -129,6 +133,8 @@ export default async function ProjectPage({ params }: Props) {
           <span>{project.role}</span>
           <span aria-hidden>·</span>
           <span>{status}</span>
+          <span aria-hidden>·</span>
+          <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
         </div>
 
         {(project.repo || project.demo) && (
