@@ -16,6 +16,37 @@
       "label": "Share",
       "copied": "Copied!"
     },
+    "notFound": {
+      "generic": {
+        "title": "Page not found",
+        "description": "The URL you’re looking for doesn’t exist or moved. Where would you like to go?"
+      },
+      "post": {
+        "title": "Post not found",
+        "description": "That post doesn’t exist or its URL changed. Try browsing the blog."
+      },
+      "project": {
+        "title": "Project not found",
+        "description": "That project doesn’t exist or its URL changed. Check the full list."
+      },
+      "actions": {
+        "home": "Back to home",
+        "blog": "Browse the blog",
+        "projects": "Browse projects"
+      }
+    },
+    "translationMissing": {
+      "title": "This version isn’t available",
+      "description": "This content isn’t translated to {locale} yet. It is available in {other}.",
+      "actions": {
+        "readInOther": "Read in {other}",
+        "backToList": "Back to the list"
+      },
+      "languages": {
+        "es": "Spanish",
+        "en": "English"
+      }
+    },
     "language": {
       "label": "Language",
       "spanish": "Spanish",
