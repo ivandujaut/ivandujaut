@@ -59,4 +59,5 @@ AGENTS.md
 CLAUDE.md
 # Velite
 .velite/
+public/static/
 .gstack/

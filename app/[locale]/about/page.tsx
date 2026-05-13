@@ -3,7 +3,8 @@ import { setRequestLocale } from "next-intl/server";
 import { ExperienceItem } from "@/components/about/experience-item";
 import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import { ArrowUpRight01Icon, DownloadIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -19,10 +20,12 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const title = isEs ? "Sobre mí" : "About me";
+  const title = isEs
+    ? "Acerca de mí · Iván Dujaut, Product Engineer"
+    : "About · Iván Dujaut, Product Engineer";
   const description = isEs
-    ? "Bioingeniero ITBA convertido en Product Engineer. Conocé mi experiencia, educación y herramientas."
-    : "Bioengineer from ITBA turned Product Engineer. Learn about my experience, education and tools.";
+    ? "Product Engineer con 4 años en Next.js y TypeScript. Argentina, remoto con EE.UU. y LATAM. Techstars W24 alumni. Bioingeniero ITBA. Mirá mi experiencia y contactame."
+    : "Product Engineer with 4 years in Next.js and TypeScript. Argentina, remote with US and LATAM teams. Techstars W24 alumni. ITBA bioengineer. See my experience and get in touch.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
@@ -82,6 +85,34 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
           <p>{t("intro.paragraph3")}</p>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <ObfuscatedEmailTrigger
+            userReversed="navituajud"
+            domainReversed="moc.liamg"
+            label={t("intro.ctas.email")}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+          >
+            <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={1.5} aria-hidden />
+            <span>{t("intro.ctas.email")}</span>
+          </ObfuscatedEmailTrigger>
+          <a
+            href="https://calendly.com/ivan-dujaut/nueva-reunion"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+          >
+            <CalendlyIcon size={14} aria-hidden />
+            <span>{t("intro.ctas.calendly")}</span>
+          </a>
+          <a
+            href="/cv-ivan-dujaut.pdf"
+            download
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+          >
+            <HugeiconsIcon icon={DownloadIcon} size={14} strokeWidth={1.5} aria-hidden />
+            <span>{t("intro.ctas.cv")}</span>
+          </a>
         </div>
       </section>
 
@@ -461,22 +492,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               <strong>{t("languages.english")}</strong> ·{" "}
               <span className="text-muted-foreground">{t("languages.englishDescription")}</span>
             </p>
-          </div>
-        </section>
-
-        {/* Lo que busco */}
-        <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {t("sections.lookingFor")}
-          </h2>
-          <div className="space-y-4 text-sm leading-relaxed">
-            <p>{t("lookingFor.intro")}</p>
-            <ul className="ml-4 list-disc space-y-2">
-              <li>{t("lookingFor.item1")}</li>
-              <li>{t("lookingFor.item2")}</li>
-              <li>{t("lookingFor.item3")}</li>
-            </ul>
-            <p className="text-muted-foreground">{t("lookingFor.outro")}</p>
           </div>
         </section>
 
