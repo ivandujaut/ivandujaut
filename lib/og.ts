@@ -8,6 +8,8 @@
  * usar (post, project, default) y otros parámetros específicos del contenido.
  */
 
+import { appendSignature } from "@/lib/og-sign";
+
 export function getBaseUrl(): string {
   return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 }
@@ -54,7 +56,7 @@ export function buildPostOgUrl(params: {
     searchParams.set("coverUrl", params.coverUrl);
   }
 
-  return `${baseUrl}/api/og?${searchParams.toString()}`;
+  return `${baseUrl}/api/og?${appendSignature(searchParams).toString()}`;
 }
 
 /**
@@ -93,7 +95,7 @@ export function buildProjectOgUrl(params: {
     searchParams.set("coverUrl", params.coverUrl);
   }
 
-  return `${baseUrl}/api/og?${searchParams.toString()}`;
+  return `${baseUrl}/api/og?${appendSignature(searchParams).toString()}`;
 }
 
 /**
@@ -121,7 +123,7 @@ export function buildDefaultOgUrl(params: {
     searchParams.set("description", params.description);
   }
 
-  return `${baseUrl}/api/og?${searchParams.toString()}`;
+  return `${baseUrl}/api/og?${appendSignature(searchParams).toString()}`;
 }
 
 /**
