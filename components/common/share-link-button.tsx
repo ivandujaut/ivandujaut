@@ -8,9 +8,14 @@ import { Copy01Icon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 interface ShareLinkButtonProps {
   url?: string;
   className?: string;
+  /**
+   * Si es `true`, el label se muestra en todos los breakpoints.
+   * Por defecto el label se oculta en mobile (`< sm:`) y aparece desde `sm:`.
+   */
+  alwaysShowLabel?: boolean;
 }
 
-export function ShareLinkButton({ url, className }: ShareLinkButtonProps) {
+export function ShareLinkButton({ url, className, alwaysShowLabel = false }: ShareLinkButtonProps) {
   const [copied, setCopied] = useState(false);
   const t = useTranslations("common.share");
 
@@ -41,7 +46,7 @@ export function ShareLinkButton({ url, className }: ShareLinkButtonProps) {
         aria-hidden
         className={copied ? "text-emerald-600 dark:text-emerald-400" : undefined}
       />
-      <span className="hidden sm:inline">{label}</span>
+      <span className={alwaysShowLabel ? "inline" : "hidden sm:inline"}>{label}</span>
     </button>
   );
 }

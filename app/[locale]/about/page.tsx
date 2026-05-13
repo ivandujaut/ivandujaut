@@ -70,9 +70,12 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
       <JsonLd data={personSchema(locale)} />
       {/* Intro */}
       <section>
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <h1 className="text-4xl font-semibold tracking-tight">{t("intro.greeting")}</h1>
-          <ShareLinkButton url={`${SITE_URL}${localePath(locale, "/about")}`} className="mt-2" />
+          <ShareLinkButton
+            url={`${SITE_URL}${localePath(locale, "/about")}`}
+            className="self-end sm:mt-2 sm:self-auto"
+          />
         </div>
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
