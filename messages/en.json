@@ -12,6 +12,10 @@
     "a11y": {
       "opensInNewTab": "opens in a new tab"
     },
+    "share": {
+      "label": "Share",
+      "copied": "Copied!"
+    },
     "language": {
       "label": "Language",
       "spanish": "Spanish",

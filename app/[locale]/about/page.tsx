@@ -9,6 +9,7 @@ import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
+import { ShareLinkButton } from "@/components/common/share-link-button";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -69,7 +70,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
       <JsonLd data={personSchema(locale)} />
       {/* Intro */}
       <section>
-        <h1 className="text-4xl font-semibold tracking-tight">{t("intro.greeting")}</h1>
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="text-4xl font-semibold tracking-tight">{t("intro.greeting")}</h1>
+          <ShareLinkButton url={`${SITE_URL}${localePath(locale, "/about")}`} className="mt-2" />
+        </div>
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>

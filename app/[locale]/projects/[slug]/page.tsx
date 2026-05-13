@@ -12,6 +12,7 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { getCachedViews } from "@/lib/views";
 import { StatusBadge } from "@/components/content/status-badge";
+import { ShareLinkButton } from "@/components/common/share-link-button";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
 
@@ -121,9 +122,12 @@ export default async function ProjectPage({ params }: Props) {
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
           <StatusBadge status={project.status} className="mb-3" />
-          <ViewTransition name={`project-title-${project.slug}`} share="morph">
-            <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
-          </ViewTransition>
+          <div className="flex items-start justify-between gap-4">
+            <ViewTransition name={`project-title-${project.slug}`} share="morph">
+              <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
+            </ViewTransition>
+            <ShareLinkButton url={`${SITE_URL}${projectPath}`} className="mt-2" />
+          </div>
           <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">

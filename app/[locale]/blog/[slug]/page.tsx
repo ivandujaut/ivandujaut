@@ -10,6 +10,7 @@ import { useMDXComponents } from "@/mdx-components";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { getCachedViews } from "@/lib/views";
 import { LikeButton } from "@/components/blog/like-button";
+import { ShareLinkButton } from "@/components/common/share-link-button";
 import { PostHero } from "@/components/blog/post-hero";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { RelatedPosts } from "@/components/blog/related-posts";
@@ -143,9 +144,12 @@ export default async function PostPage({ params }: Props) {
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-8">
-          <ViewTransition name={`post-title-${slug}`} share="morph">
-            <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
-          </ViewTransition>
+          <div className="flex items-start justify-between gap-4">
+            <ViewTransition name={`post-title-${slug}`} share="morph">
+              <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
+            </ViewTransition>
+            <ShareLinkButton url={`${SITE_URL}${postPath}`} className="mt-2" />
+          </div>
           <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
             <ViewTransition name={`post-date-${slug}`} share="morph">
               <time dateTime={post.date}>
