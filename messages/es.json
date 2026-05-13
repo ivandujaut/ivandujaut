@@ -60,9 +60,9 @@
     "description": "Pensamientos sobre desarrollo, aprendizaje y vida.",
     "like": {
       "like": "Me gusta",
+      "unlike": "Quitar me gusta",
       "likeCount": "me gusta",
-      "likesCount": "me gusta",
-      "maxReached": "¡Gracias por el cariño!"
+      "likesCount": "me gusta"
     },
     "views": {
       "singular": "vista",
