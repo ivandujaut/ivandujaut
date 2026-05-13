@@ -83,15 +83,15 @@
       "role": "Product Engineer",
       "location": "Argentina",
       "available": "Disponible",
-      "tagline": "Construyo productos en la intersección de ingeniería, producto y negocio.",
-      "credentials": "Bioingeniero ITBA · Ex-Techstars W24"
+      "tagline": "Hago producto end-to-end: código, decisiones de roadmap y métricas que importan.",
+      "credentials": "Bioingeniero ITBA · Alumni Techstars W24"
     },
     "currently": {
       "title": "Actualmente",
       "paragraph1": "Como Product Engineer en Prizmstack, desarrollo FIJI: una plataforma de valuación para negocios inmobiliarios. Trabajo en la migración de no-code a Next.js, y construyo el motor de simulaciones de valor.",
       "stack": "Stack actual: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "En paralelo, enseño Técnicas Digitales en el IPSAJ (Instituto Politécnico San Arnoldo Janssen) a estudiantes de Electrónica. Combino código de producción con docencia, y eso me obliga a pensar en cómo se aprende a construir software.",
-      "paragraph3": "Buscando oportunidades en LATAM (remoto preferido) en healthtech, fintech o startups con producto interesante."
+      "paragraph3": "Abierto a nuevas oportunidades en LATAM (remoto preferido), idealmente en healthtech, fintech o startups con producto interesante. Para charlas más generales también: escribime o agendá una call."
     },
     "sections": {
       "featuredWork": "Proyectos destacados",
@@ -140,16 +140,20 @@
     "title": "Acerca de mí",
     "intro": {
       "greeting": "Hola, soy Iván",
-      "paragraph1": "Soy Product Engineer, basado en Argentina. Trabajo en la intersección donde se cruzan ingeniería, producto y negocio: construyo herramientas que la gente usa, defino prioridades en función de impacto, y traduzco ambigüedad estratégica en planes ejecutables.",
-      "paragraph2": "Soy bioingeniero del ITBA, un detalle que define cómo abordo problemas: con rigor cuantitativo, foco en métricas y pensamiento sistémico. Empecé como desarrollador frontend hace 4 años y crecí hacia roles donde producto y negocio pesan tanto como el código.",
-      "paragraph3": "Mi objetivo a mediano plazo es liderar equipos de producto donde la decisión técnica y la decisión estratégica se toman juntas. Para eso, hoy sigo construyendo: aprendiendo cómo se diseñan métricas accionables, cómo se prioriza con criterio, y cómo se ejecuta con velocidad sin perder calidad."
+      "paragraph1": "Product Engineer con 4 años construyendo producto en Next.js + TypeScript. Vivo en Argentina, trabajo remoto con equipos en EE.UU. y LATAM. Mi rol está entre código, decisiones de producto y métricas de negocio. No solo escribo features, decido cuáles vale la pena escribir.",
+      "paragraph2": "Mi base es atípica: soy bioingeniero del ITBA, con tesis en predicción de mortalidad oncológica usando datos del Hospital Italiano. Esa formación me dejó un instinto cuantitativo que hoy aplico modelando features, midiendo impacto y priorizando. Pasé de frontend a Product Engineer en 4 años: Techstars '24 con un equipo founding en Nueva York, lead técnico en proyectos B2B/B2C con 1.500+ usuarios activos, y hoy decisiones de producto sobre roadmap y prioridades.",
+      "paragraph3": "Estoy abierto a nuevas oportunidades, especialmente en equipos donde producto, ingeniería y negocio se discuten en la misma mesa: healthtech, fintech o startups en crecimiento. Pero si lo tuyo es otra cosa, como un producto en el que estés pensando, una posible colaboración o simplemente conocernos, agendá una call y charlamos. Si es por un rol concreto, también podés escribirme o bajar mi CV.",
+      "ctas": {
+        "email": "Escribime",
+        "calendly": "Agendá una call",
+        "cv": "Bajá mi CV (PDF)"
+      }
     },
     "sections": {
       "experience": "Experiencia",
       "education": "Educación",
       "tools": "Herramientas",
       "languages": "Idiomas",
-      "lookingFor": "Lo que busco",
       "contact": "Contacto"
     },
     "tools": {
@@ -185,18 +189,11 @@
       "spanish": "Español",
       "spanishLevel": "Nativo",
       "english": "Inglés",
-      "englishDescription": "He trabajado con equipos de Estados Unidos desde 2023 (Tumo en Techstars W24 NY, actualmente Prizmstack en California). Mi inglés es funcional para trabajo técnico, comunicación escrita y colaboración asincrónica. Sigo mejorando la fluidez conversacional activamente."
-    },
-    "lookingFor": {
-      "intro": "Oportunidades en LATAM (remoto preferido, abierto a híbrido) en empresas con producto interesante. Me motivan especialmente:",
-      "item1": "Healthtech y fintech: industrias donde la complejidad técnica se cruza con impacto real en la vida de las personas.",
-      "item2": "Startups en crecimiento: lugares donde producto, ingeniería y negocio se discuten en la misma mesa.",
-      "item3": "Empresas establecidas con cultura de producto fuerte: donde el rigor de procesos no mata la velocidad de iteración.",
-      "outro": "No me cierro a otros nichos si el equipo y el problema son interesantes."
+      "englishDescription": "He trabajado con equipos en Nueva York y California desde 2023 (Tumo en Techstars W24, Prizmstack actualmente). La comunicación es principalmente escrita y asincrónica."
     },
     "contact": {
-      "intro": "La mejor forma de contactarme es por <email>email</email>.",
-      "alsoFind": "También me podés encontrar en"
+      "intro": "Si llegaste hasta acá y querés hablar, escribime por <email>email</email>. Respondo dentro de 24h.",
+      "alsoFind": "También en"
     }
   }
 }
