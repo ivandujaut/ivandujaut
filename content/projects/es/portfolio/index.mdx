@@ -1,0 +1,99 @@
+---
+title: "Portfolio personal"
+tagline: "Sitio bilingüe con blog y casos de estudio"
+description: "Mi portfolio personal construido con Next.js 15, MDX y un sistema de tema completo."
+year: 2026
+role: "Full-stack"
+status: "in-progress"
+featured: true
+stack: ["Next.js 15", "TypeScript", "Tailwind CSS", "shadcn/ui", "Velite", "next-intl"]
+repo: "https://github.com/ivandujaut/ivandujaut"
+translationKey: "portfolio"
+---
+
+<Abstract>
+  Construí este portfolio para tener un único lugar donde un reclutador, un colega o un alumno
+  puedan leer cómo pienso y cómo construyo: código en el repo, casos de estudio en MDX, y un blog
+  técnico. Documento las decisiones arquitectónicas y de producto en formato de paper académico para
+  que el proceso sea tan revisable como el resultado.
+</Abstract>
+
+## Contexto
+
+Este es el sitio que estás navegando. Lo armé desde cero con el objetivo
+de tener un portfolio que sirva como showcase técnico y a la vez como
+bitácora de aprendizaje<Sidenote>Los case studies más útiles que leí
+mientras lo planeaba son los de Linear, Vercel y Raycast: explican
+trade-offs, no sólo el resultado final.</Sidenote>.
+
+La decisión de fondo fue tratar cada proyecto como un mini-paper:
+abstract, secciones numeradas, citas a fuentes externas y referencias al
+final. La forma comunica tanto como el contenido<Footnote>"The medium is
+the message." — Marshall McLuhan, _Understanding Media_, 1964.</Footnote>.
+
+<Callout type="info" title="En progreso">
+  Este proyecto está activo. Voy sumando features semana a semana.
+</Callout>
+
+## Decisiones técnicas
+
+Elegí Next.js por App Router y server components. MDX para contenido
+porque me permite escribir posts como archivos en el repo sin necesidad
+de un CMS. next-intl para soporte bilingüe ES/EN.
+
+### Por qué Velite y no otra cosa
+
+Evalué Contentlayer<Cite to="contentlayer2023" n={1} /> pero está
+deprecado desde fines de 2023. Velite<Cite to="velite2024" n={2} /> lo
+reemplaza con mejor DX, tipos automáticos vía Zod, y soporte nativo para
+MDX en Tailwind v4.
+
+### Tipografía y modo paper
+
+Para el modo paper uso Source Serif 4<Cite to="adobe-source-serif" n={3} />,
+una serif optimizada para pantalla con métricas cercanas a Computer
+Modern — el aire académico sin pedirle al lector que tolere kerning de
+los 80.
+
+## Resultados a la fecha
+
+<MetricGrid>
+  <Metric value="100" label="Lighthouse Performance" sublabel="móvil y desktop" />
+  <Metric value="2" label="Idiomas soportados" sublabel="ES nativo, EN paritario" />
+  <Metric value="<150ms" label="TTFB en Vercel" sublabel="edge en GRU/SCL" />
+</MetricGrid>
+
+## Próximos pasos
+
+- Sumar más componentes MDX paper-mode (Equation, Theorem opcional)
+- Integrar stats de GitHub y LeetCode al home
+- Sistema de comentarios con Upstash Redis sobre la base de likes que ya
+  existe
+- OG images dinámicas con `@vercel/og` por idioma
+
+<References>
+  <Reference
+    id="contentlayer2023"
+    authors="Schickling, J."
+    year="2023"
+    title="Archiving Contentlayer"
+    venue="GitHub"
+    url="https://github.com/contentlayerdev/contentlayer"
+  />
+  <Reference
+    id="velite2024"
+    authors="zce"
+    year="2024"
+    title="Velite — Turns Markdown / MDX, YAML, JSON, or other files into app's data layer with Zod schema"
+    venue="velite.js.org"
+    url="https://velite.js.org"
+  />
+  <Reference
+    id="adobe-source-serif"
+    authors="Adobe Originals — Slimbach, R."
+    year="2021"
+    title="Source Serif 4"
+    venue="Adobe Fonts"
+    url="https://fonts.adobe.com/fonts/source-serif"
+  />
+</References>
