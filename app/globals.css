@@ -234,6 +234,7 @@
 
 .paper .prose-content :where(p, li) {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  color: var(--foreground);
 }
 
 .paper .prose-content code,
@@ -243,13 +244,15 @@
 }
 
 /* Section numbering (h2 → "1. Title", h3 → "1.1. Title") */
-.paper .prose-content h2 {
+.paper .prose-content h2:not(#paper-references-heading) {
   counter-increment: paper-section;
   counter-reset: paper-subsection;
   font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1.2;
 }
 
-.paper .prose-content h2::before {
+.paper .prose-content h2:not(#paper-references-heading)::before {
   content: counter(paper-section) ". ";
   color: var(--muted-foreground);
   font-variant-numeric: tabular-nums;
@@ -259,6 +262,8 @@
 .paper .prose-content h3 {
   counter-increment: paper-subsection;
   font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.25;
 }
 
 .paper .prose-content h3::before {
@@ -301,6 +306,12 @@
 
 .paper [data-paper-footnote-marker]::before {
   content: counter(paper-footnote);
+}
+
+.paper [data-paper-footnote-marker]:focus-visible,
+.paper [data-paper-sidenote-marker]:focus-visible {
+  background: var(--muted);
+  border-radius: 2px;
 }
 
 /* Inline expandable footnote (button + toggleable span, no <details>). */
@@ -404,6 +415,19 @@
 .paper .prose-content a {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+}
+
+/* Drop cap on the very first paragraph after the abstract — anchors the
+   article's start with a classic editorial signal. Only the FIRST top-level
+   <p> in prose-content gets the cap; nested <p> (Callouts etc.) are skipped. */
+.paper .prose-content > h2:first-of-type + p::first-letter {
+  float: left;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 3.25em;
+  line-height: 0.85;
+  margin: 0.05em 0.08em 0 0;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 @media (prefers-reduced-motion: no-preference) {
