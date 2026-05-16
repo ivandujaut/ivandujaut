@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 interface FigureProps {
   src: string;
@@ -9,7 +10,7 @@ interface FigureProps {
   priority?: boolean;
 }
 
-export function Figure({
+export async function Figure({
   src,
   alt,
   caption,
@@ -17,6 +18,9 @@ export function Figure({
   height = 800,
   priority = false,
 }: FigureProps) {
+  const t = await getTranslations("paper");
+  const figureLabel = t("figure");
+
   return (
     <figure className="my-8">
       <div className="overflow-hidden rounded-lg border border-border bg-muted/30">
@@ -31,7 +35,11 @@ export function Figure({
         />
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm text-muted-foreground">
+        <figcaption
+          data-auto-number
+          data-figure-label={figureLabel}
+          className="mt-2 text-center text-sm text-muted-foreground"
+        >
           {caption}
         </figcaption>
       )}
