@@ -91,7 +91,7 @@ export function LanguageSuggestionBanner() {
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2.5 text-sm">
         <p className="text-muted-foreground">{t.text}</p>
         <div className="flex items-center gap-2">
-          <Button size="sm" variant="default" onClick={handleAccept}>
+          <Button size="sm" variant="outline" onClick={handleAccept}>
             {t.accept}
           </Button>
           <Button size="sm" variant="ghost" onClick={handleDismiss} aria-label={t.dismiss}>
