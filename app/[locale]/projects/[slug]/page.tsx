@@ -150,7 +150,6 @@ export default async function ProjectPage({ params }: Props) {
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
-          <StatusBadge status={project.status} className="mb-3" />
           <ViewTransition name={`project-title-${project.slug}`} share="morph">
             <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
           </ViewTransition>
@@ -162,6 +161,8 @@ export default async function ProjectPage({ params }: Props) {
             </ViewTransition>
             <span aria-hidden>·</span>
             <span>{project.role}</span>
+            <span aria-hidden>·</span>
+            <StatusBadge status={project.status} />
             <span aria-hidden>·</span>
             <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
             <ShareLinkButton
