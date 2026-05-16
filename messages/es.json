@@ -136,6 +136,12 @@
       "concept": "Concepto"
     }
   },
+  "paper": {
+    "abstract": "Resumen",
+    "figure": "Figura",
+    "references": "Referencias",
+    "contents": "Índice"
+  },
   "about": {
     "title": "Acerca de mí",
     "intro": {
