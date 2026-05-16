@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Geist_Mono, Figtree } from "next/font/google";
+import { Geist_Mono, Figtree, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { getLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
@@ -16,6 +16,13 @@ const geistMono = Geist_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  display: "swap",
+  style: ["normal", "italic"],
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -75,7 +82,7 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${figTree.variable} ${geistMono.variable} antialiased`}
+        className={`${figTree.variable} ${geistMono.variable} ${sourceSerif.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
