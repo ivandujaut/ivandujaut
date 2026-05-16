@@ -6,6 +6,7 @@ interface Heading {
   id: string;
   text: string;
   level: 2 | 3;
+  number: string;
 }
 
 interface PaperTocProps {
@@ -30,12 +31,27 @@ export function PaperToc({ containerSelector = "#paper-article", label }: PaperT
     const container = document.querySelector(containerSelector);
     if (!container) return;
 
-    const nodes = container.querySelectorAll<HTMLHeadingElement>("h2[id], h3[id]");
-    const list: Heading[] = Array.from(nodes).map((node) => ({
-      id: node.id,
-      text: node.textContent?.trim() ?? "",
-      level: node.tagName === "H2" ? 2 : 3,
-    }));
+    const nodes = container.querySelectorAll<HTMLHeadingElement>(
+      "h2[id]:not(#paper-references-heading), h3[id]",
+    );
+    let section = 0;
+    let subsection = 0;
+    const list: Heading[] = Array.from(nodes).map((node) => {
+      const level = node.tagName === "H2" ? 2 : 3;
+      if (level === 2) {
+        section += 1;
+        subsection = 0;
+      } else {
+        subsection += 1;
+      }
+      const number = level === 2 ? `${section}.` : `${section}.${subsection}.`;
+      return {
+        id: node.id,
+        text: node.textContent?.trim() ?? "",
+        level,
+        number,
+      };
+    });
     // Reading headings from the DOM is a one-shot subscription to an external
     // source (the rendered article). Setting state from it is intentional.
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -80,12 +96,18 @@ export function PaperToc({ containerSelector = "#paper-article", label }: PaperT
               <a
                 href={`#${heading.id}`}
                 onClick={() => setActiveId(heading.id)}
-                className={`block border-l-2 py-0.5 pl-3 transition-colors ${
+                title={heading.text}
+                className={`block truncate border-l-[3px] py-0.5 pl-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${
                   isActive
-                    ? "border-foreground text-foreground"
+                    ? "border-foreground font-medium text-foreground"
                     : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
                 }`}
               >
+                {heading.number ? (
+                  <span className="mr-1.5 font-mono text-[0.85em] tabular-nums text-muted-foreground">
+                    {heading.number}
+                  </span>
+                ) : null}
                 {heading.text}
               </a>
             </li>
