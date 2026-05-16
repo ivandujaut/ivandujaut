@@ -23,6 +23,7 @@ import { StatusBadge } from "@/components/content/status-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
+import { PaperToc } from "@/components/mdx/paper-toc";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -118,10 +119,12 @@ export default async function ProjectPage({ params }: Props) {
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
   const tProjects = await getTranslations({ locale: typedLocale, namespace: "projects" });
+  const tPaper = await getTranslations({ locale: typedLocale, namespace: "paper" });
   const newTabLabel = tA11y("opensInNewTab");
   const demoLabel = tProjects("links.demo");
   const repoLabel = tProjects("links.repo");
   const stackLabel = tProjects("sections.stack");
+  const tocLabel = tPaper("contents");
   const homePath = localePath(typedLocale, "/");
   const projectsIndexPath = localePath(typedLocale, "/projects");
   const projectPath = localePath(typedLocale, `/projects/${project.slug}`);
@@ -142,7 +145,8 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main id="main">
-      <article className="mx-auto max-w-2xl px-6 py-24">
+      <PaperToc containerSelector="#paper-article" label={tocLabel} />
+      <article id="paper-article" className="paper relative mx-auto max-w-2xl px-6 py-24">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">

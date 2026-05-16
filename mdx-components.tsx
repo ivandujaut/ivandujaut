@@ -9,6 +9,10 @@ import { TechStack } from "./components/mdx/tech-stack";
 import { Metric, MetricGrid } from "./components/mdx/metric";
 import { Comparison } from "./components/mdx/comparison";
 import { Steps } from "./components/mdx/steps";
+import { Abstract } from "@/components/mdx/abstract";
+import { Sidenote } from "@/components/mdx/sidenote";
+import { Footnote } from "@/components/mdx/footnote";
+import { Cite, Reference, References } from "@/components/mdx/references";
 
 /**
  * Componentes MDX disponibles en posts y casos de estudio.
@@ -33,6 +37,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     MetricGrid,
     Comparison,
     Steps,
+
+    // Paper mode (LaTeX-style)
+    Abstract,
+    Sidenote,
+    Footnote,
+    References,
+    Reference,
+    Cite,
 
     // Overrides de elementos HTML
     a: MdxLink,
