@@ -11,89 +11,116 @@ repo: "https://github.com/ivandujaut/ivandujaut"
 translationKey: "portfolio"
 ---
 
-<Abstract>
-  Construí este portfolio para tener un único lugar donde un reclutador, un colega o un alumno
-  puedan leer cómo pienso y cómo construyo: código en el repo, casos de estudio en MDX, y un blog
-  técnico. Documento las decisiones arquitectónicas y de producto en formato de paper académico para
-  que el proceso sea tan revisable como el resultado.
-</Abstract>
+Quería un único lugar donde un reclutador, un colega o un alumno puedan leer
+cómo pienso y cómo construyo. Código en el repo, casos de estudio en MDX,
+notas más largas en `/research`, y un blog técnico para piezas cortas. La
+idea no era hacer el portfolio más bonito de la cuadra, era hacer uno que
+sirviera de evidencia técnica honesta.
 
-## Contexto
+## Dónde empecé
 
-Este es el sitio que estás navegando. Lo armé desde cero con el objetivo
-de tener un portfolio que sirva como showcase técnico y a la vez como
-bitácora de aprendizaje<Sidenote>Los case studies más útiles que leí
-mientras lo planeaba son los de Linear, Vercel y Raycast: explican
-trade-offs, no sólo el resultado final.</Sidenote>.
+Antes de este sitio tenía un Notion público con links a deploys y una
+versión en Webflow que arrastré durante dos años. Los problemas eran los de
+siempre: el contenido lo escribía la última vez que actualizé el CV, las
+páginas no comunicaban cómo construyo, y un visitante técnico podía pasar
+30 segundos y no aprender nada concreto.
 
-La decisión de fondo fue tratar cada proyecto como un mini-paper:
-abstract, secciones numeradas, citas a fuentes externas y referencias al
-final. La forma comunica tanto como el contenido.<Footnote>"The medium is
-the message." — Marshall McLuhan, _Understanding Media_, 1964.</Footnote>
+Lo que necesitaba: un site que fuera **acceso directo a mis decisiones**.
+Repo público con commits que se leen, MDX para escribir el "por qué" sin
+fricción, y un layout que respete tiempo del lector.
 
-<Callout type="info" title="En progreso">
-  Este proyecto está activo. Voy sumando features semana a semana.
+## El recorrido en una sola vista
+
+<BentoGrid
+  items={[
+    {
+      src: "/showcase/hero.svg",
+      alt: "Home con identidad serif sobre fondo claro",
+      span: 8,
+      aspect: "16/9",
+    },
+    {
+      src: "/showcase/dashboard.svg",
+      alt: "Workspace interno con lista priorizada",
+      span: 4,
+      aspect: "4/3",
+    },
+    {
+      src: "/showcase/frame-detail.svg",
+      alt: "Detalle de paper con TOC y sidenote",
+      span: 4,
+      aspect: "4/3",
+    },
+    {
+      src: "/showcase/after.svg",
+      alt: "Layout final con navegación calma",
+      span: 8,
+      aspect: "16/9",
+    },
+  ]}
+/>
+
+<Callout type="info" title="Placeholders">
+  Las pantallas de arriba son wireframes del sandbox de diseño mientras armo capturas reales del
+  sitio terminado. Cuando termine la primera tanda de case studies con assets propios, las reemplazo
+  acá.
 </Callout>
 
-## Decisiones técnicas
+## Por qué Next.js + MDX + Velite
 
-Elegí Next.js por App Router y server components. MDX para contenido
-porque me permite escribir posts como archivos en el repo sin necesidad
-de un CMS. next-intl para soporte bilingüe ES/EN.
+App Router de [Next.js](https://nextjs.org) por server components. MDX para
+escribir contenido como archivos en el repo sin meterme con un CMS.
+[next-intl](https://next-intl.dev) para soporte bilingüe ES/EN paritario.
 
-### Por qué Velite y no otra cosa
+La decisión que más vale acá es **Velite**. Evalué Contentlayer, que es
+prácticamente el estándar para portfolios técnicos en Next, pero está
+[deprecado desde fines de 2023](https://github.com/contentlayerdev/contentlayer).
+[Velite](https://velite.js.org) lo reemplaza con mejor DX, tipos
+automáticos vía Zod, y soporte nativo para MDX en Tailwind v4.
 
-Evalué Contentlayer<Cite to="contentlayer2023" n={1} /> pero está
-deprecado desde fines de 2023. Velite<Cite to="velite2024" n={2} /> lo
-reemplaza con mejor DX, tipos automáticos vía Zod, y soporte nativo para
-MDX en Tailwind v4.
+Trade-offs reales:
 
-### Tipografía y modo paper
+- **A favor**: cero CMS, todo versionado en git, los assets se co-locan
+  con el MDX que los referencia. Velite los procesa y emite a
+  `/public/static` con hash. Sin paid SaaS.
+- **En contra**: cada cambio de contenido es un commit, y cada commit
+  triggera un build. Para alguien que publica una vez por semana es ideal.
+  Para alguien que publica diario, friction.
 
-Para el modo paper uso Source Serif 4<Cite to="adobe-source-serif" n={3} />,
-una serif optimizada para pantalla con métricas cercanas a Computer
-Modern — el aire académico sin pedirle al lector que tolere kerning de
-los 80.
+## Tipografía y feel
 
-## Resultados a la fecha
+Source Serif 4 para los headings y, en las páginas de research, para todo
+el cuerpo. Es la serif optimizada para pantalla que más se parece a Computer
+Modern de LaTeX sin pedirle al lector que tolere kerning de los 80.
 
-<MetricGrid>
-  <Metric value="100" label="Lighthouse Performance" sublabel="móvil y desktop" />
-  <Metric value="2" label="Idiomas soportados" sublabel="ES nativo, EN paritario" />
-  <Metric value="<150ms" label="TTFB en Vercel" sublabel="edge en GRU/SCL" />
-</MetricGrid>
+Para chrome del sitio (navbar, footer, listings) uso Figtree, que es sans
+neutra y legible a 14px. Geist Mono para metadata, status badges y código.
 
-## Próximos pasos
+Tres familias en total. Dentro del presupuesto típico de un sitio editorial
+(no más de 3).
 
-- Sumar más componentes MDX paper-mode (Equation, Theorem opcional)
-- Integrar stats de GitHub y LeetCode al home
+## Lo que viene
+
+- Más componentes MDX para case studies con video y demos en vivo.
+- Integrar stats de GitHub y LeetCode al home como widget.
 - Sistema de comentarios con Upstash Redis sobre la base de likes que ya
-  existe
-- OG images dinámicas con `@vercel/og` por idioma
+  existe.
+- OG images dinámicas con `@vercel/og` por idioma.
+- Cuando publique mi tesis del Hospital Italiano sobre predicción de
+  mortalidad, va a `/research` con paper mode completo.
 
-<References>
-  <Reference
-    id="contentlayer2023"
-    authors="Schickling, J."
-    year="2023"
-    title="Archiving Contentlayer"
-    venue="GitHub"
-    url="https://github.com/contentlayerdev/contentlayer"
-  />
-  <Reference
-    id="velite2024"
-    authors="zce"
-    year="2024"
-    title="Velite — Turns Markdown / MDX, YAML, JSON, or other files into app's data layer with Zod schema"
-    venue="velite.js.org"
-    url="https://velite.js.org"
-  />
-  <Reference
-    id="adobe-source-serif"
-    authors="Adobe Originals — Slimbach, R."
-    year="2021"
-    title="Source Serif 4"
-    venue="Adobe Fonts"
-    url="https://fonts.adobe.com/fonts/source-serif"
-  />
-</References>
+## Stack
+
+<TechStack
+  items={[
+    "Next.js 15",
+    "TypeScript",
+    "Tailwind CSS",
+    "MDX",
+    "Velite",
+    "next-intl",
+    "shadcn/ui",
+    "Source Serif 4",
+    "Vercel",
+  ]}
+/>
