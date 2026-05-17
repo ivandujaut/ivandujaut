@@ -6,25 +6,114 @@ year: 2026
 role: "Full-stack"
 status: "in-progress"
 featured: true
-stack: ["Next.js 15", "TypeScript", "Tailwind CSS", "shadcn/ui", "Velite"]
+stack: ["Next.js 15", "TypeScript", "Tailwind CSS", "shadcn/ui", "Velite", "next-intl"]
 repo: "https://github.com/ivandujaut/ivandujaut"
 translationKey: "portfolio"
 ---
 
-## Context
+I wanted a single place where a recruiter, a colleague or a student could
+read how I think and how I build. Code in the repo, case studies in MDX,
+longer essays in `/research`, and a technical blog for short pieces. The
+goal was not the prettiest portfolio on the block, it was one that works as
+honest technical evidence.
 
-This is the site you're navigating. I built it from scratch aiming to have
-a personal portfolio that serves as both a technical showcase and a
-learning journal.
+## Where I started
 
-## Technical decisions
+Before this site I had a public Notion with links to deploys and a Webflow
+version I dragged around for two years. Same problems every portfolio has:
+content written the last time I updated my CV, pages that did not
+communicate how I build, and a technical visitor could spend 30 seconds
+and learn nothing concrete.
 
-I chose Next.js for App Router and server components. MDX for content
-because it allows me to write posts as files in the repo without needing
-a CMS. next-intl for bilingual ES/EN support.
+What I needed: a site that was **direct access to my decisions**. Public
+repo with commits that read well, MDX so I can write the why without
+fighting a CMS, and a layout that respects the reader's time.
 
-## Next steps
+## The whole site in one view
 
-- Add more MDX components
-- Integrate GitHub and LeetCode stats
-- Likes and comments system
+<BentoGrid
+  items={[
+    {
+      src: "/showcase/hero.svg",
+      alt: "Home with serif identity on light ground",
+      span: 8,
+      aspect: "16/9",
+    },
+    {
+      src: "/showcase/dashboard.svg",
+      alt: "Internal workspace with prioritized list",
+      span: 4,
+      aspect: "4/3",
+    },
+    {
+      src: "/showcase/frame-detail.svg",
+      alt: "Paper detail with TOC and sidenote",
+      span: 4,
+      aspect: "4/3",
+    },
+    { src: "/showcase/after.svg", alt: "Shipped layout with calm chrome", span: 8, aspect: "16/9" },
+  ]}
+/>
+
+<Callout type="info" title="Placeholders">
+  The frames above are sandbox wireframes while I capture real screenshots of the shipped site. They
+  get replaced when the first batch of case studies with real assets goes live.
+</Callout>
+
+## Why Next.js + MDX + Velite
+
+[Next.js](https://nextjs.org) App Router for server components. MDX so I
+can write content as files in the repo without touching a CMS.
+[next-intl](https://next-intl.dev) for paritary ES/EN support.
+
+The most loaded call here is **Velite**. I evaluated Contentlayer, which
+is basically the standard for technical portfolios on Next, but it has
+been [archived since late 2023](https://github.com/contentlayerdev/contentlayer).
+[Velite](https://velite.js.org) replaces it with better DX, automatic
+types via Zod, and native MDX support on Tailwind v4.
+
+Real trade-offs:
+
+- **For**: zero CMS, everything versioned in git, assets co-locate with
+  the MDX that references them. Velite processes and emits to
+  `/public/static` with hashed names. No paid SaaS.
+- **Against**: every content change is a commit, and every commit triggers
+  a build. For someone who publishes weekly this is ideal. For someone
+  who publishes daily, it is friction.
+
+## Typography and feel
+
+Source Serif 4 for headings and, on research pages, for the body too. It
+is the screen-optimized serif that gets closest to LaTeX's Computer Modern
+without asking the reader to tolerate 80s kerning.
+
+Figtree for site chrome (navbar, footer, listings). It is a neutral sans
+that holds up at 14px. Geist Mono for metadata, status badges, and code.
+
+Three families total. Within the typical budget for an editorial site
+(no more than 3).
+
+## What's next
+
+- More MDX components for case studies with video and live demos.
+- Pull GitHub and LeetCode stats into the home as a widget.
+- Comments system with Upstash Redis on top of the existing likes.
+- Dynamic OG images per locale with `@vercel/og`.
+- When I publish my Hospital Italiano thesis on cancer mortality
+  prediction, it ships to `/research` with full paper mode.
+
+## Stack
+
+<TechStack
+  items={[
+    "Next.js 15",
+    "TypeScript",
+    "Tailwind CSS",
+    "MDX",
+    "Velite",
+    "next-intl",
+    "shadcn/ui",
+    "Source Serif 4",
+    "Vercel",
+  ]}
+/>

@@ -1,4 +1,4 @@
-import { posts, projects } from "#site/content";
+import { posts, projects, research } from "#site/content";
 
 type Locale = "es" | "en";
 
@@ -112,5 +112,37 @@ export function getProjectTranslations(project: { translationKey?: string; local
   if (!project.translationKey) return [];
   return projects.filter(
     (p) => p.translationKey === project.translationKey && p.locale !== project.locale,
+  );
+}
+
+// ============================================================================
+// Research (paper-style long-form)
+// ============================================================================
+
+export function getResearch(locale: Locale) {
+  return research.filter(byLocale(locale)).filter(isVisible).sort(byYearDesc);
+}
+
+export function getFeaturedResearch(locale: Locale) {
+  return getResearch(locale).filter((r) => r.featured);
+}
+
+export function getResearchBySlug(locale: Locale, slug: string) {
+  return research.find((r) => r.locale === locale && r.slug === slug);
+}
+
+export function findResearchInAnyLocale(slug: string) {
+  return research.find((r) => r.slug === slug);
+}
+
+export function findTranslatedResearchInLocale(translationKey: string | undefined, locale: Locale) {
+  if (!translationKey) return undefined;
+  return research.find((r) => r.translationKey === translationKey && r.locale === locale);
+}
+
+export function getResearchTranslations(paper: { translationKey?: string; locale: Locale }) {
+  if (!paper.translationKey) return [];
+  return research.filter(
+    (r) => r.translationKey === paper.translationKey && r.locale !== paper.locale,
   );
 }

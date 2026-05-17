@@ -68,6 +68,7 @@
 @theme inline {
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -206,5 +207,304 @@
   ::view-transition-group(*) {
     animation-duration: 0s !important;
     animation-delay: 0s !important;
+  }
+}
+
+/* ============================================================
+   Case-study mode — editorial blog look for project pages.
+   Same serif tonal language as paper-mode, but loosened:
+   left-aligned body, no auto-numbering, no margin sidenotes,
+   no drop caps. Tuned for narrative case studies like Linear /
+   Vercel / Stripe engineering blog posts.
+   ============================================================ */
+
+.case-study .prose-content {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  text-align: left;
+  hyphens: none;
+}
+
+.case-study .prose-content :where(p, li) {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--foreground);
+}
+
+.case-study .prose-content h2 {
+  margin-top: 3.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.case-study .prose-content h3 {
+  margin-top: 2.25rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.case-study .prose-content > p:first-of-type {
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: color-mix(in oklch, var(--foreground) 92%, transparent);
+}
+
+.case-study .prose-content a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 120ms ease;
+}
+
+.case-study .prose-content a:hover {
+  text-decoration-color: var(--foreground);
+}
+
+.case-study .prose-content figure figcaption {
+  text-align: left;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+/* Header treatment for case-study pages: title serif but no italic tagline. */
+.case-study > header h1 {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+/* ============================================================
+   Paper mode — LaTeX-style academic look
+   Activated by adding `paper` class to the article element.
+   ============================================================ */
+
+.paper {
+  counter-reset: paper-section paper-figure paper-footnote;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1,
+    "onum" 1;
+}
+
+.paper .prose-content {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.paper .prose-content :where(p, li) {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  color: var(--foreground);
+}
+
+.paper .prose-content code,
+.paper .prose-content pre {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  hyphens: none;
+}
+
+/* Section numbering (h2 → "1. Title", h3 → "1.1. Title") */
+.paper .prose-content h2:not(#paper-references-heading) {
+  counter-increment: paper-section;
+  counter-reset: paper-subsection;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.paper .prose-content h2:not(#paper-references-heading)::before {
+  content: counter(paper-section) ". ";
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.25em;
+}
+
+.paper .prose-content h3 {
+  counter-increment: paper-subsection;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.25;
+}
+
+.paper .prose-content h3::before {
+  content: counter(paper-section) "." counter(paper-subsection) ". ";
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.25em;
+}
+
+/* Figure auto-numbering */
+.paper .prose-content figure {
+  counter-increment: paper-figure;
+}
+
+.paper .prose-content figure figcaption[data-auto-number]::before {
+  content: attr(data-figure-label) " " counter(paper-figure) ": ";
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* Header in paper mode uses serif too */
+.paper > header h1,
+.paper > header p {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+/* Header tagline becomes italic, like an abstract subtitle */
+.paper > header > p:first-of-type {
+  font-style: italic;
+}
+
+/* Footnote counter lives on the article so superscripts increment in source order */
+.paper {
+  counter-reset: paper-section paper-figure paper-footnote;
+}
+
+.paper [data-paper-footnote] {
+  counter-increment: paper-footnote;
+}
+
+.paper [data-paper-footnote-marker]::before {
+  content: counter(paper-footnote);
+}
+
+.paper [data-paper-footnote-marker]:focus-visible,
+.paper [data-paper-sidenote-marker]:focus-visible {
+  background: var(--muted);
+  border-radius: 2px;
+}
+
+/* Inline expandable footnote (button + toggleable span, no <details>). */
+.paper .paper-footnote-content {
+  display: none;
+}
+
+.paper .paper-footnote-content--open {
+  display: block;
+  margin: 0.625rem 0;
+  padding: 0.5rem 0.875rem;
+  border-left: 2px solid var(--border);
+  background: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: left;
+  hyphens: auto;
+}
+
+.paper .paper-footnote-content--open::before {
+  content: counter(paper-footnote) ". ";
+  font-style: normal;
+  font-weight: 600;
+  margin-right: 0.25em;
+  color: var(--foreground);
+}
+
+/* Sidenote numbering shares the footnote counter so margin + inline notes
+   stay in a single sequence the reader can follow. */
+.paper [data-paper-sidenote] {
+  counter-increment: paper-footnote;
+}
+
+.paper [data-paper-sidenote-marker]::before {
+  content: counter(paper-footnote);
+}
+
+/* Sidenote content — collapsed inline below the paragraph by default,
+   floated into the right margin on wide viewports. */
+.paper .paper-sidenote-content {
+  display: none;
+}
+
+.paper .paper-sidenote-content--open {
+  display: block;
+  margin: 0.75rem 0;
+  padding: 0.625rem 0.875rem;
+  border-left: 2px solid var(--border);
+  background: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: left;
+  hyphens: auto;
+}
+
+.paper .paper-sidenote-content--open::before {
+  content: counter(paper-footnote) ". ";
+  font-style: normal;
+  font-weight: 600;
+  margin-right: 0.25em;
+  color: var(--foreground);
+}
+
+@media (min-width: 1280px) {
+  /* Sidenote sits in the article's right margin. The wrapping `<span>` is
+     inline so we anchor the absolute positioning to `#paper-article`
+     (which has `position: relative`). With `top` and `left` left as auto,
+     the element keeps its static y-position (next to the marker), and
+     `right: -16rem` projects it just past the article's right edge. */
+  .paper .paper-sidenote-content,
+  .paper .paper-sidenote-content--open {
+    display: block;
+    position: absolute;
+    right: -16rem;
+    width: 14rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--muted-foreground);
+    text-align: left;
+    hyphens: auto;
+  }
+
+  .paper .paper-sidenote-content::before {
+    content: counter(paper-footnote) " ";
+    font-style: normal;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-right: 0.2em;
+  }
+}
+
+/* Smaller, opt-out for body links: remove underline in paper mode for a
+   cleaner book feel, restore on hover. */
+.paper .prose-content a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Drop cap on the very first paragraph after the abstract — anchors the
+   article's start with a classic editorial signal. Only the FIRST top-level
+   <p> in prose-content gets the cap; nested <p> (Callouts etc.) are skipped. */
+.paper .prose-content > h2:first-of-type + p::first-letter {
+  float: left;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2.75em;
+  line-height: 0.85;
+  margin: 0.05em 0.08em 0 0;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+@media (min-width: 1024px) {
+  .paper .prose-content > h2:first-of-type + p::first-letter {
+    font-size: 3.25em;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .paper .prose-content a {
+    transition: color 120ms ease;
   }
 }
