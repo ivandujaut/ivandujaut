@@ -211,6 +211,73 @@
 }
 
 /* ============================================================
+   Case-study mode — editorial blog look for project pages.
+   Same serif tonal language as paper-mode, but loosened:
+   left-aligned body, no auto-numbering, no margin sidenotes,
+   no drop caps. Tuned for narrative case studies like Linear /
+   Vercel / Stripe engineering blog posts.
+   ============================================================ */
+
+.case-study .prose-content {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  text-align: left;
+  hyphens: none;
+}
+
+.case-study .prose-content :where(p, li) {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--foreground);
+}
+
+.case-study .prose-content h2 {
+  margin-top: 3.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.case-study .prose-content h3 {
+  margin-top: 2.25rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.case-study .prose-content > p:first-of-type {
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: color-mix(in oklch, var(--foreground) 92%, transparent);
+}
+
+.case-study .prose-content a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 120ms ease;
+}
+
+.case-study .prose-content a:hover {
+  text-decoration-color: var(--foreground);
+}
+
+.case-study .prose-content figure figcaption {
+  text-align: left;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+/* Header treatment for case-study pages: title serif but no italic tagline. */
+.case-study > header h1 {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+/* ============================================================
    Paper mode — LaTeX-style academic look
    Activated by adding `paper` class to the article element.
    ============================================================ */
