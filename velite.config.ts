@@ -117,6 +117,47 @@ const projects = defineCollection({
 });
 
 // ============================================================================
+// Research papers (long-form academic / technical write-ups)
+// ============================================================================
+
+const research = defineCollection({
+  name: "Research",
+  pattern: "research/**/*.mdx",
+  schema: s
+    .object({
+      title: s.string().max(160),
+      tagline: s.string().max(180),
+      description: s.string().max(320),
+      // Publication year. Same range as projects.
+      year: s.number().int().min(2000).max(2100),
+      // Where this paper sits in its lifecycle.
+      status: s.enum(["draft", "preprint", "published", "archived"]),
+      // Optional external publication (journal, repo, arXiv).
+      venue: s.string().optional(),
+      doi: s.string().optional(),
+      pdf: s.string().optional(),
+      tags: s.array(s.string()).default([]),
+      featured: s.boolean().default(false),
+      translationKey: s.string().optional(),
+      draft: s.boolean().default(false),
+      cover: s
+        .object({
+          src: s.image(),
+          alt: s.string(),
+        })
+        .optional(),
+      metadata: s.metadata(),
+      content: s.mdx(),
+    })
+    .transform((data, { meta }) => ({
+      ...data,
+      slug: slugFromPath(meta.path),
+      locale: localeFromPath(meta.path),
+      url: `/${localeFromPath(meta.path)}/research/${slugFromPath(meta.path)}`,
+    })),
+});
+
+// ============================================================================
 // Config principal
 // ============================================================================
 
@@ -129,7 +170,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { posts, projects },
+  collections: { posts, projects, research },
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

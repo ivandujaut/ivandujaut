@@ -6,7 +6,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
 
 const PREFERENCE_COOKIE = "language-preference";
 const DISMISSED_COOKIE = "language-banner-dismissed";
@@ -88,16 +87,25 @@ export function LanguageSuggestionBanner() {
 
   return (
     <div role="region" aria-label={t.text} className="border-b border-border bg-muted/40">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2.5 text-sm">
-        <p className="text-muted-foreground">{t.text}</p>
-        <div className="flex items-center gap-2">
-          <Button size="sm" variant="default" onClick={handleAccept}>
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2 text-sm">
+        <p className="text-muted-foreground">
+          {t.text}{" "}
+          <button
+            type="button"
+            onClick={handleAccept}
+            className="ml-1 font-medium text-foreground underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
             {t.accept}
-          </Button>
-          <Button size="sm" variant="ghost" onClick={handleDismiss} aria-label={t.dismiss}>
-            <HugeiconsIcon icon={Cancel01Icon} size={16} strokeWidth={1.5} aria-hidden />
-          </Button>
-        </div>
+          </button>
+        </p>
+        <button
+          type="button"
+          onClick={handleDismiss}
+          aria-label={t.dismiss}
+          className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          <HugeiconsIcon icon={Cancel01Icon} size={16} strokeWidth={1.5} aria-hidden />
+        </button>
       </div>
     </div>
   );
