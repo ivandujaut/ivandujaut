@@ -13,6 +13,13 @@ import { Abstract } from "@/components/mdx/abstract";
 import { Sidenote } from "@/components/mdx/sidenote";
 import { Footnote } from "@/components/mdx/footnote";
 import { Cite, Reference, References } from "@/components/mdx/references";
+import { FrameGrid } from "@/components/mdx/frame-grid";
+import { Diagram } from "@/components/mdx/diagram";
+import { AnnotatedShot } from "@/components/mdx/annotated-shot";
+import { DemoFrame } from "@/components/mdx/demo-frame";
+import { FigmaEmbed } from "@/components/mdx/figma-embed";
+import { YouTube } from "@/components/mdx/youtube";
+import { BentoGrid } from "@/components/mdx/bento-grid";
 
 /**
  * Componentes MDX disponibles en posts y casos de estudio.
@@ -45,6 +52,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     References,
     Reference,
     Cite,
+    FrameGrid,
+    Diagram,
+    AnnotatedShot,
+    DemoFrame,
+    FigmaEmbed,
+    YouTube,
+    BentoGrid,
 
     // Overrides de elementos HTML
     a: MdxLink,
