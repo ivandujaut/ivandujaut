@@ -72,7 +72,9 @@
     },
     "mdx": {
       "copyLink": "Copy link to this section",
-      "linkCopied": "Copied"
+      "linkCopied": "Copied",
+      "copyCode": "Copy code",
+      "codeCopied": "Copied"
     },
     "breadcrumbs": {
       "label": "Breadcrumb"
