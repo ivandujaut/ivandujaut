@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Home frame placeholder">
+  <rect width="800" height="500" fill="#ffffff"/>
+  <rect x="0" y="0" width="800" height="56" fill="#fafafa" stroke="#e5e7eb"/>
+  <g transform="translate(32 22)" font-family="ui-monospace, monospace" font-size="13" fill="#18181b">
+    <text font-weight="600">ivandujaut</text>
+  </g>
+  <g transform="translate(600 18)" font-family="ui-monospace, monospace" font-size="12" fill="#71717a">
+    <text>Home</text>
+    <text x="56">Work</text>
+    <text x="106">About</text>
+  </g>
+  <g transform="translate(80 130)">
+    <text font-family="Georgia, serif" font-size="44" font-weight="600" fill="#18181b">Hello, I&apos;m Iván</text>
+    <text y="42" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#71717a">Product engineer · I write papers about how I build things</text>
+    <g transform="translate(0 90)" fill="#a1a1aa">
+      <rect width="640" height="6"/>
+      <rect y="16" width="600" height="6"/>
+      <rect y="32" width="620" height="6"/>
+      <rect y="48" width="540" height="6"/>
+    </g>
+    <g transform="translate(0 160)">
+      <rect width="140" height="40" rx="20" fill="#18181b"/>
+      <text x="70" y="26" text-anchor="middle" fill="#fafafa" font-family="Georgia, serif" font-size="14">Read essays</text>
+    </g>
+  </g>
+</svg>

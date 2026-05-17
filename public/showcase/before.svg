@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="Before placeholder">
+  <rect width="600" height="400" fill="#ffffff"/>
+  <rect x="0" y="0" width="600" height="44" fill="#fde68a"/>
+  <g transform="translate(20 16)" font-family="ui-monospace, monospace" font-size="12" fill="#92400e">
+    <text>Old chrome · cluttered nav</text>
+  </g>
+  <g transform="translate(20 60)">
+    <rect width="160" height="320" fill="#fafafa" stroke="#e5e7eb"/>
+    <rect x="180" y="0" width="400" height="320" fill="#ffffff" stroke="#e5e7eb"/>
+    <g transform="translate(12 16)" font-family="ui-monospace, monospace" font-size="11" fill="#71717a">
+      <text>1. Home</text>
+      <text y="20">2. Inbox</text>
+      <text y="40">3. Projects</text>
+      <text y="60">4. Notes</text>
+      <text y="80">5. Settings</text>
+      <text y="100">6. Archive</text>
+      <text y="120">7. Trash</text>
+      <text y="140">8. Help</text>
+    </g>
+    <g transform="translate(200 16)" fill="#a1a1aa">
+      <rect width="360" height="6"/>
+      <rect y="14" width="340" height="6"/>
+      <rect y="28" width="360" height="6"/>
+      <rect y="42" width="320" height="6"/>
+      <rect y="56" width="350" height="6"/>
+      <rect y="70" width="340" height="6"/>
+    </g>
+  </g>
+</svg>

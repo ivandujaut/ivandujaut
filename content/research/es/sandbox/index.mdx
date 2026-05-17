@@ -1,0 +1,307 @@
+---
+title: "Notes on craft"
+tagline: "Sandbox: todos los componentes MDX en una sola página"
+description: "Página de prueba que ejercita cada componente del toolkit de paper mode, para validar la presentación visual extremo a extremo."
+year: 2026
+status: "draft"
+featured: false
+tags: ["sandbox", "design-system", "mdx"]
+translationKey: "sandbox"
+draft: true
+---
+
+<Abstract>
+  Esta página no documenta un proyecto real. Es un sandbox que ejercita cada componente del toolkit
+  MDX en su contexto natural, para que un autor pueda copiar patrones y un revisor pueda auditar la
+  presentación sin tener que inventar un caso de estudio cada vez.
+</Abstract>
+
+<Figure
+  src="/showcase/hero.svg"
+  alt="Hero placeholder showing a paper title and a sample card"
+  caption="Hero full-bleed: una composición arriba de todo, sin texto encima, para enmarcar la pieza."
+  width={1280}
+  height={720}
+  fullBleed
+  priority
+/>
+
+## Contexto
+
+Empezamos por la columna principal: tipografía serif, secciones numeradas y
+texto justificado con hyphenation<Sidenote>Las sidenotes flotan al margen
+derecho en pantallas `xl:` y se colapsan a una nota inline expandible en
+mobile. Misma numeración correlativa que las footnotes.</Sidenote>. La
+primera letra de esta sección lleva drop cap automática gracias a la regla
+`.paper .prose-content > h2:first-of-type + p::first-letter`.
+
+El texto convive con citas externas<Cite to="tufte2001" n={1} /> y notas al
+pie<Footnote>Las footnotes son inline-expandibles vía `<details>`-like state.
+Marker `²` superscript sin brackets, para distinguirlas de los cites
+`[1]`.</Footnote>, dos categorías que mantenemos visualmente separadas.
+
+<Callout type="insight" title="Cuando agregar una sidenote">
+  Si la nota agrega contexto que se entiende sin volver al cuerpo, va al margen. Si requiere
+  desplegarse, va como footnote inline.
+</Callout>
+
+## Evidencia visual
+
+### Figure inset
+
+<Figure
+  src="/showcase/frame-detail.svg"
+  alt="Layout de detalle con TOC y sidenote"
+  caption="La columna del paper, anotada: TOC a la izquierda, contenido al medio, sidenote a la derecha."
+  width={1600}
+  height={1000}
+/>
+
+### Frame grid
+
+<FrameGrid
+  columns={3}
+  frames={[
+    {
+      src: "/showcase/frame-home.svg",
+      alt: "Home screen wireframe",
+      label: "Home",
+    },
+    {
+      src: "/showcase/frame-projects.svg",
+      alt: "Projects index wireframe",
+      label: "Projects",
+    },
+    {
+      src: "/showcase/frame-detail.svg",
+      alt: "Project detail wireframe",
+      label: "Detail",
+      href: "https://figma.com/file/EXAMPLE",
+    },
+  ]}
+/>
+
+### Annotated shot
+
+<AnnotatedShot
+  src="/showcase/dashboard.svg"
+  alt="Dashboard mock layout"
+  width={1600}
+  height={1000}
+  caption="The three regions that carry the workspace layout."
+  annotations={[
+    { x: 0, y: 0, w: 17, h: 100, label: "Persistent navigation con item activo" },
+    { x: 17, y: 0, w: 83, h: 8, label: "Top bar con breadcrumbs y acción primaria" },
+    { x: 17, y: 8, w: 83, h: 92, label: "Workspace: lista de items priorizada por fecha" },
+  ]}
+/>
+
+### Comparison triptych
+
+<Comparison
+  mode="triptych"
+  beforeLabel="Antes"
+  conceptLabel="Concepto"
+  afterLabel="Final"
+  before={<Figure src="/showcase/before.svg" alt="Estado anterior" width={600} height={400} />}
+  concept={<Figure src="/showcase/concept.svg" alt="Estado intermedio" width={600} height={400} />}
+  after={<Figure src="/showcase/after.svg" alt="Estado final" width={600} height={400} />}
+/>
+
+### Diagram (inline SVG)
+
+<Diagram caption="Pipeline de MDX a página: Velite tipa, Next renderiza, paper mode formatea.">
+  <svg viewBox="0 0 600 140" className="h-auto w-full" role="img" aria-label="Pipeline diagram">
+    <g fontFamily="ui-monospace, monospace" fontSize="11" fill="currentColor">
+      <g transform="translate(20 50)">
+        <rect
+          width="100"
+          height="40"
+          rx="6"
+          fill="currentColor"
+          fillOpacity="0.06"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <text x="50" y="25" textAnchor="middle">
+          MDX file
+        </text>
+      </g>
+      <g transform="translate(180 50)">
+        <rect
+          width="100"
+          height="40"
+          rx="6"
+          fill="currentColor"
+          fillOpacity="0.06"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <text x="50" y="25" textAnchor="middle">
+          Velite
+        </text>
+      </g>
+      <g transform="translate(340 50)">
+        <rect
+          width="100"
+          height="40"
+          rx="6"
+          fill="currentColor"
+          fillOpacity="0.06"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <text x="50" y="25" textAnchor="middle">
+          Next render
+        </text>
+      </g>
+      <g transform="translate(500 50)">
+        <rect
+          width="80"
+          height="40"
+          rx="6"
+          fill="currentColor"
+          fillOpacity="0.12"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <text x="40" y="25" textAnchor="middle">
+          Paper
+        </text>
+      </g>
+      <g stroke="currentColor" strokeWidth="1.5" fill="none">
+        <path d="M120 70 L180 70" markerEnd="url(#arr)" />
+        <path d="M280 70 L340 70" markerEnd="url(#arr)" />
+        <path d="M440 70 L500 70" markerEnd="url(#arr)" />
+      </g>
+      <defs>
+        <marker
+          id="arr"
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="6"
+          markerHeight="6"
+          orient="auto"
+        >
+          <path d="M0 0 L10 5 L0 10 z" fill="currentColor" />
+        </marker>
+      </defs>
+    </g>
+  </svg>
+</Diagram>
+
+### YouTube (privacy-enhanced)
+
+<YouTube
+  id="aqz-KE-bpKQ"
+  title="Big Buck Bunny (placeholder demo)"
+  caption="Soporta videos públicos o unlisted. Los private no se pueden embeber externamente."
+/>
+
+### BentoGrid (galería asimétrica)
+
+<BentoGrid
+  items={[
+    { src: "/showcase/hero.svg", alt: "Hero", span: 8, aspect: "16/9" },
+    { src: "/showcase/dashboard.svg", alt: "Dashboard", span: 4, aspect: "4/3" },
+    { src: "/showcase/frame-home.svg", alt: "Home frame", span: 4, aspect: "16/10" },
+    { src: "/showcase/frame-projects.svg", alt: "Projects frame", span: 4, aspect: "16/10" },
+    { src: "/showcase/frame-detail.svg", alt: "Detail frame", span: 4, aspect: "16/10" },
+    { src: "/showcase/before.svg", alt: "Before", span: 6, aspect: "3/2" },
+    { src: "/showcase/after.svg", alt: "After", span: 6, aspect: "3/2" },
+  ]}
+/>
+
+## Resultados
+
+<MetricGrid>
+  <Metric value="14" label="Componentes MDX" sublabel="paper + visual + embeds" />
+  <Metric value="2" label="Idiomas" sublabel="ES + EN paritarios" />
+  <Metric value="<200ms" label="TTFB local" sublabel="dev server" />
+</MetricGrid>
+
+## Pasos para autorear un caso nuevo
+
+1. Creá `content/projects/{locale}/{slug}/index.mdx` y co-locá tus assets en
+   esa misma carpeta (`./hero.png`, `./demo.mp4`, `./figma-*.png`).
+2. Abrí con `<Abstract>`, después una `<Figure fullBleed>` como hero. Una
+   composición arriba, una frase corta debajo, sin más.
+3. Estructurá en secciones numeradas: Contexto, Decisiones, Resultados,
+   Próximos pasos. Una visual cada 300-400 palabras.
+4. Cerrá con `<References>` si citaste fuentes externas. No es obligatorio
+   cuando no hay citas externas.
+
+## Patrones que no se renderizan en este sandbox
+
+Tres componentes necesitan assets externos o permisos de embed que el sandbox
+no tiene: video MP4, embed de demo en vivo, y Figma. Quedan acá como
+referencia de sintaxis.
+
+### `<FigmaEmbed>` con archivo compartido
+
+```mdx
+<FigmaEmbed
+  url="https://www.figma.com/file/abc123/Project?node-id=1%3A2"
+  title="Onboarding prototype"
+  aspect="16/9"
+  caption="Prototipo navegable. R reinicia."
+/>
+```
+
+Requiere que el archivo Figma esté en **"Anyone with the link can view"**.
+Community files no permiten embed (CloudFront devuelve 403). Para
+exploraciones tipográficas o frame stacks usá `<FrameGrid>` con PNG export.
+
+### `<Video>` con `fullBleed` y `demoHref`
+
+```mdx
+<Video
+  src="./demo.mp4"
+  poster="./demo-poster.jpg"
+  caption="Drag-and-drop interaction prototyped in Framer"
+  fullBleed
+  demoHref="https://demo.example.com"
+  demoLabel="Try it →"
+/>
+```
+
+Por defecto: `autoplay`, `muted`, `loop`, `playsInline`. Para clips de 5-10s
+sin sonido. El `demoHref` muestra un link "Try it →" al lado del caption.
+
+### `<DemoFrame>` con iframe sandboxed
+
+```mdx
+<DemoFrame
+  href="https://demo.example.com/workflow"
+  title="Workflow composer"
+  height="32rem"
+  caption="Drag a node onto the canvas to compose a workflow."
+/>
+```
+
+Renderiza un iframe con header tipo navegador (3 dots, URL chip, "Open ↗").
+Sólo funciona si el sitio destino permite framing.
+
+## Stack tipográfico
+
+<TechStack
+  items={["Source Serif 4", "Figtree", "Geist Mono", "Tailwind v4", "Velite", "next-intl"]}
+/>
+
+<References>
+  <Reference
+    id="tufte2001"
+    authors="Tufte, E. R."
+    year="2001"
+    title="The Visual Display of Quantitative Information"
+    venue="Graphics Press"
+  />
+  <Reference
+    id="krug2014"
+    authors="Krug, S."
+    year="2014"
+    title="Don't Make Me Think, Revisited"
+    venue="New Riders"
+  />
+</References>
