@@ -1,14 +1,21 @@
+import { notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getResearch } from "@/lib/content";
 import { ResearchListItem } from "@/components/content/research-list-item";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
+// TODO: remove this gate when /research has published content. Until then
+// the section is fully inaccessible (direct URLs 404). The code below is kept
+// intact so re-enabling is a one-line delete.
+const RESEARCH_ENABLED = false;
+
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props) {
+  if (!RESEARCH_ENABLED) return {};
   const { locale } = await params;
   const isEs = locale === "es";
   const typedLocale = locale as "es" | "en";
@@ -34,6 +41,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ResearchPage({ params }: Props) {
+  if (!RESEARCH_ENABLED) notFound();
   const { locale } = await params;
   setRequestLocale(locale);
 

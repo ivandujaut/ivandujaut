@@ -1,6 +1,10 @@
 import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+
+// TODO: remove this gate when /research has published content. Until then
+// /research/[slug] is fully inaccessible (direct URLs 404).
+const RESEARCH_ENABLED = false;
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon, Pdf01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
@@ -25,6 +29,7 @@ type Props = {
 };
 
 export function generateStaticParams() {
+  if (!RESEARCH_ENABLED) return [];
   const allPapers = [...getResearch("es"), ...getResearch("en")];
   return allPapers.map((paper) => ({
     locale: paper.locale,
@@ -33,6 +38,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props) {
+  if (!RESEARCH_ENABLED) return {};
   const { locale, slug } = await params;
   const paper = getResearchBySlug(locale as "es" | "en", slug);
 
@@ -68,6 +74,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ResearchDetailPage({ params }: Props) {
+  if (!RESEARCH_ENABLED) notFound();
   const { locale, slug } = await params;
   setRequestLocale(locale);
 

@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { getPosts, getProjects, getResearch } from "@/lib/content";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 
+// TODO: flip to true when /research has published content. Keeps the section
+// out of the sitemap (and out of search engines) while the routes 404.
+const RESEARCH_ENABLED = false;
+
 // Construye URLs absolutas para el sitemap manteniendo la misma forma que
 // los canonicals emitidos por Next.js: el root sin trailing slash, para que
 // Search Console no reporte inconsistencias entre `<loc>` y `rel="canonical"`.
@@ -48,7 +52,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", priority: 1.0, changeFrequency: "weekly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/projects", priority: 0.8, changeFrequency: "monthly" },
-    { path: "/research", priority: 0.8, changeFrequency: "monthly" },
+    ...(RESEARCH_ENABLED
+      ? ([{ path: "/research", priority: 0.8, changeFrequency: "monthly" }] as const)
+      : []),
     { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   ];
 
@@ -95,18 +101,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  const papers = [...getResearch("es"), ...getResearch("en")];
-  const paperGroups = groupByTranslationKey(papers);
-  const paperEntries: MetadataRoute.Sitemap = paperGroups.flatMap((group) => {
-    const languages = buildLanguages(group, "/research");
-    return group.map((paper) => ({
-      url: absoluteUrl(paper.locale, `/research/${paper.slug}`),
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-      alternates: { languages },
-    }));
-  });
+  const paperEntries: MetadataRoute.Sitemap = RESEARCH_ENABLED
+    ? groupByTranslationKey([...getResearch("es"), ...getResearch("en")]).flatMap((group) => {
+        const languages = buildLanguages(group, "/research");
+        return group.map((paper) => ({
+          url: absoluteUrl(paper.locale, `/research/${paper.slug}`),
+          lastModified: now,
+          changeFrequency: "monthly" as const,
+          priority: 0.6,
+          alternates: { languages },
+        }));
+      })
+    : [];
 
   return [...staticEntries, ...postEntries, ...projectEntries, ...paperEntries];
 }
