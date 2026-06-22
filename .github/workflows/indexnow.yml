@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           # Necesitamos historial para hacer diff entre before/after del push.
           fetch-depth: 0
