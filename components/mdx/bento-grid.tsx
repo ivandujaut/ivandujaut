@@ -9,6 +9,11 @@ interface BentoItem {
   rows?: 1 | 2 | 3;
   /** Cell aspect ratio. Default "4/3". Set "1/1" for square, "16/9" for wide. */
   aspect?: string;
+  /**
+   * How the image fills its cell. Default "cover" (fills, may crop).
+   * Use "contain" for very wide/tall shots that must be shown whole.
+   */
+  fit?: "cover" | "contain";
   caption?: string;
   width?: number;
   height?: number;
@@ -20,6 +25,13 @@ interface BentoGridProps {
   fullBleed?: boolean;
   /** Gap between cells. Default "1rem". */
   gap?: string;
+  /**
+   * Size rows to each cell's own aspect ratio instead of forcing every
+   * row to equal height. Use when mixing very different aspects (e.g. a
+   * wide banner alongside squares) so each image fits its frame exactly.
+   * Default false (all rows share one height, the bento look).
+   */
+  autoRows?: boolean;
 }
 
 const SPAN_CLASS: Record<NonNullable<BentoItem["span"]>, string> = {
@@ -56,19 +68,26 @@ const ROWS_CLASS: Record<NonNullable<BentoItem["rows"]>, string> = {
  *   { src: "/photos/sq-2.jpg", alt: "Square", span: 4, aspect: "1/1" },
  * ]} />
  */
-export function BentoGrid({ items, fullBleed = false, gap = "1rem" }: BentoGridProps) {
+export function BentoGrid({
+  items,
+  fullBleed = false,
+  gap = "1rem",
+  autoRows = false,
+}: BentoGridProps) {
   const wrapperClass = fullBleed ? "my-12 mx-[calc(50%-50vw)] w-screen px-6" : "my-8";
+  const rowSizing = autoRows ? "md:auto-rows-auto" : "md:auto-rows-fr";
 
   return (
     <div className={wrapperClass}>
       <ul
-        className="mx-auto grid w-full max-w-[1280px] list-none grid-cols-1 auto-rows-[minmax(0,auto)] pl-0! md:grid-cols-12 md:auto-rows-fr [&>li]:mb-0! [&>li]:list-none [&>li]:before:hidden"
+        className={`mx-auto grid w-full max-w-[1280px] list-none grid-cols-1 auto-rows-[minmax(0,auto)] pl-0! md:grid-cols-12 ${rowSizing} [&>li]:mb-0! [&>li]:list-none [&>li]:before:hidden`}
         style={{ gap }}
       >
         {items.map((item, i) => {
           const span = item.span ?? 4;
           const rows = item.rows ?? 1;
           const aspect = item.aspect ?? "4/3";
+          const fit = item.fit ?? "cover";
 
           return (
             <li
@@ -84,7 +103,7 @@ export function BentoGrid({ items, fullBleed = false, gap = "1rem" }: BentoGridP
                     src={item.src}
                     alt={item.alt}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    className={`${fit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-500 group-hover:scale-[1.02]`}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   />
                 </div>
