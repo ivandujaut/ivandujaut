@@ -52,7 +52,7 @@ export default async function ProjectsPage({ params }: Props) {
             <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {t("featured")}
             </h2>
-            <div className="space-y-1">
+            <div className="space-y-8">
               {featured.map((project) => (
                 <ProjectListItem
                   key={project.slug}
@@ -62,6 +62,17 @@ export default async function ProjectsPage({ params }: Props) {
                   year={project.year}
                   stack={project.stack}
                   status={project.status}
+                  variant="card"
+                  cover={
+                    project.cover
+                      ? {
+                          src: project.cover.src.src,
+                          alt: project.cover.alt,
+                          width: project.cover.src.width,
+                          height: project.cover.src.height,
+                        }
+                      : undefined
+                  }
                 />
               ))}
             </div>
@@ -73,7 +84,7 @@ export default async function ProjectsPage({ params }: Props) {
             <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {t("more")}
             </h2>
-            <div className="space-y-1">
+            <div className="space-y-8">
               {others.map((project) => (
                 <ProjectListItem
                   key={project.slug}
@@ -83,6 +94,17 @@ export default async function ProjectsPage({ params }: Props) {
                   year={project.year}
                   stack={project.stack}
                   status={project.status}
+                  variant="card"
+                  cover={
+                    project.cover
+                      ? {
+                          src: project.cover.src.src,
+                          alt: project.cover.alt,
+                          width: project.cover.src.width,
+                          height: project.cover.src.height,
+                        }
+                      : undefined
+                  }
                 />
               ))}
             </div>

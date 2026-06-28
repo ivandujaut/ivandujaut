@@ -130,7 +130,8 @@
     },
     "links": {
       "demo": "Ver demo",
-      "repo": "Repositorio"
+      "repo": "Repositorio",
+      "figma": "Figma"
     },
     "status": {
       "shipped": "Shipped",
