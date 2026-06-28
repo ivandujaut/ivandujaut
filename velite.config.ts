@@ -84,6 +84,7 @@ const projects = defineCollection({
       stack: s.array(s.string()).min(1),
       repo: s.string().url().optional(),
       demo: s.string().url().optional(),
+      figma: s.string().url().optional(),
       cover: s
         .object({
           src: s.image(),
