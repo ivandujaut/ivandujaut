@@ -2,7 +2,7 @@ import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { GithubIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import { GithubIcon, FigmaIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
@@ -121,6 +121,7 @@ export default async function ProjectPage({ params }: Props) {
   const newTabLabel = tA11y("opensInNewTab");
   const demoLabel = tProjects("links.demo");
   const repoLabel = tProjects("links.repo");
+  const figmaLabel = tProjects("links.figma");
   const stackLabel = tProjects("sections.stack");
   const homePath = localePath(typedLocale, "/");
   const projectsIndexPath = localePath(typedLocale, "/projects");
@@ -168,7 +169,7 @@ export default async function ProjectPage({ params }: Props) {
             />
           </div>
 
-          {(project.repo || project.demo) && (
+          {(project.repo || project.demo || project.figma) && (
             <div className="mt-6 flex flex-wrap gap-3">
               {project.demo && (
                 <a
@@ -197,6 +198,18 @@ export default async function ProjectPage({ params }: Props) {
                 >
                   <HugeiconsIcon icon={GithubIcon} size={14} strokeWidth={1.5} aria-hidden />
                   <span>{repoLabel}</span>
+                </a>
+              )}
+              {project.figma && (
+                <a
+                  href={project.figma}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${figmaLabel} (${newTabLabel})`}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+                >
+                  <HugeiconsIcon icon={FigmaIcon} size={14} strokeWidth={1.5} aria-hidden />
+                  <span>{figmaLabel}</span>
                 </a>
               )}
             </div>

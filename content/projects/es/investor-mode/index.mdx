@@ -1,0 +1,642 @@
+---
+title: "Modo Inversor para Roomix"
+tagline: "La capa de análisis de inversión que le falta a cada ficha de propiedad: de mostrar números a ayudar a decidir"
+description: "Una capa de producto que ideé sobre Roomix para responder si una propiedad es buena inversión, y para qué inversor. Investigué el dominio financiero, lo reencuadré de planilla a respuesta interpretada que calcula en vivo, y lo llevé de prototipo en Figma a un motor en TypeScript con tests."
+year: 2026
+role: "Design"
+status: "concept"
+featured: true
+stack: ["Figma", "TypeScript"]
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración editorial estilo serigrafía granulada: un pequeño edificio de departamentos en terracota, iluminado desde adentro por un halo de luz violeta, proyecta una sombra larga sobre una grilla en perspectiva, sobre un fondo índigo casi negro con puntos violetas flotando"
+repo: "https://github.com/ivandujaut/investor-mode"
+
+translationKey: "investor-mode"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+Tomé Roomix (el mayor buscador inmobiliario con IA de Argentina) y le diseñé la capa que le falta al que
+compra para invertir: una que no solo calcula cap rate, ROI y escenarios, sino que los interpreta y
+orienta la decisión sin dictarla. Mi primera versión era una calculadora que tiraba nueve números y decía
+"decidí vos"; la reencuadré en una respuesta que lidera con la conclusión, calcula en vivo y es honesta
+sobre el riesgo. Después la llevé de prototipo en Figma a un motor en TypeScript con tests. Research de
+dominio, diseño que interpreta y rigor de implementación, en una sola pieza.
+
+</Abstract>
+
+La mayoría de los buscadores inmobiliarios tratan a una propiedad como un lugar para vivir: ambientes,
+metros, barrio, precio. El inversor le hace otra pregunta al mismo aviso: ¿esto es un buen negocio, y
+para qué tipo de inversor? **Modo Inversor** es una capa que ideé y diseñé de punta a punta para
+responder esa pregunta adentro del producto, en lugar de mandar al usuario a una planilla aparte. La
+tesis de todo el caso cabe en una línea: mostrar números no es lo mismo que ayudar a decidir.
+
+Sobre una propiedad de ejemplo (Belgrano, USD 180.000, 30% de entrada) el motor devuelve:
+
+<MetricGrid>
+  <Metric label="Cap rate neto" value="2,98%" />
+  <Metric label="ROI a 1 año (contado)" value="+5,18%" />
+  <Metric label="Leverage ratio" value="3,33×" />
+</MetricGrid>
+
+<Callout type="info" title="Sin afiliación con Roomix">
+  [Roomix](https://roomix.ai/) es el mayor buscador inmobiliario con IA de Argentina, y me encantó
+  como producto: es de los que uso y sigo de cerca. Diseñar esta capa fue una práctica personal:
+  tomar un producto que me interesa y darle la feature que me gustaría ver. Es un ejercicio de
+  product thinking hecho por mi cuenta: no uso datos reales de Roomix ni conozco su roadmap, su
+  equipo o sus decisiones internas. Una propuesta conceptual y colaborativa, no una crítica.
+</Callout>
+
+## El contexto y la oportunidad
+
+**Roomix resuelve buscar y descubrir mejor que nadie; lo que falta es responder si una propiedad es un
+buen negocio. Ese es el hueco.**
+
+Roomix es el buscador inmobiliario con IA más grande de Argentina: analiza más de 500.000 publicaciones
+(departamentos, casas, terrenos, locales) en venta y alquiler, de inmobiliarias y de dueños directos. Su
+sello es la búsqueda en lenguaje natural ("escribí lo que buscás con tus palabras"), más colecciones de
+favoritos y alertas por WhatsApp. Es gratis, AI-first y cubre todo el país. Encima ya tiene una capa de
+herramientas: simulador de créditos hipotecarios, calculadoras de ajuste de alquiler (IPC/ICL), tasador
+online, detector de estafas. Es un producto que abraza la idea de "herramientas que te ayudan a decidir".
+
+Y justo ahí vi el hueco. Con todo eso, ninguna herramienta responde la pregunta del que compra para
+invertir: _"¿esta propiedad es un buen negocio?"_. El tasador te dice cuánto vale; el simulador
+hipotecario, cuánto pagás de cuota. Pero nadie conecta alquiler, precio, apreciación y financiación en
+una sola respuesta. Ese usuario termina, igual que antes, en una planilla de Excel.
+
+De ahí salió la idea del Modo Inversor: una capa sobre cualquier ficha de propiedad que responde
+_"¿esto es una buena inversión, y para qué tipo de inversor?"_. Encaja con el ADN de Roomix (AI-first,
+orientado a herramientas) y llena un vacío real.
+
+## El research: aprender un dominio de cero
+
+**Aprendí el dominio financiero de cero y lo destilé en una spec que se volvió la fuente de verdad del
+motor.**
+
+Para diseñar esto no me alcanzaba con entender a Roomix. Tuve que aprender el dominio
+financiero-inmobiliario desde cero: cap rate bruto y neto, NOI, ROI contado vs. apalancado, el efecto
+real del crédito sobre el retorno, y todo el contexto argentino (UVA, bimonetarismo, ajuste por
+inflación, el riesgo de que la cuota real en dólares se dispare).
+
+Destilé esa investigación en una **especificación de dominio (`domain.md`)**: las fórmulas, los inputs
+del usuario, los defaults macro y los escenarios. Esa spec se volvió la fuente de verdad del motor: todo
+lo que el prototipo calcula sale de ahí. No inventé números para que la demo se viera linda, los derivé
+del dominio que investigué.
+
+> Diseñar sobre un dominio que no dominás arranca con humildad: primero entenderlo bien, recién después
+> decidir cómo presentarlo. La mitad del trabajo fue research; la otra mitad, traducir ese rigor en una
+> experiencia que un no-analista entienda sin sentirse tonto. Y no salió a la primera: cada decisión de
+> abajo es una iteración.
+
+## El recorrido en una vista
+
+<FigmaEmbed
+  url="https://www.figma.com/proto/OaZpKtqsA2QSNjySgRLtxe/Roomix-%C2%B7-P%C3%A1gina-de-propiedad---Modo-Inversor?node-id=75-2036&starting-point-node-id=75%3A2036&scaling=min-zoom&content-scaling=fixed"
+  title="Prototipo navegable: Modo Inversor"
+  aspect="16/9"
+  caption="Tocá el prototipo (diseño v1 en Figma): scorecard, escenarios macro y simulador de crédito UVA, con los cálculos corriendo en vivo sobre la propiedad de ejemplo."
+/>
+
+## De calculadora a respuesta interpretada
+
+**El giro central: de una calculadora que tira números a una respuesta que los interpreta. Interpretar no
+es recomendar, es orientar.**
+
+Con el dominio entendido, diseñé una primera versión. Mostraba los tres escenarios en paralelo, unos
+nueve números, una comparación contra el barrio, y cerraba con un implícito _"decidí vos"_. Tenía todo el
+rigor del motor, y por eso mismo no servía. La probé y se sentía mal.
+
+> El diagnóstico de raíz: construía una calculadora para un usuario que vino a tomar una decisión y no
+> sabe interpretar los números. "Mostramos datos, no recomendaciones" se estaba usando como excusa para
+> no interpretar.
+
+El usuario de Roomix no es analista financiero. Tirarle cap rate neto más ROI contado y apalancado por
+tres escenarios, y arriba "decidí vos", le descarga toda la carga cognitiva encima. Lo paraliza: ve
+números, no sabe si invertir o no.
+
+La decisión central del proyecto fue pasar de _planilla_ a _respuesta interpretada_. La UI lidera con una
+respuesta en castellano ("2,98% de cap rate neto; para Belgrano es bajo: zona de apreciación, no de
+renta"), las capas avanzadas son opt-in, y todo cierra en una acción. Interpretar no es recomendar: es
+explicar qué significa el número y para quién tiene sentido, sin decir "comprá".
+
+## El criterio
+
+Antes de las pantallas, los principios. Cada decisión pasó por estos filtros:
+
+1. **Interpretar no es recomendar, pero orientar sí.** Explicar qué significa un número no es decir
+   "comprá". Pero dejar al usuario solo frente a un muro de cifras tampoco ayuda: lo paraliza. La salida
+   es decir _para quién_ tiene sentido ("te conviene si X, no si Y"). El usuario se auto-selecciona.
+2. **Lidera la conclusión, no el dato.** Cada bloque abre con qué significa para la decisión; el número
+   es la evidencia debajo.
+3. **Honestidad sobre persuasión.** En un producto de plata, la confianza se gana siendo honesto sobre
+   el riesgo, no escondiéndolo. "Ponés plata de tu bolsillo cada mes", "esto es una apuesta a la
+   apreciación", "no es un veredicto".
+4. **Matchear el modelo mental del usuario.** El que invierte ya vio scorecards escaneables en otros
+   productos financieros: lideran con un resumen de cinco segundos y profundizan a demanda. Me alineé con
+   ese lenguaje en vez de inventar uno.
+5. **Una gráfica se gana su lugar solo si muestra algo que un número no puede.** Si solo decora un
+   número, es peor que el número.
+6. **Restricción antes que muestrario.** Un lenguaje visual coherente parece producto; muchos tipos de
+   gráfica distintos parecen demo.
+
+## Cada decisión es una hipótesis de negocio
+
+**No diseño pantallas lindas: muevo una palanca de negocio.** Pienso cada decisión como una apuesta sobre
+el funnel: captar al usuario que invierte, que confíe, y que llegue a la acción.
+
+<Callout type="warning" title="Una hipótesis de negocio, leída desde afuera">
+  Lo que sigue es una hipótesis razonada a partir del producto público de Roomix, no conocimiento
+  interno. Mi lectura es que un portal así monetiza generando leads calificados para inmobiliarias,
+  y que el que compra para invertir es un segmento de alto valor que hoy se escapa a una planilla de
+  Excel. No tengo acceso a sus métricas ni a su modelo real: los impactos de abajo son hipótesis, no
+  números medidos. Distingo una cosa de la otra a propósito.
+</Callout>
+
+- **Simplificar la pantalla baja el abandono antes de la acción.** Una pantalla que abruma no es un
+  problema estético, es un usuario que rebota antes de contactar. Liderar con la respuesta acelera el
+  "ajá", y dejar la profundidad a un click atiende a dos públicos con una sola pantalla, sin sacrificar
+  al usuario sofisticado que quiere auditar el número.
+- **Una tarjeta de conversión que no responde es una promesa rota.** La tarjeta sticky mantiene la acción
+  a la vista mientras el usuario explora. La conecté al selector de escenario para que el retorno se
+  actualice en vivo: si el usuario juega con los supuestos y los números no se mueven, deja de creer en
+  el cálculo justo en el elemento que tiene que cerrar.
+- **La honestidad es estrategia de conversión, no su enemiga.** Un portal que infla números genera un
+  lead que se quema en la primera reunión con el corredor. Un producto honesto genera un lead calificado:
+  el que contacta ya sabe en qué se mete. Eso vale más para el corredor (mejor cierre) y construye marca
+  (el lugar que no te miente).
+- **El pulido comunica "producto serio".** En un producto financiero, un detalle descuidado le susurra al
+  usuario "esto es una maqueta, no le creas el número". La prolijidad no es vanidad: es reducir la
+  fricción de confianza que precede al clic.
+
+## Decisiones clave
+
+**Seis decisiones de diseño, cada una un trade-off explícito.**
+
+### De informe lineal a tablero escaneable
+
+El deep-dive era un informe lineal larguísimo para leer de arriba a abajo: sin un resumen arriba de
+todo, con el mismo dato (cap rate) apareciendo en tres formatos visuales distintos, y la card roja del
+ROI negativo como lo más pesado de la pantalla, justo el número que el copy decía que "no es un
+veredicto".
+
+Lo convertí en un tablero: un **scorecard de KPIs arriba** (cap rate, ROI, vs. barrio, apreciación),
+reactivo, como el resumen de cinco segundos que tiene todo producto del rubro; un **componente `Stat`
+único** que codifica cada número igual en toda la pantalla; una re-secuencia (resumen, tu input,
+escenarios, barrio, crédito, veredicto, acción); y la **financiación colapsada en un acordeón**, que saca
+el negativo del centro de gravedad y abre a demanda. La pantalla se acortó casi a la mitad.
+
+<AnnotatedShot
+  src="/showcase/investor-mode/scorecard.jpg"
+  alt="Scorecard del Modo Inversor: cap rate neto 2,98%, ROI a 1 año +5,18%, posición vs. el barrio -0,42 pts y apreciación 2,2%/año"
+  width={2162}
+  height={252}
+  caption="El scorecard separa lo que mide cada número en vez de fundirlos en un solo veredicto."
+  annotations={[
+    {
+      x: 0.5,
+      y: 6,
+      w: 23,
+      h: 88,
+      label: "Cap rate neto: mide el activo, rinde sin importar cómo se paga.",
+    },
+    {
+      x: 25,
+      y: 6,
+      w: 23,
+      h: 88,
+      label: "ROI a 1 año: mide al inversor, acá sí pesa cómo se financia.",
+    },
+    {
+      x: 49.5,
+      y: 6,
+      w: 23,
+      h: 88,
+      label: "vs. el barrio: percentil, no promedio; dónde cae en su mercado.",
+    },
+    {
+      x: 74,
+      y: 6,
+      w: 23,
+      h: 88,
+      label: "Apreciación: el supuesto macro que mueve esta inversión, no un dato del activo.",
+    },
+  ]}
+/>
+
+**El copy también lidera con la conclusión.** Antes, subtítulos descriptivos ("mismo inmueble, distintos
+supuestos macro"). Después, conclusiones que orientan:
+
+- _Escenarios:_ "Aun en el mejor escenario rinde por debajo del barrio. Es apreciación, no flujo mensual."
+- _Financiación:_ "Con crédito ponés plata de tu bolsillo cada mes. Solo cierra si esperás que se
+  valorice fuerte."
+- _Cierre:_ una línea ("Belgrano se compra por apreciación, no por renta") más un "te conviene si… / no
+  te conviene si…". El "no" va en gris, no en rojo: orienta, no condena.
+
+Mata la parálisis. El usuario que probó el original dijo, textual, _"veo solo números, estoy colapsado,
+no sé si invertir o no"_. La conclusión-líder y el "para quién" le dan un lugar donde pararse. Y de paso
+maté la jerga que excluye al no-analista: "neto de vacancia" pasó a "descontando meses vacíos", "NOI" a
+"resultado neto", "(no-cash)" a "(no es plata en mano)". Los términos que vienen con su explicación al
+lado (cap rate, apalancamiento) se quedan, cada uno con su popover.
+
+### La comparación contra el barrio: de dos barras a distribución con percentil
+
+La comparación era "esta propiedad vs. mediana": dos barras. La convertí en un **histograma de la
+distribución de cap rates del barrio**, con tu propiedad marcada y el **percentil como insight-líder**
+("Percentil 28: 7 de cada 10 deptos rinden más que este").
+
+Es la diferencia entre un portal y un producto de inversión. "Dos barras" te dice un dato; "dónde caés en
+la distribución" te da el contexto que define la decisión.
+
+<Figure
+  src="/showcase/investor-mode/distribucion-percentil.jpg"
+  alt="Distribución de precios del barrio con la propiedad marcada en su percentil"
+  width={2162}
+  height={552}
+  caption="Dónde cae la propiedad en la distribución del barrio: el percentil, no el promedio, es lo que dispara la lectura de renta vs. apreciación."
+/>
+
+### El escenario como modelo: yield vs. retorno
+
+Calcular el retorno con un solo número da una falsa sensación de precisión que el contexto argentino, con
+volatilidad macro alta, no soporta. Elegí tres escenarios (peor caso, caso base, mejor caso) porque son
+los puntos mínimos para definir un rango con centro. Subir a cinco o siete agrega categorías intermedias
+difíciles de comunicar ("moderadamente conservador" no le dice nada a nadie).
+
+Cuando hice reactivo el selector apareció una pregunta de modelo: ¿el escenario cambia el rendimiento de
+alquiler (cap rate) o solo la apreciación? La decisión: el escenario es una apuesta sobre la apreciación,
+no sobre el yield de hoy.
+
+- **Cambian con el escenario:** ROI, apreciación, resultado de la financiación, proyección de patrimonio.
+- **No cambian (a propósito):** cap rate, vs. barrio, percentil y flujo de caja, que son _yield_, lo que
+  rinde hoy, independiente de tu pronóstico.
+
+El cap rate (que es NOI sobre precio, puro presente) aparece igual en los tres escenarios. Es
+conceptualmente correcto y evita un error peligroso: que el usuario crea que "ser optimista" mejora lo
+que la propiedad rinde hoy. El cap rate es tu realidad del año 1; el escenario es tu apuesta sobre el
+futuro.
+
+<Figure
+  src="/showcase/investor-mode/escenarios.jpg"
+  alt="Los tres escenarios macro en paralelo: peor caso, caso base y mejor caso, cada uno con sus métricas"
+  width={666}
+  height={742}
+  caption="Los tres escenarios en paralelo. Lo que cambia entre ellos son los supuestos macro (vacancia, inflación, devaluación, apreciación), no los datos del activo."
+/>
+
+### Honestidad sobre la incertidumbre
+
+La decisión que más me importó. Tres movimientos, todos del lado del usuario:
+
+- **"Ponés USD X/mes de tu bolsillo".** Cuando el ROI total daba apenas positivo (+0,1%), el número en
+  verde se leía como ganancia. Pero ese +0,1% es un empate en papel (lo paga la apreciación), mientras en
+  efectivo ponés unos USD 326/mes porque el alquiler no cubre la cuota. Agregué, en ámbar y debajo del
+  ROI, "ponés USD X/mes de tu bolsillo". El verde dejó de leerse como ganancia.
+- **Caja vs. papel, explícito.** El "resultado total del año" es flujo de caja (real) más apreciación
+  (papel, "no es plata en mano"). Separarlos en el waterfall evita confundir un empate-en-papel con plata
+  en mano.
+- **El apalancamiento no "multiplica", es más volátil.** Al construir el gráfico de sensibilidad revisé
+  los números: el crédito no supera al contado en el rango realista (la cuota supera al cap rate). Corregí
+  el copy: la línea del crédito es más empinada (más volátil), no "mejor". Un dato que el modelo me
+  mostró y el copy de vendedor habría tapado.
+
+<Figure
+  src="/showcase/investor-mode/equity.jpg"
+  alt="Evolución del equity del inversor en el tiempo bajo distintos escenarios de apreciación"
+  width={2156}
+  height={932}
+  caption="El equity del inversor en el tiempo. Con crédito, el resultado depende de que la apreciación le gane al costo de poner plata del bolsillo cada mes."
+/>
+
+El [cap rate](https://www.investopedia.com/terms/c/capitalizationrate.asp) evalúa el activo sin importar
+cómo se paga. El [ROI](https://www.investopedia.com/articles/basics/10/guide-to-calculating-roi.asp)
+evalúa al inversor, donde sí importa cómo se paga (deuda, hipoteca, capital propio). El crédito convierte
+una renta floja en una apuesta a apreciación: el ROI apalancado se mueve respecto del contado en un factor
+igual al **leverage ratio** (valor del activo sobre capital propio). Con 30% de entrada, ese factor es
+3,33×, y amplifica tanto la ganancia como la pérdida:
+
+| Escenario de apreciación | ROI al contado (180k) | ROI con crédito (54k) |
+| ------------------------ | --------------------- | --------------------- |
+| 2,2% (moderado)          | +5,18%                | -6,16%                |
+| 5% (agresivo)            | +7,98%                | +3,17%                |
+
+<Figure
+  src="/showcase/investor-mode/sensibilidad.jpg"
+  alt="Gráfico de sensibilidad del ROI a la apreciación: la línea del crédito es más empinada que la del contado"
+  width={2154}
+  height={846}
+  caption="La línea del crédito es más empinada, no más alta: el apalancamiento sube la volatilidad, no garantiza más retorno. El motor lo enfatiza como más riesgo, no solo más ganancia potencial."
+/>
+
+### Para qué tipo de inversor: la segmentación
+
+La pregunta que el producto responde tiene dos partes: _"¿esto es buena inversión, y para qué tipo de
+inversor?"_. La segunda la resolví sobre dos ejes, no con un selector de personas.
+
+- **Eje 1, el objetivo (renta vs. apreciación), el principal.** El inversor de renta quiere flujo
+  mensual: le importan el cap rate, el percentil del barrio, cuánto le deja por mes. El de apreciación
+  apuesta a que el inmueble suba de valor: le importan el ROI total, la proyección a largo plazo, el
+  equity en el tiempo. Toda la tesis se apoya acá: Belgrano _es_ esto, "se compra por apreciación, no por
+  renta". El trabajo del producto es decirte a qué juego es buena la propiedad, para que veas si coincide
+  con tu juego.
+- **Eje 2, el financiamiento (contado vs. apalancado), que cruza al primero.** En Argentina el crédito
+  redefine el perfil de riesgo, no es un detalle de financiación: por eso es un eje, no una casilla.
+
+El movimiento obvio habría sido un selector Conservador / Moderado / Agresivo de perfiles. No lo
+construí, a propósito: esos tres no son tipos de inversor, son apuestas de apreciación macro (un
+pronóstico), no estrategias. Tratarlos como perfiles es un error conceptual. Por eso, en vez de fabricar
+personas, hago el eje real imposible de ignorar a través del copy y la estructura.
+
+<Comparison
+  beforeLabel="Perfiles explícitos: lo que descarté"
+  afterLabel="Distinción emergente: lo que elegí"
+  before={
+    <p>
+      Se ven más "producto", configurables. Pero fabrican una taxonomía (Conservador / Moderado /
+      Agresivo como personas) que el modelo no sostiene, y sobre-diseñan una v1.
+    </p>
+  }
+  after={
+    <p>
+      Mantiene el eje financiero real al frente, no inventa categorías, y es honesta sobre lo que
+      los datos soportan hoy. El costo: la orientación vive en el copy y la estructura, así que
+      generalizarla a cualquier propiedad es trabajo de v2.
+    </p>
+  }
+/>
+
+Lo que no segmenté, a propósito: alquiler tradicional vs. temporario tipo Airbnb, la segmentación que más
+falta. La dejé afuera porque depende de ocupación, estacionalidad y tarifa por noche (datos que no tengo
+y que el dominio no modela), y porque meterla a medias habría sido peor que no meterla. Es el candidato
+número uno a v2: en CABA, un monoambiente en Palermo puede rendir 2-3× en temporario contra el
+tradicional.
+
+### El prototipo es un producto, no un mockup
+
+El prototipo no es estático: computa. Mover el supuesto de alquiler propaga el recálculo por cap rate,
+escenarios, distribución y financiación. Construí un bloque "motor en vivo" que corre las fórmulas del
+dominio usando expresiones y condicionales nativos de Figma (suma, resta, multiplicación, división, más
+if/else), con la barra y el mensaje recalculando en tiempo real.
+
+El criterio acá fue no fingir capacidades: descubrí los límites reales de la "programación" de Figma y diseñé
+alrededor de ellos. La propiedad `characters` solo acepta string (no float) y las expresiones no formatean
+ni concatenan, así que los gráficos van por width (continuo, computado) y los números y mensajes por
+strings y umbrales. Las condicionales son como máximo dos bloques (if más else), y los tres estados se
+resuelven con "default más dos overrides". Es raro en un portfolio de diseño ver un prototipo que calcula
+en lugar de simular estados pre-horneados.
+
+**Y las gráficas, elegidas con criterio.** Exploré cuatro: un fan chart (proyección de valor a 10 años con
+banda de incertidumbre), un área apilada (equity en el tiempo), un donut (composición del cap rate) y
+gauges radiales (KPIs). Apliqué el criterio "una gráfica se gana su lugar solo si muestra lo que un número
+no puede", e integré dos, descarté dos:
+
+- **Fan chart, integrado.** Muestra trayectoria más incertidumbre: cuánto valdría tu propiedad en 10 años
+  según el escenario, con la banda abriéndose. Eso ningún número lo cuenta.
+- **Equity area, integrado.** Tu parte (equity es valor menos deuda) creciendo de la entrega a un
+  patrimonio mayor, por apreciación y amortización. El relato de la inversión apalancada hecho imagen.
+- **Gauges, descartados.** Un gauge sirve para "qué tan lleno está respecto a un máximo". El cap rate no
+  tiene máximo de 100%: obligaba a decodificar un arco para leer un número que ya estaba limpio.
+- **Donut, descartado.** Lindo, pero sumaba un tercer tipo de gráfica. Dos áreas que riman, más el
+  histograma y el waterfall, ya son un lenguaje coherente; donut y gauges lo convertían en un zoológico de
+  gráficas.
+
+Un lenguaje visual restringido parece producto; un muestrario parece demo. Descartar bien es diseñar.
+
+## El modelo por dentro: el problema bimonetario
+
+**El cap rate en USD no depende solo del alquiler: depende de si la devaluación le gana al ajuste. Ese es
+el corazón del modelo.**
+
+Acá está el detalle que diferencia un modelo serio para Argentina de una calculadora genérica. La
+propiedad se publica en USD pero el alquiler se cobra en ARS. Esa disociación obliga a dos supuestos que
+no existen en mercados estables como Madrid o Miami: qué tipo de cambio uso para convertir el ingreso, y
+cómo proyecto esa conversión durante la tenencia.
+
+La consecuencia es contraintuitiva: el retorno en USD no depende solo del ingreso neto de hoy, sino de si,
+a lo largo de la tenencia, la devaluación del peso le gana o no al ajuste del alquiler. La fórmula central
+del motor:
+
+```
+U₁ / U₀ = (1 + i) / (1 + d)
+```
+
+Donde `i` es la tasa de ajuste del alquiler (uso el ICL como proxy) y `d` la devaluación del peso vs. USD.
+Si `i > d`, el alquiler en USD crece; si `i < d`, cae. Es el concepto de
+[paridad de poder adquisitivo](https://www.investopedia.com/updates/purchasing-power-parity-ppp/)
+aplicado a un activo único. Por eso el cap rate es un solo número de hoy (el ingreso neto actual
+convertido a USD sobre el precio actual), pero el retorno a futuro no: bajo cada escenario, la misma
+propiedad rinde distinto según si la devaluación le gana o no al ajuste. Eso es exactamente lo que el
+motor proyecta en el ROI, no en el cap rate.
+
+Los defaults (vacancia, inflación, devaluación, apreciación por barrio) están construidos por
+triangulación de fuentes públicas: Zonaprop, INDEC, BCRA y La Nación. No hay vacancia medida oficialmente
+en CABA, así que el rango lo armé cruzando datos de oferta que sí existen, y lo marco como supuesto del
+modelo, no como dato. El marco regulatorio de fondo es el
+[DNU 70/2023](https://www.boletinoficial.gob.ar/detalleAviso/primera/300484/20231220), que liberó la
+elección de índice y moneda de ajuste.
+
+## Iteración: la pantalla seguía siendo "una banda"
+
+**Un usuario probó la pantalla y me dijo "no sé qué leer". Tenía razón, y el fix fue mostrar solo la
+respuesta por defecto y esconder el resto detrás de un opt-in.**
+
+Acá viene la parte incómoda. Apliqué el reencuadre (scorecard arriba, financiación colapsada) y se sentía
+bien. Pero le mostré la pantalla de análisis a un usuario y me dijo, textual: _"hay demasiada info, no sé
+qué leer."_ Tenía razón, y dolía: el proyecto nació para matar exactamente eso (la planilla que te
+paraliza), y la pantalla se había vuelto a llenar.
+
+El diagnóstico: había hecho disclosure progresivo a medias. Puse un scorecard arriba, pero dejé todo el
+informe debajo (motor, distribución, proyección a 10 años, financiación), apilado con el mismo peso
+visual. El veredicto quedaba al fondo, después de scrollear un muro. Era "respuesta más planilla", no
+"respuesta".
+
+El fix fue invertir la lógica. Por defecto, la pantalla muestra solo la respuesta: el veredicto en una
+línea, el scorecard (cuatro KPIs), el "te conviene si… / no si…", y la acción. Todo el resto (incluido el
+selector de escenario) colapsa detrás de un "ver el análisis detallado", interactivo y opt-in. La
+profundidad sigue ahí, a un click, pero no te la tira en la cara. La pantalla por defecto se redujo a poco
+más de un tercio y entra sin scroll.
+
+<Figure
+  src="/showcase/investor-mode/analisis-completo.jpg"
+  alt="El análisis detallado completo del Modo Inversor, la vista larga que quedó detrás de 'ver el análisis detallado'"
+  width={1440}
+  height={2495}
+  caption="El análisis completo no se borró: se movió detrás de un opt-in. La pantalla por defecto ahora abre con la respuesta, y esta profundidad queda a un click para el que quiere auditar el número."
+/>
+
+Lo que me llevo: disclosure progresivo hecho a medias sigue siendo sobrecarga. Y el mejor feedback es el
+que te marca que recommitiste el pecado que saliste a matar. Lo importante fue escucharlo y matar densidad
+sin ego, colapsando lo que yo mismo había construido.
+
+## Qué funciona y por qué
+
+- **El reencuadre.** Hay una tesis de producto, no solo una pantalla: de "planilla que descarga números"
+  a "herramienta que interpreta y orienta". Eso es lo que separa diseño de product thinking.
+- **La interactividad real.** El prototipo computa (alquiler, cap rate, escenarios, financiación, equity)
+  con expresiones de Figma. No es un mockup de estados.
+- **La honestidad.** Caja vs. papel, "ponés X/mes", "es una apuesta", el aviso de desvío del alquiler. El
+  producto respeta al usuario.
+- **La coherencia.** Design system con tokens (dark/light), un componente `Stat` consistente, y un
+  lenguaje de gráficas restringido.
+
+## Qué no funciona (todavía) y por qué
+
+Ser honesto sobre los huecos es parte del trabajo. Para una v1 está bien; para producción, no:
+
+- **Mobile no existe.** El real estate es mobilísimo. Es el hueco número uno de la v2. Lo prioricé
+  después porque la tesis (reencuadre, honestidad, interactividad) se prueba mejor en desktop primero.
+- **Datos reales.** La mediana, el percentil y los comparables son supuestos del motor, no data. Sin data
+  real, la confianza tiene techo.
+- **El journey muere en una propiedad.** No hay comparar ni guardar, y el inversor real evalúa cinco
+  propiedades a la vez.
+- **Accesibilidad.** Quedó pendiente el contraste AA del botón "Contactar" (verde sobre verde). Un pase de
+  a11y completo es deuda.
+- **Fragilidad de prototipo.** Algunas interacciones se resolvieron con overlays absolutos (los tabs) y
+  bindings de variables que se rompen si editás el texto directo: realidades de prototipar en Figma que en
+  código se resuelven distinto.
+
+## Lo que me llevo
+
+- **"No recomendamos" puede ser una excusa para no pensar.** La salida no es recomendar: es interpretar y
+  orientar _para quién_ sirve.
+- **La honestidad escala mejor que la persuasión** en productos de plata. El número en verde que esconde
+  el flujo negativo erosiona la confianza.
+- **Descartar es diseñar.** Las dos gráficas que no puse dicen tanto de mi criterio como las dos que sí.
+- **Recorrer el prototipo de corrido caza lo que el diseño estático esconde.** Tres bugs (dos de
+  alineación de tabs, uno de un binding cortado al editar texto) solo aparecieron interactuando. La QA en
+  vivo no es opcional.
+
+# Capítulo 2: el motor en código
+
+El prototipo de Figma _simulaba_ el cálculo (variables más expresiones). Este capítulo es lo que pasa
+cuando el prototipo deja de simular y empieza a calcular de verdad: un motor en TypeScript que toma una
+propiedad y devuelve sus métricas de inversión. Lógica pura, sin UI: hoy es solo el motor y sus tests.
+
+## El enfoque: TDD con el research como brújula
+
+El motor es **TypeScript estricto, sin dependencias de runtime, framework-agnostic** (después lo importa
+la UI; hoy no hay UI). Lo construí con TDD (red, green, refactor), y el detalle que lo vuelve demostrable
+en vez de "confiá en mí" es esta equivalencia:
+
+<Callout type="insight" title="Los casos resueltos del domain.md son los golden tests">
+  La cuota de unos USD 1.054, el ROI apalancado de -6,16%, el leverage de 3,33×: no los inventé para
+  que la demo cierre, salieron del research, y cada uno es un test que falla si el motor se desvía.
+  El research no fue solo para el diseño; fue la brújula del motor.
+</Callout>
+
+## Decisiones clave (en código)
+
+**Seis decisiones de implementación, todas ancladas a la spec del dominio.**
+
+### La spec de dominio es el contrato
+
+`domain.md` sección 3.3 define los inputs y outputs; el motor los implementa tal cual (`EngineInput` a
+`EngineOutput`, con los tres escenarios en paralelo). Cada constante lleva su `@see domain.md sección X`:
+no hay números mágicos, hay trazabilidad al research.
+
+### "Hoy" vs. "proyectado", garantizado por el tipo
+
+`calcNetCapRate` (alquiler de hoy) y `calcProjectedNetCapRate` (proyectado bajo macro) son dos funciones
+distintas. La tesis yield-vs-retorno del diseño ahora la enforzan los tipos y los tests, no un comentario.
+El ROI usa el cap rate proyectado porque es un retorno del año; mezclar "yield de hoy" con "apreciación
+del año" sería usar dos relojes distintos. Acá fue donde el test me marcó que me había equivocado.
+
+### Una sola fuente de verdad por fórmula
+
+`projectRent`, `calcOperatingBreakdown`, `computeFinancing`: cada cuenta vive una sola vez. El cap rate,
+el NOI y el ROI componen esas primitivas en lugar de repetirlas. Lo aprendí refactorizando: mi primera
+versión "des-dividía" el cap rate para recuperar el NOI; lo di vuelta para que el NOI sea el ladrillo y el
+cap rate derive de él, no al revés.
+
+### El escenario es una apuesta de apreciación, y el código lo dice
+
+`DEFAULT_SCENARIOS` codifica la tabla de la sección 2.5: lo que cambia entre Conservador, Moderado y
+Agresivo es vacancia más ajuste más devaluación más apreciación. El cap rate del activo no "mejora" por
+ser optimista. Y la vacancia vive en el escenario, no en la propiedad (es un supuesto macro, no un
+atributo del activo): un test que corría los tres escenarios con vacancias distintas me forzó a moverla
+ahí. El test maneja el diseño.
+
+### Convenciones que protegen
+
+Conceptos financieros universales en inglés (`priceUSD`, `capRateNet`); términos argentinos sin traducir
+(`expensasMonthlyUSD`, `ablQuarterlyUSD`, ICL, UVA). Cap rate como ratio decimal (`0.0293`): el ×100 vive
+en la UI, el motor no sabe de formato. La frontera de unidades es explícita.
+
+### Honestidad, también en el motor
+
+El ROI apalancado puede dar negativo (-6,16% en el caso E) y el motor lo devuelve tal cual: el flujo de
+caja negativo es real ("ponés plata de tu bolsillo cada mes"). El motor no maquilla y no dicta: devuelve
+datos estructurados por escenario, no un veredicto, la misma postura que el diseño.
+
+## Qué funciona y por qué
+
+- **Es demostrable.** 20 tests, typecheck estricto, cada métrica anclada a un caso resuelto del dominio.
+  La corrección no es una opinión, es una suite que corre.
+- **Es componible.** Fuentes únicas de verdad más wrappers que las componen. Cambiar la fórmula de la
+  cuota se toca en un solo lugar.
+- **Separa motor de presentación.** Ratio decimal, sin formato, sin UI: listo para que lo consuma la UI o
+  un test. `analyzeProperty(input)` es la única puerta de entrada.
+
+## Qué no funciona (todavía) y por qué
+
+- **v1 es a 1 año.** La proyección a 10 años (el equity y el fan chart del prototipo) es el segundo
+  módulo, todavía sin construir.
+- **UVA simplificado.** Modelé el crédito como USD a 8% TNA fija; el UVA real se denomina en UVAs (ajusta
+  por inflación vía CER). En atraso cambiario, eso subestima la cuota real. Está documentado como deuda de
+  v2 en el propio dominio: preferí una simplificación honesta y declarada antes que una falsa precisión.
+- **TIR y VAN afuera.** Las métricas que pesan el valor del dinero en el tiempo quedaron para v2:
+  requieren modelar el flujo período a período y no tienen fórmula cerrada (multiplican la complejidad por
+  dos o tres).
+- **Sin datos reales.** La mediana del barrio entra como input; el percentil y la distribución son v2. Los
+  defaults macro son defendibles para CABA a mayo 2026, pero son supuestos triangulados, no medición.
+
+## Lo que me llevo
+
+- **Los golden tests son el puente entre diseño y código.** Tener los casos resueltos del dominio
+  convirtió "implementar finanzas" en "hacer pasar números que ya validé".
+- **TDD encontró mis bugs conceptuales, no solo los typos.** El test del ROI cazó que usaba el cap rate de
+  hoy en vez del proyectado: un error de modelo, no de sintaxis. Sin el test, pasaba inadvertido.
+- **Refactorizar bajo verde da libertad.** Invertir la jerarquía NOI y cap rate, mover la vacancia al
+  escenario, extraer primitivas: todo con la red de los tests, sin miedo a romper algo en silencio.
+
+---
+
+_Próximo capítulo: conectar el motor a la interfaz, que `analyzeProperty` alimente el scorecard, los
+escenarios y la financiación reales, y cerrar la v2 (proyección a 10 años, distribución del barrio, UVA
+denominado en UVAs)._
+
+## Stack
+
+El caso tiene dos piezas. En diseño: prototipo navegable en Figma con un design system propio (Foundations
+y librería de componentes, con los estados tipados por las variables del motor). En código: el motor de
+cálculo ya está construido como una librería de TypeScript de lógica pura (cap rate, ROI, financiación y
+escenarios), cubierta con tests en Vitest y sin UI. La interfaz en Next.js y la persistencia en PostgreSQL
+son el siguiente capítulo.
+
+<TechStack items={["Figma", "Design system", "TypeScript", "Vitest", "Modelado financiero"]} />
+
+## Abierto a feedback
+
+Publico esto en parte para que me lo discutan. Aprendí el dominio financiero de cero para este proyecto,
+así que si trabajás en real estate, en finanzas, en producto o en diseño y ves algo que no cierra, me gustaría
+saberlo.
+
+**Sobre el diseño y el producto** (qué sacarías, agregarías o cambiarías):
+
+- La pantalla por defecto muestra solo la respuesta y esconde el análisis detrás de un opt-in.
+  ¿Te queda corta, o es el balance justo?
+- El bloque "te conviene si… / no te conviene si…": ¿orienta bien, o se cruza a recomendar?
+- Las gráficas que elegí para el análisis: ¿son las correctas? ¿Agregarías alguna, sacarías otra, y por qué?
+- Las señales de honestidad ("ponés USD X/mes", el ROI en ámbar): ¿suman confianza, o meten fricción de
+  más antes de la acción?
+- ¿Qué falta? (más allá de mobile, que ya sé que es el hueco número uno).
+
+**Sobre el análisis** (lo más técnico):
+
+- Los defaults macro (vacancia, inflación, devaluación, apreciación por barrio): los triangulé de fuentes
+  públicas, no son medición. ¿Los moverías, y con qué dato?
+- La simplificación del crédito UVA (lo modelo como USD a tasa fija). ¿Cuánto distorsiona en la práctica?
+- El eje renta vs. apreciación como distinción central. ¿Falta algún eje que cambie la decisión?
+
+Si algo de esto te hizo pensar, o pensás distinto, escribime.

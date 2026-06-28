@@ -166,6 +166,19 @@
   .prose-content a {
     text-decoration: underline;
   }
+
+  .prose-content table {
+    @apply my-6 w-full border-collapse text-sm;
+  }
+
+  .prose-content th,
+  .prose-content td {
+    @apply border-b border-border px-3 py-2 text-left align-top;
+  }
+
+  .prose-content th {
+    @apply font-semibold;
+  }
 }
 
 /* ============================================================
