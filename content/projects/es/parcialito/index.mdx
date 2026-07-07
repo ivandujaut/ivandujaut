@@ -1,0 +1,263 @@
+---
+title: "Parcialito"
+tagline: "El simulador de exámenes no es el producto: el loop de repaso que hace que el alumno vuelva, sí"
+description: "Un simulador de exámenes con motor de aprendizaje para chicos que preparan la OATec, construido desde el aula como docente resolviendo mi propio problema. De clear-by-mastering a repaso espaciado, y de 'la IA pone la nota' a 'la IA sugiere, el docente decide'."
+year: 2026
+role: "Full-stack"
+status: "shipped"
+featured: true
+stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Playwright", "GitHub Actions"]
+repo: "https://github.com/ivandujaut/rendi"
+demo: "https://getparcialito.com"
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración editorial estilo serigrafía granulada: una pila de hojas de examen en verde agua proyecta una larga sombra anaranjada hacia una llave iluminada desde atrás, sobre un fondo índigo casi negro con puntos violetas flotando"
+
+translationKey: "parcialito"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+Un domingo a la noche, antes de que existiera Parcialito, mi rutina era corregir a mano cada desarrollo de
+cada alumno de cada curso, hoja por hoja, y recién el lunes sabía en qué tema había fallado el curso
+entero. Parcialito es el simulador de exámenes que construí para sacarme eso de encima, para chicos que
+preparan la competencia OATec. La primera versión hacía que una pregunta fallada volviera hasta acertarla
+una vez, y después desapareciera para siempre. Funcionaba, y se sentía mal: acertar una vez no es
+aprender. La reencuadré en repaso espaciado, y apliqué el mismo criterio a la corrección con IA, que pasó
+de poner la nota a sugerirla, dejando al docente al mando. Hoy está en producción, y lo sigo usando con mis
+propios alumnos.
+
+</Abstract>
+
+## El contexto y la oportunidad
+
+La [OATec](https://www.oatec.org.ar/index.php/32-2/) (Olimpiada Argentina de Tecnología) es una competencia
+nacional pensada para despertar vocaciones científico-tecnológicas: los alumnos no solo resuelven
+ejercicios, tienen que aplicar método científico y justificar su razonamiento por escrito, no marcar una
+opción. Eso vuelve la corrección lenta incluso para un solo curso, y es justo el tipo de examen que un
+formulario de opción múltiple no puede evaluar. Mis alumnos la rinden todos los años, y esa es la práctica
+puntual sobre la que construí Parcialito.
+
+Herramientas como Forms o Kahoot ya resuelven "¿cómo tomo un examen online?". Ninguna resuelve la parte
+que a mí, como docente, me consumía el domingo: que la corrección de un desarrollo no es marcar una
+opción correcta, es leer un razonamiento y decidir cuánto vale. Del lado del alumno, el problema espejado
+es que practicar en papel no le devuelve nada hasta que yo termino de corregir, días después, cuando ya se
+olvidó qué había pensado al responder.
+
+**Parcialito** es la capa que diseñé para cerrar ambos lados a la vez, sin fotocopias y sin que la
+corrección de un desarrollo me robe la tarde:
+
+> "¿Cómo hago que mis alumnos practiquen solos, entiendan el error en el momento y vuelvan, sin que yo me
+> pase la tarde corrigiendo?"
+
+## De examen a loop de aprendizaje
+
+**El giro central: de un simulador que toma exámenes a un sistema que hace que el alumno vuelva a
+practicar. El examen es el anzuelo, el loop es el producto.**
+
+La OATec se rinde una vez al año. Si Parcialito solo tomara exámenes de práctica bien logrados, un alumno
+podría entrenar intensamente la semana previa y de todos modos llegar sin haber retenido lo que estudió
+dos meses antes, que es exactamente lo que pasaba en papel. Ese fue el reencuadre que organizó el resto de
+las decisiones: el valor no está en el examen bien resuelto en el momento, está en que el alumno vuelva a
+ver lo que ya falló, espaciado en el tiempo, hasta que se le pegue.
+
+Sobre ese mismo eje corre un segundo reencuadre, en la pieza más delicada del producto: la corrección con
+IA, que se cuenta más abajo.
+
+## El criterio
+
+Antes de las features, los principios. Cada decisión pasó por estos filtros:
+
+1. **¿Le devuelve tiempo al docente o le mejora el aprendizaje al alumno?** Si una feature no contesta
+   sí a ninguna de las dos, no entra.
+2. **El humano decide, la IA asiste.** La IA nunca es la autoridad final sobre una nota.
+3. **Honestidad antes que marketing.** Nada de métricas o testimonios fabricados en la landing.
+4. **Enviar y sentir antes que perfeccionar.** Un MVP que funciona y se prueba con uso real, antes de
+   construir el motor "correcto".
+5. **Table stakes no se venden como diferencial.** Si todos los competidores lo tienen, no es un
+   argumento de venta, aunque quede lindo en una card.
+
+## Decisiones clave
+
+### Del "acertaste una vez, listo" al repaso espaciado
+
+El caso más fuerte del proyecto es el loop de repaso. La v1 era clear-by-mastering: las preguntas que el
+alumno fallaba volvían a aparecer, y en cuanto las acertaba una vez, desaparecían para siempre. Se
+construyó, funcionaba, y se sentía mal. Un acierto de suerte "dominaba" una pregunta y el alumno no la
+volvía a ver nunca, que es exactamente lo contrario de lo que hace que un aprendizaje pegue.
+
+<Comparison
+  beforeLabel="v1: clear-by-mastering"
+  afterLabel="v2: repaso espaciado (Leitner)"
+  before={
+    <p>
+      Una pregunta fallada vuelve hasta que se acierta una vez, y ahí desaparece para siempre.
+      Simple de construir, pero confunde "acertar" con "aprender": un acierto de suerte cierra el
+      tema.
+    </p>
+  }
+  after={
+    <p>
+      La pregunta vuelve en intervalos crecientes (1, 3, 7, 16, 35 días), justo antes de que el
+      alumno la esté por olvidar. Modela la curva del olvido en vez de un booleano de acierto/error.
+    </p>
+  }
+/>
+
+El fix fue adoptar repaso espaciado tipo Leitner: la pregunta reaparece en intervalos crecientes, no
+binarios. Construí el motor de repaso sobre esa lógica: la tabla de intervalos vive en el esquema de la
+base (`db/21_review_srs.sql`) y el cliente que orquesta las sesiones de repaso, en `ReviewClient.tsx`. Es
+la decisión de la que más depende que un alumno vuelva a abrir la app la semana después del examen, no
+solo la noche anterior.
+
+### De "la IA pone la nota" a "la IA sugiere, el docente decide"
+
+La corrección de desarrollo (las preguntas que no son de opción múltiple) es la pieza que más rápido
+podría romper la confianza si sale mal. Descarté a propósito que la IA pusiera la nota final: el
+flujo original era feedback-first, sin calificación, y la IA solo señalaba qué estaba bien o mal
+razonado. Recién cuando el alumno necesitaba ver un resultado concreto para saber si aprobaba, sumé la
+nota, pero con una regla que no negocié: la IA sugiere, el docente confirma (`lib/domain/grading.ts`,
+`db/20_grading_nota.sql`).
+
+Un docente no adopta una herramienta que le saca el control de la nota, por más precisa que sea la IA:
+lo sé porque yo soy ese docente, y la primera vez que un desarrollo se corrigió solo, no confié en la
+nota hasta haberla revisado igual, lo cual anulaba el ahorro de tiempo que buscaba. Mantenerlo en el loop
+no es una limitación técnica que dejé para después: es la condición para que el producto se use.
+
+Esta decisión también tuvo su propia iteración incómoda: la primera versión de la pantalla de revisión
+tenía un botón "Aprobar" que dejaba pasar un borrador de nota sin que el docente lo hubiera leído en
+serio. Lo detecté usándolo yo mismo, y lo saqué: si el diseño permite aprobar sin leer, el "docente
+decide" es una ficción.
+
+### Modo práctica: integridad a cambio de aprendizaje inmediato
+
+En el modo de práctica libre, la respuesta correcta se revela siempre, apenas el alumno contesta.
+Acepté a sabiendas el riesgo de integridad (un alumno podría memorizar respuestas en vez de razonarlas) a
+cambio de la ganancia que más importa en este contexto: que el error se corrija en el momento en que se
+comete, no días después con la devolución del docente. Quedó anotado como deuda a resolver con un pool de
+preguntas más grande y randomización, no como algo que ignoré.
+
+### Lo que no construí, a propósito
+
+No hay pagos, no hay multi-materia, no hay gamificación con puntos ni app nativa. Construyo esto solo,
+fuera de mi horario de clase, y cada una de esas features es semanas de trabajo que le habría sacado al
+repaso espaciado o al corrector con IA, que son las dos piezas que realmente sostienen que un alumno
+vuelva. Generalizar a otras materias antes de saber si el loop funciona para una sola (OATec) habría sido
+construir ancho antes de construir hondo, con el mismo tiempo limitado.
+
+### La matemática no es el argumento de venta
+
+La landing tuvo, en algún momento, una card que decía algo como "la matemática se ve bien". La saqué. Es
+table stakes: cualquier simulador que use LaTeX o KaTeX renderiza fórmulas correctamente, así que no es un
+diferencial, es una expectativa mínima. Dejarla adentro habría gastado espacio de atención en la landing
+en algo que no mueve la decisión de adopción de un docente. El contraste real (papel y corrección manual
+vs. práctica que corrige y hace volver) está codificado en los arrays `PROBLEMS` / `SOLUTIONS` de
+`components/Landing.tsx`, y ese es el argumento que se queda.
+
+## Validar antes de construir
+
+**La corrección con IA no se construyó primero para después buscarle usuarios: nació de demanda
+validada.**
+
+Antes de escribir el corrector con IA, validé la necesidad con cuatro docentes reales. Quedó como regla
+de trabajo para el resto del proyecto: validar antes de construir, no construir y esperar que alguien lo
+necesite. Cada feature, además, se probó en staging antes de mergear a producción; nada llegó a producción
+sin que yo mismo lo hubiera usado primero. Para el flujo del alumno, hice además un research de UX
+comparando simuladores y apps de estudio existentes (`docs/benchmark-ux-alumno.md`), en vez de diseñar la
+experiencia de práctica a ciegas.
+
+El feedback más honesto no vino de los cuatro docentes, vino de usar mi propio producto: un examen
+puramente de desarrollo mostraba "0 de 0 respuestas correctas" al alumno, porque contaba preguntas de
+opción múltiple que ese examen ni siquiera tenía. Un docente que valida en una entrevista no encuentra ese
+bug; un docente que lo usa un martes a la mañana con un curso real, sí.
+
+## El motor por dentro: rigor de producto, no solo de código
+
+No es un prototipo de Figma ni una demo: es una web app en producción, y las decisiones técnicas
+sostienen las mismas garantías que ya conté (que el docente decida, que nada se rompa por atrás).
+
+- **Escala real:** cerca de 7.400 líneas de TypeScript/TSX y 1.900 de SQL, desplegada y en uso.
+- **Seguridad seria, no un detalle de implementación:** Row Level Security en Postgres más funciones
+  `security definer`, para que un alumno nunca pueda ver la clave de un examen ni escribir algo indebido
+  (`lib/supabaseServer.ts`, `db/02_rls.sql`). Esto es lo que hace sostenible, y no solo demostrable, que
+  "el docente decide": si el alumno pudiera leer la clave, la confianza en la corrección se cae.
+- **CI con cuatro gates** (tipos, lint, build y E2E con Playwright sobre autenticación real,
+  `.github/workflows/ci.yml`). Cada feature entró por PR con CI en verde, incluida la del corrector de IA.
+- **Un harness de evaluación propio para el corrector con IA** (`eval/grading/run.ts`): antes de cablear
+  el corrector a la interfaz, medí su calidad con un set de casos, en vez de asumir que "la IA corrige
+  bien" porque suena bien en la demo. Es la misma disciplina de "validar antes de construir", aplicada
+  puertas adentro del motor.
+
+## Qué funciona y por qué
+
+- **El reencuadre.** Parcialito no compite con Forms o Kahoot por tomar el examen; compite con el olvido
+  por traer al alumno de vuelta la semana siguiente.
+- **"El docente confirma" no se queda en el copy.** Está en el flujo (el corrector sugiere, no cierra) y
+  en la base de datos (RLS impide que un alumno lea la clave y rompa esa garantía por atrás). Si solo
+  viviera en el texto de la pantalla, sería una promesa de marketing, no una propiedad del sistema.
+- **La validación real antes de construir.** Cuatro docentes antes del corrector con IA, staging antes de
+  cada merge, un harness de evaluación antes de exponer el corrector a un alumno real.
+- **La honestidad en la landing.** El argumento es "lo hizo y lo usa un docente", verificable, no una
+  cifra de conversión inventada.
+
+## Qué no funciona (todavía) y por qué
+
+Ser honesto sobre los huecos es parte del trabajo:
+
+- **Integridad del modo práctica, sin resolver.** Revela siempre la respuesta; queda pendiente un pool más
+  grande y randomización para que memorizar deje de ser una estrategia viable.
+- **Tipos de la base de datos a mano.** `lib/db.types.ts` no se genera todavía desde el CLI de Supabase:
+  riesgo de que se desincronice del schema real.
+- **Cron en el plan Hobby corre diario.** La corrección con IA se dispara on-demand por el docente; el
+  cron es solo la red de seguridad, no el camino principal, pero un plan superior lo haría más frecuente.
+- **Sin unit tests.** La estrategia fue E2E de los flujos críticos con Playwright; cubre el camino feliz y
+  los flujos de autenticación, pero deja huecos que un unit test agarraría más barato.
+- **Accesibilidad parcial.** El focus-trap de los diálogos está resuelto a medias, y falta un sweep de
+  contraste WCAG completo.
+- **Contenido acotado.** Hoy corre sobre un examen modelo real; expandir el banco de contenido es
+  condición para escalar a más docentes.
+
+## Lo que me llevo
+
+- Si reconstruyera Parcialito de cero, empezaría por el repaso espaciado y dejaría el corrector con IA
+  para después: la corrección era el dolor que más gritaba, pero la retención (que el alumno vuelva) era
+  el problema real, y tardé más de la cuenta en priorizarlo.
+- El botón "Aprobar" que aprobaba una nota sin que la hubiera leído (ver más arriba) me corrió el criterio
+  de QA: probar la interacción completa con un curso real, no solo revisar que la pantalla se vea bien.
+- Descartar la card de matemática (ver más arriba) me costó más de lo que debería, justamente porque se
+  veía bien: la pregunta correcta no es "¿queda prolijo?", es "¿mueve la decisión de un docente?".
+
+## Stack
+
+Next.js con TypeScript de punta a punta, Supabase (Postgres con Row Level Security y funciones
+`security definer`) como backend, corrección de desarrollo asistida por IA con un harness de evaluación
+propio antes de exponerla, y CI con cuatro gates (tipos, lint, build, E2E con Playwright) sobre cada PR.
+
+<TechStack
+  items={[
+    "Next.js",
+    "TypeScript",
+    "Supabase",
+    "PostgreSQL",
+    "Row Level Security",
+    "Playwright",
+    "GitHub Actions",
+    "Corrección asistida por IA",
+  ]}
+/>
+
+## Abierto a feedback
+
+Mi apuesta es que el diferencial de Parcialito no es tomar exámenes, es el loop de aprendizaje: repaso
+espaciado más corrección con IA con el docente en control. Publico esto para que me lo discutan:
+
+- ¿Dónde ven el mayor riesgo: en la disposición del docente a confiar la corrección de desarrollo a una
+  IA (aunque él confirme la nota), o en la retención del alumno una vez que pasa la novedad?
+- ¿A quién priorizarían monetizar primero: al docente que adopta, a la institución, o a un modelo B2C
+  directo al alumno?
+- El modo práctica revela siempre la respuesta, a cambio de aprendizaje inmediato. ¿Es el trade-off
+  correcto, o la integridad debería pesar más incluso en una v1?
+- ¿Qué le falta al loop docente-alumno para que un colegio, no solo un docente individual, lo adopte?
+
+Si algo de esto te hizo pensar distinto, escribime.
