@@ -88,7 +88,7 @@ export function getRelatedPosts(
 // ============================================================================
 
 export function getProjects(locale: Locale) {
-  return projects.filter(byLocale(locale)).filter(isVisible).sort(byYearDesc);
+  return projects.filter(byLocale(locale)).filter(isVisible).sort(byDateDesc);
 }
 
 export function getFeaturedProjects(locale: Locale) {
