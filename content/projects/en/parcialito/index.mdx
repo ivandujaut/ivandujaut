@@ -1,0 +1,263 @@
+---
+title: "Parcialito"
+tagline: "The exam simulator isn't the product: the review loop that brings the student back is"
+description: "An exam simulator with a learning engine for students preparing for OATec, built from inside the classroom by a teacher solving his own problem. From clear-by-mastering to spaced repetition, and from 'the AI grades' to 'the AI suggests, the teacher decides'."
+year: 2026
+role: "Full-stack"
+status: "shipped"
+featured: true
+stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Playwright", "GitHub Actions"]
+repo: "https://github.com/ivandujaut/rendi"
+demo: "https://getparcialito.com"
+cover:
+  src: ./cover.jpg
+  alt: "Editorial illustration in grainy screen-print style: a stack of exam sheets in seafoam green casts a long orange shadow toward a backlit key, against a near-black indigo background with floating violet dots"
+
+translationKey: "parcialito"
+draft: false
+---
+
+<Abstract label="At a glance">
+
+On a Sunday night, before Parcialito existed, my routine was grading every open-ended answer from every
+student in every class by hand, sheet by sheet, and only finding out on Monday which topic the whole
+class had failed. Parcialito is the exam simulator I built to get that off my back, for students
+preparing for the OATec competition. The first version made a missed question keep coming back until the
+student got it right once, and then it disappeared forever. It worked, and it felt wrong: getting
+something right once isn't the same as learning it. I reframed it around spaced repetition, and applied
+the same standard to AI grading, which went from assigning the grade to suggesting it, leaving the
+teacher in charge. It's in production today, and I still use it with my own students.
+
+</Abstract>
+
+## The context and the opportunity
+
+[OATec](https://www.oatec.org.ar/index.php/32-2/) (Olimpiada Argentina de Tecnología) is a national
+competition meant to spark scientific and technological vocations: students don't just solve exercises,
+they have to apply the scientific method and justify their reasoning in writing, not just pick an option.
+That makes grading slow even for a single class, and it's exactly the kind of exam a multiple-choice form
+can't evaluate. My students sit it every year, and that's the specific practice Parcialito was built
+around.
+
+Tools like Forms or Kahoot already solve "how do I run an exam online?". None of them solve the part that
+actually ate my Sundays: grading an open-ended answer isn't marking a correct option, it's reading a line
+of reasoning and deciding how much it's worth. On the student's side, the mirrored problem is that
+practicing on paper gives nothing back until I finish grading, days later, by which point they've
+forgotten what they were even thinking when they answered.
+
+**Parcialito** is the layer I designed to close both sides at once, with no photocopies and without
+letting a single open-ended answer eat my afternoon:
+
+> "How do I get my students to practice on their own, understand the mistake in the moment, and come
+> back, without me losing an afternoon to grading?"
+
+## From exam to learning loop
+
+**The central pivot: from a simulator that runs exams to a system that gets the student to come back and
+practice. The exam is the hook, the loop is the product.**
+
+OATec is sat once a year. If Parcialito only ran well-built practice exams, a student could train hard the
+week before and still show up without having retained what they studied two months earlier, which is
+exactly what happened on paper. That was the reframe that organized every decision after it: the value
+isn't in the exam solved well in the moment, it's in the student coming back to revisit what they already
+got wrong, spaced out over time, until it sticks.
+
+That same axis runs through a second reframe, in the most delicate piece of the product: AI-assisted
+grading, covered further down.
+
+## The criteria
+
+Before the features, the principles. Every decision passed through these filters:
+
+1. **Does it give the teacher back time, or improve the student's learning?** If a feature doesn't answer
+   yes to either, it doesn't ship.
+2. **The human decides, the AI assists.** The AI is never the final authority on a grade.
+3. **Honesty over marketing.** No fabricated metrics or testimonials on the landing page.
+4. **Ship and feel it before perfecting it.** An MVP that works and gets tested with real use, before
+   building the "correct" engine.
+5. **Table stakes don't get sold as a differentiator.** If every competitor already has it, it's not a
+   selling point, even if it looks nice on a card.
+
+## Key decisions
+
+### From "get it right once, done" to spaced repetition
+
+The strongest case in the project is the review loop. V1 was clear-by-mastering: questions the student
+got wrong kept reappearing, and the moment they got one right, it disappeared for good. It got built, it
+worked, and it felt wrong. A lucky guess "mastered" a question and the student never saw it again, which
+is the exact opposite of what makes learning stick.
+
+<Comparison
+  beforeLabel="v1: clear-by-mastering"
+  afterLabel="v2: spaced repetition (Leitner)"
+  before={
+    <p>
+      A missed question comes back until it's answered correctly once, and then it disappears for
+      good. Simple to build, but it confuses "getting it right" with "learning it": a lucky guess
+      closes the topic.
+    </p>
+  }
+  after={
+    <p>
+      The question comes back at growing intervals (1, 3, 7, 16, 35 days), right before the student
+      is about to forget it. It models the forgetting curve instead of a right/wrong boolean.
+    </p>
+  }
+/>
+
+The fix was adopting Leitner-style spaced repetition: the question resurfaces at growing intervals, not
+as a binary. I built the review engine on that logic: the interval table lives in the database schema
+(`db/21_review_srs.sql`), and the client that orchestrates review sessions is in `ReviewClient.tsx`. This
+is the decision that most determines whether a student opens the app again the week after the exam, not
+just the night before.
+
+### From "the AI grades" to "the AI suggests, the teacher decides"
+
+Grading open-ended answers (the questions that aren't multiple choice) is the piece most likely to break
+trust fast if it goes wrong. I deliberately ruled out having the AI assign the final grade: the original
+flow was feedback-first, ungraded, and the AI only flagged what reasoning was sound or shaky. Only once
+students needed to see a concrete result to know if they'd passed did I add a grade, but with a rule I
+didn't negotiate on: the AI suggests, the teacher confirms (`lib/domain/grading.ts`,
+`db/20_grading_nota.sql`).
+
+A teacher doesn't adopt a tool that takes grading control away from them, no matter how accurate the AI
+is: I know because I am that teacher, and the first time an open-ended answer got graded on its own, I
+didn't trust the grade until I'd reviewed it anyway, which cancelled out the time I was trying to save.
+Keeping the teacher in the loop isn't a technical limitation I left for later: it's the condition for the
+product to actually get used.
+
+This decision had its own uncomfortable iteration too: the first version of the review screen had an
+"Approve" button that let a draft grade through without the teacher having actually read it. I caught it
+using it myself, and pulled it: if the design lets you approve without reading, "the teacher decides" is
+a fiction.
+
+### Practice mode: integrity traded for immediate learning
+
+In free practice mode, the correct answer is always revealed the moment the student answers. I knowingly
+accepted the integrity risk (a student could memorize answers instead of reasoning through them) in
+exchange for the gain that matters most in this context: the mistake gets corrected the moment it's made,
+not days later with the teacher's feedback. It's logged as debt to fix with a larger question pool plus
+randomization, not something I ignored.
+
+### What I didn't build, on purpose
+
+There's no payments, no multi-subject support, no points-based gamification, no native app. I build this
+alone, outside my teaching hours, and each of those features is weeks of work that would have come out of
+spaced repetition or AI grading, the two pieces that actually hold up the loop that brings a student back.
+Generalizing to other subjects before knowing whether the loop even works for one (OATec) would have been
+building wide before building deep, with the same limited time.
+
+### Math isn't the selling point
+
+The landing page once had a card that said something like "the math renders well." I cut it. It's table
+stakes: any simulator using LaTeX or KaTeX renders formulas correctly, so it's not a differentiator, it's
+a baseline expectation. Leaving it in would have spent attention on the landing page on something that
+doesn't move a teacher's adoption decision. The real contrast (paper and manual grading vs. practice that
+corrects and brings students back) is encoded in the `PROBLEMS` / `SOLUTIONS` arrays in
+`components/Landing.tsx`, and that's the argument that stays.
+
+## Validate before building
+
+**AI grading wasn't built first and pointed at users afterward: it came out of validated demand.**
+
+Before writing the AI grader, I validated the need with four real teachers. It became a working rule for
+the rest of the project: validate before building, don't build and hope someone needs it. Every feature,
+on top of that, got tested in staging before merging to production; nothing shipped without me using it
+myself first. For the student-facing flow, I also ran a UX benchmark comparing existing exam simulators
+and study apps (`docs/benchmark-ux-alumno.md`), instead of designing the practice experience blind.
+
+The most honest feedback didn't come from the four teachers, it came from using my own product: an
+exam that was purely open-ended showed the student "0 out of 0 correct answers," because it was counting
+multiple-choice questions that exam didn't even have. A teacher validating in an interview doesn't catch
+that bug; a teacher using it on a Tuesday morning with a real class does.
+
+## The engine underneath: product rigor, not just code
+
+This isn't a Figma prototype or a demo: it's a production web app, and the technical decisions back up
+the same guarantees already described above (the teacher decides, nothing breaks that from behind).
+
+- **Real scale:** around 7,400 lines of TypeScript/TSX and 1,900 of SQL, deployed and in use.
+- **Security taken seriously, not an implementation detail:** Row Level Security in Postgres plus
+  `security definer` functions, so a student can never see an exam's answer key or write something they
+  shouldn't (`lib/supabaseServer.ts`, `db/02_rls.sql`). This is what makes "the teacher decides" hold up,
+  not just get claimed: if a student could read the answer key, trust in the grading would collapse.
+- **CI with four gates** (types, lint, build, and E2E with Playwright over real auth,
+  `.github/workflows/ci.yml`). Every feature went in through a PR with green CI, including the AI grader.
+- **A custom evaluation harness for the AI grader** (`eval/grading/run.ts`): before wiring the grader into
+  the UI, I measured its quality against a set of cases, instead of assuming "the AI grades well" because
+  it looked good in a demo. It's the same discipline as validating before building, applied inside the
+  engine itself.
+
+## What works and why
+
+- **The reframe.** Parcialito doesn't compete with Forms or Kahoot on running the exam; it competes with
+  forgetting on bringing the student back the following week.
+- **"The teacher confirms" doesn't just live in the copy.** It's in the flow (the grader suggests, it
+  doesn't close the loop) and in the database (RLS keeps a student from reading the answer key and
+  breaking that guarantee from behind). If it only lived in the screen's text, it would be a marketing
+  promise, not a property of the system.
+- **Real validation before building.** Four teachers before the AI grader, staging before every merge, an
+  evaluation harness before exposing the grader to a real student.
+- **Honesty on the landing page.** The pitch is "a teacher built this and uses it," verifiable, not a
+  fabricated conversion number.
+
+## What doesn't work (yet) and why
+
+Being honest about the gaps is part of the job:
+
+- **Practice mode integrity, unresolved.** It always reveals the answer; a larger question pool plus
+  randomization is still pending to make memorizing a non-viable strategy.
+- **Database types written by hand.** `lib/db.types.ts` isn't generated from the Supabase CLI yet: it
+  risks drifting out of sync with the real schema.
+- **Cron on the Hobby plan runs daily.** AI grading fires on-demand from the teacher; the cron is just the
+  safety net, not the main path, but a higher-tier plan would make it more frequent.
+- **No unit tests.** The strategy was E2E coverage of critical flows with Playwright; it covers the happy
+  path and auth flows, but leaves gaps a unit test would catch more cheaply.
+- **Partial accessibility.** Dialog focus-trapping is only half-solved, and a full WCAG contrast sweep is
+  still missing.
+- **Limited content.** It runs on one real model exam today; expanding the content bank is a condition for
+  scaling to more teachers.
+
+## What I'm taking away
+
+- If I rebuilt Parcialito from scratch, I'd start with spaced repetition and leave the AI grader for
+  later: grading was the loudest pain, but retention (getting the student to come back) was the real
+  problem, and it took me longer than it should have to prioritize it.
+- The "Approve" button that let a grade through unread (see above) reset my QA standard: test the full
+  interaction with a real class, not just check that the screen looks right.
+- Cutting the math card (see above) cost me more than it should have, precisely because it looked good:
+  the right question isn't "does it look polished," it's "does it move a teacher's decision."
+
+## Stack
+
+Next.js with TypeScript end to end, Supabase (Postgres with Row Level Security and `security definer`
+functions) as the backend, AI-assisted grading of open-ended answers backed by a custom evaluation
+harness before exposing it, and CI with four gates (types, lint, build, E2E with Playwright) on every PR.
+
+<TechStack
+  items={[
+    "Next.js",
+    "TypeScript",
+    "Supabase",
+    "PostgreSQL",
+    "Row Level Security",
+    "Playwright",
+    "GitHub Actions",
+    "AI-assisted grading",
+  ]}
+/>
+
+## Open to feedback
+
+My bet is that Parcialito's real differentiator isn't running exams, it's the learning loop: spaced
+repetition plus AI grading with the teacher in control. I'm publishing this to have it challenged:
+
+- Where do you see the bigger risk: a teacher's willingness to trust AI grading of open-ended answers
+  (even if they confirm the grade), or student retention once the novelty wears off?
+- Who would you prioritize monetizing first: the teacher who adopts it, the institution, or a direct
+  B2C model aimed at the student?
+- Practice mode always reveals the answer, in exchange for immediate learning. Is that the right
+  trade-off, or should integrity weigh more even at v1?
+- What's missing from the teacher-student loop for a school, not just an individual teacher, to adopt it?
+
+If any of this made you think differently, write to me.
