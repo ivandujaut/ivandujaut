@@ -76,20 +76,18 @@ Before the features, the principles. Every decision passed through these filters
 3. **Honesty over marketing.** No fabricated metrics or testimonials on the landing page.
 4. **Ship and feel it before perfecting it.** An MVP that works and gets tested with real use, before
    building the "correct" engine.
-5. **Table stakes don't get sold as a differentiator.** If every competitor already has it, it's not a
-   selling point, even if it looks nice on a card.
 
 ## Key decisions
 
 ### From "get it right once, done" to spaced repetition
 
-The strongest case in the project is the review loop. V1 was clear-by-mastering: questions the student
-got wrong kept reappearing, and the moment they got one right, it disappeared for good. It got built, it
-worked, and it felt wrong. A lucky guess "mastered" a question and the student never saw it again, which
+The strongest case in the project is the review loop. V1 was simple: questions the student got wrong kept
+reappearing, and the moment they got one right, it disappeared for good. It got built, it worked, and it
+felt wrong. A lucky guess "mastered" a question and the student never saw it again, which
 is the exact opposite of what makes learning stick.
 
 <Comparison
-  beforeLabel="v1: clear-by-mastering"
+  beforeLabel="v1: repeat until correct"
   afterLabel="v2: spaced repetition (Leitner)"
   before={
     <p>
@@ -145,17 +143,8 @@ randomization, not something I ignored.
 There's no payments, no multi-subject support, no points-based gamification, no native app. I build this
 alone, outside my teaching hours, and each of those features is weeks of work that would have come out of
 spaced repetition or AI grading, the two pieces that actually hold up the loop that brings a student back.
-Generalizing to other subjects before knowing whether the loop even works for one (OATec) would have been
-building wide before building deep, with the same limited time.
-
-### Math isn't the selling point
-
-The landing page once had a card that said something like "the math renders well." I cut it. It's table
-stakes: any simulator using LaTeX or KaTeX renders formulas correctly, so it's not a differentiator, it's
-a baseline expectation. Leaving it in would have spent attention on the landing page on something that
-doesn't move a teacher's adoption decision. The real contrast (paper and manual grading vs. practice that
-corrects and brings students back) is encoded in the `PROBLEMS` / `SOLUTIONS` arrays in
-`components/Landing.tsx`, and that's the argument that stays.
+Generalizing to other subjects before knowing whether the loop even works for one (OATec) would have meant
+opening new fronts instead of securing the one I already have, with the same limited time.
 
 ## Validate before building
 
@@ -177,7 +166,6 @@ that bug; a teacher using it on a Tuesday morning with a real class does.
 This isn't a Figma prototype or a demo: it's a production web app, and the technical decisions back up
 the same guarantees already described above (the teacher decides, nothing breaks that from behind).
 
-- **Real scale:** around 7,400 lines of TypeScript/TSX and 1,900 of SQL, deployed and in use.
 - **Security taken seriously, not an implementation detail:** Row Level Security in Postgres plus
   `security definer` functions, so a student can never see an exam's answer key or write something they
   shouldn't (`lib/supabaseServer.ts`, `db/02_rls.sql`). This is what makes "the teacher decides" hold up,
@@ -226,8 +214,6 @@ Being honest about the gaps is part of the job:
   problem, and it took me longer than it should have to prioritize it.
 - The "Approve" button that let a grade through unread (see above) reset my QA standard: test the full
   interaction with a real class, not just check that the screen looks right.
-- Cutting the math card (see above) cost me more than it should have, precisely because it looked good:
-  the right question isn't "does it look polished," it's "does it move a teacher's decision."
 
 ## Stack
 

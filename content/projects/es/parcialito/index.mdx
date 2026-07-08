@@ -76,20 +76,18 @@ Antes de las features, los principios. Cada decisión pasó por estos filtros:
 3. **Honestidad antes que marketing.** Nada de métricas o testimonios fabricados en la landing.
 4. **Enviar y sentir antes que perfeccionar.** Un MVP que funciona y se prueba con uso real, antes de
    construir el motor "correcto".
-5. **Table stakes no se venden como diferencial.** Si todos los competidores lo tienen, no es un
-   argumento de venta, aunque quede lindo en una card.
 
 ## Decisiones clave
 
 ### Del "acertaste una vez, listo" al repaso espaciado
 
-El caso más fuerte del proyecto es el loop de repaso. La v1 era clear-by-mastering: las preguntas que el
-alumno fallaba volvían a aparecer, y en cuanto las acertaba una vez, desaparecían para siempre. Se
-construyó, funcionaba, y se sentía mal. Un acierto de suerte "dominaba" una pregunta y el alumno no la
+El caso más fuerte del proyecto es el loop de repaso. La v1 era simple: las preguntas que el alumno
+fallaba volvían a aparecer, y en cuanto las acertaba una vez, desaparecían para siempre. Se construyó,
+funcionaba, y se sentía mal. Un acierto de suerte "dominaba" una pregunta y el alumno no la
 volvía a ver nunca, que es exactamente lo contrario de lo que hace que un aprendizaje pegue.
 
 <Comparison
-  beforeLabel="v1: clear-by-mastering"
+  beforeLabel="v1: repetir hasta acertar"
   afterLabel="v2: repaso espaciado (Leitner)"
   before={
     <p>
@@ -116,8 +114,7 @@ solo la noche anterior.
 
 La corrección de desarrollo (las preguntas que no son de opción múltiple) es la pieza que más rápido
 podría romper la confianza si sale mal. Descarté a propósito que la IA pusiera la nota final: el
-flujo original era feedback-first, sin calificación, y la IA solo señalaba qué estaba bien o mal
-razonado. Recién cuando el alumno necesitaba ver un resultado concreto para saber si aprobaba, sumé la
+flujo original no calificaba nada, solo daba feedback: la IA señalaba qué estaba bien o mal razonado. Recién cuando el alumno necesitaba ver un resultado concreto para saber si aprobaba, sumé la
 nota, pero con una regla que no negocié: la IA sugiere, el docente confirma (`lib/domain/grading.ts`,
 `db/20_grading_nota.sql`).
 
@@ -144,17 +141,8 @@ preguntas más grande y randomización, no como algo que ignoré.
 No hay pagos, no hay multi-materia, no hay gamificación con puntos ni app nativa. Construyo esto solo,
 fuera de mi horario de clase, y cada una de esas features es semanas de trabajo que le habría sacado al
 repaso espaciado o al corrector con IA, que son las dos piezas que realmente sostienen que un alumno
-vuelva. Generalizar a otras materias antes de saber si el loop funciona para una sola (OATec) habría sido
-construir ancho antes de construir hondo, con el mismo tiempo limitado.
-
-### La matemática no es el argumento de venta
-
-La landing tuvo, en algún momento, una card que decía algo como "la matemática se ve bien". La saqué. Es
-table stakes: cualquier simulador que use LaTeX o KaTeX renderiza fórmulas correctamente, así que no es un
-diferencial, es una expectativa mínima. Dejarla adentro habría gastado espacio de atención en la landing
-en algo que no mueve la decisión de adopción de un docente. El contraste real (papel y corrección manual
-vs. práctica que corrige y hace volver) está codificado en los arrays `PROBLEMS` / `SOLUTIONS` de
-`components/Landing.tsx`, y ese es el argumento que se queda.
+vuelva. Generalizar a otras materias antes de saber si el loop funciona para una sola (OATec) habría sido abrir
+más frentes en vez de asegurar el que ya tengo, con el mismo tiempo limitado.
 
 ## Validar antes de construir
 
@@ -178,12 +166,11 @@ bug; un docente que lo usa un martes a la mañana con un curso real, sí.
 No es un prototipo de Figma ni una demo: es una web app en producción, y las decisiones técnicas
 sostienen las mismas garantías que ya conté (que el docente decida, que nada se rompa por atrás).
 
-- **Escala real:** cerca de 7.400 líneas de TypeScript/TSX y 1.900 de SQL, desplegada y en uso.
 - **Seguridad seria, no un detalle de implementación:** Row Level Security en Postgres más funciones
   `security definer`, para que un alumno nunca pueda ver la clave de un examen ni escribir algo indebido
   (`lib/supabaseServer.ts`, `db/02_rls.sql`). Esto es lo que hace sostenible, y no solo demostrable, que
   "el docente decide": si el alumno pudiera leer la clave, la confianza en la corrección se cae.
-- **CI con cuatro gates** (tipos, lint, build y E2E con Playwright sobre autenticación real,
+- **CI con cuatro validaciones** (tipos, lint, build y E2E con Playwright sobre autenticación real,
   `.github/workflows/ci.yml`). Cada feature entró por PR con CI en verde, incluida la del corrector de IA.
 - **Un harness de evaluación propio para el corrector con IA** (`eval/grading/run.ts`): antes de cablear
   el corrector a la interfaz, medí su calidad con un set de casos, en vez de asumir que "la IA corrige
@@ -226,14 +213,12 @@ Ser honesto sobre los huecos es parte del trabajo:
   el problema real, y tardé más de la cuenta en priorizarlo.
 - El botón "Aprobar" que aprobaba una nota sin que la hubiera leído (ver más arriba) me corrió el criterio
   de QA: probar la interacción completa con un curso real, no solo revisar que la pantalla se vea bien.
-- Descartar la card de matemática (ver más arriba) me costó más de lo que debería, justamente porque se
-  veía bien: la pregunta correcta no es "¿queda prolijo?", es "¿mueve la decisión de un docente?".
 
 ## Stack
 
 Next.js con TypeScript de punta a punta, Supabase (Postgres con Row Level Security y funciones
 `security definer`) como backend, corrección de desarrollo asistida por IA con un harness de evaluación
-propio antes de exponerla, y CI con cuatro gates (tipos, lint, build, E2E con Playwright) sobre cada PR.
+propio antes de exponerla, y CI con cuatro validaciones (tipos, lint, build, E2E con Playwright) sobre cada PR.
 
 <TechStack
   items={[
