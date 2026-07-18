@@ -123,6 +123,7 @@ export default async function ProjectPage({ params }: Props) {
   const repoLabel = tProjects("links.repo");
   const figmaLabel = tProjects("links.figma");
   const stackLabel = tProjects("sections.stack");
+  const metricsLabel = tProjects("sections.metrics");
   const homePath = localePath(typedLocale, "/");
   const projectsIndexPath = localePath(typedLocale, "/projects");
   const projectPath = localePath(typedLocale, `/projects/${project.slug}`);
@@ -230,6 +231,24 @@ export default async function ProjectPage({ params }: Props) {
               ))}
             </ul>
           </div>
+
+          {project.metrics.length > 0 && (
+            <div className="mt-8">
+              <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                {metricsLabel}
+              </h2>
+              <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {project.metrics.map((metric) => (
+                  <div key={metric.label} className="rounded-lg border border-border p-3">
+                    <dd className="font-mono text-xl font-semibold tracking-tight">
+                      {metric.value}
+                    </dd>
+                    <dt className="mt-1 text-xs text-muted-foreground">{metric.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
         </header>
 
         <hr className="mb-12 border-border" />
