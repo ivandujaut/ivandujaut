@@ -80,7 +80,7 @@ const projects = defineCollection({
       year: s.number().int().min(2000).max(2100),
       // Fecha real de publicación del caso (para ordenar el listado); year queda solo para mostrar.
       date: s.isodate(),
-      role: s.enum(["Full-stack", "Frontend", "Backend", "Design", "Other"]),
+      role: s.enum(["Product", "Full-stack", "Frontend", "Backend", "Design", "Other"]),
       status: s.enum(["shipped", "in-progress", "archived", "concept"]),
       featured: s.boolean().default(false),
       stack: s.array(s.string()).min(1),

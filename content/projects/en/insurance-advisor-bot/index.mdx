@@ -1,0 +1,356 @@
+---
+title: "Insurance Advisor Bot"
+tagline: "Insurers' bots handle policies, but they don't sell. I built the one that owns the stage nobody advises"
+description: "I analyzed a real insurer's funnel using public data, found the stage nobody owns (advised sales) and built the WhatsApp bot that fills it: product decisions documented with their criteria, measured with data, and deployed as a public demo."
+year: 2026
+date: "2026-07-18"
+role: "Product"
+status: "shipped"
+featured: true
+stack:
+  ["TypeScript", "Hono", "Claude (AI SDK)", "OpenAI embeddings", "PostgreSQL", "Redis", "Docker"]
+repo: "https://github.com/ivandujaut/insurance-advisor-bot"
+demo: "https://insurance-advisor-bot.onrender.com"
+cover:
+  src: ./cover.jpg
+  alt: "Cinematic editorial illustration with film grain: a small human figure standing alone in a dark room with indigo walls and a tiled floor in isometric perspective, lit by a speech bubble floating in front of them glowing with warm orange light, casting a soft warm halo on the floor"
+metrics:
+  - label: "Known questions answered without calling the LLM"
+    value: "64%"
+  - label: "AUC of the semantic router"
+    value: "0.92"
+  - label: "Macro-F1 of the emotion classifier"
+    value: "0.87"
+  - label: "Product lines quoting inside the chat"
+    value: "4"
+translationKey: "insurance-advisor-bot"
+draft: false
+---
+
+<Abstract label="At a glance">
+
+How does an insurer sell you a policy today? I set out to answer that question with public data and
+found a pattern that repeats across the industry: post-sale is well solved (WhatsApp bots, apps,
+self-service) and quoting lives in cold web forms. The middle, advised sales (the moment when someone
+doesn't know whether basic or full coverage suits them), has no conversational owner. I built the bot
+that owns that stage: it compares plans, advises, quotes four product lines and captures the lead
+inside the chat. To ground the analysis in real data I picked a concrete case study, La Caja (their bot
+Letizia is one of the good ones, and even so it serves, it doesn't sell), but the engine is
+white-label: the brand is configuration and the catalog is content, so it works for any insurer. Every
+decision is documented with its criteria, its data and its trade-off, and the AI pieces are not
+assumed to work: they are measured (a ROC curve for the FAQ router, a macro-F1 eval for the emotion
+classifier). It is deployed as a public demo.
+
+</Abstract>
+
+## The research: look before you build
+
+I didn't start with a product idea, I started with a question: how does a large insurer sell you a
+policy today? Answering it seriously required two things: **depth** on one concrete case and
+**breadth** across the rest of the industry. As the case to study in depth I picked a leading insurer
+in the Argentine market, [La Caja](https://www.lacaja.com.ar), and surveyed its entire public website:
+the catalog, the plan
+structure for each line, the service channels and their roles, the quote forms (auto, home,
+motorcycle), the help center. All of it with public information, keeping what I observed separate from
+what I assume.
+
+The customer journey map came out like this:
+
+| Funnel stage                   | Who owns it today        | How it feels                              |
+| ------------------------------ | ------------------------ | ----------------------------------------- |
+| Understanding what suits me    | Nobody, clearly          | The customer compares alone               |
+| Getting a quote                | Web quote form           | A form, and you have to leave for the web |
+| Buying                         | Web / human agent        |                                           |
+| Using and managing (post-sale) | Letizia (WhatsApp) + app | Well solved                               |
+
+Both ends are covered. The middle is not. And the most interesting finding of the benchmark: La Caja
+has already proven WhatsApp works for them (they invested in Letizia, they offer telemedicine through
+that channel). The channel is validated internally; they use it for the wrong stage of the funnel.
+
+The breadth came from the rest of the landscape: **the case was the anchor of the analysis, not its
+limit**. Every flow decision was checked against the full industry: quote forms from other insurers and
+aggregators (Mercantil Andina, comparaencasa, asegurarmiauto) for question design; abandoned-cart
+recovery practices from conversational commerce for re-engagement; the real WhatsApp Business rules
+(the 24-hour window, templates, opt-in) for everything proactive; and industry chatbot timeout patterns
+for handling silence. When I say below that "no quote form asks this", it's because I looked at them,
+not because I assume it.
+
+## The bet: fill the gap, don't clone the bot
+
+The rule is not to compete where the incumbent is already strong. Building another post-sale bot would
+be effort without a differentiator; conversational pre-sale attacks the moment of highest purchase
+intent and least support. The bet: **advise, compare and quote inside the chat**, and deliver a
+qualified, warm lead. The bot doesn't issue policies or replace the official rating engine: its
+ceiling, chosen on purpose, is leaving the sale ready to close.
+
+## The criteria
+
+Before the features, the principles that filtered every decision:
+
+1. **Don't compete where the incumbent is strong.** The gap is pre-sale; post-sale already has an owner.
+2. **Don't ask what can be inferred.** Every question in the flow has to earn its place.
+3. **The expensive resource is offered, not listed.** The human agent appears when it adds value, not as
+   the first menu option.
+4. **Measure before assuming.** No AI piece ships without an eval that says how much it gets right and
+   where it fails.
+5. **Structural honesty.** The demo says it's a demo, the prices say they're estimates, and the gaps are
+   documented as gaps.
+
+## Key decisions
+
+### A hybrid engine: menus to sell, AI to converse
+
+Quoting is a structured, repeatable process (web quote forms already model it in four steps); questions
+are open-ended ("what's a deductible?", "does it cover hail?"). Menus alone would be rigid; AI alone
+would be unpredictable and expensive exactly where mistakes cost the most, which is in what the bot
+claims about coverage. So: deterministic menus for the quote flow, and the language model for open
+questions, anchored to a knowledge base of real content surveyed from the site, so it doesn't make
+things up. The trade-off is maintaining two paths and tuning the boundary between them, and a good part
+of the decisions that follow are, precisely, refinements of that boundary.
+
+### Don't ask what the year already answers
+
+The initial version of the auto flow asked for the year and then, as a separate step, "is it brand new
+or used?". A real user showed me the problem in the worst way: for a 2009 car that question has an
+obvious answer, and asking it anyway makes the bot look like it can't reason. Before touching the flow I
+benchmarked how real quote forms solve it (La Caja, aggregators, comparison sites): **none of them asks
+for the condition separately**. The year carries it implicitly, or "brand new" is an option inside the
+year selector.
+
+<Comparison
+  beforeLabel="v1: condition as its own step"
+  afterLabel="v2: the year carries the condition"
+  before={
+    <p>
+      "What year is the car?" and then "is it brand new or used?". For a 2009 the second question
+      has an obvious answer: the bot adds a step and looks like it can't reason, right at the start,
+      where drop-off is highest.
+    </p>
+  }
+  after={
+    <p>
+      A past year implies used, and the flow moves on without re-asking. Only the current year is
+      ambiguous, and there the follow-up uses the business's objective criterion: "is it registered
+      yet?" (brand new means exactly not-yet-registered). A yes-or-no fact instead of a judgment
+      call.
+    </p>
+  }
+/>
+
+The flow went from 8 to 7 steps for the common case, and the follow-up for the ambiguous case changed
+from a subjective judgment to a verifiable fact. What I didn't build was also a decision: I don't ask
+for the registration year as a separate data point, because it doesn't move the price (the insured
+value comes from the model year against the market value table) and it would add a step against
+everything I had been simplifying.
+
+### The human agent is offered, not listed
+
+The original menu had "Talk to an agent" as a visible option. The problem: it's the easy way out, and a
+good share of users would pick it upfront, so the bot cannibalizes itself (it never gets to quote or
+qualify the lead, which is its job). The solution wasn't hiding the human, it was changing the trigger:
+the agent is offered when the emotion engine detects distress, with a level. The classifier returns a
+label, not an intensity, so the level comes from severity and persistence: anger weighs double and
+triggers the offer at once; frustration needs to persist beyond one message, because one can be venting
+and two are a signal. A satisfied message resets the accumulator.
+
+The exits are kept deliberately: typing "agent" always routes to a human (whoever wants a person gets
+one, just without promotion), and the post-quote closing keeps "have an agent call me" as the main
+option, because there the agent is the conversion, not a leak. The honest trade-off: a user determined
+to talk to a person takes one extra message to find out how.
+
+### The menu was pruned three times, with the same principle
+
+The menu started with seven options and ended with four symmetric quote actions. The three prunings
+("I have a question", "Talk to an agent", "Compare plans") distilled a principle: **the menu lists
+actions, not information or escape hatches**. A question gets answered by typing it; the plan comparison
+appears where it actually helps (at the final choice, with the price in front of you); the agent is
+offered by context. Around the menu, the other friction refinements piled up: a progress indicator
+("Step 3 of 7") because asking blind is a known cause of drop-off, the ability to type "back" to fix
+the last answer without losing progress, and a parser that understands "I think the second one works
+for me" as option 2, with a conservative rule: if the message smells like a question, the bot prefers
+to re-ask rather than choose for you.
+
+### Close the funnel where intent peaks
+
+The moment of highest purchase intent is right after seeing the price, and the first version wasted it:
+it quoted and ended with "type menu for another query". The current closing pushes forward: have an
+agent call me (with contact capture and the quote summary, so the agent calls warm and with context),
+buy online, or compare another plan. The contact step also asks for an explicit, separate opt-in for
+WhatsApp re-contact, because the platform's policy requires affirmative consent for marketing messages,
+and the re-engagement design (resuming a half-finished quote, a proactive "still there?", a template
+outside the 24-hour window) is built on WhatsApp Business's real rules, not on how I'd like them to
+work.
+
+## Measure to decide
+
+The part I most want to show: the AI pieces are not assumed, they are measured.
+
+### Why embeddings and RAG, and what each one bought
+
+The engine has two distinct semantic pieces, and each solves a different business problem:
+
+**RAG (the LLM anchored to a knowledge base).** The problem it solves is **trust**: an insurance
+assistant that invents a coverage isn't a demo with a bug, it's a risk. So the model doesn't speak from
+memory: it answers over a base of real surveyed content (the plans, the deductible with an example, the
+requirements per line). The benefit here isn't cost, it's fewer invented answers in the industry where
+an invented answer costs the most.
+
+**The embeddings router (retrieval without generation).** The problem it solves is **cost, latency and
+determinism**, and here there are numbers. The starting observation: most open questions are the same
+few doubts (what does this plan cover, what's a deductible, how do I pay). Paying for an LLM generation
+on every repetition is burning money, because every open question drags the whole knowledge base into
+the prompt:
+
+| Route                       | What it processes                                            | Cost per query |
+| --------------------------- | ------------------------------------------------------------ | -------------- |
+| LLM (generation)            | ~5,500 input tokens (knowledge base + history) + ~180 output | ~$0.02         |
+| Router (embedding + cosine) | ~30 embedding tokens, no generation                          | ~$0.0000006    |
+
+With the router resolving **64% of known questions** without touching the LLM, the savings projection
+scales with volume (assumptions: the per-query cost above, at the API's list prices):
+
+| Open questions / month | Resolved by the router | Estimated monthly savings |
+| ---------------------- | ---------------------- | ------------------------- |
+| 10,000                 | ~6,400                 | ~$130                     |
+| 100,000                | ~64,000                | ~$1,300                   |
+| 1,000,000              | ~640,000               | ~$13,000                  |
+
+At demo scale this is pennies, and I'll say that plainly. But cost is only a third of the argument. The
+other two weigh as much or more for an insurer: **latency** (the canonical answer comes back in
+milliseconds; a generation takes seconds, and in a chat the wait is felt) and **determinism**: the
+repeated question is always answered with the same canonical text, reviewable and approvable by
+compliance, with zero hallucination risk exactly on the questions answered most often. In insurance,
+that last one is worth more than the savings.
+
+### The threshold is not picked by eye
+
+The router compares each query against a corpus of 37 known questions (181 phrasings) and returns the
+canonical answer only if similarity clears a threshold. Choosing that threshold is a binary
+classification problem (does this query have a known answer?), so it was measured as one, with
+leave-one-out and 31 distractors as negatives:
+
+<Figure
+  src="/showcase/insurance-advisor-bot/roc-faq.svg"
+  alt="ROC curve of the FAQ router with AUC 0.92, marking the operating point at threshold 0.65 with 65% TPR and 3% FPR"
+  width={480}
+  height={430}
+  caption="The router's ROC curve (AUC 0.92). The chosen operating point sits at the elbow: maximum coverage before false positives take off. Too permissive and the bot gives canned answers to things it doesn't know; too strict and it almost never saves anything."
+/>
+
+The chosen point favors coverage with the LLM as the safety net: it resolves 64% of known questions
+with **97% content accuracy** in what it answers. And with an industry-specific criterion: for an
+insurance bot, a wrong canned answer is worse than spending a call.
+
+**The emotion classifier** followed the same discipline: it was evaluated against a labeled benchmark
+of my own. The version with the large model scored macro-F1 0.91 but was a latency drag; the small
+model scores 0.87 without losing the actionable signal (it detects all 20 negative messages in the set,
+with zero false positives), and costs a third per token on top. The decision was the small model, with
+the eval in hand.
+
+And I learned a maintenance lesson I didn't see coming: when I changed the auto flow, the canonical
+answer for "what info do you need" went stale and the router kept serving it with full confidence.
+Retrieval doesn't find out the product changed underneath it: now every flow change triggers a pass
+over the corpus and a re-run of the eval, because the threshold gets revalidated, not assumed.
+
+The funnel is also instrumented end to end: quote start and progress events, lead captured, quote
+accepted (with channel: agent or online), handoffs, where people get stuck (`flow_stuck`, with the
+exact step) and even where they correct an answer. The dashboard lives at `/funnel`, in the same demo.
+
+## How far the bot goes, on purpose
+
+It's a pre-sale bot. It doesn't issue policies: the binding price and issuance come from the official
+rating engine and underwriting, with regulatory requirements it wouldn't be right to simulate. The
+prices it shows are estimate ranges from a factor model of my own, anchored to the real surveyed
+prices, and they are presented as what they are. The chosen ceiling is delivering a qualified, warm
+lead, with its quote summary, ready for an agent to close. Defining that ceiling early organized
+everything else: what to build, what to measure and what not to promise.
+
+## The engine underneath: architecture in service of the product
+
+Technical knowledge here is a means, and it shows in what it enabled. The architecture is hexagonal
+(the core doesn't know the infrastructure), and that paid off in product terms several times: the bot
+quotes **four lines with four different pricing models** (auto by factors, home branching by owner or
+tenant, personal accidents as a published-price catalog, bikes as a rate over declared value) without
+touching the conversation engine; the same core serves **two channels** (the WhatsApp webhook and a web
+demo styled like WhatsApp, so anyone can try it without an allowlist); and the identity is
+**white-label**: the brand is a configuration variable and the catalog is a folder of markdown, so
+switching insurers means changing content and configuration, not code. The demo runs with a neutral
+identity on purpose: it isn't right to show up wearing another company's logo, and an insurtech looking
+at it should be able to picture itself using it.
+
+## What works and why
+
+- **The insight holds everything up.** The project isn't "an insurance bot", it's the answer to a
+  specific gap in a real company's funnel, found by looking at public data with method.
+- **The decisions have data behind them.** The year/condition step came from a benchmark of quote
+  forms; the router's threshold from a ROC curve; the emotion model from an eval of my own; the
+  re-engagement from WhatsApp Business's real rules.
+- **Honesty is structural, not a disclaimer.** Estimate prices that say they're estimates, a demo that
+  says it's a demo, and a product ceiling chosen and explained.
+- **The funnel is measured.** Every conversion decision (the post-quote closing, the emotion-gated
+  agent) has its event and can be audited in the dashboard.
+
+## What's missing (still)
+
+- **Proactive re-engagement is off in the demo.** The "still there?" nudge and the over-24-hour
+  template only have a real channel on WhatsApp (the web is request/response), and the template needs
+  Meta's approval. The logic is built and tested; the production channel is not.
+- **Consent lives in the session.** Enough for the demo; in production it would go to a durable record,
+  with the rest of the personal data and its retention policy.
+- **The rating engine is my own model.** It reproduces the real surveyed prices, but production
+  requires the official rating engine behind the same port.
+- **Emotion detection runs only on open questions and flow stumbles**, not on every message of the
+  happy path. It's a cost trade-off I would revisit with real usage data.
+
+## What I take with me
+
+- The most valuable feedback came from using the bot as a user, not reading it as its author: the
+  "it's a 2009 and you ask me if it's brand new" and the "I think the second one works for me" that the
+  bot didn't understand came from there. The method (benchmark, decision, eval) turns that discomfort
+  into systematic improvement.
+- I picked the large model first for emotion classification and it was a latency drag; the eval showed
+  the small one didn't lose the actionable signal. The lesson: pick the model with the eval in hand,
+  not by reputation.
+- The content of a retrieval system ages silently, with full confidence. Keeping corpus and product in
+  sync isn't optional maintenance: it's part of the system.
+
+## Stack
+
+TypeScript end to end with hexagonal architecture verified in CI, Hono as the server, Claude (AI SDK)
+for generation and emotion classification, OpenAI embeddings for the semantic FAQ router, Postgres for
+leads and events, Redis for sessions, Docker and continuous deployment with a public demo.
+
+<TechStack
+  items={[
+    "TypeScript",
+    "Hono",
+    "Claude (AI SDK)",
+    "OpenAI embeddings",
+    "PostgreSQL",
+    "Redis",
+    "Docker",
+    "WhatsApp Cloud API",
+    "Hexagonal architecture",
+  ]}
+/>
+
+## Try it, and open to feedback
+
+The demo is live: [insurance-advisor-bot.onrender.com](https://insurance-advisor-bot.onrender.com)
+(free tier: the first load may take a few seconds to wake up). Type "hola" and the menu starts (the bot
+speaks Spanish; it was built for the Argentine market). The full analysis, with 24 documented decisions
+and the benchmarks, is in the [repository](https://github.com/ivandujaut/insurance-advisor-bot).
+
+I'm publishing this to have it challenged:
+
+- Is the emotion-gated agent the right call, or does hiding the human exit punish the decided user who
+  just wants to talk to someone?
+- Which metric would convince an insurer to pilot this: cost per lead, flow completion rate, or agent
+  handoffs avoided?
+- The bot assumes "used" for any past year and loses the edge case of old-stock brand-new cars, which
+  no quote form supports either. Is that the right trade-off, or was an exception flow worth the extra
+  step?
+- If you work at an insurer or an insurtech: the engine is white-label (your brand is configuration,
+  your catalog is content). What's missing for you to pilot it with your product?
+
+If any of this made you think differently, write to me.

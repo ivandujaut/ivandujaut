@@ -126,7 +126,8 @@
     "sections": {
       "featured": "Destacados",
       "more": "Más proyectos",
-      "stack": "Stack"
+      "stack": "Stack",
+      "metrics": "Resultados"
     },
     "links": {
       "demo": "Ver demo",
