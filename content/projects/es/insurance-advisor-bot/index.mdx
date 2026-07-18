@@ -1,0 +1,349 @@
+---
+title: "Bot Asesor de Seguros"
+tagline: "Los bots de las aseguradoras atienden pólizas, pero no venden. Construí el que ocupa la etapa que nadie asesora"
+description: "Analicé el funnel de una aseguradora real con datos públicos, encontré la etapa que nadie atiende (la venta asesorada) y construí el bot de WhatsApp que la ocupa: decisiones de producto documentadas, medidas con datos y desplegadas en una demo pública."
+year: 2026
+date: "2026-07-18"
+role: "Product"
+status: "shipped"
+featured: true
+stack:
+  ["TypeScript", "Hono", "Claude (AI SDK)", "OpenAI embeddings", "PostgreSQL", "Redis", "Docker"]
+repo: "https://github.com/ivandujaut/insurance-advisor-bot"
+demo: "https://insurance-advisor-bot.onrender.com"
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración editorial cinematográfica con grano de película: una pequeña figura humana parada sola en una sala oscura de paredes índigo y piso de baldosas en perspectiva isométrica, iluminada por una burbuja de diálogo que flota frente a ella y brilla con luz cálida anaranjada, proyectando un halo tibio sobre el piso"
+metrics:
+  - label: "Dudas resueltas sin llamar al LLM"
+    value: "64%"
+  - label: "AUC del router semántico"
+    value: "0.92"
+  - label: "Macro-F1 del clasificador de emociones"
+    value: "0.87"
+  - label: "Líneas de producto cotizando en el chat"
+    value: "4"
+translationKey: "insurance-advisor-bot"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+¿Cómo te vende un seguro una aseguradora hoy? Salí a responder esa pregunta con datos públicos y
+encontré un patrón que se repite en el rubro: la posventa está bien resuelta (bots de WhatsApp, apps,
+autogestión) y la cotización vive en formularios web fríos. El medio, la venta asesorada (el momento en
+que alguien no sabe si le conviene Terceros Completo o Todo Riesgo), no tiene dueño conversacional.
+Construí el bot que ocupa esa etapa: compara planes, asesora, cotiza cuatro líneas y captura el lead
+dentro del chat. Para anclar el análisis en datos reales elegí un caso de estudio concreto, La Caja (su
+bot Letizia es de los buenos, y aun así atiende, no vende), pero el motor es white-label: la marca es
+configuración y el catálogo es contenido, así que sirve para cualquier aseguradora. Cada decisión está
+documentada con su criterio, su dato y su trade-off, y las piezas de IA no se asumen: se miden (una
+curva ROC para el router de dudas, un eval con macro-F1 para el clasificador de emociones). Está
+desplegado en una demo pública.
+
+</Abstract>
+
+## El research: mirar antes de construir
+
+No arranqué con una idea de producto, arranqué con una pregunta: ¿cómo te vende un seguro hoy una
+aseguradora grande? Para responderla en serio hacían falta dos cosas: **profundidad** en un caso
+concreto y **amplitud** en el resto del rubro. Como caso para mirar a fondo elegí una aseguradora
+líder del mercado argentino, [La Caja](https://www.lacaja.com.ar), y le relevé el sitio público
+completo: el catálogo, la estructura
+de planes de cada línea, los canales de atención y sus roles, los cotizadores (auto, hogar, moto), el
+centro de ayuda. Todo con información pública, separando lo observado de lo que supongo.
+
+El mapa del recorrido del cliente quedó así:
+
+| Etapa del funnel            | Quién la atiende hoy     | Cómo se siente                     |
+| --------------------------- | ------------------------ | ---------------------------------- |
+| Entender qué me conviene    | Nadie con claridad       | El cliente compara solo            |
+| Cotizar                     | Cotizador web            | Formulario, hay que salir a la web |
+| Contratar                   | Web / asesor             |                                    |
+| Usar y gestionar (posventa) | Letizia (WhatsApp) + app | Bien resuelto                      |
+
+Los dos extremos están cubiertos. El medio, no. Y el dato más interesante del benchmark: La Caja ya
+demostró que WhatsApp le funciona (invirtió en Letizia, ofrece telemedicina por ese canal). El canal está
+validado internamente; lo usan para la etapa equivocada del embudo.
+
+La amplitud vino del resto del paisaje: **el caso fue el ancla del análisis, no su límite**. Cada
+decisión de flujo se contrastó contra el rubro completo: los cotizadores de otras aseguradoras y
+agregadores (Mercantil Andina, comparaencasa, asegurarmiauto) para el diseño de las preguntas; las
+prácticas de recuperación de carrito abandonado del comercio conversacional para el re-enganche; las
+políticas reales de WhatsApp Business (la ventana de 24 horas, plantillas, opt-in) para todo lo
+proactivo; y los patrones de timeout de chatbots de la industria para el manejo de silencios. Cuando
+más abajo digo "ningún cotizador pregunta esto", es porque los miré, no porque lo supongo.
+
+## La apuesta: ocupar el hueco, no clonar el bot
+
+La regla es no competir donde el incumbente ya es fuerte. Hacer otro bot de posventa sería esfuerzo sin
+diferencial; la pre-venta conversacional ataca el momento de mayor intención de compra y menor
+acompañamiento. La apuesta: **asesorar, comparar y cotizar dentro del chat**, y entregar un lead
+calificado y tibio. El bot no emite pólizas ni reemplaza al tarifador oficial: su techo, elegido a
+propósito, es dejar la venta lista para cerrar.
+
+## El criterio
+
+Antes de las features, los principios que filtraron cada decisión:
+
+1. **No competir donde el incumbente es fuerte.** El hueco es la pre-venta; la posventa ya tiene dueño.
+2. **No preguntar lo que se puede deducir.** Cada pregunta del flujo tiene que ganarse el lugar.
+3. **El recurso caro se ofrece, no se lista.** El asesor humano aparece cuando agrega valor, no como
+   primera opción de menú.
+4. **Medir antes de asumir.** Ninguna pieza de IA entra sin un eval que diga cuánto acierta y dónde falla.
+5. **Honestidad estructural.** La demo dice que es demo, los precios dicen que son orientativos, y los
+   huecos quedan documentados como huecos.
+
+## Decisiones clave
+
+### Un motor híbrido: menús para vender, IA para conversar
+
+La cotización es un proceso estructurado y repetible (los cotizadores web ya lo modelan en cuatro pasos);
+las dudas son abiertas ("¿qué es la franquicia?", "¿cubre granizo?"). Usar solo menús sería rígido; usar
+solo IA sería impredecible y caro justo donde el error cuesta más, que es en lo que el bot afirma sobre
+coberturas. Entonces: menús determinísticos para el flujo de cotización, y el modelo de lenguaje para las
+consultas abiertas, anclado a una base de conocimiento con contenido real relevado del sitio, para no
+inventar. El trade-off es mantener dos caminos y afinar la frontera entre ambos, y buena parte de las
+decisiones que siguen son, justamente, refinamientos de esa frontera.
+
+### No preguntar lo que el año ya responde
+
+La versión inicial del flujo de auto pedía el año y, en un paso aparte, "¿es 0km o usado?". Un usuario
+real me lo hizo notar de la peor manera: para un auto 2009 esa pregunta tiene respuesta obvia, y hacerla
+igual hace que el bot parezca no razonar. Antes de tocar el flujo hice un benchmark de cómo lo resuelven
+los cotizadores reales (La Caja, agregadores, comparadores): **ninguno pregunta la condición por
+separado**. El año la lleva implícita, o el "0km" es una opción dentro del selector de año.
+
+<Comparison
+  beforeLabel="v1: condición como paso propio"
+  afterLabel="v2: el año lleva la condición"
+  before={
+    <p>
+      "¿Año del vehículo?" y después "¿es 0km o usado?". Para un 2009 la segunda pregunta tiene
+      respuesta obvia: el bot suma un paso y parece no razonar, justo al arranque, donde más se
+      abandona.
+    </p>
+  }
+  after={
+    <p>
+      Año pasado implica usado y se avanza sin repreguntar. Solo el año en curso es ambiguo, y ahí
+      la repregunta usa el criterio objetivo del negocio: "¿ya está patentado?" (0km significa
+      exactamente sin patentar). Un hecho de sí o no, en vez de un juicio.
+    </p>
+  }
+/>
+
+El flujo pasó de 8 a 7 pasos para el caso común, y la repregunta del caso ambiguo cambió de un juicio
+subjetivo a un hecho verificable. Lo que no hice también fue una decisión: no pido el año de
+patentamiento como dato aparte, porque no mueve el precio (la suma asegurada sale del año de modelo
+contra la tabla de valores) y sumaría un paso contra todo lo que venía simplificando.
+
+### El asesor se ofrece, no se lista
+
+El menú original tenía "Hablar con un asesor" como opción visible. El problema: es la salida fácil, y
+buena parte de los usuarios la elegiría de entrada, con lo que el bot se canibaliza solo (nunca llega a
+cotizar ni a calificar el lead, que es su función). La solución no fue esconder al humano, fue cambiar
+el disparador: el asesor se ofrece cuando el motor de emociones detecta malestar, con un nivel. El
+clasificador devuelve una etiqueta, no una intensidad, así que el nivel sale de la severidad y la
+persistencia: el enojo pesa doble y dispara la oferta de una; la frustración necesita sostenerse más de
+un mensaje, porque una puede ser desahogo y dos son una señal. Una satisfacción resetea el acumulado.
+
+Las salidas se conservan con criterio: escribir "asesor" deriva siempre (el que quiere una persona la
+tiene, solo que sin promoción), y el cierre post-cotización mantiene "que me llame un asesor" como
+opción principal, porque ahí el asesor es la conversión, no una fuga. El trade-off honesto: el usuario
+decidido a hablar con una persona tarda un mensaje más en descubrir cómo.
+
+### El menú se podó tres veces, con el mismo principio
+
+El menú arrancó con siete opciones y terminó con cuatro acciones simétricas de cotizar. Las tres podas
+("Tengo una duda", "Hablar con un asesor", "Comparar los planes") destilaron un principio: **el menú
+lista acciones, no información ni escapes**. Una duda se responde escribiéndola; la comparación de planes
+aparece donde de verdad sirve (en la elección final, con el precio adelante); el asesor se ofrece por
+contexto. Alrededor del menú se acumularon los demás refinamientos de fricción: un indicador de progreso
+("Dato 3 de 7") porque preguntar a ciegas es una causa conocida de abandono, la posibilidad de escribir
+"volver" para corregir el último dato sin perder el progreso, y un parser que entiende "creo que la
+segunda me sirve" como la opción 2, con una regla conservadora: si el mensaje huele a pregunta, el bot
+prefiere repreguntar antes que elegir por vos.
+
+### Cerrar el embudo donde la intención es máxima
+
+El momento de mayor intención de compra es justo después de ver el precio, y la primera versión lo
+desperdiciaba: cotizaba y remataba con "escribí menú para otra consulta". El cierre actual empuja hacia
+adelante: que me llame un asesor (con captura de contacto y el resumen de la cotización, para que el
+asesor llame tibio y con contexto), contratar online, o comparar otro plan. El contacto pide además un
+opt-in explícito y separado para re-contactar por WhatsApp, porque la política de la plataforma exige
+consentimiento afirmativo para mensajes de marketing, y el diseño del re-enganche (retomar una cotización
+a medias, un "¿seguís ahí?" proactivo, una plantilla fuera de la ventana de 24 horas) está construido
+sobre las reglas reales de WhatsApp Business, no sobre cómo me gustaría que funcionara.
+
+## Medir para decidir
+
+La parte que más me interesa mostrar: las piezas de IA no se asumen, se miden.
+
+### Por qué embeddings y RAG, y qué compró cada uno
+
+En el motor hay dos piezas semánticas distintas, y cada una resuelve un problema de negocio diferente:
+
+**RAG (el LLM anclado a una base de conocimiento).** El problema que resuelve es de **confianza**: un
+asistente de seguros que inventa una cobertura no es una demo con un bug, es un riesgo. Por eso el modelo
+no habla de memoria: responde sobre una base de contenido real relevado (los planes, la franquicia con
+ejemplo, los requisitos por línea). El beneficio acá no es de costo, es que baja las respuestas
+inventadas en el rubro donde una respuesta inventada cuesta más caro.
+
+**El router de embeddings (retrieval sin generación).** El problema que resuelve es de **costo, latencia
+y determinismo**, y acá sí hay números. La observación de partida: la mayoría de las consultas abiertas
+son las mismas pocas dudas (qué cubre tal plan, qué es la franquicia, cómo se paga). Pagar una
+generación del LLM por cada repetición es tirar plata, porque cada consulta abierta arrastra toda la
+base de conocimiento en el prompt:
+
+| Ruta                        | Qué procesa                                                                  | Costo por consulta |
+| --------------------------- | ---------------------------------------------------------------------------- | ------------------ |
+| LLM (generación)            | ~5.500 tokens de entrada (base de conocimiento + historial) + ~180 de salida | ~US$0,02           |
+| Router (embedding + coseno) | ~30 tokens de embedding, sin generación                                      | ~US$0,0000006      |
+
+Con el router resolviendo el **64% de las dudas conocidas** sin tocar el LLM, la proyección de ahorro
+escala con el volumen (supuestos: costo por consulta de arriba, a precios de lista de la API):
+
+| Consultas abiertas / mes | Resueltas por el router | Ahorro mensual estimado |
+| ------------------------ | ----------------------- | ----------------------- |
+| 10.000                   | ~6.400                  | ~US$130                 |
+| 100.000                  | ~64.000                 | ~US$1.300               |
+| 1.000.000                | ~640.000                | ~US$13.000              |
+
+A escala de demo son centavos, y lo digo sin vueltas. Pero el costo es solo un tercio del argumento. Los
+otros dos pesan igual o más para una aseguradora: **latencia** (la respuesta canónica sale en
+milisegundos; una generación tarda segundos, y en un chat la espera se siente) y **determinismo**: la
+duda repetida se responde siempre con el mismo texto canónico, revisable y aprobable por compliance,
+con cero riesgo de alucinación justo en las preguntas que más veces se responden. En seguros, eso último
+vale más que el ahorro.
+
+### El umbral no se elige a ojo
+
+El router compara cada consulta contra un corpus de 37 dudas conocidas (181 formulaciones) y responde la
+canónica solo si la similitud supera un umbral. Elegir ese umbral es un problema de clasificación
+binaria (¿esta consulta tiene respuesta conocida?), así que se midió como tal, con método leave-one-out
+y 31 distractores como negativos:
+
+<Figure
+  src="/showcase/insurance-advisor-bot/roc-faq.svg"
+  alt="Curva ROC del router de FAQ con AUC 0.92, marcando el punto de operación en umbral 0.65 con TPR 65% y FPR 3%"
+  width={480}
+  height={430}
+  caption="La curva ROC del router (AUC 0.92). El punto de operación elegido cae en el codo: máxima cobertura antes de que los falsos positivos se disparen. Muy permisivo y el bot contesta enlatado a lo que no sabe; muy estricto y casi nunca ahorra."
+/>
+
+El punto elegido privilegia cobertura con el LLM como red de seguridad: resuelve el 64% de las dudas
+conocidas con un **97% de acierto de contenido** en lo que responde. Y con un criterio del rubro: para
+un bot de seguros, una respuesta enlatada equivocada es peor que gastar una llamada.
+
+**El clasificador de emociones** siguió la misma disciplina: se evaluó contra un benchmark propio
+etiquetado. La versión con el modelo grande daba macro-F1 0.91 pero era un lastre de latencia; el modelo
+chico da 0.87 sin perder la señal accionable (detecta los 20 mensajes negativos del set, con cero falsos
+positivos), y encima cuesta un tercio por token. La decisión fue el chico, con el eval en la mano.
+
+Y aprendí una lección de mantenimiento que no vi venir: cuando cambié el flujo de auto, la respuesta
+canónica de "qué datos pedís" quedó vieja y el router la seguía sirviendo con total confianza. El
+retrieval no se entera de que el producto cambió debajo: ahora cada cambio de flujo dispara una pasada
+por el corpus y una re-corrida del eval, porque el umbral se revalida, no se asume.
+
+El embudo también está instrumentado de punta a punta: eventos de inicio y avance de cotización, lead
+capturado, cotización aceptada (con canal: asesor u online), derivaciones, dónde se traba la gente
+(`flow_stuck`, con el paso exacto) y hasta dónde se corrige un dato. El dashboard vive en `/funnel`, en
+la misma demo.
+
+## Hasta dónde llega el bot, a propósito
+
+Es un bot de pre-venta. No emite pólizas: el precio en firme y la emisión salen del tarifador oficial y
+la suscripción, con requisitos regulatorios que no corresponde simular. Los precios que muestra son
+rangos orientativos de un modelo de factores propio, anclados a los precios reales relevados, y se
+presentan como lo que son. El techo elegido es entregar un lead calificado y tibio, con el resumen de su
+cotización, listo para que un asesor lo cierre. Definir ese techo temprano ordenó todo lo demás: qué
+construir, qué medir y qué no prometer.
+
+## El motor por dentro: arquitectura al servicio del producto
+
+El conocimiento técnico acá es un medio, y se nota en qué habilitó. La arquitectura es hexagonal (el
+núcleo no conoce la infraestructura), y eso pagó en términos de producto varias veces: el bot cotiza
+**cuatro líneas con cuatro modelos de pricing distintos** (auto por factores, hogar bifurcado según
+propietario o inquilino, accidentes personales como catálogo de precio publicado, bici como tasa sobre
+el valor declarado) sin tocar el motor de conversación; el mismo núcleo atiende **dos canales** (el
+webhook de WhatsApp y una demo web con estética de WhatsApp, para que cualquiera pruebe sin lista
+blanca); y la identidad es **white-label**: la marca es una variable de configuración y el catálogo es
+una carpeta de markdown, así que cambiar de aseguradora es cambiar contenido y configuración, no código.
+La demo corre con identidad neutra a propósito: no corresponde presentarse con el logo de una empresa
+ajena, y una insurtech que la mira tiene que poder proyectarse usándola.
+
+## Qué funciona y por qué
+
+- **El insight sostiene todo.** El proyecto no es "un bot de seguros", es la respuesta a un hueco
+  específico del funnel de una empresa real, encontrado mirando datos públicos con método.
+- **Las decisiones tienen datos atrás.** El paso de año/condición salió de un benchmark de cotizadores;
+  el umbral del router, de una curva ROC; el modelo de emociones, de un eval propio; el re-enganche, de
+  las reglas reales de WhatsApp Business.
+- **La honestidad es estructural, no un disclaimer.** Precios orientativos que se dicen orientativos,
+  demo que se dice demo, y un techo de producto elegido y explicado.
+- **El embudo se mide.** Cada decisión de conversión (el cierre post-cotización, el asesor por emoción)
+  tiene su evento y se puede auditar en el dashboard.
+
+## Qué falta (todavía)
+
+- **El re-enganche proactivo está apagado en la demo.** El "¿seguís ahí?" y la plantilla de más de 24
+  horas solo tienen canal real en WhatsApp (la web es request/response), y la plantilla necesita
+  aprobación de Meta. La lógica está construida y testeada; el canal de producción, no.
+- **El consentimiento vive en la sesión.** Para la demo alcanza; en producción iría a un registro
+  durable, junto al resto del dato personal, con su política de retención.
+- **El tarifador es un modelo propio.** Reproduce los precios reales relevados, pero producción exige el
+  tarifador oficial detrás del mismo puerto.
+- **La detección de emociones corre solo en las consultas abiertas y en los tropiezos del flujo**, no en
+  cada mensaje del recorrido feliz. Es un trade-off de costo que revisaría con datos de uso real.
+
+## Lo que me llevo
+
+- El feedback más valioso vino de usar el bot como usuario, no de leerlo como autor: el "2009 y te
+  pregunto si es 0km" y el "creo que la segunda me sirve" que el bot no entendía salieron de ahí. El
+  método (benchmark, decisión, eval) convierte esa incomodidad en mejora sistemática.
+- Elegí primero el modelo grande para clasificar emociones y era un lastre de latencia; el eval mostró
+  que el chico no perdía la señal accionable. La lección: elegir el modelo con el eval en la mano, no
+  por reputación.
+- El contenido de un sistema de retrieval envejece en silencio, con total confianza. Sincronizar corpus
+  y producto no es mantenimiento opcional: es parte del sistema.
+
+## Stack
+
+TypeScript de punta a punta con arquitectura hexagonal verificada en CI, Hono como servidor, Claude (AI
+SDK) para generación y clasificación de emociones, embeddings de OpenAI para el router semántico de
+dudas, Postgres para leads y eventos, Redis para sesiones, Docker y deploy continuo con demo pública.
+
+<TechStack
+  items={[
+    "TypeScript",
+    "Hono",
+    "Claude (AI SDK)",
+    "OpenAI embeddings",
+    "PostgreSQL",
+    "Redis",
+    "Docker",
+    "WhatsApp Cloud API",
+    "Arquitectura hexagonal",
+  ]}
+/>
+
+## Probalo, y abierto a feedback
+
+La demo está viva: [insurance-advisor-bot.onrender.com](https://insurance-advisor-bot.onrender.com)
+(plan gratuito: la primera carga puede tardar unos segundos en despertar). Escribí "hola" y arranca el
+menú. El análisis completo, con las 24 decisiones documentadas y los benchmarks, está en el
+[repositorio](https://github.com/ivandujaut/insurance-advisor-bot).
+
+Publico esto para que me lo discutan:
+
+- ¿El asesor gateado por emoción es la decisión correcta, o esconder la salida humana castiga al usuario
+  decidido que solo quiere hablar con alguien?
+- ¿Qué métrica convencería a una aseguradora de pilotear esto: costo por lead, tasa de finalización del
+  flujo, o derivaciones a asesor evitadas?
+- El bot asume "usado" para todo año pasado y pierde el caso borde del 0km de stock viejo, que ningún
+  cotizador soporta. ¿Es el trade-off correcto, o un flujo de excepción valía el paso extra?
+- Si trabajás en una aseguradora o insurtech: el motor es white-label (tu marca es configuración, tu
+  catálogo es contenido). ¿Qué le falta para que lo pilotees con tu producto?
+
+Si algo de esto te hizo pensar distinto, escribime.
