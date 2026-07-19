@@ -1,6 +1,6 @@
 ---
 title: "Bot Asesor de Seguros"
-tagline: "Los bots de las aseguradoras atienden pólizas, pero no venden. Construí el que ocupa la etapa que nadie asesora"
+tagline: "Los bots de las aseguradoras atienden pólizas, pero no venden. Construí el que ocupa la etapa que nadie asesora en el chat"
 description: "Analicé el funnel de una aseguradora real con datos públicos, encontré la etapa que nadie atiende (la venta asesorada) y construí el bot de WhatsApp que la ocupa: decisiones de producto documentadas, medidas con datos y desplegadas en una demo pública."
 year: 2026
 date: "2026-07-18"
@@ -39,7 +39,7 @@ bot Letizia es de los buenos, y aun así atiende, no vende), pero el motor es wh
 configuración y el catálogo es contenido, así que sirve para cualquier aseguradora. Cada decisión está
 documentada con su criterio, su dato y su trade-off, y las piezas de IA no se asumen: se miden (una
 curva ROC para el router de dudas, un eval con macro-F1 para el clasificador de emociones). Está
-desplegado en una demo pública.
+desplegado en una demo pública que podés probar en un clic.
 
 </Abstract>
 
@@ -55,16 +55,40 @@ centro de ayuda. Todo con información pública, separando lo observado de lo qu
 
 El mapa del recorrido del cliente quedó así:
 
-| Etapa del funnel            | Quién la atiende hoy     | Cómo se siente                     |
-| --------------------------- | ------------------------ | ---------------------------------- |
-| Entender qué me conviene    | Nadie con claridad       | El cliente compara solo            |
-| Cotizar                     | Cotizador web            | Formulario, hay que salir a la web |
-| Contratar                   | Web / asesor             |                                    |
-| Usar y gestionar (posventa) | Letizia (WhatsApp) + app | Bien resuelto                      |
+| Etapa del funnel            | Quién la atiende hoy                              | Cómo se siente                         |
+| --------------------------- | ------------------------------------------------- | -------------------------------------- |
+| Entender qué me conviene    | Asesores y productores, por teléfono o en persona | El que arranca por la web compara solo |
+| Cotizar                     | Cotizador web                                     | Formulario, hay que salir a la web     |
+| Contratar                   | Web / asesor / productor                          |                                        |
+| Usar y gestionar (posventa) | Letizia (WhatsApp) + app                          | Bien resuelto                          |
 
-Los dos extremos están cubiertos. El medio, no. Y el dato más interesante del benchmark: La Caja ya
-demostró que WhatsApp le funciona (invirtió en Letizia, ofrece telemedicina por ese canal). El canal está
-validado internamente; lo usan para la etapa equivocada del embudo.
+Una precisión importante, porque el matiz es la tesis: **el asesoramiento existe**. Está el asesor del
+call center y, sobre todo, están los productores asesores, que son el corazón comercial del rubro. El
+hueco no es que falte la figura: es que atiende por teléfono o en persona, en horario comercial, y
+lejos de donde el recorrido digital empieza. El que entra por la web a las 11 de la noche se encuentra
+con un formulario, no con un asesor. Lo que no tiene dueño es el **asesoramiento en el canal
+conversacional**, y el dato más interesante del benchmark es que el canal ya está validado: La Caja
+demostró que WhatsApp le funciona (invirtió en Letizia, ofrece telemedicina por ahí). Lo usan para la
+etapa equivocada del embudo.
+
+### ¿Es un problema de una empresa, o del rubro?
+
+Antes de apostar, la pregunta obligada: ¿esto le pasa solo a La Caja? Relevé a la competencia
+(información pública, julio de 2026) y el patrón se confirmó con un detalle revelador: **todas
+invirtieron en canales conversacionales, y ninguna los apunta a venderle al cliente nuevo**.
+
+| Aseguradora                                 | Canal conversacional                      | Para qué lo usan                                                           | ¿Venta asesorada en el chat?                                                                                           |
+| ------------------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| La Caja                                     | Letizia (WhatsApp)                        | Posventa: pólizas, bajas, documentación                                    | No: la cotización vive en la web                                                                                       |
+| [Zurich](https://www.zurich.com.ar/)        | Chatbot de WhatsApp con IA                | Atención y siniestros (derivó el 15% de las denuncias telefónicas al chat) | No: venta por teléfono y cotizadores web                                                                               |
+| [Allianz](https://www.allianz.com.ar/)      | Ally (portal Mi Allianz) + WhatsApp 24/7  | Autogestión de clientes y soporte a productores                            | No: cotización por formulario web y productores                                                                        |
+| [Mapfre](https://www.mapfre.com.ar/)        | MAIPI (WhatsApp)                          | Autogestión: pólizas, cuotas, siniestros; incluye cotizar                  | A medias: solo para clientes ya registrados (exige el celular de la póliza), transaccional y sin comparación asesorada |
+| [Sancor](https://www.sancorseguros.com.ar/) | Cotizador IA por WhatsApp + PREVI (salud) | El cotizador es para productores; PREVI es autogestión de socios           | No para el cliente final: lo conversacional de venta apunta al intermediario                                           |
+
+La lectura fina importa: los movimientos más cercanos (Mapfre cotizando a clientes existentes, Sancor
+cotizando por WhatsApp para sus productores) confirman que el rubro va hacia ahí, pero dejan vacante el
+lugar específico: **la venta asesorada al cliente que todavía no es cliente, dentro del chat**. Ese es
+el hueco, y no es de una empresa: es estructural.
 
 La amplitud vino del resto del paisaje: **el caso fue el ancla del análisis, no su límite**. Cada
 decisión de flujo se contrastó contra el rubro completo: los cotizadores de otras aseguradoras y
@@ -78,9 +102,11 @@ más abajo digo "ningún cotizador pregunta esto", es porque los miré, no porqu
 
 La regla es no competir donde el incumbente ya es fuerte. Hacer otro bot de posventa sería esfuerzo sin
 diferencial; la pre-venta conversacional ataca el momento de mayor intención de compra y menor
-acompañamiento. La apuesta: **asesorar, comparar y cotizar dentro del chat**, y entregar un lead
-calificado y tibio. El bot no emite pólizas ni reemplaza al tarifador oficial: su techo, elegido a
-propósito, es dejar la venta lista para cerrar.
+acompañamiento digital. La apuesta: **asesorar, comparar y cotizar dentro del chat**, y entregar un
+lead calificado y tibio al asesor o productor que hoy ya existe. El bot no compite con esa figura: la
+alimenta con un lead que llega con su cotización armada, en vez de un dato frío de formulario. Y no
+emite pólizas ni reemplaza al tarifador oficial: su techo, elegido a propósito, es dejar la venta lista
+para que una persona la cierre.
 
 ## El criterio
 
@@ -276,7 +302,9 @@ ajena, y una insurtech que la mira tiene que poder proyectarse usándola.
 ## Qué funciona y por qué
 
 - **El insight sostiene todo.** El proyecto no es "un bot de seguros", es la respuesta a un hueco
-  específico del funnel de una empresa real, encontrado mirando datos públicos con método.
+  estructural del rubro: encontrado en una empresa real mirando datos públicos con método, y verificado
+  contra la competencia (Zurich, Allianz, Mapfre, Sancor: todas con canal conversacional, ninguna
+  vendiéndole al cliente nuevo en el chat).
 - **Las decisiones tienen datos atrás.** El paso de año/condición salió de un benchmark de cotizadores;
   el umbral del router, de una curva ROC; el modelo de emociones, de un eval propio; el re-enganche, de
   las reglas reales de WhatsApp Business.
@@ -331,8 +359,8 @@ dudas, Postgres para leads y eventos, Redis para sesiones, Docker y deploy conti
 ## Probalo, y abierto a feedback
 
 La demo está viva: [insurance-advisor-bot.onrender.com](https://insurance-advisor-bot.onrender.com)
-(plan gratuito: la primera carga puede tardar unos segundos en despertar). Escribí "hola" y arranca el
-menú. El análisis completo, con las 24 decisiones documentadas y los benchmarks, está en el
+(plan gratuito: la primera carga puede tardar unos segundos en despertar). **Escribí "hola" y arranca
+el menú.** El análisis completo, con las 24 decisiones documentadas y los benchmarks, está en el
 [repositorio](https://github.com/ivandujaut/insurance-advisor-bot).
 
 Publico esto para que me lo discutan:
@@ -346,4 +374,5 @@ Publico esto para que me lo discutan:
 - Si trabajás en una aseguradora o insurtech: el motor es white-label (tu marca es configuración, tu
   catálogo es contenido). ¿Qué le falta para que lo pilotees con tu producto?
 
-Si algo de esto te hizo pensar distinto, escribime.
+Si algo de esto te hizo pensar distinto,
+[escribime](https://www.linkedin.com/in/ivan-dujaut/).

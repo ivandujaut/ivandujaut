@@ -1,6 +1,6 @@
 ---
 title: "Insurance Advisor Bot"
-tagline: "Insurers' bots handle policies, but they don't sell. I built the one that owns the stage nobody advises"
+tagline: "Insurers' bots handle policies, but they don't sell. I built the one that owns the stage nobody advises in the chat"
 description: "I analyzed a real insurer's funnel using public data, found the stage nobody owns (advised sales) and built the WhatsApp bot that fills it: product decisions documented with their criteria, measured with data, and deployed as a public demo."
 year: 2026
 date: "2026-07-18"
@@ -39,7 +39,7 @@ Letizia is one of the good ones, and even so it serves, it doesn't sell), but th
 white-label: the brand is configuration and the catalog is content, so it works for any insurer. Every
 decision is documented with its criteria, its data and its trade-off, and the AI pieces are not
 assumed to work: they are measured (a ROC curve for the FAQ router, a macro-F1 eval for the emotion
-classifier). It is deployed as a public demo.
+classifier). It is deployed as a public demo you can try in one click.
 
 </Abstract>
 
@@ -56,16 +56,40 @@ what I assume.
 
 The customer journey map came out like this:
 
-| Funnel stage                   | Who owns it today        | How it feels                              |
-| ------------------------------ | ------------------------ | ----------------------------------------- |
-| Understanding what suits me    | Nobody, clearly          | The customer compares alone               |
-| Getting a quote                | Web quote form           | A form, and you have to leave for the web |
-| Buying                         | Web / human agent        |                                           |
-| Using and managing (post-sale) | Letizia (WhatsApp) + app | Well solved                               |
+| Funnel stage                   | Who owns it today                           | How it feels                              |
+| ------------------------------ | ------------------------------------------- | ----------------------------------------- |
+| Understanding what suits me    | Advisors and brokers, by phone or in person | Whoever starts on the web compares alone  |
+| Getting a quote                | Web quote form                              | A form, and you have to leave for the web |
+| Buying                         | Web / agent / broker                        |                                           |
+| Using and managing (post-sale) | Letizia (WhatsApp) + app                    | Well solved                               |
 
-Both ends are covered. The middle is not. And the most interesting finding of the benchmark: La Caja
-has already proven WhatsApp works for them (they invested in Letizia, they offer telemedicine through
-that channel). The channel is validated internally; they use it for the wrong stage of the funnel.
+One important precision, because the nuance is the thesis: **advising exists**. There's the call
+center agent and, above all, there are the licensed insurance brokers (productores asesores), the
+commercial heart of the industry. The gap isn't a missing figure: it's that this figure works by phone
+or in person, during business hours, far from where the digital journey starts. Whoever lands on the
+website at 11pm meets a form, not an advisor. What has no owner is **advising in the conversational
+channel**, and the most interesting finding of the benchmark is that the channel is already validated:
+La Caja proved WhatsApp works for them (they invested in Letizia, they offer telemedicine through it).
+They use it for the wrong stage of the funnel.
+
+### Is this one company's problem, or the industry's?
+
+Before betting, the mandatory question: does this only happen to La Caja? I surveyed the competition
+(public information, July 2026) and the pattern held, with a revealing detail: **they all invested in
+conversational channels, and none of them points those channels at selling to new customers**.
+
+| Insurer                                     | Conversational channel                   | What they use it for                                                 | Advised selling in the chat?                                                                                                    |
+| ------------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| La Caja                                     | Letizia (WhatsApp)                       | Post-sale: policies, cancellations, documents                        | No: quoting lives on the web                                                                                                    |
+| [Zurich](https://www.zurich.com.ar/)        | AI-powered WhatsApp chatbot              | Service and claims (diverted 15% of phone claim reports to the chat) | No: sales by phone and web quote forms                                                                                          |
+| [Allianz](https://www.allianz.com.ar/)      | Ally (Mi Allianz portal) + 24/7 WhatsApp | Customer self-service and support for brokers                        | No: quoting via web form and brokers                                                                                            |
+| [Mapfre](https://www.mapfre.com.ar/)        | MAIPI (WhatsApp)                         | Self-service: policies, payments, claims; includes quoting           | Halfway: only for already-registered customers (requires the phone on the policy), transactional and without advised comparison |
+| [Sancor](https://www.sancorseguros.com.ar/) | AI WhatsApp quoter + PREVI (health)      | The quoter is for brokers; PREVI is member self-service              | Not for the end customer: their conversational selling targets the intermediary                                                 |
+
+The fine print matters: the closest moves (Mapfre quoting for existing customers, Sancor quoting over
+WhatsApp for its brokers) confirm the industry is heading this way, but they leave the specific spot
+vacant: **advised selling to the not-yet-customer, inside the chat**. That's the gap, and it doesn't
+belong to one company: it's structural.
 
 The breadth came from the rest of the landscape: **the case was the anchor of the analysis, not its
 limit**. Every flow decision was checked against the full industry: quote forms from other insurers and
@@ -79,9 +103,11 @@ not because I assume it.
 
 The rule is not to compete where the incumbent is already strong. Building another post-sale bot would
 be effort without a differentiator; conversational pre-sale attacks the moment of highest purchase
-intent and least support. The bet: **advise, compare and quote inside the chat**, and deliver a
-qualified, warm lead. The bot doesn't issue policies or replace the official rating engine: its
-ceiling, chosen on purpose, is leaving the sale ready to close.
+intent and least digital support. The bet: **advise, compare and quote inside the chat**, and deliver
+a qualified, warm lead to the human advisor or broker who already exists. The bot doesn't compete with
+that figure: it feeds it, with a lead that arrives with its quote already built instead of a cold form
+entry. And it doesn't issue policies or replace the official rating engine: its ceiling, chosen on
+purpose, is leaving the sale ready for a person to close.
 
 ## The criteria
 
@@ -281,7 +307,9 @@ at it should be able to picture itself using it.
 ## What works and why
 
 - **The insight holds everything up.** The project isn't "an insurance bot", it's the answer to a
-  specific gap in a real company's funnel, found by looking at public data with method.
+  structural gap in the industry: found in a real company's funnel by looking at public data with
+  method, and verified against the competition (Zurich, Allianz, Mapfre, Sancor: all with a
+  conversational channel, none selling to new customers in the chat).
 - **The decisions have data behind them.** The year/condition step came from a benchmark of quote
   forms; the router's threshold from a ROC curve; the emotion model from an eval of my own; the
   re-engagement from WhatsApp Business's real rules.
@@ -337,9 +365,10 @@ leads and events, Redis for sessions, Docker and continuous deployment with a pu
 ## Try it, and open to feedback
 
 The demo is live: [insurance-advisor-bot.onrender.com](https://insurance-advisor-bot.onrender.com)
-(free tier: the first load may take a few seconds to wake up). Type "hola" and the menu starts (the bot
-speaks Spanish; it was built for the Argentine market). The full analysis, with 24 documented decisions
-and the benchmarks, is in the [repository](https://github.com/ivandujaut/insurance-advisor-bot).
+(free tier: the first load may take a few seconds to wake up). **Type "hola" and the menu starts** (the
+bot speaks Spanish; it was built for the Argentine market). The full analysis, with 24 documented
+decisions and the benchmarks, is in the
+[repository](https://github.com/ivandujaut/insurance-advisor-bot).
 
 I'm publishing this to have it challenged:
 
@@ -353,4 +382,5 @@ I'm publishing this to have it challenged:
 - If you work at an insurer or an insurtech: the engine is white-label (your brand is configuration,
   your catalog is content). What's missing for you to pilot it with your product?
 
-If any of this made you think differently, write to me.
+If any of this made you think differently,
+[write to me](https://www.linkedin.com/in/ivan-dujaut/).
