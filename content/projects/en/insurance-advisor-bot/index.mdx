@@ -56,21 +56,30 @@ what I assume.
 
 The customer journey map came out like this:
 
-| Funnel stage                   | Who owns it today                           | How it feels                              |
-| ------------------------------ | ------------------------------------------- | ----------------------------------------- |
-| Understanding what suits me    | Advisors and brokers, by phone or in person | Whoever starts on the web compares alone  |
-| Getting a quote                | Web quote form                              | A form, and you have to leave for the web |
-| Buying                         | Web / agent / broker                        |                                           |
-| Using and managing (post-sale) | Letizia (WhatsApp) + app                    | Well solved                               |
+| Funnel stage                   | Who owns it today                           | How it feels                                               |
+| ------------------------------ | ------------------------------------------- | ---------------------------------------------------------- |
+| Understanding what suits me    | Advisors and brokers, by phone or in person | Whoever starts on the web compares alone                   |
+| Getting a quote                | Web form (24 hs) or a WhatsApp human agent  | A cold form, or dictating the form to a person and waiting |
+| Buying                         | Web / agent / broker                        |                                                            |
+| Using and managing (post-sale) | Letizia (WhatsApp) + app                    | Well solved                                                |
 
 One important precision, because the nuance is the thesis: **advising exists**. There's the call
 center agent and, above all, there are the licensed insurance brokers (productores asesores), the
-commercial heart of the industry. The gap isn't a missing figure: it's that this figure works by phone
-or in person, during business hours, far from where the digital journey starts. Whoever lands on the
-website at 11pm meets a form, not an advisor. What has no owner is **advising in the conversational
-channel**, and the most interesting finding of the benchmark is that the channel is already validated:
+commercial heart of the industry. And quoting over WhatsApp is possible too: I tested it as a
+customer. I asked to quote my car, stating in my very first message that it was used, without CNG and
+for personal use, and the channel routed me to a human agent. The service was courteous, but the
+path's design showed its seams: the first reply took 22 minutes; it asked for all the data at once,
+like a dictated form (national ID, birth date and license plate included, before seeing any price); it
+re-asked the usage and the CNG I had already stated; and the quote was deferred to later. The next
+day, an automated message invited me to buy 100% online... on the web quote forms. One interaction is
+not a sample, but these frictions are properties of the channel's design, not of the person: business
+hours and a queue, zero memory of context, and a price that is always deferred.
+
+So what has no owner is not "quoting over WhatsApp": it's **immediate advised selling, 24 hours a day,
+that respects what you already said and shows a price on the spot**, saving the human for where they
+add value. And the most interesting finding of the benchmark is that the channel is already validated:
 La Caja proved WhatsApp works for them (they invested in Letizia, they offer telemedicine through it).
-They use it for the wrong stage of the funnel.
+What's missing is pointing it at this stage of the funnel.
 
 ### Is this one company's problem, or the industry's?
 
@@ -78,13 +87,13 @@ Before betting, the mandatory question: does this only happen to La Caja? I surv
 (public information, July 2026) and the pattern held, with a revealing detail: **they all invested in
 conversational channels, and none of them points those channels at selling to new customers**.
 
-| Insurer                                     | Conversational channel                   | What they use it for                                                 | Advised selling in the chat?                                                                                                    |
-| ------------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| La Caja                                     | Letizia (WhatsApp)                       | Post-sale: policies, cancellations, documents                        | No: quoting lives on the web                                                                                                    |
-| [Zurich](https://www.zurich.com.ar/)        | AI-powered WhatsApp chatbot              | Service and claims (diverted 15% of phone claim reports to the chat) | No: sales by phone and web quote forms                                                                                          |
-| [Allianz](https://www.allianz.com.ar/)      | Ally (Mi Allianz portal) + 24/7 WhatsApp | Customer self-service and support for brokers                        | No: quoting via web form and brokers                                                                                            |
-| [Mapfre](https://www.mapfre.com.ar/)        | MAIPI (WhatsApp)                         | Self-service: policies, payments, claims; includes quoting           | Halfway: only for already-registered customers (requires the phone on the policy), transactional and without advised comparison |
-| [Sancor](https://www.sancorseguros.com.ar/) | AI WhatsApp quoter + PREVI (health)      | The quoter is for brokers; PREVI is member self-service              | Not for the end customer: their conversational selling targets the intermediary                                                 |
+| Insurer                                     | Conversational channel                             | What they use it for                                                           | Advised selling in the chat?                                                                                                    |
+| ------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| La Caja                                     | Letizia (WhatsApp) + human agents in the same chat | Post-sale: policies, cancellations, documents; quoting routes to a human agent | Halfway: I tested it, and it's the form dictated to a person (all the data at once, business hours, deferred price)             |
+| [Zurich](https://www.zurich.com.ar/)        | AI-powered WhatsApp chatbot                        | Service and claims (diverted 15% of phone claim reports to the chat)           | No: sales by phone and web quote forms                                                                                          |
+| [Allianz](https://www.allianz.com.ar/)      | Ally (Mi Allianz portal) + 24/7 WhatsApp           | Customer self-service and support for brokers                                  | No: quoting via web form and brokers                                                                                            |
+| [Mapfre](https://www.mapfre.com.ar/)        | MAIPI (WhatsApp)                                   | Self-service: policies, payments, claims; includes quoting                     | Halfway: only for already-registered customers (requires the phone on the policy), transactional and without advised comparison |
+| [Sancor](https://www.sancorseguros.com.ar/) | AI WhatsApp quoter + PREVI (health)                | The quoter is for brokers; PREVI is member self-service                        | Not for the end customer: their conversational selling targets the intermediary                                                 |
 
 The fine print matters: the closest moves (Mapfre quoting for existing customers, Sancor quoting over
 WhatsApp for its brokers) confirm the industry is heading this way, but they leave the specific spot
@@ -329,6 +338,10 @@ at it should be able to picture itself using it.
   requires the official rating engine behind the same port.
 - **Emotion detection runs only on open questions and flow stumbles**, not on every message of the
   happy path. It's a cost trade-off I would revisit with real usage data.
+- **The bot doesn't parse the opening message either.** When I tested La Caja's real channel, I stated
+  "used, no CNG" in my first message and the agent re-asked it. My bot has the same friction today: if
+  you start with "I want to quote my used car, no CNG", the flow asks about CNG anyway. Criticizing it
+  in the benchmark put it on my backlog: pre-fill data from the free-text opening.
 
 ## What I take with me
 
