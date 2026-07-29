@@ -43,16 +43,10 @@ La cobranza de seguros no es un proceso: son al menos cuatro, con actores y modo
 distintos. Los relevé y diagramé antes de tocar un solo dato, porque el número sin el flujo no
 explica nada.
 
-{/\* TODO: exportar el diagrama de los cuatro flujos (débito AR · PAS · ART · MX multi-canal)
-a /public/projects/cobranza-seguros/flujos.png y descomentar:
-
-<Figure
-  src="/projects/cobranza-seguros/flujos.png"
-  alt="Cuatro flujos de cobranza en paralelo: débito automático en Argentina, cobranza vía productor (PAS), ART con autodeclaración del empleador, y multi-canal regulado en México. Cada flujo termina en conciliación manual, mora o cancelación."
-  width={900}
-  height={560}
-/>
-*/}
+<Callout type="info" title="Pendiente del borrador">
+  Acá va el diagrama de los cuatro flujos (débito AR · PAS · ART · MX multi-canal). Exportarlo a
+  `/public/projects/cobranza-seguros/flujos.png` y agregar el `<Figure />` correspondiente.
+</Callout>
 
 1. **Débito automático (personales).** El intento de débito rebota (fondos, tarjeta vencida), hay
    2-3 reintentos ciegos, y si fallan: mora → aviso → suspensión → cancelación. El cliente muchas
