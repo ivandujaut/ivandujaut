@@ -1,0 +1,215 @@
+---
+title: "La prima que no llega"
+tagline: "Las aseguradoras no tienen un problema de cobranza: tienen un problema de conciliación, y cancelan clientes que querían pagar"
+description: "Mapeé los cuatro flujos de cobranza del seguro argentino y los cuantifiqué con datos abiertos de la SSN y la SRT: $45 mil millones de mora mensual en ART, 18,9% de pólizas anuladas y 2 meses de prima atrapados en cuentas por cobrar. Un caso de mejora con tesis, priorización y métricas."
+year: 2026
+date: "2026-07-29"
+role: "Product"
+status: "concept"
+featured: false
+stack: ["Datos abiertos (SSN · SRT)", "Python", "pandas"]
+metrics:
+  - label: "Mora mensual del sistema ART"
+    value: "$45.349M"
+  - label: "Pólizas anuladas por trimestre"
+    value: "18,9%"
+  - label: "Meses de prima atrapados (mediana top 50)"
+    value: "2,0"
+  - label: "Prima anulada en pesos (mediana top 50)"
+    value: "10%"
+translationKey: "cobranza-seguros"
+draft: true
+---
+
+<Abstract label="En resumen">
+
+En el seguro argentino, el desenlace malo de la cobranza casi nunca es "el cliente no quiso pagar".
+Es mora fabricada por el proceso: el débito rebotó y nadie reintentó a tiempo, el productor cobró
+pero no rindió, el empleador declaró mal la nómina, el comprobante no concilió y la póliza se
+canceló igual. Mapeé los cuatro flujos de cobranza del mercado y los cuantifiqué con cuatro fuentes
+oficiales: el sistema ART deja de cobrar **$45.349 millones por mes** (8,36% de morosidad, SRT),
+**18,9% de las pólizas patrimoniales emitidas se anula en el mismo trimestre** (SSN), la aseguradora
+mediana del top 50 tiene **el equivalente a 2 meses de prima inmovilizados en premios a cobrar**, y
+las anulaciones se comen **el 10% de la prima emitida en pesos** (balances SSN). El patrón que une
+todo: la fricción crece con la intermediación y con el tamaño chico del pagador. La tesis del caso
+es que esto no se arregla cobrando más agresivo sino conciliando mejor, y propongo por dónde
+empezar, qué construir y con qué métricas gobernarlo.
+
+</Abstract>
+
+## Cómo entra la plata en una aseguradora (cuatro flujos, cuatro maneras de romperse)
+
+La cobranza de seguros no es un proceso: son al menos cuatro, con actores y modos de falla
+distintos. Los relevé y diagramé antes de tocar un solo dato, porque el número sin el flujo no
+explica nada.
+
+{/\* TODO: exportar el diagrama de los cuatro flujos (débito AR · PAS · ART · MX multi-canal)
+a /public/projects/cobranza-seguros/flujos.png y descomentar:
+
+<Figure
+  src="/projects/cobranza-seguros/flujos.png"
+  alt="Cuatro flujos de cobranza en paralelo: débito automático en Argentina, cobranza vía productor (PAS), ART con autodeclaración del empleador, y multi-canal regulado en México. Cada flujo termina en conciliación manual, mora o cancelación."
+  width={900}
+  height={560}
+/>
+*/}
+
+1. **Débito automático (personales).** El intento de débito rebota (fondos, tarjeta vencida), hay
+   2-3 reintentos ciegos, y si fallan: mora → aviso → suspensión → cancelación. El cliente muchas
+   veces se entera cuando ya no tiene cobertura.
+2. **Cobranza vía productor (PAS).** El productor cobra al cliente en efectivo, cheque o
+   transferencia, y rinde a la aseguradora cuando rinde. La conciliación entre lo cobrado y el core
+   es manual, con errores humanos y demoras estructurales.
+3. **ART.** El empleador autodeclara sueldos (F.931), la prima varía mes a mes según nómina, y la
+   conciliación entre lo declarado y lo cobrado arrastra subdeclaración, error y mora.
+4. **Multi-canal regulado (México, como contraste).** Domiciliación, ventanilla, OXXO, SPEI,
+   tarjeta: cada canal emite comprobantes distintos que se concilian a mano contra el core. Si la
+   conciliación no llega a tiempo, la póliza se cancela _indebidamente_ — el cliente pagó.
+
+El denominador común no es la falta de pago: es que **entre la plata y el sistema que decide si la
+póliza vive hay un proceso manual**. Eso es lo que sale a medir este caso.
+
+## Los números: cuatro fuentes oficiales, un mismo problema
+
+### La mora del sistema ART es la métrica del regulador, no una opinión
+
+La SRT publica mensualmente cuota pactada y cuota recaudada del sistema. En abril de 2026: $542.248
+millones pactados, $496.899 millones recaudados. La brecha — **$45.349 millones en un solo mes** —
+es exactamente la "Morosidad: 8,36%" que reporta el propio organismo. Anualizado, el orden de
+magnitud es ~8,4% de una facturación de ~$6,5 billones.
+
+El desglose por segmento es la primera evidencia de la tesis:
+
+| Segmento                              | Mora       | Brecha mensual |
+| ------------------------------------- | ---------- | -------------- |
+| Unidades productivas (empresas)       | 8,29%      | $44.445M       |
+| Casas particulares (empleo doméstico) | **14,25%** | $904M          |
+
+Donde el pagador es más chico y el proceso más manual, la mora casi se duplica. En plata por
+trabajador: se pactan $58.730 por mes y se cobran $54.463 — $4.266 que quedan en el limbo.
+
+### Casi 1 de cada 5 pólizas emitidas se anula en el mismo trimestre
+
+Del cuadro de pólizas, siniestros y primas de la SSN (1º trimestre 2026): sobre 16,6 millones de
+pólizas patrimoniales emitidas brutas, **3,14 millones se anularon**. Y el patrón por ramo repite el
+de la SRT: motovehículos (el segmento más precario) anula el 25,6% de lo que emite y el 18% de su
+stock vigente _por trimestre_; automotores, el ramo masivo, anula 1,38 millones de pólizas por
+trimestre.
+
+<Figure
+  src="/projects/cobranza-seguros/chart_anulaciones_ramo.png"
+  alt="Ranking de tasa de anulación por ramo en el primer trimestre 2026: Caución 43,3%, Robo 31,5%, Motovehículos 25,6%, Combinado Familiar 23,8%, con la referencia del total de mercado en 18,9%"
+  width={890}
+  height={601}
+/>
+
+### El costo vive en el balance: 2 meses de prima atrapados
+
+De los balances trimestrales que las aseguradoras presentan a la SSN (cierre marzo 2026, 177
+compañías): la mediana del top 50 por primas tiene **el equivalente a 2 meses de prima emitida
+inmovilizados en "premios a cobrar"**, y las **anulaciones en pesos se comen el 10% de la prima**
+(con extremos: Seguros Galicia 24,6%, Nación Seguros 24,2%).
+
+Pero el hallazgo más útil del ranking es _quién_ está arriba y quién abajo:
+
+<Figure
+  src="/projects/cobranza-seguros/chart_meses_atrapados.png"
+  alt="Ranking de meses de prima atrapados en cuentas por cobrar: Assurant 4,6 meses, cooperativas con red de productores entre 3,5 y 3,9, bancaseguros alrededor de 3, contra La Caja con 0,9 y Provincia ART con 0,3, y una mediana de 2 meses"
+  width={890}
+  height={562}
+/>
+
+**Los meses atrapados son función del canal.** Arriba del ranking: Assurant (vende garantías a
+través de retailers), las cooperativas con red de productores (La Segunda, Cooperación Mutual, Río
+Uruguay) y el canal bancario/institucional (Allianz, Galicia, Nación, Provincia Seguros). Abajo, con
+cobranza sana: La Caja (venta directa, débito automático: 0,9 meses) y Provincia ART (cobro por
+nómina: 0,3). Donde hay un intermediario en el medio del flujo de plata, la prima tarda 3-4 meses en
+llegar; donde el cobro es directo, semanas. Es el flujo 2 del diagrama, confirmado compañía por
+compañía en la contabilidad.
+
+La comparación interanual (mismo mes fiscal, 2025 vs 2026) da estable: mediana 2,06 → 1,98 meses.
+**El problema es estructural, no coyuntural.**
+
+## La tesis
+
+> Las aseguradoras no tienen un problema de cobranza: tienen un problema de conciliación. La mora
+> que ven es, en una fracción relevante, mora falsa — clientes que pagaron o querían pagar,
+> atrapados en un proceso que no reintenta a tiempo, no matchea comprobantes y no distingue "no
+> quiere pagar" de "no pudo pagar".
+
+En suscripciones digitales, entre el 20% y el 40% del churn es involuntario — recuperable con
+reintentos inteligentes y dunning. El seguro argentino opera con más intermediación y más fricción
+de medios de pago que un SaaS, no con menos. Cada punto de esa mora que sea involuntaria es revenue
+que se pierde sin que nadie lo haya decidido: ni el cliente, que quería cobertura, ni la
+aseguradora, que ya pagó por adquirirlo.
+
+## Priorización: por dónde empezaría
+
+Cuatro flujos, un solo equipo: hay que elegir. Mi criterio es volumen × automatizabilidad ×
+fricción política del canal.
+
+1. **Débito automático, primero.** Máximo volumen (el ramo automotor solo emite 7 millones de
+   pólizas netas por trimestre), cero humanos con incentivos propios en el medio, y la intervención
+   es puro producto: reintentos con timing inteligente, dunning multicanal, autogestión del medio de
+   pago. Es el flujo donde el software solo puede mover la aguja.
+2. **PAS, segundo — pero como producto para el productor, no contra él.** Es el flujo más caro (3-4
+   meses de prima atrapados en las compañías intermediadas) y el más difícil: el productor es un
+   canal con intereses, no un proceso. La jugada no es desintermediarlo sino darle rendición
+   automática — que rendir deje de ser trabajo.
+3. **ART, tercero.** La mora es enorme en pesos pero el flujo depende de la autodeclaración del
+   empleador y de AFIP; la palanca es detección temprana de subdeclaración, no cobranza clásica.
+
+## Qué construiría: el agente de cobranza
+
+Tres decisiones de diseño concretas, con su porqué:
+
+- **Reintentos que saben cuándo hay plata.** El reintento ciego a las 48 horas es la política de
+  quien no mira datos. El timing correcto se aprende: fecha de acreditación de sueldos, historial de
+  rechazos del propio cliente, día del mes. Objetivo: maximizar la tasa de aprobación en el primer
+  reintento, no la cantidad de reintentos.
+- **Dunning que ofrece salida, no amenaza.** Entre el rechazo y la suspensión hay una ventana que
+  hoy se usa para avisar y debería usarse para resolver: un mensaje de WhatsApp con link de pago y
+  actualización del medio de pago self-service. La cancelación pasa a ser el final de un camino con
+  salidas, no un timeout.
+- **Conciliación con revisión humana solo de excepciones.** Matching automático de comprobantes y
+  rendiciones contra el core; las personas dejan de buscar coincidencias y pasan a resolver los
+  casos que el sistema marca. La cancelación indebida (cancelar una póliza paga) se vuelve un evento
+  auditable, no un accidente estadístico.
+
+## Cómo lo gobernaría
+
+La North Star: **% de la prima emitida que se cobra en término sin intervención humana.** Mide el
+valor entregado (la plata que entra _y_ el ejército manual que ya no hace falta), es leading
+respecto del resultado financiero, y cada flujo la alimenta con inputs que el equipo puede mover:
+
+| Flujo  | Métricas de input                                                                  |
+| ------ | ---------------------------------------------------------------------------------- |
+| Débito | Aprobación en primer intento · recupero post-rechazo · días rechazo→regularización |
+| PAS    | Días cobro→rendición · % de rendiciones auto-conciliadas · antigüedad de partidas  |
+| ART    | Brecha pactada−cobrada (el dato SRT) · días hasta detectar subdeclaración          |
+
+Con dos guardrails que evitan optimizar rompiendo otra cosa: reclamos por cobros indebidos (la meta
+es cobrar más inteligente, no más agresivo) y costo por peso cobrado. Y una advertencia sobre la
+métrica que suele usarse como estrella en cobranzas: la tasa de recupero **premia que el flujo
+falle** para poder recuperarlo. El recupero es input; la estrella es que el pago salga bien a la
+primera.
+
+<Callout type="warning" title="Supuestos y límites, declarados">
+  Este es un análisis externo hecho con datos públicos; lo que no pude observar, lo digo. (1) La
+  "anulación" de la SSN incluye motivos no financieros — endosos, reemplazo de póliza por cambio de
+  vehículo — así que el 18,9% es techo, no medida pura de churn de cobranza. (2) La morosidad
+  mensual de la SRT no es pérdida definitiva: parte se recauda después con intereses; el número
+  correcto es "plata que no entró en término". (3) El benchmark de churn involuntario (20-40%) viene
+  de suscripciones digitales, trasladado como orden de magnitud. (4) Galeno ART no reportó en el
+  archivo de balances del 1º trimestre 2026: no está en el ranking por falta de dato, no por
+  omisión. (5) Los importes del dataset de balances traen formatos mixtos según el período; usé los
+  dos períodos con formato íntegro (cierres a marzo 2025 y 2026) y descarté los corruptos.
+</Callout>
+
+## Fuentes
+
+- [SRT — Cobertura y financiación, últimos datos](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) (abril 2026)
+- [SSN — Pólizas, siniestros y primas](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas) (1º trimestre 2026)
+- [SSN — Datos abiertos: indicadores del mercado asegurador](https://datosabiertos.ssn.gob.ar/dataset/indicadores-mercado) (2009–2026)
+- [SSN — Datos abiertos: balances de aseguradoras](https://datosabiertos.ssn.gob.ar/dataset/balances) (cierres marzo 2025 y marzo 2026)
+- [GoCardless — Churn involuntario](https://gocardless.com/es/guias/consejos/churn-involuntario) (benchmark de suscripciones)
