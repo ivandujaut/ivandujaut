@@ -109,7 +109,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <CalendlyIcon size={14} aria-hidden />
             <span>{t("intro.ctas.calendly")}</span>
           </a>
-          <AnimateIcon animateOnHover asChild>
+          {/* Sin `asChild`: esta página es Server Component y `AnimateIcon` es
+              cliente; ver el comentario en `components/home/stats-grid.tsx`. */}
+          <AnimateIcon animateOnHover className="inline-flex">
             <a
               href="/cv-ivan-dujaut.pdf"
               download

@@ -91,8 +91,13 @@ export function Hero({ locale }: { locale: "es" | "en" }) {
           leer. El destino primario es el trabajo; el CV es la salida rápida
           para quien vino a evaluar un perfil. */}
       <div className="mt-8 flex flex-wrap items-center gap-3">
-        {/* Sin `asChild`: `AnimateIcon` haría `motion.create()` sobre el `Link`
-            de next-intl y eso rompe. El span envolvente capta el hover igual. */}
+        {/* Nunca `asChild` desde un Server Component. `AnimateIcon` es cliente,
+            y los children que cruzan el borde servidor → cliente no llegan
+            materializados como elemento durante el SSR: `Slot` lee
+            `children.type` antes de su propio `isValidElement`, y revienta con
+            "Cannot read properties of undefined (reading 'displayName')".
+            La variante con wrapper (un span) capta el hover igual por burbujeo.
+            En componentes con "use client" `asChild` sí funciona. */}
         <AnimateIcon animateOnHover className="inline-flex">
           <Link
             href="/projects"
@@ -102,7 +107,7 @@ export function Hero({ locale }: { locale: "es" | "en" }) {
             <ArrowRight size={16} strokeWidth={1.5} aria-hidden />
           </Link>
         </AnimateIcon>
-        <AnimateIcon animateOnHover asChild>
+        <AnimateIcon animateOnHover className="inline-flex">
           <a
             href="/cv-ivan-dujaut.pdf"
             download

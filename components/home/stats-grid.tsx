@@ -57,15 +57,23 @@ const cornerIconClassName =
  * sobre la tarjeta entera (no solo sobre el icono, que mide 14px).
  * El glifo distingue destino: `external-link` sale del sitio, `arrow-right` no.
  *
- * Ojo con `AnimateIcon`: la variante `asChild` hace `motion.create()` sobre el
- * hijo y eso rompe con el `Link` de next-intl. Para links internos usamos la
- * variante con wrapper (un span), que capta el hover igual por burbujeo.
+ * Nunca `asChild` desde acá: este es un Server Component y `AnimateIcon` es
+ * cliente. Los children que cruzan ese borde no llegan materializados como
+ * elemento durante el SSR, y `Slot` lee `children.type` antes de su propio
+ * `isValidElement`, así que revienta con "Cannot read properties of undefined
+ * (reading 'displayName')". La variante con wrapper (un span) capta el hover
+ * igual por burbujeo. En componentes con "use client" `asChild` sí funciona.
  */
 function StatsCardWrapper({ href, external = false, children }: StatsCardWrapperProps) {
   if (external) {
     return (
-      <AnimateIcon animateOnHover asChild>
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cardClassName}>
+      <AnimateIcon animateOnHover className="block h-full">
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${cardClassName} h-full`}
+        >
           {children}
           <ExternalLink size={14} strokeWidth={1.5} className={cornerIconClassName} aria-hidden />
         </a>
