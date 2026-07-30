@@ -78,6 +78,11 @@
     },
     "breadcrumbs": {
       "label": "Breadcrumb"
+    },
+    "reading": {
+      "minutes": "{count} min read",
+      "progress": "Reading progress",
+      "contents": "Contents"
     }
   },
   "home": {
@@ -87,7 +92,11 @@
       "location": "Argentina",
       "available": "Available",
       "tagline": "I build product end-to-end: code, roadmap decisions, and metrics that matter.",
-      "credentials": "Bioengineer at ITBA · Techstars W24 alumni"
+      "credentials": "Bioengineer at ITBA · Techstars W24 alumni",
+      "ctas": {
+        "work": "See my work",
+        "cv": "Download my CV"
+      }
     },
     "currently": {
       "title": "Currently",
@@ -144,6 +153,18 @@
       "build": "Product",
       "case-study": "Improvement case",
       "design": "Design"
+    },
+    "close": {
+      "title": "Want to talk about this case?",
+      "body": "If you read this far, something about the problem caught your interest. I like discussing these decisions with people who live them: write me what you would do differently, or let's book a call.",
+      "ctas": {
+        "email": "Write me",
+        "call": "Book a call"
+      },
+      "moreLabel": "More cases",
+      "newer": "Next case",
+      "older": "Previous case",
+      "allProjects": "See all projects"
     }
   },
   "paper": {

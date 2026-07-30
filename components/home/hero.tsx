@@ -1,7 +1,11 @@
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
+import { Download } from "@/components/animate-ui/icons/download";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
+import { Link } from "@/i18n/navigation";
 
 const socialLinks = [
   {
@@ -37,6 +41,33 @@ export function Hero() {
       <p className="mt-6 text-lg leading-relaxed text-foreground">{t("tagline")}</p>
 
       <p className="mt-2 font-mono text-sm text-muted-foreground">{t("credentials")}</p>
+
+      {/* Arriba del pliegue tiene que haber algo para hacer, no solo algo para
+          leer. El destino primario es el trabajo; el CV es la salida rápida
+          para quien vino a evaluar un perfil. */}
+      <div className="mt-8 flex flex-wrap items-center gap-3">
+        {/* Sin `asChild`: `AnimateIcon` haría `motion.create()` sobre el `Link`
+            de next-intl y eso rompe. El span envolvente capta el hover igual. */}
+        <AnimateIcon animateOnHover className="inline-flex">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+          >
+            <span>{t("ctas.work")}</span>
+            <ArrowRight size={16} strokeWidth={1.5} aria-hidden />
+          </Link>
+        </AnimateIcon>
+        <AnimateIcon animateOnHover asChild>
+          <a
+            href="/cv-ivan-dujaut.pdf"
+            download
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
+          >
+            <Download size={16} strokeWidth={1.5} aria-hidden />
+            <span>{t("ctas.cv")}</span>
+          </a>
+        </AnimateIcon>
+      </div>
 
       <div className="mt-6 flex items-center gap-3">
         {socialLinks.map((link) => (
