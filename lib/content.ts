@@ -115,6 +115,40 @@ export function getProjectTranslations(project: { translationKey?: string; local
   );
 }
 
+/**
+ * Caso que anuncia el badge del hero: el más nuevo que haya elegido sus 3
+ * imágenes de preview en el frontmatter.
+ *
+ * Depende del dato y no de una lista fija para que no se quede viejo en
+ * silencio: publicás un caso nuevo, le agregás `preview`, y el badge lo toma.
+ * Un caso sin imágenes de proporción usable simplemente no define el campo y
+ * no compite.
+ */
+export function getPreviewProject(locale: Locale) {
+  return getProjects(locale).find((project) => project.preview !== undefined);
+}
+
+/**
+ * Casos vecinos en el listado, para que un caso de estudio no termine en un
+ * callejón sin salida.
+ *
+ * "next" es el siguiente en el orden del listado (más viejo, porque ordenamos
+ * por fecha descendente) y "previous" el anterior (más nuevo). Devuelve
+ * `undefined` en los extremos; con un solo caso publicado, ambos son
+ * `undefined`.
+ */
+export function getAdjacentProjects(locale: Locale, slug: string) {
+  const all = getProjects(locale);
+  const index = all.findIndex((p) => p.slug === slug);
+
+  if (index === -1) return { previous: undefined, next: undefined };
+
+  return {
+    previous: index > 0 ? all[index - 1] : undefined,
+    next: index < all.length - 1 ? all[index + 1] : undefined,
+  };
+}
+
 // ============================================================================
 // Research (paper-style long-form)
 // ============================================================================

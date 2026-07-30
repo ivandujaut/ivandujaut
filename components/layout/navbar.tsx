@@ -20,7 +20,10 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+      {/* Misma columna que el contenido (max-w-2xl): con max-w-5xl el logo
+          quedaba ~220px a la izquierda del borde del texto de todas las
+          páginas. Alineado exacto, no "casi". */}
+      <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-6">
         {/* Logo / Nombre */}
         <Link
           href="/"

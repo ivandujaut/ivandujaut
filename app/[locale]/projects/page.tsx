@@ -53,7 +53,7 @@ export default async function ProjectsPage({ params }: Props) {
               {t("featured")}
             </h2>
             <div className="space-y-8">
-              {featured.map((project) => (
+              {featured.map((project, index) => (
                 <ProjectListItem
                   key={project.slug}
                   slug={project.slug}
@@ -64,6 +64,7 @@ export default async function ProjectsPage({ params }: Props) {
                   status={project.status}
                   kind={project.kind}
                   variant="card"
+                  isFirst={index === 0}
                   cover={
                     project.cover
                       ? {
@@ -71,6 +72,7 @@ export default async function ProjectsPage({ params }: Props) {
                           alt: project.cover.alt,
                           width: project.cover.src.width,
                           height: project.cover.src.height,
+                          blurDataURL: project.cover.src.blurDataURL,
                         }
                       : undefined
                   }
@@ -104,6 +106,7 @@ export default async function ProjectsPage({ params }: Props) {
                           alt: project.cover.alt,
                           width: project.cover.src.width,
                           height: project.cover.src.height,
+                          blurDataURL: project.cover.src.blurDataURL,
                         }
                       : undefined
                   }

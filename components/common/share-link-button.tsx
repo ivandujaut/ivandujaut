@@ -3,14 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Share08Icon,
-  CheckmarkCircle02Icon,
-  Link04Icon,
-  LinkedinIcon,
-  Mail01Icon,
-  NewTwitterIcon,
-} from "@hugeicons/core-free-icons";
+import { Share08Icon, LinkedinIcon, Mail01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Check } from "@/components/animate-ui/icons/check";
+import { Copy } from "@/components/animate-ui/icons/copy";
 
 interface ShareLinkButtonProps {
   url?: string;
@@ -123,13 +119,17 @@ export function ShareLinkButton({
         aria-expanded={menuOpen}
         className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
       >
-        <HugeiconsIcon
-          icon={copied ? CheckmarkCircle02Icon : Share08Icon}
-          size={14}
-          strokeWidth={1.5}
-          aria-hidden
-          className={copied ? "text-emerald-600 dark:text-emerald-400" : undefined}
-        />
+        {copied ? (
+          <Check
+            size={14}
+            strokeWidth={1.5}
+            animate
+            aria-hidden
+            className="text-emerald-600 dark:text-emerald-400"
+          />
+        ) : (
+          <HugeiconsIcon icon={Share08Icon} size={14} strokeWidth={1.5} aria-hidden />
+        )}
         <span className={alwaysShowLabel ? "inline" : "hidden sm:inline"}>{triggerLabel}</span>
       </button>
 
@@ -171,18 +171,20 @@ export function ShareLinkButton({
             <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={1.5} aria-hidden />
             <span>{t("shareByEmail")}</span>
           </a>
-          <button
-            type="button"
-            role="menuitem"
-            onClick={async () => {
-              await copyToClipboard();
-              setMenuOpen(false);
-            }}
-            className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus:bg-muted focus:outline-none"
-          >
-            <HugeiconsIcon icon={Link04Icon} size={14} strokeWidth={1.5} aria-hidden />
-            <span>{t("copyLink")}</span>
-          </button>
+          <AnimateIcon animateOnHover asChild>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={async () => {
+                await copyToClipboard();
+                setMenuOpen(false);
+              }}
+              className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus:bg-muted focus:outline-none"
+            >
+              <Copy size={14} strokeWidth={1.5} aria-hidden />
+              <span>{t("copyLink")}</span>
+            </button>
+          </AnimateIcon>
         </div>
       )}
     </div>

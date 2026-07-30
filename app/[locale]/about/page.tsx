@@ -3,7 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 import { ExperienceItem } from "@/components/about/experience-item";
 import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpRight01Icon, DownloadIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { ArrowUpRight01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
@@ -37,7 +39,9 @@ export async function generateMetadata({ params }: Props) {
   const pageUrl = `${SITE_URL}${localePath(typedLocale, "/about")}`;
 
   return {
-    title,
+    // `absolute` evita que el template del root layout ("%s · Iván Dujaut")
+    // agregue el nombre por segunda vez: el título ya lo incluye.
+    title: { absolute: title },
     description,
     alternates: buildStaticAlternates(typedLocale, "/about"),
     openGraph: {
@@ -105,14 +109,18 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <CalendlyIcon size={14} aria-hidden />
             <span>{t("intro.ctas.calendly")}</span>
           </a>
-          <a
-            href="/cv-ivan-dujaut.pdf"
-            download
-            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
-          >
-            <HugeiconsIcon icon={DownloadIcon} size={14} strokeWidth={1.5} aria-hidden />
-            <span>{t("intro.ctas.cv")}</span>
-          </a>
+          {/* Sin `asChild`: esta página es Server Component y `AnimateIcon` es
+              cliente; ver el comentario en `components/home/stats-grid.tsx`. */}
+          <AnimateIcon animateOnHover className="inline-flex">
+            <a
+              href="/cv-ivan-dujaut.pdf"
+              download
+              className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+            >
+              <Download size={14} strokeWidth={1.5} aria-hidden />
+              <span>{t("intro.ctas.cv")}</span>
+            </a>
+          </AnimateIcon>
         </div>
       </section>
 
@@ -539,6 +547,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
   );
 }
 
+/**
+ * Sin logos a propósito: acá es un inventario de herramientas, no el stack de
+ * un proyecto. Los logos quedan reservados para /projects y el detalle de un
+ * caso, donde acompañan a un trabajo concreto.
+ */
 function ToolCategory({ label, items }: { label: string; items: string }) {
   return (
     <div className="grid grid-cols-1 gap-1 sm:grid-cols-[180px_1fr] sm:gap-4">

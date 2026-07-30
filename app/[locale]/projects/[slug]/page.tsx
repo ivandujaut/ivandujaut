@@ -7,6 +7,7 @@ import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
   findTranslatedProjectInLocale,
+  getAdjacentProjects,
   getProjectBySlug,
   getProjects,
   getProjectTranslations,
@@ -22,6 +23,10 @@ import { getCachedViews } from "@/lib/views";
 import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
+import { CaseStudyClose } from "@/components/content/case-study-close";
+import { StackList } from "@/components/content/stack-list";
+import { ReadingProgress } from "@/components/content/reading-progress";
+import { PaperToc } from "@/components/mdx/paper-toc";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
 
@@ -120,6 +125,7 @@ export default async function ProjectPage({ params }: Props) {
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
   const tProjects = await getTranslations({ locale: typedLocale, namespace: "projects" });
+  const tReading = await getTranslations({ locale: typedLocale, namespace: "common.reading" });
   const newTabLabel = tA11y("opensInNewTab");
   const demoLabel = tProjects("links.demo");
   const repoLabel = tProjects("links.repo");
@@ -143,10 +149,17 @@ export default async function ProjectPage({ params }: Props) {
   ]);
 
   const initialViews = await getCachedViews("projects", slug);
+  const { previous, next } = getAdjacentProjects(typedLocale, slug);
 
   return (
     <main id="main">
-      <article className="case-study relative mx-auto max-w-2xl px-6 py-24">
+      <ReadingProgress targetSelector="#case-study-article" label={tReading("progress")} />
+      <PaperToc
+        containerSelector="#case-study-content"
+        label={tReading("contents")}
+        numbered={false}
+      />
+      <article id="case-study-article" className="case-study relative mx-auto max-w-2xl px-6 py-24">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
@@ -160,11 +173,21 @@ export default async function ProjectPage({ params }: Props) {
               <span>{project.year}</span>
             </ViewTransition>
             <span aria-hidden>·</span>
-            <span>{project.role}</span>
+            {/* El rol va etiquetado. Sin el "Rol:", la fila mostraba "Product"
+                pelado justo al lado del badge de tipo ("Caso de estudio") y no
+                había forma de saber que uno es el papel que ocupé y el otro qué
+                clase de pieza es. */}
+            <span>{tProjects("meta.role", { role: project.role })}</span>
             <span aria-hidden>·</span>
             <KindBadge kind={project.kind} />
             {(project.kind === "build" || project.status !== "concept") && (
               <StatusBadge status={project.status} />
+            )}
+            {project.metadata && (
+              <>
+                <span aria-hidden>·</span>
+                <span>{tReading("minutes", { count: project.metadata.readingTime })}</span>
+              </>
             )}
             <span aria-hidden>·</span>
             <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
@@ -225,16 +248,7 @@ export default async function ProjectPage({ params }: Props) {
             <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {stackLabel}
             </h2>
-            <ul className="flex flex-wrap gap-2">
-              {project.stack.map((tech) => (
-                <li
-                  key={tech}
-                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
-                >
-                  {tech}
-                </li>
-              ))}
-            </ul>
+            <StackList items={project.stack} />
           </div>
 
           {project.metrics.length > 0 && (
@@ -245,7 +259,10 @@ export default async function ProjectPage({ params }: Props) {
               <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {project.metrics.map((metric) => (
                   <div key={metric.label} className="rounded-lg border border-border p-3">
-                    <dd className="font-mono text-xl font-semibold tracking-tight">
+                    {/* text-lg y no text-xl: con 4 columnas dentro de una
+                        columna de 672px, un valor como "$45,3 mil M" no entra
+                        en una línea y la unidad quedaba sola abajo. */}
+                    <dd className="font-mono text-lg font-semibold tracking-tight tabular-nums">
                       {metric.value}
                     </dd>
                     <dt className="mt-1 text-xs text-muted-foreground">{metric.label}</dt>
@@ -258,7 +275,7 @@ export default async function ProjectPage({ params }: Props) {
 
         <hr className="mb-12 border-border" />
 
-        <div className="prose-content">
+        <div id="case-study-content" className="prose-content">
           <MDXContent code={project.content} />
         </div>
 
@@ -270,6 +287,25 @@ export default async function ProjectPage({ params }: Props) {
             alwaysShowLabel
           />
         </footer>
+
+        <CaseStudyClose
+          locale={typedLocale}
+          previous={
+            previous
+              ? {
+                  slug: previous.slug,
+                  title: previous.title,
+                  tagline: previous.tagline,
+                  kind: previous.kind,
+                }
+              : undefined
+          }
+          next={
+            next
+              ? { slug: next.slug, title: next.title, tagline: next.tagline, kind: next.kind }
+              : undefined
+          }
+        />
       </article>
     </main>
   );

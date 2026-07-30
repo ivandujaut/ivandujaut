@@ -16,6 +16,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
+  // Red de contención para páginas que no definan `alternates`. Hoy no hay
+  // ninguna: las 8 lo definen y Next reemplaza el objeto completo, así que el
+  // feed llega al `<head>` por `buildStaticAlternates` /
+  // `buildContentAlternates` en `lib/seo.ts`, no por acá.
   return {
     alternates: {
       types: {

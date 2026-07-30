@@ -66,9 +66,7 @@
       "system": "Sistema"
     },
     "footer": {
-      "madeBy": "Hecho con ❤️ por <author>Iván Dujaut</author>.",
-      "builtWith": "Construido con",
-      "viewSource": "Ver código"
+      "madeBy": "Hecho con ❤️ por <author>Iván Dujaut</author>."
     },
     "mdx": {
       "copyLink": "Copiar enlace de esta sección",
@@ -78,6 +76,11 @@
     },
     "breadcrumbs": {
       "label": "Migas de pan"
+    },
+    "reading": {
+      "minutes": "{count} min de lectura",
+      "progress": "Progreso de lectura",
+      "contents": "Contenido"
     }
   },
   "home": {
@@ -87,7 +90,12 @@
       "location": "Argentina",
       "available": "Disponible",
       "tagline": "Hago producto end-to-end: código, decisiones de roadmap y métricas que importan.",
-      "credentials": "Bioingeniero ITBA · Alumni Techstars W24"
+      "credentials": "Bioingeniero ITBA · Alumni Techstars W24",
+      "badge": "Último caso: {title}",
+      "ctas": {
+        "work": "Ver mi trabajo",
+        "cv": "Bajá mi CV"
+      }
     },
     "currently": {
       "title": "Actualmente",
@@ -142,8 +150,23 @@
     },
     "kind": {
       "build": "Producto",
-      "case-study": "Caso de mejora",
+      "case-study": "Caso de estudio",
       "design": "Diseño"
+    },
+    "meta": {
+      "role": "Rol: {role}"
+    },
+    "close": {
+      "title": "¿Hablamos de este caso?",
+      "body": "Si llegaste hasta acá, algo del problema te interesó. Me gusta discutir estas decisiones con gente que las vive de cerca: escribime lo que harías distinto, o agendemos una call.",
+      "ctas": {
+        "email": "Escribime",
+        "call": "Agendá una call"
+      },
+      "moreLabel": "Más casos",
+      "newer": "Caso siguiente",
+      "older": "Caso anterior",
+      "allProjects": "Ver todos los proyectos"
     }
   },
   "paper": {
