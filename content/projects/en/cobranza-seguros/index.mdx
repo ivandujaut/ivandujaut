@@ -33,7 +33,7 @@ issued are annulled within the same quarter** (SSN), the median top-50 insurer c
 equivalent of 2 months of premium locked in receivables**, and annulments eat **10% of issued
 premium in pesos** (SSN financial statements). The pattern that ties it together: friction grows
 with intermediation and with how small the payer is. The thesis of this case is that you don't fix
-this by collecting more aggressively but by reconciling better — and I propose where to start, what
+this by collecting more aggressively but by reconciling better, and I propose where to start, what
 to build and which metrics should govern it.
 
 </Abstract>
@@ -62,8 +62,8 @@ without its flow explains nothing.
    under-declaration, error and arrears.
 4. **Regulated multi-channel (Mexico, as contrast).** Direct debit, bank counter, OXXO, SPEI, card:
    every channel emits a different receipt, all reconciled by hand against the core. If
-   reconciliation doesn't land in time, the policy is cancelled _improperly_ — the customer had
-   paid.
+   reconciliation doesn't land in time, the policy is cancelled _improperly_: the customer had
+   already paid.
 
 The common denominator is not non-payment: it's that **between the money and the system that
 decides whether a policy lives, there is a manual process**. That is what this case sets out to
@@ -73,9 +73,9 @@ measure.
 
 ### Workers' comp arrears is the regulator's own metric, not an opinion
 
-The SRT publishes agreed and collected premium for the system monthly. In April 2026: $542.2
-billion pesos agreed, $496.9 billion collected. The gap — **$45.3 billion in a single month** — is
-exactly the "Morosidad: 8.36%" the agency itself reports. Annualized, the order of magnitude is
+The SRT [publishes agreed and collected premium](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php)
+for the system monthly. In April 2026: $542.2 billion pesos agreed, $496.9 billion collected. The
+gap, **$45.3 billion in a single month**, is exactly the "Morosidad: 8.36%" the agency itself reports. Annualized, the order of magnitude is
 ~8.4% of a ~$6.5 trillion peso revenue base.
 
 The segment split is the first piece of evidence for the thesis:
@@ -86,11 +86,11 @@ The segment split is the first piece of evidence for the thesis:
 | Private households (domestic staff) | **14.25%** | $0.9B       |
 
 Where the payer is smaller and the process more manual, arrears nearly double. In money per worker:
-$58,730 pesos are agreed per month and $54,463 collected — $4,266 stuck in limbo.
+$58,730 pesos are agreed per month and $54,463 collected; the remaining $4,266 are stuck in limbo.
 
 ### Almost 1 in 5 policies issued is annulled within the same quarter
 
-From the SSN's policies, claims and premiums release (Q1 2026): of 16.6 million gross property &
+From the SSN's [policies, claims and premiums release](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas) (Q1 2026): of 16.6 million gross property &
 casualty policies issued in the quarter, **3.14 million were annulled**. And the pattern by line of
 business repeats the SRT's: motorcycles (the most precarious segment) annul 25.6% of what they
 issue and 18% of their in-force stock _per quarter_; auto, the mass-market line, annuls 1.38
@@ -105,7 +105,7 @@ million policies per quarter.
 
 ### The cost lives on the balance sheet: 2 months of premium trapped
 
-From the quarterly financial statements insurers file with the SSN (March 2026 close, 177
+From the [quarterly financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) insurers file with the SSN (March 2026 close, 177
 companies): the median top-50 insurer by premium carries **the equivalent of 2 months of issued
 premium locked in premium receivables**, and **annulments in pesos eat 10% of premium** (with
 extremes: Seguros Galicia 24.6%, Nación Seguros 24.2%).
@@ -133,11 +133,11 @@ The year-over-year comparison (same fiscal month, 2025 vs 2026) is flat: median 
 ## The thesis
 
 > Insurers don't have a collections problem: they have a reconciliation problem. A relevant
-> fraction of the arrears they see is false arrears — customers who paid or wanted to pay, trapped
+> fraction of the arrears they see is false arrears: customers who paid or wanted to pay, trapped
 > in a process that doesn't retry in time, doesn't match receipts, and can't tell "won't pay" from
 > "couldn't pay".
 
-In digital subscriptions, 20% to 40% of churn is involuntary — recoverable with smart retries and
+In digital subscriptions, [20% to 40% of churn is involuntary](https://gocardless.com/es/guias/consejos/churn-involuntario), meaning recoverable with smart retries and
 dunning. Argentine insurance operates with more intermediation and more payment-method friction
 than a SaaS, not less. Every point of that arrears that is involuntary is revenue lost without
 anyone having decided it: not the customer, who wanted coverage, nor the insurer, who already paid
@@ -152,10 +152,10 @@ political friction.
    per quarter), zero humans with their own incentives in the middle, and the intervention is pure
    product: retries with smart timing, multi-channel dunning, self-service payment-method updates.
    It's the flow where software alone can move the needle.
-2. **Brokers, second — but as a product for the broker, not against them.** It's the most expensive
+2. **Brokers, second, and as a product for the broker, not against them.** It's the most expensive
    flow (3-4 months of premium trapped at intermediated carriers) and the hardest: the broker is a
    channel with interests, not a process. The play is not to disintermediate but to give them
-   automatic remittance — make remitting stop being work.
+   automatic remittance: make remitting stop being work.
 3. **Workers' comp, third.** The arrears are huge in pesos but the flow depends on employer
    self-declaration and the tax agency; the lever is early detection of under-declaration, not
    classic dunning.
@@ -195,8 +195,8 @@ so it can be recovered. Recovery is an input; the star is the payment going thro
 
 <Callout type="warning" title="Assumptions and limits, stated">
   This is an outside-in analysis built on public data; what I couldn't observe, I say so. (1) The
-  SSN's "annulment" includes non-financial causes — endorsements, policy rewrites when a vehicle
-  changes — so 18.9% is a ceiling, not a pure measure of collections churn. (2) The SRT's monthly
+  SSN's "annulment" includes non-financial causes (endorsements, policy rewrites when a vehicle
+  changes), so 18.9% is a ceiling, not a pure measure of collections churn. (2) The SRT's monthly
   arrears is not a definitive loss: part is collected later with interest; the correct reading is
   "money that didn't arrive on time". (3) The involuntary-churn benchmark (20-40%) comes from
   digital subscriptions, carried over as an order of magnitude. (4) Galeno ART did not report in the
@@ -207,8 +207,8 @@ so it can be recovered. Recovery is an input; the star is the payment going thro
 
 ## Sources
 
-- [SRT — Coverage and financing, latest data](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) (April 2026)
-- [SSN — Policies, claims and premiums](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas) (Q1 2026)
-- [SSN — Open data: insurance market indicators](https://datosabiertos.ssn.gob.ar/dataset/indicadores-mercado) (2009–2026)
-- [SSN — Open data: insurer financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) (March 2025 and March 2026 closes)
-- [GoCardless — Involuntary churn](https://gocardless.com/es/guias/consejos/churn-involuntario) (subscriptions benchmark)
+- [SRT: Coverage and financing, latest data](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) (April 2026)
+- [SSN: Policies, claims and premiums](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas) (Q1 2026)
+- [SSN: Open data, insurance market indicators](https://datosabiertos.ssn.gob.ar/dataset/indicadores-mercado) (2009–2026)
+- [SSN: Open data, insurer financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) (March 2025 and March 2026 closes)
+- [GoCardless: Involuntary churn](https://gocardless.com/es/guias/consejos/churn-involuntario) (subscriptions benchmark)
