@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { StatusBadge, type ProjectStatus } from "@/components/content/status-badge";
 import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
+import { StackList } from "@/components/content/stack-list";
 
 interface ProjectCover {
   src: string;
@@ -62,10 +63,22 @@ export function ProjectListItem({
         </ViewTransition>
       </div>
       <p className="mt-1 text-sm text-muted-foreground">{tagline}</p>
-      <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-        <span className="font-mono">{stack.slice(0, 3).join(" · ")}</span>
-        {stack.length > 3 && <span className="font-mono">+{stack.length - 3}</span>}
-      </div>
+      {/* Los logos van solo en la variante "card" (el listado de /projects).
+          La variante "row" se usa en los destacados de la home, donde el stack
+          es metadata secundaria y las píldoras competirían con el resto del
+          bloque; ahí queda el texto plano de siempre. */}
+      {variant === "card" ? (
+        <StackList
+          items={stack.slice(0, 3)}
+          overflowCount={Math.max(0, stack.length - 3)}
+          className="mt-3"
+        />
+      ) : (
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+          <span className="font-mono">{stack.slice(0, 3).join(" · ")}</span>
+          {stack.length > 3 && <span className="font-mono">+{stack.length - 3}</span>}
+        </div>
+      )}
     </>
   );
 
