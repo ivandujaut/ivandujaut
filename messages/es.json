@@ -66,9 +66,7 @@
       "system": "Sistema"
     },
     "footer": {
-      "madeBy": "Hecho con ❤️ por <author>Iván Dujaut</author>.",
-      "builtWith": "Construido con",
-      "viewSource": "Ver código"
+      "madeBy": "Hecho con ❤️ por <author>Iván Dujaut</author>."
     },
     "mdx": {
       "copyLink": "Copiar enlace de esta sección",
@@ -93,6 +91,7 @@
       "available": "Disponible",
       "tagline": "Hago producto end-to-end: código, decisiones de roadmap y métricas que importan.",
       "credentials": "Bioingeniero ITBA · Alumni Techstars W24",
+      "badge": "Último caso: {title}",
       "ctas": {
         "work": "Ver mi trabajo",
         "cv": "Bajá mi CV"
@@ -151,8 +150,11 @@
     },
     "kind": {
       "build": "Producto",
-      "case-study": "Caso de mejora",
+      "case-study": "Caso de estudio",
       "design": "Diseño"
+    },
+    "meta": {
+      "role": "Rol: {role}"
     },
     "close": {
       "title": "¿Hablamos de este caso?",

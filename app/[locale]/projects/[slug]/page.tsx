@@ -24,6 +24,7 @@ import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { CaseStudyClose } from "@/components/content/case-study-close";
+import { StackList } from "@/components/content/stack-list";
 import { ReadingProgress } from "@/components/content/reading-progress";
 import { PaperToc } from "@/components/mdx/paper-toc";
 import { useMDXComponents } from "@/mdx-components";
@@ -172,7 +173,11 @@ export default async function ProjectPage({ params }: Props) {
               <span>{project.year}</span>
             </ViewTransition>
             <span aria-hidden>·</span>
-            <span>{project.role}</span>
+            {/* El rol va etiquetado. Sin el "Rol:", la fila mostraba "Product"
+                pelado justo al lado del badge de tipo ("Caso de estudio") y no
+                había forma de saber que uno es el papel que ocupé y el otro qué
+                clase de pieza es. */}
+            <span>{tProjects("meta.role", { role: project.role })}</span>
             <span aria-hidden>·</span>
             <KindBadge kind={project.kind} />
             {(project.kind === "build" || project.status !== "concept") && (
@@ -243,16 +248,7 @@ export default async function ProjectPage({ params }: Props) {
             <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {stackLabel}
             </h2>
-            <ul className="flex flex-wrap gap-2">
-              {project.stack.map((tech) => (
-                <li
-                  key={tech}
-                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
-                >
-                  {tech}
-                </li>
-              ))}
-            </ul>
+            <StackList items={project.stack} />
           </div>
 
           {project.metrics.length > 0 && (

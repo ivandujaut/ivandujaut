@@ -66,9 +66,7 @@
       "system": "System"
     },
     "footer": {
-      "madeBy": "Made with ❤️ by <author>Iván Dujaut</author>.",
-      "builtWith": "Built with",
-      "viewSource": "View source"
+      "madeBy": "Made with ❤️ by <author>Iván Dujaut</author>."
     },
     "mdx": {
       "copyLink": "Copy link to this section",
@@ -93,6 +91,7 @@
       "available": "Available",
       "tagline": "I build product end-to-end: code, roadmap decisions, and metrics that matter.",
       "credentials": "Bioengineer at ITBA · Techstars W24 alumni",
+      "badge": "Latest case: {title}",
       "ctas": {
         "work": "See my work",
         "cv": "Download my CV"
@@ -151,8 +150,11 @@
     },
     "kind": {
       "build": "Product",
-      "case-study": "Improvement case",
+      "case-study": "Case study",
       "design": "Design"
+    },
+    "meta": {
+      "role": "Role: {role}"
     },
     "close": {
       "title": "Want to talk about this case?",
