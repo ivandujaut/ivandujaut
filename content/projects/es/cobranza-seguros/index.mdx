@@ -48,6 +48,13 @@ explica nada.
   alt="Cuatro flujos de cobranza en paralelo: débito automático en Argentina (rechazo, reintentos, mora, suspensión y cancelación), cobranza vía productor con conciliación manual, ART con autodeclaración del empleador, y multi-canal regulado en México con comprobantes distintos por canal. Los cuatro convergen en un agente de cobranza que concilia contra el core de la aseguradora."
   width={920}
   height={780}
+  caption="Los cuatro flujos de cobranza y su convergencia en el agente. Elaboración propia: mapeados en Eraser durante el relevamiento y redibujados como SVG para este sitio. El color codifica el estado: verde éxito, amarillo proceso manual, rojo falla o mora, violeta oportunidad de automatización."
+/>
+
+<EraserEmbed
+  url="https://app.eraser.io/workspace/Q3fl0Fp1sk8eu23z3301"
+  title="Flujos de cobranza en seguros"
+  caption="El diagrama original, navegable en Eraser: zoom sobre cada flujo y sus notas de trabajo."
 />
 
 1. **Débito automático (personales).** El intento de débito rebota (fondos, tarjeta vencida), hay
@@ -99,6 +106,7 @@ trimestre.
   alt="Ranking de tasa de anulación por ramo en el primer trimestre 2026: Caución 43,3%, Robo 31,5%, Motovehículos 25,6%, Combinado Familiar 23,8%, con la referencia del total de mercado en 18,9%"
   width={890}
   height={601}
+  caption="Anulaciones como porcentaje de las pólizas emitidas brutas (emitidas netas + anuladas), ramos patrimoniales con más de 30 mil emisiones en el trimestre. Elaboración propia sobre el cuadro de pólizas de la SSN (1º trim. 2026), procesado con pandas."
 />
 
 ### El costo vive en el balance: 2 meses de prima atrapados
@@ -115,6 +123,7 @@ Pero el hallazgo más útil del ranking es _quién_ está arriba y quién abajo:
   alt="Ranking de meses de prima atrapados en cuentas por cobrar: Assurant 4,6 meses, cooperativas con red de productores entre 3,5 y 3,9, bancaseguros alrededor de 3, contra La Caja con 0,9 y Provincia ART con 0,3, y una mediana de 2 meses"
   width={890}
   height={562}
+  caption="Premios a cobrar divididos por la prima mensual promedio (9 meses del ejercicio 2025/26, cierre marzo 2026). Muestra el top 10 más las dos compañías de cobranza directa, en naranja. Elaboración propia sobre los balances trimestrales que las aseguradoras presentan a la SSN."
 />
 
 **Los meses atrapados son función del canal.** Arriba del ranking: Assurant (vende garantías a
@@ -193,15 +202,23 @@ falle** para poder recuperarlo. El recupero es input; la estrella es que el pago
 primera.
 
 <Callout type="warning" title="Supuestos y límites, declarados">
-  Este es un análisis externo hecho con datos públicos; lo que no pude observar, lo digo. (1) La
-  "anulación" de la SSN incluye motivos no financieros (endosos, reemplazo de póliza por cambio de
-  vehículo), así que el 18,9% es techo, no medida pura de churn de cobranza. (2) La morosidad
-  mensual de la SRT no es pérdida definitiva: parte se recauda después con intereses; el número
-  correcto es "plata que no entró en término". (3) El benchmark de churn involuntario (20-40%) viene
-  de suscripciones digitales, trasladado como orden de magnitud. (4) Galeno ART no reportó en el
-  archivo de balances del 1º trimestre 2026: no está en el ranking por falta de dato, no por
-  omisión. (5) Los importes del dataset de balances traen formatos mixtos según el período; usé los
-  dos períodos con formato íntegro (cierres a marzo 2025 y 2026) y descarté los corruptos.
+  Este es un análisis externo hecho con datos públicos; lo que no pude observar, lo digo.
+
+1. La "anulación" de la SSN incluye motivos no financieros (endosos, reemplazo de póliza por
+   cambio de vehículo), así que el 18,9% es techo, no medida pura de churn de cobranza.
+
+2. La morosidad mensual de la SRT no es pérdida definitiva: parte se recauda después con
+   intereses; el número correcto es "plata que no entró en término".
+
+3. El benchmark de churn involuntario (20-40%) viene de suscripciones digitales, trasladado como
+   orden de magnitud.
+
+4. Galeno ART no reportó en el archivo de balances del 1º trimestre 2026: no está en el ranking
+   por falta de dato, no por omisión.
+
+5. Los importes del dataset de balances traen formatos mixtos según el período; usé los dos
+   períodos con formato íntegro (cierres a marzo 2025 y 2026) y descarté los corruptos.
+
 </Callout>
 
 ## Fuentes

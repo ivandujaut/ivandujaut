@@ -49,6 +49,13 @@ without its flow explains nothing.
   alt="Four collection flows in parallel: automatic debit in Argentina (bounce, retries, arrears, suspension and cancellation), broker-mediated collections with manual reconciliation, workers' comp with employer self-declaration, and regulated multi-channel payments in Mexico with different receipts per channel. All four converge into a collections agent that reconciles against the insurer's core system. Diagram labels are in Spanish."
   width={920}
   height={780}
+  caption="The four collection flows and their convergence into the agent. Own work: mapped in Eraser during the research and redrawn as SVG for this site. Color encodes state: green success, yellow manual process, red failure or arrears, violet automation opportunity."
+/>
+
+<EraserEmbed
+  url="https://app.eraser.io/workspace/Q3fl0Fp1sk8eu23z3301"
+  title="Insurance collection flows"
+  caption="The original diagram, navigable in Eraser: zoom into each flow and its working notes."
 />
 
 1. **Automatic debit (personal lines).** The debit attempt bounces (insufficient funds, expired
@@ -103,6 +110,7 @@ million policies per quarter.
   alt="Ranking of annulment rate by line of business in Q1 2026: surety 43.3%, theft 31.5%, motorcycles 25.6%, homeowners 23.8%, with the market total reference at 18.9%. Chart labels are in Spanish."
   width={890}
   height={601}
+  caption="Annulments as a percentage of gross policies issued (net issued + annulled), property & casualty lines with over 30 thousand issuances in the quarter. Own work on the SSN's policies release (Q1 2026), processed with pandas."
 />
 
 ### The cost lives on the balance sheet: 2 months of premium trapped
@@ -119,6 +127,7 @@ But the most useful finding in the ranking is _who_ sits at the top and who at t
   alt="Ranking of months of premium trapped in receivables: Assurant 4.6 months, broker-network cooperatives between 3.5 and 3.9, bancassurance around 3, against La Caja at 0.9 and Provincia ART at 0.3, with a median of 2 months. Chart labels are in Spanish."
   width={890}
   height={562}
+  caption="Premium receivables divided by average monthly premium (9 months of fiscal year 2025/26, March 2026 close). Shows the top 10 plus the two direct-collection carriers, in orange. Own work on the quarterly financial statements insurers file with the SSN."
 />
 
 **Months trapped are a function of the channel.** At the top of the ranking: Assurant (sells
@@ -196,15 +205,23 @@ warning about the metric usually crowned in collections: recovery rate **rewards
 so it can be recovered. Recovery is an input; the star is the payment going through the first time.
 
 <Callout type="warning" title="Assumptions and limits, stated">
-  This is an outside-in analysis built on public data; what I couldn't observe, I say so. (1) The
-  SSN's "annulment" includes non-financial causes (endorsements, policy rewrites when a vehicle
-  changes), so 18.9% is a ceiling, not a pure measure of collections churn. (2) The SRT's monthly
-  arrears is not a definitive loss: part is collected later with interest; the correct reading is
-  "money that didn't arrive on time". (3) The involuntary-churn benchmark (20-40%) comes from
-  digital subscriptions, carried over as an order of magnitude. (4) Galeno ART did not report in the
-  Q1 2026 financial-statements file: it's missing from the ranking for lack of data, not by
-  omission. (5) The statements dataset mixes number formats across periods; I used the two periods
-  with intact formatting (March 2025 and March 2026 closes) and discarded the corrupted ones.
+  This is an outside-in analysis built on public data; what I couldn't observe, I say so.
+
+1. The SSN's "annulment" includes non-financial causes (endorsements, policy rewrites when a
+   vehicle changes), so 18.9% is a ceiling, not a pure measure of collections churn.
+
+2. The SRT's monthly arrears is not a definitive loss: part is collected later with interest; the
+   correct reading is "money that didn't arrive on time".
+
+3. The involuntary-churn benchmark (20-40%) comes from digital subscriptions, carried over as an
+   order of magnitude.
+
+4. Galeno ART did not report in the Q1 2026 financial-statements file: it's missing from the
+   ranking for lack of data, not by omission.
+
+5. The statements dataset mixes number formats across periods; I used the two periods with intact
+   formatting (March 2025 and March 2026 closes) and discarded the corrupted ones.
+
 </Callout>
 
 ## Sources
