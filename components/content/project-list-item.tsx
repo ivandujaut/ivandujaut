@@ -2,6 +2,7 @@ import { ViewTransition } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { StatusBadge, type ProjectStatus } from "@/components/content/status-badge";
+import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
 
 interface ProjectCover {
   src: string;
@@ -17,6 +18,7 @@ interface ProjectListItemProps {
   year: number;
   stack: string[];
   status: ProjectStatus;
+  kind: ProjectKind;
   /** "row" (default) is the compact text layout; "card" shows a cover preview on top. */
   variant?: "row" | "card";
   cover?: ProjectCover;
@@ -29,12 +31,20 @@ export function ProjectListItem({
   year,
   stack,
   status,
+  kind,
   variant = "row",
   cover,
 }: ProjectListItemProps) {
+  // Para casos de mejora y diseños, "Concepto" es redundante con el tipo de
+  // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
+  // información en productos construidos.
+  const showStatus = kind === "build" || status !== "concept";
   const meta = (
     <>
-      <StatusBadge status={status} className="mb-2" />
+      <span className="mb-2 inline-flex flex-wrap gap-1.5">
+        <KindBadge kind={kind} />
+        {showStatus && <StatusBadge status={status} />}
+      </span>
       <div className="flex items-baseline justify-between gap-4">
         <ViewTransition name={`project-title-${slug}`} share="morph">
           <h3 className="text-base font-medium">{title}</h3>
