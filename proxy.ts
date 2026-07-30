@@ -18,8 +18,15 @@ import { routing } from "./i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Match todas las rutas EXCEPTO:
-  // - rutas que arranquen con /api, /trpc, /_next, /_vercel
-  // - archivos estáticos (con extensión, ej: favicon.ico)
-  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+  matcher: [
+    // Match todas las rutas EXCEPTO:
+    // - rutas que arranquen con /api, /trpc, /_next, /_vercel
+    // - archivos estáticos (con extensión, ej: favicon.ico)
+    "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+    // Excepción a la regla del punto: el feed es una ruta con locale
+    // (`app/[locale]/rss.xml/route.ts`), no un archivo estático. Sin esta
+    // entrada `/rss.xml` nunca se reescribe a `/es/rss.xml` y da 404, que es
+    // justo la URL que el `<link rel="alternate">` del layout anuncia.
+    "/rss.xml",
+  ],
 };
