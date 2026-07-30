@@ -12,6 +12,23 @@ export function localePath(locale: Locale, pathWithoutLocale: string): string {
   return clean;
 }
 
+/**
+ * Descubrimiento del feed RSS para lectores y crawlers.
+ *
+ * Va acá y no solo en el layout de `[locale]` porque Next reemplaza el objeto
+ * `alternates` entero cuando una página define el suyo: no lo mergea campo por
+ * campo. Como las 8 páginas del sitio definen `alternates` (canonical +
+ * hreflang), el `types` del layout se perdía en todas y el
+ * `<link rel="alternate" type="application/rss+xml">` no llegaba nunca al
+ * `<head>`. Incluyéndolo en los dos builders, cualquier página que los use lo
+ * hereda sin tener que acordarse.
+ */
+function feedTypes(locale: Locale): NonNullable<Metadata["alternates"]>["types"] {
+  return {
+    "application/rss+xml": `${SITE_URL}${localePath(locale, "/rss.xml")}`,
+  };
+}
+
 export function buildStaticAlternates(
   locale: Locale,
   pathWithoutLocale: string,
@@ -25,6 +42,7 @@ export function buildStaticAlternates(
       en: enPath,
       "x-default": esPath,
     },
+    types: feedTypes(locale),
   };
 }
 
@@ -53,5 +71,6 @@ export function buildContentAlternates({
   return {
     canonical: localePath(current.locale, `${basePath}/${current.slug}`),
     languages,
+    types: feedTypes(current.locale),
   };
 }
