@@ -545,6 +545,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
   );
 }
 
+/**
+ * Sin logos a propósito: acá es un inventario de herramientas, no el stack de
+ * un proyecto. Los logos quedan reservados para /projects y el detalle de un
+ * caso, donde acompañan a un trabajo concreto.
+ */
 function ToolCategory({ label, items }: { label: string; items: string }) {
   return (
     <div className="grid grid-cols-1 gap-1 sm:grid-cols-[180px_1fr] sm:gap-4">
