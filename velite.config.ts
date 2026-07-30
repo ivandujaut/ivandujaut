@@ -96,6 +96,26 @@ const projects = defineCollection({
           alt: s.string(),
         })
         .optional(),
+      // Imágenes para el badge de la home (`ImagesBadge`). Exactamente 3:
+      // el abanico en tamaño LARGE está diseñado para ese número y con menos
+      // queda flojo. Son rutas públicas y no `s.image()` porque las imágenes
+      // de los casos ya viven en `public/`, no junto al MDX.
+      //
+      // Ojo con la proporción: se muestran a 140x108 (ratio 1.30) con
+      // `object-cover`. Una panorámica de 2000x250 se recorta a una tira
+      // central sin sentido. Elegí imágenes entre ~1.1 y ~1.7 de ratio.
+      //
+      // El campo es opcional a propósito: la home toma el caso más nuevo que
+      // lo tenga, así que un caso sin imágenes buenas simplemente no compite.
+      preview: s
+        .array(
+          s.object({
+            src: s.string(),
+            alt: s.string(),
+          }),
+        )
+        .length(3)
+        .optional(),
       metrics: s
         .array(
           s.object({

@@ -14,6 +14,11 @@ interface PaperTocProps {
   containerSelector?: string;
   /** Heading shown above the list, e.g. "Contents". */
   label: string;
+  /**
+   * Prefix each entry with a section number (1., 1.1., ...). Right for papers,
+   * wrong for case studies, whose headings read as prose rather than sections.
+   */
+  numbered?: boolean;
 }
 
 /**
@@ -23,7 +28,11 @@ interface PaperTocProps {
  * Reads h2/h3 from the document on mount, then tracks which heading is
  * currently in the viewport via IntersectionObserver to highlight it.
  */
-export function PaperToc({ containerSelector = "#paper-article", label }: PaperTocProps) {
+export function PaperToc({
+  containerSelector = "#paper-article",
+  label,
+  numbered = true,
+}: PaperTocProps) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -44,7 +53,7 @@ export function PaperToc({ containerSelector = "#paper-article", label }: PaperT
       } else {
         subsection += 1;
       }
-      const number = level === 2 ? `${section}.` : `${section}.${subsection}.`;
+      const number = numbered ? (level === 2 ? `${section}.` : `${section}.${subsection}.`) : "";
       return {
         id: node.id,
         text: node.textContent?.trim() ?? "",
@@ -76,7 +85,7 @@ export function PaperToc({ containerSelector = "#paper-article", label }: PaperT
 
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
-  }, [containerSelector]);
+  }, [containerSelector, numbered]);
 
   if (headings.length < 2) return null;
 

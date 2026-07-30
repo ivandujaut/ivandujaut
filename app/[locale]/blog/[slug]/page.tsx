@@ -146,6 +146,7 @@ export default async function PostPage({ params }: Props) {
     : (heroUrls?.light as string);
 
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
+  const tReading = await getTranslations({ locale: typedLocale, namespace: "common.reading" });
   const homeLabel = t("home");
   const blogLabel = t("blog");
   const homePath = localePath(typedLocale, "/");
@@ -201,7 +202,7 @@ export default async function PostPage({ params }: Props) {
             {post.metadata && (
               <>
                 <span aria-hidden>·</span>
-                <span>{post.metadata.readingTime} min read</span>
+                <span>{tReading("minutes", { count: post.metadata.readingTime })}</span>
               </>
             )}
             <span aria-hidden>·</span>
@@ -223,6 +224,7 @@ export default async function PostPage({ params }: Props) {
                   alt: post.cover.alt,
                   width: post.cover.src.width,
                   height: post.cover.src.height,
+                  blurDataURL: post.cover.src.blurDataURL,
                 }
               : undefined
           }

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Menu01Icon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Menu } from "@/components/animate-ui/icons/menu";
 import { NavLink } from "@/components/layout/nav-link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -27,9 +27,13 @@ export function MobileNav() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden" aria-label={t("openMenu")}>
-          <HugeiconsIcon icon={Menu01Icon} size={20} strokeWidth={1.5} />
-        </Button>
+        {/* En mobile no hay hover: animamos al tocar, y `completeOnStop` deja
+            que el trazo termine aunque el dedo se levante antes. */}
+        <AnimateIcon animateOnTap completeOnStop asChild>
+          <Button variant="ghost" size="icon" className="md:hidden" aria-label={t("openMenu")}>
+            <Menu size={20} strokeWidth={1.5} />
+          </Button>
+        </AnimateIcon>
       </SheetTrigger>
       <SheetContent
         side="right"
