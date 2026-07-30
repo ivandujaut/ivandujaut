@@ -65,9 +65,12 @@ export default async function Home({ params }: Props) {
   const tSections = await getTranslations({ locale, namespace: "home.sections" });
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    // Más padding arriba que el `py-24` original: el abanico del badge sube
+    // desde arriba del h1 y con 24 se metía abajo del navbar sticky. En `lg`
+    // el abanico es el grande y sube ~114px, así que ahí hace falta más aire.
+    <main id="main" className="mx-auto max-w-2xl px-6 pt-28 pb-24 lg:pt-40">
       <JsonLd data={personSchema(locale as "es" | "en")} />
-      <Hero />
+      <Hero locale={locale as "es" | "en"} />
 
       <div className="mt-16 space-y-16">
         <Currently />
