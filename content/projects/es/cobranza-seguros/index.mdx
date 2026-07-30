@@ -10,7 +10,7 @@ featured: false
 stack: ["Datos abiertos (SSN · SRT)", "Python", "pandas"]
 metrics:
   - label: "Mora mensual del sistema ART"
-    value: "$45.349M"
+    value: "$45,3 mil M"
   - label: "Pólizas anuladas por trimestre"
     value: "18,9%"
   - label: "Meses de prima atrapados (mediana top 50)"
@@ -27,7 +27,7 @@ En el seguro argentino, el desenlace malo de la cobranza no siempre es "el clien
 Una parte de la mora la fabrica el proceso: el débito rebotó y nadie reintentó a tiempo, el
 productor cobró pero no rindió, el empleador declaró mal la nómina, el comprobante no concilió y la
 póliza se canceló igual. Mapeé los cuatro flujos de cobranza del mercado y los cuantifiqué con cuatro fuentes
-oficiales: el sistema ART deja de cobrar **$45.349 millones por mes** (8,36% de morosidad, SRT),
+oficiales: el sistema ART deja de cobrar **$45,3 mil M por mes** (8,36% de morosidad, SRT),
 **18,9% de las pólizas patrimoniales emitidas se anula en el mismo trimestre** (SSN), la aseguradora
 mediana del top 50 tiene **el equivalente a 2 meses de prima inmovilizados en premios a cobrar**, y
 las anulaciones se comen **el 10% de la prima emitida en pesos** (balances SSN). El patrón que une
@@ -74,20 +74,22 @@ póliza vive hay un proceso manual**. Eso es lo que sale a medir este caso.
 
 ## Los números: cuatro fuentes oficiales, un mismo problema
 
-### La mora del sistema ART es la métrica del regulador, no una opinión
+### 45 mil millones de pesos por mes: la mora ART medida por el propio regulador
 
-La SRT [publica mensualmente](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) cuota pactada y cuota recaudada del sistema. En abril de 2026: $542.248
-millones pactados, $496.899 millones recaudados. La brecha, **$45.349 millones en un solo mes**,
-es exactamente la "Morosidad: 8,36%" que reporta el propio organismo. Anualizado, el orden de
-magnitud es ~8,4% de una facturación de ~$6,5 billones.
+La SRT [publica mensualmente](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) cuánto
+deberían pagar todos los empleadores del sistema (cuota pactada) y cuánto entró efectivamente
+(cuota recaudada). En abril de 2026: $542,2 mil M pactados, $496,9 mil M recaudados. La brecha,
+**$45,3 mil M en un solo mes**, es exactamente la "Morosidad: 8,36%" que reporta el propio
+organismo. Anualizado, el orden de magnitud es ~8,4% de una facturación de ~$6,5 billones.
 
 El desglose por segmento es consistente con la tesis, aunque hay una lectura alternativa que estos
 datos no permiten descartar: pagadores más chicos, ingresos más volátiles.
 
-| Segmento                              | Mora       | Brecha mensual |
-| ------------------------------------- | ---------- | -------------- |
-| Unidades productivas (empresas)       | 8,29%      | $44.445M       |
-| Casas particulares (empleo doméstico) | **14,25%** | $904M          |
+| Grupo                 | Quiénes son                                        | Debían pagar (mes) | Pagaron      | Mora       |
+| --------------------- | -------------------------------------------------- | ------------------ | ------------ | ---------- |
+| Unidades productivas  | Empresas y comercios (9,5 M de trabajadores)       | $535,9 mil M       | $491,5 mil M | 8,29%      |
+| Casas particulares    | Familias con personal doméstico (601 mil personas) | $6,3 mil M         | $5,4 mil M   | **14,25%** |
+| **Total del sistema** | 10,1 M de trabajadores cubiertos                   | $542,2 mil M       | $496,9 mil M | **8,36%**  |
 
 Donde el pagador es más chico y el proceso más manual, la mora casi se duplica. En plata por
 trabajador: se pactan $58.730 por mes y se cobran $54.463; los $4.266 restantes quedan en el limbo.
