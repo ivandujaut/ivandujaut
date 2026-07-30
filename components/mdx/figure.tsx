@@ -7,6 +7,16 @@ interface FigureProps {
   caption?: string;
   width?: number;
   height?: number;
+  /**
+   * Carga la imagen sin esperar a que entre en viewport. Para la primera
+   * figura de un artículo largo, que suele ser el LCP.
+   *
+   * Se mantiene el nombre `priority` porque es el que usa el MDX ya escrito,
+   * pero por dentro ya no pasa el prop `priority` de `next/image`: está
+   * deprecado desde Next 16 en favor de `preload`. Y como acá puede haber
+   * varias figuras candidatas a LCP según el viewport, los docs recomiendan
+   * `loading="eager"` + `fetchPriority` antes que `preload`.
+   */
   priority?: boolean;
   /**
    * Break out of the article column to span the viewport. Use for hero shots
@@ -52,7 +62,7 @@ export async function Figure({
           alt={alt}
           width={width}
           height={height}
-          priority={priority}
+          {...(priority ? { loading: "eager" as const, fetchPriority: "high" as const } : {})}
           className="h-auto w-full"
           sizes={fullBleed ? "100vw" : "(max-width: 768px) 100vw, 768px"}
         />
