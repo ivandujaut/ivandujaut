@@ -1,6 +1,6 @@
 ---
 title: "La prima que no llega"
-tagline: "Las aseguradoras no tienen un problema de cobranza: tienen un problema de conciliación, y cancelan clientes que querían pagar"
+tagline: "No toda la mora es igual: la que fabrica el propio proceso es la más barata de recuperar y la más cara de ignorar"
 description: "Mapeé los cuatro flujos de cobranza del seguro argentino y los cuantifiqué con datos abiertos de la SSN y la SRT: $45 mil millones de mora mensual en ART, 18,9% de pólizas anuladas y 2 meses de prima atrapados en cuentas por cobrar. Un caso de mejora con tesis, priorización y métricas."
 year: 2026
 date: "2026-07-29"
@@ -10,7 +10,7 @@ featured: false
 stack: ["Datos abiertos (SSN · SRT)", "Python", "pandas"]
 metrics:
   - label: "Mora mensual del sistema ART"
-    value: "$45.349M"
+    value: "$45,3 mil M"
   - label: "Pólizas anuladas por trimestre"
     value: "18,9%"
   - label: "Meses de prima atrapados (mediana top 50)"
@@ -23,17 +23,18 @@ draft: true
 
 <Abstract label="En resumen">
 
-En el seguro argentino, el desenlace malo de la cobranza casi nunca es "el cliente no quiso pagar".
-Es mora fabricada por el proceso: el débito rebotó y nadie reintentó a tiempo, el productor cobró
-pero no rindió, el empleador declaró mal la nómina, el comprobante no concilió y la póliza se
-canceló igual. Mapeé los cuatro flujos de cobranza del mercado y los cuantifiqué con cuatro fuentes
-oficiales: el sistema ART deja de cobrar **$45.349 millones por mes** (8,36% de morosidad, SRT),
+En el seguro argentino, el desenlace malo de la cobranza no siempre es "el cliente no quiso pagar".
+Una parte de la mora la fabrica el proceso: el débito rebotó y nadie reintentó a tiempo, el
+productor cobró pero no rindió, el empleador declaró mal la nómina, el comprobante no concilió y la
+póliza se canceló igual. Mapeé los cuatro flujos de cobranza del mercado y los cuantifiqué con cuatro fuentes
+oficiales: el sistema ART deja de cobrar **$45,3 mil M por mes** (8,36% de morosidad, SRT),
 **18,9% de las pólizas patrimoniales emitidas se anula en el mismo trimestre** (SSN), la aseguradora
 mediana del top 50 tiene **el equivalente a 2 meses de prima inmovilizados en premios a cobrar**, y
 las anulaciones se comen **el 10% de la prima emitida en pesos** (balances SSN). El patrón que une
 todo: la fricción crece con la intermediación y con el tamaño chico del pagador. La tesis del caso
-es que esto no se arregla cobrando más agresivo sino conciliando mejor, y propongo por dónde
-empezar, qué construir y con qué métricas gobernarlo.
+es que la mora fabricada por el proceso es la más barata de recuperar y la más cara de ignorar, y
+que solo acelerar la conciliación ya libera meses de prima atrapados en el balance. Propongo por
+dónde empezar, qué construir y con qué métricas gobernarlo.
 
 </Abstract>
 
@@ -73,19 +74,22 @@ póliza vive hay un proceso manual**. Eso es lo que sale a medir este caso.
 
 ## Los números: cuatro fuentes oficiales, un mismo problema
 
-### La mora del sistema ART es la métrica del regulador, no una opinión
+### 45 mil millones de pesos por mes: la mora ART medida por el propio regulador
 
-La SRT [publica mensualmente](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) cuota pactada y cuota recaudada del sistema. En abril de 2026: $542.248
-millones pactados, $496.899 millones recaudados. La brecha, **$45.349 millones en un solo mes**,
-es exactamente la "Morosidad: 8,36%" que reporta el propio organismo. Anualizado, el orden de
-magnitud es ~8,4% de una facturación de ~$6,5 billones.
+La SRT [publica mensualmente](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) cuánto
+deberían pagar todos los empleadores del sistema (cuota pactada) y cuánto entró efectivamente
+(cuota recaudada). En abril de 2026: $542,2 mil M pactados, $496,9 mil M recaudados. La brecha,
+**$45,3 mil M en un solo mes**, es exactamente la "Morosidad: 8,36%" que reporta el propio
+organismo. Anualizado, el orden de magnitud es ~8,4% de una facturación de ~$6,5 billones.
 
-El desglose por segmento es la primera evidencia de la tesis:
+El desglose por segmento es consistente con la tesis, aunque hay una lectura alternativa que estos
+datos no permiten descartar: pagadores más chicos, ingresos más volátiles.
 
-| Segmento                              | Mora       | Brecha mensual |
-| ------------------------------------- | ---------- | -------------- |
-| Unidades productivas (empresas)       | 8,29%      | $44.445M       |
-| Casas particulares (empleo doméstico) | **14,25%** | $904M          |
+| Grupo                 | Quiénes son                                        | Debían pagar (mes) | Pagaron      | Mora       |
+| --------------------- | -------------------------------------------------- | ------------------ | ------------ | ---------- |
+| Unidades productivas  | Empresas y comercios (9,5 M de trabajadores)       | $535,9 mil M       | $491,5 mil M | 8,29%      |
+| Casas particulares    | Familias con personal doméstico (601 mil personas) | $6,3 mil M         | $5,4 mil M   | **14,25%** |
+| **Total del sistema** | 10,1 M de trabajadores cubiertos                   | $542,2 mil M       | $496,9 mil M | **8,36%**  |
 
 Donde el pagador es más chico y el proceso más manual, la mora casi se duplica. En plata por
 trabajador: se pactan $58.730 por mes y se cobran $54.463; los $4.266 restantes quedan en el limbo.
@@ -129,23 +133,44 @@ Uruguay) y el canal bancario/institucional (Allianz, Galicia, Nación, Provincia
 cobranza sana: La Caja (venta directa, débito automático: 0,9 meses) y Provincia ART (cobro por
 nómina: 0,3). Donde hay un intermediario en el medio del flujo de plata, la prima tarda 3-4 meses en
 llegar; donde el cobro es directo, semanas. Es el flujo 2 del diagrama, confirmado compañía por
-compañía en la contabilidad.
+compañía en la contabilidad. Una precisión: parte de esos meses es diseño comercial (pago en
+cuotas, ciclos de rendición pactados con el productor), no patología. El gradiente por canal marca
+dónde mirar, no cuánto recuperar.
 
 La comparación interanual (mismo mes fiscal, 2025 vs 2026) da estable: mediana 2,06 → 1,98 meses.
 **El problema es estructural, no coyuntural.**
 
 ## La tesis
 
-> Las aseguradoras no tienen un problema de cobranza: tienen un problema de conciliación. La mora
-> que ven es, en una fracción relevante, mora falsa: clientes que pagaron o querían pagar,
-> atrapados en un proceso que no reintenta a tiempo, no matchea comprobantes y no distingue "no
-> quiere pagar" de "no pudo pagar".
+> Las aseguradoras tienen un problema de cobranza, pero no toda la mora es igual. Una parte la
+> fabrica el propio proceso: pagos que existieron y no conciliaron, débitos que rebotaron sin un
+> reintento inteligente, clientes cancelados que querían pagar. Esa parte es la más barata de
+> recuperar, la más cara de ignorar, y la única que se arregla con producto.
 
-En suscripciones digitales, [entre el 20% y el 40% del churn es involuntario](https://gocardless.com/es/guias/consejos/churn-involuntario), es decir, recuperable con
-reintentos inteligentes y dunning. El seguro argentino opera con más intermediación y más fricción
-de medios de pago que un SaaS, no con menos. Cada punto de esa mora que sea involuntaria es revenue
-que se pierde sin que nadie lo haya decidido: ni el cliente, que quería cobertura, ni la
-aseguradora, que ya pagó por adquirirlo.
+Una parte, no toda: con datos públicos no se puede medir qué proporción de la mora es genuina
+(clientes que no pueden o no quieren pagar) y cuánta la produce el proceso. Cada número de este
+caso mezcla ambas. La brecha de la SRT incluye insolvencia real además de subdeclaración y error;
+el 18,9% de anulaciones incluye churn voluntario y motivos técnicos; los meses de prima en premios
+a cobrar incluyen crédito comercial de diseño, no solo patología. Sostener que "el problema es de
+conciliación" sería una afirmación que estos datos no alcanzan a probar.
+
+Lo que sí muestran los datos es dónde está el valor recuperable por peso invertido, por tres
+razones:
+
+1. **Asimetría de costos del error.** Perder a un moroso genuino cuesta cerca de un mes de prima,
+   porque la cobertura se corta. Cancelar indebidamente a un cliente que pagaba cuesta su valor de
+   vida completo más el costo de adquisición de reponerlo. Aunque la mora fabricada sea minoría
+   del stock, su costo unitario es un múltiplo.
+2. **El capital de trabajo no depende de la descomposición.** El top 50 acumula **$4,13 billones
+   en premios a cobrar** contra una prima mensual de $2,13 billones (balances SSN, marzo 2026). A
+   tasas de 2-4% mensual, sostener ese stock cuesta **entre $1 y $2 billones por año**; acelerar
+   la cobranza un mes libera ~$2,1 billones por única vez. Este valor existe aunque toda la mora
+   fuera genuina: es plata que iba a llegar igual, llegando antes.
+3. **Tratabilidad.** La insolvencia de un cliente no se arregla con software; el timing de
+   reintentos, el matching de comprobantes y la autogestión del medio de pago, sí. Como referencia
+   del orden de magnitud recuperable, en suscripciones digitales [entre el 20% y el 40% del churn
+   es involuntario](https://gocardless.com/es/guias/consejos/churn-involuntario), un benchmark de
+   otra industria, útil como orden de magnitud antes que como dato del sector.
 
 ## Priorización: por dónde empezaría
 
@@ -198,8 +223,9 @@ métrica que suele usarse como estrella en cobranzas: la tasa de recupero **prem
 falle** para poder recuperarlo. El recupero es input; la estrella es que el pago salga bien a la
 primera.
 
-<Callout type="warning" title="Supuestos y límites, declarados">
-  Este es un análisis externo hecho con datos públicos; lo que no pude observar, lo digo.
+<Callout type="warning" title="Supuestos y límites">
+  Este es un análisis externo, hecho con datos públicos, y arrastra los límites de ese punto de
+  partida:
 
 1. La "anulación" de la SSN incluye motivos no financieros (endosos, reemplazo de póliza por
    cambio de vehículo), así que el 18,9% es techo, no medida pura de churn de cobranza.
