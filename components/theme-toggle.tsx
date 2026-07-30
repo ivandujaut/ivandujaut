@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Sun03Icon, Moon02Icon, ComputerIcon } from "@hugeicons/core-free-icons";
+import { ComputerIcon, Sun03Icon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Sun } from "@/components/animate-ui/icons/sun";
+import { Moon } from "@/components/animate-ui/icons/moon";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,6 +27,8 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
+    // Antes de hidratar no sabemos el tema resuelto: usamos el icono estático
+    // para no montar `motion` en el árbol crítico ni animar en el primer paint.
     return (
       <Button variant="ghost" size="icon" disabled aria-label={t("label")}>
         <HugeiconsIcon icon={Sun03Icon} size={18} strokeWidth={1.5} />
@@ -36,29 +41,38 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label={t("label")}>
-          <HugeiconsIcon icon={isDark ? Moon02Icon : Sun03Icon} size={18} strokeWidth={1.5} />
-        </Button>
+        {/* `AnimateIcon asChild` mueve el trigger de la animación al botón
+            entero: el icono mide 18px dentro de un target de 36px, así que
+            animar solo al pasar por el SVG dejaría media zona muerta. */}
+        <AnimateIcon animateOnHover asChild>
+          <Button variant="ghost" size="icon" aria-label={t("label")}>
+            {isDark ? <Moon size={18} strokeWidth={1.5} /> : <Sun size={18} strokeWidth={1.5} />}
+          </Button>
+        </AnimateIcon>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          <HugeiconsIcon icon={Sun03Icon} size={16} strokeWidth={1.5} />
-          <span>{t("light")}</span>
-          {theme === "light" && (
-            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
-              ✓
-            </span>
-          )}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          <HugeiconsIcon icon={Moon02Icon} size={16} strokeWidth={1.5} />
-          <span>{t("dark")}</span>
-          {theme === "dark" && (
-            <span aria-hidden className="ml-auto text-xs text-muted-foreground">
-              ✓
-            </span>
-          )}
-        </DropdownMenuItem>
+        <AnimateIcon animateOnHover asChild>
+          <DropdownMenuItem onClick={() => setTheme("light")}>
+            <Sun size={16} strokeWidth={1.5} />
+            <span>{t("light")}</span>
+            {theme === "light" && (
+              <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+                ✓
+              </span>
+            )}
+          </DropdownMenuItem>
+        </AnimateIcon>
+        <AnimateIcon animateOnHover asChild>
+          <DropdownMenuItem onClick={() => setTheme("dark")}>
+            <Moon size={16} strokeWidth={1.5} />
+            <span>{t("dark")}</span>
+            {theme === "dark" && (
+              <span aria-hidden className="ml-auto text-xs text-muted-foreground">
+                ✓
+              </span>
+            )}
+          </DropdownMenuItem>
+        </AnimateIcon>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <HugeiconsIcon icon={ComputerIcon} size={16} strokeWidth={1.5} />
           <span>{t("system")}</span>

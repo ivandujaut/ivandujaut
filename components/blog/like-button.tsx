@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { FavouriteIcon } from "@hugeicons/core-free-icons";
+import { Heart } from "@/components/animate-ui/icons/heart";
 
 interface LikeButtonProps {
   kind: "blog" | "projects";
@@ -17,7 +16,6 @@ interface LikesData {
 
 export function LikeButton({ kind, slug }: LikeButtonProps) {
   const [data, setData] = useState<LikesData | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const t = useTranslations("blog.like");
   const endpoint = `/api/likes/${kind}/${slug}`;
@@ -46,11 +44,6 @@ export function LikeButton({ kind, slug }: LikeButtonProps) {
 
     const nextLiked = !data.liked;
     const method = nextLiked ? "POST" : "DELETE";
-
-    if (nextLiked) {
-      setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 300);
-    }
 
     const previous = data;
     setData({
@@ -91,16 +84,19 @@ export function LikeButton({ kind, slug }: LikeButtonProps) {
         className={`
           group inline-flex cursor-pointer items-center justify-center
           rounded-sm
-          transition-transform duration-200
           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
           disabled:cursor-not-allowed disabled:opacity-60
-          ${isAnimating ? "scale-125" : "scale-100"}
         `}
       >
-        <HugeiconsIcon
-          icon={FavouriteIcon}
+        {/* `animate` dispara el latido al pasar a "liked". El relleno
+            persistente lo hace CSS y no la variante `fill` del icono: usada
+            suelta, `IconWrapper` no reenvía `persistOnAnimateEnd` a
+            `AnimateIcon`, así que el relleno volvía a cero al terminar la
+            animación y el corazón nunca quedaba lleno. */}
+        <Heart
           size={20}
           strokeWidth={1.5}
+          animate={data.liked}
           className={`
             transition-colors duration-200
             ${
