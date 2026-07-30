@@ -94,6 +94,7 @@ function renderTemplate(template: string, params: URLSearchParams) {
           description={params.get("description") ?? undefined}
           stack={parseList(params.get("stack"))}
           status={parseStatus(params.get("status"))}
+          kind={parseKind(params.get("kind"))}
           coverUrl={params.get("coverUrl") ?? undefined}
           locale={parseLocale(params.get("locale"))}
           theme={parseTheme(params.get("theme"))}
@@ -142,6 +143,13 @@ function parseStatus(
     value === "archived" ||
     value === "concept"
   ) {
+    return value;
+  }
+  return undefined;
+}
+
+function parseKind(value: string | null): "build" | "case-study" | "design" | undefined {
+  if (value === "build" || value === "case-study" || value === "design") {
     return value;
   }
   return undefined;

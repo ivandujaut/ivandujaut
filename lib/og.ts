@@ -67,6 +67,7 @@ export function buildProjectOgUrl(params: {
   description?: string;
   stack?: string[];
   status?: "shipped" | "in-progress" | "archived" | "concept";
+  kind?: "build" | "case-study" | "design";
   coverUrl?: string;
   locale: "es" | "en";
   theme?: "light" | "dark";
@@ -90,6 +91,9 @@ export function buildProjectOgUrl(params: {
   }
   if (params.status) {
     searchParams.set("status", params.status);
+  }
+  if (params.kind) {
+    searchParams.set("kind", params.kind);
   }
   if (params.coverUrl) {
     searchParams.set("coverUrl", params.coverUrl);
