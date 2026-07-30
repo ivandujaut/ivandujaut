@@ -10,6 +10,7 @@ import { Metric, MetricGrid } from "./components/mdx/metric";
 import { Comparison } from "./components/mdx/comparison";
 import { Steps } from "./components/mdx/steps";
 import { Abstract } from "@/components/mdx/abstract";
+import { Thesis } from "@/components/mdx/thesis";
 import { Sidenote } from "@/components/mdx/sidenote";
 import { Footnote } from "@/components/mdx/footnote";
 import { Cite, Reference, References } from "@/components/mdx/references";
@@ -47,6 +48,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     // Paper mode (LaTeX-style)
     Abstract,
+    Thesis,
     Sidenote,
     Footnote,
     References,

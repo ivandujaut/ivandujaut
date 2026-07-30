@@ -139,6 +139,11 @@
       "in-progress": "In progress",
       "archived": "Archived",
       "concept": "Concept"
+    },
+    "kind": {
+      "build": "Product",
+      "case-study": "Improvement case",
+      "design": "Design"
     }
   },
   "paper": {

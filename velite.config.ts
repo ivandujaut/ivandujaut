@@ -82,6 +82,9 @@ const projects = defineCollection({
       date: s.isodate(),
       role: s.enum(["Product", "Full-stack", "Frontend", "Backend", "Design", "Other"]),
       status: s.enum(["shipped", "in-progress", "archived", "concept"]),
+      // Qué tipo de trabajo es la pieza: producto construido, caso de mejora
+      // sobre un producto ajeno, o diseño. Eje independiente del status.
+      kind: s.enum(["build", "case-study", "design"]).default("build"),
       featured: s.boolean().default(false),
       stack: s.array(s.string()).min(1),
       repo: s.string().url().optional(),

@@ -41,6 +41,7 @@ export function FeaturedProjects({ locale }: FeaturedProjectsProps) {
             year={project.year}
             stack={project.stack}
             status={project.status}
+            kind={project.kind}
           />
         ))}
       </div>
