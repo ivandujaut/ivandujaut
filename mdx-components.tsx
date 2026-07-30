@@ -18,6 +18,7 @@ import { Diagram } from "@/components/mdx/diagram";
 import { AnnotatedShot } from "@/components/mdx/annotated-shot";
 import { DemoFrame } from "@/components/mdx/demo-frame";
 import { FigmaEmbed } from "@/components/mdx/figma-embed";
+import { EraserEmbed } from "@/components/mdx/eraser-embed";
 import { YouTube } from "@/components/mdx/youtube";
 import { BentoGrid } from "@/components/mdx/bento-grid";
 
@@ -57,6 +58,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     AnnotatedShot,
     DemoFrame,
     FigmaEmbed,
+    EraserEmbed,
     YouTube,
     BentoGrid,
 
