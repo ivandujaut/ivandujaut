@@ -3,7 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 import { ExperienceItem } from "@/components/about/experience-item";
 import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpRight01Icon, DownloadIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { ArrowUpRight01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
@@ -37,7 +39,9 @@ export async function generateMetadata({ params }: Props) {
   const pageUrl = `${SITE_URL}${localePath(typedLocale, "/about")}`;
 
   return {
-    title,
+    // `absolute` evita que el template del root layout ("%s · Iván Dujaut")
+    // agregue el nombre por segunda vez: el título ya lo incluye.
+    title: { absolute: title },
     description,
     alternates: buildStaticAlternates(typedLocale, "/about"),
     openGraph: {
@@ -105,14 +109,16 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <CalendlyIcon size={14} aria-hidden />
             <span>{t("intro.ctas.calendly")}</span>
           </a>
-          <a
-            href="/cv-ivan-dujaut.pdf"
-            download
-            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
-          >
-            <HugeiconsIcon icon={DownloadIcon} size={14} strokeWidth={1.5} aria-hidden />
-            <span>{t("intro.ctas.cv")}</span>
-          </a>
+          <AnimateIcon animateOnHover asChild>
+            <a
+              href="/cv-ivan-dujaut.pdf"
+              download
+              className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+            >
+              <Download size={14} strokeWidth={1.5} aria-hidden />
+              <span>{t("intro.ctas.cv")}</span>
+            </a>
+          </AnimateIcon>
         </div>
       </section>
 
