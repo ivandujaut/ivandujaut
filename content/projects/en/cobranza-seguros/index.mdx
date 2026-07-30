@@ -120,14 +120,14 @@ $4,266 behind.
 
 ### For every 100 policies issued in a quarter, 19 are annulled
 
-From the SSN's [policies, claims and premiums release](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas) (Q1 2026): during the quarter,
-16.6 million gross property & casualty policies were issued (net issuance plus annulments) and
-**3.14 million annulments were recorded**. The comparison is between flows of the same period, not
-a cohort analysis: a policy annulled in the quarter may have been issued earlier. And the pattern
-by line of
-business repeats the SRT's: motorcycles (the most precarious segment) annul 25.6% of what they
-issue and 18% of their in-force stock _per quarter_; auto, the mass-market line, annuls 1.38
-million policies per quarter.
+The property & casualty market annuls **3.14 million policies per quarter** against 16.6 million
+gross issuances (net issuance plus annulments). That is 19 out of every 100. It comes from the SSN's
+[policies, claims and premiums release](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas)
+for Q1 2026.
+
+The pattern by line of business repeats the SRT's. Motorcycles, the most precarious segment, annul
+25.6% of what they issue and 18% of their in-force stock _per quarter_. Auto, the mass-market line,
+annuls 1.38 million policies per quarter.
 
 <Figure
   src="/projects/cobranza-seguros/chart_anulaciones_ramo.png"
@@ -139,16 +139,17 @@ million policies per quarter.
 
 ### The cost lives on the balance sheet: 2 months of premium trapped
 
-On an insurer's balance sheet, premium receivables are money already invoiced that hasn't come in
-yet. Divided by an average month of premium, they show how many months of sales are pending
-collection. In finance this indicator is known as DSO (days sales outstanding, how long invoiced
-revenue takes to turn into cash); here it is expressed in months. From the
-[quarterly financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) insurers file
-with the SSN (March 2026 close, 177 companies): the median top-50 insurer by premium carries
-**the equivalent of 2 months of invoiced premium not yet collected**, and **annulments in pesos
-eat 10% of premium** (with extremes: Seguros Galicia 24.6%, Nación Seguros 24.2%).
+The median top-50 insurer carries **the equivalent of 2 months of invoiced premium not yet
+collected**, but the number depends on the sales channel more than on the company: it ranges from
+0.3 to 4.6 months depending on how the money is collected. On the balance sheet, premium receivables
+are money already invoiced that hasn't come in yet; divided by an average month of premium, they
+show how many months of sales are pending, which is any industry's DSO (days sales outstanding),
+here expressed in months.
 
-But the most useful finding in the ranking is _who_ sits at the top and who at the bottom:
+The data comes from the
+[quarterly financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) insurers file
+with the SSN (March 2026 close, 177 companies). The same source shows **annulments in pesos eating
+10% of premium**, with extremes: Seguros Galicia 24.6%, Nación Seguros 24.2%.
 
 <Figure
   src="/projects/cobranza-seguros/chart_meses_atrapados.png"
@@ -158,15 +159,16 @@ But the most useful finding in the ranking is _who_ sits at the top and who at t
   caption="Premium receivables divided by average monthly premium (9 months of fiscal year 2025/26, March 2026 close). Shows the top 10 plus the two direct-collection carriers, in orange. How to read it: La Caja is owed the equivalent of 0.9 months of its billing; Assurant, 4.6. Own work on the quarterly financial statements insurers file with the SSN."
 />
 
-**Months trapped are a function of the channel.** At the top of the ranking: Assurant (sells
-warranties through retailers), the cooperatives with broker networks (La Segunda, Cooperación
-Mutual, Río Uruguay) and the bank/institutional channel (Allianz, Galicia, Nación, Provincia
-Seguros). At the bottom, with healthy collections: La Caja (direct sales, automatic debit: 0.9
-months) and Provincia ART (payroll-based collection: 0.3). Wherever an intermediary sits in the
-money flow, premium takes 3-4 months to arrive; where collection is direct, weeks. It's flow 2 of
-the diagram, confirmed company by company in the accounting. One precision: part of those months
-is commercial design (installment plans, remittance cycles agreed with the broker), not pathology.
-The channel gradient tells you where to look, not how much to recover.
+At the top of the ranking sits everything intermediated: Assurant (sells warranties through
+retailers), the cooperatives with broker networks (La Segunda, Cooperación Mutual, Río Uruguay) and
+the bank and institutional channel (Allianz, Galicia, Nación, Provincia Seguros). At the bottom,
+direct collection: La Caja with automatic debit (0.9 months) and Provincia ART with payroll-based
+collection (0.3). With an intermediary in the money flow, premium takes 3-4 months to arrive;
+without one, weeks. It's flow 2 of the diagram, confirmed company by company in the accounting.
+
+One precision: part of those months is commercial design (installment plans, remittance cycles
+agreed with the broker), not pathology. The channel gradient tells you where to look, not how much
+to recover.
 
 The year-over-year comparison (same fiscal month, 2025 vs 2026) is flat: median 2.06 → 1.98 months.
 **The problem is structural, not cyclical.**
@@ -260,7 +262,9 @@ so it can be recovered. Recovery is an input; the star is the payment going thro
   point:
 
 1. The SSN's "annulment" includes non-financial causes (endorsements, policy rewrites when a
-   vehicle changes), so 18.9% is a ceiling, not a pure measure of collections churn.
+   vehicle changes), so 18.9% is a ceiling, not a pure measure of collections churn. It also
+   compares flows of the same period rather than a cohort: a policy annulled in the quarter may
+   have been issued earlier.
 
 2. The SRT's monthly arrears is not a definitive loss: part is collected later with interest; the
    correct reading is "money that didn't arrive on time".
