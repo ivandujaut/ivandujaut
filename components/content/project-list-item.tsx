@@ -9,6 +9,8 @@ interface ProjectCover {
   alt: string;
   width: number;
   height: number;
+  /** Miniatura en base64 que genera Velite; evita el hueco vacío al cargar. */
+  blurDataURL?: string;
 }
 
 interface ProjectListItemProps {
@@ -22,6 +24,11 @@ interface ProjectListItemProps {
   /** "row" (default) is the compact text layout; "card" shows a cover preview on top. */
   variant?: "row" | "card";
   cover?: ProjectCover;
+  /**
+   * Marca la primera card del listado. Es la candidata a LCP, así que su cover
+   * se carga en modo eager y con prioridad alta en vez de lazy.
+   */
+  isFirst?: boolean;
 }
 
 export function ProjectListItem({
@@ -34,6 +41,7 @@ export function ProjectListItem({
   kind,
   variant = "row",
   cover,
+  isFirst = false,
 }: ProjectListItemProps) {
   // Para casos de mejora y diseños, "Concepto" es redundante con el tipo de
   // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
@@ -77,6 +85,13 @@ export function ProjectListItem({
                 height={cover.height}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 sizes="(max-width: 768px) 100vw, 672px"
+                {...(cover.blurDataURL
+                  ? { placeholder: "blur" as const, blurDataURL: cover.blurDataURL }
+                  : {})}
+                // `loading="eager"` + `fetchPriority` en vez de `preload`: hay
+                // varios covers candidatos a LCP según el viewport, y los docs
+                // de Next 16 recomiendan esta vía para ese caso.
+                {...(isFirst ? { loading: "eager" as const, fetchPriority: "high" as const } : {})}
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-muted to-background">
