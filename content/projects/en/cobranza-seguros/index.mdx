@@ -151,14 +151,14 @@ The year-over-year comparison (same fiscal month, 2025 vs 2026) is flat: median 
 > bounced without a smart retry, cancelled customers who wanted to pay. That part is the cheapest
 > to recover, the most expensive to ignore, and the only one product can fix.
 
-I say "part" deliberately: with public data you cannot measure what share of the arrears is
-genuine (customers who can't or won't pay) and what share the process produces. Every number in
-this case mixes both. The SRT gap includes real insolvency on top of under-declaration and error;
-the 18.9% annulment rate includes voluntary churn and technical causes; the months of premium in
-receivables include commercial credit by design, not just pathology. Claiming "the problem is
-reconciliation" would be an overstatement the data cannot back.
+Part, not all: with public data you cannot measure what share of the arrears is genuine
+(customers who can't or won't pay) and what share the process produces. Every number in this case
+mixes both. The SRT gap includes real insolvency on top of under-declaration and error; the 18.9%
+annulment rate includes voluntary churn and technical causes; the months of premium in receivables
+include commercial credit by design, not just pathology. Claiming "the problem is reconciliation"
+would be a statement these figures cannot prove.
 
-What the data can back is where the recoverable value per peso invested is concentrated, for
+What the figures do show is where the recoverable value per peso invested is concentrated, for
 three reasons:
 
 1. **Asymmetric error costs.** Losing a genuine defaulter costs about one month of premium,
@@ -174,7 +174,7 @@ three reasons:
 3. **Tractability.** A customer's insolvency cannot be fixed with software; retry timing, receipt
    matching and self-service payment updates can. As a reference for the recoverable order of
    magnitude, in digital subscriptions [20% to 40% of churn is involuntary](https://gocardless.com/es/guias/consejos/churn-involuntario),
-   a benchmark from another industry that I carry over and declare as such.
+   a benchmark from another industry, useful as an order of magnitude rather than sector data.
 
 ## Prioritization: where I would start
 
@@ -226,8 +226,9 @@ improper charges (the goal is collecting smarter, not harder) and cost per peso 
 warning about the metric usually crowned in collections: recovery rate **rewards the flow failing**
 so it can be recovered. Recovery is an input; the star is the payment going through the first time.
 
-<Callout type="warning" title="Assumptions and limits, stated">
-  This is an outside-in analysis built on public data; what I couldn't observe, I say so.
+<Callout type="warning" title="Assumptions and limits">
+  This is an outside-in analysis built on public data, and it carries the limits of that starting
+  point:
 
 1. The SSN's "annulment" includes non-financial causes (endorsements, policy rewrites when a
    vehicle changes), so 18.9% is a ceiling, not a pure measure of collections churn.
