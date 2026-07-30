@@ -116,6 +116,19 @@ export function getProjectTranslations(project: { translationKey?: string; local
 }
 
 /**
+ * Caso que anuncia el badge del hero: el más nuevo que haya elegido sus 3
+ * imágenes de preview en el frontmatter.
+ *
+ * Depende del dato y no de una lista fija para que no se quede viejo en
+ * silencio: publicás un caso nuevo, le agregás `preview`, y el badge lo toma.
+ * Un caso sin imágenes de proporción usable simplemente no define el campo y
+ * no compite.
+ */
+export function getPreviewProject(locale: Locale) {
+  return getProjects(locale).find((project) => project.preview !== undefined);
+}
+
+/**
  * Casos vecinos en el listado, para que un caso de estudio no termine en un
  * callejón sin salida.
  *
