@@ -6,6 +6,7 @@ interface ProjectTemplateProps {
   description?: string;
   stack?: string[];
   status?: "shipped" | "in-progress" | "archived" | "concept";
+  kind?: "build" | "case-study" | "design";
   coverUrl?: string;
   locale?: "es" | "en";
   theme?: OgTheme;
@@ -25,6 +26,7 @@ export function ProjectTemplate({
   description,
   stack = [],
   status,
+  kind = "build",
   coverUrl,
   locale = "es",
   theme = "light",
@@ -39,7 +41,17 @@ export function ProjectTemplate({
   };
 
   // Project label según locale
-  const projectLabel = locale === "es" ? "PROYECTO" : "PROJECT";
+  // Tipo de pieza: es el rótulo principal, igual que el chip del sitio.
+  const kindLabels = {
+    build: { es: "PRODUCTO", en: "PRODUCT" },
+    "case-study": { es: "CASO DE MEJORA", en: "IMPROVEMENT CASE" },
+    design: { es: "DISEÑO", en: "DESIGN" },
+  };
+  const projectLabel = kindLabels[kind][locale];
+
+  // El status solo aporta en productos construidos: en casos y diseños,
+  // "concepto" es redundante con el tipo de pieza (misma regla que el sitio).
+  const showStatus = Boolean(status) && (kind === "build" || status !== "concept");
 
   // CTA según locale
   const ctaLabel = locale === "es" ? "Ver proyecto" : "View project";
@@ -97,7 +109,7 @@ export function ProjectTemplate({
               }}
             >
               <span>{projectLabel}</span>
-              {status && (
+              {showStatus && status && (
                 <>
                   <span style={{ color: tokens.fgSubtle }}>·</span>
                   <div

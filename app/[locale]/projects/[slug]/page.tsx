@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: Props) {
     description: project.description,
     stack: project.stack,
     status: project.status,
+    kind: project.kind,
     coverUrl: buildCoverUrl(project.cover?.src.src),
     locale: locale as "es" | "en",
   });
