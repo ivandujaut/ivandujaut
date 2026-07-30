@@ -1,0 +1,214 @@
+---
+title: "The premium that never arrives"
+tagline: "Insurers don't have a collections problem: they have a reconciliation problem, and they cancel customers who wanted to pay"
+description: "I mapped the four premium-collection flows of Argentine insurance and quantified them with open data from the SSN and SRT: $45 billion pesos of monthly arrears in workers' comp, 18.9% of policies cancelled per quarter and 2 months of premium trapped in receivables. An outside-in improvement case with a thesis, prioritization and metrics."
+year: 2026
+date: "2026-07-29"
+role: "Product"
+status: "concept"
+featured: false
+stack: ["Open data (SSN · SRT)", "Python", "pandas"]
+metrics:
+  - label: "Monthly arrears, workers' comp system"
+    value: "$45.3B ARS"
+  - label: "Policies annulled per quarter"
+    value: "18.9%"
+  - label: "Months of premium trapped (top-50 median)"
+    value: "2.0"
+  - label: "Premium annulled in pesos (top-50 median)"
+    value: "10%"
+translationKey: "cobranza-seguros"
+draft: true
+---
+
+<Abstract label="TL;DR">
+
+In Argentine insurance, the bad ending of the collections story is almost never "the customer
+refused to pay". It's arrears manufactured by the process: the debit bounced and nobody retried in
+time, the broker collected but didn't remit, the employer misdeclared payroll, the receipt never
+reconciled and the policy got cancelled anyway. I mapped the market's four collection flows and
+quantified them with four official sources: the workers' comp system fails to collect **$45.3
+billion pesos every month** (8.36% arrears rate, SRT), **18.9% of property & casualty policies
+issued are annulled within the same quarter** (SSN), the median top-50 insurer carries **the
+equivalent of 2 months of premium locked in receivables**, and annulments eat **10% of issued
+premium in pesos** (SSN financial statements). The pattern that ties it together: friction grows
+with intermediation and with how small the payer is. The thesis of this case is that you don't fix
+this by collecting more aggressively but by reconciling better — and I propose where to start, what
+to build and which metrics should govern it.
+
+</Abstract>
+
+## How money enters an insurer (four flows, four ways to break)
+
+Insurance collections is not one process: it's at least four, with different actors and different
+failure modes. I surveyed and diagrammed them before touching a single dataset, because a number
+without its flow explains nothing.
+
+<Figure
+  src="/projects/cobranza-seguros/flujos.svg"
+  alt="Four collection flows in parallel: automatic debit in Argentina (bounce, retries, arrears, suspension and cancellation), broker-mediated collections with manual reconciliation, workers' comp with employer self-declaration, and regulated multi-channel payments in Mexico with different receipts per channel. All four converge into a collections agent that reconciles against the insurer's core system. Diagram labels are in Spanish."
+  width={920}
+  height={780}
+/>
+
+1. **Automatic debit (personal lines).** The debit attempt bounces (insufficient funds, expired
+   card), there are 2-3 blind retries, and if they fail: arrears → notice → suspension →
+   cancellation. Customers often find out when they no longer have coverage.
+2. **Broker-mediated collections (PAS).** The broker collects from the customer in cash, check or
+   transfer, and remits to the insurer whenever they remit. Reconciling what was collected against
+   the core system is manual, with human error and structural delay.
+3. **Workers' comp (ART).** The employer self-declares payroll (form F.931), the premium varies
+   month to month with the declared headcount, and reconciling declared vs. collected drags
+   under-declaration, error and arrears.
+4. **Regulated multi-channel (Mexico, as contrast).** Direct debit, bank counter, OXXO, SPEI, card:
+   every channel emits a different receipt, all reconciled by hand against the core. If
+   reconciliation doesn't land in time, the policy is cancelled _improperly_ — the customer had
+   paid.
+
+The common denominator is not non-payment: it's that **between the money and the system that
+decides whether a policy lives, there is a manual process**. That is what this case sets out to
+measure.
+
+## The numbers: four official sources, one problem
+
+### Workers' comp arrears is the regulator's own metric, not an opinion
+
+The SRT publishes agreed and collected premium for the system monthly. In April 2026: $542.2
+billion pesos agreed, $496.9 billion collected. The gap — **$45.3 billion in a single month** — is
+exactly the "Morosidad: 8.36%" the agency itself reports. Annualized, the order of magnitude is
+~8.4% of a ~$6.5 trillion peso revenue base.
+
+The segment split is the first piece of evidence for the thesis:
+
+| Segment                             | Arrears    | Monthly gap |
+| ----------------------------------- | ---------- | ----------- |
+| Productive units (companies)        | 8.29%      | $44.4B      |
+| Private households (domestic staff) | **14.25%** | $0.9B       |
+
+Where the payer is smaller and the process more manual, arrears nearly double. In money per worker:
+$58,730 pesos are agreed per month and $54,463 collected — $4,266 stuck in limbo.
+
+### Almost 1 in 5 policies issued is annulled within the same quarter
+
+From the SSN's policies, claims and premiums release (Q1 2026): of 16.6 million gross property &
+casualty policies issued in the quarter, **3.14 million were annulled**. And the pattern by line of
+business repeats the SRT's: motorcycles (the most precarious segment) annul 25.6% of what they
+issue and 18% of their in-force stock _per quarter_; auto, the mass-market line, annuls 1.38
+million policies per quarter.
+
+<Figure
+  src="/projects/cobranza-seguros/chart_anulaciones_ramo.png"
+  alt="Ranking of annulment rate by line of business in Q1 2026: surety 43.3%, theft 31.5%, motorcycles 25.6%, homeowners 23.8%, with the market total reference at 18.9%. Chart labels are in Spanish."
+  width={890}
+  height={601}
+/>
+
+### The cost lives on the balance sheet: 2 months of premium trapped
+
+From the quarterly financial statements insurers file with the SSN (March 2026 close, 177
+companies): the median top-50 insurer by premium carries **the equivalent of 2 months of issued
+premium locked in premium receivables**, and **annulments in pesos eat 10% of premium** (with
+extremes: Seguros Galicia 24.6%, Nación Seguros 24.2%).
+
+But the most useful finding in the ranking is _who_ sits at the top and who at the bottom:
+
+<Figure
+  src="/projects/cobranza-seguros/chart_meses_atrapados.png"
+  alt="Ranking of months of premium trapped in receivables: Assurant 4.6 months, broker-network cooperatives between 3.5 and 3.9, bancassurance around 3, against La Caja at 0.9 and Provincia ART at 0.3, with a median of 2 months. Chart labels are in Spanish."
+  width={890}
+  height={562}
+/>
+
+**Months trapped are a function of the channel.** At the top of the ranking: Assurant (sells
+warranties through retailers), the cooperatives with broker networks (La Segunda, Cooperación
+Mutual, Río Uruguay) and the bank/institutional channel (Allianz, Galicia, Nación, Provincia
+Seguros). At the bottom, with healthy collections: La Caja (direct sales, automatic debit: 0.9
+months) and Provincia ART (payroll-based collection: 0.3). Wherever an intermediary sits in the
+money flow, premium takes 3-4 months to arrive; where collection is direct, weeks. It's flow 2 of
+the diagram, confirmed company by company in the accounting.
+
+The year-over-year comparison (same fiscal month, 2025 vs 2026) is flat: median 2.06 → 1.98 months.
+**The problem is structural, not cyclical.**
+
+## The thesis
+
+> Insurers don't have a collections problem: they have a reconciliation problem. A relevant
+> fraction of the arrears they see is false arrears — customers who paid or wanted to pay, trapped
+> in a process that doesn't retry in time, doesn't match receipts, and can't tell "won't pay" from
+> "couldn't pay".
+
+In digital subscriptions, 20% to 40% of churn is involuntary — recoverable with smart retries and
+dunning. Argentine insurance operates with more intermediation and more payment-method friction
+than a SaaS, not less. Every point of that arrears that is involuntary is revenue lost without
+anyone having decided it: not the customer, who wanted coverage, nor the insurer, who already paid
+to acquire them.
+
+## Prioritization: where I would start
+
+Four flows, one team: you have to choose. My criterion is volume × automatability × the channel's
+political friction.
+
+1. **Automatic debit, first.** Maximum volume (the auto line alone issues 7 million net policies
+   per quarter), zero humans with their own incentives in the middle, and the intervention is pure
+   product: retries with smart timing, multi-channel dunning, self-service payment-method updates.
+   It's the flow where software alone can move the needle.
+2. **Brokers, second — but as a product for the broker, not against them.** It's the most expensive
+   flow (3-4 months of premium trapped at intermediated carriers) and the hardest: the broker is a
+   channel with interests, not a process. The play is not to disintermediate but to give them
+   automatic remittance — make remitting stop being work.
+3. **Workers' comp, third.** The arrears are huge in pesos but the flow depends on employer
+   self-declaration and the tax agency; the lever is early detection of under-declaration, not
+   classic dunning.
+
+## What I would build: the collections agent
+
+Three concrete design decisions, each with its why:
+
+- **Retries that know when there's money.** The blind 48-hour retry is the policy of someone who
+  doesn't look at data. The right timing can be learned: salary-deposit dates, the customer's own
+  bounce history, day of the month. Goal: maximize first-retry approval, not retry count.
+- **Dunning that offers a way out, not a threat.** Between the bounce and the suspension there's a
+  window that today is used to notify and should be used to resolve: a WhatsApp message with a
+  payment link and self-service payment-method update. Cancellation becomes the end of a path with
+  exits, not a timeout.
+- **Reconciliation where humans only review exceptions.** Automatic matching of receipts and
+  remittances against the core; people stop hunting for matches and start resolving what the
+  system flags. Improper cancellation (cancelling a paid policy) becomes an auditable event, not a
+  statistical accident.
+
+## How I would govern it
+
+The North Star: **% of issued premium collected on time without human intervention.** It measures
+value delivered (the money that comes in _and_ the manual army no longer needed), it's a leading
+indicator of the financial result, and every flow feeds it with inputs the team can move:
+
+| Flow    | Input metrics                                                                    |
+| ------- | -------------------------------------------------------------------------------- |
+| Debit   | First-attempt approval · post-bounce recovery · days bounce→regularization       |
+| Brokers | Days collection→remittance · % auto-reconciled remittances · aging of open items |
+| ART     | Agreed−collected gap (the SRT figure) · days to detect under-declaration         |
+
+With two guardrails so the metric can't be optimized by breaking something else: complaints about
+improper charges (the goal is collecting smarter, not harder) and cost per peso collected. Plus a
+warning about the metric usually crowned in collections: recovery rate **rewards the flow failing**
+so it can be recovered. Recovery is an input; the star is the payment going through the first time.
+
+<Callout type="warning" title="Assumptions and limits, stated">
+  This is an outside-in analysis built on public data; what I couldn't observe, I say so. (1) The
+  SSN's "annulment" includes non-financial causes — endorsements, policy rewrites when a vehicle
+  changes — so 18.9% is a ceiling, not a pure measure of collections churn. (2) The SRT's monthly
+  arrears is not a definitive loss: part is collected later with interest; the correct reading is
+  "money that didn't arrive on time". (3) The involuntary-churn benchmark (20-40%) comes from
+  digital subscriptions, carried over as an order of magnitude. (4) Galeno ART did not report in the
+  Q1 2026 financial-statements file: it's missing from the ranking for lack of data, not by
+  omission. (5) The statements dataset mixes number formats across periods; I used the two periods
+  with intact formatting (March 2025 and March 2026 closes) and discarded the corrupted ones.
+</Callout>
+
+## Sources
+
+- [SRT — Coverage and financing, latest data](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos.php) (April 2026)
+- [SSN — Policies, claims and premiums](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas) (Q1 2026)
+- [SSN — Open data: insurance market indicators](https://datosabiertos.ssn.gob.ar/dataset/indicadores-mercado) (2009–2026)
+- [SSN — Open data: insurer financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) (March 2025 and March 2026 closes)
+- [GoCardless — Involuntary churn](https://gocardless.com/es/guias/consejos/churn-involuntario) (subscriptions benchmark)
