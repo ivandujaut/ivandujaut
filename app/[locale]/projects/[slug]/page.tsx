@@ -20,6 +20,7 @@ import { ViewCounter } from "@/components/blog/view-counter";
 import { LikeButton } from "@/components/blog/like-button";
 import { getCachedViews } from "@/lib/views";
 import { StatusBadge } from "@/components/content/status-badge";
+import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
@@ -160,7 +161,10 @@ export default async function ProjectPage({ params }: Props) {
             <span aria-hidden>·</span>
             <span>{project.role}</span>
             <span aria-hidden>·</span>
-            <StatusBadge status={project.status} />
+            <KindBadge kind={project.kind} />
+            {(project.kind === "build" || project.status !== "concept") && (
+              <StatusBadge status={project.status} />
+            )}
             <span aria-hidden>·</span>
             <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
             <ShareLinkButton

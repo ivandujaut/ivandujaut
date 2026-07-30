@@ -62,6 +62,7 @@ export default async function ProjectsPage({ params }: Props) {
                   year={project.year}
                   stack={project.stack}
                   status={project.status}
+                  kind={project.kind}
                   variant="card"
                   cover={
                     project.cover
@@ -94,6 +95,7 @@ export default async function ProjectsPage({ params }: Props) {
                   year={project.year}
                   stack={project.stack}
                   status={project.status}
+                  kind={project.kind}
                   variant="card"
                   cover={
                     project.cover
