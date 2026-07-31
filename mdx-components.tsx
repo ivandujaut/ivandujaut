@@ -21,6 +21,7 @@ import { DemoFrame } from "@/components/mdx/demo-frame";
 import { FigmaEmbed } from "@/components/mdx/figma-embed";
 import { YouTube } from "@/components/mdx/youtube";
 import { BentoGrid } from "@/components/mdx/bento-grid";
+import { TableCaption } from "@/components/mdx/table-caption";
 
 /**
  * Componentes MDX disponibles en posts y casos de estudio.
@@ -61,6 +62,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     FigmaEmbed,
     YouTube,
     BentoGrid,
+    TableCaption,
 
     // Overrides de elementos HTML
     a: MdxLink,
