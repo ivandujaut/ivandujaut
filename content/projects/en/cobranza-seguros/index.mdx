@@ -27,7 +27,7 @@ metrics:
   - label: "Months of premium trapped (top-50 median)"
     value: "2.0"
   - label: "Premium annulled in pesos (top-50 median)"
-    value: "10%"
+    value: "8.9%"
 translationKey: "cobranza-seguros"
 draft: false
 ---
@@ -41,7 +41,7 @@ receipt never reconciled and the policy got cancelled anyway. I mapped the marke
 quantified them with four official sources: the workers' comp system fails to collect **$45.3
 billion pesos every month** (8.36% arrears rate, SRT), **for every 100 property & casualty
 policies issued, 19 are annulled** (SSN), the median top-50 insurer carries **the
-equivalent of 2 months of premium locked in receivables**, and annulments eat **10% of issued
+equivalent of 2 months of premium locked in receivables**, and annulments eat **8.9% of issued
 premium in pesos** (SSN financial statements). The pattern that ties it together: friction grows
 with intermediation and with how small the payer is. The thesis of this case is that
 process-manufactured arrears are the cheapest to recover and the most expensive to ignore, and
@@ -157,7 +157,9 @@ here expressed in months.
 The data comes from the
 [quarterly financial statements](https://datosabiertos.ssn.gob.ar/dataset/balances) insurers file
 with the SSN (March 2026 close, 177 companies). The same source shows **annulments in pesos eating
-10% of premium**, with extremes: Seguros Galicia 24.6%, Nación Seguros 24.2%.
+8.9% of premium**, with extremes: Seguros Galicia 24.6%, Nación Seguros 24.5%. Ten of those fifty
+are workers' comp or retirement carriers, where annulment does not exist as a concept; across the
+remaining forty the median rises to 10.6%.
 
 <Figure
   src="/projects/cobranza-seguros/chart_meses_atrapados.png"
@@ -304,6 +306,12 @@ so it can be recovered. Recovery is an input; the star is the payment going thro
 9. The arrears rates per segment (8.29% and 14.25%) are my own calculation: the SRT publishes a
    single arrears rate, the 8.36% for the whole system. Same for the $45.3B gap, which is agreed
    premium minus collected premium.
+
+10. Annulled premium is "Anulaciones de Primas - Seguros Directos" over "Primas Seguros Directos",
+    taking each account at its aggregate level rather than the per-line detail, which coexist in
+    this dataset and double-count if summed together. The top 50 is ranked by premium. I previously
+    published 10%, which does not reproduce under that definition: the median across the full top
+    50 is 8.9%, and 10.6% across the forty carriers that do annul.
 
 </Callout>
 
