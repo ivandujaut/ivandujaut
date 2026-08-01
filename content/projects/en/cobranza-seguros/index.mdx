@@ -37,16 +37,18 @@ draft: false
 In Argentine insurance, the bad ending of the collections story is not always "the customer
 refused to pay". Part of the arrears is manufactured by the process: the debit bounced and nobody
 retried in time, the broker collected but didn't remit, the employer misdeclared payroll, the
-receipt never reconciled and the policy got cancelled anyway. I mapped the market's four collection flows and
-quantified them with four official sources: the workers' comp system fails to collect **$45.3
-billion pesos every month** (8.36% arrears rate, SRT), **for every 100 property & casualty
-policies issued, 19 are annulled** (SSN), the median top-50 insurer carries **the
-equivalent of 2 months of premium locked in receivables**, and annulments eat **10.6% of issued
-premium in pesos** (SSN financial statements). The pattern that ties it together: friction grows
-with intermediation and with how small the payer is. The thesis of this case is that
-process-manufactured arrears are the cheapest to recover and the most expensive to ignore, and
-that merely accelerating reconciliation frees months of premium trapped on the balance sheet. I
-propose where to start, what to build and which metrics should govern it.
+receipt never reconciled and the policy got cancelled anyway.
+
+I mapped the market's four collection flows and quantified them with four official sources. The
+workers' comp system fails to collect **$45.3 billion pesos every month** (8.36% arrears rate,
+SRT). For every 100 property & casualty policies issued, **19 are annulled** (SSN). The median
+top-50 insurer carries **2 months of premium locked in receivables**, and annulments eat **10.6%
+of issued premium** (SSN financial statements).
+
+The pattern that ties it together: friction grows with intermediation and with how small the payer
+is. The thesis is that process-manufactured arrears are the cheapest to recover and the most
+expensive to ignore, and that merely accelerating reconciliation frees months of premium trapped
+on the balance sheet. I propose where to start, what to build and which metrics should govern it.
 
 </Abstract>
 
@@ -95,7 +97,7 @@ The SRT [publishes monthly](https://www.srt.gob.ar/estadisticas/cf_ultimos_datos
 every employer in the system should have paid (agreed premium) and how much actually came in
 (collected premium). In April 2026: $542.2 billion pesos agreed, $496.9 billion collected. The
 gap, **$45.3 billion in a single month**, is exactly the "Morosidad: 8.36%" the agency itself
-reports. Annualized, the order of magnitude is ~8.4% of a ~$6.5 trillion peso revenue base.
+reports.
 
 The segment split is consistent with the thesis, though there is an alternative reading these
 figures cannot rule out: smaller payers, more volatile income. The system splits into two
@@ -203,16 +205,19 @@ would be a statement these figures cannot prove.
 What the figures do show is where the recoverable value per peso invested is concentrated, for
 three reasons:
 
-1. **Asymmetric error costs.** Losing a genuine defaulter costs about one month of premium,
-   because coverage stops. Improperly cancelling a paying customer costs their full lifetime
-   value plus the acquisition cost of replacing them. Even if manufactured arrears are a minority
-   of the stock, their unit cost is a multiple.
-2. **The working capital does not depend on the decomposition.** The top 50 carries **$4.13
-   trillion pesos in premium receivables** against a monthly premium of $2.13 trillion (SSN
-   financial statements, March 2026). At 2-4% monthly rates, holding that stock costs **$1 to $2
-   trillion pesos per year**; accelerating collection by one month frees ~$2.1 trillion once.
-   This value exists even if every peso of arrears were genuine: it's money that was arriving
-   anyway, arriving earlier.
+1. **Asymmetric error costs.** This is reasoning, not measurement: public data does not carry the
+   cost of each type of error. Losing a genuine defaulter costs the premium that never came in and
+   coverage stops, so the damage ends there. Improperly cancelling someone who was paying costs
+   everything that customer was going to pay from now on, plus whatever it takes to replace them.
+   Even if manufactured arrears are a minority of the stock, each case costs a good deal more.
+2. **The working capital does not depend on how much of the arrears is genuine.** The top 50
+   carries **$4.13 trillion pesos in premium receivables** ($4,130 billion) against a monthly
+   premium of $2.13 trillion (SSN financial statements, March 2026). Accelerating collection by one
+   month frees **~$2.1 trillion once**, and that number depends on no rate at all: it's money that
+   was arriving anyway, arriving earlier. Holding the stock, on the other hand, does cost:
+   **every point of monthly funding cost is ~$0.5 trillion a year**, so each company plugs in its
+   own real rate and gets its own figure. All of this holds even if every peso of arrears were
+   genuine.
 3. **Tractability.** A customer's insolvency cannot be fixed with software; retry timing, receipt
    matching and self-service payment updates can. As a reference for the recoverable order of
    magnitude, in digital subscriptions [20% to 40% of churn is involuntary](https://gocardless.com/es/guias/consejos/churn-involuntario),
@@ -283,32 +288,36 @@ so it can be recovered. Recovery is an input; the star is the payment going thro
 3. The involuntary-churn benchmark (20-40%) comes from digital subscriptions, carried over as an
    order of magnitude.
 
-4. Galeno ART did not report in the Q1 2026 financial-statements file: it's missing from the
+4. No source publishes insurers' cost of funding. That is why the cost of holding premium
+   receivables is given as a coefficient per point of rate rather than a closed figure: it comes
+   from multiplying the stock by the monthly rate and by twelve, and the reader supplies the rate.
+
+5. Galeno ART did not report in the Q1 2026 financial-statements file: it's missing from the
    ranking for lack of data, not by omission.
 
-5. The statements dataset mixes number formats across periods; I used the two periods with intact
+6. The statements dataset mixes number formats across periods; I used the two periods with intact
    formatting (March 2025 and March 2026 closes) and discarded the corrupted ones.
 
-6. Arrears rates per segment come from the unrounded amounts. Redoing the maths with the rounded
+7. Arrears rates per segment come from the unrounded amounts. Redoing the maths with the rounded
    figures in the table gives 14.29% for private households, against the 14.25% published.
 
-7. The per-worker amounts I quote are the ones the SRT publishes ($58,729.68 agreed, $54,463.3
+8. The per-worker amounts I quote are the ones the SRT publishes ($58,729.68 agreed, $54,463.3
    collected), not my own arithmetic. Anyone dividing the aggregates in the table by the covered
    population will get something else: $542.2B over 10,117,170 people gives $53,597. The difference
    is self-insured employers, roughly 884,000 people who are in the covered population but outside
    that indicator. That is why I use the source figure and not my division.
 
-8. The two per-worker indicators are not subtractable from each other either: their difference
+9. The two per-worker indicators are not subtractable from each other either: their difference
    implies a 7.27% arrears rate, against the 8.36% the same agency reports. The proof is in its own
    table: for private households the SRT publishes collections per worker ($11,056.2) above the
    agreed premium per worker ($10,547.9), because the former counts only workers whose employer
    paid that month.
 
-9. The arrears rates per segment (8.29% and 14.25%) are my own calculation: the SRT publishes a
-   single arrears rate, the 8.36% for the whole system. Same for the $45.3B gap, which is agreed
-   premium minus collected premium.
+10. The arrears rates per segment (8.29% and 14.25%) are my own calculation: the SRT publishes a
+    single arrears rate, the 8.36% for the whole system. Same for the $45.3B gap, which is agreed
+    premium minus collected premium.
 
-10. Annulled premium is "Anulaciones de Primas - Seguros Directos" over "Primas Seguros Directos",
+11. Annulled premium is "Anulaciones de Primas - Seguros Directos" over "Primas Seguros Directos",
     taking each account at its aggregate level rather than the per-line detail, which coexist in
     this dataset and double-count if summed together. The top 50 is ranked by premium, and out of
     those fifty I exclude the ten workers' comp and retirement carriers: all of them report zero
