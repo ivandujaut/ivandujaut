@@ -26,8 +26,8 @@ metrics:
     value: "18,9%"
   - label: "Meses de prima atrapados (mediana top 50)"
     value: "2,0"
-  - label: "Prima anulada en pesos (mediana top 50)"
-    value: "10%"
+  - label: "Prima anulada (mediana, sin ART ni retiro)"
+    value: "10,6%"
 translationKey: "cobranza-seguros"
 draft: false
 ---
@@ -41,7 +41,7 @@ póliza se canceló igual. Mapeé los cuatro flujos de cobranza del mercado y lo
 oficiales: el sistema ART deja de cobrar **$45,3 mil M por mes** (8,36% de morosidad, SRT),
 **por cada 100 pólizas patrimoniales emitidas se anulan 19** (SSN), la aseguradora
 mediana del top 50 tiene **el equivalente a 2 meses de prima inmovilizados en premios a cobrar**, y
-las anulaciones se comen **el 10% de la prima emitida en pesos** (balances SSN). El patrón que une
+las anulaciones se comen **el 10,6% de la prima emitida en pesos** (balances SSN). El patrón que une
 todo: la fricción crece con la intermediación y con el tamaño chico del pagador. La tesis del caso
 es que la mora fabricada por el proceso es la más barata de recuperar y la más cara de ignorar, y
 que solo acelerar la conciliación ya libera meses de prima atrapados en el balance. Propongo por
@@ -152,7 +152,10 @@ por la facturación de un mes promedio da cuántos meses de ventas están pendie
 Los datos salen de los
 [balances trimestrales](https://datosabiertos.ssn.gob.ar/dataset/balances) que las aseguradoras
 presentan a la SSN (cierre marzo 2026, 177 compañías). Ahí también se ve que las **anulaciones en
-pesos se comen el 10% de la prima**, con extremos: Seguros Galicia 24,6%, Nación Seguros 24,2%.
+pesos se comen el 10,6% de la prima**, con extremos: Seguros Galicia 24,6%, Nación Seguros 24,5%.
+Esa mediana deja afuera a diez de las cincuenta: las ART y las compañías de retiro, donde la
+anulación no existe como figura porque la cobertura es continua. Contándolas como cero, la mediana
+del top 50 completo baja a 8,9%.
 
 <Figure
   src="/projects/cobranza-seguros/chart_meses_atrapados.png"
@@ -298,6 +301,15 @@ primera.
 9. Las tasas de mora por segmento (8,29% y 14,25%) las calculo yo: la SRT publica una sola
    morosidad, la del 8,36% del total. Lo mismo la brecha de $45,3 mil M, que es la resta entre
    cuota pactada y recaudada.
+
+10. La prima anulada es "Anulaciones de Primas - Seguros Directos" sobre "Primas Seguros Directos",
+    tomando el nivel agregado de cada cuenta y no el detalle por subramo, que en este dataset
+    conviven y sumarlos duplica. El top 50 va ordenado por primas, y de esas cincuenta excluyo las
+    diez ART y de retiro: todas tienen anulaciones en cero, así que incluirlas mide un fenómeno
+    donde no puede existir. El corte no depende del estadístico que se elija: sobre esas cuarenta,
+    la mediana da 10,6% y el total anulado sobre el total de prima da 10,4%. Sobre el top 50
+    completo serían 8,9% y 8,2%. Una versión anterior del caso publicaba 10%, que no reproduce con
+    ninguna de las dos definiciones.
 
 </Callout>
 
