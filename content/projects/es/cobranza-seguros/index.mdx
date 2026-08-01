@@ -37,15 +37,18 @@ draft: false
 En el seguro argentino, el desenlace malo de la cobranza no siempre es "el cliente no quiso pagar".
 Una parte de la mora la fabrica el proceso: el débito rebotó y nadie reintentó a tiempo, el
 productor cobró pero no rindió, el empleador declaró mal la nómina, el comprobante no concilió y la
-póliza se canceló igual. Mapeé los cuatro flujos de cobranza del mercado y los cuantifiqué con cuatro fuentes
-oficiales: el sistema ART deja de cobrar **$45,3 mil M por mes** (8,36% de morosidad, SRT),
-**por cada 100 pólizas patrimoniales emitidas se anulan 19** (SSN), la aseguradora
-mediana del top 50 tiene **el equivalente a 2 meses de prima inmovilizados en premios a cobrar**, y
-las anulaciones se comen **el 10,6% de la prima emitida en pesos** (balances SSN). El patrón que une
-todo: la fricción crece con la intermediación y con el tamaño chico del pagador. La tesis del caso
-es que la mora fabricada por el proceso es la más barata de recuperar y la más cara de ignorar, y
-que solo acelerar la conciliación ya libera meses de prima atrapados en el balance. Propongo por
-dónde empezar, qué construir y con qué métricas gobernarlo.
+póliza se canceló igual.
+
+Mapeé los cuatro flujos de cobranza del mercado y los cuantifiqué con cuatro fuentes oficiales. El
+sistema ART deja de cobrar **$45,3 mil M por mes** (8,36% de morosidad, SRT). Por cada 100 pólizas
+patrimoniales emitidas **se anulan 19** (SSN). La aseguradora mediana del top 50 tiene **2 meses de
+prima inmovilizados en premios a cobrar**, y las anulaciones se comen **el 10,6% de la prima**
+(balances SSN).
+
+El patrón que une todo: la fricción crece con la intermediación y con el tamaño chico del pagador.
+La tesis es que la mora fabricada por el proceso es la más barata de recuperar y la más cara de
+ignorar, y que solo acelerar la conciliación ya libera meses de prima atrapados en el balance.
+Propongo por dónde empezar, qué construir y con qué métricas gobernarlo.
 
 </Abstract>
 
@@ -91,7 +94,7 @@ La SRT [publica mensualmente](https://www.srt.gob.ar/estadisticas/cf_ultimos_dat
 deberían pagar todos los empleadores del sistema (cuota pactada) y cuánto entró efectivamente
 (cuota recaudada). En abril de 2026: $542,2 mil M pactados, $496,9 mil M recaudados. La brecha,
 **$45,3 mil M en un solo mes**, es exactamente la "Morosidad: 8,36%" que reporta el propio
-organismo. Anualizado, el orden de magnitud es ~8,4% de una facturación de ~$6,5 billones.
+organismo.
 
 El desglose por segmento es consistente con la tesis, aunque hay una lectura alternativa que estos
 datos no permiten descartar: pagadores más chicos, ingresos más volátiles. El sistema separa dos
@@ -197,15 +200,18 @@ conciliación" sería una afirmación que estos datos no alcanzan a probar.
 Lo que sí muestran los datos es dónde está el valor recuperable por peso invertido, por tres
 razones:
 
-1. **Asimetría de costos del error.** Perder a un moroso genuino cuesta cerca de un mes de prima,
-   porque la cobertura se corta. Cancelar indebidamente a un cliente que pagaba cuesta su valor de
-   vida completo más el costo de adquisición de reponerlo. Aunque la mora fabricada sea minoría
-   del stock, su costo unitario es un múltiplo.
-2. **El capital de trabajo no depende de la descomposición.** El top 50 acumula **$4,13 billones
-   en premios a cobrar** contra una prima mensual de $2,13 billones (balances SSN, marzo 2026). A
-   tasas de 2-4% mensual, sostener ese stock cuesta **entre $1 y $2 billones por año**; acelerar
-   la cobranza un mes libera ~$2,1 billones por única vez. Este valor existe aunque toda la mora
-   fuera genuina: es plata que iba a llegar igual, llegando antes.
+1. **Asimetría de costos del error.** Esto es razonamiento, no medición: los datos públicos no
+   traen el costo de cada tipo de error. Perder a un moroso genuino cuesta la prima que no entró y
+   se corta la cobertura, así que el daño termina. Cancelar indebidamente a alguien que sí pagaba
+   cuesta todo lo que ese cliente iba a pagar de acá en adelante, más lo que salga reponerlo.
+   Aunque la mora fabricada sea minoría del stock, cada caso cuesta bastante más.
+2. **El capital de trabajo no depende de cuánta mora sea genuina.** El top 50 acumula
+   **$4,13 billones en premios a cobrar** ($4.130 mil M) contra una prima mensual de $2,13
+   billones (balances SSN, marzo 2026). Acelerar la cobranza un mes libera **~$2,1 billones por
+   única vez**, y ese número no depende de ninguna tasa: es plata que iba a llegar igual, llegando
+   antes. Sostener el stock, en cambio, cuesta: **cada punto de costo de fondeo mensual son ~$0,5
+   billones al año**, así que cada compañía pone su tasa real y saca su cifra. Todo esto vale
+   aunque toda la mora fuera genuina.
 3. **Tratabilidad.** La insolvencia de un cliente no se arregla con software; el timing de
    reintentos, el matching de comprobantes y la autogestión del medio de pago, sí. Como referencia
    del orden de magnitud recuperable, en suscripciones digitales [entre el 20% y el 40% del churn
@@ -278,31 +284,35 @@ primera.
 3. El benchmark de churn involuntario (20-40%) viene de suscripciones digitales, trasladado como
    orden de magnitud.
 
-4. Galeno ART no reportó en el archivo de balances del 1º trimestre 2026: no está en el ranking
+4. Ninguna fuente publica el costo de fondeo de las aseguradoras. Por eso el costo de sostener los
+   premios a cobrar va como coeficiente por punto de tasa y no como cifra cerrada: sale de
+   multiplicar el stock por la tasa mensual y por doce, y la tasa la pone el lector.
+
+5. Galeno ART no reportó en el archivo de balances del 1º trimestre 2026: no está en el ranking
    por falta de dato, no por omisión.
 
-5. Los importes del dataset de balances traen formatos mixtos según el período; usé los dos
+6. Los importes del dataset de balances traen formatos mixtos según el período; usé los dos
    períodos con formato íntegro (cierres a marzo 2025 y 2026) y descarté los corruptos.
 
-6. Las tasas de mora por segmento salen de los importes sin redondear. Rehacer la cuenta con las
+7. Las tasas de mora por segmento salen de los importes sin redondear. Rehacer la cuenta con las
    cifras redondeadas de la tabla da 14,29% en casas particulares, contra el 14,25% publicado.
 
-7. Los montos por trabajador que cito son los que publica la SRT ($58.729,68 de cuota pactada,
+8. Los montos por trabajador que cito son los que publica la SRT ($58.729,68 de cuota pactada,
    $54.463,3 de recaudada), no una cuenta mía. Quien divida los agregados de la tabla por el padrón
    va a obtener otra cosa: $542,2 mil M sobre 10.117.170 personas da $53.597. La diferencia son las
    empresas autoaseguradas, unas 884 mil personas que están en el padrón pero fuera de ese
    indicador. Por eso uso el dato de la fuente y no mi división.
 
-8. Los dos indicadores por trabajador tampoco son restables entre sí: su diferencia da 7,27% de
+9. Los dos indicadores por trabajador tampoco son restables entre sí: su diferencia da 7,27% de
    morosidad, contra el 8,36% que informa el mismo organismo. La prueba está en el propio cuadro:
    en casas particulares la SRT publica una recaudación por trabajador ($11.056,2) mayor que la
    cuota pactada ($10.547,9), porque la primera cuenta solo a quienes su empleador pagó ese mes.
 
-9. Las tasas de mora por segmento (8,29% y 14,25%) las calculo yo: la SRT publica una sola
-   morosidad, la del 8,36% del total. Lo mismo la brecha de $45,3 mil M, que es la resta entre
-   cuota pactada y recaudada.
+10. Las tasas de mora por segmento (8,29% y 14,25%) las calculo yo: la SRT publica una sola
+    morosidad, la del 8,36% del total. Lo mismo la brecha de $45,3 mil M, que es la resta entre
+    cuota pactada y recaudada.
 
-10. La prima anulada es "Anulaciones de Primas - Seguros Directos" sobre "Primas Seguros Directos",
+11. La prima anulada es "Anulaciones de Primas - Seguros Directos" sobre "Primas Seguros Directos",
     tomando el nivel agregado de cada cuenta y no el detalle por subramo, que en este dataset
     conviven y sumarlos duplica. El top 50 va ordenado por primas, y de esas cincuenta excluyo las
     diez ART y de retiro: todas tienen anulaciones en cero, así que incluirlas mide un fenómeno
