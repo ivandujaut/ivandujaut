@@ -92,7 +92,9 @@ for (let i = 0; i < entries.length; i += CONCURRENCY) {
     batch.map(async ([url, files]) => ({ url, files: [...files], ...(await probe(url)) })),
   );
   results.push(...settled);
-  process.stderr.write(`\r  chequeando ${Math.min(i + CONCURRENCY, entries.length)}/${entries.length}`);
+  process.stderr.write(
+    `\r  chequeando ${Math.min(i + CONCURRENCY, entries.length)}/${entries.length}`,
+  );
 }
 process.stderr.write("\r".padEnd(50) + "\r");
 

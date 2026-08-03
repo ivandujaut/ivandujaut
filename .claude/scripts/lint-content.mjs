@@ -105,9 +105,7 @@ function lintFile(file) {
   // Los bloques y spans de código se sacan antes de cualquier chequeo: adentro
   // puede haber `<Figure fullBleed>` como ejemplo de documentación, o un guion
   // largo dentro de un snippet, y ninguno de los dos es una violación.
-  const body = fmMatch[2]
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/`[^`\n]*`/g, "");
+  const body = fmMatch[2].replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
 
   // ---------------------------------------------------------------- ERRORES
 
@@ -187,7 +185,9 @@ function lintFile(file) {
         err(
           rel,
           `<Figure src="${src}"> declara ${declaredW}x${declaredH} y el archivo mide ${real.width}x${real.height}` +
-            (n > 1 ? ` (a ${n}x correspondería ${Math.round(real.width / n)}x${Math.round(real.height / n)})` : ""),
+            (n > 1
+              ? ` (a ${n}x correspondería ${Math.round(real.width / n)}x${Math.round(real.height / n)})`
+              : ""),
         );
       }
     }
@@ -222,7 +222,10 @@ function lintFile(file) {
     const [, section, slug] = href.split("/");
     const collectionForHref = section === "blog" ? "posts" : section;
     if (!existingSlugs(collectionForHref).has(slug)) {
-      err(rel, `link interno ${href} no corresponde a ninguna entrada de content/${collectionForHref}/`);
+      err(
+        rel,
+        `link interno ${href} no corresponde a ninguna entrada de content/${collectionForHref}/`,
+      );
     }
   }
 
@@ -242,7 +245,8 @@ function lintFile(file) {
   // decisión, fue una consecuencia" es el mismo molde. Las variantes con verbo
   // repetido ("no compite contra A, compite contra B") las cuenta el auditor
   // del nodo 5, no este regex: automatizarlas da demasiados falsos positivos.
-  const noEsPattern = /\bno (?:es|son|fue|era|se trata de)\b[^.;:,]{0,60}[.;:,]\s*(?:es|son|era|fue)\b/gi;
+  const noEsPattern =
+    /\bno (?:es|son|fue|era|se trata de)\b[^.;:,]{0,60}[.;:,]\s*(?:es|son|era|fue)\b/gi;
   const hits = prose.match(noEsPattern) ?? [];
   if (hits.length > 1) {
     warn(
@@ -251,11 +255,15 @@ function lintFile(file) {
     );
   }
 
-  for (const m of prose.matchAll(/\b(revolucionari\w+|disruptiv\w+|game.?changer|innovador\w*)\b/gi)) {
+  for (const m of prose.matchAll(
+    /\b(revolucionari\w+|disruptiv\w+|game.?changer|innovador\w*)\b/gi,
+  )) {
     warn(rel, `adjetivo inflador sin dato atrás: "${m[1]}"`);
   }
 
-  for (const m of prose.matchAll(/\b(simulé el rol|como si fuera (?:un )?PM|con fines de portfolio)\b/gi)) {
+  for (const m of prose.matchAll(
+    /\b(simulé el rol|como si fuera (?:un )?PM|con fines de portfolio)\b/gi,
+  )) {
     warn(rel, `lenguaje de aspirante: "${m[1]}"`);
   }
 
