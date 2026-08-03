@@ -7,15 +7,18 @@ Iván, y Claude propone en el medio.**
 
 ```mermaid
 flowchart TD
-    N0[0. Selección del caso] --> N1[1. Investigación]
+    N0[0. Selección del caso] --> N1a[1a. Plan de fuentes · conjunto]
+    N1a --> N1[1. Investigación]
     N1 --> N2[2. Hoja de hechos]
-    N2 --> N3[3. Gráficos]
-    N2 --> N4[4. Borrador ES]
+    N2 --> N2b{2b. Discusión de la tesis · conjunto}
+    N2b -- faltan datos --> N1a
+    N2b -- tesis acordada --> N3[3. Gráficos]
+    N2b -- tesis acordada --> N4[4. Borrador ES]
     N3 --> N4
     N4 --> N5{5. Auditoría automática}
     N5 -- hallazgos --> N4
     N5 -- limpio --> N6[6. Edición de Iván]
-    N6 -- cambios de fondo --> N1
+    N6 -- cambios de fondo --> N2b
     N6 -- ajustes --> N4
     N6 -- cerrado --> N7[7. Traducción EN]
     N7 --> N8{8. Verificación técnica}
@@ -52,9 +55,42 @@ Reglas:
 **Revisa:** Iván. Es la única decisión 100% suya del flujo.
 **Herramienta:** `/new-case` scaffoldea las dos carpetas con el frontmatter válido.
 
+## Nodo 1a · Plan de fuentes (conjunto)
+
+**Entra:** el ángulo del nodo 0. **Sale:** un plan de dónde buscar, acordado con Iván
+antes de gastar horas de investigación.
+
+Qué fuentes existen depende del caso, y el plan se arma **juntos**: Claude releva qué
+hay disponible, Iván decide qué vale la pena. El menú a recorrer, siempre:
+
+1. **Datos abiertos y oficiales** (SSN, SRT, INDEC, reguladores del país que toque).
+   Cuando existen, mandan: son la columna vertebral de un caso tipo "La prima que
+   no llega".
+2. **Informes de mercado y estadísticas sectoriales** (cámaras, consultoras,
+   informes anuales de la industria).
+3. **Fuentes corporativas**: resultados, comunicados, investor relations, páginas
+   de producto de los jugadores.
+4. **Prensa de negocios**, para hechos (rondas, acuerdos, lanzamientos), no para
+   cifras recalculables.
+5. **Trabajo de campo propio**: entrevistas, relevamiento de producto en primera
+   persona, benchmarks de otros mercados. Es la fuente más cara y la única que
+   nadie más tiene; cuándo la pagamos se decide acá.
+
+Reglas:
+
+1. Para cada fuente candidata, el plan dice qué pregunta del caso responde y qué
+   valor agrega. Una fuente que no responde nada no entra por completismo.
+2. Mientras más información, mejor: el techo lo pone la disponibilidad, no la
+   pereza. Si una clase de fuente no existe para este caso, el plan lo deja
+   escrito (que la limitación quede declarada, no descubierta tarde).
+3. El plan es revisable: si el nodo 2b muestra que falta evidencia, se vuelve acá
+   y se amplía, no se estira lo que hay.
+
+**Revisa:** Iván aprueba el plan antes de ejecutarlo.
+
 ## Nodo 1 · Investigación
 
-**Entra:** el ángulo elegido. **Sale:** hallazgos con fuente, cada uno etiquetado.
+**Entra:** el plan de fuentes aprobado. **Sale:** hallazgos con fuente, cada uno etiquetado.
 
 Reglas:
 
@@ -106,10 +142,37 @@ fuente oficial` / `versión periodística` / `hipótesis del modelo`) y fuente.
 al caso. Velite solo levanta `*.mdx`, así que no se publica, pero el auditor y las
 sesiones futuras siempre la encuentran.
 
+## Nodo 2b · Discusión de la tesis (conjunto)
+
+**Entra:** la hoja de hechos con TODA la información disponible ya analizada.
+**Sale:** la tesis acordada, o la vuelta al nodo 1a por más evidencia.
+
+Este es el gate que la falla #1 del registro compró: la primera tesis del caso
+Nubank se escribió antes de mirar los datos y murió al verificarlos. El orden
+correcto es datos → tesis, nunca al revés.
+
+Reglas:
+
+1. **No se escribe ni un párrafo del borrador ni se dibuja un gráfico antes de
+   acordar la tesis.** Los gráficos argumentan una tesis; sin tesis acordada son
+   decoración que después hay que tirar (g1 y g2 lo probaron).
+2. Claude presenta los hallazgos organizados en tres pilas: qué refuerza cada
+   tesis candidata, qué la debilita, y qué no se pudo saber. La pila del medio se
+   presenta con el mismo detalle que la primera: la evidencia incómoda destacada
+   acá es la que después sostiene el artículo.
+3. Cada tesis candidata se enuncia con su condición de muerte ("qué me haría
+   cambiar de opinión") ya pensada. Una tesis sin condición de muerte no compite.
+4. La discusión es con datos sobre la mesa: cada afirmación del debate traza a la
+   hoja de hechos. "Me parece que" no cierra el gate.
+5. La tesis final la decide Iván. Claude recomienda una y dice por qué.
+
+**Revisa:** Iván y Claude juntos; es el segundo de los dos gates conjuntos del
+flujo, y el más barato de los dos de repetir si hace falta.
+
 ## Nodo 3 · Gráficos
 
-**Entra:** hoja de hechos. **Sale:** PNGs en `public/projects/<slug>/` + script
-generador.
+**Entra:** hoja de hechos + tesis acordada en 2b. **Sale:** PNGs en
+`public/projects/<slug>/` + script generador.
 
 Reglas:
 
@@ -140,7 +203,8 @@ asset pesa más de 5x la mediana de sus pares.
 
 ## Nodo 4 · Borrador ES
 
-**Entra:** hoja de hechos + gráficos. **Sale:** `index.mdx` en `content/<col>/es/`.
+**Entra:** hoja de hechos + tesis acordada + gráficos. **Sale:** `index.mdx` en
+`content/<col>/es/`.
 
 Reglas de contenido:
 
