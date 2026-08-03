@@ -432,16 +432,24 @@ caiga en el corte, y esa caída es la línea roja 2 en público.
    la cuenta supere ~5.000 seguidores: debajo de eso la imagen única rinde más
    (AuthoredUp sobre 3M de posts; van der Blom sobre 1,8M).
 2. El link al caso va en el primer comentario, nunca en el cuerpo (-60% de
-   alcance). El valor completo va nativo en el post, no como teaser.
-3. Toda cifra del post traza a la hoja de hechos del caso.
-4. **Gate anti-IA del texto:** el checklist de marcas léxicas y de formato del
+   alcance), y el cuerpo lo anuncia como CTA explícito ("el análisis está en el
+   primer comentario"): sin ese anuncio, nadie sabe que tiene que ir a buscarlo.
+3. **Ingeniería del corte "ver más":** en mobile el feed muestra ~3,5 líneas
+   (~200 caracteres) antes del "…más" (medido en el primer post real,
+   2026-08-03). Lo visible tiene que abrir una pregunta, no cerrarla: si el
+   gancho entrega el qué, el dónde y el cómo completos antes del corte, el
+   lector ya no necesita clickear. La técnica: escribir el gancho, contar 200
+   caracteres, y verificar que justo ahí haya una tensión sin resolver (una
+   promesa incompleta o una frase que el corte interrumpe a mitad).
+4. Toda cifra del post traza a la hoja de hechos del caso.
+5. **Gate anti-IA del texto:** el checklist de marcas léxicas y de formato del
    playbook (acumulación de "clave/crucial/subraya", paralelismo "no es X, es Y",
    regla de tres automática, cierres de participio) más lectura en voz alta, y
    cierre con opinión firmada. Los detectores automáticos NO son gate: 24,6% de
    falsos positivos medidos en ZeroGPT y sesgo documentado contra no nativos
    (Stanford, 61%). Se pueden mirar como dato, nunca reescribir para
    conformarlos.
-5. Aprobación conjunta del texto y la imagen antes de publicar.
+6. Aprobación conjunta del texto y la imagen antes de publicar.
 
 ### TikTok (decidido 2026-08-03, sobre la evidencia del playbook)
 
