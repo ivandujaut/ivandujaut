@@ -46,3 +46,11 @@ resto lo posee el auditor del nodo 5.
 16. Ritmo variado: una frase corta, después una más larga. La prueba final es
     leerlo en voz alta como a un colega; lo que no se diría hablando, se
     reescribe.
+17. **Sin frases hechas de columnista.** Si una frase se reconoce de otros mil
+    artículos, se reemplaza por el dato sin el gesto. Ejemplos reales marcados
+    por Iván (2026-08-03): "lo dijo sin vueltas", "la trato como lo que es",
+    "no en letra chica" / "aunque no lea la letra chica", "cambio de terreno",
+    "una hipótesis no vale nada si no se puede matar", "queda mal parado",
+    "envejezca mal", "la forma silenciosa", "esa amplitud es el punto". El
+    reemplazo correcto suele ser borrar la frase entera: la información ya
+    estaba en la oración de al lado. _(auditor)_
