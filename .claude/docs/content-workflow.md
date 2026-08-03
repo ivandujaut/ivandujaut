@@ -220,6 +220,12 @@ Reglas de contenido:
    sección de límites o "Qué me haría cambiar de opinión".
 5. Disclaimer de no afiliación, una vez, discreto.
 6. Los experimentos propuestos llevan criterio de kill fijado a priori.
+7. **El caso presenta la tesis final, nunca el camino de descarte.** Nada de "mi
+   premisa original era..." ni "el hallazgo que me hizo cambiar de opinión": el
+   gate 2b existe justamente para que la tesis llegue al borrador ya filtrada
+   por los datos, y narrarle al lector una tesis muerta debilita la vigente. El
+   relato de proceso es material del making-of en el blog (regla 0.4), donde esa
+   historia es el punto y no una fisura.
 
 Reglas de voz (fuente de verdad: `.claude/docs/voice-rules.md`; el lint hace
 cumplir como WARN la 8 y parcialmente la 7, 9 y 10 con los patrones listados en
