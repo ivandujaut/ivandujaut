@@ -71,12 +71,7 @@ public/static/
 # documento de trabajo con correcciones y descartes y no se publica.
 /data/
 
-# Config de Claude Code: se versiona lo compartible (hooks, skills, agentes,
-# scripts) y queda local lo de máquina (settings.local.json, worktrees).
-.claude/*
-!.claude/settings.json
-!.claude/launch.json
-!.claude/scripts/
-!.claude/skills/
-!.claude/agents/
-!.claude/docs/
+# Config de Claude Code: local por decisión (2026-08-03). Los docs contienen el
+# registro de fallas y la estrategia de contenido, que no se publican; el
+# tooling corre desde el disco y no necesita estar trackeado.
+.claude/
