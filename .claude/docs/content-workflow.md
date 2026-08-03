@@ -314,8 +314,13 @@ Reglas:
    se escribe a medida.
 4. Iteración dirigida: si la imagen sale con texto, simetría o cliché, se ajusta
    el bloque responsable del prompt, no se regenera a ciegas.
-5. La imagen queda como `cover.jpg` al lado del `index.mdx` (Velite genera el
-   placeholder) con un `alt` que describe la escena completa. Recién con la
+5. **La imagen de Gemini llega con su marca de agua** (el destello en la esquina
+   inferior derecha): antes de guardarla se limpia. Como el estilo de la serie
+   deja esa esquina en negro casi puro, el parche con el entorno es trivial y lo
+   hace Claude con PIL; si la esquina trajera detalle, se recorta y re-encuadra
+   manteniendo 16:9.
+6. La imagen limpia queda como `cover.jpg` al lado del `index.mdx` (Velite genera
+   el placeholder) con un `alt` que describe la escena completa. Recién con la
    cover puesta el caso puede ser `featured: true` (lo exigen Velite y el lint).
 
 **Revisa:** aprobación conjunta del prompt; la imagen final la elige Iván.

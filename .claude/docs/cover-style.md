@@ -67,9 +67,16 @@ completo está al final; la anatomía sale de ahí.
 - Iteración dirigida: si el resultado trae texto, simetría o un cliché, se
   ajusta el bloque responsable (4 para clichés del motivo, 3 para simetría, 7
   para texto), no se regenera a ciegas con el mismo prompt.
+- La imagen de Gemini trae marca de agua en la esquina inferior derecha: se
+  limpia con un parche del entorno (la esquina es negra en el estilo de la
+  serie) o se recorta re-encuadrando a 16:9, antes de cualquier otro paso.
 - La imagen final se guarda como `cover.jpg` junto al MDX del caso (Velite la
   procesa para el placeholder), con un `alt` que describa la escena completa,
   como el de cobranza. `featured: true` sin cover no compila (lint + Velite).
+- Los clichés que el modelo ya mostró y quedan vetados de serie: templetes
+  griegos con frontón y columnas, pantallas con interfaz de app, figuras
+  mirando el teléfono en vez de portarlo. Cada rechazo nuevo suma su cliché a
+  esta lista.
 
 ## Prompt canónico (cobranza-seguros, verbatim)
 
