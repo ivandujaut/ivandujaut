@@ -26,6 +26,7 @@ flowchart TD
     N8 -- pasa --> N9[9. Commit y PR]
     N9 --> N10[10. Deploy y verificación en prod]
     N10 --> N11[11. Post-publicación]
+    N10 --> N12[12. Distribución social · aprobación conjunta]
     N11 -. link muerto .-> N1
 ```
 
@@ -359,6 +360,49 @@ Reglas:
    reemplazo propuesto y la decisión es de Iván.
 2. Anti-bot (403/999) no es link muerto; 503 puede ser un server dormido: se
    reintenta antes de reportar.
+
+## Nodo 12 · Distribución social (LinkedIn + TikTok)
+
+**Entra:** el ES cerrado (nodo 6) habilita la producción; el caso vivo en prod
+(nodo 10) habilita la publicación. **Sale:** carrusel y texto de LinkedIn aprobados,
+guion de TikTok aprobado. **Publica Iván, siempre, desde sus cuentas.**
+
+Regla madre del nodo: el contenido social es un **derivado** del caso, no una pieza
+nueva de análisis. No puede afirmar nada que el caso no afirme, y cada cifra
+mantiene su estatus: una proyección se dice como proyección aunque el video dure 30
+segundos. La compresión es el lugar más fácil para que "mi modelo proyecta" se
+caiga en el corte, y esa caída es la línea roja 2 en público.
+
+### LinkedIn (decidido: carrusel PDF, español)
+
+1. Formato: carrusel/documento PDF. Portada con la tesis, 3 a 5 slides de datos,
+   cierre con CTA al caso. Los gráficos se re-arman para el formato (los del caso
+   son 16:9 de lectura de escritorio; el carrusel pide vertical o cuadrado con
+   tipografía más grande), desde el mismo script versionado del caso.
+2. Toda cifra del carrusel y del texto traza a la hoja de hechos del caso.
+3. **Gate anti-IA del texto:** pasar el texto por GPTZero y ZeroGPT (webs
+   gratuitas) y registrar el peor de los dos scores. Umbral inicial: peor score
+   por debajo de 30% (propuesto, se recalibra con los primeros posts). Si no
+   pasa, se reescribe y se vuelve a medir. El score complementa, no reemplaza,
+   el checklist de `voice-rules.md`: hay marcas de IA que los detectores no ven.
+4. Aprobación conjunta del texto y las slides antes de publicar.
+
+### TikTok (formato: pendiente del playbook de investigación)
+
+1. El formato de producción (a cámara, voz en off, u otro) se decide con la
+   evidencia del research de perfiles top globales, no por intuición. Hasta esa
+   decisión, este sub-flujo no produce.
+2. El guion sigue la estructura del playbook (hook en los primeros segundos,
+   datos en pantalla, cierre con CTA), en español rioplatense hablado natural.
+3. Toda cifra del guion traza a la hoja de hechos, con su estatus dicho en voz.
+4. El CTA se diseña para el objetivo declarado: audiencia que quiere este tipo de
+   análisis, y potenciales empleadores o clientes. El puente es el perfil y el
+   link al caso, no la venta directa.
+5. Aprobación conjunta del guion antes de grabar.
+
+**Revisa:** Iván y Claude juntos (tercer gate conjunto del flujo).
+**Herramienta:** el playbook de investigación en `.claude/docs/social-playbook.md`
+cuando el research cierre; los detectores de IA vía navegador.
 
 ---
 
