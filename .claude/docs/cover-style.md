@@ -75,8 +75,16 @@ completo está al final; la anatomía sale de ahí.
   como el de cobranza. `featured: true` sin cover no compila (lint + Velite).
 - Los clichés que el modelo ya mostró y quedan vetados de serie: templetes
   griegos con frontón y columnas, pantallas con interfaz de app, figuras
-  mirando el teléfono en vez de portarlo. Cada rechazo nuevo suma su cliché a
-  esta lista.
+  mirando el teléfono en vez de portarlo, teléfonos como iPhones literales con
+  notch y bisel, y la figura de espaldas sosteniendo un objeto adelante
+  (anatómicamente imposible: si el objeto va contra el pecho, la figura va de
+  perfil). Cada rechazo nuevo suma su cliché a esta lista.
+- Marcas de terceros: nunca el logo literal (contradice el disclaimer de no
+  afiliación y es la marca de un target de contratación). La evocación correcta
+  es por color: el violeta de Nubank en el nicho de la cuña, sin símbolo ni
+  letras. Excepción declarada a la regla de "un solo acento cálido": un caso
+  puede sumar UN segundo acento si es la tesis pintada, como el violeta contra
+  el ámbar.
 
 ## Prompt canónico (cobranza-seguros, verbatim)
 
