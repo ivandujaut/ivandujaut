@@ -1,0 +1,28 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "/Users/ivandujaut/.nvm/versions/node/v22.12.0/bin/node",
+      "runtimeArgs": [
+        "/Users/ivandujaut/.nvm/versions/node/v22.12.0/lib/node_modules/npm/bin/npm-cli.js",
+        "exec",
+        "--",
+        "next",
+        "dev"
+      ],
+      "port": 3000,
+      "autoPort": true,
+      "env": {
+        "PATH": "/Users/ivandujaut/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    },
+    {
+      "name": "job-radar-dashboard",
+      "runtimeExecutable": "/Users/ivandujaut/.bun/bin/bun",
+      "runtimeArgs": ["run", "--cwd", "/Users/ivandujaut/Interview/job-radar", "dev"],
+      "port": 3947,
+      "autoPort": true
+    }
+  ]
+}
