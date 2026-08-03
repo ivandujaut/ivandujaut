@@ -112,9 +112,10 @@ Reglas:
    otra cosa.
 
 **Revisa:** Claude triangula; Iván desafía ("¿de dónde sale este número?").
-**Herramienta:** WebSearch/WebFetch + scripts de análisis en el scratchpad. Los
-datasets crudos (CSV de balances, XLSX) se guardan en el scratchpad de la sesión y
-los cálculos quedan reproducibles como script, no como número suelto.
+**Herramienta:** WebSearch/WebFetch. Los datasets crudos (CSV de balances, XLSX)
+se guardan en `data/<slug>/` (ignorado por git, sobrevive a la sesión); su URL de
+descarga queda en el `facts.md` del caso, así el auditor puede re-descargar y
+re-correr. Los cálculos quedan reproducibles como script, no como número suelto.
 
 ## Nodo 2 · Hoja de hechos
 
@@ -373,36 +374,47 @@ mantiene su estatus: una proyección se dice como proyección aunque el video du
 segundos. La compresión es el lugar más fácil para que "mi modelo proyecta" se
 caiga en el corte, y esa caída es la línea roja 2 en público.
 
-### LinkedIn (decidido: carrusel PDF, español)
+### LinkedIn (decidido 2026-08-03, sobre la evidencia del playbook)
 
-1. Formato: carrusel/documento PDF. Portada con la tesis, 3 a 5 slides de datos,
-   cierre con CTA al caso. Los gráficos se re-arman para el formato (los del caso
-   son 16:9 de lectura de escritorio; el carrusel pide vertical o cuadrado con
-   tipografía más grande), desde el mismo script versionado del caso.
-2. Toda cifra del carrusel y del texto traza a la hoja de hechos del caso.
-3. **Gate anti-IA del texto:** pasar el texto por GPTZero y ZeroGPT (webs
-   gratuitas) y registrar el peor de los dos scores. Umbral inicial: peor score
-   por debajo de 30% (propuesto, se recalibra con los primeros posts). Si no
-   pasa, se reescribe y se vuelve a medir. El score complementa, no reemplaza,
-   el checklist de `voice-rules.md`: hay marcas de IA que los detectores no ven.
-4. Aprobación conjunta del texto y las slides antes de publicar.
+1. Formato: **imagen única con un gráfico protagonista + texto largo de análisis**
+   (1.000+ caracteres; el algoritmo actual paga dwell time). El gráfico se re-arma
+   para el feed desde el script versionado del caso, con la fuente de datos
+   visible en la imagen. El carrusel queda reservado para casos profundos cuando
+   la cuenta supere ~5.000 seguidores: debajo de eso la imagen única rinde más
+   (AuthoredUp sobre 3M de posts; van der Blom sobre 1,8M).
+2. El link al caso va en el primer comentario, nunca en el cuerpo (-60% de
+   alcance). El valor completo va nativo en el post, no como teaser.
+3. Toda cifra del post traza a la hoja de hechos del caso.
+4. **Gate anti-IA del texto:** el checklist de marcas léxicas y de formato del
+   playbook (acumulación de "clave/crucial/subraya", paralelismo "no es X, es Y",
+   regla de tres automática, cierres de participio) más lectura en voz alta, y
+   cierre con opinión firmada. Los detectores automáticos NO son gate: 24,6% de
+   falsos positivos medidos en ZeroGPT y sesgo documentado contra no nativos
+   (Stanford, 61%). Se pueden mirar como dato, nunca reescribir para
+   conformarlos.
+5. Aprobación conjunta del texto y la imagen antes de publicar.
 
-### TikTok (formato: pendiente del playbook de investigación)
+### TikTok (decidido 2026-08-03, sobre la evidencia del playbook)
 
-1. El formato de producción (a cámara, voz en off, u otro) se decide con la
-   evidencia del research de perfiles top globales, no por intuición. Hasta esa
-   decisión, este sub-flujo no produce.
-2. El guion sigue la estructura del playbook (hook en los primeros segundos,
-   datos en pantalla, cierre con CTA), en español rioplatense hablado natural.
+1. Formato: **Iván a cámara con la cuenta visible en pantalla** (el patrón de los
+   perfiles que convierten análisis en contratación: Vivian Tu, Humphrey Yang,
+   Austin Hankwitz), rotando 3-4 variantes (a cámara, papel y birome, green
+   screen sobre el gráfico) para no fatigar. 30-45 segundos, un solo dato
+   contraintuitivo por video.
+2. El guion sigue la estructura del playbook: hook en los primeros 3 segundos sin
+   saludar ni anunciar el tema, foreshadowing, la cuenta completa visible,
+   payoff, CTA con loop. Español rioplatense hablado natural, guion "como
+   poema": una idea por frase.
 3. Toda cifra del guion traza a la hoja de hechos, con su estatus dicho en voz.
-4. El CTA se diseña para el objetivo declarado: audiencia que quiere este tipo de
-   análisis, y potenciales empleadores o clientes. El puente es el perfil y el
-   link al caso, no la venta directa.
+4. CTA sin links en el video ("el caso completo está en mi perfil"), link único
+   en bio, y un video fijado al perfil que funcione como CV vivo. El puente con
+   empleadores es el perfil, no la venta directa.
 5. Aprobación conjunta del guion antes de grabar.
 
 **Revisa:** Iván y Claude juntos (tercer gate conjunto del flujo).
-**Herramienta:** el playbook de investigación en `.claude/docs/social-playbook.md`
-cuando el research cierre; los detectores de IA vía navegador.
+**Herramienta:** `.claude/docs/social-playbook.md` (40 hallazgos con fuente).
+Los borradores viven en `social/<slug>/` (ignorado por git): guiones, textos,
+imágenes adaptadas y grabaciones no van al repo.
 
 ---
 
