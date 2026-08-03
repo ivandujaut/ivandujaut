@@ -62,4 +62,12 @@ CLAUDE.md
 .velite/
 public/static/
 .gstack/
-.claude/
+# Config de Claude Code: se versiona lo compartible (hooks, skills, agentes,
+# scripts) y queda local lo de máquina (settings.local.json, worktrees).
+.claude/*
+!.claude/settings.json
+!.claude/launch.json
+!.claude/scripts/
+!.claude/skills/
+!.claude/agents/
+!.claude/docs/
