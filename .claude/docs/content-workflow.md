@@ -21,6 +21,8 @@ flowchart TD
     N6 -- cambios de fondo --> N2b
     N6 -- ajustes --> N4
     N6 -- cerrado --> N7[7. Traducción EN]
+    N6 -- cerrado --> N6b[6b. Cover · aprobación conjunta]
+    N6b --> N8{8. Verificación técnica}
     N7 --> N8{8. Verificación técnica}
     N8 -- falla --> N7
     N8 -- pasa --> N9[9. Commit y PR]
@@ -277,6 +279,35 @@ Reglas:
 
 **Revisa:** Iván. Claude no defiende el texto: responde con evidencia y, si no la
 hay, corta lo que no se sostiene.
+
+## Nodo 6b · Cover (conjunto)
+
+**Entra:** el ES cerrado. **Sale:** `cover.jpg` junto al MDX, con su `alt`.
+
+La cover se genera con la IA de imágenes de Google desde un prompt que Claude
+redacta y se aprueba junto con Iván; la generación la corre Iván con su cuenta.
+Corre en paralelo con la traducción (nodo 7).
+
+Reglas:
+
+1. El prompt sigue la anatomía de 7 bloques de `.claude/docs/cover-style.md`
+   (estilo, paleta, composición, metáfora en dos estructuras, figura humana,
+   luz y mood, prohibiciones y formato). Los bloques 1, 2, 3 y 7 son fijos entre
+   casos: son la identidad visual de la serie.
+2. La metáfora (bloque 4) nace del escrito cerrado, nunca del título: la tesis
+   traducida a objetos físicos, sin pantallas, logos ni nada literal. El objeto
+   que brilla en ámbar es el protagonista conceptual del caso.
+3. La frase de mood (bloque 6) es el tagline del caso traducido a atmósfera, y
+   se escribe a medida.
+4. Iteración dirigida: si la imagen sale con texto, simetría o cliché, se ajusta
+   el bloque responsable del prompt, no se regenera a ciegas.
+5. La imagen queda como `cover.jpg` al lado del `index.mdx` (Velite genera el
+   placeholder) con un `alt` que describe la escena completa. Recién con la
+   cover puesta el caso puede ser `featured: true` (lo exigen Velite y el lint).
+
+**Revisa:** aprobación conjunta del prompt; la imagen final la elige Iván.
+**Herramienta:** `.claude/docs/cover-style.md`, con el prompt canónico de
+cobranza-seguros como referencia verbatim.
 
 ## Nodo 7 · Traducción EN
 
