@@ -63,6 +63,9 @@
     ],
     "*.{json,md,mdx,css,yml,yaml}": [
       "prettier --write"
+    ],
+    "content/**/*.mdx": [
+      "node .claude/scripts/lint-content.mjs"
     ]
   },
   "overrides": {
