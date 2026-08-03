@@ -47,8 +47,12 @@ Reglas:
    técnica es evidencia de soporte, no el titular.
 3. Un caso sobre una empresa real es consejo no pedido: el estándar de rigor sube,
    no baja. Si no se puede sostener cada número, se elige otro ángulo.
-4. El making-of de un caso va al blog (`posts`), no como segundo project: su
-   schema es más liviano y su tono es personal.
+4. **El relato de proceso no se publica.** Ni en el caso (regla 4.7) ni como
+   "making-of" en el blog: contar tesis descartadas o errores atrapados le pide
+   generosidad al lector y puede leerse como debilidad en vez de rigor
+   (decisión de Iván, 2026-08-03, tras descartar una pieza ya escrita). El
+   aprendizaje de proceso queda en el registro de fallas de este documento. El
+   blog sigue existiendo para piezas personales de otra índole.
 5. Vía corta de posts: saltean los nodos 1-3 y van 0 → 4 → 6 → 7 → 8. Condición:
    toda cifra de un post sale de la hoja commiteada de un caso, referenciada con el
    puntero `{/* facts: ... */}` en el cuerpo; sin puntero, el auditor trata cada
@@ -224,8 +228,8 @@ Reglas de contenido:
    premisa original era..." ni "el hallazgo que me hizo cambiar de opinión": el
    gate 2b existe justamente para que la tesis llegue al borrador ya filtrada
    por los datos, y narrarle al lector una tesis muerta debilita la vigente. El
-   relato de proceso es material del making-of en el blog (regla 0.4), donde esa
-   historia es el punto y no una fisura.
+   relato de proceso no se publica en ningún formato (regla 0.4): queda en el
+   registro de fallas interno.
 
 Reglas de voz (fuente de verdad: `.claude/docs/voice-rules.md`; el lint hace
 cumplir como WARN la 8 y parcialmente la 7, 9 y 10 con los patrones listados en
