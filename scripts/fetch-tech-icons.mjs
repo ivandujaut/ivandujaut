@@ -30,6 +30,9 @@ const ICONS = {
   notion: "notion-icon",
   numpy: "numpy",
   git: "git-icon",
+  // matplotlib NO está acá: la colección logos trae un SVG de 85KB.
+  // Su entrada en el generado viene de devicon:matplotlib (MIT) pasada por
+  // svgo --precision 1 (11,7KB). Si regenerás, conservala a mano.
 };
 
 const entries = [];
