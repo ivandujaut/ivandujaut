@@ -54,9 +54,9 @@ Reglas:
    aprendizaje de proceso queda en el registro de fallas de este documento. El
    blog sigue existiendo para piezas personales de otra índole.
 5. Vía corta de posts: saltean los nodos 1-3 y van 0 → 4 → 6 → 7 → 8. Condición:
-   toda cifra de un post sale de la hoja commiteada de un caso, referenciada con el
-   puntero `{/* facts: ... */}` en el cuerpo; sin puntero, el auditor trata cada
-   cifra como inventada hasta demostrar lo contrario. Las reglas de voz aplican
+   toda cifra de un post sale de la hoja de un caso (`data/<slug>/facts.md`),
+   referenciada con el puntero `{/* facts: ... */}` en el cuerpo; sin puntero, el
+   auditor trata cada cifra como inventada hasta demostrar lo contrario. Las reglas de voz aplican
    igual.
 
 **Revisa:** Iván. Es la única decisión 100% suya del flujo.
@@ -146,9 +146,12 @@ fuente oficial` / `versión periodística` / `hipótesis del modelo`) y fuente.
    greppeable contra la fuente. Un cálculo irreproducible es un número suelto.
 
 **Revisa:** nadie todavía; la hoja ES el instrumento de revisión de los nodos 4-5.
-**Herramienta:** vive en `content/<colección>/es/<slug>/facts.md`, versionada junto
-al caso. Velite solo levanta `*.mdx`, así que no se publica, pero el auditor y las
-sesiones futuras siempre la encuentran.
+**Herramienta:** vive en `data/<slug>/facts.md`, junto a los datasets del caso,
+**fuera del repo** (el directorio está ignorado): es un documento de trabajo que
+registra correcciones y descartes, y eso no se publica (regla 0.4). Sobrevive a
+las sesiones en la máquina; el respaldo es el backup local, no git. Los scripts
+de gráficos sí se versionan: no llevan notas de proceso y hacen verificable la
+"elaboración propia".
 
 ## Nodo 2b · Discusión de la tesis (conjunto)
 

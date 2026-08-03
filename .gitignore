@@ -66,8 +66,9 @@ public/static/
 # de LinkedIn y grabaciones son material de trabajo local, no del sitio.
 /social/
 
-# Datasets crudos de investigación (nodo 1): se re-descargan desde la URL
-# registrada en el facts.md de cada caso; el de balances SSN pesa 41MB.
+# Materiales de investigación por caso (nodos 1-2): datasets crudos
+# (re-descargables desde la URL registrada en la hoja) y el facts.md, que es
+# documento de trabajo con correcciones y descartes y no se publica.
 /data/
 
 # Config de Claude Code: se versiona lo compartible (hooks, skills, agentes,

@@ -79,10 +79,11 @@ translationKey: "<slug>"
 
 ## Al terminar
 
-1. Crear también `content/<colección>/es/<slug>/facts.md`: la hoja de hechos del
-   caso, con las secciones "Datos publicados", "Cálculos propios", "Versión
-   periodística" e "Hipótesis del modelo" vacías. Ningún número entra al artículo
-   sin pasar por ahí (ver `.claude/docs/content-workflow.md`, nodo 2).
+1. Crear también `data/<slug>/facts.md` (fuera del repo, junto a los futuros
+   datasets): la hoja de hechos del caso, con las secciones "Datos publicados",
+   "Cálculos propios", "Versión periodística" e "Hipótesis del modelo" vacías.
+   Ningún número entra al artículo sin pasar por ahí (ver
+   `.claude/docs/content-workflow.md`, nodo 2).
 2. Si el caso lleva gráficos, su script va en `scripts/charts/<slug>.py`.
 3. `npx velite build` para confirmar que el schema pasa.
 4. `node .claude/scripts/lint-content.mjs --all`.
