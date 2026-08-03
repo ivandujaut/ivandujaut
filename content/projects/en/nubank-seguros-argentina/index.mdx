@@ -1,0 +1,277 @@
+---
+title: "Nubank is late to Argentine insurance. It can still win."
+tagline: "Mercado Pago and Ualá already play. The wedge is phone insurance without punishment, and Nubank already built it in Brazil"
+description: "Independent analysis: the insurance line where phone coverage lives bills $228.3B pesos in 9 months (my calculation on SSN statements), bank-channel insurers dominate it and deductibles run 25-40%. Nubank's entry into Argentina is porting Nu Celular from Brazil, with Mercado Pago and Ualá racing."
+year: 2026
+date: "2026-08-02"
+role: "Product"
+status: "concept"
+kind: "case-study"
+featured: true
+cover:
+  src: ./cover.jpg
+  alt: "Nighttime editorial illustration with film grain: a long slate-blue stone wall with dozens of short awnings covering only the upper half of phones glowing amber under dark drizzle; a faceless figure walks in profile hugging its glowing phone to the chest, under a violet neon nu emblem, toward a deep violet doorway at the end of the path"
+stack: ["Open data (SSN)", "Market research", "Python", "matplotlib"]
+metrics:
+  - label: "Phones stolen per day (AMBA)"
+    value: "10,000"
+  - label: "Telco deductibles"
+    value: "25-40%"
+  - label: "Theft-line premium (9 months)"
+    value: "$228.3B ARS"
+  - label: "Nubank+Chubb attach in Brazil"
+    value: "2.2%"
+translationKey: "nubank-seguros-argentina"
+draft: false
+---
+
+<Abstract label="TL;DR">
+
+Nubank will not be the first to sell digital insurance in Argentina. Mercado Pago has done it
+since 2022 and Ualá entered in 2026 with Allianz inside its cap table. My recommendation is to
+enter anyway, with the product Nubank already built in Brazil and that everyone here sells badly:
+phone insurance.
+
+The insurance line where that product lives bills $228.3 billion pesos of premium in 9 months,
+according to my calculation on SSN financial statements. Bank-channel insurers dominate it, and it
+punishes the user with deductibles of 25% to 40%, or with coverage caps that do not pay for half a
+phone. The wedge: be the first to sell it without punishment. Arriving first is no longer in play,
+and inventing the product is not needed. What it does demand is paying an anti-fraud operating
+cost that today the whole industry passes on to the customer. That part of my thesis is a bet,
+still without data behind it.
+
+Independent analysis, not affiliated with any of the companies mentioned.
+
+</Abstract>
+
+## The race already started
+
+Argentine digital insurance already has serious players: the country's two largest wallets, with
+global insurers behind them.
+
+Mercado Pago sells life and personal accident insurance in Argentina since the deal
+[announced in October 2022](https://www.cronista.com/finanzas-mercados/mercado-pago-se-mete-a-fondo-en-el-mercado-de-seguros-y-lanza-dos-innovadoras-coberturas/):
+Prudential as the insurer, Swiss Re on reinsurance and the Argentine insurtech Klimber on the
+build. It replicated what the same partnership had launched in Brazil a few months earlier.
+
+Ualá launched the same two products in 2026 and collected
+[more than 300,000 quotes in a few weeks](https://fortuna.perfil.com/noticias/negocios/uala-cierra-una-ronda-de-us-195-millones-liderada-por-allianz-x.phtml).
+In March it closed a USD 195 million round led by Allianz X, the Allianz group's investment arm,
+at a USD 3.2 billion valuation. The Allianz X CEO said: "in the future insurance won't be sold,
+it will be integrated into everyday financial experiences".
+
+The 300,000 quotes do not prove conversion, but they do prove the condition this thesis needs:
+insurance demand can be activated from a financial app, with no sales force.
+
+From Nubank, meanwhile, there is less than it seems. It confirmed
+[a hub in Buenos Aires in January 2026](https://www.lanacion.com.ar/economia/negocios/nubank-invertira-us474-millones-para-ampliar-su-red-de-oficinas-y-abrira-una-sede-en-buenos-aires-nid29012026/),
+inside a global USD 474 million office plan. Asked by the press, the company did not confirm
+whether it resumes financial operations in the country. There was also a report by _Valor
+Econômico_ (August 2025) about a failed negotiation to buy Brubank, never confirmed by the
+parties; Nubank replied that it does not comment on rumors. It is an unconfirmed press report,
+and no conclusion in this case rests on it.
+
+<Thesis>
+
+The fintech-insurer partnership stopped being an idea and became the industry pattern. Chubb with
+Nubank in Brazil, Prudential and Swiss Re with Mercado Pago, Allianz with Ualá. That a fintech can
+sell insurance is already proven. What remains is deciding which product to enter with.
+
+</Thesis>
+
+## Ten thousand phones stolen per day, and insurance that punishes twice
+
+In the AMBA metro area [around 10,000 phones are stolen per day](https://www.cronista.com/infotechnology/actualidad/celulares-5684/),
+416 per hour, according to BTR Consulting (2024). Device theft is 27% of all robberies in the
+country and the most frequent victims are between 14 and 20 years old. For scale: Peru sits
+around 4,800 per day and Colombia around 3,500.
+
+There is no lack of offers. Phone insurance is sold by manufacturers, the three telcos, Mercado
+Libre through La Caja and at least eight banks, according to _La Nación_'s survey of August 2023.
+Mercado Pago itself started here: it [launched phone theft and damage coverage in 2022](https://www.cronista.com/finanzas-mercados/mercado-pago-se-mete-a-fondo-en-el-mercado-de-seguros-y-lanza-dos-innovadoras-coberturas/),
+before its life products. The product is everywhere; what is missing is a version that does not
+punish, and the punishment takes two distinct forms.
+
+Telcos punish through the deductible. [Movistar covers 70% of the device's value](https://ayuda.movistar.com.ar/pregunta/que-es-y-que-cubre-seguro-movil-para-tu-celular.html)
+on theft or total destruction: the remaining 30% comes out of the user's pocket.
+[Claro charges a 40% deductible](https://tienda.claro.com.ar/proteccion-movil) of list price when
+replacing after theft, and 25% on total damage. In general they do not cover loss, and they cap
+at two to four events per year.
+
+Banks punish through the cap. The 2023 survey shows lower deductibles (BBVA, 10% of the insured
+sum) but insured sums that did not keep up with device-price inflation: maximum coverage around
+$180,000 pesos at Banco Nación or $66,000 at Supervielle at the time, against phones that already
+cost several times that, so the friendly deductible protects decorative coverage.
+
+Run the math the user runs. Say a phone costs 800,000 pesos and the deductible is 30%: after
+paying the premium all year and having the phone stolen, you put 240,000 pesos out of pocket. The
+coverage exists on paper. The feeling of being covered does not.
+
+## The real size of the category, measured in the statements
+
+Up to here, press and product pages. This section comes from a different source: the financial
+statements insurers file with the SSN, published as open data, with the same method I used in
+[my case study on insurance collections](/en/projects/cobranza-seguros).
+
+The phone insurance products surveyed operate as theft coverage, so their natural home in the
+statements is the "Theft and Similar Risks" line. That line billed
+**$228.3 billion pesos of premium between July 2025 and March 2026**, 1.21% of the market, and
+closed the first quarter of 2026 with **3.32 million active policies**: 9% of all property
+policies in the country.
+
+<Figure
+  src="/projects/nubank-seguros-argentina/g5_ramo_robo.png"
+  alt="Horizontal bar chart of the ten insurers with the most premium in the Theft and Similar Risks line, with bank-channel companies highlighted: Provincia, Galicia, Qualia, Supervielle, Nación and BIND. Chart labels are in Spanish."
+  width={1495}
+  height={886}
+  caption="Own work on SSN financial statements (open data, March 2026): direct-insurance premium of the Theft and Similar Risks subline, July 2025 to March 2026. The line includes more products than phone insurance, so these figures mark the category's ceiling."
+/>
+
+Two things come out of that chart. First: six of the line's ten leaders sell through bank
+channels (Provincia, Galicia, Qualia of the Petersen group, Supervielle, Nación, BIND), and the
+top 3 alone concentrates 46% of the premium. The line is distributed through branches and home
+banking. There is no mobile-first player among the leaders.
+
+The second comes from crossing it with my previous case: annulments eat **13.6% of the line's
+issued premium**, against the 10.6% median I calculated for the market's top 50 with the same source and
+method. The line loses more premium to annulments than the market that contains it. My reading,
+and this is my interpretation on top of a verified figure: a product sold as a bundle through a
+channel the customer did not choose, and that punishes at claim time, leaves the customer no
+reason to keep it when reviewing expenses.
+
+## The wedge: Nubank already has the product. The hard part is missing.
+
+Here is the fact my recommendation is anchored on. Nubank would not have to build anything:
+[Nu Celular Seguro exists in Brazil since February 2022](https://chubb.mediaroom.com/20220201-nubank-lanza-seguro-para-celular-en-brasil),
+with Chubb, 100% in-app, covering theft and damage. Of the
+[2 million policy portfolio](https://international.nubank.com.br/es/clientes/nubank-y-chubb-alcanzan-la-marca-de-2-millones-de-polizas-de-seguros-activas-en-brasil/)
+Nubank and Chubb announced in June 2024, more than one million is Nu Vida; the rest splits across
+the portfolio's other products: phone, home and installment protection. Entering Argentina with the phone product would be
+porting the piece of the portfolio that best fits the country's most massive risk.
+
+One fact works against this recommendation:
+
+<Thesis>
+
+Not even Nubank itself does a low deductible. Its Brazilian product page does not publish the
+deductible (you have to simulate in the app) and third-party sources place it around 25% of the
+device's value. My recommendation is a bet against the consensus of the whole industry, including
+the Nubank of Brazil.
+
+</Thesis>
+
+The consensus exists for a reason that deserves respect before betting against it. The high
+deductible is the category's fraud control: when replacing the phone costs you 30%, inventing a
+theft loses its charm. Lowering the deductible removes that brake, and what replaces it is
+operations: IMEI checks against the police report, behavioral signals in the app, repeat-claim
+blocking, fast resolution for the legitimate case and selective friction for the suspicious one.
+It is expensive and slow to build. For that same reason, once it works, nobody copies it in a
+quarter. The anti-fraud capability is not the product's cost: it is the moat.
+
+And there is a signal that users feel the punishment: the line's 13.6% annulment rate. A product cancelled more than the market average is a product that
+is not retaining, and that is the incumbent the version without punishment would compete
+against.
+
+## My model
+
+Up to here every number came from a source or from a calculation on a source. The ones that
+follow are my projections.
+
+The next step I propose is a 14-day smoke test with in-app traffic, before building anything:
+banner, landing, simulated quote, waitlist. The go criterion is set before running it, at 5% conversion from impression to
+waitlist. My model projects 8%. If the real number comes in under 5%, the thesis gets revised.
+
+<Figure
+  src="/projects/nubank-seguros-argentina/g3_funnel_smoketest.png"
+  alt="Four-stage funnel of the projected smoke test: see banner, open landing, request quote and leave email on the waitlist. Chart labels are in Spanish."
+  width={1495}
+  height={886}
+  caption="Smoke test design with the funnel my model projects. None of these figures is a measured result: the experiment has not run yet."
+/>
+
+For volume at 24 months I built three scenarios anchored on Brazil's real trajectory, where the
+Nubank and Chubb attach rate went from 1.6% (1.4 million policies over 88 million customers in 2023) to 2.2% (2 million over 92 million in June 2024). My model projects between 15,000 and
+120,000 active policies, with 60,000 as the base case.
+
+<Figure
+  src="/projects/nubank-seguros-argentina/g4_proyeccion_escenarios.png"
+  alt="Three curves my model projects for active policies at 24 months from launch: conservative 15 thousand, base 60 thousand and optimistic 120 thousand. Chart labels are in Spanish."
+  width={1632}
+  height={969}
+  caption="Scenarios at 24 months. Own projection: policies = customers times target attach, with an S-shaped adoption curve saturating at month 24; the attach anchors on the observed 2.2% of Nubank and Chubb in Brazil. The full model lives in the case script."
+/>
+
+The range is huge. The attach rate explains little of it: in Brazil
+it moved from 1.6% to 2.2% in a year and a half, so it lives in a narrow band and moves slowly.
+The distance between 15,000 and 120,000 policies comes from how many customers Nubank has in
+Argentina at launch.
+
+## The recommendation and the timing
+
+The product: port Nu Celular with one deliberate difference from Brazil. A low, fixed deductible
+in pesos, shown on the purchase screen and not after simulating. Coverage for the
+device's real value, without decorative caps. Resolution committed in hours. And the anti-fraud
+operation treated as a core capability of the business, because it is what pays for everything
+above.
+
+The timing: the sequence stays, because without a customer base there is no channel and without a
+channel the attach rate does not exist. What moves earlier is the preparation: the insurance
+partner and the product design close now, while the license and the base are still pending. When
+Nubank entered insurance in Brazil, Nu Vida launched in December 2020 and by February 2021 it
+already had 90,000 policies, with about half of those customers buying life insurance for the
+first time. That snapshot covers the first 90 days and cannot be extrapolated on its own, but it
+shows what happens when the product arrives ready to a base that already exists.
+
+## What is data and what is assumption
+
+| Claim                                                   | Status                                               |
+| ------------------------------------------------------- | ---------------------------------------------------- |
+| 10,000 phones stolen per day in AMBA                    | Published figure (BTR Consulting, 2024)              |
+| Deductibles: Movistar 30%, Claro 25-40%                 | Official product pages and _La Nación_ (August 2023) |
+| Bank caps ($180,000, $66,000)                           | _La Nación_ survey (August 2023)                     |
+| Theft-line premium: $228.3B pesos in 9 months           | My calculation on SSN statements                     |
+| 3.32M active policies in the line                       | SSN statistical annex, Q1 2026                       |
+| Line annulments: 13.6% vs 10.6% market median           | My calculation on SSN statements                     |
+| Nu Celular in Brazil since 2022; 2M policies with Chubb | Chubb and Nubank announcements                       |
+| Nu Celular deductible around 25%                        | Third-party sources; Nubank does not publish it      |
+| Ualá's 300,000 quotes; Allianz X round                  | Published figure (Fortuna/Perfil)                    |
+| Failed negotiation for Brubank                          | Unconfirmed press report                             |
+| 8% waitlist conversion in the smoke test                | My model, with the go bar at 5%                      |
+| 15,000 / 60,000 / 120,000 policies at 24 months         | My model                                             |
+
+<TableCaption>
+  The status column governs how each number reads. My calculations on SSN statements use the same
+  source and method as my collections case: direct-insurance premium and annulments at subline
+  level, July 2025 to March 2026.
+</TableCaption>
+
+## What would change my mind
+
+If Nubank ports Nu Celular exactly as it is in Brazil, with its deductible around 25%, it enters
+the market but the wedge I recommend does not exist: it would be one more offer in the pile,
+competing on brand against a bank channel that already owns distribution. It is the most likely
+scenario against this analysis, because it requires nothing unusual: Nubank repeating its own
+playbook is enough.
+
+If the smoke test comes in under 5%, the demand I assume does not hold and the recommendation
+falls entirely. If Ualá or Mercado Pago launch a phone product without punishment first, the
+wedge closes. If the anti-fraud operation turns out more expensive than I assume, the low
+deductible stops being an advantage and becomes the problem.
+
+One more scenario: Nubank not returning to operate in Argentina at all. The Buenos Aires
+hub is real and confirmed. That it is the first step of a financial comeback is my reading, and
+the company, when asked, did not confirm it.
+
+## Sources
+
+- [Nu Holdings, Q1 2026 results](https://international.nubank.com.br/es/compania/nu-holdings-ltd-reporta-los-resultados-financieros-del-primer-trimestre-de-2026/)
+- [La Nación: Nubank to invest USD 474 million and open a Buenos Aires office (January 2026)](https://www.lanacion.com.ar/economia/negocios/nubank-invertira-us474-millones-para-ampliar-su-red-de-oficinas-y-abrira-una-sede-en-buenos-aires-nid29012026/)
+- [Chubb: Nubank launches phone insurance in Brazil (February 2022)](https://chubb.mediaroom.com/20220201-nubank-lanza-seguro-para-celular-en-brasil)
+- [Nubank and Chubb: 2 million active policies in Brazil (June 2024)](https://international.nubank.com.br/es/clientes/nubank-y-chubb-alcanzan-la-marca-de-2-millones-de-polizas-de-seguros-activas-en-brasil/)
+- [El Cronista: Mercado Pago launches life and accident insurance with Prudential (October 2022)](https://www.cronista.com/finanzas-mercados/mercado-pago-se-mete-a-fondo-en-el-mercado-de-seguros-y-lanza-dos-innovadoras-coberturas/)
+- [Fortuna/Perfil: Ualá closes a USD 195 million round led by Allianz X (March 2026)](https://fortuna.perfil.com/noticias/negocios/uala-cierra-una-ronda-de-us-195-millones-liderada-por-allianz-x.phtml)
+- [El Cronista: phone theft in AMBA, BTR Consulting report](https://www.cronista.com/infotechnology/actualidad/celulares-5684/)
+- [La Nación: how much phone insurance costs (August 2023)](https://www.lanacion.com.ar/tecnologia/cuanto-cuesta-asegurar-tu-celular-por-robo-o-rotura-de-la-pantalla-nid28082023/)
+- [Movistar: what Seguro Móvil covers](https://ayuda.movistar.com.ar/pregunta/que-es-y-que-cubre-seguro-movil-para-tu-celular.html)
+- [Claro: Protección Móvil](https://tienda.claro.com.ar/proteccion-movil)
+- [SSN: open data on financial statements and Q1 2026 statistical annex](https://www.argentina.gob.ar/ssn)
