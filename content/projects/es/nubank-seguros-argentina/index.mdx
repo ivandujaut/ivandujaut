@@ -1,0 +1,271 @@
+---
+title: "Nubank llega tarde al seguro argentino. Igual puede ganar."
+tagline: "Mercado Pago y Ualá ya juegan. La cuña es el seguro de celular sin castigo, y Nubank ya lo tiene construido en Brasil"
+description: "Análisis independiente: el ramo donde vive el seguro de celular factura $228,3 mil M en 9 meses (mi cálculo sobre balances SSN), lo dominan bancaseguros y castiga con franquicias del 25-40%. La entrada de Nubank a Argentina es portar Nu Celular de Brasil, con Mercado Pago y Ualá ya en carrera."
+year: 2026
+date: "2026-08-02"
+role: "Product"
+status: "concept"
+kind: "case-study"
+featured: true
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración editorial nocturna con grano de película: una larga pared de piedra azulada con decenas de alerones cortos que cubren solo la mitad superior de teléfonos que brillan en ámbar bajo la llovizna; una figura sin rostro camina de perfil abrazando su teléfono encendido contra el pecho, bajo un emblema nu de neón violeta, hacia un umbral violeta profundo al fondo del sendero"
+stack: ["Datos abiertos (SSN)", "Investigación de mercado", "Python", "matplotlib"]
+metrics:
+  - label: "Robos de celular por día (AMBA)"
+    value: "10.000"
+  - label: "Franquicia de las telcos"
+    value: "25-40%"
+  - label: "Prima del ramo Robo (9 meses)"
+    value: "$228,3 mil M"
+  - label: "Attach de Nubank+Chubb en Brasil"
+    value: "2,2%"
+translationKey: "nubank-seguros-argentina"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+Nubank no va a ser el primero en vender seguros digitales en Argentina. Mercado Pago lo hace desde
+2022 y Ualá entró en 2026 con Allianz adentro de su cap table. Mi recomendación es que entre igual,
+por el producto que ya tiene construido en Brasil y que acá todos venden mal: el seguro de celular.
+
+El ramo donde vive ese producto factura $228,3 mil M de prima en 9 meses según mi cálculo sobre
+los balances de la SSN, lo dominan aseguradoras de canal bancario, y castiga al usuario con
+franquicias del 25% al 40% o con topes de suma que no cubren ni medio teléfono. La cuña: ser el
+primero en venderlo sin castigo. Llegar primero ya no está en juego, e inventar el producto no
+hace falta. Eso exige pagar un costo de operación antifraude que hoy toda la industria le traslada
+al cliente, y esa parte de mi tesis es una apuesta, todavía sin dato que la respalde.
+
+Análisis independiente, no afiliado a las empresas mencionadas.
+
+</Abstract>
+
+## La carrera ya empezó
+
+El seguro digital argentino ya tiene jugadores en serio: las dos billeteras más grandes del país,
+con aseguradoras globales atrás.
+
+Mercado Pago vende seguros de vida y accidentes personales en Argentina desde el acuerdo
+[anunciado en octubre de 2022](https://www.cronista.com/finanzas-mercados/mercado-pago-se-mete-a-fondo-en-el-mercado-de-seguros-y-lanza-dos-innovadoras-coberturas/):
+Prudential como aseguradora, Swiss Re en el reaseguro y la insurtech argentina Klimber en el
+desarrollo. Replicó lo que la misma sociedad había lanzado en Brasil unos meses antes.
+
+Ualá lanzó los mismos dos productos en 2026 y juntó
+[más de 300.000 cotizaciones en pocas semanas](https://fortuna.perfil.com/noticias/negocios/uala-cierra-una-ronda-de-us-195-millones-liderada-por-allianz-x.phtml).
+En marzo cerró una ronda de USD 195 millones liderada por Allianz X, el brazo inversor del grupo
+Allianz, a una valuación de USD 3.200 millones. El CEO de Allianz X dijo: "en el futuro los
+seguros no se venderán, estarán integrados en las experiencias financieras cotidianas".
+
+Las 300.000 cotizaciones no prueban conversión, pero sí prueban la condición que esta tesis
+necesita: la demanda de seguros se puede activar desde una app financiera, sin fuerza de venta.
+
+De Nubank, mientras tanto, hay menos de lo que parece. Confirmó
+[un hub en Buenos Aires en enero de 2026](https://www.lanacion.com.ar/economia/negocios/nubank-invertira-us474-millones-para-ampliar-su-red-de-oficinas-y-abrira-una-sede-en-buenos-aires-nid29012026/),
+dentro de un plan global de USD 474 millones en oficinas. Consultada por la prensa, la empresa no
+confirmó si retoma operación financiera en el país. Hubo además una versión de _Valor Económico_
+(agosto de 2025) sobre una negociación fallida para comprar Brubank, nunca confirmada por las
+partes; Nubank respondió que no comenta rumores. Es una versión periodística sin confirmar y
+ninguna conclusión de este caso se apoya en ella.
+
+<Thesis>
+
+El partnership fintech-aseguradora dejó de ser una idea para volverse el patrón de la industria.
+Chubb con Nubank en Brasil, Prudential y Swiss Re con Mercado Pago, Allianz con Ualá. Que una
+fintech pueda vender seguros ya quedó demostrado. Falta decidir con qué producto entrar.
+
+</Thesis>
+
+## Diez mil robos por día y un seguro que castiga dos veces
+
+En el AMBA se roban [unos 10.000 celulares por día](https://www.cronista.com/infotechnology/actualidad/celulares-5684/),
+416 por hora, según BTR Consulting (2024). El hurto de dispositivos es el 27% del total de robos
+del país y las víctimas más frecuentes tienen entre 14 y 20 años. Para dimensionarlo: Perú está en
+torno a 4.800 por día y Colombia en 3.500.
+
+Oferta no falta. Venden seguro de celular los fabricantes, las tres telcos, Mercado Libre a través
+de La Caja y al menos ocho bancos, según el relevamiento de _La Nación_ de agosto de 2023. El
+propio Mercado Pago arrancó por acá: [lanzó robo y daño de celulares en 2022](https://www.cronista.com/finanzas-mercados/mercado-pago-se-mete-a-fondo-en-el-mercado-de-seguros-y-lanza-dos-innovadoras-coberturas/), antes que
+sus seguros de vida. El producto ya está en todos lados; lo que falta es una versión que no
+castigue, y el castigo tiene dos formas distintas.
+
+Las telcos castigan por franquicia. [Movistar cubre el 70% del valor del equipo](https://ayuda.movistar.com.ar/pregunta/que-es-y-que-cubre-seguro-movil-para-tu-celular.html)
+en robo o destrucción total: el 30% restante lo pone el usuario. [Claro cobra una franquicia del 40%](https://tienda.claro.com.ar/proteccion-movil)
+del precio de lista al reponer por robo, y del 25% en daño total. En general no cubren pérdida y
+limitan a entre dos y cuatro eventos por año.
+
+Los bancos castigan por tope. El relevamiento de 2023 muestra franquicias más bajas (BBVA, 10% de
+la suma asegurada) pero sumas aseguradas que no acompañaron la inflación del precio de los
+equipos: coberturas máximas que en ese momento rondaban los $180.000 en Banco Nación o los $66.000
+en Supervielle, contra celulares que ya costaban varias veces eso, con lo cual la franquicia
+amable protege una cobertura decorativa.
+
+Hagamos la cuenta que hace el usuario. Supongamos un celular de 800.000 pesos con 30% de
+franquicia: después de pagar la prima todo el año y de que te roben el teléfono, ponés 240.000
+pesos de tu bolsillo. La cobertura existe en el papel. La sensación de estar cubierto, no.
+
+## El tamaño real de la categoría, medido en los balances
+
+Hasta acá, prensa y páginas de producto. Esta sección sale de otra fuente: los balances que las
+aseguradoras presentan ante la SSN, publicados como datos abiertos, con el mismo método que usé en
+[mi caso sobre cobranza de seguros](/projects/cobranza-seguros).
+
+Los seguros de celular relevados operan como seguros de robo, así que su lugar natural en los
+balances es el ramo "Robo y Riesgos Similares". Ese ramo
+facturó **$228,3 mil M de prima entre julio de 2025 y marzo de 2026**, el 1,21% del mercado, y
+cerró el primer trimestre de 2026 con **3,32 millones de pólizas vigentes**: el 9% de todas las
+pólizas patrimoniales del país.
+
+<Figure
+  src="/projects/nubank-seguros-argentina/g5_ramo_robo.png"
+  alt="Gráfico de barras horizontales con las diez aseguradoras que más prima emiten en el ramo Robo y Riesgos Similares, con las de canal bancario destacadas: Provincia, Galicia, Qualia, Supervielle, Nación y BIND"
+  width={1495}
+  height={886}
+  caption="Elaboración propia sobre los balances SSN (datos abiertos, marzo 2026): prima emitida de seguros directos del subramo Robo y Riesgos Similares, julio 2025 a marzo 2026. El ramo incluye más productos que el seguro de celular, así que estas cifras marcan el techo de la categoría."
+/>
+
+Dos cosas salen de ese cuadro. La primera: seis de los diez líderes del ramo venden por canal
+bancario (Provincia, Galicia, Qualia del grupo Petersen, Supervielle, Nación, BIND), y solo el top
+3 concentra el 46% de la prima. El ramo se distribuye por sucursal y home banking. No hay ningún
+jugador mobile-first entre los líderes.
+
+La segunda sale de cruzarlo con mi caso anterior: las anulaciones del ramo se comen el **13,6%
+de su prima emitida**, contra el 10,6% de mediana que calculé para el top 50 del mercado con la
+misma fuente y el mismo método. El ramo pierde más prima por anulaciones que el mercado que lo
+contiene. Mi lectura, y esto es interpretación mía sobre un dato verificado:
+un producto que se vende empaquetado por un canal que el cliente no eligió, y que castiga al
+momento del siniestro, no le deja al cliente razones para sostenerlo cuando revisa gastos.
+
+## La cuña: Nubank ya tiene el producto. Le falta la parte difícil.
+
+Acá está el dato que ancla mi recomendación. Nubank no tendría que construir nada:
+[Nu Celular Seguro existe en Brasil desde febrero de 2022](https://chubb.mediaroom.com/20220201-nubank-lanza-seguro-para-celular-en-brasil),
+con Chubb, 100% en la app, con cobertura de robo, hurto simple y daño. Del
+[portfolio de 2 millones de pólizas](https://international.nubank.com.br/es/clientes/nubank-y-chubb-alcanzan-la-marca-de-2-millones-de-polizas-de-seguros-activas-en-brasil/)
+que Nubank y Chubb anunciaron en junio de 2024, más de un millón es Nu Vida; el resto se reparte
+entre los otros productos del portfolio: celular, hogar y protección de cuotas. Entrar a Argentina con celular sería portar la pieza
+del portfolio que mejor calza con el riesgo más masivo del país.
+
+Un dato juega en contra de esta recomendación:
+
+<Thesis>
+
+Ni la propia Nubank hace deducible bajo. Su página brasileña no publica la franquicia (hay que
+simular en la app) y fuentes de terceros la ubican en torno al 25% del valor del equipo. Mi
+recomendación es una apuesta contra el consenso de toda la industria, incluida la Nubank de Brasil.
+
+</Thesis>
+
+El consenso existe por una razón que hay que respetar antes de apostarle en contra. La franquicia
+alta es el control antifraude de la categoría: cuando reponer el teléfono te cuesta el 30%,
+inventar un robo no tiene gracia. Bajar el deducible saca ese freno, y lo que lo reemplaza es
+operación: verificación de IMEI contra la denuncia, señales de comportamiento en la app, bloqueo
+de reincidencia, resolución rápida para el caso legítimo y fricción selectiva para el sospechoso.
+Es caro y es lento de construir. Por eso mismo, el día que funciona, nadie lo copia en un
+trimestre. La capacidad antifraude no es el costo del producto: es el foso.
+
+Y hay una señal de que el usuario percibe el castigo: el 13,6% de anulaciones del ramo. Un producto que se cancela más que el promedio del mercado es un producto
+que no está reteniendo, y ese es el incumbente contra el que competiría la versión sin castigo.
+
+## Mi modelo
+
+Hasta acá todos los números salían de una fuente o de un cálculo sobre una fuente. Los que
+vienen ahora son proyecciones mías.
+
+El paso siguiente que propongo es un smoke test de 14 días con tráfico in-app, antes de
+construir nada: banner, landing, cotizador simulado, waitlist. El criterio de go lo dejo fijado antes de correrlo, en 5% de
+conversión de impresión a waitlist. Mi modelo proyecta 8%. Si el dato real da por debajo de 5%, la tesis se revisa.
+
+<Figure
+  src="/projects/nubank-seguros-argentina/g3_funnel_smoketest.png"
+  alt="Embudo de cuatro etapas del smoke test proyectado: ven banner, abren landing, piden cotización y dejan email en la waitlist"
+  width={1495}
+  height={886}
+  caption="Diseño del smoke test con el embudo que proyecta mi modelo. Ninguna de estas cifras es un resultado medido: el experimento todavía no se corrió."
+/>
+
+Para el volumen a 24 meses armé tres escenarios anclados en la trayectoria real de Brasil, donde
+el attach de Nubank y Chubb pasó de 1,6% (1,4 millones de pólizas sobre 88 millones de clientes en 2023) a 2,2% (2 millones sobre 92 millones en junio de 2024). Mi modelo proyecta entre 15.000 y
+120.000 pólizas activas, con 60.000 como escenario base.
+
+<Figure
+  src="/projects/nubank-seguros-argentina/g4_proyeccion_escenarios.png"
+  alt="Tres curvas de pólizas activas que proyecta mi modelo a 24 meses del lanzamiento: conservador 15 mil, base 60 mil y optimista 120 mil"
+  width={1632}
+  height={969}
+  caption="Escenarios a 24 meses. Proyección propia: pólizas = clientes por attach objetivo, con una curva S de adopción que satura en el mes 24; el attach se ancla en el 2,2% observado de Nubank y Chubb en Brasil. El modelo completo está en el script del caso."
+/>
+
+El rango es enorme. El attach explica poco: en Brasil se movió de
+1,6% a 2,2% en año y medio, o sea que vive en una banda angosta y se mueve despacio. La distancia
+entre 15.000 y 120.000 pólizas sale de cuántos clientes tenga Nubank en Argentina cuando lance.
+
+## La recomendación y el timing
+
+El producto: portar Nu Celular con una diferencia deliberada respecto de Brasil. Deducible bajo,
+fijo y en pesos, mostrado en la pantalla de contratación y no después de simular. Cobertura por el
+valor real del equipo, sin topes decorativos. Resolución comprometida en horas. Y la operación
+antifraude tratada como capacidad central del negocio, porque es lo que financia todo lo anterior.
+
+El timing: la secuencia no se toca, porque sin base de clientes no hay canal y sin canal el attach
+no existe. Lo que se adelanta es la preparación: el partner asegurador y el diseño del producto se
+cierran ahora, mientras la licencia y la base todavía están pendientes. Cuando Nubank entró a
+seguros en Brasil, Nu Vida salió en diciembre de 2020 y a febrero de 2021 ya llevaba 90.000
+pólizas, con cerca de la mitad de esos clientes contratando un seguro de vida por primera vez. Esa
+foto es de los primeros 90 días y no se puede extrapolar sola, pero muestra qué pasa cuando el
+producto llega listo a una base que ya existe.
+
+## Qué es dato y qué es supuesto
+
+| Afirmación                                                 | Estatus                                                   |
+| ---------------------------------------------------------- | --------------------------------------------------------- |
+| 10.000 robos de celular por día en el AMBA                 | Dato publicado (BTR Consulting, 2024)                     |
+| Franquicias: Movistar 30%, Claro 25-40%                    | Páginas oficiales de producto y _La Nación_ (agosto 2023) |
+| Topes bancarios ($180.000, $66.000)                        | Relevamiento _La Nación_ (agosto 2023)                    |
+| Prima del ramo Robo: $228,3 mil M en 9 meses               | Cálculo propio sobre balances SSN                         |
+| 3,32 M de pólizas vigentes del ramo                        | SSN, anexo estadístico 1T 2026                            |
+| Anulaciones del ramo: 13,6% vs 10,6% de mediana de mercado | Cálculo propio sobre balances SSN                         |
+| Nu Celular en Brasil desde 2022; 2 M de pólizas con Chubb  | Comunicados de Chubb y Nubank                             |
+| Franquicia de Nu Celular en torno al 25%                   | Fuentes de terceros; Nubank no la publica                 |
+| 300.000 cotizaciones de Ualá; ronda Allianz X              | Dato publicado (Fortuna/Perfil)                           |
+| Negociación fallida por Brubank                            | Versión periodística sin confirmar                        |
+| 8% de conversión a waitlist en el smoke test               | Mi modelo, con criterio de go en 5%                       |
+| 15.000 / 60.000 / 120.000 pólizas a 24 meses               | Mi modelo                                                 |
+
+<TableCaption>
+  La columna de estatus gobierna cómo se lee cada número. Los cálculos propios sobre balances SSN
+  usan la misma fuente y el mismo método que mi caso de cobranza: prima emitida de seguros directos
+  y anulaciones a nivel subramo, período julio 2025 a marzo 2026.
+</TableCaption>
+
+## Qué me haría cambiar de opinión
+
+Si Nubank porta Nu Celular tal como está en Brasil, con su franquicia del orden del 25%, entra al
+mercado pero la cuña que recomiendo no existe: sería una oferta más del montón, compitiendo por
+marca contra un canal bancario que ya tiene la distribución. Es el escenario más probable en
+contra de este análisis, porque no requiere que nadie haga nada raro: alcanza con que Nubank
+repita su propio playbook.
+
+Si el smoke test da por debajo de 5%, la demanda que asumo no se sostiene y la recomendación cae
+entera. Si Ualá o Mercado Pago lanzan un celular sin castigo antes, la cuña se cierra. Si la
+operación antifraude resulta más cara de lo que asumo, el deducible bajo deja de ser una ventaja
+para pasar a ser el problema.
+
+Queda un escenario más: que Nubank no vuelva a operar en Argentina. El hub de Buenos Aires es
+real y está confirmado. Que sea el primer paso de un regreso financiero es una lectura mía, y la
+empresa, cuando le preguntaron, no la confirmó.
+
+## Fuentes
+
+- [Nu Holdings, resultados Q1 2026](https://international.nubank.com.br/es/compania/nu-holdings-ltd-reporta-los-resultados-financieros-del-primer-trimestre-de-2026/)
+- [La Nación: Nubank invertirá USD 474 millones y abrirá sede en Buenos Aires (enero 2026)](https://www.lanacion.com.ar/economia/negocios/nubank-invertira-us474-millones-para-ampliar-su-red-de-oficinas-y-abrira-una-sede-en-buenos-aires-nid29012026/)
+- [Chubb: Nubank lanza seguro para celular en Brasil (febrero 2022)](https://chubb.mediaroom.com/20220201-nubank-lanza-seguro-para-celular-en-brasil)
+- [Nubank y Chubb: 2 millones de pólizas activas en Brasil (junio 2024)](https://international.nubank.com.br/es/clientes/nubank-y-chubb-alcanzan-la-marca-de-2-millones-de-polizas-de-seguros-activas-en-brasil/)
+- [El Cronista: Mercado Pago lanza seguros de vida y accidentes personales con Prudential (octubre 2022)](https://www.cronista.com/finanzas-mercados/mercado-pago-se-mete-a-fondo-en-el-mercado-de-seguros-y-lanza-dos-innovadoras-coberturas/)
+- [Fortuna/Perfil: Ualá cierra una ronda de USD 195 millones liderada por Allianz X (marzo 2026)](https://fortuna.perfil.com/noticias/negocios/uala-cierra-una-ronda-de-us-195-millones-liderada-por-allianz-x.phtml)
+- [El Cronista: robo de celulares en el AMBA, informe de BTR Consulting](https://www.cronista.com/infotechnology/actualidad/celulares-5684/)
+- [La Nación: cuánto cuesta asegurar tu celular (agosto 2023)](https://www.lanacion.com.ar/tecnologia/cuanto-cuesta-asegurar-tu-celular-por-robo-o-rotura-de-la-pantalla-nid28082023/)
+- [Movistar: qué es y qué cubre Seguro Móvil](https://ayuda.movistar.com.ar/pregunta/que-es-y-que-cubre-seguro-movil-para-tu-celular.html)
+- [Claro: Protección Móvil](https://tienda.claro.com.ar/proteccion-movil)
+- [SSN: datos abiertos de balances y anexo estadístico del 1º trimestre 2026](https://www.argentina.gob.ar/ssn)
