@@ -62,4 +62,21 @@ CLAUDE.md
 .velite/
 public/static/
 .gstack/
-.claude/
+# Contenido social (nodo 12 del flujo): guiones de TikTok, textos e imágenes
+# de LinkedIn y grabaciones son material de trabajo local, no del sitio.
+/social/
+
+# Materiales de investigación por caso (nodos 1-2): datasets crudos
+# (re-descargables desde la URL registrada en la hoja) y el facts.md, que es
+# documento de trabajo con correcciones y descartes y no se publica.
+/data/
+
+# Config de Claude Code: se versiona lo compartible (hooks, skills, agentes,
+# scripts) y queda local lo de máquina (settings.local.json, worktrees).
+.claude/*
+!.claude/settings.json
+!.claude/launch.json
+!.claude/scripts/
+!.claude/skills/
+!.claude/agents/
+!.claude/docs/

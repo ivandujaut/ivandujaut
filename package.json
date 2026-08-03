@@ -57,12 +57,15 @@
     "typescript": "^6"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
       "eslint --fix",
       "prettier --write"
     ],
     "*.{json,md,mdx,css,yml,yaml}": [
       "prettier --write"
+    ],
+    "content/**/*.mdx": [
+      "node .claude/scripts/lint-content.mjs"
     ]
   },
   "overrides": {

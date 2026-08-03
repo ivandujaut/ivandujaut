@@ -51,6 +51,7 @@ const ALIASES: Record<string, TechIconKey> = {
   linear: "linear",
   notion: "notion",
   numpy: "numpy",
+  matplotlib: "matplotlib",
   git: "git",
 };
 
