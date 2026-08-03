@@ -79,12 +79,14 @@ completo está al final; la anatomía sale de ahí.
   notch y bisel, y la figura de espaldas sosteniendo un objeto adelante
   (anatómicamente imposible: si el objeto va contra el pecho, la figura va de
   perfil). Cada rechazo nuevo suma su cliché a esta lista.
-- Marcas de terceros: nunca el logo literal (contradice el disclaimer de no
-  afiliación y es la marca de un target de contratación). La evocación correcta
-  es por color: el violeta de Nubank en el nicho de la cuña, sin símbolo ni
-  letras. Excepción declarada a la regla de "un solo acento cálido": un caso
-  puede sumar UN segundo acento si es la tesis pintada, como el violeta contra
-  el ámbar.
+- Marcas de terceros: decisión por caso, de Iván. El default es la evocación
+  por color (el violeta de Nubank en el nicho de la cuña); el logo literal entra
+  solo con su decisión explícita, como uso editorial, y con la excepción escrita
+  dentro del bloque de prohibiciones para que el "no logos" general no la pise
+  (caso Nubank, 2026-08-03: pedido expreso del autor, emblema "nu" violeta como
+  dosel sobre la figura). Excepción declarada a la regla de "un solo acento
+  cálido": un caso puede sumar UN segundo acento si es la tesis pintada, como el
+  violeta contra el ámbar.
 
 ## Prompt canónico (cobranza-seguros, verbatim)
 
