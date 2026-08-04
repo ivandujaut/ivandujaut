@@ -173,12 +173,6 @@ export default async function ProjectPage({ params }: Props) {
               <span>{project.year}</span>
             </ViewTransition>
             <span aria-hidden>·</span>
-            {/* El rol va etiquetado. Sin el "Rol:", la fila mostraba "Product"
-                pelado justo al lado del badge de tipo ("Caso de estudio") y no
-                había forma de saber que uno es el papel que ocupé y el otro qué
-                clase de pieza es. */}
-            <span>{tProjects("meta.role", { role: project.role })}</span>
-            <span aria-hidden>·</span>
             <KindBadge kind={project.kind} />
             {(project.kind === "build" || project.status !== "concept") && (
               <StatusBadge status={project.status} />
