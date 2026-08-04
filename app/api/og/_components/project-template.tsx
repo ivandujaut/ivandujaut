@@ -27,6 +27,53 @@ const CTA_LABELS = {
   },
 } as const;
 
+/**
+ * La columna izquierda de la tarjeta no scrollea: lo que pasa de los 630px se
+ * pierde, y lo último de la pila es justo el CTA y el pie con el dominio. Las
+ * constantes de abajo son el presupuesto de alto de esa columna, medido sobre
+ * las tarjetas reales. Son estimaciones: Satori no expone la medición del
+ * texto, así que se aproxima el ancho por carácter y se verifica renderizando.
+ */
+const COL_W = 532; // 660 de ancho menos 64 de padding a cada lado
+const COL_H = 518; // 630 de alto menos 56 arriba y abajo
+const HEADER_H = 70; // logo + rótulo de tipo
+const SPACER_H = 32; // el separador flexible, en su mínimo
+const TITLE_GAP = 20;
+const BLOCK_GAP = 32; // margen del bloque de stack + CTA
+const CTA_GAP = 24;
+const CTA_H = 46;
+const FOOTER_H = 56;
+const DESC_LINE_H = 28; // 20px de cuerpo con interlínea 1,4
+const PILL_ROW_H = 46;
+const DESC_CHARS_PER_LINE = 48;
+const PILL_CHAR_W = 10.8; // avance medio del mono a 18px
+const PILL_EXTRA = 36; // padding horizontal más el gap
+
+/** Píldoras que entran en `maxRows` filas del ancho de la columna. */
+function fitStack(stack: string[], maxRows: number) {
+  const items: string[] = [];
+  let rows = 1;
+  let used = 0;
+  for (const tech of stack) {
+    const width = tech.length * PILL_CHAR_W + PILL_EXTRA;
+    if (used + width > COL_W) {
+      if (rows >= maxRows) break;
+      rows += 1;
+      used = 0;
+    }
+    used += width;
+    items.push(tech);
+  }
+  // Nunca dejar el bloque vacío: una píldora sola es mejor que ninguna.
+  return { items: items.length > 0 ? items : stack.slice(0, 1), rows };
+}
+
+/** Recorta en el último espacio, para no cortar una palabra por la mitad. */
+function clampText(text: string, limit: number) {
+  if (text.length <= limit) return text;
+  return `${text.slice(0, limit).replace(/[\s.,;:]+\S*$/, "")}…`;
+}
+
 interface ProjectTemplateProps {
   title: string;
   description?: string;
@@ -83,8 +130,38 @@ export function ProjectTemplate({
   // un proyecto propio en la única superficie que se consume sin contexto.
   const ctaLabel = CTA_LABELS[locale][kind];
 
-  // Limitar stack a máximo 4 items para no saturar
-  const visibleStack = stack.slice(0, 4);
+  // A 64px entran unos 16 caracteres por línea del ancho de la columna.
+  const titleLines = Math.ceil(title.length / 16);
+
+  // Un título de cuatro líneas a 64px se come 268 de los 518px útiles, y lo que
+  // queda no alcanza para descripción, stack, CTA y pie. Así que lo primero que
+  // cede es el cuerpo del título, antes de podarle texto a nada.
+  const titleSize = titleLines >= 4 ? 42 : titleLines === 3 ? 52 : 64;
+  const titleHeight = Math.ceil(title.length / (COL_W / (titleSize * 0.52))) * titleSize * 1.05;
+
+  // El stack se mide por ancho y no por cantidad: dos etiquetas largas
+  // ("Investigación de mercado") ya desbordan la fila, y la segunda fila son
+  // 46px que salen justo del pie.
+  const { items: visibleStack, rows: stackRows } = fitStack(stack, titleLines >= 3 ? 1 : 2);
+
+  // Con el resto de la columna ya reservado, lo que sobra es lo que puede ocupar
+  // la descripción. Clave: esto depende del título Y de la descripción, no solo
+  // del título. La tarjeta de cobranza tiene título corto y perdía el pie igual,
+  // porque su descripción sola ocupaba seis líneas.
+  const reserved =
+    HEADER_H +
+    SPACER_H +
+    titleHeight +
+    TITLE_GAP +
+    BLOCK_GAP +
+    stackRows * PILL_ROW_H +
+    CTA_GAP +
+    CTA_H +
+    FOOTER_H;
+  const descLines = Math.max(0, Math.floor((COL_H - reserved) / DESC_LINE_H));
+  const visibleDescription = description
+    ? clampText(description, descLines * DESC_CHARS_PER_LINE)
+    : description;
 
   // Color del dot según status
   const statusColor =
@@ -176,7 +253,7 @@ export function ProjectTemplate({
             {/* Título */}
             <h1
               style={{
-                fontSize: 64,
+                fontSize: titleSize,
                 fontWeight: 700,
                 color: tokens.fg,
                 lineHeight: 1.05,
@@ -189,7 +266,7 @@ export function ProjectTemplate({
             </h1>
 
             {/* Descripción */}
-            {description && (
+            {visibleDescription && (
               <p
                 style={{
                   fontSize: 20,
@@ -200,7 +277,7 @@ export function ProjectTemplate({
                   fontFamily: "Inter",
                 }}
               >
-                {description}
+                {visibleDescription}
               </p>
             )}
           </div>
