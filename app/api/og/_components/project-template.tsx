@@ -1,5 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
 import { Logo, Footer, Background, Tag, getTokens, type OgTheme } from "./shared";
+import esMessages from "@/messages/es.json";
+import enMessages from "@/messages/en.json";
+
+/** Única fuente de los rótulos de tipo: los mismos que muestra el detalle. */
+const KIND_LABELS = {
+  es: esMessages.projects.kind,
+  en: enMessages.projects.kind,
+} as const;
+
+/**
+ * Copy del CTA. Vive acá y no en `messages` a propósito: el sitio no tiene este
+ * botón en ninguna parte, así que no hay contra qué derivar. Los rótulos de
+ * tipo sí existen en los dos lados, y por eso se importan.
+ */
+const CTA_LABELS = {
+  es: {
+    build: "Ver el proyecto",
+    "case-study": "Leer el análisis",
+    design: "Ver la propuesta",
+  },
+  en: {
+    build: "View the project",
+    "case-study": "Read the analysis",
+    design: "View the proposal",
+  },
+} as const;
 
 interface ProjectTemplateProps {
   title: string;
@@ -40,21 +66,22 @@ export function ProjectTemplate({
     concept: { es: "CONCEPTO", en: "CONCEPT" },
   };
 
-  // Project label según locale
-  // Tipo de pieza: es el rótulo principal, igual que el chip del sitio.
-  const kindLabels = {
-    build: { es: "PRODUCTO", en: "PRODUCT" },
-    "case-study": { es: "CASO DE MEJORA", en: "IMPROVEMENT CASE" },
-    design: { es: "DISEÑO", en: "DESIGN" },
-  };
-  const projectLabel = kindLabels[kind][locale];
+  // Tipo de pieza: es el rótulo principal y sale de los mismos mensajes que el
+  // chip del sitio, no de una copia local. La copia anterior había derivado sin
+  // que nada lo detectara: el sitio decía "Caso de estudio" y la tarjeta que se
+  // comparte en redes, "CASO DE MEJORA". El uppercase es del estilo de la
+  // tarjeta, así que se aplica acá y no se escribe en el mensaje.
+  const projectLabel = KIND_LABELS[locale][kind].toUpperCase();
 
   // El status solo aporta en productos construidos: en casos y diseños,
   // "concepto" es redundante con el tipo de pieza (misma regla que el sitio).
   const showStatus = Boolean(status) && (kind === "build" || status !== "concept");
 
-  // CTA según locale
-  const ctaLabel = locale === "es" ? "Ver proyecto" : "View project";
+  // El CTA nombra lo que la persona va a hacer, y eso cambia con el tipo de
+  // pieza: un producto y una propuesta se miran, un análisis se lee. Antes era
+  // "Ver proyecto" para los tres, así que un análisis de PIX se anunciaba como
+  // un proyecto propio en la única superficie que se consume sin contexto.
+  const ctaLabel = CTA_LABELS[locale][kind];
 
   // Limitar stack a máximo 4 items para no saturar
   const visibleStack = stack.slice(0, 4);
