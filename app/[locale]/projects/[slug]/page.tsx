@@ -15,7 +15,7 @@ import {
 import { TranslationMissingPage } from "@/components/common/translation-missing-page";
 import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbSchema } from "@/lib/jsonld";
+import { breadcrumbSchema, projectArticleSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { LikeButton } from "@/components/blog/like-button";
@@ -142,11 +142,36 @@ export default async function ProjectPage({ params }: Props) {
     { label: project.title },
   ];
 
-  const jsonLd = breadcrumbSchema([
-    { name: t("home"), path: homePath },
-    { name: t("projects"), path: projectsIndexPath },
-    { name: project.title, path: projectPath },
-  ]);
+  // La misma imagen que anuncia el `og:image` de la página, para que el dato
+  // estructurado y la tarjeta que se comparte no muestren cosas distintas.
+  const articleImage = buildProjectOgUrl({
+    title: project.title,
+    description: project.description,
+    stack: project.stack,
+    status: project.status,
+    kind: project.kind,
+    coverUrl: buildCoverUrl(project.cover?.src.src),
+    locale: typedLocale,
+  });
+
+  const jsonLd = [
+    projectArticleSchema({
+      title: project.title,
+      description: project.description,
+      slug: project.slug,
+      locale: typedLocale,
+      datePublished: project.date,
+      stack: project.stack,
+      image: articleImage,
+      wordCount: project.metadata?.wordCount,
+      readingTimeMinutes: project.metadata?.readingTime,
+    }),
+    breadcrumbSchema([
+      { name: t("home"), path: homePath },
+      { name: t("projects"), path: projectsIndexPath },
+      { name: project.title, path: projectPath },
+    ]),
+  ];
 
   const initialViews = await getCachedViews("projects", slug);
   const { previous, next } = getAdjacentProjects(typedLocale, slug);
