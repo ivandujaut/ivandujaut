@@ -80,7 +80,6 @@ const projects = defineCollection({
       year: s.number().int().min(2000).max(2100),
       // Fecha real de publicación del caso (para ordenar el listado); year queda solo para mostrar.
       date: s.isodate(),
-      role: s.enum(["Product", "Full-stack", "Frontend", "Backend", "Design", "Other"]),
       status: s.enum(["shipped", "in-progress", "archived", "concept"]),
       // Qué tipo de trabajo es la pieza: producto construido, caso de mejora
       // sobre un producto ajeno, o diseño. Eje independiente del status.
