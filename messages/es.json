@@ -153,9 +153,6 @@
       "case-study": "Caso de estudio",
       "design": "Diseño"
     },
-    "meta": {
-      "role": "Rol: {role}"
-    },
     "close": {
       "title": "¿Hablamos de este caso?",
       "body": "Si llegaste hasta acá, algo del problema te interesó. Me gusta discutir estas decisiones con gente que las vive de cerca: escribime lo que harías distinto, o agendemos una call.",
