@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getProjects, getFeaturedProjects } from "@/lib/content";
+import { getProjects, getProjectsBySubject } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
@@ -38,82 +38,63 @@ export default async function ProjectsPage({ params }: Props) {
   setRequestLocale(locale);
 
   const allProjects = getProjects(locale as "es" | "en");
-  const featured = getFeaturedProjects(locale as "es" | "en");
-  const others = allProjects.filter((p) => !p.featured);
   const t = await getTranslations({ locale, namespace: "projects.sections" });
+
+  // Los productos propios van arriba, y no por ser lo más nuevo (hoy no lo
+  // son). Los análisis tienen otras puertas de entrada: el link del primer
+  // comentario en LinkedIn y los destacados de la home. Un producto construido
+  // no tiene ninguna, así que el lugar visible es para lo que no llega por
+  // otro lado.
+  const groups = [
+    { key: "own" as const, projects: getProjectsBySubject(locale as "es" | "en", "own") },
+    { key: "external" as const, projects: getProjectsBySubject(locale as "es" | "en", "external") },
+  ];
+
+  // El `isFirst` marca la imagen LCP, así que es una sola en toda la página.
+  let rendered = 0;
 
   return (
     <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <ProjectsHeader />
 
-      <div className="mt-16 space-y-12">
-        {featured.length > 0 && (
-          <section>
-            <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {t("featured")}
-            </h2>
-            <div className="space-y-8">
-              {featured.map((project, index) => (
-                <ProjectListItem
-                  key={project.slug}
-                  slug={project.slug}
-                  title={project.title}
-                  tagline={project.tagline}
-                  year={project.year}
-                  stack={project.stack}
-                  status={project.status}
-                  kind={project.kind}
-                  variant="card"
-                  isFirst={index === 0}
-                  cover={
-                    project.cover
-                      ? {
-                          src: project.cover.src.src,
-                          alt: project.cover.alt,
-                          width: project.cover.src.width,
-                          height: project.cover.src.height,
-                          blurDataURL: project.cover.src.blurDataURL,
-                        }
-                      : undefined
-                  }
-                />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {others.length > 0 && (
-          <section>
-            <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {t("more")}
-            </h2>
-            <div className="space-y-8">
-              {others.map((project) => (
-                <ProjectListItem
-                  key={project.slug}
-                  slug={project.slug}
-                  title={project.title}
-                  tagline={project.tagline}
-                  year={project.year}
-                  stack={project.stack}
-                  status={project.status}
-                  kind={project.kind}
-                  variant="card"
-                  cover={
-                    project.cover
-                      ? {
-                          src: project.cover.src.src,
-                          alt: project.cover.alt,
-                          width: project.cover.src.width,
-                          height: project.cover.src.height,
-                          blurDataURL: project.cover.src.blurDataURL,
-                        }
-                      : undefined
-                  }
-                />
-              ))}
-            </div>
-          </section>
+      <div className="mt-16 space-y-14">
+        {groups.map(
+          (group) =>
+            group.projects.length > 0 && (
+              <section key={group.key}>
+                {/* El encabezado tiene que ganarle al primer vistazo: antes era
+                    mono/xs/muted y se leía como una etiqueta de sistema, no
+                    como la división que organiza la página. */}
+                <h2 className="mb-6 text-lg font-semibold tracking-tight">{t(group.key)}</h2>
+                <div className="space-y-8">
+                  {group.projects.map((project) => (
+                    <ProjectListItem
+                      key={project.slug}
+                      slug={project.slug}
+                      title={project.title}
+                      tagline={project.tagline}
+                      year={project.year}
+                      stack={project.stack}
+                      status={project.status}
+                      kind={project.kind}
+                      variant="card"
+                      isFirst={rendered++ === 0}
+                      cover={
+                        project.cover
+                          ? {
+                              src: project.cover.src.src,
+                              alt: project.cover.alt,
+                              width: project.cover.src.width,
+                              height: project.cover.src.height,
+                              blurDataURL: project.cover.src.blurDataURL,
+                            }
+                          : undefined
+                      }
+                    />
+                  ))}
+                </div>
+              </section>
+            ),
         )}
 
         {allProjects.length === 0 && <p className="text-muted-foreground">No projects yet.</p>}

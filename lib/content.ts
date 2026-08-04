@@ -91,8 +91,21 @@ export function getProjects(locale: Locale) {
   return projects.filter(byLocale(locale)).filter(isVisible).sort(byDateDesc);
 }
 
+/** Curaduría para la home. El listado ya no la usa: agrupa por `subject`. */
 export function getFeaturedProjects(locale: Locale) {
   return getProjects(locale).filter((p) => p.featured);
+}
+
+/**
+ * Proyectos según de quién es el producto: lo que construí y lo que analicé.
+ *
+ * Antes el listado partía por `featured`, y coincidía con esta división por
+ * accidente, porque los tres destacados eran justo los tres casos de estudio.
+ * El día que destacara un producto propio, iba a aparecer mezclado entre los
+ * análisis sin ningún separador.
+ */
+export function getProjectsBySubject(locale: Locale, subject: "own" | "external") {
+  return getProjects(locale).filter((p) => p.subject === subject);
 }
 
 export function getProjectBySlug(locale: Locale, slug: string) {
