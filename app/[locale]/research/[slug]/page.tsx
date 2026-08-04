@@ -28,6 +28,22 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
+/**
+ * Va junto con el `RESEARCH_ENABLED` de arriba: sacar los dos a la vez.
+ *
+ * Con la sección apagada `generateStaticParams` devuelve una lista vacía, y esa
+ * combinación (ruta SSG sin un solo param que prerenderizar) es la que rompía:
+ * ante cualquier `/research/<slug>` Next intentaba generar la página en demanda,
+ * el render estático tocaba APIs dinámicas y la ruta contestaba **500** en vez
+ * del 404 que promete el TODO de arriba.
+ *
+ * Renderizando en demanda, el `notFound()` de abajo hace lo suyo y la respuesta
+ * es un 404 real con la página 404 del sitio, igual que en projects y blog.
+ * Mientras no haya papers publicados no se pierde nada: no hay contenido para
+ * prerenderizar. Al publicar, esta línea sale y la ruta vuelve a ser estática.
+ */
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   if (!RESEARCH_ENABLED) return [];
   const allPapers = [...getResearch("es"), ...getResearch("en")];
