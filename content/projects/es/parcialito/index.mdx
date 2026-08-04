@@ -170,7 +170,7 @@ sostienen las mismas garantías que ya conté (que el docente decida, que nada s
   `security definer`, para que un alumno nunca pueda ver la clave de un examen ni escribir algo indebido
   (`lib/supabaseServer.ts`, `db/02_rls.sql`). Esto es lo que hace sostenible, y no solo demostrable, que
   "el docente decide": si el alumno pudiera leer la clave, la confianza en la corrección se cae.
-- **CI con cuatro validaciones** (tipos, lint, build y E2E con Playwright sobre autenticación real,
+- **CI, integración continua, con cuatro validaciones** (tipos, lint, build y pruebas E2E, de punta a punta, con Playwright sobre autenticación real,
   `.github/workflows/ci.yml`). Cada feature entró por PR con CI en verde, incluida la del corrector de IA.
 - **Un harness de evaluación propio para el corrector con IA** (`eval/grading/run.ts`): antes de cablear
   el corrector a la interfaz, medí su calidad con un set de casos, en vez de asumir que "la IA corrige
@@ -182,7 +182,7 @@ sostienen las mismas garantías que ya conté (que el docente decida, que nada s
 - **El reencuadre.** Parcialito no compite con Forms o Kahoot por tomar el examen; compite con el olvido
   por traer al alumno de vuelta la semana siguiente.
 - **"El docente confirma" no se queda en el copy.** Está en el flujo (el corrector sugiere, no cierra) y
-  en la base de datos (RLS impide que un alumno lea la clave y rompa esa garantía por atrás). Si solo
+  en la base de datos (RLS, las reglas de acceso por fila de la base, impide que un alumno lea la clave y rompa esa garantía por atrás). Si solo
   viviera en el texto de la pantalla, sería una promesa de marketing, no una propiedad del sistema.
 - **La validación real antes de construir.** Cuatro docentes antes del corrector con IA, staging antes de
   cada merge, un harness de evaluación antes de exponer el corrector a un alumno real.
@@ -195,14 +195,14 @@ Ser honesto sobre los huecos es parte del trabajo:
 
 - **Integridad del modo práctica, sin resolver.** Revela siempre la respuesta; queda pendiente un pool más
   grande y randomización para que memorizar deje de ser una estrategia viable.
-- **Tipos de la base de datos a mano.** `lib/db.types.ts` no se genera todavía desde el CLI de Supabase:
+- **Tipos de la base de datos a mano.** `lib/db.types.ts` no se genera todavía desde la línea de comandos (CLI) de Supabase:
   riesgo de que se desincronice del schema real.
 - **Cron en el plan Hobby corre diario.** La corrección con IA se dispara on-demand por el docente; el
   cron es solo la red de seguridad, no el camino principal, pero un plan superior lo haría más frecuente.
 - **Sin unit tests.** La estrategia fue E2E de los flujos críticos con Playwright; cubre el camino feliz y
   los flujos de autenticación, pero deja huecos que un unit test agarraría más barato.
 - **Accesibilidad parcial.** El focus-trap de los diálogos está resuelto a medias, y falta un sweep de
-  contraste WCAG completo.
+  contraste según WCAG, el estándar de accesibilidad web.
 - **Contenido acotado.** Hoy corre sobre un examen modelo real; expandir el banco de contenido es
   condición para escalar a más docentes.
 
@@ -212,7 +212,7 @@ Ser honesto sobre los huecos es parte del trabajo:
   para después: la corrección era el dolor que más gritaba, pero la retención (que el alumno vuelva) era
   el problema real, y tardé más de la cuenta en priorizarlo.
 - El botón "Aprobar" que aprobaba una nota sin que la hubiera leído (ver más arriba) me corrió el criterio
-  de QA: probar la interacción completa con un curso real, no solo revisar que la pantalla se vea bien.
+  de QA, el control de calidad: probar la interacción completa con un curso real, no solo revisar que la pantalla se vea bien.
 
 ## Stack
 
@@ -240,7 +240,7 @@ espaciado más corrección con IA con el docente en control. Publico esto para q
 
 - ¿Dónde ven el mayor riesgo: en la disposición del docente a confiar la corrección de desarrollo a una
   IA (aunque él confirme la nota), o en la retención del alumno una vez que pasa la novedad?
-- ¿A quién priorizarían monetizar primero: al docente que adopta, a la institución, o a un modelo B2C
+- ¿A quién priorizarían monetizar primero: al docente que adopta, a la institución, o a un modelo B2C,
   directo al alumno?
 - El modo práctica revela siempre la respuesta, a cambio de aprendizaje inmediato. ¿Es el trade-off
   correcto, o la integridad debería pesar más incluso en una v1?
