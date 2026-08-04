@@ -418,7 +418,7 @@ A restrained visual language reads as product; a showcase reads as a demo. Knowi
 adjustment. That's the heart of the model.**
 
 This is the detail that separates a serious model for Argentina from a generic calculator. The property
-is listed in USD but the rent is collected in ARS. That mismatch forces two assumptions that don't exist
+is listed in USD but the rent is collected in pesos (ARS). That mismatch forces two assumptions that don't exist
 in stable markets like Madrid or Miami: which exchange rate to use to convert the income, and how to
 project that conversion over the holding period.
 
@@ -516,7 +516,7 @@ Being honest about the gaps is part of the job. Fine for a v1; not for productio
 - **Cutting is designing.** The two charts I left out say as much about my judgment as the two I kept.
 - **Running the prototype end to end catches what static design hides.** Three bugs (two tab-alignment
   issues, one broken variable binding from editing text directly) only showed up while interacting with
-  it. Live QA isn't optional.
+  it. Live QA, testing the interaction by hand, isn't optional.
 
 # Chapter 2: the engine in code
 
@@ -525,7 +525,7 @@ happens when the prototype stops simulating and starts actually computing: a Typ
 a property and returns its investment metrics. Pure logic, no UI: today it's just the engine and its
 tests.
 
-## The approach: TDD with the research as a compass
+## The approach: TDD, the test before the code, with the research as a compass
 
 The engine is **strict TypeScript, no runtime dependencies, framework-agnostic** (the UI will import it
 later; there's no UI yet). I built it with TDD (red, green, refactor), and the detail that makes it
@@ -601,7 +601,7 @@ dictate: it returns structured data per scenario, not a verdict, the same postur
   denominated in UVAs (inflation-adjusted via CER, Argentina's reference stabilization coefficient). In a
   currency lag scenario, that understates the real payment. It's documented as v2 debt in the domain spec
   itself: I chose an honest, declared simplification over false precision.
-- **IRR and NPV are out of scope.** The metrics that weigh the time value of money are v2 work: they
+- **IRR and NPV, the two metrics that discount money over time, are out of scope.** The metrics that weigh the time value of money are v2 work: they
   require modeling period-by-period cash flow and have no closed-form formula, which multiplies the
   complexity by two or three.
 - **No real data.** The neighborhood median comes in as an input; the percentile and the distribution are

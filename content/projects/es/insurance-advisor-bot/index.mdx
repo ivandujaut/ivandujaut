@@ -15,9 +15,9 @@ cover:
   src: ./cover.jpg
   alt: "Ilustración editorial cinematográfica con grano de película: una pequeña figura humana parada sola en una sala oscura de paredes índigo y piso de baldosas en perspectiva isométrica, iluminada por una burbuja de diálogo que flota frente a ella y brilla con luz cálida anaranjada, proyectando un halo tibio sobre el piso"
 metrics:
-  - label: "Dudas resueltas sin llamar al LLM"
+  - label: "Dudas resueltas sin llamar al modelo de lenguaje"
     value: "64%"
-  - label: "AUC del router semántico"
+  - label: "Calidad del router semántico (AUC)"
     value: "0.92"
   - label: "Macro-F1 del clasificador de emociones"
     value: "0.87"
@@ -38,7 +38,7 @@ dentro del chat. Para anclar el análisis en datos reales elegí un caso de estu
 bot Letizia es de los buenos, y aun así atiende, no vende), pero el motor es white-label: la marca es
 configuración y el catálogo es contenido, así que sirve para cualquier aseguradora. Cada decisión está
 documentada con su criterio, su dato y su trade-off, y las piezas de IA no se asumen: se miden (una
-curva ROC para el router de dudas, un eval con macro-F1 para el clasificador de emociones). Está
+curva ROC, que mide cuántos aciertos gana el modelo por cada error que suma, para el router de dudas, un eval con macro-F1 para el clasificador de emociones). Está
 desplegado en una demo pública que podés probar en un clic.
 
 </Abstract>
@@ -65,7 +65,7 @@ El mapa del recorrido del cliente quedó así:
 Una precisión importante, porque el matiz es la tesis: **el asesoramiento existe**. Está el asesor del
 call center y, sobre todo, están los productores asesores, que son el corazón comercial del rubro. Y
 cotizar por WhatsApp también se puede: lo probé como cliente. Pedí cotizar mi auto aclarando desde el
-primer mensaje que era usado, sin GNC y de uso particular, y el canal me derivó con una asesora humana.
+primer mensaje que era usado, sin GNC (el equipo de gas) y de uso particular, y el canal me derivó con una asesora humana.
 La atención fue correcta, pero el diseño del camino mostró sus costuras: la primera respuesta llegó a
 los 22 minutos; me pidió todos los datos juntos, como un formulario dictado (DNI, fecha de nacimiento y
 patente incluidos, antes de ver un precio); me re-preguntó el uso y el GNC que yo ya había aclarado; y
@@ -219,7 +219,7 @@ La parte que más me interesa mostrar: las piezas de IA no se asumen, se miden.
 
 En el motor hay dos piezas semánticas distintas, y cada una resuelve un problema de negocio diferente:
 
-**RAG (el LLM anclado a una base de conocimiento).** El problema que resuelve es de **confianza**: un
+**RAG (el modelo de lenguaje, o LLM, anclado a una base de conocimiento).** El problema que resuelve es de **confianza**: un
 asistente de seguros que inventa una cobertura no es una demo con un bug, es un riesgo. Por eso el modelo
 no habla de memoria: responde sobre una base de contenido real relevado (los planes, la franquicia con
 ejemplo, los requisitos por línea). El beneficio acá no es de costo, es que baja las respuestas
@@ -261,7 +261,7 @@ y 31 distractores como negativos:
 
 <Figure
   src="/showcase/insurance-advisor-bot/roc-faq.svg"
-  alt="Curva ROC del router de FAQ con AUC 0.92, marcando el punto de operación en umbral 0.65 con TPR 65% y FPR 3%"
+  alt="Curva ROC del router de FAQ con AUC 0.92, marcando el punto de operación en umbral 0.65 con 65% de aciertos (TPR) y 3% de falsas alarmas (FPR)"
   width={480}
   height={430}
   caption="La curva ROC del router (AUC 0.92). El punto de operación elegido cae en el codo: máxima cobertura antes de que los falsos positivos se disparen. Muy permisivo y el bot contesta enlatado a lo que no sabe; muy estricto y casi nunca ahorra."

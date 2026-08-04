@@ -170,7 +170,7 @@ the same guarantees already described above (the teacher decides, nothing breaks
   `security definer` functions, so a student can never see an exam's answer key or write something they
   shouldn't (`lib/supabaseServer.ts`, `db/02_rls.sql`). This is what makes "the teacher decides" hold up,
   not just get claimed: if a student could read the answer key, trust in the grading would collapse.
-- **CI with four gates** (types, lint, build, and E2E with Playwright over real auth,
+- **CI, continuous integration, with four gates** (types, lint, build, and end-to-end (E2E) tests with Playwright over real auth,
   `.github/workflows/ci.yml`). Every feature went in through a PR with green CI, including the AI grader.
 - **A custom evaluation harness for the AI grader** (`eval/grading/run.ts`): before wiring the grader into
   the UI, I measured its quality against a set of cases, instead of assuming "the AI grades well" because
@@ -182,7 +182,7 @@ the same guarantees already described above (the teacher decides, nothing breaks
 - **The reframe.** Parcialito doesn't compete with Forms or Kahoot on running the exam; it competes with
   forgetting on bringing the student back the following week.
 - **"The teacher confirms" doesn't just live in the copy.** It's in the flow (the grader suggests, it
-  doesn't close the loop) and in the database (RLS keeps a student from reading the answer key and
+  doesn't close the loop) and in the database (RLS, the database's row-level access rules, keeps a student from reading the answer key and
   breaking that guarantee from behind). If it only lived in the screen's text, it would be a marketing
   promise, not a property of the system.
 - **Real validation before building.** Four teachers before the AI grader, staging before every merge, an
@@ -196,13 +196,13 @@ Being honest about the gaps is part of the job:
 
 - **Practice mode integrity, unresolved.** It always reveals the answer; a larger question pool plus
   randomization is still pending to make memorizing a non-viable strategy.
-- **Database types written by hand.** `lib/db.types.ts` isn't generated from the Supabase CLI yet: it
+- **Database types written by hand.** `lib/db.types.ts` isn't generated from the Supabase command line (CLI) yet: it
   risks drifting out of sync with the real schema.
 - **Cron on the Hobby plan runs daily.** AI grading fires on-demand from the teacher; the cron is just the
   safety net, not the main path, but a higher-tier plan would make it more frequent.
 - **No unit tests.** The strategy was E2E coverage of critical flows with Playwright; it covers the happy
   path and auth flows, but leaves gaps a unit test would catch more cheaply.
-- **Partial accessibility.** Dialog focus-trapping is only half-solved, and a full WCAG contrast sweep is
+- **Partial accessibility.** Dialog focus-trapping is only half-solved, and a full contrast sweep against WCAG, the web accessibility standard, is
   still missing.
 - **Limited content.** It runs on one real model exam today; expanding the content bank is a condition for
   scaling to more teachers.
@@ -212,7 +212,7 @@ Being honest about the gaps is part of the job:
 - If I rebuilt Parcialito from scratch, I'd start with spaced repetition and leave the AI grader for
   later: grading was the loudest pain, but retention (getting the student to come back) was the real
   problem, and it took me longer than it should have to prioritize it.
-- The "Approve" button that let a grade through unread (see above) reset my QA standard: test the full
+- The "Approve" button that let a grade through unread (see above) reset my QA, the bar I test against, standard, the bar I test against,: test the full
   interaction with a real class, not just check that the screen looks right.
 
 ## Stack
@@ -241,8 +241,8 @@ repetition plus AI grading with the teacher in control. I'm publishing this to h
 
 - Where do you see the bigger risk: a teacher's willingness to trust AI grading of open-ended answers
   (even if they confirm the grade), or student retention once the novelty wears off?
-- Who would you prioritize monetizing first: the teacher who adopts it, the institution, or a direct
-  B2C model aimed at the student?
+- Who would you prioritize monetizing first: the teacher who adopts it, the institution, or a
+  B2C model, aimed directly at the student?
 - Practice mode always reveals the answer, in exchange for immediate learning. Is that the right
   trade-off, or should integrity weigh more even at v1?
 - What's missing from the teacher-student loop for a school, not just an individual teacher, to adopt it?

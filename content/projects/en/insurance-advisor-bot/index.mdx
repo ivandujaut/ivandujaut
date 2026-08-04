@@ -15,9 +15,9 @@ cover:
   src: ./cover.jpg
   alt: "Cinematic editorial illustration with film grain: a small human figure standing alone in a dark room with indigo walls and a tiled floor in isometric perspective, lit by a speech bubble floating in front of them glowing with warm orange light, casting a soft warm halo on the floor"
 metrics:
-  - label: "Known questions answered without calling the LLM"
+  - label: "Known questions answered without calling the language model"
     value: "64%"
-  - label: "AUC of the semantic router"
+  - label: "Quality of the semantic router (AUC)"
     value: "0.92"
   - label: "Macro-F1 of the emotion classifier"
     value: "0.87"
@@ -38,7 +38,7 @@ inside the chat. To ground the analysis in real data I picked a concrete case st
 Letizia is one of the good ones, and even so it serves, it doesn't sell), but the engine is
 white-label: the brand is configuration and the catalog is content, so it works for any insurer. Every
 decision is documented with its criteria, its data and its trade-off, and the AI pieces are not
-assumed to work: they are measured (a ROC curve for the FAQ router, a macro-F1 eval for the emotion
+assumed to work: they are measured (a ROC curve, which weighs how many hits the model gains per error it adds, for the FAQ router, a macro-F1 eval for the emotion
 classifier). It is deployed as a public demo you can try in one click.
 
 </Abstract>
@@ -66,7 +66,7 @@ The customer journey map came out like this:
 One important precision, because the nuance is the thesis: **advising exists**. There's the call
 center agent and, above all, there are the licensed insurance brokers (productores asesores), the
 commercial heart of the industry. And quoting over WhatsApp is possible too: I tested it as a
-customer. I asked to quote my car, stating in my very first message that it was used, without CNG and
+customer. I asked to quote my car, stating in my very first message that it was used, without CNG (a natural-gas conversion) and
 for personal use, and the channel routed me to a human agent. The service was courteous, but the
 path's design showed its seams: the first reply took 22 minutes; it asked for all the data at once,
 like a dictated form (national ID, birth date and license plate included, before seeing any price); it
@@ -224,7 +224,7 @@ The part I most want to show: the AI pieces are not assumed, they are measured.
 
 The engine has two distinct semantic pieces, and each solves a different business problem:
 
-**RAG (the LLM anchored to a knowledge base).** The problem it solves is **trust**: an insurance
+**RAG (the language model, or LLM, anchored to a knowledge base).** The problem it solves is **trust**: an insurance
 assistant that invents a coverage isn't a demo with a bug, it's a risk. So the model doesn't speak from
 memory: it answers over a base of real surveyed content (the plans, the deductible with an example, the
 requirements per line). The benefit here isn't cost, it's fewer invented answers in the industry where
@@ -266,7 +266,7 @@ leave-one-out and 31 distractors as negatives:
 
 <Figure
   src="/showcase/insurance-advisor-bot/roc-faq.svg"
-  alt="ROC curve of the FAQ router with AUC 0.92, marking the operating point at threshold 0.65 with 65% TPR and 3% FPR"
+  alt="ROC curve of the FAQ router with AUC 0.92, marking the operating point at threshold 0.65 with 65% hit rate (TPR) and 3% false alarms (FPR)"
   width={480}
   height={430}
   caption="The router's ROC curve (AUC 0.92). The chosen operating point sits at the elbow: maximum coverage before false positives take off. Too permissive and the bot gives canned answers to things it doesn't know; too strict and it almost never saves anything."
