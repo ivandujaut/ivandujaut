@@ -84,6 +84,16 @@ const projects = defineCollection({
       // Qué tipo de trabajo es la pieza: producto construido, caso de mejora
       // sobre un producto ajeno, o diseño. Eje independiente del status.
       kind: s.enum(["build", "case-study", "design"]).default("build"),
+      // De quién es el producto del que habla la pieza. Es un eje distinto de
+      // `kind` y no se deduce de él: `investor-mode` es un diseño (kind) sobre
+      // un producto ajeno (subject), y nada impide que algún día haya un diseño
+      // sobre algo propio.
+      //
+      // El listado agrupa por acá, bajo encabezados que dicen "Productos que
+      // construí" y "Productos ajenos que analicé". Una pieza mal marcada queda
+      // debajo de un título que afirma algo falso, así que el campo es
+      // obligatorio y sin default: cada caso nuevo tiene que declararlo.
+      subject: s.enum(["own", "external"]),
       featured: s.boolean().default(false),
       stack: s.array(s.string()).min(1),
       repo: s.string().url().optional(),

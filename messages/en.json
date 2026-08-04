@@ -132,8 +132,8 @@
     "title": "Projects",
     "description": "Case studies and featured work.",
     "sections": {
-      "featured": "Featured",
-      "more": "More projects",
+      "own": "Products I built",
+      "external": "Other products I analyzed",
       "stack": "Stack",
       "metrics": "Results"
     },

@@ -132,8 +132,8 @@
     "title": "Proyectos",
     "description": "Casos de estudio y trabajos destacados.",
     "sections": {
-      "featured": "Destacados",
-      "more": "Más proyectos",
+      "own": "Productos que construí",
+      "external": "Productos ajenos que analicé",
       "stack": "Stack",
       "metrics": "Resultados"
     },
