@@ -6,7 +6,7 @@ import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { Download } from "@/components/animate-ui/icons/download";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { ImagesBadge } from "@/components/ui/images-badge";
-import { getPreviewProject } from "@/lib/content";
+import { getLatestProject } from "@/lib/content";
 import { Link } from "@/i18n/navigation";
 import { localePath } from "@/lib/seo";
 
@@ -25,13 +25,13 @@ const socialLinks = [
 
 export function Hero({ locale }: { locale: "es" | "en" }) {
   const t = useTranslations("home.hero");
-  const previewProject = getPreviewProject(locale);
-  const badgeText = previewProject ? t("badge", { title: previewProject.title }) : "";
-  const badgeHref = previewProject ? localePath(locale, `/projects/${previewProject.slug}`) : "";
+  const latestProject = getLatestProject(locale);
+  const badgeText = latestProject ? t("badge", { title: latestProject.title }) : "";
+  const badgeHref = latestProject ? localePath(locale, `/projects/${latestProject.slug}`) : "";
 
   return (
     <section>
-      {previewProject?.preview && (
+      {latestProject?.preview && (
         // El abanico se abre hacia arriba y hacia los costados desde la carpeta,
         // que arranca pegada al borde izquierdo de la columna. En tamaño LARGE
         // el borde izquierdo del abanico cae 96px a la izquierda de ese borde,
@@ -53,14 +53,14 @@ export function Hero({ locale }: { locale: "es" | "en" }) {
             className="lg:hidden"
             text={badgeText}
             href={badgeHref}
-            images={previewProject.preview}
+            images={latestProject.preview}
             revealOnInteraction={false}
           />
           <ImagesBadge
             className="hidden lg:inline-flex"
             text={badgeText}
             href={badgeHref}
-            images={previewProject.preview}
+            images={latestProject.preview}
             folderSize={{ width: 48, height: 36 }}
             teaserImageSize={{ width: 40, height: 28 }}
             hoverImageSize={{ width: 140, height: 108 }}
