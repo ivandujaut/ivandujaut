@@ -11,8 +11,15 @@ const labels = {
   en: { title: "Featured projects", viewAll: "View all" },
 };
 
+/**
+ * Tope de casos en la home. La curaduría la hace el frontmatter (`featured`),
+ * pero el corte evita que la home crezca sin querer si se marca uno de más:
+ * arriba de tres, el listado deja de leerse y empieza a scrollearse.
+ */
+const HOME_LIMIT = 3;
+
 export function FeaturedProjects({ locale }: FeaturedProjectsProps) {
-  const projects = getFeaturedProjects(locale);
+  const projects = getFeaturedProjects(locale).slice(0, HOME_LIMIT);
 
   if (projects.length === 0) return null;
 

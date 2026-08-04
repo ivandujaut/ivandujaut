@@ -1,0 +1,297 @@
+---
+title: "PIX did not kill the wallets. It forced them to become banks."
+tagline: "What Brazil's free rail killed, what it gave away and where the margin went. The lesson for MODO, Mercado Pago, Ualá, Pomelo and ueno"
+description: "Independent analysis on BCB open data: which instruments PIX killed (DOC reached exactly zero), what it gave away (the rail wallets grew on) and where the margin moved. With the month PIX became a checkout network, and the echo for Argentina and Paraguay."
+year: 2026
+date: "2026-08-04"
+role: "Product"
+status: "concept"
+kind: "case-study"
+featured: true
+cover:
+  src: ./cover.jpg
+  alt: "Nighttime editorial illustration with film grain: a huge bridge shaped like the PIX diamond glows turquoise across the scene; three luminous tokens carrying the Nubank, Mercado Pago and PicPay marks move along it toward a classical bank facade lit in amber at the far end; below, in shadow, lie the wreckage of smashed toll booths and dull coins, while a faceless figure steps onto the causeway from the left"
+stack: ["Open data (BCB)", "Python", "matplotlib"]
+preview:
+  - src: /projects/pix-brasil/g1_instrumentos.png
+    alt: "Diverging bars of which payment method fell and which grew between 2020 and 2025"
+  - src: /projects/pix-brasil/g2_crossover.png
+    alt: "Curves of PIX use between people and toward merchants, crossing in 2025"
+  - src: /projects/pix-brasil/g3_billeteras.png
+    alt: "Slopes of PIX key share per participant between 2021 and 2026"
+metrics:
+  - label: "PIX transactions in 2025"
+    value: "79.6B"
+  - label: "DOC transactions in 2025"
+    value: "0"
+  - label: "Month PIX became a checkout rail"
+    value: "Sep 2025"
+  - label: "Merchant cost vs credit card"
+    value: "0.22% vs ~2.2%"
+translationKey: "pix-brasil"
+draft: false
+---
+
+<Abstract label="TL;DR">
+
+In November 2020 Brazil's Central Bank launched PIX, an instant payment rail that
+is free for people and mandatory for large banks. The reading that has circulated
+ever since says it ate the private wallets' market. The BCB's own open data tells
+a different story, and a more useful one for anyone building payments in the
+region.
+
+What PIX killed were instruments: DOC went from 250 million transactions to
+**exactly zero**, TED lost 57% of its operations, cash withdrawals fell 36% and
+debit cards had their first annual decline in 2025. The wallets, meanwhile, grew
+riding on the rail: Nubank, PicPay and Mercado Pago now hold 36.6% of all PIX
+keys, more than Itaú, Bradesco and Santander combined. And in **September 2025**,
+a month I computed on the BCB's granular dataset and that is published nowhere,
+the most important thing happened: for the first time Brazilians used PIX more to
+pay merchants than to send money to each other.
+
+The thesis of this case: PIX gave the wallets the rail and confiscated their moat.
+The transfer layer became free by mandate, so the system's margin moved to the one
+place the rail does not touch: credit. The winners were those who could lend, the
+losers were the owners of the old rails, and the whole market grew wider at the
+bottom. At the end, what this means for MODO, Mercado Pago, Ualá, Pomelo and
+ueno. Independent analysis, not affiliated with any of the companies mentioned.
+
+</Abstract>
+
+## The gift was designed
+
+PIX won on three design decisions no private player could make, rather than on the
+quality of its app. They are documented in the
+[BIS analyses of the system](https://www.bis.org/publ/bisbull52.pdf):
+participation is **mandatory** for large institutions, so the network was born
+complete instead of growing in fragments; usage is **free for individuals** by
+mandate, so nobody can undercut it on price; and the brand is **single and owned
+by the regulator**, so the butcher and the bank display the same logo.
+
+There is a fourth decision that usually falls out of the story and sets the board:
+in June 2020, five months before launching PIX,
+[the BCB suspended WhatsApp Pay](https://www.cnnbrasil.com.br/tecnologia/bc-suspende-pagamento-por-whatsapp-e-diz-que-operacao-requer-aval-previo/),
+which had launched with a 3.99% merchant fee. The regulatory message was clear:
+Brazil was not going to have a private closed loop dominating person-to-person
+payments. That fee pool stayed empty by regulation before anyone could fill it.
+
+To size what came next: PIX went from 176 million transactions in its first two
+months to **79.6 billion in 2025** (452x), moving R$ 35.3 trillion, according to
+my calculation on the BCB's payment-methods series. The
+[BCB's own survey](https://agenciabrasil.ebc.com.br/economia/noticia/2024-12/pix-ja-e-forma-de-pagamento-mais-usada-no-brasil)
+shows cash falling from 42% to 22% as the most used payment method in three years.
+
+## The kill was selective
+
+The right question is at whose expense it grew. The answer sits in the BCB's
+quarterly series.
+
+<Figure
+  src="/projects/pix-brasil/g1_instrumentos.png"
+  alt="Diverging horizontal bar chart of the percentage change in transaction counts between 2020 and 2025 by instrument: DOC minus one hundred percent, cheque minus 62, TED minus 57, cash withdrawals minus 36; boleto plus 9, debit plus 43, credit plus 147, prepaid cards plus 971. PIX annotated off the scale at 452x. Chart labels are in Spanish."
+  width={1495}
+  height={886}
+  caption="Own work on the BCB's quarterly payment-methods series (open data), annual totals for 2020 against 2025. PIX falls off the scale: it multiplied its transactions by 452."
+/>
+
+The instruments whose only job was moving money died: DOC reached **exactly zero**
+and was [formally switched off in January 2024](https://www.infomoney.com.br/minhas-financas/fim-de-uma-era-transacoes-via-doc-tec-terminam-em-15-de-janeiro-no-pais/),
+with Febraban explaining that customers preferred PIX "por ser gratuito e
+instantâneo". Cheques lost 62% of their operations. Cash withdrawals, 36%.
+
+Two nuances block the simplistic story, and both matter. The **boleto did not
+die**: its transactions rose 9% and its value reached R$ 10 trillion in 2025; the
+instrument that bills companies survived the free rail. And **TED forked** instead
+of dying: it lost 57% of its operations while its value rose 61%, because it
+became the rail for large money. In June 2026 TED still moved more money than PIX
+(R$ 4.2 trillion against R$ 3.6 trillion in the month), with PIX doing 120 times
+more transactions. The new rail took the people; the old one kept the treasury.
+
+Debit is the victim still standing. It grew 43% between 2020 and 2025, but in 2025
+it had its **first annual decline** of the series, and the acquirers had been
+flagging it: for Stone, PIX
+["cannibalize on debit volumes... we do not see PIX cannibalizing on credit volumes"](https://www.fool.com/earnings/call-transcripts/2024/11/12/stoneco-stne-q3-2024-earnings-call-transcript/);
+for PagSeguro,
+["probably PIX is cannibalizing the growth of debit"](https://www.insidermonkey.com/blog/pagseguro-digital-ltd-nysepags-q2-2023-earnings-call-transcript-1187479/).
+The reason is price: a Brazilian merchant pays
+[0.22% on average for PIX against ~1.1% for debit and ~2.2% for credit](https://www.bis.org/publ/bisbull52.pdf).
+Against debit, PIX competes head to head and cheaper. Credit it barely touches,
+because credit sells financing, which the rail does not include.
+
+## September 2025: the month PIX changed jobs
+
+<Figure
+  src="/projects/pix-brasil/g2_crossover.png"
+  alt="Line chart of the monthly share of PIX transactions between people (P2P) and from people to merchants (P2B) from November 2020 to July 2026; the curves cross in September 2025, marked with a dashed line. Chart labels are in Spanish."
+  width={1495}
+  height={886}
+  caption="Own work on the BCB's granular PIX transactions dataset (69 months). In September 2025 merchant payments overtook person-to-person transfers for the first time."
+/>
+
+In its first December, PIX was a transfer app: 84.8% of operations were between
+people and only 6.4% went to merchants. Five years later, in December 2025,
+merchant payments were already 44.4% (3.15 billion transactions in the month)
+against 42.4% for P2P. The crossing happened in **September 2025**, by a thin
+margin I will state: 677,000 transactions out of 6.13 billion, one hundredth of a
+point. From there the gap only widened: two points by December, almost seven by
+July 2026. This is my calculation on the BCB's granular dataset; I found no
+publication that had done it.
+
+That crossing is what reorders the industry. While PIX was P2P, it competed
+against cash and DOC. Once it became a checkout network, it started competing
+against acquiring, which was the business of Stone, PagSeguro and Cielo:
+[Bloomberg documented](https://www.bloomberg.com/news/articles/2023-11-08/after-tumbling-90-fintechs-battle-brazil-instant-payment-mania)
+Stone and PagSeguro falling from some USD 50 billion in combined valuation to
+about a tenth of that. One nuance: not all of that collapse is PIX (Cielo, for
+one, lost share to Stone and PagSeguro themselves before being delisted), and
+Stone today reports record average fees while integrating PIX QR into its
+terminals. The cheap rail hit valuations and at the same time became an input for
+those same companies.
+
+## The wallets that supposedly died
+
+<Figure
+  src="/projects/pix-brasil/g3_billeteras.png"
+  alt="Slope chart of the share of the PIX key registry by participant between December 2021 and July 2026: Nubank, PicPay and Mercado Pago rise in blue; Caixa, Bradesco and Itaú fall in grey. Chart labels are in Spanish."
+  width={1495}
+  height={886}
+  caption="Own work on the BCB's DICT registry (PIX keys per participant). Wallets and neobanks climbed while incumbent banks gave up share of the registry."
+/>
+
+In the BCB's key registry, my calculation shows PicPay going from 6.0% of the
+stock in December 2021 to 10.1% in July 2026 (already above Itaú back then), and
+Mercado Pago from 4.8% to 7.7%. Adding Nubank (18.8%), the three wallets now hold
+36.6% of the system's keys, more than double Itaú, Bradesco and Santander
+combined. The business numbers follow:
+[Mercado Libre reported](https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm)
+78 million fintech users and USD 278 billion in TPV (+41%) in 2025, and
+[PicPay reached Nasdaq](https://www.sec.gov/Archives/edgar/data/1841644/000121390026080986/ea029910701ex99-1.htm)
+after doubling its profit. PicPay's prospectus puts it in writing: PIX "has been
+favorable to our platform". And Giménez, of Mercado Pago, had already described it
+back in 2021 as
+["incremental volume"](https://www.fool.com/earnings/call-transcripts/2022/02/22/mercadolibre-meli-q4-2021-earnings-call-transcript/).
+
+So the rail gave them everything? Not quite, and here is the price they paid:
+
+<Thesis>
+
+PIX gave the wallets the rail and confiscated their moat. Moving money became
+public infrastructure: P2P funded with balance is free by mandate, the closed loop
+was banned in practice, and the system's margin moved to the one place the rail
+does not touch: credit.
+
+</Thesis>
+
+PicPay's prospectus documents it with accounting precision: PIX transfers funded
+with balance are "free of charge"; the company monetizes when the funding source
+is a credit card (3.49% to 5.49%) and through
+[Pix Credit, which moved R$ 19.6 billion in 2024 (+69%)](https://www.sec.gov/Archives/edgar/data/1841644/000121390026001029/ea0201690-17.htm).
+52% of its 2025 revenue already comes from credit, and the company now describes
+itself as one of Brazil's leading digital banks. Nubank turned PIX into an
+interface and a credit originator. And the most telling signal of who kept what:
+[the BCB dropped its plan to regulate an official Pix Parcelado](https://agenciabrasil.ebc.com.br/economia/noticia/2025-12/apos-adiamentos-banco-central-desiste-de-regular-pix-parcelado)
+and left the financing to private hands, at rates around 5% monthly. The State
+kept the rail; the margin stayed upstairs, for whoever holds a licence and a
+balance sheet.
+
+## The echo: what each player down here reads
+
+Argentina already shows the same pattern of victims.
+[The BCRA's retail payments report](https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/Informe-Mensual-de-Pagos-Minoristas-julio-2025.pdf)
+for July 2025 records debit falling 31.5% year on year in counts and ATM
+withdrawals 40.5%, with credit rising 12.9%. The Brazilian sequence, delayed and
+without a PIX: here the rail is Transferencias 3.0 and the interoperable QR. What
+each type of player can read from the case:
+
+1. **MODO (the banks' wallet).** Its CEO
+   [claims 7.5 million active users](https://planbmisiones.com/2025/11/04/nota/ceo-de-modo-la-2-billetera-estamos-creciendo-al-250-la-gente-deja-de-usar-el-plastico-y-el-efectivo-y-paga-con-el-celular/),
+   a self-reported figure that changes from one article to the next. The BCRA's
+   hard data tempers the story: interoperability did not deconcentrate the market
+   (Mercado Pago holds 82% of the balances in payment accounts) and, per the same
+   report, the most operated pair on the interoperable QR is MODO paying on
+   Mercado Pago's QR codes. The Brazilian lesson for a bank consortium: the shared
+   rail changes where you compete, and the share already lost stays lost. Caixa,
+   Bradesco and Itaú own the rail and still gave up registry share to the
+   neobanks.
+2. **Mercado Pago (the superapp).** It is the player that already ran this play in
+   Brazil: embrace the rail as incremental volume and monetize with credit, taking
+   the QR to the long tail of merchants. Its risk in Argentina is regulatory
+   before it is competitive: the Brazilian case shows that a determined regulator
+   can make a revenue-generating layer free overnight.
+3. **Ualá (the challenger neobank).** It was the one that pushed interoperability
+   ([Ualá's QR shipped alongside the launch of Transferencias 3.0](https://www.infobae.com/economia/networking/2021/11/30/uala-lanzo-su-qr-interoperable-para-realizar-pagos-y-cobros/),
+   with Barbieri arguing that every merchant should accept any wallet), and
+   [its pricing already mirrors the Brazilian logic](https://www.cronista.com/finanzas-mercados/uala-bis-lanza-un-nuevo-pos-para-comercios-cuanto-cuesta-y-cuales-son-las-comisiones/):
+   0.6% for transfer collection against 2.9% for debit and 4.4% for credit. The
+   case confirms its bet: a shared rail favours the challenger without an
+   installed base, and the margin has to be built upstairs, in credit and
+   insurance, which is exactly where Ualá went.
+4. **Pomelo (the B2B infrastructure).** Its reading of Brazil was the sharpest on
+   the map: an indirect PIX participant, focus pulled away from accounts (what the
+   rail commoditized) and placed on
+   [cards and credit](https://startups.com.br/negocios/fintech/pomelo-foca-em-cartoes-e-quer-conquistar-bancos-incumbentes/),
+   tokenization and global issuing. For an infrastructure provider, a state rail
+   works less as a threat than as the event that forces every client to rebuild
+   their plumbing, and Pomelo sells that rebuild.
+5. **ueno (the Paraguayan neobank).** Paraguay is running the Brazilian film years
+   later and with the script in plain sight: the
+   [BCP's SPI already carries 97.2% of interbank operations](https://www.bcp.gov.py/web/institucional/w/sistema-de-pagos-instant%C3%A1neos-spi-impulsa-operaciones-electr%C3%B3nicas)
+   and the regulator explicitly copies the Brazilian manual, with a PIX
+   interconnection planned. ueno, with more than 2.7 million customers in a
+   country of some 6 million people, is the Nubank of that film: distribution
+   mounted on the state rail and the margin still to be built in credit, with the
+   Brazilian ending already visible.
+
+## What is data and what is assumption
+
+| Claim                                                                   | Status                                              |
+| ----------------------------------------------------------------------- | --------------------------------------------------- |
+| PIX 2020→2025: 176 M → 79.6 B transactions; R$ 35.3 trillion            | My calculation on BCB open data                     |
+| DOC at zero; TED −57% count / +61% value; cheque −62%; withdrawals −36% | My calculation on BCB open data                     |
+| Debit: first annual decline in 2025                                     | My calculation on BCB open data                     |
+| P2P→P2B crossover in September 2025                                     | My calculation (BCB granular dataset); unpublished  |
+| Keys: Nubank 18.8%, PicPay 10.1%, MP 7.7% (Jul 2026)                    | My calculation on the BCB's DICT                    |
+| PIX costs merchants 0.22% vs ~1.1% debit and ~2.2% credit               | BIS (minor inconsistency between its papers)        |
+| WhatsApp Pay block; DOC discontinued; Parcelado deregulated             | Published facts with sources                        |
+| Quotes from Stone, PagSeguro, PicPay and Mercado Pago                   | SEC filings and public transcripts                  |
+| Stone+PagSeguro valuation falling to ~a tenth                           | Bloomberg (Nov 2023); partially attributable to PIX |
+| Argentine echo (debit −31.5%, ATM −40.5%, MP 82% of balances)           | BCRA, retail payments report, July 2025             |
+| Regional echo: Ualá pricing, SPI 97.2%, ueno 2.7 M customers            | Published with sources                              |
+| MODO: 7.5 M active users                                                | Self-reported by its CEO, unaudited                 |
+| "The margin moved to credit"                                            | My interpretation on top of the data above          |
+
+<TableCaption>
+  The status column governs how each number reads. The own calculations are reproducible: the case
+  scripts download the BCB datasets and regenerate every figure and all three charts.
+</TableCaption>
+
+## What would change my mind
+
+The BCB does not publish PIX transaction volume per participant, only keys. If
+that data appeared and showed wallets losing transaction share to the banks, the
+thesis would move towards the reading this case discards; that hole is declared.
+
+If the wallets' growth turned out to be attributable only to general
+digitalization and the pandemic, the "rail as a gift" would be overstated: the
+counterfactual of how much they would have grown without PIX does not exist, and
+no accessible causal study resolves it. And if the BCB ever charged for the rail
+or regulated the credit margin on top of PIX, the regional conclusion (the margin
+stays upstairs, with the private players) would need rewriting: the December 2025
+signal points the other way, but it is a regulatory decision and it can change.
+
+## Sources
+
+- [BCB open data portal: PIX, DICT and payment-methods statistics](https://dadosabertos.bcb.gov.br/dataset/pix)
+- [BIS Bulletin 52: "Pix: Brazil's fast payment scheme"](https://www.bis.org/publ/bisbull52.pdf) and [BIS Papers 153](https://www.bis.org/publ/bppdf/bispap153.pdf)
+- [CNN Brasil: the BCB suspends WhatsApp Pay (June 2020)](https://www.cnnbrasil.com.br/tecnologia/bc-suspende-pagamento-por-whatsapp-e-diz-que-operacao-requer-aval-previo/)
+- [InfoMoney: the end of DOC (January 2024)](https://www.infomoney.com.br/minhas-financas/fim-de-uma-era-transacoes-via-doc-tec-terminam-em-15-de-janeiro-no-pais/)
+- [Agência Brasil: PIX as the most used payment method](https://agenciabrasil.ebc.com.br/economia/noticia/2024-12/pix-ja-e-forma-de-pagamento-mais-usada-no-brasil) and [the BCB drops the Pix Parcelado regulation](https://agenciabrasil.ebc.com.br/economia/noticia/2025-12/apos-adiamentos-banco-central-desiste-de-regular-pix-parcelado)
+- [PicPay, F-1 filed with the SEC (January 2026)](https://www.sec.gov/Archives/edgar/data/1841644/000121390026001029/ea0201690-17.htm) and [2025 results](https://www.sec.gov/Archives/edgar/data/1841644/000121390026080986/ea029910701ex99-1.htm)
+- [Mercado Libre, 10-K FY2025](https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm) and [Q4 2021 call](https://www.fool.com/earnings/call-transcripts/2022/02/22/mercadolibre-meli-q4-2021-earnings-call-transcript/)
+- [StoneCo, Q3 2024 call](https://www.fool.com/earnings/call-transcripts/2024/11/12/stoneco-stne-q3-2024-earnings-call-transcript/) and [PagSeguro, Q2 2023 call](https://www.insidermonkey.com/blog/pagseguro-digital-ltd-nysepags-q2-2023-earnings-call-transcript-1187479/)
+- [Bloomberg: payment fintechs against the instant payment mania (November 2023)](https://www.bloomberg.com/news/articles/2023-11-08/after-tumbling-90-fintechs-battle-brazil-instant-payment-mania)
+- [BCRA, monthly retail payments report (July 2025)](https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/Informe-Mensual-de-Pagos-Minoristas-julio-2025.pdf)
+- [Infobae: Ualá launches its interoperable QR (November 2021)](https://www.infobae.com/economia/networking/2021/11/30/uala-lanzo-su-qr-interoperable-para-realizar-pagos-y-cobros/)
+- [BCP: Paraguay's SPI](https://www.bcp.gov.py/web/institucional/w/sistema-de-pagos-instant%C3%A1neos-spi-impulsa-operaciones-electr%C3%B3nicas)
+- [Pomelo: focus on cards and credit in Brazil](https://startups.com.br/negocios/fintech/pomelo-foca-em-cartoes-e-quer-conquistar-bancos-incumbentes/)
+- [This case's scripts (GitHub)](https://github.com/ivandujaut/ivandujaut/tree/main/scripts): `analysis/pix-brasil.py` reproduces every own calculation and `charts/pix-brasil.py` regenerates the three charts; the BCB dataset URLs sit in each script's header.

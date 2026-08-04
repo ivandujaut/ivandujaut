@@ -116,16 +116,16 @@ export function getProjectTranslations(project: { translationKey?: string; local
 }
 
 /**
- * Caso que anuncia el badge del hero: el más nuevo que haya elegido sus 3
- * imágenes de preview en el frontmatter.
+ * Caso que anuncia el badge del hero: siempre **el más nuevo publicado**.
  *
- * Depende del dato y no de una lista fija para que no se quede viejo en
- * silencio: publicás un caso nuevo, le agregás `preview`, y el badge lo toma.
- * Un caso sin imágenes de proporción usable simplemente no define el campo y
- * no compite.
+ * Antes elegía el más nuevo que tuviera `preview` definido, y eso lo hacía
+ * envejecer en silencio: si un caso nuevo no declaraba sus 3 imágenes, el badge
+ * seguía anunciando uno viejo sin que nada fallara. Ahora el texto del badge no
+ * puede quedar desactualizado, y el abanico de imágenes queda como decoración
+ * opcional: se muestra solo si ese caso trae `preview` (ver `Hero`).
  */
-export function getPreviewProject(locale: Locale) {
-  return getProjects(locale).find((project) => project.preview !== undefined);
+export function getLatestProject(locale: Locale) {
+  return getProjects(locale)[0];
 }
 
 /**
