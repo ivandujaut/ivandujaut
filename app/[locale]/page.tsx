@@ -1,4 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 import { Hero } from "@/components/home/hero";
 import { Currently } from "@/components/home/currently";
 import { FeaturedProjects } from "@/components/home/featured-projects";
@@ -16,6 +19,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
+  // Mismo motivo que abajo, y mismo patrón que `app/[locale]/layout.tsx`: sin
+  // esto una sonda con punto genera la metadata de la home para su propio 404.
+  if (!hasLocale(routing.locales, locale)) return {};
+
   const isEs = locale === "es";
   const typedLocale = locale as "es" | "en";
 
@@ -59,6 +66,15 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;
+
+  // El layout ya valida el locale, pero su `notFound()` no frena a esta página:
+  // layout y page renderizan en paralelo. Una URL de un solo segmento que el
+  // proxy no reescribe (`/foo.php` y demás sondas de bots, excluidas del matcher
+  // por tener punto) entra acá con `locale = "foo.php"`, y `StatsGrid` explota
+  // buscando sus etiquetas en un idioma que no existe. La respuesta ya era 404,
+  // pero cada sonda dejaba una excepción en los logs.
+  if (!hasLocale(routing.locales, locale)) notFound();
+
   setRequestLocale(locale);
 
   const stats = await getAllStats(locale as "es" | "en");
