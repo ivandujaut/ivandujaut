@@ -60,6 +60,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: post.title,
     description: post.description,
+    // Mismo criterio que en projects: un borrador es "no listado", no
+    // "no publicado", hasta que lleva noindex.
+    robots: post.draft ? { index: false, follow: false } : undefined,
     alternates: buildContentAlternates({
       current: { locale: typedLocale, slug: post.slug },
       translations: translations.map((t) => ({ locale: t.locale, slug: t.slug })),
