@@ -473,8 +473,13 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 <strong>{t("languages.english")}</strong> ·{" "}
                 <span className="text-muted-foreground">{t("languages.englishLevel")}</span>
               </p>
-              <p className="mt-1 text-muted-foreground">{t("languages.englishDescription")}</p>
-              {/* El certificado vence en mayo de 2028: al rendir uno nuevo hay que
+              {/* Sin prosa alrededor a propósito. El certificado dice el nivel y lo
+                  respalda; cualquier oración que lo acompañe termina siendo defensa
+                  anticipada, y la que había le atribuía al examen una brecha entre
+                  escribir y hablar que son 5 puntos sobre 160, el escalón mínimo que
+                  reporta Duolingo.
+
+                  El certificado vence en mayo de 2028: al rendir uno nuevo hay que
                   actualizar puntaje y fecha en `languages.englishCertificate`, que es
                   el único lugar donde viven. */}
               <a
