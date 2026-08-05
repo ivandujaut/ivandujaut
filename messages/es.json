@@ -164,6 +164,10 @@
       "newer": "Caso siguiente",
       "older": "Caso anterior",
       "allProjects": "Ver todos los proyectos"
+    },
+    "trend": {
+      "good": "mejora",
+      "bad": "empeora"
     }
   },
   "paper": {

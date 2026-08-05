@@ -2,7 +2,13 @@ import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { GithubIcon, FigmaIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  GithubIcon,
+  FigmaIcon,
+  ArrowUpRight01Icon,
+  TradeUpIcon,
+  TradeDownIcon,
+} from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
@@ -283,6 +289,29 @@ export default async function ProjectPage({ params }: Props) {
                         en una línea y la unidad quedaba sola abajo. */}
                     <dd className="font-mono text-lg font-semibold tracking-tight tabular-nums">
                       {metric.value}
+                      {/* La flecha dice la dirección; el color, si esa
+                          dirección es buena. Así el lector sabe si leerlo como
+                          mejora sin abrir el caso (regla del nodo 4). */}
+                      {metric.trend && metric.trend !== "neutral" && metric.sentiment && (
+                        <span
+                          className={`ml-1.5 inline-flex items-center gap-0.5 align-middle text-sm font-medium ${
+                            metric.sentiment === "good"
+                              ? "text-emerald-600 dark:text-emerald-500"
+                              : "text-red-600 dark:text-red-500"
+                          }`}
+                        >
+                          <HugeiconsIcon
+                            icon={metric.trend === "up" ? TradeUpIcon : TradeDownIcon}
+                            size={16}
+                            strokeWidth={2}
+                            aria-hidden
+                          />
+                          {metric.change && <span className="text-xs">{metric.change}</span>}
+                          <span className="sr-only">
+                            {tProjects(metric.sentiment === "good" ? "trend.good" : "trend.bad")}
+                          </span>
+                        </span>
+                      )}
                     </dd>
                     <dt className="mt-1 text-xs text-muted-foreground">{metric.label}</dt>
                   </div>

@@ -125,14 +125,27 @@ const projects = defineCollection({
         )
         .length(3)
         .optional(),
+      // Tarjetas del encabezado. Regla: el `value` es UN valor que aterriza
+      // solo, nunca una secuencia ("6,9 → 6,9 → 9,2%" no la pudo leer ni el
+      // autor). Si la tendencia importa se declara aparte: `trend` es la
+      // dirección, `sentiment` dice si esa dirección es buena o mala (la
+      // morosidad bajando es verde aunque la flecha apunte para abajo) y
+      // `change` es la magnitud ("−1,3 pp"). El sitio dibuja la flecha
+      // verde o roja: el lector sabe si es mejora sin leer el caso.
       metrics: s
         .array(
-          s.object({
-            label: s.string(),
-            value: s.string(),
-            change: s.string().optional(),
-            trend: s.enum(["up", "down", "neutral"]).optional(),
-          }),
+          s
+            .object({
+              label: s.string(),
+              value: s.string(),
+              change: s.string().optional(),
+              trend: s.enum(["up", "down", "neutral"]).optional(),
+              sentiment: s.enum(["good", "bad"]).optional(),
+            })
+            .refine((m) => !m.trend || m.trend === "neutral" || !!m.sentiment, {
+              message:
+                "Una métrica con trend up/down exige sentiment: la dirección sola no dice si es mejora",
+            }),
         )
         .default([]),
       translationKey: s.string().optional(),

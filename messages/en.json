@@ -164,6 +164,10 @@
       "newer": "Next case",
       "older": "Previous case",
       "allProjects": "See all projects"
+    },
+    "trend": {
+      "good": "improving",
+      "bad": "worsening"
     }
   },
   "paper": {
