@@ -89,8 +89,8 @@
       "role": "Product Engineer",
       "location": "Argentina",
       "available": "Disponible",
-      "tagline": "Hago producto end-to-end: código, decisiones de roadmap y métricas que importan.",
-      "credentials": "Bioingeniero ITBA · Alumni Techstars W24",
+      "tagline": "Decido qué construye el equipo, mido si funcionó y escribo el código.",
+      "credentials": "Bioingeniero ITBA · Techstars W24",
       "badge": "Último caso: {title}",
       "ctas": {
         "work": "Ver mi trabajo",
@@ -99,10 +99,10 @@
     },
     "currently": {
       "title": "Actualmente",
-      "paragraph1": "Como Product Engineer en Prizmstack, desarrollo FIJI: una plataforma de valuación para negocios inmobiliarios. Trabajo en la migración de no-code a Next.js, y construyo el motor de simulaciones de valor.",
+      "paragraph1": "Como Product Engineer en Prizmstack construyo FIJI, una plataforma que valúa negocios inmobiliarios traduciendo métricas de operación a números de valuación. También lidero la migración de no-code a Next.js.",
       "stack": "Stack actual: TypeScript, Next.js, PostgreSQL, Supabase.",
-      "paragraph2": "En paralelo, enseño Técnicas Digitales en el IPSAJ (Instituto Politécnico San Arnoldo Janssen) a estudiantes de Electrónica. Combino código de producción con docencia, y eso me obliga a pensar en cómo se aprende a construir software.",
-      "paragraph3": "Abierto a nuevas oportunidades en LATAM (remoto preferido), idealmente en healthtech, fintech o startups con producto interesante. Para charlas más generales también: escribime o agendá una call."
+      "paragraph2": "En paralelo enseño Técnicas Digitales a estudiantes de Electrónica en el IPSAJ (Instituto Politécnico San Arnoldo Janssen), la escuela técnica donde me recibí.",
+      "paragraph3": "Busco oportunidades remotas en LATAM, con preferencia por healthtech y fintech. Escribime o agendá una call."
     },
     "sections": {
       "featuredWork": "Proyectos destacados",
@@ -188,9 +188,9 @@
     "title": "Acerca de mí",
     "intro": {
       "greeting": "Hola, soy Iván",
-      "paragraph1": "Product Engineer con 4 años construyendo producto en Next.js + TypeScript. Vivo en Argentina, trabajo remoto con equipos en EE.UU. y LATAM. Mi rol está entre código, decisiones de producto y métricas de negocio. No solo escribo features, decido cuáles vale la pena escribir.",
-      "paragraph2": "Mi base es atípica: soy bioingeniero del ITBA, con tesis en predicción de mortalidad oncológica usando datos del Hospital Italiano. Esa formación me dejó un instinto cuantitativo que hoy aplico modelando features, midiendo impacto y priorizando. Pasé de frontend a Product Engineer en 4 años: Techstars '24 con un equipo founding en Nueva York, lead técnico en proyectos B2B/B2C con 1.500+ usuarios activos, y hoy decisiones de producto sobre roadmap y prioridades.",
-      "paragraph3": "Estoy abierto a nuevas oportunidades, especialmente en equipos donde producto, ingeniería y negocio se discuten en la misma mesa: healthtech, fintech o startups en crecimiento. Pero si lo tuyo es otra cosa, como un producto en el que estés pensando, una posible colaboración o simplemente conocernos, agendá una call y charlamos. Si es por un rol concreto, también podés escribirme o bajar mi CV.",
+      "paragraph1": "Product Engineer, con cuatro años repartidos entre decidir qué se construye y construirlo. Lo más útil que hice en Banana Software fue sacar del roadmap cerca de una de cada cinco funcionalidades planificadas, porque no justificaban lo que costaban. Las que quedaron las escribí yo, en Next.js y TypeScript. Vivo en Argentina y trabajo remoto con equipos en EE.UU. y LATAM.",
+      "paragraph2": "Soy bioingeniero del ITBA. Mi tesis predijo mortalidad a dos años en pacientes con metástasis hepática de cáncer colorrectal, con datos reales del Hospital Italiano, y de ahí me quedó la costumbre de pedirle un número a cada decisión antes de tomarla. Llegué a producto por el lado del frontend: pasé por el batch W24 de Techstars en Nueva York como parte del equipo fundador de Tumo, y después lideré cuatro proyectos en Banana con equipos de tres o cuatro personas y hasta 1.500 usuarios activos.",
+      "paragraph3": "Busco equipos donde producto, ingeniería y negocio se discutan en la misma mesa, sobre todo en healthtech, fintech o startups en crecimiento. Si tenés un rol concreto, escribime. Si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
       "ctas": {
         "email": "Escribime",
         "calendly": "Agendá una call",
@@ -205,7 +205,7 @@
       "contact": "Contacto"
     },
     "tools": {
-      "intro": "Trabajo principalmente con Next.js, TypeScript y PostgreSQL en proyectos de producto. Experiencia integrando pagos (Stripe, Mercado Pago, PayPal) y trabajando con stacks que migran de no-code a código (Bubble → Next.js).",
+      "intro": "Trabajo sobre todo con Next.js, TypeScript y PostgreSQL. Integré pagos con Stripe, Mercado Pago y PayPal, y migré producto de no-code a código (Bubble a Next.js).",
       "categories": {
         "frontend": {
           "label": "Frontend",
@@ -237,10 +237,10 @@
       "spanish": "Español",
       "spanishLevel": "Nativo",
       "english": "Inglés",
-      "englishDescription": "He trabajado con equipos en Nueva York y California desde 2023 (Tumo en Techstars W24, Prizmstack actualmente). La comunicación es principalmente escrita y asincrónica."
+      "englishDescription": "Básico conversacional. Escrito y asincrónico desde 2023, con equipos de Nueva York y California (Tumo en Techstars W24, Prizmstack hoy)."
     },
     "contact": {
-      "intro": "Si llegaste hasta acá y querés hablar, escribime por <email>email</email>. Respondo dentro de 24h.",
+      "intro": "Si querés hablar, escribime por <email>email</email>. Respondo dentro de 24h.",
       "alsoFind": "También en"
     }
   }
