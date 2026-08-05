@@ -1,0 +1,259 @@
+---
+title: "Primo nailed the entry. The public metric still has no owner."
+tagline: "It sold on results and picked the perfect showcase. The strategist move is missing: turn the regulator's number into product."
+description: "Independent analysis of how Primo entered the market, the insurtech that automates insurance collections: pay-for-results contract, a showcase in workers' compensation, and a public metric nobody owns yet. Rebuilt from public sources and the regulator's monthly series."
+year: 2026
+date: "2026-08-05"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: false
+stack: ["Open data (SRT · SSN)", "Python", "matplotlib"]
+metrics:
+  - label: "Premium uncollected, April 2026"
+    value: "$8.592B ARS"
+  - label: "Founding pilot, paid on results"
+    value: "45 days"
+  - label: "Serena ART arrears since the rebrand"
+    value: "4.9%"
+    change: "−1.3 pp"
+    trend: "down"
+    sentiment: "good"
+  - label: "Regulator bulletins in the series"
+    value: "69 of 73"
+cover:
+  src: ./cover.jpg
+  alt: "Cinematic editorial illustration with film grain: on the left, two polished vertical stone slabs lit in coral and separated by a dark gap, with a human figure in silhouette resting a hand on one of them; from a high slot on the right, an endless cascade of grey payment receipts falls in cold light, against a midnight blue background fading to black"
+translationKey: "primo-cobranza"
+draft: true
+---
+
+<Abstract label="TL;DR">
+
+[Primo](https://www.primo.la/) automates insurance operations with AI agents
+from Buenos Aires and Mexico City, and its path into the market can be rebuilt
+entirely from public sources: it won a pitch in front of a jury of insurers
+when it had no product and no clients yet (Mendoza, June 2024), turned the
+first interested executive into a 45-day arrears collection pilot paid on
+results, and grew from there into life, health and workers' compensation across
+two countries.
+
+This case names the two decisions behind that entry. The door: enter through
+the process where the result is already measured, because a pay-for-results
+contract needs a baseline. The showcase: appear in workers' compensation (ART),
+the only line where each player's arrears are public. And it
+finds the missing step: the regulator's metric runs on its own. I built the
+monthly series from the SRT (the workers' compensation regulator) starting in
+January 2024, to see what a prospect checking that number sees, and today the
+showcase series runs against it: Provincia ART hit 9.2% in April 2026, its
+worst reading in the window. There is an unused growth asset there, and a
+positioning risk nobody is managing. Independent analysis, not affiliated with
+any of the companies mentioned.
+
+</Abstract>
+
+In July 2024, [primo.la](https://www.primo.la/) was a domain for sale. The
+company already existed: a month earlier it had won the pitch round at the
+Argentine Insurtech Chamber MeetDay in Mendoza, with 8 of 10 votes from a jury
+of insurance executives, when it had no product and no clients yet. One of
+those executives called them in right after. The pilot that came out of it
+defined the whole company: arrears collection, 45 days, a target of beating the
+client's historical collection rate by 15%, and a contract with a minimum fee
+plus a variable cut of what was recovered. The first week they recovered
+nothing. The second week they hit the target.
+
+That contract explains more about Primo than any deck. The principle its press
+repeats today, no impact means no charge, was already in that first 2024
+contract, along with a minimum fee that today's version leaves out. The pricing
+model came before the product.
+
+## The timeline you can rebuild
+
+The public timeline is short and full of gaps. The second known client was Life
+Seguros, in life and general insurance. Then came Mexico: AXA Keralty, Afirme
+and Auna, clients in health and general insurance, none of them in workers'
+compensation. The first full Mexican rollout was in March 2026, according to
+the company's own blog.
+
+The workers' compensation clients show up at the end of that sequence, and they
+show up all at once: between March and May 2026 the site was redesigned and
+published its list of nine logos for the first time, Provincia ART and Serena
+ART among them. There is no dated announcement for either one. The press wave
+arrived in May: USD 150 million in premium under management and 70% automation
+(90% in another story the same week), self-reported figures with no known
+independent measurement.
+
+For a buyer, the context around those logos matters. Provincia ART had just
+announced a $180 billion peso capital injection in December 2025, with an
+explicit mandate to modernize. Serena ART is the former Omint ART, bought by
+Grupo Lapachos in October 2024 and renamed in September 2025. Two buyers with
+collections on the board's agenda, for public and dated reasons.
+
+Read as an entry strategy, the sequence is clean: demand came first, the
+product was distilled from the first contract, and the showcase was picked last,
+once there were results to show.
+
+<Thesis>
+
+A vendor's entry comes down to two choices, and neither one is how automatable
+the process is. The door: the process where the result is already measured,
+because without a baseline there is no pay-for-results contract. The showcase:
+the line where the result is public, because there the buyer's pain needs no
+argument. Primo nailed both. What it has not done yet is own the consequence: if
+the showcase is public, the regulator's metric is part of the product, and right
+now it runs on its own.
+
+</Thesis>
+
+## The door: where the result is already measured
+
+When I [mapped the four collection flows of Argentine insurance](/en/projects/cobranza-seguros),
+I ranked them from the seat of an insurer that builds: direct debit first, for
+volume and automation, the broker channel next, and workers' compensation third,
+because its lever depends on the employer's own payroll filing. That ranking
+still holds for whoever builds in-house. A vendor solves a different problem: it
+needs to close its first contract, and a pay-for-results contract demands a
+result you can measure in weeks. Arrears collection comes with one built in: the
+client's historical collection rate is the baseline, and 45 days are enough to
+move it or not.
+
+The pattern repeats across comparable vendors. Colektia, Kleva and Mozart, the
+AI collection vendors in the region, all entered through banks and fintechs,
+where arrears are a number the banking regulator forces them to provision and
+report. Toku, the only insurance-collection specialist in Latin America (a USD
+48 million Series A in 2025, active in Chile and Mexico, not in Argentina),
+entered in 2020 through a purely commercial pain: policies lapsing because
+automatic payments failed. Different routes, and all of them entered where
+arrears were already a number someone was watching.
+
+## The showcase: where the result is public
+
+There is one line in Argentine insurance where the state publishes that number
+with names attached: workers' compensation. Since January 2014 the SRT has put
+out a monthly bulletin per insurer with the premium agreed, the premium
+collected and the resulting arrears, broken down by sector and employer size.
+For the rest of the market, the SSN (the insurance regulator) publishes
+quarterly balance sheets and indicators per company, but no collection series
+at all: I checked its open data catalog while building this case and the
+collections one.
+
+Appearing there is rational. The buyer's pain was public and current: the
+Provincia ART capital injection and the Omint sale both ran in the general
+press, with dates. The success story Primo published is Provincia ART, and two
+of the three named testimonials on its site come from workers' compensation
+lines.
+
+## The number that runs on its own
+
+That showcase has an effect that waits for nobody: any administration manager
+evaluating Primo can open the bulletin for their own insurer, or for the one in
+the success story, and look. To see exactly what that prospect sees, I wrote a
+script that downloads the 73 bulletins in the period and builds the series from
+the 69 that have a text layer (the other four are scans with no extractable
+text). The script lives in the repo: anyone can regenerate every number from the
+source.
+
+<Figure
+  src="/projects/primo-cobranza/g1_morosidad.png"
+  alt="Line chart of monthly arrears for Provincia ART, Omint/Serena ART and the workers' compensation system total between January 2024 and April 2026, with two dated events marked by dotted lines (the Omint to Serena rebrand and the Provincia ART capital injection) and a band covering the window in which Primo's site published its client list and success story"
+  width={720}
+  height={435}
+  caption="Own work on the SRT's monthly bulletins (premium agreed vs collected, productive units). Gaps are months with no bulletin or bulletins scanned without a text layer. The dotted lines mark two dated events; the band marks the window in which Primo's site published its client list and success story (that window closes on 6 May, past the edge of the series). None of this claims causality."
+/>
+
+In the series, Provincia ART collects better than the system average across the
+six months of 2024 with a readable bulletin: between 4.1% and 6.9% arrears,
+against 6.1% to 7.8% for the total that year. In 2025 it sits in a higher band
+(6.4% to 8.0%), with the August to September jump (7.0 to 8.0%) the largest of
+the year. The decisive slide comes in 2026: 7.6% in February; 8.8% in March, the
+first of the 28 rebuilt months above the system (which came in at 8.3%); and
+9.2% in April, the worst reading in the window. Comparing April against April
+rules out seasonality: 6.9% in 2024, 6.9% in 2025, 9.2% in 2026. The whole
+deterioration is concentrated in the last year. Serena ART runs the opposite
+way: it was sliding as Omint down to 6.2% in August 2025, and since the
+September rebrand the series falls to close April at 4.9%, always below the
+system.
+
+None of this can be attributed to Primo, in either direction: the rollout date
+for each client is not public, so there is no before and after to work with. The
+"+30% in collections" from the success story may measure recovery on the stock
+of accumulated arrears, a different metric from the month's flow arrears, and
+both can improve and worsen at the same time. And an insurer's arrears depend on
+portfolio mix: if Provincia ART took on more delinquent sectors, the series gets
+worse without its collections running worse. What holds is smaller and more
+actionable: the number any prospect can look at today does not yet back the
+success story. That gap is manageable, and nobody is managing it.
+
+## What I would do with this
+
+**If I were Primo**, I would turn the public number into product, in three
+moves. One: define the success story's metric (what the +30% measures, on what
+base, since when) and publish it next to that client's SRT bulletin, month after
+month, so the contrast that is a risk today becomes the proof. Two: a public
+arrears dashboard by insurer, built on that same bulletin, as a demand
+generation engine: every manager who sees themselves above the system average
+walks into the first meeting already sold on the problem, and the yardstick
+already exists, published by the regulator, so turning it into product is cheap.
+Three: the cut-off criteria set in advance, which is what separates a dashboard
+from a brochure: if after six bulletins the showcase client's series does not
+follow, the showcase rotates to another client or the claim changes shape. An
+auditable showcase nobody audits is marketing; an audited one that holds up is
+the best sales machine a collections company can have.
+
+**If I were an insurer evaluating the vendor**, I would ask for the baseline in
+the same currency the regulator publishes, on top of the internal one. Primo's
+pay-for-results contract is good incentive design, and that is exactly why the
+definition of the metric matters more than the percentage promised.
+
+**If I were another vendor looking at insurtech**, the question that orders your
+entry is which process already has a number the board watches; the one in worst
+shape can wait. In Argentina that list is short, and at the top sits a line
+billed off the employer's own payroll filing. If Toku enters the country on the
+commercial side while Primo defends the regulatory showcase, that collision will
+be followable month by month in the same bulletin this case uses.
+
+## What is data and what is assumption
+
+| Claim                                                                                                                        | Status                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Timeline: pitch with no product (Jun 2024), 45-day pilot with a success fee, Life second, Mexico, ART logos together in 2026 | Retrospective press (Fortuna) + Wayback Machine of the site                            |
+| Monthly arrears per insurer: Provincia 9.2% (Apr 2026), crossover in Mar 2026, Serena 6.2 → 4.9%                             | My calculation on 69 of 73 SRT bulletins (four with no text layer); script in the repo |
+| Receivables over assets: Provincia ART 15% (2024) → 22.6% (Q3 2025)                                                          | My calculation on SSN open datasets                                                    |
+| USD 150M in premium, 70% automation, +30% in collections                                                                     | Primo's own claims, no independent measurement                                         |
+| Identity of the first client (2024 pilot)                                                                                    | Not published; no source names it                                                      |
+| Serena ART = former Omint ART; Provincia ART ≠ Provincia Seguros                                                             | SSN entity records                                                                     |
+| The Provincia ART WhatsApp assistant (Mar 2026) built by Primo                                                               | Inference from functional overlap; unconfirmed                                         |
+
+<TableCaption>
+  The status column governs how to read each number. The calculations are reproducible: the case
+  script resolves the bulletins against the SRT's own search, downloads them, and regenerates the
+  series and the chart.
+</TableCaption>
+
+## What would change my mind
+
+This case is written with the bulletins published through April 2026, and three
+things would refute it, all of them publishable by the people involved. If Primo
+published the rollout date at Provincia ART and the exact definition of the
++30%, and that metric improved where flow arrears do not, the gap I describe
+would be explained. If the next bulletins showed Provincia ART falling steadily
+toward the system, the showcase would be starting to pay off; reading that as
+Primo's doing would still require the rollout date, because without it there is
+no attribution in either direction. And if the first client of 2024 turned out
+to be an ART insurer, half the thesis (the door) would be refuted: what holds it
+up today is that no public source says so. For everything else, the check does
+not need me: the script in the repo downloads new bulletins and rebuilds the
+series for anyone who wants to look.
+
+## Sources
+
+- [SRT, monthly coverage and financing bulletins per insurer](https://www.srt.gob.ar/estadisticas/cf_boletin_art.php)
+- [SSN open data: market indicators per company](https://datosabiertos.ssn.gob.ar/dataset/indicadores-mercado) and [receivables per company](https://datosabiertos.ssn.gob.ar/dataset/creditos)
+- [Fortuna: Primo's strategy, with the founders' account of the early days (May 2026)](https://fortuna.perfil.com/noticias/tecnologia/la-estrategia-de-primo-para-transformar-la-industria-de-los-seguros.phtml)
+- [100% Seguro: Primo, the AI startup reinventing insurance operations (May 2026)](https://100seguro.com.ar/primo-la-startup-de-ia-que-esta-reinventando-la-operacion-de-seguros-desde-ciudad-de-mexico-y-buenos-aires/)
+- [Primo's blog: a year working at Primo (July 2026)](https://www.primo.la/blog/un-anio-trabajando-en-primo) and [its site, with clients and testimonials](https://www.primo.la/)
+- [Todo Riesgo: the 2024 Insurtech Chamber MeetDay](https://todoriesgo.com.ar/meetday-camara-insurtech-argentina-edicion-2024/) and [Provincia ART launches its AI assistant (March 2026)](https://todoriesgo.com.ar/provincia-art-asistente-virtual-ia/)
+- [Infobae: Omint sells its ART to Grupo Lapachos (October 2024)](https://www.infobae.com/economia/networking/2024/10/18/omint-anuncio-la-venta-de-su-art-a-grupo-lapachos/) and [the Provincia ART capital injection (December 2025)](https://www.infobae.com/economia/networking/2025/12/19/la-art-del-grupo-provincia-anuncio-una-capitalizacion-de-180000-para-2026/)
+- [NBS: the SSN approves the change from Omint ART to Serena ART (2025)](https://nbs.ar/la-ssn-aprobo-el-cambio-de-omint-art-a-serena-art-tras-su-incorporacion-al-grupo-lapachos/)
+- [Fintechile: Toku and insurance collections in Latin America](https://www.fintechile.org/noticias/toku-transforma-la-recaudacion-de-seguros-en-chile-y-america-latina) and [Toku Mexico](https://trytoku.com/mx)
+- [Latam Fintech: Kleva raises its seed for collection agents](https://www.latamfintech.co/articles/fintech-mexicana-kleva-levanta-us-1-55-millones-en-una-ronda-semilla-para-potenciar-sus-agentes-de-ia-para-cobranzas) and [Startups Latam: Mozart](https://startupslatam.com/mozart-revoluciona-la-cobranza-en-latinoamerica-con-inteligencia-artificial-y-agentes-de-voz/)

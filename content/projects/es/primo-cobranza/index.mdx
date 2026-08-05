@@ -1,0 +1,262 @@
+---
+title: "Primo clavó la entrada. La métrica pública todavía no tiene dueño."
+tagline: "Entró cobrando por resultado y eligió la vitrina perfecta. Falta el paso de estratega: convertir el número del regulador en producto."
+description: "Análisis independiente de la estrategia de entrada de Primo, la insurtech que automatiza la cobranza de aseguradoras: contrato a resultado, vitrina en riesgos del trabajo y una métrica pública que todavía no tiene dueño. Reconstruida con fuentes públicas y la serie mensual del regulador."
+year: 2026
+date: "2026-08-05"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: false
+stack: ["Datos abiertos (SRT · SSN)", "Python", "matplotlib"]
+metrics:
+  - label: "Cuota que Provincia ART no cobró en abril de 2026"
+    value: "$8.592 M"
+  - label: "Piloto fundacional, cobrando por resultado"
+    value: "45 días"
+  - label: "Morosidad de Serena ART desde el rebrand"
+    value: "4,9%"
+    change: "−1,3 pp"
+    trend: "down"
+    sentiment: "good"
+  - label: "Boletines del regulador en la serie"
+    value: "69 de 73"
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración editorial cinematográfica con grano de película: a la izquierda, dos losas verticales de piedra pulida iluminadas en coral, separadas por un hueco oscuro, con una figura humana en silueta apoyando la mano en una de ellas; desde una ranura alta a la derecha cae una cascada continua de comprobantes de pago grises iluminados en frío, sobre un fondo azul noche que se funde en negro"
+translationKey: "primo-cobranza"
+draft: true
+---
+
+<Abstract label="En resumen">
+
+[Primo](https://www.primo.la/) automatiza la operación de aseguradoras con
+agentes de IA desde Buenos Aires y Ciudad de México, y su entrada al mercado se
+puede reconstruir entera
+con fuentes públicas: ganó un pitch ante un jurado de aseguradoras cuando
+todavía no tenía ni producto ni clientes (Mendoza, junio de 2024), convirtió al
+primer interesado en un piloto de cobranza de mora a 45
+días cobrando por resultado, y expandió desde ahí a vida, salud y riesgos del
+trabajo en dos países.
+
+Este caso le pone nombre a las dos decisiones de esa entrada. La puerta:
+entrar por el proceso donde el resultado ya se mide, porque el contrato a
+resultado necesita línea de base. La vitrina: mostrarse en riesgos del trabajo
+(las ART), el único ramo donde la morosidad de cada jugador es pública. Y encuentra
+el paso que falta: la métrica del regulador corre sola. Armé la serie mensual
+de la SRT (la Superintendencia de Riesgos del Trabajo) desde enero de 2024
+para ver lo que ve un prospecto que chequea el número, y hoy la serie de la
+vitrina corre en contra: Provincia ART marcó 9,2% en abril de 2026, su peor
+registro de la ventana. Ahí hay un activo de crecimiento sin explotar y un
+riesgo de posicionamiento sin gestionar. Análisis independiente, no afiliado a
+las empresas mencionadas.
+
+</Abstract>
+
+En julio de 2024, [primo.la](https://www.primo.la/) era un dominio en venta. La empresa ya existía: un
+mes antes había ganado la ronda de pitches del MeetDay de la Cámara Insurtech
+Argentina en Mendoza, con 8 de 10 votos de un jurado de ejecutivos de
+aseguradoras, cuando todavía no tenía ni producto ni clientes. Uno de esos
+ejecutivos los convocó al terminar. El piloto que salió de ahí definió a la empresa entera: cobranza de
+mora, 45 días, meta de mejorar 15% la tasa de cobro histórica del cliente, y un
+contrato con fijo mínimo más variable por recupero. La primera semana no
+recuperaron nada. La segunda alcanzaron el objetivo.
+
+Ese contrato explica más de Primo que cualquier presentación. El principio que
+hoy repite su prensa, si el cliente no ve impacto no se cobra, ya estaba en
+aquel primer contrato de 2024, con un fijo mínimo que la versión de hoy omite.
+El modelo de cobro vino antes que el producto.
+
+## La cronología que se puede reconstruir
+
+La cronología pública es corta y con huecos.
+El segundo cliente conocido fue Life Seguros, de vida y seguros generales.
+Después vino México: AXA Keralty, Afirme y Auna, clientes de salud y de
+seguros generales, ninguno de riesgos del trabajo. El primer
+despliegue completo mexicano fue en marzo de 2026, según el blog de la propia
+empresa.
+
+Los clientes de riesgos del trabajo aparecen al final de esa secuencia, y
+aparecen de golpe: entre marzo y mayo de 2026 el sitio se rediseñó y publicó por
+primera vez su lista de nueve logos, con Provincia ART y Serena ART incluidos.
+No existe anuncio individual fechado de ninguno de los dos. En mayo llegó la ola
+de prensa: USD 150 millones en primas gestionadas y 70% de automatización (90%
+en otra nota de la misma semana), cifras autodeclaradas y sin medición
+independiente conocida.
+
+Para el que compra, el contexto de esos logos importa. Provincia ART venía de
+anunciar en diciembre de 2025 una capitalización de $180.000 millones con
+mandato explícito de modernización. Serena ART es la ex Omint ART,
+comprada por Grupo Lapachos en octubre de 2024 y renombrada en septiembre de 2025. Dos compradores
+con la cobranza en la agenda del directorio, por razones públicas y fechadas.
+
+Leída como estrategia de entrada, la secuencia es limpia: la demanda llegó
+primero, el producto se destiló del primer contrato, y la vitrina se eligió al
+final, cuando hubo resultados que mostrar.
+
+<Thesis>
+
+La entrada de un vendor se decide con dos elecciones, y ninguna es la
+automatizabilidad del proceso. La puerta: el proceso donde el resultado ya se
+mide, porque sin línea de base no hay contrato a resultado. La vitrina: el ramo
+donde el resultado es público, porque ahí el dolor del comprador no hay que
+argumentarlo. Primo clavó las dos. Lo que todavía no hizo es adueñarse de la
+consecuencia: si la vitrina es pública, la métrica del regulador es parte del
+producto, y hoy corre sola.
+
+</Thesis>
+
+## La puerta: donde el resultado ya se mide
+
+Cuando [mapeé los cuatro flujos de cobranza del seguro argentino](/projects/cobranza-seguros),
+prioricé desde la silla de una aseguradora que construye: débito automático
+primero por volumen y automatizabilidad, el canal de productores después, y
+riesgos del trabajo tercero, porque su palanca depende de la autodeclaración del
+empleador. Esa priorización sigue en pie para quien construye adentro. Un vendor
+resuelve otro problema: necesita cerrar su primer contrato, y un contrato a
+resultado exige un resultado medible en semanas. La cobranza de mora lo tiene
+de fábrica: la tasa de cobro histórica del cliente es la línea de base, y 45
+días alcanzan para moverla o no.
+
+El patrón se repite en los comparables. Colektia, Kleva y Mozart, los vendors
+de cobranza con IA de la región, entraron todos por bancos y fintechs, donde la
+mora es un número que el regulador bancario obliga a provisionar y reportar.
+Toku, el único vertical de cobranza de seguros de América Latina (Serie A de
+USD 48 millones en 2025, presente en Chile y México, no en Argentina), entró en
+2020 por un dolor puramente comercial: la baja de pólizas por pagos
+automáticos fallidos. Con caminos distintos, todos entraron por donde la mora
+ya era un número que alguien miraba.
+
+## La vitrina: donde el resultado es público
+
+En el seguro argentino hay un solo ramo donde ese número lo publica el Estado
+con nombre y apellido: riesgos del trabajo. La SRT publica desde enero de 2014
+un boletín mensual por ART con la cuota pactada, la cuota recaudada y la
+morosidad resultante, abierta por sector y tamaño de empleador. Para el resto
+del mercado, la SSN (la Superintendencia de Seguros de la Nación) publica
+balances e indicadores trimestrales por entidad, pero ninguna serie de
+cobranza: lo verifiqué en su catálogo de datos abiertos al armar este caso y el
+de cobranza.
+
+Mostrarse ahí es racional. El dolor del comprador era público y contemporáneo:
+la capitalización de Provincia ART y la venta de Omint salieron en la prensa
+generalista, con fecha. El caso de éxito que Primo publicó es de Provincia ART,
+y dos de los tres testimonios con nombre de su sitio son de líneas de riesgos
+del trabajo.
+
+## El número que corre solo
+
+Esa vitrina tiene un efecto que no espera a nadie: cualquier gerente de
+administración que evalúe a Primo puede abrir el boletín de su propia ART, o el
+del caso de éxito, y mirar. Para ver exactamente lo que
+ve ese prospecto, escribí un script que descarga los 73 boletines del período y
+arma la serie con los 69 que tienen capa de texto (los otros cuatro son
+escaneos sin texto extraíble). El script queda en el repo: cualquiera puede
+regenerar cada número desde la fuente.
+
+<Figure
+  src="/projects/primo-cobranza/g1_morosidad.png"
+  alt="Gráfico de líneas con la morosidad mensual de Provincia ART, Omint/Serena ART y el total del sistema de riesgos del trabajo entre enero de 2024 y abril de 2026, con dos hechos fechados marcados con línea punteada (el rebrand de Omint a Serena y la capitalización de Provincia ART) y una banda que cubre la ventana en que el sitio de Primo publicó su lista de clientes y el caso de éxito"
+  width={720}
+  height={435}
+  caption="Elaboración propia sobre los boletines mensuales de la SRT (cuota pactada vs recaudada, unidades productivas). Los huecos son meses sin boletín o boletines escaneados sin capa de texto. Las líneas punteadas marcan dos hechos fechados; la banda, la ventana en que el sitio de Primo publicó su lista de clientes y el caso de éxito (la ventana documentada cierra el 6 de mayo, pasado el borde de la serie). Nada de esto afirma causalidad."
+/>
+
+En la serie, Provincia ART cobra mejor que el promedio del sistema en los seis
+meses de 2024 con dato legible en su boletín: entre 4,1% y 6,9% de morosidad,
+contra 6,1% a 7,8% del total en el año. En 2025 se mueve en una banda más alta
+(6,4% a 8,0%), con el salto de agosto a septiembre (7,0 a 8,0%) como el mayor
+del año. El deterioro decisivo llega en 2026: 7,6% en febrero; 8,8% en marzo, el
+primer mes de los 28 reconstruidos arriba del sistema (que marcó 8,3%); y 9,2%
+en abril, el peor registro de la ventana. Comparar abril contra abril descarta la
+estacionalidad: 6,9% en 2024, 6,9% en 2025, 9,2% en 2026. Todo el deterioro se
+concentra en el último año. Serena
+ART recorre el camino inverso: se deterioraba como Omint hasta 6,2% en agosto
+de 2025, y desde el rebrand de septiembre la serie baja hasta cerrar abril en
+4,9%, siempre debajo del sistema.
+
+Nada de esto es
+atribuible a Primo, en ninguna dirección: la fecha de despliegue en cada
+cliente no es pública, así que no hay antes y después que valga. El "+30% en
+cobranza" del caso de éxito puede medir recupero sobre el stock de mora
+acumulada, que es otra métrica que la morosidad de flujo del mes, y ambas
+pueden mejorar y empeorar a la vez. Y la morosidad de una ART depende del mix
+de cartera: si Provincia ART concentró sectores más morosos, la serie empeora
+sin que su cobranza opere peor. Lo que queda en pie es más chico y más
+accionable: el número que cualquier prospecto puede mirar hoy no acompaña
+todavía al caso de éxito. Esa brecha es gestionable, y nadie la está
+gestionando.
+
+## Qué haría yo con esto
+
+**Si fuera Primo**, convertiría el número público en producto, en tres
+movimientos. Uno: definir la métrica del caso de éxito (qué mide el +30%, sobre
+qué base, desde cuándo) y publicarla al lado del boletín de la SRT del cliente,
+mes a mes, para que el contraste que hoy es un riesgo pase a ser la prueba.
+Dos: un tablero público de morosidad por ART, armado sobre el mismo boletín,
+como motor de generación de demanda: cada gerente que se vea arriba del
+promedio del sistema llega a la primera reunión ya convencido del problema, y
+la vara existe, la publica el regulador y convertirla en producto es barato.
+Tres: el criterio de corte fijado de antemano, que es lo que separa un tablero
+de un folleto: si después de seis boletines la serie del cliente vitrina no
+acompaña, la vitrina rota de cliente o el claim cambia de forma. Una vitrina
+auditable que nadie audita es marketing; una auditada que resiste es la mejor
+máquina de ventas que una empresa de cobranza puede tener.
+
+**Si fuera una aseguradora evaluando al vendor**, pediría la línea de base en
+la misma moneda que publica el regulador, además de la interna. El contrato a
+resultado de Primo es un buen diseño de incentivos, y justamente por eso la
+definición de la métrica importa más que el porcentaje prometido.
+
+**Si fuera otro vendor mirando insurtech**, la pregunta que ordena la entrada
+es qué proceso ya tiene un número que el directorio mira; el que está peor
+puede esperar. En Argentina esa lista es corta y la encabeza un ramo que
+factura por autodeclaración del empleador. Si Toku entra al país por el lado
+comercial mientras Primo defiende la vitrina regulatoria, esa colisión se va a
+poder seguir mes a mes en el mismo boletín que usa este caso.
+
+## Qué es dato y qué es supuesto
+
+| Afirmación                                                                                                                   | Estatus                                                                                     |
+| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Cronología: pitch sin producto (jun-2024), piloto a 45 días con fee de éxito, Life segundo, México, logos ART juntos en 2026 | Prensa retrospectiva (Fortuna) + Wayback Machine del sitio                                  |
+| Morosidad mensual por ART: Provincia 9,2% (abr-2026), cruce en mar-2026, Serena 6,2 → 4,9%                                   | Mi cálculo sobre 69 de 73 boletines de la SRT (cuatro sin capa de texto); script en el repo |
+| Créditos sobre activos: Provincia ART 15% (2024) → 22,6% (2025-Q3)                                                           | Mi cálculo sobre datasets abiertos de la SSN                                                |
+| USD 150M en primas, 70% de automatización, +30% de cobranza                                                                  | Claims de Primo, sin medición independiente                                                 |
+| Identidad del primer cliente (piloto 2024)                                                                                   | No publicada; ninguna fuente la nombra                                                      |
+| Serena ART = ex Omint ART; Provincia ART ≠ Provincia Seguros                                                                 | Registros de entidades de la SSN                                                            |
+| Asistente de WhatsApp de Provincia ART (mar-2026) provisto por Primo                                                         | Inferencia por coincidencia funcional; sin confirmación                                     |
+
+<TableCaption>
+  La columna de estatus gobierna cómo se lee cada número. Los cálculos propios son reproducibles: el
+  script del caso resuelve los boletines contra el buscador de la SRT, los descarga y regenera la
+  serie y el gráfico.
+</TableCaption>
+
+## Qué me haría cambiar de opinión
+
+Este caso está escrito con los boletines publicados hasta abril de 2026, y
+tres cosas lo refutarían, todas publicables por los protagonistas. Si Primo
+publicara la fecha de despliegue en Provincia ART y la definición exacta del
++30%, y esa métrica mejorara donde la morosidad de flujo no lo hace, la brecha
+que describo quedaría explicada. Si los boletines siguientes mostraran a
+Provincia ART bajando sostenido hacia el sistema, la vitrina estaría empezando
+a pagar; leerlo como mérito de Primo seguiría exigiendo la fecha de despliegue,
+porque sin ella no hay atribución en ninguna dirección. Y si el primer cliente
+de 2024 resultara ser una ART, la mitad de la tesis (la puerta) quedaría
+refutada: hoy la sostiene que ninguna fuente pública lo dice. Para todo lo
+demás, el chequeo no me necesita: el script del repo descarga los boletines
+nuevos y regenera la serie para cualquiera que quiera mirar.
+
+## Fuentes
+
+- [SRT, boletines mensuales de cobertura y financiación por ART](https://www.srt.gob.ar/estadisticas/cf_boletin_art.php)
+- [SSN, datos abiertos: indicadores del mercado por entidad](https://datosabiertos.ssn.gob.ar/dataset/indicadores-mercado) y [créditos por entidad](https://datosabiertos.ssn.gob.ar/dataset/creditos)
+- [Fortuna: la estrategia de Primo, con la narrativa fundacional de sus fundadores (mayo 2026)](https://fortuna.perfil.com/noticias/tecnologia/la-estrategia-de-primo-para-transformar-la-industria-de-los-seguros.phtml)
+- [100% Seguro: Primo, la startup de IA que reinventa la operación de seguros (mayo 2026)](https://100seguro.com.ar/primo-la-startup-de-ia-que-esta-reinventando-la-operacion-de-seguros-desde-ciudad-de-mexico-y-buenos-aires/)
+- [Primo, blog: un año trabajando en Primo (julio 2026)](https://www.primo.la/blog/un-anio-trabajando-en-primo) y [sitio con clientes y testimonios](https://www.primo.la/)
+- [Todo Riesgo: MeetDay 2024 de la Cámara Insurtech](https://todoriesgo.com.ar/meetday-camara-insurtech-argentina-edicion-2024/) y [Provincia ART lanza su asistente con IA (marzo 2026)](https://todoriesgo.com.ar/provincia-art-asistente-virtual-ia/)
+- [Infobae: Omint vende su ART a Grupo Lapachos (octubre 2024)](https://www.infobae.com/economia/networking/2024/10/18/omint-anuncio-la-venta-de-su-art-a-grupo-lapachos/) y [la capitalización de Provincia ART (diciembre 2025)](https://www.infobae.com/economia/networking/2025/12/19/la-art-del-grupo-provincia-anuncio-una-capitalizacion-de-180000-para-2026/)
+- [NBS: la SSN aprueba el cambio de Omint ART a Serena ART (2025)](https://nbs.ar/la-ssn-aprobo-el-cambio-de-omint-art-a-serena-art-tras-su-incorporacion-al-grupo-lapachos/)
+- [Fintechile: Toku y la recaudación de seguros en América Latina](https://www.fintechile.org/noticias/toku-transforma-la-recaudacion-de-seguros-en-chile-y-america-latina) y [Toku México](https://trytoku.com/mx)
+- [Latam Fintech: Kleva levanta su semilla para agentes de cobranza](https://www.latamfintech.co/articles/fintech-mexicana-kleva-levanta-us-1-55-millones-en-una-ronda-semilla-para-potenciar-sus-agentes-de-ia-para-cobranzas) y [Startups Latam: Mozart](https://startupslatam.com/mozart-revoluciona-la-cobranza-en-latinoamerica-con-inteligencia-artificial-y-agentes-de-voz/)
