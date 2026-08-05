@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props) {
     ? "Acerca de mí · Iván Dujaut, Product Engineer"
     : "About · Iván Dujaut, Product Engineer";
   const description = isEs
-    ? "Product Engineer con 4 años en Next.js y TypeScript. Argentina, remoto con EE.UU. y LATAM. Techstars W24 alumni. Bioingeniero ITBA. Mirá mi experiencia y contactame."
-    : "Product Engineer with 4 years in Next.js and TypeScript. Argentina, remote with US and LATAM teams. Techstars W24 alumni. ITBA bioengineer. See my experience and get in touch.";
+    ? "Product Engineer, cuatro años entre decidir qué se construye y construirlo. Argentina, remoto con EE.UU. y LATAM. Techstars W24, bioingeniero del ITBA. Mirá mi experiencia."
+    : "Product Engineer, four years split between deciding what gets built and building it. Argentina, remote with US and LATAM teams. Techstars W24, ITBA bioengineer. See my experience.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
@@ -144,27 +144,24 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Desarrollo de <strong>FIJI</strong>, una plataforma de valuación para negocios
-                    inmobiliarios. Lidero la migración desde no-code (Bubble) a Next.js, y construyo
-                    el motor de simulaciones de valor que conecta métricas operativas con
-                    valuaciones financieras.
+                    Construyo <strong>FIJI</strong>, una plataforma de valuación para negocios
+                    inmobiliarios. Lidero la migración desde no-code (Bubble) a Next.js y armo el
+                    motor de simulaciones, que traduce métricas de operación a valuaciones
+                    financieras.
                   </p>
                   <p>
-                    Trabajo en la intersección ingeniería-producto: flujos de usuario, dashboards,
-                    marketplace y herramientas internas de administración.
+                    Trabajo sobre flujos de usuario, dashboards, el marketplace y las herramientas
+                    internas de administración.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    Building <strong>FIJI</strong>, a valuation platform for real estate businesses.
-                    Leading the migration from no-code (Bubble) to Next.js, and building the value
-                    simulation engine that connects operational metrics with financial valuations.
+                    I build <strong>FIJI</strong>, a valuation platform for real estate businesses.
+                    I lead the migration from no-code (Bubble) to Next.js and build the simulation
+                    engine that turns operating metrics into financial valuations.
                   </p>
-                  <p>
-                    Working at the engineering-product intersection: user flows, dashboards,
-                    marketplace and internal admin tools.
-                  </p>
+                  <p>I work on user flows, dashboards, the marketplace and internal admin tools.</p>
                 </>
               )}
             </ExperienceItem>
@@ -182,15 +179,13 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 <p>
                   Docente de <strong>Técnicas Digitales I</strong> para estudiantes de 4° año de
                   Electrónica. Enseño álgebra de Boole, mapas de Karnaugh, lógica combinacional y
-                  secuencial. También participo en planificación y actualización del programa
-                  académico. Enseñar me obliga a entender los conceptos a un nivel más profundo.
+                  secuencial, y participo en la planificación del programa académico.
                 </p>
               ) : (
                 <p>
-                  Teaching <strong>Digital Techniques I</strong> to 4th-year Electronics students.
-                  Topics include Boolean algebra, Karnaugh maps, combinational and sequential logic.
-                  I also participate in academic program planning. Teaching forces me to understand
-                  concepts at a deeper level.
+                  I teach <strong>Digital Techniques I</strong> to 4th-year Electronics students:
+                  Boolean algebra, Karnaugh maps, combinational and sequential logic. I also help
+                  plan the academic program.
                 </p>
               )}
             </ExperienceItem>
@@ -211,10 +206,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Mi experiencia más larga, y donde realmente aprendí a construir producto. Crecí
-                    desde Trainee hasta Product Engineer en 4 años, pasando por desarrollo
-                    individual, liderazgo de proyectos y, finalmente, decisiones de producto y
-                    priorización.
+                    Mi experiencia más larga, y donde aprendí a construir producto. Entré de Trainee
+                    y salí de Product Engineer, cuatro años después.
                   </p>
                   <p>
                     Como <strong>Product Engineer</strong> (Ago 2025 – Ene 2026), mejoré la{" "}
@@ -236,9 +229,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ) : (
                 <>
                   <p>
-                    My longest experience, and where I really learned to build product. Grew from
-                    Trainee to Product Engineer over 4 years, going through individual contribution,
-                    project leadership, and finally product and prioritization decisions.
+                    My longest experience, and where I learned to build product. I came in as a
+                    Trainee and left as a Product Engineer, four years later.
                   </p>
                   <p>
                     As <strong>Product Engineer</strong> (Aug 2025 – Jan 2026), I improved{" "}
@@ -278,15 +270,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     MoneyGram Accelerator) en Nueva York como parte del equipo fundador.
                   </p>
                   <ul className="ml-4 list-disc space-y-1">
-                    <li>~100 usuarios early adopters en fase de validación</li>
+                    <li>~100 primeros usuarios durante la fase de validación</li>
                     <li>
                       Mejoras de onboarding que <strong>incrementaron el engagement ~40%</strong>
                     </li>
-                    <li>Colaboración directa con founders en decisiones de roadmap</li>
-                    <li>
-                      Operación en entorno Techstars: validación rápida, iteración semanal,
-                      escalabilidad
-                    </li>
+                    <li>Decisiones de roadmap discutidas de primera mano con los fundadores</li>
                   </ul>
                 </>
               ) : (
@@ -297,15 +285,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     Accelerator) in New York as part of the founding team.
                   </p>
                   <ul className="ml-4 list-disc space-y-1">
-                    <li>~100 early adopters in validation phase</li>
+                    <li>~100 first users during the validation phase</li>
                     <li>
                       Onboarding improvements that <strong>increased engagement ~40%</strong>
                     </li>
-                    <li>Direct collaboration with founders on roadmap decisions</li>
-                    <li>
-                      Techstars environment operation: fast validation, weekly iteration,
-                      scalability
-                    </li>
+                    <li>Roadmap decisions discussed first-hand with the founders</li>
                   </ul>
                 </>
               )}
@@ -330,9 +314,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     digitales.
                   </p>
                   <p>
-                    Una experiencia corta pero formativa: aprendí cómo se piensa la operación de una
-                    empresa grande, cómo se diseñan procesos y cómo se mide la performance con
-                    métricas reales. Esa lente operativa la sigo aplicando hoy en producto.
+                    Duró tres meses y me mostró cómo una empresa grande diseña sus procesos y mide
+                    su rendimiento.
                   </p>
                 </>
               ) : (
@@ -344,10 +327,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     KPIs.
                   </p>
                   <p>
-                    A short but formative experience: I learned how a large company thinks about
-                    operations, how processes are designed, and how performance is measured with
-                    real metrics. That operational lens still informs how I think about product
-                    today.
+                    It lasted three months and showed me how a large company designs its processes
+                    and measures its performance.
                   </p>
                 </>
               )}
@@ -390,14 +371,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     </a>
                     , desarrollada en conjunto con el{" "}
                     <strong>Hospital Italiano de Buenos Aires</strong>. La investigación partió de
-                    una necesidad real de la institución: poder anticipar outcomes clínicos en
-                    pacientes oncológicos a partir de datos históricos. Trabajé con datos clínicos
-                    reales, modelos predictivos y análisis estadístico aplicado a oncología.
-                  </p>
-                  <p>
-                    El ITBA me dio una base cuantitativa sólida que después se tradujo naturalmente
-                    en cómo abordo problemas de software: con foco en métricas, modelado y
-                    trade-offs explícitos.
+                    una necesidad del hospital: anticipar la evolución clínica de un paciente
+                    oncológico a partir de sus datos históricos. Trabajé con datos clínicos reales,
+                    modelos predictivos y estadística aplicada a oncología.
                   </p>
                 </>
               ) : (
@@ -420,15 +396,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                       />
                     </a>
                     , developed in collaboration with{" "}
-                    <strong>Hospital Italiano de Buenos Aires</strong>. The research addressed a
-                    real institutional need: predicting clinical outcomes in oncology patients from
-                    historical data. I worked with real clinical data, predictive models and
-                    statistical analysis applied to oncology.
-                  </p>
-                  <p>
-                    ITBA gave me a solid quantitative foundation that translated naturally into how
-                    I approach software problems: metrics-focused, model-driven, with explicit
-                    trade-offs.
+                    <strong>Hospital Italiano de Buenos Aires</strong>. The research came from a
+                    need the hospital had: predicting how an oncology patient would evolve from
+                    their historical data. I worked with real clinical data, predictive models and
+                    statistics applied to oncology.
                   </p>
                 </>
               )}
@@ -443,8 +414,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             >
               <p>
                 {locale === "es"
-                  ? "Formación técnica en electrónica analógica, digital y comunicaciones. La base donde empecé a entender sistemas y resolución de problemas con herramientas concretas."
-                  : "Technical training in analog electronics, digital electronics and communications. The foundation where I started understanding systems and problem solving with concrete tools."}
+                  ? "Formación técnica en electrónica analógica, digital y comunicaciones. Hoy doy clases ahí."
+                  : "Technical training in analog electronics, digital electronics and communications. I teach there now."}
               </p>
             </EducationItem>
           </div>
