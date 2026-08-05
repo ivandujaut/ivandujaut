@@ -283,6 +283,24 @@ export default async function ProjectPage({ params }: Props) {
                         en una línea y la unidad quedaba sola abajo. */}
                     <dd className="font-mono text-lg font-semibold tracking-tight tabular-nums">
                       {metric.value}
+                      {/* La flecha dice la dirección; el color, si esa
+                          dirección es buena. Así el lector sabe si leerlo como
+                          mejora sin abrir el caso (regla del nodo 4). */}
+                      {metric.trend && metric.trend !== "neutral" && metric.sentiment && (
+                        <span
+                          className={`ml-1.5 text-sm font-medium ${
+                            metric.sentiment === "good"
+                              ? "text-emerald-600 dark:text-emerald-500"
+                              : "text-red-600 dark:text-red-500"
+                          }`}
+                        >
+                          <span aria-hidden>{metric.trend === "up" ? "▲" : "▼"}</span>
+                          {metric.change && <span className="ml-0.5 text-xs">{metric.change}</span>}
+                          <span className="sr-only">
+                            {tProjects(metric.sentiment === "good" ? "trend.good" : "trend.bad")}
+                          </span>
+                        </span>
+                      )}
                     </dd>
                     <dt className="mt-1 text-xs text-muted-foreground">{metric.label}</dt>
                   </div>

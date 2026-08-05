@@ -73,3 +73,4 @@ public/static/
 
 # Config de Claude Code: local, nunca se versiona.
 .claude/
+scripts/**/__pycache__/
