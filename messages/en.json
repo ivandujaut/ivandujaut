@@ -89,8 +89,8 @@
       "role": "Product Engineer",
       "location": "Argentina",
       "available": "Available",
-      "tagline": "I build product end-to-end: code, roadmap decisions, and metrics that matter.",
-      "credentials": "Bioengineer at ITBA · Techstars W24 alumni",
+      "tagline": "I decide what the team builds, measure whether it worked, and write the code.",
+      "credentials": "Bioengineer at ITBA · Techstars W24",
       "badge": "Latest case: {title}",
       "ctas": {
         "work": "See my work",
@@ -99,10 +99,10 @@
     },
     "currently": {
       "title": "Currently",
-      "paragraph1": "As a Product Engineer at Prizmstack, I'm building FIJI: a valuation platform for real estate businesses. I work on the migration from no-code to Next.js and build the value simulation engine.",
+      "paragraph1": "As a Product Engineer at Prizmstack I build FIJI, a platform that values real estate businesses by turning operating metrics into valuation numbers. I also lead the migration from no-code to Next.js.",
       "stack": "Current stack: TypeScript, Next.js, PostgreSQL, Supabase.",
-      "paragraph2": "In parallel, I teach Digital Techniques at IPSAJ (Instituto Politécnico San Arnoldo Janssen) to Electronics students. Combining production code with teaching pushes me to think about how people learn to build software.",
-      "paragraph3": "Open to new opportunities in LATAM (remote preferred), ideally in healthtech, fintech, or startups with interesting products. For broader conversations too: email me or book a call."
+      "paragraph2": "In parallel I teach Digital Techniques to Electronics students at IPSAJ (Instituto Politécnico San Arnoldo Janssen), the technical school I graduated from.",
+      "paragraph3": "I'm looking for remote work in LATAM, with a preference for healthtech and fintech. Email me or book a call."
     },
     "sections": {
       "featuredWork": "Featured projects",
@@ -188,9 +188,9 @@
     "title": "About me",
     "intro": {
       "greeting": "Hi, I'm Iván",
-      "paragraph1": "Product Engineer with 4 years building product in Next.js + TypeScript. Based in Argentina, working remotely with teams in the US and LATAM. My role sits between code, product decisions and business metrics. I don't just ship features; I decide which ones are worth shipping.",
-      "paragraph2": "My background is atypical: I'm a bioengineer from ITBA, with a thesis on cancer mortality prediction using data from Hospital Italiano de Buenos Aires. That training left me with a quantitative instinct I now apply to modeling features, measuring impact, and prioritizing. I went from frontend to Product Engineer in 4 years: Techstars W24 with a founding team in New York, tech lead on B2B/B2C projects with 1,500+ active users, and now product decisions on roadmap and priorities.",
-      "paragraph3": "I'm open to new opportunities, especially with teams where product, engineering, and business get discussed at the same table: healthtech, fintech, or growing startups. But if it's something else, like a product you're thinking about, a possible collaboration, or just getting to know each other, book a call and we'll talk. If it's about a specific role, you can also email me or grab my CV.",
+      "paragraph1": "Product Engineer, with four years split between deciding what gets built and building it. The most useful thing I did at Banana Software was cut roughly one in five planned features from the roadmap, because they didn't earn what they cost. The ones that stayed, I wrote myself, in Next.js and TypeScript. I live in Argentina and work remotely with teams in the US and LATAM.",
+      "paragraph2": "I'm a bioengineer from ITBA. My thesis predicted 2-year mortality in patients with colorectal cancer liver metastasis, using real data from Hospital Italiano de Buenos Aires, and it left me in the habit of asking a decision for a number before making it. I came into product through the frontend: I went through the Techstars W24 batch in New York as part of Tumo's founding team, and later led four projects at Banana with teams of three or four people and up to 1,500 active users.",
+      "paragraph3": "I'm looking for teams where product, engineering and business get discussed at the same table, mostly healthtech, fintech or growing startups. If you have a specific role, email me. If it's a product you're thinking about and you want a second head on it, book a call.",
       "ctas": {
         "email": "Email me",
         "calendly": "Book a call",
@@ -205,7 +205,7 @@
       "contact": "Contact"
     },
     "tools": {
-      "intro": "I primarily work with Next.js, TypeScript and PostgreSQL on product projects. Experienced with payment integrations (Stripe, Mercado Pago, PayPal) and migrating stacks from no-code to code (Bubble → Next.js).",
+      "intro": "I mostly work with Next.js, TypeScript and PostgreSQL. I've integrated payments with Stripe, Mercado Pago and PayPal, and migrated product from no-code to code (Bubble to Next.js).",
       "categories": {
         "frontend": {
           "label": "Frontend",
@@ -237,10 +237,12 @@
       "spanish": "Spanish",
       "spanishLevel": "Native",
       "english": "English",
-      "englishDescription": "I've worked with teams in New York and California since 2023 (Tumo at Techstars W24, Prizmstack currently). Communication is primarily written and async."
+      "englishLevel": "Intermediate (B1)",
+      "englishDescription": "Written and async since 2023, with teams in New York and California (Tumo at Techstars W24, Prizmstack now). I'm more fluent writing than speaking, and the test says the same.",
+      "englishCertificate": "Duolingo English Test · 85/160 · May 2026"
     },
     "contact": {
-      "intro": "If you made it this far and want to talk, reach me via <email>email</email>. I reply within 24h.",
+      "intro": "If you want to talk, reach me via <email>email</email>. I reply within 24h.",
       "alsoFind": "Also on"
     }
   }
