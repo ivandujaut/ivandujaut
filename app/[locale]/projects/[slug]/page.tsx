@@ -2,7 +2,13 @@ import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { GithubIcon, FigmaIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  GithubIcon,
+  FigmaIcon,
+  ArrowUpRight01Icon,
+  TradeUpIcon,
+  TradeDownIcon,
+} from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
@@ -288,14 +294,19 @@ export default async function ProjectPage({ params }: Props) {
                           mejora sin abrir el caso (regla del nodo 4). */}
                       {metric.trend && metric.trend !== "neutral" && metric.sentiment && (
                         <span
-                          className={`ml-1.5 text-sm font-medium ${
+                          className={`ml-1.5 inline-flex items-center gap-0.5 align-middle text-sm font-medium ${
                             metric.sentiment === "good"
                               ? "text-emerald-600 dark:text-emerald-500"
                               : "text-red-600 dark:text-red-500"
                           }`}
                         >
-                          <span aria-hidden>{metric.trend === "up" ? "▲" : "▼"}</span>
-                          {metric.change && <span className="ml-0.5 text-xs">{metric.change}</span>}
+                          <HugeiconsIcon
+                            icon={metric.trend === "up" ? TradeUpIcon : TradeDownIcon}
+                            size={16}
+                            strokeWidth={2}
+                            aria-hidden
+                          />
+                          {metric.change && <span className="text-xs">{metric.change}</span>}
                           <span className="sr-only">
                             {tProjects(metric.sentiment === "good" ? "trend.good" : "trend.bad")}
                           </span>
