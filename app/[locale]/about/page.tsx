@@ -7,6 +7,7 @@ import { ArrowUpRight01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
+import { DuolingoIcon } from "@/components/icons/duolingo-icon";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -467,10 +468,32 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               <strong>{t("languages.spanish")}</strong> ·{" "}
               <span className="text-muted-foreground">{t("languages.spanishLevel")}</span>
             </p>
-            <p>
-              <strong>{t("languages.english")}</strong> ·{" "}
-              <span className="text-muted-foreground">{t("languages.englishDescription")}</span>
-            </p>
+            <div>
+              <p>
+                <strong>{t("languages.english")}</strong> ·{" "}
+                <span className="text-muted-foreground">{t("languages.englishLevel")}</span>
+              </p>
+              <p className="mt-1 text-muted-foreground">{t("languages.englishDescription")}</p>
+              {/* El certificado vence en mayo de 2028: al rendir uno nuevo hay que
+                  actualizar puntaje y fecha en `languages.englishCertificate`, que es
+                  el único lugar donde viven. */}
+              <a
+                href="https://certs.duolingo.com/pfap9504d5w1ei74"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-2 inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-xs transition-colors hover:bg-muted"
+              >
+                <DuolingoIcon size={13} aria-hidden />
+                <span>{t("languages.englishCertificate")}</span>
+                <HugeiconsIcon
+                  icon={ArrowUpRight01Icon}
+                  size={12}
+                  strokeWidth={1.5}
+                  className="opacity-0 transition-opacity group-hover:opacity-60"
+                  aria-hidden
+                />
+              </a>
+            </div>
           </div>
         </section>
 
