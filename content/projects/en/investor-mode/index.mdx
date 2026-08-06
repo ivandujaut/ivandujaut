@@ -22,8 +22,8 @@ draft: false
 
 I use Roomix (Argentina's largest AI-powered real estate search engine) to search for properties, and I
 proposed, without being asked, the layer it's missing for buyers investing rather than living: one that
-doesn't just calculate cap rate, ROI, and scenarios, but interprets them and points toward a decision
-without dictating one. My first version was a calculator that dumped nine numbers on the screen and said
+calculates cap rate, ROI and scenarios, and then interprets them to point toward a decision without
+dictating one. My first version was a calculator that dumped nine numbers on the screen and said
 "you decide"; I reframed it into an answer that leads with the conclusion, calculates live, and is honest
 about risk. I then took it from a Figma prototype to a TypeScript engine with tests. Domain research,
 interpretive design, and implementation rigor, in one case study.
@@ -121,9 +121,8 @@ paralyzes: they see numbers and still don't know whether to invest.
 
 The core decision of the project was moving from _spreadsheet_ to _interpreted answer_. The UI now leads
 with a plain-language answer ("2.98% net cap rate; that's low for Belgrano, an appreciation market, not a
-rental-yield one"), the advanced layers are opt-in, and everything closes on an action. Interpreting isn't
-recommending: it's explaining what the number means and who it makes sense for, without ever saying "buy
-this."
+rental-yield one"), the advanced layers are opt-in, and everything closes on an action. Interpreting means
+explaining what the number means and who it makes sense for, without ever saying "buy this."
 
 ## The criteria
 
@@ -159,8 +158,8 @@ funnel: get the investor's attention, earn their trust, get them to the action.
   measured numbers. I'm keeping that distinction on purpose.
 </Callout>
 
-- **A simpler screen lowers drop-off before the action.** An overwhelming screen isn't just an aesthetic
-  problem, it's a user bouncing before they reach out. Leading with the answer speeds up the "aha," and
+- **A simpler screen lowers drop-off before the action.** An overwhelming screen is a user
+  bouncing before they reach out. Leading with the answer speeds up the "aha," and
   pushing depth behind a click serves two audiences on one screen, without shortchanging the sophisticated
   user who wants to audit the number.
 - **A conversion card that doesn't respond is a broken promise.** The sticky card keeps the action visible
@@ -172,7 +171,7 @@ funnel: get the investor's attention, earn their trust, get them to the action.
   reaches out already knows what they're getting into. That's worth more to the broker (a cleaner close)
   and builds the brand (the place that doesn't lie to you).
 - **Polish signals "serious product."** In a financial product, a sloppy detail whispers "this is a
-  mockup, don't trust the number." Craft here isn't vanity, it's cutting the trust friction that sits
+  mockup, don't trust the number." Craft here cuts the trust friction that sits
   right before the click.
 
 ## Key decisions
@@ -352,7 +351,7 @@ second half along two axes, not with a persona picker.
   the risk profile, it's not a financing footnote: that's why it's an axis, not a checkbox.
 
 The obvious move would have been a Conservative / Moderate / Aggressive persona selector. I deliberately
-didn't build it: those three aren't investor types, they're bets on macro appreciation (a forecast), not
+didn't build it: those three are bets on macro appreciation (a forecast), not investor types and not
 strategies. Treating them as personas is a conceptual mistake. So instead of manufacturing personas, I
 make the real axis impossible to ignore through copy and structure.
 
@@ -509,8 +508,8 @@ Being honest about the gaps is part of the job. Fine for a v1; not for productio
 
 ## What I'm taking away
 
-- **"We don't make recommendations" can be an excuse not to think.** The way out isn't recommending: it's
-  interpreting and pointing out _who_ something works for.
+- **"We don't make recommendations" can be an excuse not to think.** The way out is interpreting and
+  pointing out _who_ something works for.
 - **Honesty scales better than persuasion** in money products. The green number that hides negative cash
   flow erodes trust.
 - **Cutting is designing.** The two charts I left out say as much about my judgment as the two I kept.
@@ -534,8 +533,7 @@ demonstrable instead of "trust me" is this equivalence:
 <Callout type="insight" title="The solved cases in domain.md are the golden tests">
   The roughly USD 1,054 monthly payment, the -6.16% leveraged ROI, the 3.33× leverage: I didn't
   invent these to make the demo look good. They came from the research, and each one is a test that
-  fails if the engine drifts. The research wasn't just for the design; it became the engine's
-  compass.
+  fails if the engine drifts. The research became the engine's compass.
 </Callout>
 
 ## Key decisions (in code)
@@ -587,7 +585,7 @@ dictate: it returns structured data per scenario, not a verdict, the same postur
 ## What works and why
 
 - **It's demonstrable.** 20 tests, strict typechecking, every metric anchored to a solved case from the
-  domain. Correctness isn't an opinion, it's a suite that runs.
+  domain. Correctness is a suite that runs.
 - **It's composable.** Single sources of truth plus wrappers that compose them. Changing the payment
   formula means touching one place.
 - **It separates engine from presentation.** A decimal ratio, no formatting, no UI: ready for either a UI
