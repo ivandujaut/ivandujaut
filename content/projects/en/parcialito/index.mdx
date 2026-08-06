@@ -34,15 +34,15 @@ teacher in charge. It's in production today, and I still use it with my own stud
 ## The context and the opportunity
 
 [OATec](https://www.oatec.org.ar/index.php/32-2/) (Olimpiada Argentina de Tecnología) is a national
-competition meant to spark scientific and technological vocations: students don't just solve exercises,
-they have to apply the scientific method and justify their reasoning in writing, not just pick an option.
+competition meant to spark scientific and technological vocations: students have to apply the scientific
+method and justify their reasoning in writing, not pick an option.
 That makes grading slow even for a single class, and it's exactly the kind of exam a multiple-choice form
 can't evaluate. My students sit it every year, and that's the specific practice Parcialito was built
 around.
 
 Tools like Forms or Kahoot already solve "how do I run an exam online?". None of them solve the part that
-actually ate my Sundays: grading an open-ended answer isn't marking a correct option, it's reading a line
-of reasoning and deciding how much it's worth. On the student's side, the mirrored problem is that
+actually ate my Sundays: grading an open-ended answer means reading a line of reasoning and deciding
+how much it's worth. On the student's side, the mirrored problem is that
 practicing on paper gives nothing back until I finish grading, days later, by which point they've
 forgotten what they were even thinking when they answered.
 
@@ -122,8 +122,7 @@ didn't negotiate on: the AI suggests, the teacher confirms (`lib/domain/grading.
 A teacher doesn't adopt a tool that takes grading control away from them, no matter how accurate the AI
 is: I know because I am that teacher, and the first time an open-ended answer got graded on its own, I
 didn't trust the grade until I'd reviewed it anyway, which cancelled out the time I was trying to save.
-Keeping the teacher in the loop isn't a technical limitation I left for later: it's the condition for the
-product to actually get used.
+Keeping the teacher in the loop is the condition for the product to actually get used.
 
 This decision had its own uncomfortable iteration too: the first version of the review screen had an
 "Approve" button that let a draft grade through without the teacher having actually read it. I caught it
@@ -161,15 +160,15 @@ exam that was purely open-ended showed the student "0 out of 0 correct answers,"
 multiple-choice questions that exam didn't even have. A teacher validating in an interview doesn't catch
 that bug; a teacher using it on a Tuesday morning with a real class does.
 
-## The engine underneath: product rigor, not just code
+## The engine underneath
 
-This isn't a Figma prototype or a demo: it's a production web app, and the technical decisions back up
+This is a production web app, and the technical decisions back up
 the same guarantees already described above (the teacher decides, nothing breaks that from behind).
 
 - **Security taken seriously, not an implementation detail:** Row Level Security in Postgres plus
   `security definer` functions, so a student can never see an exam's answer key or write something they
-  shouldn't (`lib/supabaseServer.ts`, `db/02_rls.sql`). This is what makes "the teacher decides" hold up,
-  not just get claimed: if a student could read the answer key, trust in the grading would collapse.
+  shouldn't (`lib/supabaseServer.ts`, `db/02_rls.sql`). This is what holds "the teacher decides" up:
+  if a student could read the answer key, trust in the grading would collapse.
 - **CI, continuous integration, with four gates** (types, lint, build, and end-to-end (E2E) tests with Playwright over real auth,
   `.github/workflows/ci.yml`). Every feature went in through a PR with green CI, including the AI grader.
 - **A custom evaluation harness for the AI grader** (`eval/grading/run.ts`): before wiring the grader into
@@ -236,7 +235,7 @@ harness before exposing it, and CI with four gates (types, lint, build, E2E with
 
 ## Open to feedback
 
-My bet is that Parcialito's real differentiator isn't running exams, it's the learning loop: spaced
+My bet is that Parcialito's real differentiator is the learning loop: spaced
 repetition plus AI grading with the teacher in control. I'm publishing this to have it challenged:
 
 - Where do you see the bigger risk: a teacher's willingness to trust AI grading of open-ended answers
@@ -245,6 +244,6 @@ repetition plus AI grading with the teacher in control. I'm publishing this to h
   B2C model, aimed directly at the student?
 - Practice mode always reveals the answer, in exchange for immediate learning. Is that the right
   trade-off, or should integrity weigh more even at v1?
-- What's missing from the teacher-student loop for a school, not just an individual teacher, to adopt it?
+- What's missing from the teacher-student loop for a whole school to adopt it, rather than one teacher?
 
 If any of this made you think differently, write to me.

@@ -97,8 +97,7 @@ conversational channels, and none of them points those channels at selling to ne
 
 The fine print matters: the closest moves (Mapfre quoting for existing customers, Sancor quoting over
 WhatsApp for its brokers) confirm the industry is heading this way, but they leave the specific spot
-vacant: **advised selling to the not-yet-customer, inside the chat**. That's the gap, and it doesn't
-belong to one company: it's structural.
+vacant: **advised selling to the not-yet-customer, inside the chat**. That gap is structural.
 
 The breadth came from the rest of the landscape: **the case was the anchor of the analysis, not its
 limit**. Every flow decision was checked against the full industry: quote forms from other insurers and
@@ -182,7 +181,7 @@ everything I had been simplifying.
 
 The original menu had "Talk to an agent" as a visible option. The problem: it's the easy way out, and a
 good share of users would pick it upfront, so the bot cannibalizes itself (it never gets to quote or
-qualify the lead, which is its job). The solution wasn't hiding the human, it was changing the trigger:
+qualify the lead, which is its job). The solution was changing the trigger:
 the agent is offered when the emotion engine detects distress, with a level. The classifier returns a
 label, not an intensity, so the level comes from severity and persistence: anger weighs double and
 triggers the offer at once; frustration needs to persist beyond one message, because one can be venting
@@ -225,9 +224,9 @@ The part I most want to show: the AI pieces are not assumed, they are measured.
 The engine has two distinct semantic pieces, and each solves a different business problem:
 
 **RAG (the language model, or LLM, anchored to a knowledge base).** The problem it solves is **trust**: an insurance
-assistant that invents a coverage isn't a demo with a bug, it's a risk. So the model doesn't speak from
+assistant that invents a coverage is a risk, not one more demo bug. So the model doesn't speak from
 memory: it answers over a base of real surveyed content (the plans, the deductible with an example, the
-requirements per line). The benefit here isn't cost, it's fewer invented answers in the industry where
+requirements per line). The benefit here is fewer invented answers in the industry where
 an invented answer costs the most.
 
 **The embeddings router (retrieval without generation).** The problem it solves is **cost, latency and
@@ -315,7 +314,7 @@ at it should be able to picture itself using it.
 
 ## What works and why
 
-- **The insight holds everything up.** The project isn't "an insurance bot", it's the answer to a
+- **The insight holds everything up.** The project is the answer to a
   structural gap in the industry: found in a real company's funnel by looking at public data with
   method, and verified against the competition (Zurich, Allianz, Mapfre, Sancor: all with a
   conversational channel, none selling to new customers in the chat).
@@ -353,7 +352,7 @@ at it should be able to picture itself using it.
   the small one didn't lose the actionable signal. The lesson: pick the model with the eval in hand,
   not by reputation.
 - The content of a retrieval system ages silently, with full confidence. Keeping corpus and product in
-  sync isn't optional maintenance: it's part of the system.
+  sync is part of the system.
 
 ## Stack
 
