@@ -184,6 +184,7 @@ export default async function PostPage({ params }: Props) {
     <main id="main">
       <ReadTracker
         kind="blog"
+        locale={typedLocale}
         slug={slug}
         targetSelector="#post-article"
         readingMinutes={post.metadata?.readingTime}

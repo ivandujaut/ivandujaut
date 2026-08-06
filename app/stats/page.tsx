@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getPosts, getProjects } from "@/lib/content";
 import { getCachedViews } from "@/lib/views";
 import { getCachedContinued, getCachedReads } from "@/lib/reads";
-import type { ViewKind } from "@/lib/views";
+import { CONTENT_LOCALES, type ContentLocale, type ViewKind } from "@/lib/views";
 
 /**
  * Tablero privado de lectura. No está en el nav, no está en el sitemap y sale
@@ -24,6 +24,7 @@ type Props = { searchParams: Promise<{ key?: string }> };
 
 interface Row {
   kind: ViewKind;
+  locale: ContentLocale;
   slug: string;
   title: string;
   minutes?: number;
@@ -39,24 +40,38 @@ export default async function StatsPage({ searchParams }: Props) {
   // abierta por un despliegue al que se le olvidó la variable.
   if (!expected || key !== expected) notFound();
 
-  const pieces = [
-    ...getProjects("es").map((p) => ({ kind: "projects" as const, item: p })),
-    ...getPosts("es").map((p) => ({ kind: "blog" as const, item: p })),
-  ];
+  // Una fila por pieza Y por idioma: los slugs se repiten entre idiomas, así
+  // que hasta ahora una lectura en inglés era indistinguible de una española.
+  const pieces = CONTENT_LOCALES.flatMap((locale) => [
+    ...getProjects(locale).map((p) => ({ kind: "projects" as const, locale, item: p })),
+    ...getPosts(locale).map((p) => ({ kind: "blog" as const, locale, item: p })),
+  ]);
 
-  const rows: Row[] = await Promise.all(
-    pieces.map(async ({ kind, item }) => ({
+  const todas: Row[] = await Promise.all(
+    pieces.map(async ({ kind, locale, item }) => ({
       kind,
+      locale,
       slug: item.slug,
       title: item.title,
       minutes: item.metadata?.readingTime,
-      views: await getCachedViews(kind, item.slug),
-      reads: await getCachedReads(kind, item.slug),
-      continued: await getCachedContinued(kind, item.slug),
+      views: await getCachedViews(kind, locale, item.slug),
+      reads: await getCachedReads(kind, locale, item.slug),
+      continued: await getCachedContinued(kind, locale, item.slug),
     })),
   );
 
+  // Las filas sin ningún dato no se muestran: con seis casos por dos idiomas,
+  // listar los ceros del inglés sería más ruido que información. La fila
+  // aparece sola en cuanto haya una sola visita.
+  const rows = todas.filter((r) => r.views || r.reads || r.continued);
   rows.sort((a, b) => b.views - a.views);
+
+  const porIdioma = CONTENT_LOCALES.map((l) => {
+    const dellocale = todas.filter((r) => r.locale === l);
+    const v = dellocale.reduce((a, r) => a + r.views, 0);
+    const rd = dellocale.reduce((a, r) => a + r.reads, 0);
+    return { locale: l, views: v, reads: rd };
+  });
 
   const totalViews = rows.reduce((acc, r) => acc + r.views, 0);
   const totalReads = rows.reduce((acc, r) => acc + r.reads, 0);
@@ -87,11 +102,18 @@ export default async function StatsPage({ searchParams }: Props) {
         ))}
       </dl>
 
+      <p className="mt-6 font-mono text-xs text-muted-foreground">
+        {porIdioma
+          .map((l) => `${l.locale}: ${l.views} vistas · ${l.reads} lecturas`)
+          .join("   |   ")}
+      </p>
+
       <div className="mt-10 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border text-left font-mono text-xs uppercase tracking-wider text-muted-foreground">
               <th className="py-2 pr-4 font-normal">Pieza</th>
+              <th className="py-2 pr-4 font-normal">Idioma</th>
               <th className="py-2 pr-4 text-right font-normal">Min</th>
               <th className="py-2 pr-4 text-right font-normal">Vistas</th>
               <th className="py-2 pr-4 text-right font-normal">Lecturas</th>
@@ -108,6 +130,7 @@ export default async function StatsPage({ searchParams }: Props) {
                   </span>{" "}
                   {r.title}
                 </td>
+                <td className="py-2 pr-4 font-mono text-xs text-muted-foreground">{r.locale}</td>
                 <td className="py-2 pr-4 text-right font-mono text-xs text-muted-foreground">
                   {r.minutes ?? "—"}
                 </td>
@@ -128,11 +151,13 @@ export default async function StatsPage({ searchParams }: Props) {
       </div>
 
       <p className="mt-8 text-xs text-muted-foreground">
-        &quot;Siguieron&quot; cuenta lectores que después de terminar esta pieza abrieron otra del
-        sitio, y se le acredita a la que enganchó, no a la que se leyó después. Reemplaza al botón
-        de me gusta: es conducta y no cortesía. Los contadores viven en Redis y se cachean 60
-        segundos. Vercel Analytics, aparte, tiene el origen del tráfico: sirve para cruzar de dónde
-        viene la gente que sí llega al final.
+        Los contadores se separan por idioma desde el 6 de agosto de 2026. Antes compartían clave,
+        así que las claves viejas de Redis suman los dos y quedaron fuera de esta vista sin
+        borrarse. &quot;Siguieron&quot; cuenta lectores que después de terminar esta pieza abrieron
+        otra del sitio, y se le acredita a la que enganchó, no a la que se leyó después. Reemplaza
+        al botón de me gusta: es conducta y no cortesía. Los contadores viven en Redis y se cachean
+        60 segundos. Vercel Analytics, aparte, tiene el origen del tráfico: sirve para cruzar de
+        dónde viene la gente que sí llega al final.
       </p>
     </main>
   );

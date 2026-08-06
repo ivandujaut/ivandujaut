@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
-import { isValidSlug, isViewKind, viewsTag } from "@/lib/views";
+import { isContentLocale, isValidSlug, isViewKind, viewsTag } from "@/lib/views";
 import { check, viewsRatelimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -16,8 +16,11 @@ const SEEN_TTL_SECONDS = 60 * 60 * 24;
 
 export async function POST(request: Request, context: RouteContext) {
   const { kind, slug } = await context.params;
+  // El idioma viaja por query y no por ruta: los slugs son iguales en los dos
+  // idiomas, así que sin esto ambas versiones incrementan el mismo contador.
+  const locale = new URL(request.url).searchParams.get("l") ?? "";
 
-  if (!isViewKind(kind) || !isValidSlug(slug)) {
+  if (!isViewKind(kind) || !isValidSlug(slug) || !isContentLocale(locale)) {
     return NextResponse.json({ views: 0 }, { status: 404 });
   }
 
@@ -41,8 +44,8 @@ export async function POST(request: Request, context: RouteContext) {
       );
     }
 
-    const counterKey = keyFor("views", kind, slug);
-    const seenKey = keyFor("views", "seen", kind, slug, ipHash);
+    const counterKey = keyFor("views", kind, locale, slug);
+    const seenKey = keyFor("views", "seen", kind, locale, slug, ipHash);
 
     const isFirstSeen = await redis.set(seenKey, 1, { nx: true, ex: SEEN_TTL_SECONDS });
 
@@ -51,7 +54,7 @@ export async function POST(request: Request, context: RouteContext) {
       : ((await redis.get<number>(counterKey)) ?? 0);
 
     if (isFirstSeen) {
-      revalidateTag(viewsTag(kind, slug), "max");
+      revalidateTag(viewsTag(kind, locale, slug), "max");
     }
 
     return NextResponse.json({ views });
