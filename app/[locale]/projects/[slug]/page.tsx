@@ -23,9 +23,8 @@ import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema, projectArticleSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
-import { ViewCounter } from "@/components/blog/view-counter";
+import { ReadTracker } from "@/components/content/read-tracker";
 import { LikeButton } from "@/components/blog/like-button";
-import { getCachedViews } from "@/lib/views";
 import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
@@ -184,13 +183,17 @@ export default async function ProjectPage({ params }: Props) {
       { name: project.title, path: projectPath },
     ]),
   ];
-
-  const initialViews = await getCachedViews("projects", slug);
   const { previous, next } = getAdjacentProjects(typedLocale, slug);
 
   return (
     <main id="main">
       <ReadingProgress targetSelector="#case-study-article" label={tReading("progress")} />
+      <ReadTracker
+        kind="projects"
+        slug={slug}
+        targetSelector="#case-study-article"
+        readingMinutes={project.metadata?.readingTime}
+      />
       <PaperToc
         containerSelector="#case-study-content"
         label={tReading("contents")}
@@ -220,8 +223,6 @@ export default async function ProjectPage({ params }: Props) {
                 <span>{tReading("minutes", { count: project.metadata.readingTime })}</span>
               </>
             )}
-            <span aria-hidden>·</span>
-            <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
             <ShareLinkButton
               url={`${SITE_URL}${projectPath}`}
               title={project.title}
