@@ -120,10 +120,6 @@
       "likeCount": "me gusta",
       "likesCount": "me gusta"
     },
-    "views": {
-      "singular": "vista",
-      "plural": "vistas"
-    },
     "related": {
       "title": "Posts relacionados"
     }

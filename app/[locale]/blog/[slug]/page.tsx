@@ -15,8 +15,7 @@ import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/jsonld";
 import { useMDXComponents } from "@/mdx-components";
-import { ViewCounter } from "@/components/blog/view-counter";
-import { getCachedViews } from "@/lib/views";
+import { ReadTracker } from "@/components/content/read-tracker";
 import { LikeButton } from "@/components/blog/like-button";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { PostHero } from "@/components/blog/post-hero";
@@ -181,11 +180,16 @@ export default async function PostPage({ params }: Props) {
   ];
 
   const related = getRelatedPosts({ locale: typedLocale, slug: post.slug, tags: post.tags }, 3);
-  const initialViews = await getCachedViews("blog", slug);
 
   return (
     <main id="main">
-      <article className="mx-auto max-w-2xl px-6 py-24">
+      <ReadTracker
+        kind="blog"
+        slug={slug}
+        targetSelector="#post-article"
+        readingMinutes={post.metadata?.readingTime}
+      />
+      <article id="post-article" className="mx-auto max-w-2xl px-6 py-24">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-8">
@@ -208,8 +212,6 @@ export default async function PostPage({ params }: Props) {
                 <span>{tReading("minutes", { count: post.metadata.readingTime })}</span>
               </>
             )}
-            <span aria-hidden>·</span>
-            <ViewCounter kind="blog" slug={slug} initialViews={initialViews} />
             <ShareLinkButton
               url={`${SITE_URL}${postPath}`}
               title={post.title}

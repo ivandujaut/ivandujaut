@@ -120,10 +120,6 @@
       "likeCount": "like",
       "likesCount": "likes"
     },
-    "views": {
-      "singular": "view",
-      "plural": "views"
-    },
     "related": {
       "title": "Related posts"
     }
