@@ -49,21 +49,42 @@ export function ReadTracker({ kind, slug, targetSelector, readingMinutes }: Read
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const ping = (endpoint: "views" | "reads") => {
-      const sessionKey = `${endpoint === "views" ? "viewed" : "read"}:${kind}:${slug}`;
+    const post = (endpoint: string, sessionKey: string) => {
       if (sessionStorage.getItem(sessionKey)) return;
-      sessionStorage.setItem(sessionKey, "1");
-      fetch(`/api/${endpoint}/${kind}/${slug}`, { method: "POST", keepalive: true }).catch(
-        (error) => {
-          // Si falla, se borra la marca para que un reintento en la próxima
-          // navegación pueda contar. Perder un ping es preferible a inflar.
-          sessionStorage.removeItem(sessionKey);
-          console.error(`ReadTracker ${endpoint} error:`, error);
-        },
-      );
+      // El valor es la marca de tiempo, no un 1: las claves `read:` se comparan
+      // después entre sí para saber cuál fue la primera pieza de la sesión.
+      sessionStorage.setItem(sessionKey, String(Date.now()));
+      fetch(`/api/${endpoint}`, { method: "POST", keepalive: true }).catch((error) => {
+        // Si falla, se borra la marca para que un reintento en la próxima
+        // navegación pueda contar. Perder un ping es preferible a inflar.
+        sessionStorage.removeItem(sessionKey);
+        console.error(`ReadTracker ${endpoint} error:`, error);
+      });
     };
 
-    ping("views");
+    /**
+     * Al terminar una pieza, mira si en esta sesión ya se había terminado otra.
+     * Si la hay, le acredita la continuidad a la **más vieja**: la que enganchó
+     * al lector, no la que está leyendo ahora.
+     */
+    const marcarContinuidad = () => {
+      let primeraClave: string | null = null;
+      let primeraMarca = Infinity;
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const k = sessionStorage.key(i);
+        if (!k?.startsWith("read:") || k === `read:${kind}:${slug}`) continue;
+        const t = Number(sessionStorage.getItem(k));
+        if (Number.isFinite(t) && t < primeraMarca) {
+          primeraMarca = t;
+          primeraClave = k;
+        }
+      }
+      if (!primeraClave) return;
+      const [, primeroKind, primeroSlug] = primeraClave.split(":");
+      post(`continued/${primeroKind}/${primeroSlug}`, `continued:${primeroKind}:${primeroSlug}`);
+    };
+
+    post(`views/${kind}/${slug}`, `viewed:${kind}:${slug}`);
 
     const target = document.querySelector(targetSelector);
     if (!target) return;
@@ -102,7 +123,14 @@ export function ReadTracker({ kind, slug, targetSelector, readingMinutes }: Read
       const recorrido = window.scrollY - (rect.top + window.scrollY) + window.innerHeight;
       if (recorrido / rect.height < SCROLL_THRESHOLD) return;
 
-      ping("reads");
+      // Solo cuenta como continuidad terminar una pieza NUEVA. Sin esta guarda,
+      // volver a leer algo ya terminado en la misma sesión le acreditaba el
+      // enganche a otra pieza cualquiera, que no fue la que lo produjo.
+      //
+      // Y va antes de marcar esta como leída, para que su propia clave no
+      // compita por ser la primera de la sesión.
+      if (!sessionStorage.getItem(`read:${kind}:${slug}`)) marcarContinuidad();
+      post(`reads/${kind}/${slug}`, `read:${kind}:${slug}`);
       clearInterval(interval);
     }, SAMPLE_MS);
 
