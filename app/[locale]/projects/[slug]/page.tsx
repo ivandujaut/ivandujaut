@@ -72,6 +72,12 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: project.title,
     description: project.description,
+    // Un borrador queda fuera de listados, sitemap, RSS y home, pero la URL
+    // directa igual responde: `getProjectBySlug` no filtra por `draft` a
+    // propósito, para poder compartir una preview con alguien. Sin `noindex`
+    // eso es "no listado", no "no publicado": basta que la URL aparezca en un
+    // mail o un chat para que un buscador la tome.
+    robots: project.draft ? { index: false, follow: false } : undefined,
     alternates: buildContentAlternates({
       current: { locale: typedLocale, slug: project.slug },
       translations: translations.map((t) => ({ locale: t.locale, slug: t.slug })),
