@@ -33,6 +33,9 @@
 
   /* Borders, inputs, focus */
   --border: oklch(0.922 0 0);
+  /* Sombra de los bordes de una tabla desplazable. Más marcada que `--border`
+     a propósito: es una señal de que hay contenido cortado, no una línea. */
+  --table-scroll-shadow: oklch(0 0 0 / 12%);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 
@@ -57,6 +60,8 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
+  /* En oscuro la sombra negra no se ve contra el fondo: se invierte a luz. */
+  --table-scroll-shadow: oklch(1 0 0 / 16%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 }
@@ -167,8 +172,13 @@
     text-decoration: underline;
   }
 
+  /* El margen vertical vive en `.table-scroll`, que es quien envuelve.
+     `min-width` es el freno al apriete: por debajo de 32rem las celdas se
+     apilan en columnas de dos palabras y la tabla deja de leerse. Cuando entra,
+     `width: 100%` la estira; cuando no, el envoltorio la desplaza. */
   .prose-content table {
-    @apply my-6 w-full border-collapse text-sm;
+    @apply w-full border-collapse text-sm;
+    min-width: 32rem;
   }
 
   .prose-content th,
@@ -178,6 +188,38 @@
 
   .prose-content th {
     @apply font-semibold;
+  }
+}
+
+/* ============================================================
+   Tablas anchas: scroll propio en vez de mover la página
+   ============================================================ */
+
+/**
+ * Sombras de scroll sin JavaScript, con la técnica de las cuatro capas de
+ * fondo: las dos de `background-attachment: local` llevan el color del fondo y
+ * viajan con el contenido, así que en cada extremo tapan a las dos de `scroll`,
+ * que están fijas. El resultado es que la sombra solo se ve del lado donde
+ * queda tabla por delante, que es la señal de que hay más para ver.
+ */
+.table-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  background:
+    linear-gradient(to right, var(--background) 30%, transparent) left center / 2.5rem 100%
+      no-repeat local,
+    linear-gradient(to left, var(--background) 30%, transparent) right center / 2.5rem 100%
+      no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--table-scroll-shadow), transparent) left center /
+      0.9rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--table-scroll-shadow), transparent) right
+      center / 0.9rem 100% no-repeat scroll;
+}
+
+/* Con `prefers-reduced-motion` el scroll suave molesta más de lo que ayuda. */
+@media (prefers-reduced-motion: no-preference) {
+  .table-scroll {
+    scroll-behavior: smooth;
   }
 }
 

@@ -89,6 +89,26 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     pre: Pre,
 
+    // Una tabla ancha adentro de una columna de 672px (327px en un teléfono) no
+    // desbordaba: se apretaba. Con `w-full` las celdas se apilaban hasta once
+    // líneas de alto, que es ilegible, y las tablas de cuatro columnas igual
+    // terminaban empujando la página.
+    //
+    // El envoltorio le da su propio scroll horizontal: el `min-width` de la
+    // tabla frena el apriete y el desborde queda contenido acá adentro en vez de
+    // mover la página entera. El `TableCaption` va suelto después de la tabla,
+    // así que queda fuera del scroll y no se va de vista al desplazarla.
+    //
+    // `tabIndex` para que la tabla se pueda desplazar con el teclado, que si no
+    // queda inalcanzable sin mouse. Sin `role="region"` a propósito: un landmark
+    // sin nombre accesible molesta más de lo que ayuda, y el nombre tendría que
+    // salir del `TableCaption`, que es opcional y es hermano.
+    table: ({ children, ...props }) => (
+      <div className="table-scroll my-6" tabIndex={0}>
+        <table {...props}>{children}</table>
+      </div>
+    ),
+
     code: ({ children, ...props }) => (
       <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[0.9em]" {...props}>
         {children}
