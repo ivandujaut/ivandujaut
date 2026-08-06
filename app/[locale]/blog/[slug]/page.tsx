@@ -16,7 +16,6 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/jsonld";
 import { useMDXComponents } from "@/mdx-components";
 import { ReadTracker } from "@/components/content/read-tracker";
-import { LikeButton } from "@/components/blog/like-button";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { PostHero } from "@/components/blog/post-hero";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -240,8 +239,7 @@ export default async function PostPage({ params }: Props) {
           <MDXContent code={post.content} />
         </div>
 
-        <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
-          <LikeButton kind="blog" slug={slug} />
+        <footer className="mt-16 border-t border-border pt-8">
           <ShareLinkButton url={`${SITE_URL}${postPath}`} title={post.title} alwaysShowLabel />
         </footer>
 

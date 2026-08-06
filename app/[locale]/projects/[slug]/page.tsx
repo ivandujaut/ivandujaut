@@ -24,7 +24,6 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema, projectArticleSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ReadTracker } from "@/components/content/read-tracker";
-import { LikeButton } from "@/components/blog/like-button";
 import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
@@ -343,17 +342,13 @@ export default async function ProjectPage({ params }: Props) {
           )}
         </section>
 
-        <footer className="mt-12 flex flex-wrap items-center gap-4">
-          <LikeButton kind="projects" slug={slug} />
-          <ShareLinkButton
-            url={`${SITE_URL}${projectPath}`}
-            title={project.title}
-            alwaysShowLabel
-          />
-        </footer>
-
+        {/* Compartir vive adentro del cierre y no en una fila propia: sin el
+            me gusta al lado quedaba un botón solo entre dos bloques con borde.
+            Ahí abajo las tres acciones se leen juntas y en orden de valor. */}
         <CaseStudyClose
           locale={typedLocale}
+          shareUrl={`${SITE_URL}${projectPath}`}
+          shareTitle={project.title}
           previous={
             previous
               ? {
