@@ -114,12 +114,6 @@
   "blog": {
     "title": "Blog",
     "description": "Thoughts on development, learning and life.",
-    "like": {
-      "like": "Like",
-      "unlike": "Remove like",
-      "likeCount": "like",
-      "likesCount": "likes"
-    },
     "related": {
       "title": "Related posts"
     }

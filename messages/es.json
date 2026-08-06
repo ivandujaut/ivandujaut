@@ -114,12 +114,6 @@
   "blog": {
     "title": "Blog",
     "description": "Pensamientos sobre desarrollo, aprendizaje y vida.",
-    "like": {
-      "like": "Me gusta",
-      "unlike": "Quitar me gusta",
-      "likeCount": "me gusta",
-      "likesCount": "me gusta"
-    },
     "related": {
       "title": "Posts relacionados"
     }
