@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getPosts, getProjects } from "@/lib/content";
 import { getCachedViews } from "@/lib/views";
-import { getCachedReads } from "@/lib/reads";
+import { getCachedContinued, getCachedReads } from "@/lib/reads";
 import type { ViewKind } from "@/lib/views";
 
 /**
@@ -29,6 +29,7 @@ interface Row {
   minutes?: number;
   views: number;
   reads: number;
+  continued: number;
 }
 
 export default async function StatsPage({ searchParams }: Props) {
@@ -51,6 +52,7 @@ export default async function StatsPage({ searchParams }: Props) {
       minutes: item.metadata?.readingTime,
       views: await getCachedViews(kind, item.slug),
       reads: await getCachedReads(kind, item.slug),
+      continued: await getCachedContinued(kind, item.slug),
     })),
   );
 
@@ -58,6 +60,7 @@ export default async function StatsPage({ searchParams }: Props) {
 
   const totalViews = rows.reduce((acc, r) => acc + r.views, 0);
   const totalReads = rows.reduce((acc, r) => acc + r.reads, 0);
+  const totalContinued = rows.reduce((acc, r) => acc + r.continued, 0);
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
@@ -68,11 +71,12 @@ export default async function StatsPage({ searchParams }: Props) {
         que dice si el texto funcionó.
       </p>
 
-      <dl className="mt-8 grid grid-cols-3 gap-4">
+      <dl className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
           ["Vistas", totalViews.toLocaleString("es-AR")],
           ["Lecturas", totalReads.toLocaleString("es-AR")],
           ["Read-through", totalViews ? `${Math.round((totalReads / totalViews) * 100)}%` : "—"],
+          ["Siguieron", String(totalContinued)],
         ].map(([label, value]) => (
           <div key={label} className="rounded-lg border border-border p-4">
             <dt className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -91,7 +95,8 @@ export default async function StatsPage({ searchParams }: Props) {
               <th className="py-2 pr-4 text-right font-normal">Min</th>
               <th className="py-2 pr-4 text-right font-normal">Vistas</th>
               <th className="py-2 pr-4 text-right font-normal">Lecturas</th>
-              <th className="py-2 text-right font-normal">Read-through</th>
+              <th className="py-2 pr-4 text-right font-normal">Read-through</th>
+              <th className="py-2 text-right font-normal">Siguieron</th>
             </tr>
           </thead>
           <tbody>
@@ -112,9 +117,10 @@ export default async function StatsPage({ searchParams }: Props) {
                 <td className="py-2 pr-4 text-right font-mono">
                   {r.reads.toLocaleString("es-AR")}
                 </td>
-                <td className="py-2 text-right font-mono">
+                <td className="py-2 pr-4 text-right font-mono">
                   {r.views ? `${Math.round((r.reads / r.views) * 100)}%` : "—"}
                 </td>
+                <td className="py-2 text-right font-mono">{r.continued || "—"}</td>
               </tr>
             ))}
           </tbody>
@@ -122,8 +128,11 @@ export default async function StatsPage({ searchParams }: Props) {
       </div>
 
       <p className="mt-8 text-xs text-muted-foreground">
-        Los contadores viven en Redis y se cachean 60 segundos. Vercel Analytics, aparte, tiene el
-        origen del tráfico: sirve para cruzar de dónde viene la gente que sí llega al final.
+        &quot;Siguieron&quot; cuenta lectores que después de terminar esta pieza abrieron otra del
+        sitio, y se le acredita a la que enganchó, no a la que se leyó después. Reemplaza al botón
+        de me gusta: es conducta y no cortesía. Los contadores viven en Redis y se cachean 60
+        segundos. Vercel Analytics, aparte, tiene el origen del tráfico: sirve para cruzar de dónde
+        viene la gente que sí llega al final.
       </p>
     </main>
   );
