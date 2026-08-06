@@ -2,9 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPosts, getProjects, getResearch } from "@/lib/content";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 
-// TODO: flip to true when /research has published content. Keeps the section
-// out of the sitemap (and out of search engines) while the routes 404.
-const RESEARCH_ENABLED = false;
+import { RESEARCH_ENABLED } from "@/lib/features";
 
 // Construye URLs absolutas para el sitemap manteniendo la misma forma que
 // los canonicals emitidos por Next.js: el root sin trailing slash, para que
