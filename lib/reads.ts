@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { redis, keyFor } from "@/lib/redis";
-import type { ViewKind } from "@/lib/views";
+import type { ContentLocale, ViewKind } from "@/lib/views";
 
 /**
  * Lecturas completadas, contra vistas abiertas.
@@ -13,24 +13,28 @@ import type { ViewKind } from "@/lib/views";
  * Comparte los validadores de `lib/views.ts` (mismo `kind`, mismo slug) y vive
  * en el mismo Redis, en su propio espacio de claves.
  */
-export function readsTag(kind: ViewKind, slug: string): string {
-  return `reads:${kind}:${slug}`;
+export function readsTag(kind: ViewKind, locale: ContentLocale, slug: string): string {
+  return `reads:${kind}:${locale}:${slug}`;
 }
 
-async function readReads(kind: ViewKind, slug: string): Promise<number> {
+async function readReads(kind: ViewKind, locale: ContentLocale, slug: string): Promise<number> {
   if (!redis) return 0;
   try {
-    return (await redis.get<number>(keyFor("reads", kind, slug))) ?? 0;
+    return (await redis.get<number>(keyFor("reads", kind, locale, slug))) ?? 0;
   } catch (error) {
     console.error("Failed to read reads:", error);
     return 0;
   }
 }
 
-export function getCachedReads(kind: ViewKind, slug: string): Promise<number> {
-  return unstable_cache(() => readReads(kind, slug), ["reads", kind, slug], {
+export function getCachedReads(
+  kind: ViewKind,
+  locale: ContentLocale,
+  slug: string,
+): Promise<number> {
+  return unstable_cache(() => readReads(kind, locale, slug), ["reads", kind, locale, slug], {
     revalidate: 60,
-    tags: [readsTag(kind, slug)],
+    tags: [readsTag(kind, locale, slug)],
   })();
 }
 
@@ -43,23 +47,31 @@ export function getCachedReads(kind: ViewKind, slug: string): Promise<number> {
  * un lector que termina dos casos dice más que un toque anónimo, no se puede
  * confundir con cortesía y no compite con escribir un mail.
  */
-export function continuedTag(kind: ViewKind, slug: string): string {
-  return `continued:${kind}:${slug}`;
+export function continuedTag(kind: ViewKind, locale: ContentLocale, slug: string): string {
+  return `continued:${kind}:${locale}:${slug}`;
 }
 
-async function readContinued(kind: ViewKind, slug: string): Promise<number> {
+async function readContinued(kind: ViewKind, locale: ContentLocale, slug: string): Promise<number> {
   if (!redis) return 0;
   try {
-    return (await redis.get<number>(keyFor("continued", kind, slug))) ?? 0;
+    return (await redis.get<number>(keyFor("continued", kind, locale, slug))) ?? 0;
   } catch (error) {
     console.error("Failed to read continued:", error);
     return 0;
   }
 }
 
-export function getCachedContinued(kind: ViewKind, slug: string): Promise<number> {
-  return unstable_cache(() => readContinued(kind, slug), ["continued", kind, slug], {
-    revalidate: 60,
-    tags: [continuedTag(kind, slug)],
-  })();
+export function getCachedContinued(
+  kind: ViewKind,
+  locale: ContentLocale,
+  slug: string,
+): Promise<number> {
+  return unstable_cache(
+    () => readContinued(kind, locale, slug),
+    ["continued", kind, locale, slug],
+    {
+      revalidate: 60,
+      tags: [continuedTag(kind, locale, slug)],
+    },
+  )();
 }

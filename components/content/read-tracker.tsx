@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import type { ViewKind } from "@/lib/views";
+import type { ContentLocale, ViewKind } from "@/lib/views";
 
 interface ReadTrackerProps {
   kind: ViewKind;
+  /** Idioma de la pieza. Va en cada ping: los slugs se repiten entre idiomas. */
+  locale: ContentLocale;
   slug: string;
   /** Elemento cuyo avance se mide. El mismo que usa `ReadingProgress`. */
   targetSelector: string;
@@ -45,16 +47,25 @@ const SAMPLE_MS = 2000;
  *
  * Ninguno de los dos números se muestra en la página. Se miran en `/stats`.
  */
-export function ReadTracker({ kind, slug, targetSelector, readingMinutes }: ReadTrackerProps) {
+export function ReadTracker({
+  kind,
+  locale,
+  slug,
+  targetSelector,
+  readingMinutes,
+}: ReadTrackerProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const post = (endpoint: string, sessionKey: string) => {
+    // El idioma es un parámetro y no se toma del closure: la continuidad se le
+    // acredita a la primera pieza de la sesión, que puede estar en otro idioma
+    // que esta.
+    const post = (endpoint: string, sessionKey: string, l: string) => {
       if (sessionStorage.getItem(sessionKey)) return;
       // El valor es la marca de tiempo, no un 1: las claves `read:` se comparan
       // después entre sí para saber cuál fue la primera pieza de la sesión.
       sessionStorage.setItem(sessionKey, String(Date.now()));
-      fetch(`/api/${endpoint}`, { method: "POST", keepalive: true }).catch((error) => {
+      fetch(`/api/${endpoint}?l=${l}`, { method: "POST", keepalive: true }).catch((error) => {
         // Si falla, se borra la marca para que un reintento en la próxima
         // navegación pueda contar. Perder un ping es preferible a inflar.
         sessionStorage.removeItem(sessionKey);
@@ -72,7 +83,7 @@ export function ReadTracker({ kind, slug, targetSelector, readingMinutes }: Read
       let primeraMarca = Infinity;
       for (let i = 0; i < sessionStorage.length; i++) {
         const k = sessionStorage.key(i);
-        if (!k?.startsWith("read:") || k === `read:${kind}:${slug}`) continue;
+        if (!k?.startsWith("read:") || k === `read:${kind}:${locale}:${slug}`) continue;
         const t = Number(sessionStorage.getItem(k));
         if (Number.isFinite(t) && t < primeraMarca) {
           primeraMarca = t;
@@ -80,11 +91,15 @@ export function ReadTracker({ kind, slug, targetSelector, readingMinutes }: Read
         }
       }
       if (!primeraClave) return;
-      const [, primeroKind, primeroSlug] = primeraClave.split(":");
-      post(`continued/${primeroKind}/${primeroSlug}`, `continued:${primeroKind}:${primeroSlug}`);
+      const [, primeroKind, primeroLocale, primeroSlug] = primeraClave.split(":");
+      post(
+        `continued/${primeroKind}/${primeroSlug}`,
+        `continued:${primeroKind}:${primeroLocale}:${primeroSlug}`,
+        primeroLocale,
+      );
     };
 
-    post(`views/${kind}/${slug}`, `viewed:${kind}:${slug}`);
+    post(`views/${kind}/${slug}`, `viewed:${kind}:${locale}:${slug}`, locale);
 
     const target = document.querySelector(targetSelector);
     if (!target) return;
@@ -129,13 +144,13 @@ export function ReadTracker({ kind, slug, targetSelector, readingMinutes }: Read
       //
       // Y va antes de marcar esta como leída, para que su propia clave no
       // compita por ser la primera de la sesión.
-      if (!sessionStorage.getItem(`read:${kind}:${slug}`)) marcarContinuidad();
-      post(`reads/${kind}/${slug}`, `read:${kind}:${slug}`);
+      if (!sessionStorage.getItem(`read:${kind}:${locale}:${slug}`)) marcarContinuidad();
+      post(`reads/${kind}/${slug}`, `read:${kind}:${locale}:${slug}`, locale);
       clearInterval(interval);
     }, SAMPLE_MS);
 
     return () => clearInterval(interval);
-  }, [kind, slug, targetSelector, readingMinutes]);
+  }, [kind, locale, slug, targetSelector, readingMinutes]);
 
   return null;
 }

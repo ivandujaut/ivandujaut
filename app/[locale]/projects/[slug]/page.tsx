@@ -189,6 +189,7 @@ export default async function ProjectPage({ params }: Props) {
       <ReadingProgress targetSelector="#case-study-article" label={tReading("progress")} />
       <ReadTracker
         kind="projects"
+        locale={typedLocale}
         slug={slug}
         targetSelector="#case-study-article"
         readingMinutes={project.metadata?.readingTime}
