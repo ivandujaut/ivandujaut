@@ -6,6 +6,7 @@ import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
+import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
 
 interface AdjacentProject {
@@ -19,6 +20,8 @@ interface CaseStudyCloseProps {
   locale: "es" | "en";
   previous?: AdjacentProject;
   next?: AdjacentProject;
+  shareUrl: string;
+  shareTitle: string;
 }
 
 /**
@@ -27,10 +30,18 @@ interface CaseStudyCloseProps {
  * Un caso son entre 2.500 y 6.000 palabras: quien llega al final ya invirtió
  * varios minutos y es el lector más calificado que va a tener la página. Antes
  * este bloque no existía y el artículo terminaba en "me gusta" y "compartir",
- * sin ninguna salida. Ahora ofrece las dos únicas que tienen sentido ahí:
- * seguir leyendo otro caso, o hablar.
+ * sin ninguna salida. Ahora reúne las tres acciones que tienen sentido ahí, en
+ * orden de valor: escribir, agendar, compartir. El me gusta se sacó del sitio
+ * porque en una página cuyo trabajo es empezar una conversación, un toque
+ * anónimo es la forma más barata de descargar el impulso de escribir.
  */
-export async function CaseStudyClose({ locale, previous, next }: CaseStudyCloseProps) {
+export async function CaseStudyClose({
+  locale,
+  previous,
+  next,
+  shareUrl,
+  shareTitle,
+}: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
   const hasNeighbours = Boolean(previous || next);
 
@@ -58,6 +69,7 @@ export async function CaseStudyClose({ locale, previous, next }: CaseStudyCloseP
           <CalendlyIcon size={16} aria-hidden />
           <span>{t("ctas.call")}</span>
         </a>
+        <ShareLinkButton url={shareUrl} title={shareTitle} alwaysShowLabel />
       </div>
 
       {hasNeighbours && (
