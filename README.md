@@ -32,4 +32,4 @@ Bioengineer (ITBA), Techstars W24 in New York with Tumo. Product Engineer at Pri
 Argentina.
 
 **Open to product roles across LATAM and the US.**
-[About](https://ivandujaut.com/en/about) · [LinkedIn](https://linkedin.com/in/ivan-dujaut) · [Writing](https://ivandujaut.com/en/blog)
+[About](https://ivandujaut.com/en/about) · [LinkedIn](https://linkedin.com/in/ivan-dujaut) · [Writing](https://ivandujaut.com/en/blog) · [How this site is built](ARCHITECTURE.md)

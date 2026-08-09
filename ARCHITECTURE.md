@@ -3,10 +3,13 @@
 Bilingual portfolio and writing site. Next.js 16 with the App Router, MDX content compiled by Velite,
 deployed on Vercel.
 
-> This file is what GitHub shows on the repository page. The `README.md` at the root is a different
-> document on purpose: GitHub renders that one on the profile, so it is written for someone deciding
-> whether to keep reading, not for someone reading the code. GitHub's precedence puts `.github/README.md`
-> ahead of the root one for the repo page, which is what makes the split possible.
+> These are the notes for someone reading the code. The `README.md` is a different document on
+> purpose: this repository is named after the account, so GitHub renders that file on the profile,
+> where the reader is deciding whether to keep reading rather than how the thing is built.
+>
+> This file lived at `.github/README.md` for three days. That path takes precedence over the root
+> one **on the profile too**, not only on the repository page as the docs suggest, so the profile
+> ended up showing the engineering notes. Do not move it back.
 
 ## Running it
 
