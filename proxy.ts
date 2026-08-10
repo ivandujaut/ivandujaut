@@ -21,8 +21,11 @@ export const config = {
   matcher: [
     // Match todas las rutas EXCEPTO:
     // - rutas que arranquen con /api, /trpc, /_next, /_vercel
+    // - /stats, que es el tablero privado y vive fuera de `[locale]`: sin esta
+    //   exclusión el proxy lo reescribe a /es/stats, que no existe, y la página
+    //   da 404 aun con la clave correcta
     // - archivos estáticos (con extensión, ej: favicon.ico)
-    "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+    "/((?!api|trpc|_next|_vercel|stats|.*\\..*).*)",
     // Excepción a la regla del punto: el feed es una ruta con locale
     // (`app/[locale]/rss.xml/route.ts`), no un archivo estático. Sin esta
     // entrada `/rss.xml` nunca se reescribe a `/es/rss.xml` y da 404, que es

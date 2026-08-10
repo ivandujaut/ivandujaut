@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { redis, keyFor } from "@/lib/redis";
 import { hashIp, getIpFromRequest } from "@/lib/hash";
-import { isContentLocale, isValidSlug, isViewKind, viewsTag } from "@/lib/views";
+import { isContentLocale, isValidSlug, isViewKind } from "@/lib/views";
+import { continuedTag } from "@/lib/reads";
 import { check, viewsRatelimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -14,6 +15,12 @@ interface RouteContext {
 
 const SEEN_TTL_SECONDS = 60 * 60 * 24;
 
+/**
+ * Marca que el lector siguió con otra pieza después de terminar esta.
+ *
+ * El `kind` y el `slug` que llegan son los de la **primera** pieza de la sesión,
+ * no los de la que se está leyendo ahora: se le acredita a la que enganchó.
+ */
 export async function POST(request: Request, context: RouteContext) {
   const { kind, slug } = await context.params;
   // El idioma viaja por query y no por ruta: los slugs son iguales en los dos
@@ -21,11 +28,11 @@ export async function POST(request: Request, context: RouteContext) {
   const locale = new URL(request.url).searchParams.get("l") ?? "";
 
   if (!isViewKind(kind) || !isValidSlug(slug) || !isContentLocale(locale)) {
-    return NextResponse.json({ views: 0 }, { status: 404 });
+    return NextResponse.json({ ok: false }, { status: 404 });
   }
 
   if (!redis) {
-    return NextResponse.json({ views: 0 });
+    return NextResponse.json({ ok: true });
   }
 
   try {
@@ -34,7 +41,7 @@ export async function POST(request: Request, context: RouteContext) {
     const rl = await check(viewsRatelimit, ipHash);
     if (!rl.allowed) {
       return NextResponse.json(
-        { views: 0 },
+        { ok: false },
         {
           status: 429,
           headers: {
@@ -44,22 +51,17 @@ export async function POST(request: Request, context: RouteContext) {
       );
     }
 
-    const counterKey = keyFor("views", kind, locale, slug);
-    const seenKey = keyFor("views", "seen", kind, locale, slug, ipHash);
-
+    const seenKey = keyFor("continued", "seen", kind, locale, slug, ipHash);
     const isFirstSeen = await redis.set(seenKey, 1, { nx: true, ex: SEEN_TTL_SECONDS });
 
-    const views = isFirstSeen
-      ? await redis.incr(counterKey)
-      : ((await redis.get<number>(counterKey)) ?? 0);
-
     if (isFirstSeen) {
-      revalidateTag(viewsTag(kind, locale, slug), "max");
+      await redis.incr(keyFor("continued", kind, locale, slug));
+      revalidateTag(continuedTag(kind, locale, slug), "max");
     }
 
-    return NextResponse.json({ views });
+    return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Failed to increment views:", error);
-    return NextResponse.json({ views: 0 });
+    console.error("Failed to increment continued:", error);
+    return NextResponse.json({ ok: false });
   }
 }

@@ -97,7 +97,7 @@ invirtieron en canales conversacionales, y ninguna los apunta a venderle al clie
 La lectura fina importa: los movimientos más cercanos (Mapfre cotizando a clientes existentes, Sancor
 cotizando por WhatsApp para sus productores) confirman que el rubro va hacia ahí, pero dejan vacante el
 lugar específico: **la venta asesorada al cliente que todavía no es cliente, dentro del chat**. Ese es
-el hueco, y no es de una empresa: es estructural.
+el hueco, y es estructural.
 
 La amplitud vino del resto del paisaje: **el caso fue el ancla del análisis, no su límite**. Cada
 decisión de flujo se contrastó contra el rubro completo: los cotizadores de otras aseguradoras y
@@ -177,7 +177,7 @@ contra la tabla de valores) y sumaría un paso contra todo lo que venía simplif
 
 El menú original tenía "Hablar con un asesor" como opción visible. El problema: es la salida fácil, y
 buena parte de los usuarios la elegiría de entrada, con lo que el bot se canibaliza solo (nunca llega a
-cotizar ni a calificar el lead, que es su función). La solución no fue esconder al humano, fue cambiar
+cotizar ni a calificar el lead, que es su función). La solución fue cambiar
 el disparador: el asesor se ofrece cuando el motor de emociones detecta malestar, con un nivel. El
 clasificador devuelve una etiqueta, no una intensidad, así que el nivel sale de la severidad y la
 persistencia: el enojo pesa doble y dispara la oferta de una; la frustración necesita sostenerse más de
@@ -220,9 +220,9 @@ La parte que más me interesa mostrar: las piezas de IA no se asumen, se miden.
 En el motor hay dos piezas semánticas distintas, y cada una resuelve un problema de negocio diferente:
 
 **RAG (el modelo de lenguaje, o LLM, anclado a una base de conocimiento).** El problema que resuelve es de **confianza**: un
-asistente de seguros que inventa una cobertura no es una demo con un bug, es un riesgo. Por eso el modelo
+asistente de seguros que inventa una cobertura es un riesgo, no un bug más de una demo. Por eso el modelo
 no habla de memoria: responde sobre una base de contenido real relevado (los planes, la franquicia con
-ejemplo, los requisitos por línea). El beneficio acá no es de costo, es que baja las respuestas
+ejemplo, los requisitos por línea). El beneficio acá es que baja las respuestas
 inventadas en el rubro donde una respuesta inventada cuesta más caro.
 
 **El router de embeddings (retrieval sin generación).** El problema que resuelve es de **costo, latencia
@@ -310,7 +310,7 @@ ajena, y una insurtech que la mira tiene que poder proyectarse usándola.
 
 ## Qué funciona y por qué
 
-- **El insight sostiene todo.** El proyecto no es "un bot de seguros", es la respuesta a un hueco
+- **El insight sostiene todo.** El proyecto es la respuesta a un hueco
   estructural del rubro: encontrado en una empresa real mirando datos públicos con método, y verificado
   contra la competencia (Zurich, Allianz, Mapfre, Sancor: todas con canal conversacional, ninguna
   vendiéndole al cliente nuevo en el chat).
@@ -347,7 +347,7 @@ ajena, y una insurtech que la mira tiene que poder proyectarse usándola.
   que el chico no perdía la señal accionable. La lección: elegir el modelo con el eval en la mano, no
   por reputación.
 - El contenido de un sistema de retrieval envejece en silencio, con total confianza. Sincronizar corpus
-  y producto no es mantenimiento opcional: es parte del sistema.
+  y producto es parte del sistema.
 
 ## Stack
 

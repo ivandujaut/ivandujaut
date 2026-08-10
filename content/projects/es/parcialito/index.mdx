@@ -34,15 +34,14 @@ propios alumnos.
 ## El contexto y la oportunidad
 
 La [OATec](https://www.oatec.org.ar/index.php/32-2/) (Olimpiada Argentina de Tecnología) es una competencia
-nacional pensada para despertar vocaciones científico-tecnológicas: los alumnos no solo resuelven
-ejercicios, tienen que aplicar método científico y justificar su razonamiento por escrito, no marcar una
-opción. Eso vuelve la corrección lenta incluso para un solo curso, y es justo el tipo de examen que un
+nacional pensada para despertar vocaciones científico-tecnológicas: los alumnos tienen que aplicar método científico y
+justificar su razonamiento por escrito, no marcar una opción. Eso vuelve la corrección lenta incluso para un solo curso, y es justo el tipo de examen que un
 formulario de opción múltiple no puede evaluar. Mis alumnos la rinden todos los años, y esa es la práctica
 puntual sobre la que construí Parcialito.
 
 Herramientas como Forms o Kahoot ya resuelven "¿cómo tomo un examen online?". Ninguna resuelve la parte
-que a mí, como docente, me consumía el domingo: que la corrección de un desarrollo no es marcar una
-opción correcta, es leer un razonamiento y decidir cuánto vale. Del lado del alumno, el problema espejado
+que a mí, como docente, me consumía el domingo: corregir un desarrollo es leer un razonamiento y
+decidir cuánto vale. Del lado del alumno, el problema espejado
 es que practicar en papel no le devuelve nada hasta que yo termino de corregir, días después, cuando ya se
 olvidó qué había pensado al responder.
 
@@ -121,7 +120,7 @@ nota, pero con una regla que no negocié: la IA sugiere, el docente confirma (`l
 Un docente no adopta una herramienta que le saca el control de la nota, por más precisa que sea la IA:
 lo sé porque yo soy ese docente, y la primera vez que un desarrollo se corrigió solo, no confié en la
 nota hasta haberla revisado igual, lo cual anulaba el ahorro de tiempo que buscaba. Mantenerlo en el loop
-no es una limitación técnica que dejé para después: es la condición para que el producto se use.
+es la condición para que el producto se use.
 
 Esta decisión también tuvo su propia iteración incómoda: la primera versión de la pantalla de revisión
 tenía un botón "Aprobar" que dejaba pasar un borrador de nota sin que el docente lo hubiera leído en
@@ -161,14 +160,14 @@ puramente de desarrollo mostraba "0 de 0 respuestas correctas" al alumno, porque
 opción múltiple que ese examen ni siquiera tenía. Un docente que valida en una entrevista no encuentra ese
 bug; un docente que lo usa un martes a la mañana con un curso real, sí.
 
-## El motor por dentro: rigor de producto, no solo de código
+## El motor por dentro
 
-No es un prototipo de Figma ni una demo: es una web app en producción, y las decisiones técnicas
+Es una web app en producción, y las decisiones técnicas
 sostienen las mismas garantías que ya conté (que el docente decida, que nada se rompa por atrás).
 
 - **Seguridad seria, no un detalle de implementación:** Row Level Security en Postgres más funciones
   `security definer`, para que un alumno nunca pueda ver la clave de un examen ni escribir algo indebido
-  (`lib/supabaseServer.ts`, `db/02_rls.sql`). Esto es lo que hace sostenible, y no solo demostrable, que
+  (`lib/supabaseServer.ts`, `db/02_rls.sql`). Esto es lo que sostiene que
   "el docente decide": si el alumno pudiera leer la clave, la confianza en la corrección se cae.
 - **CI, integración continua, con cuatro validaciones** (tipos, lint, build y pruebas E2E, de punta a punta, con Playwright sobre autenticación real,
   `.github/workflows/ci.yml`). Cada feature entró por PR con CI en verde, incluida la del corrector de IA.
@@ -235,7 +234,7 @@ propio antes de exponerla, y CI con cuatro validaciones (tipos, lint, build, E2E
 
 ## Abierto a feedback
 
-Mi apuesta es que el diferencial de Parcialito no es tomar exámenes, es el loop de aprendizaje: repaso
+Mi apuesta es que el diferencial de Parcialito es el loop de aprendizaje: repaso
 espaciado más corrección con IA con el docente en control. Publico esto para que me lo discutan:
 
 - ¿Dónde ven el mayor riesgo: en la disposición del docente a confiar la corrección de desarrollo a una
@@ -244,6 +243,6 @@ espaciado más corrección con IA con el docente en control. Publico esto para q
   directo al alumno?
 - El modo práctica revela siempre la respuesta, a cambio de aprendizaje inmediato. ¿Es el trade-off
   correcto, o la integridad debería pesar más incluso en una v1?
-- ¿Qué le falta al loop docente-alumno para que un colegio, no solo un docente individual, lo adopte?
+- ¿Qué le falta al loop docente-alumno para que lo adopte un colegio entero y no un docente suelto?
 
 Si algo de esto te hizo pensar distinto, escribime.

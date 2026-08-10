@@ -23,9 +23,7 @@ import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema, projectArticleSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
-import { ViewCounter } from "@/components/blog/view-counter";
-import { LikeButton } from "@/components/blog/like-button";
-import { getCachedViews } from "@/lib/views";
+import { ReadTracker } from "@/components/content/read-tracker";
 import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
@@ -184,13 +182,18 @@ export default async function ProjectPage({ params }: Props) {
       { name: project.title, path: projectPath },
     ]),
   ];
-
-  const initialViews = await getCachedViews("projects", slug);
   const { previous, next } = getAdjacentProjects(typedLocale, slug);
 
   return (
     <main id="main">
       <ReadingProgress targetSelector="#case-study-article" label={tReading("progress")} />
+      <ReadTracker
+        kind="projects"
+        locale={typedLocale}
+        slug={slug}
+        targetSelector="#case-study-article"
+        readingMinutes={project.metadata?.readingTime}
+      />
       <PaperToc
         containerSelector="#case-study-content"
         label={tReading("contents")}
@@ -214,14 +217,14 @@ export default async function ProjectPage({ params }: Props) {
             {(project.kind === "build" || project.status !== "concept") && (
               <StatusBadge status={project.status} />
             )}
+            {/* Separador y tiempo en el mismo span: sueltos, el `·` se quedaba
+                solo al final de la línea anterior cuando la fila envuelve. */}
             {project.metadata && (
-              <>
+              <span className="inline-flex items-center gap-x-3 whitespace-nowrap">
                 <span aria-hidden>·</span>
                 <span>{tReading("minutes", { count: project.metadata.readingTime })}</span>
-              </>
+              </span>
             )}
-            <span aria-hidden>·</span>
-            <ViewCounter kind="projects" slug={slug} initialViews={initialViews} />
             <ShareLinkButton
               url={`${SITE_URL}${projectPath}`}
               title={project.title}
@@ -274,7 +277,20 @@ export default async function ProjectPage({ params }: Props) {
               )}
             </div>
           )}
+        </header>
 
+        <hr className="mb-12 border-border" />
+
+        <div id="case-study-content" className="prose-content">
+          <MDXContent code={project.content} />
+        </div>
+
+        {/* Ficha técnica al pie y no en el encabezado. Arriba, el stack y las
+            métricas empujaban el primer párrafo a 1,24 pantallas: son datos
+            sobre cómo está hecho el caso, no razones para leerlo, y abrir cada
+            análisis con una lista de herramientas contradice el encuadre de
+            producto del resto del sitio. */}
+        <section className="mt-16 space-y-8 border-t border-border pt-8">
           <div className="mt-8">
             <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {stackLabel}
@@ -291,13 +307,13 @@ export default async function ProjectPage({ params }: Props) {
                 {project.metrics.map((metric) => (
                   <div key={metric.label} className="rounded-lg border border-border p-3">
                     {/* text-lg y no text-xl: con 4 columnas dentro de una
-                        columna de 672px, un valor como "$45,3 mil M" no entra
-                        en una línea y la unidad quedaba sola abajo. */}
+                      columna de 672px, un valor como "$45,3 mil M" no entra
+                      en una línea y la unidad quedaba sola abajo. */}
                     <dd className="font-mono text-lg font-semibold tracking-tight tabular-nums">
                       {metric.value}
                       {/* La flecha dice la dirección; el color, si esa
-                          dirección es buena. Así el lector sabe si leerlo como
-                          mejora sin abrir el caso (regla del nodo 4). */}
+                        dirección es buena. Así el lector sabe si leerlo como
+                        mejora sin abrir el caso (regla del nodo 4). */}
                       {metric.trend && metric.trend !== "neutral" && metric.sentiment && (
                         <span
                           className={`ml-1.5 inline-flex items-center gap-0.5 align-middle text-sm font-medium ${
@@ -325,25 +341,15 @@ export default async function ProjectPage({ params }: Props) {
               </dl>
             </div>
           )}
-        </header>
+        </section>
 
-        <hr className="mb-12 border-border" />
-
-        <div id="case-study-content" className="prose-content">
-          <MDXContent code={project.content} />
-        </div>
-
-        <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
-          <LikeButton kind="projects" slug={slug} />
-          <ShareLinkButton
-            url={`${SITE_URL}${projectPath}`}
-            title={project.title}
-            alwaysShowLabel
-          />
-        </footer>
-
+        {/* Compartir vive adentro del cierre y no en una fila propia: sin el
+            me gusta al lado quedaba un botón solo entre dos bloques con borde.
+            Ahí abajo las tres acciones se leen juntas y en orden de valor. */}
         <CaseStudyClose
           locale={typedLocale}
+          shareUrl={`${SITE_URL}${projectPath}`}
+          shareTitle={project.title}
           previous={
             previous
               ? {

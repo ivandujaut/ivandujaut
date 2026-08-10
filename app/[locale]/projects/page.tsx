@@ -50,9 +50,6 @@ export default async function ProjectsPage({ params }: Props) {
     { key: "external" as const, projects: getProjectsBySubject(locale as "es" | "en", "external") },
   ];
 
-  // El `isFirst` marca la imagen LCP, así que es una sola en toda la página.
-  let rendered = 0;
-
   return (
     <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <ProjectsHeader />
@@ -66,7 +63,7 @@ export default async function ProjectsPage({ params }: Props) {
                     mono/xs/muted y se leía como una etiqueta de sistema, no
                     como la división que organiza la página. */}
                 <h2 className="mb-6 text-lg font-semibold tracking-tight">{t(group.key)}</h2>
-                <div className="space-y-8">
+                <div className="divide-y divide-border/60">
                   {group.projects.map((project) => (
                     <ProjectListItem
                       key={project.slug}
@@ -77,8 +74,7 @@ export default async function ProjectsPage({ params }: Props) {
                       stack={project.stack}
                       status={project.status}
                       kind={project.kind}
-                      variant="card"
-                      isFirst={rendered++ === 0}
+                      variant="list"
                       cover={
                         project.cover
                           ? {

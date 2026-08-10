@@ -5,10 +5,7 @@ import { getResearch } from "@/lib/content";
 import { ResearchListItem } from "@/components/content/research-list-item";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
-// TODO: remove this gate when /research has published content. Until then
-// the section is fully inaccessible (direct URLs 404). The code below is kept
-// intact so re-enabling is a one-line delete.
-const RESEARCH_ENABLED = false;
+import { RESEARCH_ENABLED } from "@/lib/features";
 
 type Props = {
   params: Promise<{ locale: string }>;

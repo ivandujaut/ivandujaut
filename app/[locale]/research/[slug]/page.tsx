@@ -2,9 +2,7 @@ import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-// TODO: remove this gate when /research has published content. Until then
-// /research/[slug] is fully inaccessible (direct URLs 404).
-const RESEARCH_ENABLED = false;
+import { RESEARCH_ENABLED } from "@/lib/features";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon, Pdf01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";

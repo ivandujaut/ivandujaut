@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: Props) {
     ? "Iván Dujaut · Product Engineer & Bioingeniero"
     : "Iván Dujaut · Product Engineer & Bioengineer";
   const description = isEs
-    ? "Product Engineer y Bioingeniero del ITBA. Construyo producto end-to-end con Next.js, TypeScript y foco en métricas. De startups en Techstars a proptech."
-    : "Product Engineer and Bioengineer from ITBA. I build end-to-end product with Next.js, TypeScript and a metrics-first lens. From Techstars startups to proptech.";
+    ? "Product Engineer y bioingeniero del ITBA. Decido qué construye un equipo, mido si funcionó y escribo el código. De una fintech en Techstars a valuación inmobiliaria."
+    : "Product Engineer and ITBA bioengineer. I decide what a team builds, measure whether it worked, and write the code. From a Techstars fintech to real estate valuation.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title: ogTitle,

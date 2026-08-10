@@ -21,8 +21,8 @@ draft: false
 <Abstract label="En resumen">
 
 Uso Roomix (el mayor buscador inmobiliario con IA de Argentina) para buscar propiedades, y le propuse,
-sin que me lo pidieran, la capa que le falta al que compra para invertir: una que no solo calcula cap
-rate, ROI y escenarios, sino que los interpreta y orienta la decisión sin dictarla. Mi primera versión era
+sin que me lo pidieran, la capa que le falta al que compra para invertir: una que calcula cap rate,
+ROI y escenarios, y además los interpreta para orientar la decisión sin dictarla. Mi primera versión era
 una calculadora que tiraba nueve números y decía "decidí vos"; la reencuadré en una respuesta que lidera
 con la conclusión, calcula en vivo y es honesta sobre el riesgo. Después la llevé de prototipo en Figma a
 un motor en TypeScript con tests. Research de dominio, diseño que interpreta y rigor de implementación, en
@@ -121,8 +121,8 @@ números, no sabe si invertir o no.
 
 La decisión central del proyecto fue pasar de _planilla_ a _respuesta interpretada_. La UI lidera con una
 respuesta en castellano ("2,98% de cap rate neto; para Belgrano es bajo: zona de apreciación, no de
-renta"), las capas avanzadas son opt-in, y todo cierra en una acción. Interpretar no es recomendar: es
-explicar qué significa el número y para quién tiene sentido, sin decir "comprá".
+renta"), las capas avanzadas son opt-in, y todo cierra en una acción. Interpretar es explicar
+qué significa el número y para quién tiene sentido, sin decir "comprá".
 
 ## El criterio
 
@@ -157,8 +157,8 @@ el funnel: captar al usuario que invierte, que confíe, y que llegue a la acció
   números medidos. Distingo una cosa de la otra a propósito.
 </Callout>
 
-- **Simplificar la pantalla baja el abandono antes de la acción.** Una pantalla que abruma no es un
-  problema estético, es un usuario que rebota antes de contactar. Liderar con la respuesta acelera el
+- **Simplificar la pantalla baja el abandono antes de la acción.** Una pantalla que abruma
+  es un usuario que rebota antes de contactar. Liderar con la respuesta acelera el
   "ajá", y dejar la profundidad a un click atiende a dos públicos con una sola pantalla, sin sacrificar
   al usuario sofisticado que quiere auditar el número.
 - **Una tarjeta de conversión que no responde es una promesa rota.** La tarjeta sticky mantiene la acción
@@ -170,7 +170,7 @@ el funnel: captar al usuario que invierte, que confíe, y que llegue a la acció
   el que contacta ya sabe en qué se mete. Eso vale más para el corredor (mejor cierre) y construye marca
   (el lugar que no te miente).
 - **El pulido comunica "producto serio".** En un producto financiero, un detalle descuidado le susurra al
-  usuario "esto es una maqueta, no le creas el número". La prolijidad no es vanidad: es reducir la
+  usuario "esto es una maqueta, no le creas el número". La prolijidad reduce la
   fricción de confianza que precede al clic.
 
 ## Decisiones clave
@@ -347,8 +347,8 @@ inversor?"_. La segunda la resolví sobre dos ejes, no con un selector de person
   redefine el perfil de riesgo, no es un detalle de financiación: por eso es un eje, no una casilla.
 
 El movimiento obvio habría sido un selector Conservador / Moderado / Agresivo de perfiles. No lo
-construí, a propósito: esos tres no son tipos de inversor, son apuestas de apreciación macro (un
-pronóstico), no estrategias. Tratarlos como perfiles es un error conceptual. Por eso, en vez de fabricar
+construí, a propósito: esos tres son apuestas de apreciación macro (un pronóstico),
+no tipos de inversor ni estrategias. Tratarlos como perfiles es un error conceptual. Por eso, en vez de fabricar
 personas, hago el eje real imposible de ignorar a través del copy y la estructura.
 
 <Comparison
@@ -501,7 +501,7 @@ Ser honesto sobre los huecos es parte del trabajo. Para una v1 está bien; para 
 
 ## Lo que me llevo
 
-- **"No recomendamos" puede ser una excusa para no pensar.** La salida no es recomendar: es interpretar y
+- **"No recomendamos" puede ser una excusa para no pensar.** La salida es interpretar y
   orientar _para quién_ sirve.
 - **La honestidad escala mejor que la persuasión** en productos de plata. El número en verde que esconde
   el flujo negativo erosiona la confianza.
@@ -510,7 +510,7 @@ Ser honesto sobre los huecos es parte del trabajo. Para una v1 está bien; para 
   alineación de tabs, uno de un binding cortado al editar texto) solo aparecieron interactuando. La QA en
   vivo, probar la interacción a mano, no es opcional.
 
-# Capítulo 2: el motor en código
+## Capítulo 2: el motor en código
 
 El prototipo de Figma _simulaba_ el cálculo (variables más expresiones). Este capítulo es lo que pasa
 cuando el prototipo deja de simular y empieza a calcular de verdad: un motor en TypeScript que toma una
@@ -525,7 +525,7 @@ en vez de "confiá en mí" es esta equivalencia:
 <Callout type="insight" title="Los casos resueltos del domain.md son los golden tests">
   La cuota de unos USD 1.054, el ROI apalancado de -6,16%, el leverage de 3,33×: no los inventé para
   que la demo cierre, salieron del research, y cada uno es un test que falla si el motor se desvía.
-  El research no fue solo para el diseño; fue la brújula del motor.
+  El research fue la brújula del motor.
 </Callout>
 
 ## Decisiones clave (en código)
@@ -575,7 +575,7 @@ datos estructurados por escenario, no un veredicto, la misma postura que el dise
 ## Qué funciona y por qué
 
 - **Es demostrable.** 20 tests, typecheck estricto, cada métrica anclada a un caso resuelto del dominio.
-  La corrección no es una opinión, es una suite que corre.
+  La corrección es una suite que corre.
 - **Es componible.** Fuentes únicas de verdad más wrappers que las componen. Cambiar la fórmula de la
   cuota se toca en un solo lugar.
 - **Separa motor de presentación.** Ratio decimal, sin formato, sin UI: listo para que lo consuma la UI o
