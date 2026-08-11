@@ -563,3 +563,33 @@
     transition: color 120ms ease;
   }
 }
+
+/*
+ * View Transitions del lightbox de figuras (components/mdx/figure-lightbox.tsx).
+ * El morph de la miniatura a la imagen grande lo hace el navegador solo; acá se
+ * afina el ritmo y se tapa el artefacto de interpolación con un blur breve, como
+ * en la guía de Next. Los nombres son dinámicos (uno por figura), así que se
+ * apunta con el selector universal: hoy el sitio no usa otra view transition.
+ */
+::view-transition-group(*) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+::view-transition-image-pair(*) {
+  animation-name: figure-morph-blur;
+}
+@keyframes figure-morph-blur {
+  40% {
+    filter: blur(2px);
+  }
+}
+
+/* Sin animación bajo prefers-reduced-motion: el cambio es instantáneo. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

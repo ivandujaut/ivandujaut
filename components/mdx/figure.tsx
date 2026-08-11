@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
+import { FigureLightbox } from "./figure-lightbox";
+
 interface FigureProps {
   src: string;
   alt: string;
@@ -42,6 +44,7 @@ export async function Figure({
   fullBleedMaxWidth = 1280,
 }: FigureProps) {
   const t = await getTranslations("paper");
+  const tMdx = await getTranslations("common.mdx");
   const figureLabel = t("figure");
 
   const wrapperClass = fullBleed
@@ -51,21 +54,37 @@ export async function Figure({
     ? "w-full overflow-hidden border-y border-border bg-muted/30"
     : "overflow-hidden rounded-lg border border-border bg-muted/30";
 
+  // El mismo `sizes` para la miniatura y para la copia ampliada, para que las
+  // dos pidan el mismo candidato del srcset. Así el morph de apertura va hacia
+  // una imagen que el navegador ya tiene decodificada, en vez de una grande sin
+  // cargar (que es lo que hacía saltar la transición al abrir).
+  const imgSizes = fullBleed ? "100vw" : "(max-width: 768px) 100vw, 768px";
+
   return (
     <figure className={wrapperClass}>
       <div
         className={imageWrapperClass}
         style={fullBleed ? { maxWidth: `${fullBleedMaxWidth}px` } : undefined}
       >
-        <Image
+        <FigureLightbox
           src={src}
           alt={alt}
           width={width}
           height={height}
-          {...(priority ? { loading: "eager" as const, fetchPriority: "high" as const } : {})}
-          className="h-auto w-full"
-          sizes={fullBleed ? "100vw" : "(max-width: 768px) 100vw, 768px"}
-        />
+          sizes={imgSizes}
+          openLabel={tMdx("expandImage")}
+          closeLabel={tMdx("closeImage")}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            {...(priority ? { loading: "eager" as const, fetchPriority: "high" as const } : {})}
+            className="h-auto w-full"
+            sizes={imgSizes}
+          />
+        </FigureLightbox>
         {caption && fullBleed && (
           <figcaption
             data-auto-number

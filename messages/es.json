@@ -72,7 +72,9 @@
       "copyLink": "Copiar enlace de esta sección",
       "linkCopied": "Copiado",
       "copyCode": "Copiar código",
-      "codeCopied": "Copiado"
+      "codeCopied": "Copiado",
+      "expandImage": "Ampliar la imagen",
+      "closeImage": "Cerrar la imagen ampliada"
     },
     "breadcrumbs": {
       "label": "Migas de pan"
