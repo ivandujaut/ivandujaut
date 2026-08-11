@@ -72,7 +72,9 @@
       "copyLink": "Copy link to this section",
       "linkCopied": "Copied",
       "copyCode": "Copy code",
-      "codeCopied": "Copied"
+      "codeCopied": "Copied",
+      "expandImage": "Expand image",
+      "closeImage": "Close expanded image"
     },
     "breadcrumbs": {
       "label": "Breadcrumb"
