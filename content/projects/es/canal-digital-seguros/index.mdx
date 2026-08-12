@@ -11,15 +11,14 @@ featured: true
 cover:
   src: ./cover.jpg
   alt: "Ilustración editorial pintada con grano de película: un canal de piedra azulada cruza la escena en diagonal desde el borde izquierdo, cargado de comprobantes de papel grises y apagados que se derraman por una rotura y caen en cascada hacia un vacío negro; del otro lado de la rotura, el tramo que sigue lleva unos pocos comprobantes encendidos en ámbar hasta una pileta baja de piedra, y junto a ella una figura humana sin rostro, de perfil y en silueta azulada, sostiene uno en alto y mira hacia atrás la cascada"
-stack:
-  ["Datos abiertos (SSN)", "Recorrido de producto", "Python", "pandas", "scikit-learn", "Next.js"]
+stack: ["Datos abiertos (SSN)", "Recorrido de producto", "Python", "Next.js"]
 preview:
-  - src: /projects/canal-digital-seguros/preview-metrica.png
-    alt: "Tarjeta del tablero con la métrica norte escrita como frase: por cada peso invertido, $9,29 de prima de un año que sigue viva a los seis meses"
-  - src: /projects/canal-digital-seguros/preview-ranking.png
-    alt: "Tabla de canales del tablero, con las barras de prima persistente por peso y dos filas resaltadas donde el puesto por costo y el de rendimiento no coinciden"
-  - src: /projects/canal-digital-seguros/preview-alertas.png
-    alt: "Capa de decisión del tablero con tres alertas apiladas, dos críticas en rojo y una de atención en ámbar, cada una con su indicación de qué hacer"
+  - src: /projects/canal-digital-seguros/preview-portada.jpg
+    alt: "Recorte de la portada: una figura en silueta sostiene un comprobante encendido en ámbar junto a una pileta de piedra, con la rotura del canal detrás"
+  - src: /projects/canal-digital-seguros/ranking-canales.png
+    alt: "Slope chart de cinco canales simulados: puesto por costo por alta a la izquierda y por prima persistente por peso invertido a la derecha, con dos canales que se cruzan"
+  - src: /projects/canal-digital-seguros/modelo-listas.png
+    alt: "Gráfico de mi simulación de cobros: de cada 100 gestionados en la lista corta, 45 fallan de verdad; eligiendo al azar serían 6"
 metrics:
   - label: "Anulación trimestral de automotores"
     value: "12,76%"
@@ -27,40 +26,31 @@ metrics:
     value: "0,9 meses"
   - label: "Cotizadores distintos en producción"
     value: "6"
-  - label: "Parámetros con fuente pública"
-    value: "10 de 53"
+  - label: "Parámetros elegidos por mí"
+    value: "43 de 53"
 translationKey: "canal-digital-seguros"
 draft: false
 ---
 
 <Abstract label="En resumen">
 
-Medir un equipo de canal digital por «altas» premia el comportamiento que destruye valor:
-una póliza que no acredita el primer pago ya consumió costo de adquisición, comisión y
-sistema, y no dejó prima. La escala del descarte la publica la Superintendencia de Seguros
-de la Nación: según su cuadro de pólizas patrimoniales del primer trimestre de 2026, en
-automotores **se anula el 12,76% del stock por trimestre**, por cualquier motivo y sobre
-toda la cartera.
+Recorrí el canal digital de La Caja por sus flujos públicos para entender cómo se mide un
+canal así. Me encontré con un problema anterior al que buscaba: la cotización online vive
+en **seis plataformas separadas que miden cosas distintas**, y hoy ni siquiera se puede
+comparar la conversión entre productos. Después miré cómo cotizan otras diez aseguradoras
+líderes para saber si se repetía el mismo problema. Cinco no dan señal desde afuera; de las
+cinco que sí, una lo comparte y cuatro lo resolvieron.
 
-Antes de llegar a esa discusión hay un problema anterior, y lo encontré recorriendo los
-sitios: **la cotización online está repartida en plataformas que miden cosas distintas**,
-así que a veces ni siquiera se puede comparar la conversión entre productos. El caso que
-recorrí a fondo, La Caja, corre sobre seis cotizadores separados; el benchmark de otras
-aseguradoras muestra que no está sola, y también que hay quien lo resolvió. Este análisis
-recorre dónde se pierde plata en un canal así y por qué: la emisión que no persiste, la
-fricción que llega después de la decisión de compra, el cobro que falla todos los meses, y
-la autogestión que el promedio del portal de empresas esconde.
+El fondo del caso es la métrica. Medir un equipo por «altas» premia lo que no genera valor:
+una póliza que se cae antes de acreditar el primer pago ya se gastó la adquisición y la
+comisión, y no dejó prima. La escala del descarte la publica la Superintendencia de Seguros
+de la Nación (SSN): en automotores **se anula el 12,76% del stock por trimestre**, por
+cualquier motivo y sobre toda la cartera. Elegí La Caja como ancla porque automotores es el
+82,7% de su producción, así que casi todo su negocio depende de medir bien un solo ramo.
 
-Para discutirlo con números armé un modelo de métricas y un tablero de prueba, calibrados
-contra los cuadros del mismo regulador. Son el instrumento del análisis, no el entregable,
-y quedan a disposición de quien quiera verlos en detalle.
-
-El caso ancla es La Caja, elegida porque automotores concentra el 82,7% de su producción y
-casi todo depende de medir bien un solo ramo. El relevamiento y las cifras de mercado son
-datos públicos verificados. Los volúmenes a nivel póliza son simulados: la simulación se
-alimenta de 53 números (cuánta gente cotiza en cada paso, cuánto vale una prima media,
-cuánto cuesta traer un cliente por cada canal) y **sólo 10 salen de fuentes públicas**; los
-otros 43 son elecciones mías, declaradas una por una.
+Para discutir con números armé un modelo de métricas calibrado contra los cuadros de la
+misma SSN. De los 53 números que alimentan esa simulación, 43 los elegí yo, declarados uno
+por uno; sólo 6 salen directo de cuadros publicados.
 
 </Abstract>
 
@@ -73,7 +63,7 @@ sigue viva a los seis meses, dividida por lo que costó traerla.
 
 ## Qué es dato y qué es elección mía
 
-Antes de cualquier número, la línea que separa las dos cosas.
+Antes de cualquier número, la línea que separa lo verificable de lo mío.
 
 | Cifra                                                         | Estatus  | Fuente                                                 |
 | ------------------------------------------------------------- | -------- | ------------------------------------------------------ |
@@ -82,9 +72,8 @@ Antes de cualquier número, la línea que separa las dos cosas.
 | Prima sin cobrar de La Caja, 0,9 meses, contra 2,1 de mediana | dato     | SSN, balances al 31/03/2026, 53 entidades              |
 | Automotores, 82,7% de la producción de La Caja                | dato     | SSN a marzo de 2026, vía el sitio de la compañía       |
 | Canal intermediado, 69,9% del mercado en el ejercicio 2025    | dato     | SSN, cuadro de canales de venta                        |
-| Hazard mensual de moto sobre auto, 1,44                       | derivado | cociente de dos cifras del mismo cuadro de la SSN      |
 | Los seis cotizadores, sus hosts y los defectos de producción  | dato     | recorrido propio del sitio, reverificado el 10/08/2026 |
-| Cómo cotizan otras seis aseguradoras líderes                  | dato     | benchmark propio sobre sus sitios, 11/08/2026          |
+| Cómo cotizan otras aseguradoras: 10 relevadas, 5 con señal    | dato     | benchmark propio sobre sus sitios, 11/08/2026          |
 | Rankings de canales, persistencia, funnel y modelo de cobro   | supuesto | simulación propia: 43 de sus 53 números los elegí yo   |
 
 <TableCaption>
@@ -94,339 +83,234 @@ Antes de cualquier número, la línea que separa las dos cosas.
 
 ## Seis cotizadores que miden cosas distintas
 
-Antes de decidir qué medir hay que ver qué existe, así que recorrí los flujos públicos de
-cotización y autogestión. Cargué sólo datos de vehículo, no completé ninguna contratación y
-no intenté saltear el reCAPTCHA que aparece antes del paso de precio. Todo lo de esta
-sección está verificado sobre el sitio en producción y reverificado el 10 de agosto de 2026
-con herramientas distintas de las del relevamiento original.
+Antes de decidir qué medir fui a ver qué hay y recorrí los flujos públicos de cotización.
+Todo lo de esta sección está verificado sobre
+[el sitio en producción](https://seguros.lacaja.com.ar/) al 10 de agosto de 2026.
 
-**El canal digital corre sobre seis cotizadores distintos.** Auto, hogar, moto, bicicleta y
-salud viven cada uno en su propio subdominio. El sexto es un stack heredado que cotiza
-notebook, cartera y cuidados mayores sobre dos rutas distintas de un host cuya raíz, además,
-redirige al sitio institucional. Sumando los portales de personas, empresas y productores, el
-ecosistema vive en al menos nueve hosts, y sólo dos de los seis declaran su versión en el
-HTML que entregan.
+Lo primero fue contar. Auto, hogar, moto, bicicleta y salud cotizan cada uno en su propio
+subdominio, y hay un sexto stack heredado que cotiza notebook, cartera y cuidados mayores
+en dos rutas de un host que además redirige su raíz al sitio institucional. Son **seis
+cotizadores distintos**; contando los portales de personas, empresas y productores, el
+ecosistema vive en al menos nueve hosts. Sólo dos de los seis declaran qué versión sirven.
 
-La consecuencia es concreta: **hoy no se puede comparar la conversión de auto con la de moto
-ni con la de hogar**. Hay seis implementaciones que miden cosas distintas, en dominios
-distintos, con sesiones y cookies distintas, y la pregunta «¿el canal digital funciona?» no
-tiene una tabla donde apoyarse.
+En la práctica eso significa que **hoy no se puede comparar la conversión de auto con la de
+moto ni con la de hogar**. Son seis implementaciones que miden cosas distintas, cada una en
+su dominio y con su propia sesión. La pregunta «¿el canal digital funciona?» no tiene una
+tabla donde apoyarse.
 
-Para saber si esto es una rareza o una deuda del sector, miré también cómo cotizan otras
-aseguradoras líderes (11 de agosto de 2026, sobre el código que sirven sus sitios). El
-patrón se repite en parte del mercado: Mapfre también reparte auto, hogar y accidentes
-personales en subdominios separados.
+Me quedó la duda de si esto era una particularidad o una deuda de todo el sector, así que
+miré cómo cotizan otras diez aseguradoras líderes (11 de agosto, sobre el código que sirven
+sus sitios). Cinco no dan señal concluyente desde afuera, así que de ésas no afirmo nada.
+De las cinco con señal, sólo Mapfre comparte el problema: reparte
+[auto](https://autos.mapfre.com.ar/), [hogar](https://hogar.mapfre.com.ar/) y
+[accidentes personales](https://ap.mapfre.com.ar/) en subdominios separados. Las otras
+cuatro cotizan unificado:
+[Provincia Seguros](https://cotizadores.provinciaseguros.com.ar/) usa el mismo cotizador
+cambiando sólo la ruta;
+[Rivadavia](https://www.segurosrivadavia.com/cotizador?seguro=Autos) elige el producto por
+parámetro; [San Cristóbal](https://www.sancristobal.com.ar/cotizar-auto/) y
+[Sancor](https://cotiza.sancorseguros.com.ar/) concentran la cotización en un dominio.
+Cuando todo vive en **una sola plataforma donde el producto es una ruta**, los funnels
+comparten sesión y medición, y sumar un producto no abre un silo nuevo. El problema se
+repite en el mercado, pero no es inevitable: la mayoría de las que dan señal ya cotiza
+unificado.
 
-Y otra parte lo tiene resuelto, con una solución cuya forma se ve en la propia URL: **una
-sola plataforma de cotización donde el producto es una ruta o un parámetro, no un sitio
-aparte**. Provincia Seguros cotiza auto, moto, hogar y accidentes personales en el mismo
-cotizador cambiando sólo la ruta; Rivadavia usa un único cotizador donde el producto se
-elige por parámetro; San Cristóbal y Sancor concentran la cotización en un solo dominio. La
-diferencia no es cosmética. Un solo dominio es una sola sesión y una sola medición, así que
-los funnels son comparables por construcción, y sumar un producto agrega una ruta en vez de
-un silo nuevo.
+Del recorrido salió otro hallazgo. De los seis, el único que pide datos personales antes de
+mostrar el precio es el de moto: fecha de nacimiento, teléfono y correo en el primer paso.
+El de auto hace el camino inverso, pide año, marca, modelo y versión, muestra el precio, y
+recién después pregunta quién sos. Cuando alguien compare la conversión de los seis lado a
+lado, moto va a dar peor, y va a haber quien lea esa brecha como falta de demanda cuando el
+origen está en el diseño del formulario.
 
-En resumen: la fragmentación es una deuda frecuente del sector, no una falla exclusiva de
-una compañía, pero tampoco es inevitable, porque una parte del mercado ya cotiza unificado.
-Lo que cambia es el grado, y el caso que recorrí a fondo está en el extremo.
+Del recorrido salieron además dos reglas del producto que cambian las cuentas.
 
-**Uno de los seis pide datos personales antes de mostrar el precio.** El de moto abre con un
-paso que incluye fecha de nacimiento, teléfono y correo; el de auto pide año, marca, modelo y
-versión, muestra precio, y recién después pregunta quién sos. Los dos declaran cinco pasos.
-Comparar la conversión de los seis productos lado a lado va a mostrar a moto convirtiendo
-peor, y alguien va a leer esa brecha como falta de demanda cuando el origen está en el
-diseño del formulario.
+- **La póliza de auto es mensual y se renueva automáticamente** (está en las preguntas
+  frecuentes del propio cotizador). Hay doce decisiones de continuidad y doce cobros por
+  año: la retención se lee mes a mes, y cada cobro que falla es una chance de perder la
+  póliza por un motivo ajeno al producto.
+- **Para autos usados hay una inspección donde el cliente sube fotos desde el navegador.**
+  Es el único paso donde el trabajo llega después de haber decidido comprar, con la
+  intención ya ganada, y mezcla tres situaciones que conviene separar: el 0 kilómetro no
+  inspecciona, la presencial es otro proceso, y en el flujo por fotos el usuario que
+  abandona y el sistema que rechaza son problemas distintos.
 
-Dos reglas del producto cambian además cualquier modelo que se dibuje de memoria.
+De todo esto me quedó una conclusión de secuencia: **el primer entregable del área es un
+acuerdo de qué se llama cotización y qué se llama alta entre las seis plataformas**, antes
+que cualquier pantalla.
 
-**La póliza de auto es mensual y se renueva automáticamente.** Está escrito en las preguntas
-frecuentes del propio cotizador. Hay doce decisiones de continuidad y doce eventos de cobro
-al año, así que la retención se lee mes a mes y la pérdida por fallo de cobro se vuelve una
-oportunidad mensual de perder la póliza por un problema ajeno al producto.
-
-**Para autos usados hay un paso de inspección que ningún funnel dibujado de memoria
-incluye.** El cliente sube fotos desde el navegador, y es el único paso donde el trabajo lo
-hace el usuario _después_ de haber decidido comprar: la intención ya está y la fricción viene
-después, así que cada punto que se pierde ahí es una venta que ya estaba ganada. Tiene tres
-ramas que hay que separar, porque el 0 kilómetro no inspecciona, la inspección presencial es
-otro proceso, y dentro del flujo por fotos el usuario que abandona y el sistema que rechaza
-son problemas distintos.
-
-De todo esto sale una conclusión de secuencia: **el primer entregable del área es un acuerdo
-de definición e instrumentación entre las seis plataformas; las pantallas vienen después.**
-Lo que sigue es qué tiene que mirar el equipo una vez acordado eso.
-
-**Al margen, dos defectos chicos que siguen en producción.** El botón para descargar la app
-apunta a una dirección interna de los servidores de la compañía que no existe fuera de su
-red: quien lo toca no llega a ningún lado. El defecto no aparece revisando el código que
-entrega el servidor, sólo usando el sitio como un visitante más, y eso ayuda a que
-sobreviva. Y los tres instructivos de autogestión del canal de productores tienen el enlace
-vacío, así que no descargan nada, en el canal que en el ejercicio 2025 concentró el 69,9% de
-la distribución del mercado según el cuadro de canales de venta de la SSN. Ninguno de los
-dos mueve prima por sí solo, pero cada intento fallido termina en una llamada al centro de
-atención, y los dos arreglos son de una tarde.
+Al margen quedaron dos defectos chicos que siguen en producción. El botón «CONOCÉ NUESTRA
+APP» del encabezado apunta a `seguros-dev.lacaja.local`, un servidor interno de desarrollo
+que no existe fuera de la red de la compañía. En el código que entrega el servidor el link
+está bien: se rompe cuando la página termina de cargar en el navegador, y por eso sólo se
+encuentra usando el sitio. El otro está en el portal de productores, el canal que concentró
+el 69,9% de la distribución del mercado en 2025: sus tres instructivos de autogestión
+(segundo factor de autenticación, blanqueo de contraseña y pago electrónico) tienen el
+botón «Descargar» sin dirección asignada, no descargan nada. Ninguno de los dos mueve prima
+por sí solo, pero cada intento fallido probablemente termina en una llamada al centro de
+atención, y los dos se podrían arreglar rápido.
 
 ## Por qué el alta no alcanza
 
 En automotores, el cuadro de pólizas patrimoniales de la SSN del primer trimestre de 2026
-dice que **se anula el 12,76% del stock vigente por trimestre**, y que las anulaciones
-equivalen al 16,36% de lo que se emite. En el total de ramos patrimoniales, las anulaciones
-son el 18,91% de las pólizas emitidas, casi diecinueve de cada cien.
+dice que se anula el 12,76% del stock vigente por trimestre, y que las anulaciones
+equivalen al 16,36% de lo que se emite. En el total de ramos patrimoniales son el 18,91% de
+las pólizas emitidas, casi diecinueve de cada cien. Una parte de eso son endosos y
+reemplazos por cambio de vehículo, así que leo la cifra como techo del churn y no como
+medida pura. Aun como techo, la escala alcanza para el punto: **medir por altas es contar
+pólizas que en buena parte no van a llegar a cobrarse**.
 
-Una parte de eso son endosos y reemplazos de póliza por cambio de vehículo, así que la cifra
-funciona como techo del churn y no como medida pura. Aun tomándola como techo, la escala del
-problema es la misma: **medir por altas es contar pólizas que en buena medida no van a
-llegar a cobrarse**.
+Y hay una razón más simple. Si al equipo lo medís por altas, produce altas: baja precio,
+afloja suscripción, compra tráfico barato. Elegir la métrica es elegir un comportamiento.
 
-Y hay una segunda razón, que no depende de ningún número. Si el equipo se mide por altas,
-produce altas: bajando precio, aflojando suscripción, comprando tráfico barato. El equipo
-trabaja para mover la métrica que lo mide, así que elegirla es elegir un comportamiento.
+## La métrica norte y su contrapeso
 
-## La métrica norte, y el contrapeso que no es opcional
+La que elegí es la **Prima Anualizada Persistente**: la prima anualizada de las pólizas del
+canal digital que siguen vigentes y al día seis meses después del alta. Las alternativas
+más comunes fallan cada una por su lado:
 
-La que elegí es la **Prima Anualizada Persistente**: prima anualizada de las pólizas
-originadas en el canal digital que siguen vigentes y al día seis meses después del alta.
-Descarté tres candidatas antes.
+- **Altas:** tratan igual a una cobertura que se sostiene y a una que se cae al segundo mes.
+- **Prima emitida:** mide la promesa; el cobro llega después.
+- **Prima cobrada:** correcta pero lenta. Para cuando el dato cierra, la decisión que lo
+  causó ya tiene tres meses.
 
-**Altas.** Trata igual a una cobertura total que se sostiene y a una que se cae al segundo
-mes.
+De la prima persistente me importó una propiedad más que la precisión: **ninguna área la
+puede mover sola**. Marketing puede mostrar un costo por alta que baja y suscripción una
+calidad que sube, cada uno por su lado, mientras el negocio empeora. La prima persistente
+los obliga a compartir el resultado, y por eso mismo va a ser incómoda de adoptar.
 
-**Prima emitida.** Mide la promesa y se cobra después.
-
-**Prima cobrada.** Correcta pero lenta: cuando el dato cierra, la decisión que lo causó
-tiene tres meses.
-
-La prima persistente queda en el medio, y tiene una propiedad que me importó más que la
-precisión: **ninguna área la puede mover sola**. Marketing baja el costo por alta sin ayuda,
-suscripción sube la calidad sin ayuda y cobranzas mejora el recupero sin ayuda, y los tres
-pueden mostrar su número en verde mientras el negocio empeora. La prima persistente los
-obliga a compartir el resultado. Eso la hace incómoda de adoptar y útil de tener.
-
-Sola no alcanza: cualquier métrica de volumen se infla gastando de más. Por eso la acompaña
-**prima persistente sobre inversión**, que es la que decide el presupuesto: dónde rinde más
-el próximo peso.
-
-<Figure
-  src="/projects/canal-digital-seguros/tablero-semana.png"
-  alt="Pantalla de Semana del tablero: la métrica norte expresada como una frase, seguida de la capa de decisión con tres alertas ordenadas por severidad, entre ellas una de comparabilidad del funnel de moto"
-  width={2880}
-  height={2250}
-  caption="La métrica norte escrita como una frase, y debajo la capa de decisión. La tercera alerta es el hallazgo del cotizador de moto convertido en regla de medición. Las cifras de las alertas son salida del generador, y el monto en pesos de la segunda descansa en un costo por gestión asistida que también elegí yo."
-/>
+Sola tampoco alcanza, porque cualquier métrica de volumen se infla gastando de más. La
+acompaña **prima persistente sobre inversión**, que es la que decide el presupuesto: dónde
+rinde más el próximo peso.
 
 ## Corregir el costo por alta no cambia el ranking
 
-La corrección que parece obvia es dividir el costo por alta por la tasa de persistencia, y
-usar el costo por alta que sobrevive:
+La corrección que parece obvia es dividir el costo por alta (CPA) por la tasa de
+persistencia, y quedarse con el costo de la póliza que sobrevive: CPAP = CPA / persistencia.
+La probé en mi simulación y no movió ni un puesto. Los cinco canales quedaron en el mismo
+orden que ya tenían por costo.
 
-```
-CPAP = CPA / tasa de persistencia
-```
+Y tenía que pasar, porque hay una asimetría de fondo. La persistencia es una proporción:
+mientras el peor canal retenga más de la mitad de su cartera, la brecha entre el mejor y el
+peor no puede pasar de 2 veces. El costo por alta no tiene ese techo. La corrección mueve
+el nivel y deja el orden donde estaba.
 
-El orden entre dos canales se da vuelta sólo si la razón de persistencia entre ellos supera
-a la razón de costo. Y ahí hay una asimetría que sale del álgebra. **La persistencia es una
-proporción, así que la razón entre el mejor y el peor canal está acotada por 1 sobre la
-persistencia del peor.** Si el peor canal retiene más de la mitad de su cartera a los seis
-meses, esa razón no puede pasar de 2. El costo por alta no tiene tope: comprar tráfico puede
-costar un múltiplo arbitrario de vender sobre base propia. Mientras el peor canal retenga la
-mitad, **la corrección mueve el nivel y deja el orden donde estaba**.
-
-Lo que sí reordena es prima persistente sobre inversión, porque agrega la variable que
-faltaba, el tamaño del ticket. Un canal de ticket chico y adhesión impulsiva puede traer
-altas baratísimas y quedar último en plata dejada.
-
-En mi simulación eso es exactamente lo que pasa. En la pantalla de abajo, las filas marcadas
-son los canales donde el puesto por costo y el puesto por rendimiento se separan en dos o
-más posiciones.
+Lo que sí reordena es la prima persistente por peso invertido, porque agrega la variable
+que faltaba, el tamaño del ticket. En mi simulación, el canal embedded trae las segundas
+altas más baratas y termina último en prima que deja; el conversacional, el más caro por
+alta, sube al tercer puesto.
 
 <Figure
-  src="/projects/canal-digital-seguros/tablero-presupuesto.png"
-  alt="Pantalla de Presupuesto del tablero: tabla de canales con inversión, pólizas emitidas, pólizas que siguen pagando, costo por póliza que persiste y prima persistente por peso invertido, con dos columnas de puesto (costo y rendimiento) y las filas discordantes resaltadas"
-  width={2880}
-  height={1920}
-  caption="El instrumento puesto a decidir un presupuesto. Los volúmenes y los costos por canal son supuestos míos, así que la pantalla demuestra el comportamiento de las tres métricas y no la performance de ninguna compañía."
+  src="/projects/canal-digital-seguros/ranking-canales.png"
+  alt="Slope chart de cinco canales simulados: a la izquierda el puesto por costo por alta, a la derecha el puesto por prima persistente por peso invertido. Embedded cae del segundo al último puesto y Conversacional sube del quinto al tercero; base propia y e-commerce conservan su puesto y comparadores sube uno"
+  width={2000}
+  height={1200}
+  caption="Cinco canales de mi simulación. Base propia y e-commerce propio conservan su puesto; comparadores sube uno, de 3º a 2º; los dos de color son los que se cruzan al pasar del costo a la prima por peso invertido. Los volúmenes y costos de los cinco son supuestos míos."
 />
 
-## El portal de empresas se mide por lo que ahorra
+## De dónde sale cada número
 
-El otro frente del canal digital es el portal B2B, y medirlo con el árbol de altas es un
-error de categoría. El portal no produce prima, evita llamadas. Su métrica norte es la tasa
-de autogestión, y el ahorro operativo son las gestiones deflectadas multiplicadas por el
-costo de una atención asistida.
+El dato que más pesa en la simulación es la anulación trimestral de automotores, que
+publica la SSN. Antes de usarlo verifiqué mi extracción de los cuadros contra tres cifras
+que ya había publicado en un
+[trabajo anterior sobre cobranza](/projects/cobranza-seguros) (18%, 25,6% y 18,9%): mi
+extracción da 18,04%, 25,57% y 18,91%, así que las tres reproducen. La carga corre diez
+controles de ese estilo, y si alguno falla no entra nada.
 
-Lo que reorganiza el eje es una distinción que el número agregado esconde. Las **consultas**
-(pólizas vigentes, deuda, siniestros, nómina, certificados) se resuelven cuando el dato está
-y se encuentra. Las **transacciones**, que en una compañía de flotas son sobre todo el alta y
-la baja de vehículos, se resuelven cuando el trámite se cierra solo. **Un portal puede tener
-95% de autogestión en consultas y 0% real en transacciones, reportar un promedio excelente y
-tener el call center igual de cargado.** Las dos familias se miden y se reportan por
-separado, o el promedio miente.
+## El cobro fallido es una fuga mensual
 
-De ahí sale la métrica que me parece la más valiosa del eje: **la tasa de resolución
-directa**, solicitudes de alta y baja de vehículos completadas sin intervención humana sobre
-el total de solicitudes. En una compañía donde automotores es el 82,7% de la producción,
-hasta el portal B2B es de auto, y las flotas rotan todo el tiempo. Si ese trámite es una
-solicitud que cae en una bandeja y no una transacción que se cierra sola, hay un volumen
-alto que figura como autogestión y es trabajo manual. Desde afuera no se puede confirmar, y
-es la primera pregunta que haría adentro.
+Con la póliza mensual hay doce cobros al año, y cada uno puede perder la póliza por un
+motivo que no es de producto. La distinción que me importa es entre la baja que el cliente
+pide y la que ocurre porque el débito rebotó los reintentos: la primera es un problema de
+valor, la segunda es de proceso, y las arreglan equipos distintos con presupuestos
+distintos.
 
-Hay además una métrica del portal que no es de eficiencia sino de riesgo: **la latencia entre
-la solicitud de alta de un vehículo y su vigencia**. Mientras esa ventana está abierta hay un
-auto de la flota circulando sin cobertura. Es el número que saca la conversación de la
-eficiencia del área y la lleva a la exposición de la compañía.
-
-Y una que lo mantiene honesto: **el recontacto posterior a la gestión**. Sin ella la tasa de
-autogestión se infla sola, empujando al usuario al portal sin registrar el ticket que llama
-después. Medir el recontacto es aceptar de entrada que la métrica principal se puede
-manipular.
-
-Tres cosas se ven desde la puerta del portal, sin credenciales y sin cargar un dato. Pide
-**número de documento**, no CUIT, así que la identidad es de la persona y contar «empresas
-activas» exige un join usuario a empresa que puede no ser uno a uno. Corre la versión
-V 3.7.7.2, mientras el portal de productores usa un sistema de identidad distinto y más
-viejo. Y avisa que **«estamos mejorando nuestra seguridad y el proceso de registro e inicio
-de sesión está cambiando»**: una migración de login en curso es una discontinuidad en la
-serie de adopción, y cualquier caída de usuarios activos durante ese período va a ser
-ambigua entre desinterés y fricción de re-registro. Eso se deja anotado antes de que pase,
-para no tener que explicarlo después.
-
-## De dónde tiene que salir cada número
-
-Un modelo de métricas se sostiene o se cae por la procedencia de sus parámetros, así que los
-puse todos en un archivo aparte donde cada uno declara si es dato, derivado o elección mía, y
-el recuento incómodo (**43 de 53 elegidos por mí**) queda a la vista. El que más pesa es la
-tasa de anulación trimestral de automotores, que el cuadro de la SSN publica. Antes de
-cargarla verifiqué el extractor contra tres cifras que yo mismo había publicado en un
-[trabajo anterior sobre cobranza](/projects/cobranza-seguros), motovehículos sobre stock
-18,04%, sobre emitidas brutas 25,57% y el total del mercado 18,91%, y las tres reproducen. El
-extractor corre diez controles como esos y **no escribe nada si alguno falla**.
-
-Separar la procedencia sirve además para detectar una trampa de método que en un tablero real
-es más común de lo que parece. Una de las validaciones del generador pedía que el hazard de
-moto fuera al menos 1,8 veces el de auto, y ese 1,8 salía de comparar el dato real de moto
-contra un supuesto de auto elegido por mí. **Una validación anclada en un supuesto del modelo
-no puede fallar**, porque repite el supuesto con otro nombre, y queda en verde mientras el
-supuesto siga siendo un supuesto. Con los dos ramos medidos por el regulador la relación es
-1,44, y ahora el chequeo compara contra eso. Cuando llegan datos reales, lo primero es
-preguntarle a cada control de dónde salió su número esperado.
-
-<Figure
-  src="/projects/canal-digital-seguros/tablero-metodo.png"
-  alt="Pantalla de Método del tablero: tabla de tres chequeos con valor obtenido, valor esperado y el ancla externa de cada uno, seguida de la lista de lo que el tablero no puede sostener y del diccionario técnico de métricas"
-  width={2880}
-  height={1920}
-  caption="Las validaciones, sus anclas externas y los límites del trabajo viven adentro del producto. La propia pantalla aclara que ninguno de los tres chequeos prueba que la calibración sea correcta, y que sólo descartan calibraciones groseramente equivocadas."
-/>
-
-## El cobro fallido es una fuga mensual, no un caso borde
-
-Con la póliza mensual hay doce eventos de cobro al año, y cada uno es una oportunidad de
-perder la póliza por un motivo que no es de producto. La distinción que importa es entre la
-baja que el cliente pide y la que ocurre porque el débito rebotó los reintentos: la primera
-es un problema de valor y la segunda es de proceso, y las arreglan equipos distintos con
-presupuestos distintos.
-
-Para priorizar la gestión armé un modelo que puntúa cada cobro del mes siguiente por su
-probabilidad de fallar. La capacidad de cobranza es finita: el equipo trabaja una lista con
-tope, así que la pregunta útil no es cuánto acierta el modelo en general sino **cuántos
-fallos reales entran en la lista que se alcanza a trabajar**.
+La capacidad de cobranza es finita: el equipo trabaja una lista con tope. La decisión de
+producto está en qué lista darle y con qué vara medirla, y la vara que me importa es
+**cuántos fallos reales entran en la lista que se alcanza a trabajar**. Para dimensionarla
+simulé una priorización de los cobros del mes por riesgo de fallo.
 
 <Figure
   src="/projects/canal-digital-seguros/modelo-listas.png"
-  alt="Gráfico de barras agrupadas: para listas del 5, 10 y 20 por ciento de la cartera mensual, cuántos de cada 100 cobros gestionados son fallos reales (45, 26 y 16) y qué porcentaje de todos los fallos del mes se captura (37, 43 y 54), contra una línea punteada en 6 que marca el azar"
+  alt="Gráfico de barras de mi simulación: para listas del 5, 10 y 20 por ciento de la cartera mensual, cuántos de cada 100 cobros gestionados son fallos reales (45, 26 y 16) y qué porcentaje de todos los fallos del mes se captura (37, 43 y 54), contra una línea punteada en 6 que marca el azar"
   width={2000}
   height={1200}
-  caption="La vista que decide qué lista trabajar. De cada 100 cobros gestionados en la lista corta, 45 fallan de verdad; eligiendo al azar serían 6. Los datos son simulados, generados por mí y calibrados con cuadros de la SSN: con datos reales las alturas cambian, la forma de leerlo no."
+  caption="La vista que decide qué lista trabajar. De cada 100 cobros de mi simulación gestionados en la lista corta, 45 fallan de verdad; eligiendo al azar serían 6. Con datos reales cambian las alturas; la forma de leerlo se mantiene."
 />
 
-Sobre estos datos, los tres modelos que probé (una regresión logística y dos basados en
-árboles) empatan, y tenían que empatar: la simulación compone los riesgos de una forma que
-favorece justo al más simple. Gana entonces el que se puede explicar, donde cada factor
-tiene un peso legible y defendible en una reunión. Con datos reales la comparación hay que
-rehacerla.
+Todo esto corre sobre una simulación, pero el ejercicio es el mismo con los datos reales
+de la compañía. Ahí el output deja de ilustrar y pasa a decidir: qué tamaño de lista
+conviene trabajar y qué recupero esperar de ella. En un caso así mi recomendación sería
+arrancar por la lista corta, donde cada gestión rinde más, y ampliarla mientras el recupero
+siga pagando el costo de gestionarla; y entre dos modelos que rindan parecido, elegir el
+que el equipo de cobranzas pueda explicar. Construir y mantener el modelo es del equipo de
+datos; del lado de producto quedan la métrica de éxito y el tope de la lista.
 
-La palanca ya existe en el producto y es verificable desde afuera: el cotizador aplica el
-precio promocional al débito automático. Lo que falta es el número que sólo tiene la
-compañía, cuánto mix compra ese descuento y si la persistencia extra paga la prima
-resignada.
+La palanca ya existe en el producto y se verifica desde afuera: el cotizador aplica el
+precio promocional al débito automático. Falta el número que sólo tiene la compañía, cuánto
+mix compra ese descuento y si la persistencia extra paga la prima resignada.
 
 ## La hipótesis que queda abierta
 
-Tres observaciones de tres trabajos distintos apuntan al mismo patrón.
+Tres observaciones de tres trabajos distintos apuntan al mismo lado. Entre los ramos de
+vehículos, motovehículos anula bastante más que automotores: 25,57% de lo que emite contra
+16,36%, según la SSN del primer trimestre de 2026. El cotizador de moto es el único de los
+seis que pide datos personales antes de mostrar un precio. Y el canal conversacional hace
+lo mismo: cuando lo probé como cliente para [otro proyecto](/projects/insurance-advisor-bot),
+me pidió documento, fecha de nacimiento y patente antes de cualquier precio, y al final
+difirió la cotización.
 
-**Entre los ramos de vehículos, motovehículos anula mucho más que automotores**, 25,57% de
-lo que emite contra 16,36%, según la SSN del primer trimestre de 2026.
-
-**El cotizador de moto es el único de los seis que pide datos personales antes de mostrar un
-precio.**
-
-**El canal conversacional hace lo mismo.** Cuando lo probé como cliente para
-[otro proyecto](/projects/insurance-advisor-bot), me pidió documento, fecha de nacimiento y
-patente antes de cualquier precio, y difirió la cotización.
-
-La hipótesis: **los flujos que capturan el lead antes de entregar valor producen ventas de
-peor calidad, y esa calidad reaparece después como anulación.**
-
-No está probada, y no puede probarse desde afuera, porque la correlación es de mercado y el
-diseño del flujo es de una compañía. Pero es **falsable con datos internos en una tarde**,
-midiendo la tasa de anulación temprana de moto contra auto, segmentada por origen del lead y
-por si el precio se mostró antes o después de la captura. Si se confirma, conecta una
-decisión de diseño de formulario con una línea del balance. Si no, la explicación alternativa
-es igual de interesante: el ramo es estructuralmente más precario y el flujo no tiene nada
-que ver.
+Mi hipótesis: **los flujos que capturan el lead antes de entregar valor producen ventas de
+peor calidad, y esa calidad reaparece después como anulación**. No la puedo probar desde
+afuera, porque la correlación es de mercado y el diseño del flujo es de cada compañía. Pero
+adentro se comprueba rápido, midiendo la anulación temprana de moto contra auto,
+segmentada por origen del lead y por si el precio se mostró antes o después de pedir los
+datos. Si da, conecta una decisión de formulario con una línea del balance. Si no da, la
+explicación alternativa también me interesa: el ramo es más precario de fondo y el flujo no
+tiene nada que ver.
 
 ## Lo que este trabajo no puede sostener
 
 Es un análisis externo, con datos públicos, y arrastra los límites de ese punto de partida.
 
 - **43 de los 53 números que alimentan la simulación los elegí yo.** Todo lo que sale de
-  ella (rankings de canales, tasas del funnel, resultados del modelo de cobro) ilustra cómo
-  se comporta el modelo y no mide el mercado.
-- **Ninguna tasa del funnel es pública.** La estructura de pasos está verificada recorriendo
+  ella (rankings de canales, tasas del funnel, resultados del modelo de cobro) muestra cómo
+  se comporta la simulación, nada más.
+- Ninguna tasa del funnel es pública. La estructura de pasos está verificada recorriendo
   los cotizadores; los niveles son elegidos.
-- **No existe dato público del peso de los canales digitales en la producción.** Es el
+- No existe dato público del peso de los canales digitales en la producción, y es el
   denominador de todo el dimensionamiento.
-- **La anulación que publica el regulador incluye motivos no financieros**, así que funciona
-  como techo del churn. El generador la usa igual, sobrestimando la pérdida a propósito.
-- **La validación contra la variable latente es un lujo del entorno sintético.** Con datos
-  reales no hay verdad conocida contra la cual medir recuperación.
-- **El costo asimétrico de los errores no está modelado.** Un falso positivo cuesta una
-  gestión de cobranza innecesaria; un falso negativo cuesta una póliza. El umbral debería
-  salir de esa asimetría, y para eso hace falta un número que sólo tiene Operaciones.
-- **La participación de canales del regulador no abre por ramo.** Lo más granular es
-  patrimoniales contra personas, así que no hay corte específico de automotores.
+- La anulación que publica el regulador incluye motivos no financieros, así que funciona
+  como techo del churn. La simulación la usa igual, sobrestimando la pérdida a propósito.
+- En una simulación la verdad de cada póliza se conoce, así que puedo medir cuánto recupera
+  la priorización. Con datos reales esa vara no existe.
+- Los dos errores de la lista no cuestan lo mismo: gestionar un cobro que iba a salir bien
+  cuesta una gestión de más; no gestionar uno que falla cuesta una póliza. El punto de
+  corte debería salir de esa asimetría, y ese número lo tiene Operaciones.
+- La participación de canales del regulador no abre por ramo: lo más granular es
+  patrimoniales contra personas.
 
-## Las seis preguntas que ordenan el próximo trimestre
+## Las cuatro preguntas que ordenan el arranque
 
-Nada de lo anterior se ejecuta sin seis respuestas que sólo existen adentro. Las tres
-primeras deciden si vale la pena construir el modelo; las otras tres, cuánta plata hay
-detrás de cada frente. Un área que las tiene contestadas sabe dónde está parada y puede
-defender un presupuesto con números. Una que no, discute sobre percepciones y gana el que
-habla más fuerte.
+Nada de lo anterior se ejecuta sin respuestas que sólo existen adentro. Las tres primeras
+deciden si vale la pena construir el modelo; la cuarta dimensiona la palanca de cobro.
 
 1. **¿Cuál fue la última decisión importante que tomaron con datos, y qué les faltó para
-   tomarla con más confianza?** Una medición que no cambia ninguna decisión existente no se
-   usa, por buena que sea.
-2. **¿Qué porcentaje de la producción viene de canales digitales?** Sin eso no se puede saber
-   si dos puntos de conversión valen una reunión o un trimestre.
+   tomarla con más confianza?** Busco saber qué decisión concreta mejoraría con mejores
+   datos.
+2. **¿Qué porcentaje de la producción viene de canales digitales?** Sin eso no se sabe si
+   dos puntos de conversión valen una reunión o un trimestre.
 3. **¿Existe trazabilidad de campaña hasta la póliza emitida?** El eje de eficiencia entero
    depende de un join que puede no existir.
-4. **La solicitud de alta de vehículo del portal de empresas, ¿se resuelve sola o cae en una
-   bandeja, y cuánto tarda en quedar vigente?** Si cae en una bandeja hay un trámite de
-   altísimo volumen que figura como autogestión y es trabajo manual. Y mientras tarda, hay
-   un auto de flota circulando sin cobertura.
-5. **¿Cuánto rinde el descuento por débito automático?** La palanca ya está en uso, porque el
-   cotizador aplica el precio promocional al débito. Lo que falta es saber cuánto mix compra
-   y si la persistencia extra paga la prima resignada.
-6. **¿Cuánto cuesta una gestión asistida?** Es el multiplicador que convierte gestiones
-   evitadas en pesos, y sin él el ahorro es una estimación mía.
+4. **¿Cuánto rinde el descuento por débito automático?** Es la palanca de la sección de
+   cobro, y su rendimiento es un número que sólo existe adentro.
 
-Con las tres primeras contestadas, el orden de trabajo me parece claro y no empieza por el
-tablero. Empieza por acordar la definición de cotización y de alta entre las seis
-plataformas, porque sin eso cualquier comparación entre productos produce una conclusión
-falsa. Sigue por separar, en el portal, la autogestión de consulta de la transaccional,
-porque ahí es donde el promedio esconde el trabajo manual. Y recién entonces el tablero,
-que a esa altura ya tiene números que significan lo mismo en todas las columnas.
+Con las tres primeras contestadas, lo primero sigue siendo el acuerdo de definiciones
+entre las seis plataformas, porque sin eso cualquier comparación entre productos da una
+conclusión falsa. La medición llega cuando los números ya significan lo mismo en todas las
+columnas.
+
+Un frente quedó afuera a propósito: el portal de empresas se mide con otra vara, porque
+ahorra operación en vez de traer prima, y lo estoy trabajando como caso aparte.
 
 Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación
 comercial con La Caja.

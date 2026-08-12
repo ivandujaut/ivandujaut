@@ -11,14 +11,14 @@ featured: true
 cover:
   src: ./cover.jpg
   alt: "Painted editorial illustration with film grain: a blue-grey stone channel crosses the scene diagonally from the left edge, loaded with dull grey paper slips that spill through a break and fall in a cascade into black emptiness; past the break, the surviving stretch carries a few amber-lit slips to a shallow stone basin, and beside it a faceless human figure in blue silhouette, seen in profile, holds one up and looks back at the cascade"
-stack: ["Open data (SSN)", "Product walkthrough", "Python", "pandas", "scikit-learn", "Next.js"]
+stack: ["Open data (SSN)", "Product walkthrough", "Python", "Next.js"]
 preview:
-  - src: /projects/canal-digital-seguros/preview-metrica.png
-    alt: "Dashboard card stating the north star metric as a sentence: for every peso invested, $9.29 of one-year premium still alive at six months"
-  - src: /projects/canal-digital-seguros/preview-ranking.png
-    alt: "Dashboard channel table, with the persistent-premium-per-peso bars and two highlighted rows where the cost rank and the return rank disagree"
-  - src: /projects/canal-digital-seguros/preview-alertas.png
-    alt: "Dashboard decision layer with three stacked alerts, two critical in red and one warning in amber, each with what to do about it"
+  - src: /projects/canal-digital-seguros/preview-portada.jpg
+    alt: "Cover crop: a silhouetted figure holds an amber-lit receipt next to a stone pool, with the broken channel behind"
+  - src: /projects/canal-digital-seguros/ranking-canales.png
+    alt: "Slope chart of five simulated channels: rank by cost per sign-up on the left and by persistent premium per peso invested on the right, with two channels crossing"
+  - src: /projects/canal-digital-seguros/modelo-listas.png
+    alt: "Chart from my simulation of collections: out of every 100 managed in the short list, 45 truly fail; picking at random it would be 6"
 metrics:
   - label: "Quarterly motor cancellation rate"
     value: "12.76%"
@@ -26,38 +26,32 @@ metrics:
     value: "0.9 months"
   - label: "Separate quoters in production"
     value: "6"
-  - label: "Model inputs with a public source"
-    value: "10 of 53"
+  - label: "Model inputs I chose myself"
+    value: "43 of 53"
 translationKey: "canal-digital-seguros"
 draft: false
 ---
 
 <Abstract label="In short">
 
-Measuring a digital-channel team by «new policies» rewards the behavior that destroys value:
-a policy that never clears its first payment has already burned acquisition cost, commission
-and systems, and left no premium. The Argentine insurance regulator (SSN) publishes the scale
-of that discard: in its Q1-2026 property policy table, motor insurance **cancels 12.76% of
-its stock per quarter**, for any reason and across the whole book.
+I walked La Caja's digital channel through its public flows to understand how a channel
+like this gets measured. I ran into a problem before the one I was looking for: online
+quoting lives on **six separate platforms that measure different things**, and today you
+cannot even compare conversion between products. Then I looked at how ten other leading
+insurers quote, to see whether the same problem repeats. Five give no signal from outside;
+of the five that do, one shares it and four solved it.
 
-Before that discussion there is an earlier problem, and I found it by walking the sites:
-**online quoting is spread across platforms that measure different things**, so at times you
-cannot even compare conversion between products. The case I walked in depth, La Caja, runs on
-six separate quoters; the benchmark of other insurers shows it is not alone, and also that
-some have solved it. This analysis walks where premium leaks in a channel like that and why:
-the issue that does not persist, the friction that arrives after the buying decision, the
-collection that fails every month, and the self-service that the portal's average hides.
+The heart of the case is the metric. Measuring a team by "new policies" rewards what
+generates no value: a policy that lapses before clearing its first payment has already
+spent the acquisition and the commission, and left no premium. The scale of the discard is
+published by Argentina's insurance regulator (SSN): in motor insurance, **12.76% of the
+stock cancels every quarter**, for any reason and across the whole book. I chose La Caja as
+the anchor because motor is 82.7% of its production, so almost all of its business depends
+on measuring a single line well.
 
-To argue it with numbers I built a metrics model and a test dashboard, calibrated against the
-same regulator's tables. They are the instrument of the analysis, not the deliverable, and
-they are available for anyone who wants to see them in detail.
-
-The anchor case is La Caja, chosen because motor insurance is 82.7% of its production, so
-almost everything depends on measuring a single line well. The walkthrough and the market
-figures are verified public data. Policy-level volumes are simulated: the simulation runs on
-53 numbers (how many people quote at each step, what an average premium is worth, what it
-costs to bring a customer through each channel) and **only 10 come from public sources**; the
-other 43 are my own choices, declared one by one.
+To argue with numbers I built a metrics model calibrated against the same SSN tables. Of
+the 53 numbers that feed that simulation, I chose 43 myself, each one declared; only 6 come
+straight from published tables.
 
 </Abstract>
 
@@ -70,7 +64,7 @@ the premium still alive at six months, divided by what it cost to bring it in.
 
 ## What is data and what is my own choice
 
-Before any number, the line that separates the two.
+Before any number, the line that separates the verifiable from what is mine.
 
 | Figure                                                     | Status     | Source                                            |
 | ---------------------------------------------------------- | ---------- | ------------------------------------------------- |
@@ -79,338 +73,251 @@ Before any number, the line that separates the two.
 | La Caja premium uncollected, 0.9 months, vs a 2.1 median   | data       | SSN, balance sheets as of 03/31/2026, 53 entities |
 | Motor at 82.7% of La Caja's production                     | data       | SSN as of March 2026, via the company's own site  |
 | Intermediated channel, 69.9% of the market in fiscal 2025  | data       | SSN, sales channel table                          |
-| Monthly motorcycle-over-car hazard, 1.44                   | derived    | ratio of two figures from the same SSN table      |
 | The six quoters, their hosts and the production defects    | data       | my own site walkthrough, re-verified 08/10/2026   |
-| How six other leading insurers quote                       | data       | my own benchmark of their sites, 08/11/2026       |
+| How other insurers quote: 10 surveyed, 5 with signal       | data       | my own benchmark of their sites, 08/11/2026       |
 | Channel rankings, persistence, funnel and collection model | assumption | my own simulation: I chose 43 of its 53 numbers   |
 
 <TableCaption>
-  The last two data rows are the observed field; the assumption row is everything the simulation
-  outputs. No number from that row measures the market.
+  The last row covers everything that comes out of the simulation. No number in that row measures
+  the market.
 </TableCaption>
 
 ## Six quoters that measure different things
 
-Before deciding what to measure you have to see what exists, so I walked the public quoting
-and self-service flows. I entered vehicle data only, never completed a purchase, and did not
-try to bypass the reCAPTCHA that appears before the price step. Everything in this section is
-verified on the live site and re-verified on August 10, 2026 with tools different from the
-original walkthrough.
+Before deciding what to measure I went to see what exists, and walked the public quoting
+flows. Everything in this section is verified against
+[the production site](https://seguros.lacaja.com.ar/) as of August 10, 2026.
 
-**The digital channel runs on six separate quoters.** Car, home, motorcycle, bicycle and
-health each live on their own subdomain. The sixth is a legacy stack that quotes notebook,
-handbag and elder-care coverage across two different routes of a host whose root, on top of
-that, redirects to the institutional site. Adding the personal, business and broker portals,
-the ecosystem lives on at least nine hosts, and only two of the six declare their version in
-the HTML they serve.
+The first thing was counting. Car, home, motorcycle, bicycle and health each quote on their
+own subdomain, and there is a sixth, legacy stack that quotes notebook, handbag and
+elder-care coverage on two routes of a host whose root, on top of that, redirects to the
+institutional site. That makes **six separate quoters**; counting the personal, business
+and broker portals, the ecosystem lives on at least nine hosts. Only two of the six declare
+which version they serve.
 
-The consequence is concrete: **today you cannot compare car conversion against motorcycle or
-home**. There are six implementations measuring different things, on different domains, with
-different sessions and cookies, and the question "does the digital channel work?" has no table
-to rest on.
+In practice this means that **today you cannot compare car conversion against motorcycle or
+home**. They are six implementations measuring different things, each on its own domain and
+with its own session. The question "does the digital channel work?" has no table to rest
+on.
 
-To know whether this is a rarity or an industry-wide debt, I also looked at how other leading
-insurers quote (August 11, 2026, from the code their sites serve). The pattern repeats in part
-of the market: Mapfre also splits car, home and personal accident into separate subdomains.
+I was left wondering whether this was one company's quirk or a debt of the whole industry,
+so I looked at how ten other leading insurers quote (August 11, from the code their sites
+serve). Five give no conclusive signal from outside, so I make no claims about those. Of
+the five with signal, only Mapfre shares the problem: it splits
+[car](https://autos.mapfre.com.ar/), [home](https://hogar.mapfre.com.ar/) and
+[personal accident](https://ap.mapfre.com.ar/) into separate subdomains. The other four
+quote unified: [Provincia Seguros](https://cotizadores.provinciaseguros.com.ar/) uses the
+same quoter changing only the route;
+[Rivadavia](https://www.segurosrivadavia.com/cotizador?seguro=Autos) picks the product by
+parameter; [San Cristóbal](https://www.sancristobal.com.ar/cotizar-auto/) and
+[Sancor](https://cotiza.sancorseguros.com.ar/) concentrate quoting on one domain. When
+everything lives on **a single platform where the product is a route**, the funnels share
+session and measurement, and adding a product does not open a new silo. The problem repeats
+in the market, but it is not inevitable: most of the insurers with signal already quote
+unified.
 
-And another part has solved it, with a solution whose shape shows in the URL itself: **a single
-quoting platform where the product is a route or a parameter, not a separate site**. Provincia
-Seguros quotes car, motorcycle, home and personal accident on the same quoter by changing only
-the route; Rivadavia uses a single quoter where the product is chosen by parameter; San
-Cristóbal and Sancor concentrate quoting on one domain. The difference is not cosmetic. One
-domain is one session and one measurement, so the funnels are comparable by construction, and
-adding a product adds a route instead of a new silo.
+The walkthrough turned up another finding. Of the six, the only one that asks for personal
+data before showing the price is the motorcycle quoter: date of birth, phone and email in
+the first step. The car quoter goes the other way, asks for year, make, model and version,
+shows the price, and only then asks who you are. When someone compares the conversion of
+the six products side by side, motorcycle will look worse, and someone will read that gap
+as lack of demand when the origin is in the form design.
 
-In short: fragmentation is a frequent industry debt, not one company's exclusive failure, but
-it is not inevitable either, because part of the market already quotes on a unified platform.
-What changes is the degree, and the case I walked in depth is at the extreme.
+The walkthrough also surfaced two product rules that change the math.
 
-**One of the six asks for personal data before showing the price.** The motorcycle quoter
-opens with a step that includes date of birth, phone and email; the car quoter asks for year,
-make, model and version, shows a price, and only then asks who you are. Both declare five
-steps. Comparing the conversion of the six products side by side will show motorcycle
-converting worse, and someone will read that gap as lack of demand when the origin is in the
-form design.
+- **The car policy is monthly and renews automatically** (it is in the quoter's own FAQ).
+  That means twelve continuity decisions and twelve collection events a year: retention
+  reads month by month, and every failed collection is a chance to lose the policy for a
+  reason unrelated to the product.
+- **For used cars there is an inspection where the customer uploads photos from the
+  browser.** It is the only step where the work comes after the decision to buy, with the
+  intent already won, and it mixes three situations worth separating: brand-new cars skip
+  inspection, the in-person one is a different process, and within the photo flow the user
+  who abandons and the system that rejects are different problems.
 
-Two product rules also change any model drawn from memory.
+From all of this I took away a sequencing conclusion: **the area's first deliverable is an
+agreement on what counts as a quote and what counts as a new policy across the six
+platforms**, before any screen.
 
-**The car policy is monthly and renews automatically.** It is written in the quoter's own FAQ.
-There are twelve continuity decisions and twelve collection events a year, so retention reads
-month by month and the loss from a failed collection becomes a monthly chance to lose the
-policy over a problem unrelated to the product.
-
-**For used cars there is an inspection step that no funnel drawn from memory includes.** The
-customer uploads photos from the browser, and it is the only step where the work is done by the
-user _after_ deciding to buy: the intent is already there and the friction comes later, so
-every point lost there is a sale that was already won. It has three branches to separate,
-because the brand-new car is not inspected, the in-person inspection is another process, and
-within the photo flow the user who abandons and the system that rejects are different problems.
-
-From all of this comes a sequencing conclusion: **the area's first deliverable is an agreement
-on definition and instrumentation across the six platforms; the screens come after.** What
-follows is what the team should watch once that is agreed.
-
-**On the side, two small defects still in production.** The button to download the app points
-to an internal address on the company's servers that does not exist outside its network:
-whoever taps it goes nowhere. The defect does not show up by inspecting the code the server
-delivers, only by using the site as any visitor would, which helps it survive. And the three
-broker-channel self-service guides have an empty link, so they download nothing, on the channel
-that in fiscal 2025 concentrated 69.9% of the market's distribution per the SSN sales channel
-table. Neither one moves premium on its own, but each failed attempt ends in a call to the
-contact center, and both fixes are an afternoon's work.
+On the side, two small defects still in production. The «CONOCÉ NUESTRA APP» button in the
+header (the "check out our app" call to action) points to `seguros-dev.lacaja.local`, an
+internal development server that does not exist outside the company's network. In the code
+the server delivers the link is fine: it breaks once the page finishes loading in the
+browser, which is why it can only be found by using the site. The other one is in the
+broker portal, the channel that concentrated 69.9% of the market's distribution in 2025:
+its three self-service guides (second-factor authentication, password reset and electronic
+payment) have their «Descargar» button with no address assigned, they download nothing.
+Neither moves premium on its own, but every failed attempt probably ends in a call to the
+contact center, and both could be fixed quickly.
 
 ## Why new policies are not enough
 
-In motor insurance, the SSN's Q1-2026 property policy table says that **12.76% of the standing
-stock cancels per quarter**, and that cancellations equal 16.36% of what is issued. Across all
-property lines, cancellations are 18.91% of issued policies, nearly nineteen in every hundred.
-
-Part of that is endorsements and policy replacements from a change of vehicle, so the figure
-works as a ceiling on churn rather than a pure measure. Even taken as a ceiling, the scale of
-the problem is the same: **measuring by new policies means counting policies that in good part
+In motor insurance, the SSN's Q1-2026 property policy table says 12.76% of the standing
+stock cancels each quarter, and that cancellations equal 16.36% of what gets issued. Across
+all property lines they are 18.91% of issued policies, almost nineteen in every hundred.
+Part of that is endorsements and replacements from a change of vehicle, so I read the
+figure as a ceiling on churn rather than a pure measure. Even as a ceiling, the scale is
+enough for the point: **measuring by new policies means counting policies that in good part
 will never be collected**.
 
-And there is a second reason that depends on no number. If the team is measured by new
-policies, it produces new policies: cutting price, loosening underwriting, buying cheap
-traffic. The team works to move the metric it is measured by, so choosing it is choosing a
-behavior.
+And there is a simpler reason. If you measure the team by new policies, it produces new
+policies: cutting price, loosening underwriting, buying cheap traffic. Choosing the metric
+is choosing a behavior.
 
-## The north star metric, and the counterweight that is not optional
+## The north star metric and its counterweight
 
-The one I chose is **Persistent Annualized Premium**: annualized premium from policies
-originated in the digital channel that are still in force and current six months after issue. I
-ruled out three candidates first.
+The one I chose is **Persistent Annualized Premium**: the annualized premium of
+digital-channel policies still in force and current six months after issue. The usual
+alternatives each fail on their own side:
 
-**New policies.** Treats a full-coverage policy that holds and one that lapses in the second
-month the same.
+- **New policies:** they treat a coverage that holds and one that lapses in the second
+  month the same.
+- **Issued premium:** it measures the promise; collection comes later.
+- **Collected premium:** correct but slow. By the time the figure closes, the decision that
+  caused it is three months old.
 
-**Issued premium.** Measures the promise, and gets collected later.
+What mattered to me about persistent premium, more than precision, is one property: **no
+single area can move it alone**. Marketing can show a falling cost per sign-up and
+underwriting a rising quality, each on its own, while the business gets worse. Persistent
+premium forces them to share the result, and for that same reason it will be awkward to
+adopt.
 
-**Collected premium.** Correct but slow: by the time the figure closes, the decision that
-caused it is three months old.
+It is not enough on its own either, because any volume metric inflates by overspending. It
+comes paired with **persistent premium over investment**, which is the one that decides the
+budget: where the next peso yields most.
 
-Persistent premium sits in the middle, and it has a property that mattered to me more than
-precision: **no single area can move it alone**. Marketing lowers cost per policy on its own,
-underwriting raises quality on its own and collections improves recovery on its own, and all
-three can show their number in the green while the business gets worse. Persistent premium
-forces them to share the result. That makes it awkward to adopt and useful to have.
+## Correcting cost per sign-up does not change the ranking
 
-Alone it is not enough: any volume metric inflates by spending more. So it comes paired with
-**persistent premium over investment**, which is the one that decides the budget: where the
-next peso yields most.
+The correction that looks obvious is to divide cost per sign-up (CPA) by the persistence
+rate and keep the cost of the policy that survives: CPAP = CPA / persistence. I tried it in
+my simulation and it did not move a single rank. The five channels stayed in the same order
+they already had by cost.
 
-<Figure
-  src="/projects/canal-digital-seguros/tablero-semana.png"
-  alt="Week screen of the dashboard: the north star metric written as a sentence, followed by the decision layer with three alerts ordered by severity, one of them about the comparability of the motorcycle funnel"
-  width={2880}
-  height={2250}
-  caption="The north star metric written as a sentence, and below it the decision layer. The third alert is the motorcycle-quoter finding turned into a measurement rule. The alert figures are simulation output, and the peso amount in the second rests on a cost per assisted case that I also chose."
-/>
+And it had to happen, because there is an asymmetry underneath. Persistence is a
+proportion: as long as the worst channel keeps more than half its book, the gap between the
+best and the worst cannot exceed 2 to 1. Cost per sign-up has no such ceiling. The
+correction moves the level and leaves the order where it was.
 
-## Correcting cost per policy does not change the ranking
-
-The correction that looks obvious is to divide cost per policy by the persistence rate, and use
-cost per surviving policy:
-
-```
-CPAP = CPA / persistence rate
-```
-
-The order between two channels flips only if the persistence ratio between them exceeds the
-cost ratio. And there is an asymmetry that comes from the algebra. **Persistence is a
-proportion, so the ratio between the best and worst channel is bounded by 1 over the worst
-channel's persistence.** If the worst channel keeps more than half its book at six months, that
-ratio cannot exceed 2. Cost per policy has no ceiling: buying traffic can cost an arbitrary
-multiple of selling into your own base. As long as the worst channel keeps half, **the
-correction moves the level and leaves the order where it was**.
-
-What does reorder is persistent premium over investment, because it adds the variable that was
-missing, ticket size. A channel with a small ticket and impulsive sign-up can bring the
-cheapest policies and end up last in premium left.
-
-In my simulation that is exactly what happens. In the screen below, the highlighted rows are
-the channels where the cost rank and the return rank separate by two or more positions.
+What does reorder is persistent premium per peso invested, because it adds the missing
+variable, ticket size. In my simulation, the embedded channel brings the second-cheapest
+sign-ups and ends up last in premium left behind; the conversational one, the most
+expensive per sign-up, climbs to third.
 
 <Figure
-  src="/projects/canal-digital-seguros/tablero-presupuesto.png"
-  alt="Budget screen of the dashboard: a table of channels with spend, policies issued, policies still paying, cost per persisting policy and persistent premium per peso invested, with two rank columns (cost and return) and the disagreeing rows highlighted"
-  width={2880}
-  height={1920}
-  caption="The instrument put to decide a budget. Volumes and per-channel costs are my own assumptions, so the screen demonstrates the behavior of the three metrics, not any company's performance."
+  src="/projects/canal-digital-seguros/ranking-canales.png"
+  alt="Slope chart of five simulated channels: rank by cost per sign-up on the left and by persistent premium per peso invested on the right. Embedded falls from second to last and Conversational climbs from fifth to third; own base and own e-commerce keep their rank and comparison sites move up one"
+  width={2000}
+  height={1200}
+  caption="Five channels from my simulation. Own base and own e-commerce keep their rank; comparison sites move up one, from 3rd to 2nd; the two colored ones are the ones that cross when moving from cost to premium per peso invested. The volumes and costs of all five are my own assumptions."
 />
 
-## The company portal is measured by what it saves
+## Where every number comes from
 
-The other front of the digital channel is the business portal, and measuring it with the
-new-policies tree is a category error. The portal does not produce premium, it avoids calls.
-Its north star is the self-service rate, and the operating saving is deflected cases multiplied
-by the cost of one assisted contact.
+The number that weighs most in the simulation is the quarterly motor cancellation rate,
+which the SSN publishes. Before using it I checked my extraction of the tables against
+three figures I had already published in an
+[earlier piece on collections](/projects/cobranza-seguros) (18%, 25.6% and 18.9%): my
+extraction gives 18.04%, 25.57% and 18.91%, so all three reproduce. The load runs ten
+checks of that kind, and if any fails nothing gets in.
 
-What reorganizes this axis is a distinction the aggregate number hides. **Queries** (active
-policies, debt, claims, payroll, certificates) are resolved when the data is there and can be
-found. **Transactions**, which in a fleet company are mostly adding and removing vehicles, are
-resolved when the process closes on its own. **A portal can show 95% self-service on queries
-and 0% real on transactions, report an excellent average and leave the contact center just as
-loaded.** The two families are measured and reported separately, or the average lies.
+## A failed collection is a monthly leak
 
-From there comes the metric I find most valuable on this axis: **the direct-resolution rate**,
-vehicle add and remove requests completed without human intervention over total requests. In a
-company where motor is 82.7% of production, even the business portal is about cars, and fleets
-rotate all the time. If that transaction is a request that lands in a queue rather than one that
-closes on its own, there is a high-volume operation that appears as self-service and is manual
-work. It cannot be confirmed from outside, and it is the first question I would ask inside.
+With a monthly policy there are twelve collections a year, and each one can lose the policy
+for a reason that is not about the product. The distinction I care about is between the
+cancellation the customer asks for and the one that happens because the debit bounced
+through its retries: the first is a value problem, the second a process one, and different
+teams with different budgets fix them.
 
-There is also a portal metric that is not about efficiency but about risk: **the latency
-between a vehicle-add request and its coverage taking effect**. While that window is open there
-is a fleet car on the road without cover. It is the number that takes the conversation out of
-the area's efficiency and into the company's exposure.
-
-And one that keeps it honest: **post-case recontact**. Without it the self-service rate inflates
-on its own, pushing the user to the portal without logging the ticket that calls afterward.
-Measuring recontact means accepting up front that the main metric can be gamed.
-
-Three things are visible from the portal's door, with no credentials and without entering a
-single field. It asks for a **document number**, not a tax ID, so the identity is the person's
-and counting "active companies" needs a user-to-company join that may not be one-to-one. It runs
-version V 3.7.7.2, while the broker portal uses a different, older identity stack. And it warns
-that **"we are improving our security and the registration and sign-in process is changing"**: a
-login migration in progress is a discontinuity in the adoption series, and any drop in active
-users during that window will be ambiguous between disinterest and re-registration friction.
-That gets flagged before it happens, so it does not have to be explained after.
-
-## Where every number has to come from
-
-A metrics model stands or falls on the provenance of its parameters, so I put them all in a
-separate file where each one declares whether it is data, derived or my own choice, and the
-uncomfortable count (**43 of 53 chosen by me**) stays in view. The one that weighs most is the
-quarterly motor cancellation rate, which the SSN table publishes. Before loading it I checked
-the extractor against three figures I had published myself in an
-[earlier collections piece](/projects/cobranza-seguros), motorcycle over stock 18.04%, over
-gross issuance 25.57% and the market total 18.91%, and all three reproduce. The extractor runs
-ten checks like those and **writes nothing if any of them fails**.
-
-Separating provenance also serves to catch a method trap that in a real dashboard is more common
-than it seems. One of the generator's validations required the motorcycle hazard to be at least
-1.8 times the car's, and that 1.8 came from comparing real motorcycle data against a car
-assumption I had chosen. **A validation anchored on a model assumption cannot fail**, because it
-repeats the assumption under another name, and stays green as long as the assumption stays an
-assumption. With both lines measured by the regulator the ratio is 1.44, and the check now
-compares against that. When real data arrives, the first thing is to ask each check where its
-expected number came from.
-
-<Figure
-  src="/projects/canal-digital-seguros/tablero-metodo.png"
-  alt="Method screen of the dashboard: a table of three checks with obtained value, expected value and the external anchor for each, followed by the list of what the dashboard cannot support and the technical dictionary of metrics"
-  width={2880}
-  height={1920}
-  caption="The validations, their external anchors and the work's limits live inside the product. The screen itself states that none of the three checks proves the calibration is correct, and that they only rule out grossly wrong calibrations."
-/>
-
-## A failed collection is a monthly leak, not an edge case
-
-With the monthly policy there are twelve collection events a year, and each is a chance to lose
-the policy over a reason unrelated to the product. The distinction that matters is between the
-cancellation the customer asks for and the one that happens because the debit bounced its
-retries: the first is a value problem and the second a process one, and different teams with
-different budgets fix them.
-
-To prioritize the work I built a model that scores each of the next month's collections by its
-probability of failing. Collection capacity is finite: the team works a capped list, so the
-useful question is not how much the model gets right overall but **how many real failures land
-in the list it can actually work**.
+Collection capacity is finite: the team works a capped list. The product decision is which
+list to give it and which yardstick to judge it by, and the yardstick I care about is **how
+many real failures land in the list the team actually gets to work**. To size it I
+simulated a prioritization of the month's collections by risk of failure.
 
 <Figure
   src="/projects/canal-digital-seguros/modelo-listas.png"
-  alt="Grouped bar chart: for lists of 5, 10 and 20 percent of the monthly book, how many of every 100 collections worked are real failures (45, 26 and 16) and what share of all the month's failures is captured (37, 43 and 54), against a dashed line at 6 marking chance"
+  alt="Bar chart from my simulation: for lists of 5, 10 and 20 percent of the monthly book, how many of every 100 collections worked are real failures (45, 26 and 16) and what share of all the month's failures is captured (37, 43 and 54), against a dashed line at 6 marking chance"
   width={2000}
   height={1200}
-  caption="The view that decides which list to work. Of every 100 collections worked in the short list, 45 truly fail; picking at random it would be 6. The data is simulated, generated by me and calibrated against SSN tables: with real data the heights change, the way to read it does not."
+  caption="The view that decides which list to work. Of every 100 collections from my simulation worked in the short list, 45 truly fail; picking at random it would be 6. With real data the heights change; the way to read it stays."
 />
 
-On this data, the three models I tried tie, and they had to tie: the lifecycle I wrote composes
-multiplicative hazards, which in log scale is exactly the form a logistic regression specifies
-well. The trees had no way to beat it. With real data the comparison has to be redone.
+All of this runs on a simulation, but the exercise is the same with the company's real
+data. That is where the output stops illustrating and starts deciding: what list size is
+worth working and what recovery to expect from it. In a case like this my recommendation
+would be to start with the short list, where each action yields most, and widen it as long
+as the recovery keeps paying for the cost of working it; and between two models that
+perform alike, pick the one the collections team can explain. Building and maintaining the
+model belongs to the data team; on the product side sit the success metric and the list
+cap.
 
-The lever already exists in the product and is verifiable from outside: the quoter applies the
-promotional price to automatic debit. What is missing is the number only the company has, how
-much mix that discount buys and whether the extra persistence pays for the premium given up.
+The lever already exists in the product and can be verified from outside: the quoter
+applies the promotional price to automatic debit. What is missing is the number only the
+company has, how much mix that discount buys and whether the extra persistence pays for the
+premium given up.
 
 ## The hypothesis left open
 
-Three observations from three different pieces point to the same pattern.
+Three observations from three different pieces point the same way. Among vehicle lines,
+motorcycle cancels quite a bit more than car: 25.57% of what it issues against 16.36%, per
+the SSN's Q1-2026 table. The motorcycle quoter is the only one of the six that asks for
+personal data before showing a price. And the conversational channel does the same: when I
+tested it as a customer for [another project](/projects/insurance-advisor-bot), it asked
+for my ID, date of birth and license plate before any price, and in the end deferred the
+quote.
 
-**Among vehicle lines, motorcycle cancels far more than car**, 25.57% of what it issues against
-16.36%, per the SSN's Q1-2026 table.
-
-**The motorcycle quoter is the only one of the six that asks for personal data before showing a
-price.**
-
-**The conversational channel does the same.** When I tested it as a customer for
-[another project](/projects/insurance-advisor-bot), it asked for ID, date of birth and license
-plate before any price, and deferred the quote.
-
-The hypothesis: **flows that capture the lead before delivering value produce lower-quality
-sales, and that quality reappears later as cancellation.**
-
-It is not proven, and it cannot be proven from outside, because the correlation is market-wide
-and the flow design belongs to one company. But it is **falsifiable with internal data in an
-afternoon**, measuring the early cancellation rate of motorcycle against car, segmented by lead
-origin and by whether the price was shown before or after the capture. If it holds, it connects
-a form-design decision to a line on the balance sheet. If it does not, the alternative
-explanation is just as interesting: the line is structurally more precarious and the flow has
-nothing to do with it.
+My hypothesis: **flows that capture the lead before delivering value produce lower-quality
+sales, and that quality comes back later as cancellation**. I cannot prove it from outside,
+because the correlation is market-wide and each flow design belongs to one company. But
+inside it is quick to test, measuring early cancellation of motorcycle against car,
+segmented by lead origin and by whether the price was shown before or after asking for the
+data. If it holds, it connects a form-design decision to a line on the
+balance sheet. If it does not, the alternative explanation interests me too: the line is
+simply more fragile and the flow has nothing to do with it.
 
 ## What this work cannot support
 
-It is an external analysis, on public data, and it carries the limits of that starting point.
+It is an external analysis, on public data, and it carries the limits of that starting
+point.
 
-- **43 of the simulation's 53 numbers I chose myself.** Everything it outputs (channel
-  rankings, funnel rates, collection-model results) illustrates how the model behaves and does
-  not measure the market.
-- **No funnel rate is public.** The step structure is verified by walking the quoters; the
+- **43 of the 53 numbers that feed the simulation I chose myself.** Everything that comes
+  out of it (channel rankings, funnel rates, collection-model results) shows how the
+  simulation behaves, nothing more.
+- No funnel rate is public. The step structure is verified by walking the quoters; the
   levels are chosen.
-- **There is no public figure for the digital channels' weight in production.** It is the
+- There is no public figure for the digital channels' weight in production, and it is the
   denominator of the whole sizing.
-- **The cancellation the regulator publishes includes non-financial reasons**, so it works as a
-  ceiling on churn. The generator uses it anyway, overstating the loss on purpose.
-- **Validating against the latent variable is a luxury of the synthetic setting.** With real
-  data there is no known truth to measure recovery against.
-- **The asymmetric cost of errors is not modeled.** A false positive costs an unnecessary
-  collection action; a false negative costs a policy. The threshold should come from that
-  asymmetry, and for that you need a number only Operations has.
-- **The regulator's channel split does not break out by line.** The most granular cut is
-  property versus personal, so there is no motor-specific split.
+- The cancellation rate the regulator publishes includes non-financial reasons, so it works
+  as a ceiling on churn. The simulation uses it anyway, overstating the loss on purpose.
+- In a simulation the truth about each policy is known, so I can measure how much the
+  prioritization recovers. With real data that yardstick does not exist.
+- The two list errors do not cost the same: working a collection that was going to clear
+  costs one extra action; not working one that fails costs a policy. The list's cutoff
+  should come from that asymmetry, and Operations has that number.
+- The regulator's channel split does not break out by line: the most granular cut is
+  property versus personal.
 
-## The six questions that set the next quarter
+## The four questions to start with
 
-Nothing above runs without six answers that only exist inside. The first three decide whether
-building the model is worth it; the other three, how much money sits behind each front. An area
-that has them answered knows where it stands and can defend a budget with numbers. One that does
-not argues over perceptions, and the loudest voice wins.
+None of the above runs without answers that only exist inside. The first three decide
+whether the model is worth building; the fourth sizes the collection lever.
 
-1. **What was the last important decision you made with data, and what did you lack to make it
-   with more confidence?** A measurement that changes no existing decision goes unused, however
-   good it is.
-2. **What share of production comes from digital channels?** Without it you cannot tell whether
-   two points of conversion are worth a meeting or a quarter.
-3. **Is there campaign traceability down to the issued policy?** The entire efficiency axis
+1. **What was the last important decision you made with data, and what was missing to make
+   it with more confidence?** I want to know which concrete decision would improve with
+   better data.
+2. **What share of production comes from digital channels?** Without it there is no telling
+   whether two points of conversion are worth a meeting or a quarter.
+3. **Is there campaign traceability down to the issued policy?** The whole efficiency axis
    depends on a join that may not exist.
-4. **The vehicle-add request in the business portal, does it resolve on its own or land in a
-   queue, and how long until it takes effect?** If it lands in a queue there is a very
-   high-volume operation that shows as self-service and is manual work. And while it takes, there
-   is a fleet car on the road without cover.
-5. **How much does the automatic-debit discount return?** The lever is already in use, because
-   the quoter applies the promotional price to debit. What is missing is how much mix it buys and
-   whether the extra persistence pays for the premium given up.
-6. **What does an assisted case cost?** It is the multiplier that turns avoided cases into pesos,
-   and without it the saving is an estimate of mine.
+4. **How much does the automatic-debit discount return?** It is the lever from the
+   collections section, and its return is a number that only exists inside.
 
-With the first three answered, the order of work seems clear to me and does not start with the
-dashboard. It starts with agreeing the definition of a quote and of a new policy across the six
-platforms, because without it any comparison between products produces a false conclusion. Then
-separating, in the portal, query self-service from transactional, because that is where the
-average hides the manual work. And only then the dashboard, which by that point already has
-numbers that mean the same thing in every column.
+With the first three answered, the first move is still the definitions agreement across
+the six platforms, because without it any comparison between products produces a false
+conclusion. Measurement arrives once the numbers mean the same thing in every column.
 
-This is independent work, done with public sources. I have no commercial relationship with La
-Caja, and never have.
+One front was left out on purpose: the business portal is measured with a different
+yardstick, because it saves operations instead of bringing premium, and I am working on it
+as its own case.
+
+This is independent work, done with public sources. I have no commercial relationship with
+La Caja, and never have.
