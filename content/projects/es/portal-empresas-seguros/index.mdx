@@ -1,0 +1,85 @@
+---
+title: "La autogestión que el promedio esconde"
+tagline: "Un portal de empresas puede reportar 95% de autogestión en consultas y 0% real en transacciones, con el call center igual de cargado"
+description: "Cómo medir el portal B2B de una aseguradora: consultas y transacciones por separado, la tasa de resolución directa como métrica norte, la latencia de vigencia como riesgo y el recontacto como control de honestidad. Continúa el análisis del canal digital de La Caja."
+year: 2026
+date: "2026-08-12"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: false
+stack: ["Recorrido de producto", "Datos abiertos (SSN)"]
+translationKey: "portal-empresas-seguros"
+draft: true
+---
+
+**[BORRADOR EN PREPARACIÓN. Este caso sale de separar la sección del portal de
+empresas del caso canal-digital-seguros (decisión del 2026-08-12: dos temas, dos
+casos). Lo que sigue es el material movido, todavía con la voz vieja; se reescribe
+charlado en su propio ciclo de trabajo, con hoja de hechos propia en
+`data/portal-empresas-seguros/facts.md`.]**
+
+**[PENDIENTE: Abstract + Thesis. Tesis candidata: el promedio de autogestión
+esconde el trabajo manual; el portal se mide por las transacciones que se cierran
+solas.]**
+
+**[PENDIENTE: intro propia que presente el caso como continuación del relevamiento
+del canal digital, con link a /projects/canal-digital-seguros.]**
+
+## Material movido del caso canal (reescribir)
+
+El otro frente del canal digital es el portal B2B, y medirlo con el árbol de altas es un
+error de categoría. El portal no produce prima, evita llamadas. Su métrica norte es la tasa
+de autogestión, y el ahorro operativo son las gestiones deflectadas multiplicadas por el
+costo de una atención asistida.
+
+Lo que reorganiza el eje es una distinción que el número agregado esconde. Las **consultas**
+(pólizas vigentes, deuda, siniestros, nómina, certificados) se resuelven cuando el dato está
+y se encuentra. Las **transacciones**, que en una compañía de flotas son sobre todo el alta y
+la baja de vehículos, se resuelven cuando el trámite se cierra solo. **Un portal puede tener
+95% de autogestión en consultas y 0% real en transacciones, reportar un promedio excelente y
+tener el call center igual de cargado.** Las dos familias se miden y se reportan por
+separado, o el promedio miente.
+
+De ahí sale la métrica que me parece la más valiosa del eje: **la tasa de resolución
+directa**, solicitudes de alta y baja de vehículos completadas sin intervención humana sobre
+el total de solicitudes. En una compañía donde automotores es el 82,7% de la producción,
+hasta el portal B2B es de auto, y las flotas rotan todo el tiempo. Si ese trámite es una
+solicitud que cae en una bandeja y no una transacción que se cierra sola, hay un volumen
+alto que figura como autogestión y es trabajo manual. Desde afuera no se puede confirmar, y
+es la primera pregunta que haría adentro.
+
+Hay además una métrica del portal que no es de eficiencia sino de riesgo: **la latencia entre
+la solicitud de alta de un vehículo y su vigencia**. Mientras esa ventana está abierta hay un
+auto de la flota circulando sin cobertura. Es el número que saca la conversación de la
+eficiencia del área y la lleva a la exposición de la compañía.
+
+Y una que lo mantiene honesto: **el recontacto posterior a la gestión**. Sin ella la tasa de
+autogestión se infla sola, empujando al usuario al portal sin registrar el ticket que llama
+después. Medir el recontacto es aceptar de entrada que la métrica principal se puede
+manipular.
+
+Tres cosas se ven desde la puerta del portal, sin credenciales y sin cargar un dato. Pide
+**número de documento**, no CUIT, así que la identidad es de la persona y contar «empresas
+activas» exige un join usuario a empresa que puede no ser uno a uno. Corre la versión
+V 3.7.7.2, mientras el portal de productores usa un sistema de identidad distinto y más
+viejo. Y avisa que **«estamos mejorando nuestra seguridad y el proceso de registro e inicio
+de sesión está cambiando»**: una migración de login en curso es una discontinuidad en la
+serie de adopción, y cualquier caída de usuarios activos durante ese período va a ser
+ambigua entre desinterés y fricción de re-registro. Eso se deja anotado antes de que pase,
+para no tener que explicarlo después.
+
+## Preguntas que se llevan a la entrevista (movidas del caso canal)
+
+1. **La solicitud de alta de vehículo del portal de empresas, ¿se resuelve sola o cae en una
+   bandeja, y cuánto tarda en quedar vigente?** Si cae en una bandeja hay un trámite de
+   altísimo volumen que figura como autogestión y es trabajo manual. Y mientras tarda, hay
+   un auto de flota circulando sin cobertura.
+2. **¿Cuánto cuesta una gestión asistida?** Es el multiplicador que convierte gestiones
+   evitadas en pesos, y sin él el ahorro es una estimación mía.
+
+**[PENDIENTE: decidir si entra un benchmark de portales B2B de otras aseguradoras,
+espejando el benchmark de cotizadores del caso canal.]**
+
+**[PENDIENTE: cierre + la línea de independencia: análisis independiente, sin
+relación comercial con La Caja.]**
