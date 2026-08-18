@@ -58,6 +58,20 @@ export function PostHogProvider() {
       autocapture: false,
       capture_pageview: false,
       disable_session_recording: true,
+      // Los tres de abajo vienen prendidos en la configuración REMOTA del
+      // proyecto, heredada de un producto anterior, y por eso se descargaban sus
+      // módulos en cada carga. Apagarlos acá gana sobre el servidor y evita
+      // depender de un ajuste del dashboard que nadie recuerda por qué está.
+      //
+      // web vitals: se pisa con Speed Insights de Vercel, que ya mide lo mismo
+      // mejor. En `posthog-js`, si el cliente manda un booleano, prevalece sobre
+      // el flag del servidor (ver el getter `isEnabled` del módulo).
+      capture_performance: false,
+      // No hay ninguna encuesta y el motor pesa en cada carga.
+      disable_surveys: true,
+      // Manda un evento por cada clic que no produce efecto. Es ruido que nadie
+      // pidió en un proyecto donde cada evento está porque alguien lo decidió.
+      capture_dead_clicks: false,
     });
   }, []);
 
