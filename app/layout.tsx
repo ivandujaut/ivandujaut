@@ -4,6 +4,8 @@ import { ThemeProvider } from "next-themes";
 import { getLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ClickTracker } from "@/components/analytics/click-tracker";
+import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import type { Metadata, Viewport } from "next";
 
 const figTree = Figtree({
@@ -94,6 +96,8 @@ export default async function RootLayout({
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
+        <PostHogProvider />
+        <ClickTracker />
       </body>
     </html>
   );

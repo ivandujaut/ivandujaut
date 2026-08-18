@@ -93,6 +93,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
           <ObfuscatedEmailTrigger
+            surface="about-intro"
             userReversed="navituajud"
             domainReversed="moc.liamg"
             label={t("intro.ctas.email")}
@@ -103,6 +104,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           </ObfuscatedEmailTrigger>
           <a
             href="https://calendly.com/ivan-dujaut/nueva-reunion"
+            data-ph="contact_click"
+            data-ph-kind="calendly"
+            data-ph-surface="about-intro"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
@@ -511,6 +515,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             {t.rich("contact.intro", {
               email: (chunks) => (
                 <ObfuscatedEmailTrigger
+                  surface="about-footer"
                   userReversed="navituajud"
                   domainReversed="moc.liamg"
                   className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
@@ -524,6 +529,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             {t("contact.alsoFind")}{" "}
             <a
               href="https://linkedin.com/in/ivan-dujaut"
+              data-ph="contact_click"
+              data-ph-kind="linkedin"
+              data-ph-surface="about-footer"
               target="_blank"
               rel="noopener noreferrer"
               className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"

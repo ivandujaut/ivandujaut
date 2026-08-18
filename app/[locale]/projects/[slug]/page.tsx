@@ -239,6 +239,10 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-ph="proof_click"
+                  data-ph-kind="demo"
+                  data-ph-slug={project.slug}
+                  data-ph-locale={locale}
                   aria-label={`${demoLabel} (${newTabLabel})`}
                   className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
                 >
@@ -256,6 +260,10 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.repo}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-ph="proof_click"
+                  data-ph-kind="repo"
+                  data-ph-slug={project.slug}
+                  data-ph-locale={locale}
                   aria-label={`${repoLabel} (${newTabLabel})`}
                   className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
                 >
@@ -268,6 +276,10 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.figma}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-ph="proof_click"
+                  data-ph-kind="figma"
+                  data-ph-slug={project.slug}
+                  data-ph-locale={locale}
                   aria-label={`${figmaLabel} (${newTabLabel})`}
                   className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
                 >

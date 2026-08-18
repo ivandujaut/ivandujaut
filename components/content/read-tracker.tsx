@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { type AnalyticsEvent, track } from "@/lib/analytics";
 import type { ContentLocale, ViewKind } from "@/lib/views";
 
 interface ReadTrackerProps {
@@ -60,11 +61,22 @@ export function ReadTracker({
     // El idioma es un parámetro y no se toma del closure: la continuidad se le
     // acredita a la primera pieza de la sesión, que puede estar en otro idioma
     // que esta.
-    const post = (endpoint: string, sessionKey: string, l: string) => {
+    const post = (
+      endpoint: string,
+      sessionKey: string,
+      l: string,
+      event: AnalyticsEvent,
+      props: Record<string, unknown>,
+    ) => {
       if (sessionStorage.getItem(sessionKey)) return;
       // El valor es la marca de tiempo, no un 1: las claves `read:` se comparan
       // después entre sí para saber cuál fue la primera pieza de la sesión.
       sessionStorage.setItem(sessionKey, String(Date.now()));
+      // El mismo hecho va a los dos lados: al contador propio, que responde
+      // "cuánto", y a PostHog, que responde "de dónde vino y qué hizo después".
+      // Sale de acá y no de un pageview de PostHog para que la definición de
+      // lectura siga siendo la de este archivo, que es más exigente.
+      track(event, props);
       fetch(`/api/${endpoint}?l=${l}`, { method: "POST", keepalive: true }).catch((error) => {
         // Si falla, se borra la marca para que un reintento en la próxima
         // navegación pueda contar. Perder un ping es preferible a inflar.
@@ -96,10 +108,25 @@ export function ReadTracker({
         `continued/${primeroKind}/${primeroSlug}`,
         `continued:${primeroKind}:${primeroLocale}:${primeroSlug}`,
         primeroLocale,
+        "content_continued",
+        // Las dos piezas: la que enganchó y la que se acaba de terminar. Sin la
+        // segunda no se puede saber qué camino hace la gente entre casos.
+        {
+          kind: primeroKind,
+          locale: primeroLocale,
+          slug: primeroSlug,
+          next_kind: kind,
+          next_locale: locale,
+          next_slug: slug,
+        },
       );
     };
 
-    post(`views/${kind}/${slug}`, `viewed:${kind}:${locale}:${slug}`, locale);
+    post(`views/${kind}/${slug}`, `viewed:${kind}:${locale}:${slug}`, locale, "content_viewed", {
+      kind,
+      locale,
+      slug,
+    });
 
     const target = document.querySelector(targetSelector);
     if (!target) return;
@@ -145,7 +172,15 @@ export function ReadTracker({
       // Y va antes de marcar esta como leída, para que su propia clave no
       // compita por ser la primera de la sesión.
       if (!sessionStorage.getItem(`read:${kind}:${locale}:${slug}`)) marcarContinuidad();
-      post(`reads/${kind}/${slug}`, `read:${kind}:${locale}:${slug}`, locale);
+      post(`reads/${kind}/${slug}`, `read:${kind}:${locale}:${slug}`, locale, "content_read", {
+        kind,
+        locale,
+        slug,
+        // Cuánto tardó en alcanzar el umbral. Permite distinguir al que leyó
+        // rápido del que se quedó, sin cambiar la definición de lectura.
+        seconds_visible: Math.round(visibleMs / 1000),
+        reading_minutes: readingMinutes ?? null,
+      });
       clearInterval(interval);
     }, SAMPLE_MS);
 
