@@ -73,11 +73,21 @@ const nextConfig: NextConfig = {
   // visitó. Corren antes que el proxy de next-intl, que si no reescribiría
   // `/r/1` a `/es/r/1`.
   async redirects() {
-    return Object.entries(SERIE_LINKEDIN).map(([n, destino]) => ({
-      source: `/r/${n}`,
-      destination: `${destino}?utm_source=linkedin&utm_campaign=serie&utm_content=post-${n.padStart(2, "0")}`,
-      permanent: false,
-    }));
+    return [
+      ...Object.entries(SERIE_LINKEDIN).map(([n, destino]) => ({
+        source: `/r/${n}`,
+        destination: `${destino}?utm_source=linkedin&utm_campaign=serie&utm_content=post-${n.padStart(2, "0")}`,
+        permanent: false,
+      })),
+      // Bio de TikTok: la plataforma permite un solo link en el perfil y se
+      // muestra como texto, así que va lo más corto y legible posible. El UTM
+      // separa esta señal de la serie de LinkedIn en el panel de analytics.
+      {
+        source: "/tt",
+        destination: "/projects?utm_source=tiktok&utm_content=bio",
+        permanent: false,
+      },
+    ];
   },
   images: {
     remotePatterns: [
