@@ -35,6 +35,16 @@ const MIN_TIME_RATIO = 0.25;
 const SAMPLE_MS = 2000;
 
 /**
+ * Hitos de profundidad, en porcentaje. Son acumulativos: llegar al 75% emite
+ * también los anteriores que falten, así la curva se lee como "cuántos
+ * alcanzaron al menos X" y no hace falta sumar nada al graficarla.
+ */
+const HITOS = [25, 50, 75, 100] as const;
+
+/** El `<Abstract>` de los casos. Los posts no lo tienen y ahí no se emite nada. */
+const ABSTRACT_SELECTOR = ".paper-abstract";
+
+/**
  * Mide dos cosas distintas y no dibuja nada.
  *
  * - **Vista:** alguien abrió la pieza. Se cuenta al montar.
@@ -138,6 +148,71 @@ export function ReadTracker({
 
     let visibleMs = 0;
     let ultimoTick = performance.now();
+    let leido = false;
+    let profundidadMax = 0;
+    let salidaEmitida = false;
+
+    const abstract = document.querySelector(ABSTRACT_SELECTOR);
+    const claveProgreso = `progress:${kind}:${locale}:${slug}`;
+    const claveAbstract = `abstract:${kind}:${locale}:${slug}`;
+    // El hito ya emitido se guarda en la sesión y no en el closure: volver a la
+    // misma pieza no debe volver a contar la parte que ya se había recorrido.
+    let hitoMax = Number(sessionStorage.getItem(claveProgreso) ?? 0);
+
+    /** Porcentaje del artículo recorrido. Puede pasarse de 100 al final. */
+    const profundidadActual = (): number => {
+      const rect = target.getBoundingClientRect();
+      if (rect.height <= 0) return 0;
+      const recorrido = window.scrollY - (rect.top + window.scrollY) + window.innerHeight;
+      return Math.max(0, Math.min(100, Math.round((recorrido / rect.height) * 100)));
+    };
+
+    const registrarProfundidad = (pct: number) => {
+      if (pct > profundidadMax) profundidadMax = pct;
+      for (const hito of HITOS) {
+        if (pct < hito || hito <= hitoMax) continue;
+        hitoMax = hito;
+        sessionStorage.setItem(claveProgreso, String(hito));
+        track("content_progress", { kind, locale, slug, depth: hito });
+      }
+    };
+
+    /**
+     * El abstract cuenta como pasado cuando su borde inferior sale por arriba
+     * de la ventana: el lector lo dejó atrás y está en el cuerpo.
+     */
+    const revisarAbstract = () => {
+      if (!abstract || sessionStorage.getItem(claveAbstract)) return;
+      if (abstract.getBoundingClientRect().bottom >= 0) return;
+      sessionStorage.setItem(claveAbstract, "1");
+      track("content_abstract_passed", { kind, locale, slug });
+    };
+
+    /**
+     * Se emite una sola vez, al irse sin haber llegado al final. Si llegó al
+     * 100% ya lo dijo `content_progress` y este evento sería ruido.
+     */
+    const registrarSalida = (viaBeacon: boolean) => {
+      if (salidaEmitida || profundidadMax >= 100) return;
+      salidaEmitida = true;
+      track(
+        "content_exit",
+        {
+          kind,
+          locale,
+          slug,
+          depth_max: profundidadMax,
+          seconds_visible: Math.round(visibleMs / 1000),
+          reached_read: leido,
+        },
+        viaBeacon ? { transport: "sendBeacon" } : undefined,
+      );
+    };
+
+    // `pagehide` y no `beforeunload`: este último no dispara en Safari móvil ni
+    // en las restauraciones desde la bfcache, que es buena parte del tráfico.
+    const alOcultar = () => registrarSalida(true);
+    window.addEventListener("pagehide", alOcultar);
 
     // Un muestreo periódico en vez de escuchar el scroll. Las dos condiciones
     // (haber llegado al 75% y haber estado el tiempo mínimo) se cumplen en
@@ -159,11 +234,19 @@ export function ReadTracker({
 
       if (document.visibilityState !== "visible") return;
       visibleMs += delta;
-      if (visibleMs / 1000 < minSeconds) return;
 
-      const rect = target.getBoundingClientRect();
-      const recorrido = window.scrollY - (rect.top + window.scrollY) + window.innerHeight;
-      if (recorrido / rect.height < SCROLL_THRESHOLD) return;
+      // La profundidad se mide en CADA tick, antes de cualquier corte. Si se
+      // midiera después del piso de tiempo, quien se va rápido (justo el que
+      // interesa para el copy) no dejaría ningún rastro de hasta dónde llegó.
+      const pct = profundidadActual();
+      registrarProfundidad(pct);
+      revisarAbstract();
+
+      // El intervalo sigue vivo después de la lectura: falta ver si llega al
+      // 100%. Lo que se apaga es la parte que ya disparó.
+      if (leido) return;
+      if (visibleMs / 1000 < minSeconds) return;
+      if (pct / 100 < SCROLL_THRESHOLD) return;
 
       // Solo cuenta como continuidad terminar una pieza NUEVA. Sin esta guarda,
       // volver a leer algo ya terminado en la misma sesión le acreditaba el
@@ -181,10 +264,17 @@ export function ReadTracker({
         seconds_visible: Math.round(visibleMs / 1000),
         reading_minutes: readingMinutes ?? null,
       });
-      clearInterval(interval);
+      leido = true;
     }, SAMPLE_MS);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("pagehide", alOcultar);
+      // Navegar a otra pieza desmonta el componente sin disparar `pagehide`:
+      // sin esto, todo el que se va por un link interno queda sin registrar.
+      // La página sigue viva, así que no hace falta el beacon.
+      registrarSalida(false);
+    };
   }, [kind, locale, slug, targetSelector, readingMinutes]);
 
   return null;

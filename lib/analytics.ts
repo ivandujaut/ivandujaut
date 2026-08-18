@@ -25,6 +25,23 @@ export type AnalyticsEvent =
   | "content_read"
   /** Terminó una segunda pieza en la misma sesión. Se acredita a la primera. */
   | "content_continued"
+  /**
+   * Cruzó un hito de profundidad (25/50/75/100). Existe porque `content_read`
+   * es binario: sin estos hitos, el que se va en el título y el que se va en el
+   * 70% son el mismo dato, y son problemas de copy opuestos.
+   */
+  | "content_progress"
+  /**
+   * Pasó el `<Abstract>` y entró al cuerpo. Aísla la pregunta del gancho (el
+   * resumen) de la del desarrollo: sin esto, un abandono temprano no dice cuál
+   * de los dos falló.
+   */
+  | "content_abstract_passed"
+  /**
+   * Se fue sin terminar, con la profundidad máxima alcanzada. Es lo único que
+   * ve al que abandona antes del primer hito, que es justo el grupo invisible.
+   */
+  | "content_exit"
   /** Clic a una prueba: la demo desplegada, el repo, el Figma. */
   | "proof_click"
   /** Clic a una vía de contacto: mail revelado, Calendly, LinkedIn. */
@@ -36,8 +53,21 @@ export function isAnalyticsEnabled(): boolean {
   return Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY);
 }
 
+interface TrackOptions {
+  /**
+   * `sendBeacon` para lo que se emite mientras la página se está yendo: una
+   * request normal se cancela al descargar el documento y el evento se pierde,
+   * que es exactamente el caso de `content_exit`.
+   */
+  transport?: "XHR" | "sendBeacon";
+}
+
 /** Emite un evento. Silencioso si PostHog no está configurado. */
-export function track(event: AnalyticsEvent, properties?: Record<string, unknown>): void {
+export function track(
+  event: AnalyticsEvent,
+  properties?: Record<string, unknown>,
+  options?: TrackOptions,
+): void {
   if (!isAnalyticsEnabled()) return;
-  posthog.capture(event, properties);
+  posthog.capture(event, properties, options);
 }
