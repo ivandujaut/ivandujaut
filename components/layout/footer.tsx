@@ -31,6 +31,9 @@ export function Footer() {
             author: (chunks) => (
               <a
                 href="https://www.linkedin.com/in/ivan-dujaut/"
+                data-ph="contact_click"
+                data-ph-kind="linkedin"
+                data-ph-surface="footer"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Iván Dujaut — LinkedIn (${newTabLabel})`}
@@ -56,6 +59,7 @@ export function Footer() {
             </a>
           ))}
           <ObfuscatedEmailTrigger
+            surface="footer"
             userReversed="navituajud"
             domainReversed="moc.liamg"
             label="Email"

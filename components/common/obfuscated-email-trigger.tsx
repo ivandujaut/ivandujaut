@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { track } from "@/lib/analytics";
 
 interface ObfuscatedEmailTriggerProps {
   /** Email user reversed. Ej: para "dujautivan" pasar "navituajud". */
@@ -12,6 +13,12 @@ interface ObfuscatedEmailTriggerProps {
   /** aria-label necesario cuando children es solo un ícono. */
   label?: string;
   className?: string;
+  /**
+   * Dónde está este trigger (hero, footer, about, cierre del caso). El mail se
+   * ofrece en cinco lugares distintos y sin esto todos los contactos se ven
+   * iguales: la pregunta útil es cuál de esas superficies convierte.
+   */
+  surface?: string;
 }
 
 const rev = (s: string) => s.split("").reverse().join("");
@@ -33,8 +40,13 @@ export function ObfuscatedEmailTrigger({
   children,
   label,
   className,
+  surface,
 }: ObfuscatedEmailTriggerProps) {
   const openMail = () => {
+    // El evento va antes de la navegación: `window.location.href` con un
+    // `mailto:` puede desmontar la página antes de que salga la request.
+    // El mail no se manda como propiedad, obviamente: es el propio.
+    track("contact_click", { kind: "email", surface: surface ?? "unknown" });
     const email = `${rev(userReversed)}@${rev(domainReversed)}`;
     window.location.href = `mailto:${email}`;
   };

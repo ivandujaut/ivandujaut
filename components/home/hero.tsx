@@ -133,6 +133,7 @@ export function Hero({ locale }: { locale: "es" | "en" }) {
           </a>
         ))}
         <ObfuscatedEmailTrigger
+          surface="hero"
           userReversed="navituajud"
           domainReversed="moc.liamg"
           label="Email"

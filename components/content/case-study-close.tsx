@@ -52,6 +52,7 @@ export async function CaseStudyClose({
 
       <div className="mt-5 flex flex-wrap gap-3">
         <ObfuscatedEmailTrigger
+          surface="case-close"
           userReversed="navituajud"
           domainReversed="moc.liamg"
           label={t("ctas.email")}
@@ -62,6 +63,9 @@ export async function CaseStudyClose({
         </ObfuscatedEmailTrigger>
         <a
           href="https://calendly.com/ivan-dujaut/nueva-reunion"
+          data-ph="contact_click"
+          data-ph-kind="calendly"
+          data-ph-surface="case-close"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
