@@ -65,8 +65,33 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  // La API de ingestión de PostHog usa barra final (`/e/`). Sin esto Next.js la
+  // redirige y los eventos se pierden en silencio.
+  skipTrailingSlashRedirect: true,
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
+  },
+  // Proxy inverso de PostHog sobre el propio dominio. Los bloqueadores filtran
+  // por dominio y por patrones conocidos (`posthog`, `ingest`, `analytics`,
+  // `telemetry`), y se comen entre el 10% y el 30% del tráfico técnico, que es
+  // justo el perfil que interesa medir. Por eso la ruta es corta y no dice qué
+  // es. Va excluida del matcher de `proxy.ts`, como `/stats`: si no, next-intl
+  // la reescribe a `/es/rl/...` y no llega nada.
+  async rewrites() {
+    return [
+      {
+        source: "/rl/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/rl/array/:path*",
+        destination: "https://us-assets.i.posthog.com/array/:path*",
+      },
+      {
+        source: "/rl/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
   },
   // Van como 307 y no como 308: un permanente queda cacheado en el browser para
   // siempre, así que un destino equivocado sería incorregible para quien ya lo
