@@ -58,7 +58,7 @@ export function PostHogProvider() {
       autocapture: false,
       capture_pageview: false,
       disable_session_recording: true,
-      // Los tres de abajo vienen prendidos en la configuración REMOTA del
+      // Los de abajo vienen prendidos en la configuración REMOTA del
       // proyecto, heredada de un producto anterior, y por eso se descargaban sus
       // módulos en cada carga. Apagarlos acá gana sobre el servidor y evita
       // depender de un ajuste del dashboard que nadie recuerda por qué está.
@@ -72,6 +72,19 @@ export function PostHogProvider() {
       // Manda un evento por cada clic que no produce efecto. Es ruido que nadie
       // pidió en un proyecto donde cada evento está porque alguien lo decidió.
       capture_dead_clicks: false,
+      // Heatmaps SÍ se quiere: es la única forma de ver dónde interactúa la gente
+      // dentro de un caso, que es una pregunta que los eventos no contestan.
+      // Va explícito en `true` y no heredado del servidor: el resto de la config
+      // de captura se decide acá, y este flag no debería ser la excepción que
+      // depende de un ajuste del dashboard.
+      //
+      // Consecuencia conocida: con heatmaps activo, `dead-clicks-autocapture.js`
+      // se descarga en cada carga aunque `capture_dead_clicks` esté en false,
+      // porque el módulo de heatmaps instancia el suyo propio con el `isEnabled`
+      // fijo en `true` (`new an(this.instance, nn, ...)`, con `nn = () => true`).
+      // No implica eventos de más: el handler que le pasa (`this.ke(evento,
+      // "deadclick")`) alimenta el mapa en vez de emitir `$dead_click`.
+      capture_heatmaps: true,
     });
   }, []);
 
