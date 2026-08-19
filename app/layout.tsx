@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     "Product Engineer and Bioengineer from ITBA. Building product with Next.js, TypeScript and a metrics-first lens. Writing about engineering, product and learning.",
   authors: [{ name: "Iván Dujaut", url: baseUrl }],
   creator: "Iván Dujaut",
+  verification: {
+    google: "OqVJAu5kIVPQcZ_QItCaZzQcsQwSqqCx-ZKjILFV3xk",
+  },
   openGraph: {
     title: "Iván Dujaut",
     description:
