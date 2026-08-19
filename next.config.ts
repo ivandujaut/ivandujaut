@@ -112,6 +112,22 @@ const nextConfig: NextConfig = {
         destination: "/projects?utm_source=tiktok&utm_content=bio",
         permanent: false,
       },
+      // Link del perfil de LinkedIn, mismo criterio que la bio de TikTok.
+      //
+      // Existe por un hallazgo del 18/08: el post de las 10:00 apuntaba a un
+      // caso vía `/r/5`, y las dos sesiones que llegaron de LinkedIn esa mañana
+      // entraron a OTROS dos casos, sin UTM. O sea que la gente llega por el
+      // perfil y no por el link del primer comentario, y todo el esquema de
+      // `utm_content` mide cero por diseño, no por falla.
+      //
+      // `utm_medium=profile` distingue esta señal permanente de la serie
+      // (`utm_campaign=serie`), que es temporal: sin eso, el tráfico del perfil
+      // se sumaría a los posts y les inflaría el crédito.
+      {
+        source: "/li",
+        destination: "/projects?utm_source=linkedin&utm_medium=profile",
+        permanent: false,
+      },
     ];
   },
   images: {
