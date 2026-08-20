@@ -44,7 +44,10 @@ function PostHogPageview() {
 export function PostHogProvider() {
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    if (!key) return;
+    // `isAnalyticsEnabled` incluye el filtro de agentes que no son lectores (ver
+    // `lib/analytics.ts`). Se corta acá, antes de `init`, para que esos agentes
+    // no lleguen a cargar la librería ni a emitir el `$pageview`.
+    if (!key || !isAnalyticsEnabled()) return;
 
     posthog.init(key, {
       // Proxy en el propio dominio (ver los rewrites de `next.config.ts`): sin
