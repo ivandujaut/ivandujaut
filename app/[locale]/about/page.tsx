@@ -14,6 +14,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { ShareLinkButton } from "@/components/common/share-link-button";
+import { Link } from "@/i18n/navigation";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -212,7 +213,14 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 <>
                   <p>
                     Mi experiencia más larga, y donde aprendí a construir producto. Entré de Trainee
-                    y salí de Product Engineer, cuatro años después.
+                    y salí de Product Engineer, cuatro años después. Conté{" "}
+                    <Link
+                      href="/blog/from-bioengineering-to-product-engineer"
+                      className="underline underline-offset-4"
+                    >
+                      cómo fue ese recorrido y qué hace el rol en la práctica
+                    </Link>
+                    .
                   </p>
                   <p>
                     Como <strong>Product Engineer</strong> (Ago 2025 – Ene 2026), mejoré la{" "}
@@ -235,7 +243,14 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 <>
                   <p>
                     My longest experience, and where I learned to build product. I came in as a
-                    Trainee and left as a Product Engineer, four years later.
+                    Trainee and left as a Product Engineer, four years later. I wrote about{" "}
+                    <Link
+                      href="/blog/from-bioengineering-to-product-engineer"
+                      className="underline underline-offset-4"
+                    >
+                      how that path went and what the role does in practice
+                    </Link>
+                    .
                   </p>
                   <p>
                     As <strong>Product Engineer</strong> (Aug 2025 – Jan 2026), I improved{" "}
