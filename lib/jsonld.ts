@@ -11,15 +11,51 @@ export function personSchema(locale: Locale) {
     url: SITE_URL,
     image: `${SITE_URL}/api/og?title=Iv%C3%A1n+Dujaut&subtitle=Portfolio&locale=${locale}`,
     jobTitle: locale === "es" ? "Product Engineer" : "Product Engineer",
+    // La descripción anterior ("construyo producto con Next.js, TypeScript...")
+    // era la única frase que un buscador tenía para resumir el perfil, y la
+    // resumía como desarrollo web: el AI Overview de Google la parafraseaba
+    // literal. Acá se declara el trabajo que diferencia, no el stack.
     description:
       locale === "es"
-        ? "Product Engineer y Bioingeniero del ITBA. Construyo producto con Next.js, TypeScript y foco en métricas."
-        : "Product Engineer and Bioengineer from ITBA. I build product with Next.js, TypeScript and a metrics-first lens.",
+        ? "Analizo mercados y productos con datos públicos y termino en recomendaciones: seguros, fintech y pagos en Argentina y Brasil. Bioingeniero del ITBA."
+        : "I analyze markets and products with public data and end in recommendations: insurance, fintech and payments in Argentina and Brazil. Bioengineer from ITBA.",
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",
       url: "https://www.itba.edu.ar",
     },
+    worksFor: {
+      "@type": "Organization",
+      name: "Prizmstack",
+    },
+    // `knowsAbout` es el campo con el que schema.org declara sobre qué temas
+    // hay expertise. Sin él, el buscador infiere los temas del texto suelto de
+    // la página, que es exactamente cómo terminaba clasificado como "Next.js".
+    // Cada entrada tiene respaldo publicado en /projects.
+    knowsAbout:
+      locale === "es"
+        ? [
+            "Seguros",
+            "Insurtech",
+            "Fintech",
+            "Medios de pago",
+            "Análisis de datos",
+            "Estrategia de producto",
+            "Análisis de producto",
+            "Bioingeniería",
+            "Aprendizaje automático",
+          ]
+        : [
+            "Insurance",
+            "Insurtech",
+            "Fintech",
+            "Payments",
+            "Data analysis",
+            "Product strategy",
+            "Product analytics",
+            "Bioengineering",
+            "Machine learning",
+          ],
     knowsLanguage: ["es", "en"],
     sameAs: ["https://linkedin.com/in/ivan-dujaut", "https://github.com/ivandujaut"],
   };
