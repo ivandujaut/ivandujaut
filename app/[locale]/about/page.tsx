@@ -8,6 +8,7 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
+import { getProjectsBySubject } from "@/lib/content";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -20,6 +21,13 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * Piezas que no entran en el listado del /about. En `/projects` tienen sentido;
+ * acá el sitio hablando del sitio es autorreferencial y resta. Es la única
+ * excepción manual a un listado que por lo demás sale de Velite solo.
+ */
+const FUERA_DEL_ABOUT: string[] = ["portfolio"];
+
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
@@ -27,9 +35,11 @@ export async function generateMetadata({ params }: Props) {
   const title = isEs
     ? "Acerca de mí · Iván Dujaut, Product Engineer"
     : "About · Iván Dujaut, Product Engineer";
+  // La descripción vende el trabajo publicado, no el cargo: es lo que
+  // diferencia el perfil y lo que sostiene el resto de la página.
   const description = isEs
-    ? "Product Engineer, cuatro años entre decidir qué se construye y construirlo. Argentina, remoto con EE.UU. y LATAM. Techstars W24, bioingeniero del ITBA. Mirá mi experiencia."
-    : "Product Engineer, four years split between deciding what gets built and building it. Argentina, remote with US and LATAM teams. Techstars W24, ITBA bioengineer. See my experience.";
+    ? "Analizo mercados y productos con datos públicos: seguros, fintech y pagos en Argentina y Brasil. Bioingeniero del ITBA, product engineer, Techstars W24."
+    : "I analyze markets and products with public data: insurance, fintech and payments in Argentina and Brazil. ITBA bioengineer, product engineer, Techstars W24.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
@@ -91,6 +101,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
           <p>{t("intro.paragraph3")}</p>
+          <p>{t("intro.paragraph4")}</p>
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
           <ObfuscatedEmailTrigger
@@ -131,6 +142,52 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
       </section>
 
       <div className="mt-16 space-y-16">
+        {/* Trabajo publicado. Se arma desde Velite y no a mano: si se hardcodea,
+            queda desactualizado en la primera pieza que se publique. Va antes
+            que Experiencia a propósito: la obra es el argumento y el CV es el
+            respaldo, no al revés. Cada link de acá le pasa autoridad al caso,
+            que es lo que puede rankear; esta página no. */}
+        <section>
+          <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            {t("sections.work")}
+          </h2>
+          <div className="space-y-8">
+            {(["external", "own"] as const).map((grupo) => {
+              const piezas = getProjectsBySubject(locale, grupo).filter(
+                (pieza) => !FUERA_DEL_ABOUT.includes(pieza.slug),
+              );
+              if (piezas.length === 0) return null;
+              return (
+                <div key={grupo}>
+                  <h3 className="mb-3 text-sm font-semibold tracking-tight">
+                    {t(`work.groups.${grupo}`)}
+                  </h3>
+                  <ul className="space-y-3">
+                    {piezas.map((pieza) => (
+                      <li key={pieza.slug} className="text-sm leading-relaxed">
+                        <Link
+                          href={`/projects/${pieza.slug}`}
+                          className="font-medium underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                        >
+                          {pieza.title}
+                        </Link>{" "}
+                        <span className="text-muted-foreground">{pieza.tagline}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+          <Link
+            href="/projects"
+            className="mt-6 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+          >
+            {t("work.all")}
+            <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} aria-hidden />
+          </Link>
+        </section>
+
         {/* Experiencia */}
         <section>
           <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -451,6 +508,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
 
           <dl className="mt-6 space-y-3">
             <ToolCategory
+              label={t("tools.categories.data.label")}
+              items={t("tools.categories.data.items")}
+            />
+            <ToolCategory
               label={t("tools.categories.frontend.label")}
               items={t("tools.categories.frontend.items")}
             />
@@ -469,10 +530,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <ToolCategory
               label={t("tools.categories.infrastructure.label")}
               items={t("tools.categories.infrastructure.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.data.label")}
-              items={t("tools.categories.data.items")}
             />
           </dl>
         </section>

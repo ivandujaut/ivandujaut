@@ -180,9 +180,10 @@
     "title": "Acerca de mí",
     "intro": {
       "greeting": "Hola, soy Iván",
-      "paragraph1": "Product Engineer, con cuatro años repartidos entre decidir qué se construye y construirlo. Lo más útil que hice en Banana Software fue sacar del roadmap cerca de una de cada cinco funcionalidades planificadas, porque no justificaban lo que costaban. Las que quedaron las escribí yo, en Next.js y TypeScript. Vivo en Argentina y trabajo remoto con equipos en EE.UU. y LATAM.",
-      "paragraph2": "Soy bioingeniero del ITBA. Mi tesis predijo mortalidad a dos años en pacientes con metástasis hepática de cáncer colorrectal, con datos reales del Hospital Italiano, y de ahí me quedó la costumbre de pedirle un número a cada decisión antes de tomarla. Llegué a producto por el lado del frontend: pasé por Techstars W24 en Nueva York con Tumo, y después lideré cuatro proyectos en Banana con equipos de tres o cuatro personas y hasta 1.500 usuarios activos.",
-      "paragraph3": "Busco equipos donde producto, ingeniería y negocio se discutan en la misma mesa, sobre todo en healthtech, fintech o startups en crecimiento. Si tenés un rol concreto, escribime. Si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
+      "paragraph1": "Agarro una pregunta de negocio que nadie estructuró, averiguo si los datos pueden contestarla, y termino en una recomendación con los trade-offs a la vista. Lo hago como product engineer desde hace cuatro años: lo más útil que hice en Banana Software fue sacar del roadmap cerca de una de cada cinco funcionalidades planificadas, porque no justificaban lo que costaban. Vivo en Argentina y trabajo remoto con equipos de Estados Unidos y LATAM.",
+      "paragraph2": "Soy bioingeniero del ITBA. Mi tesis predijo la mortalidad a dos años en pacientes con metástasis hepática de cáncer colorrectal, con radiómica y aprendizaje automático sobre datos reales del Hospital Italiano. Antes fui ayudante de Procesamiento de Imágenes Biomédicas y de Biosensores. De ahí me quedó la costumbre de pedirle un número a una decisión antes de tomarla.",
+      "paragraph3": "Desde 2026 publico análisis de mercados y productos reales, sólo con datos públicos: los balances que las aseguradoras presentan ante el regulador, las estadísticas de riesgos del trabajo, los canales digitales de las propias compañías. Cada cifra traza a su fuente y cada supuesto se declara como supuesto.",
+      "paragraph4": "Busco un rol de estrategia o producto en consultoría, insurtech, fintech o healthtech. Si en tu equipo hay decisiones que hoy se toman sin números, escribime. Y si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
       "ctas": {
         "email": "Escribime",
         "calendly": "Agendá una call",
@@ -190,14 +191,22 @@
       }
     },
     "sections": {
+      "work": "Trabajo publicado",
       "experience": "Experiencia",
       "education": "Educación",
       "tools": "Herramientas",
       "languages": "Idiomas",
       "contact": "Contacto"
     },
+    "work": {
+      "groups": {
+        "external": "Analicé",
+        "own": "Construí"
+      },
+      "all": "Ver todos los casos"
+    },
     "tools": {
-      "intro": "Trabajo sobre todo con Next.js, TypeScript y PostgreSQL. Integré pagos con Stripe, Mercado Pago y PayPal, y saqué producto de Bubble para reescribirlo en Next.js.",
+      "intro": "El análisis lo hago en Python sobre PostgreSQL y la medición con PostHog. Cuando necesito ver el producto funcionando lo prototipo en Next.js y TypeScript. Integré pagos con Stripe, Mercado Pago y PayPal, y saqué un producto de Bubble para reescribirlo en Next.js.",
       "categories": {
         "frontend": {
           "label": "Frontend",
@@ -221,7 +230,7 @@
         },
         "data": {
           "label": "Datos y Análisis",
-          "items": "Python, NumPy, Pandas (de mi formación en bioingeniería)"
+          "items": "Python, NumPy, Pandas, matplotlib, PostHog"
         }
       }
     },
