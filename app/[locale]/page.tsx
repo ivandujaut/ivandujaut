@@ -30,9 +30,12 @@ export async function generateMetadata({ params }: Props) {
   const seoTitle = isEs
     ? "Iván Dujaut · Product Engineer & Bioingeniero"
     : "Iván Dujaut · Product Engineer & Bioengineer";
+  // El remate anterior era "y escribo el código", y era la última frase del
+  // resultado de búsqueda para quien busca el nombre. El código es la palanca,
+  // no el oficio: lo que distingue el perfil son los análisis publicados.
   const description = isEs
-    ? "Product Engineer y bioingeniero del ITBA. Decido qué construye un equipo, mido si funcionó y escribo el código. De una fintech en Techstars a valuación inmobiliaria."
-    : "Product Engineer and ITBA bioengineer. I decide what a team builds, measure whether it worked, and write the code. From a Techstars fintech to real estate valuation.";
+    ? "Analizo mercados y productos con datos públicos: seguros, fintech y pagos en Argentina y Brasil. Product engineer y bioingeniero del ITBA, Techstars W24."
+    : "I analyze markets and products with public data: insurance, fintech and payments in Argentina and Brazil. Product engineer and ITBA bioengineer, Techstars W24.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title: ogTitle,
