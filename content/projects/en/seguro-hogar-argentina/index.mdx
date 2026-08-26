@@ -1,0 +1,231 @@
+---
+title: "Home insurance stalled, and the problem is how it's sold"
+tagline: "Home insurance stayed flat while the market grew 6.57%. I asked three insurers for a quote, and none showed a price without my data first."
+description: "Independent analysis: home insurance stayed flat in policies while the market grew 6.57%, with only 14-18% of homes covered. I checked the online quotes of three players in the segment, two of the largest, and none shows a price without asking for your data first."
+year: 2026
+date: "2026-08-26"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: false
+stack: ["Open data (SSN)", "Census (INDEC)", "Hands-on product review", "Python", "matplotlib"]
+metrics:
+  - label: "Home policies, year over year"
+    value: "−0.22%"
+    change: "market +6.57%"
+    trend: "down"
+    sentiment: "bad"
+  - label: "Estimated market penetration"
+    value: "14-18%"
+  - label: "Insurers showing price, no data"
+    value: "0 of 3"
+  - label: "Home share of active policies"
+    value: "10.73%"
+    change: "−0.7 pp YoY"
+    trend: "down"
+    sentiment: "bad"
+translationKey: "seguro-hogar-argentina"
+draft: true
+---
+
+<Abstract label="In short">
+
+Home insurance in Argentina stopped moving. Between the first quarter of 2025 and the first quarter
+of 2026, active policies fell 0.22%, while the market grew 6.57%. In a country where, by my own math
+on SSN (the national insurance regulator) and Census data, only 14% to 18% of homes have coverage, a
+segment that doesn't grow is money left on the table.
+
+I went to find out why. I checked the online quotes of three players in the segment, two of them among
+the largest, and none lets you see a home insurance price without handing over your data first: La
+Caja shows it only after it captures your phone and email, Galicia doesn't quote it online and asks
+you to leave your data so they call you, and Federación Patronal doesn't even list it among its online
+products. The product is fine. The way it's sold is broken.
+
+My recommendation, and it's a bet: a transparent, self-service home quote moves penetration more than
+any tweak to the product. I leave it with an experiment and a kill criterion set in advance, not as a
+result.
+
+Independent analysis, not affiliated with the companies mentioned.
+
+</Abstract>
+
+## The segment stood still
+
+Argentina's insurance market grew strongly in policies: it closed the first quarter of 2026 with
+almost 37 million active policies, 6.57% more than a year earlier. Home insurance didn't keep up. The
+Combinado Familiar segment, where home coverage lives, went from 3,968,852 active policies to
+3,960,095: a 0.22% drop. Flat.
+
+<Figure
+  src="/projects/seguro-hogar-argentina/g1_estancamiento.png"
+  alt="Horizontal bar chart of the year-over-year change in active policies by segment: total market +6.57%, Fire +4.32%, Combinado Familiar (home insurance) −0.22%, and Theft and Similar Risks −1.62%"
+  width={1495}
+  height={886}
+  caption="Year-over-year change in active policies, Q1 2025 to Q1 2026. My own calculation on the SSN statistical annex; the result matches the year-over-year change the annex itself publishes."
+/>
+
+Standing still in a rising market means losing ground. Home's share of the country's active policies
+fell from 11.46% to 10.73% in the year. There's no crash, and that's why it goes unnoticed: it's a
+slow leak, a segment growing slower than everything around it.
+
+## How many homes actually have insurance
+
+Before hunting for causes, it helps to size the problem, and here the numbers going around don't
+agree. One figure the press repeats comes from a survey by the insurer Chubb: 45% of respondents say
+they have insurance for their home. That number can't be the real penetration.
+
+Let's do the math with hard data. The 2022 Census by INDEC (the national statistics office) counted
+15,699,016 occupied private homes. Even counting every policy in the Combinado Familiar segment
+(which also includes commercial packages, that is, businesses that aren't homes), the ceiling is
+25.2%. Isolating home by its weight within the segment, my calculation puts it between 14% and 18% of
+homes, in line with the "17 out of 100" the industry cites. The survey's 45% falls outside what the
+arithmetic allows.
+
+<Figure
+  src="/projects/seguro-hogar-argentina/g2_penetracion.png"
+  alt="Dot chart with home insurance penetration estimates: Chubb (survey) 45% marked as refuted, segment-over-homes ceiling 25.2%, industry 17%, and my calculation 14-18%, with a band marking the plausible range from hard data"
+  width={1495}
+  height={886}
+  caption="Denominator: 15,699,016 occupied private homes (INDEC, 2022 Census). The ceiling and my calculation come from dividing SSN active policies by that denominator; the step from premium to policies to isolate home is my own assumption, stated as such."
+/>
+
+The conclusion holds whatever the method: home insurance is a low-penetration product. Four out of
+five homes in the country don't have it. That's an unserved market, with plenty of room to grow.
+
+## I went to buy home insurance
+
+If the market is unserved and the segment isn't growing, the question is where it gets stuck. So I
+did what anyone would: I went to get a quote. I checked the online quote flows of three players in the
+segment in August 2026: two of the largest by premium, Galicia and Federación Patronal, and La Caja,
+which sits lower (tenth by premium) but does quote home online.
+
+<Figure
+  src="/projects/seguro-hogar-argentina/g3_canal.png"
+  alt="Matrix of three insurers in the segment (La Caja, Galicia, Federación Patronal) with three columns: whether they quote home online, whether they show the price without asking for personal data, and how they sell it. None shows the price without asking for data."
+  width={1495}
+  height={760}
+  caption="My own review of the quote tools of La Caja, Galicia, and Federación Patronal (August 2026). The ranks I mention in the text (Galicia second, La Caja tenth) come from premium written, on SSN filings."
+/>
+
+**La Caja** does quote online, but before it shows you a single number it makes you tick a reCAPTCHA,
+enter the home details, and then leave your phone and email. Only then does the plan appear. The price
+sits behind a contact-capture form.
+
+**Galicia**, the second largest in the segment, simply doesn't quote home online. Its page has a form
+that says "leave your details and we'll contact you" and asks for name, ID, phone, and email. There's
+no price at any point: you leave your data and wait for the call, or you go to a broker.
+
+**Federación Patronal**, one of the fastest growers in the segment, has an online quote tool, but home
+isn't among the products you can quote there. To insure your house they send you to a broker.
+
+Three insurers, three versions of the same thing: the home insurance price isn't shown. It hides
+behind your data or behind a middleman.
+
+## The product isn't the problem
+
+The evidence against my thesis is worth a look, because it's what makes it solid. It would be easy to
+say home doesn't grow because it's a bad product, or because it covers too little. The data says
+otherwise.
+
+<Thesis>
+
+When I finally saw La Caja's plan for a 70 m² house in the City of Buenos Aires, the default sum
+insured for building fire was AR$202,860,000, or AR$2,898,000 per square meter. That's above the
+construction-cost references I found for Buenos Aires in 2026: around AR$1.5M per m² from the
+[Mi Obra](https://www.miobra.com.ar/blog/precio-m2-construccion-caba-argentina/) portal in May, and
+AR$2.02M per m² plus VAT that [APYMECO reports](https://www.cronista.com/economia-politica/cuanto-cuesta-construir-una-casa-en-2026-el-precio-real-del-m-en-argentina-rubro-por-rubro/),
+the small-builders chamber of Buenos Aires province, in January. The default coverage is enough to
+rebuild, with room to spare. Underinsurance, where it shows up, comes from old policies whose sum fell
+behind inflation; the coverage they sell you today holds up.
+
+</Thesis>
+
+And the people who have it keep it: the segment's cancellations equal 9.8% of its premium, below the
+10.6% median I calculated for the market with the same method in
+[my case on premium collection](/en/projects/cobranza-seguros). A product that gets cancelled less
+than average isn't one people feel is useless.
+
+La Caja itself shows that wall can come down. Its car insurance quote shows you the plans and their
+price after you enter only the vehicle details (year, make, model); the personal data comes later,
+once you've seen the price. Its home quote, from the same company with the same technology, asks for
+your phone and email before it shows a single number. Phone insurance takes yet another path: in
+[my analysis of phone insurance](/en/projects/nubank-seguros-argentina) I showed a product that's sold
+badly, with deductibles that punish, but that doesn't even need a quote tool, because it rides along
+with the phone purchase or an app you're already in.
+
+## The recommendation
+
+The price is there. They just don't show it to you. And in a mass-market, low-penetration product,
+that's the bottleneck.
+
+What I'd propose is a transparent, self-service home quote: you pick home type and location, you see
+the price and the sums right away, and you only give your data if you want to move to buying. The ask
+isn't the same for the three. La Caja is one step away, because it already runs this in its car quote
+and would only have to stop hiding the home price; Galicia and Federación Patronal would have to build
+the online quote they don't offer today. Home got left behind in the channel, with a product that
+still holds up.
+
+Now, whether that friction explains the stall is my hypothesis, not a measured fact: I have the broken
+channel documented and the low penetration documented, but not the real conversion of each funnel. So
+the recommendation comes with an experiment and a kill criterion set in advance, so I don't fall in
+love with the thesis:
+
+- **Experiment:** an A/B where a frictionless quote (price visible with only the home details) competes
+  against the current data-capture funnel. The metric that decides is policies bound per visitor for
+  each funnel. That's the fair comparison: the capture funnel defends itself by saying an agent closes
+  better with someone who left their data, so you have to measure the sale, not stop at how many see a
+  price. Completed quotes stay as a diagnostic, to see where each funnel leaks.
+- **Kill criterion, set in advance:** if the frictionless quote doesn't bind more policies per visitor
+  than the current funnel, with statistical significance, the channel thesis falls and the problem is
+  demand, not how it's sold.
+
+## What's data and what's assumption
+
+| Claim                                                                                          | Status                                                              |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Home: −0.22% active policies YoY; market +6.57%                                                | My own calculation on the SSN annex (matches published)             |
+| Home share of policies: 11.46% → 10.73%                                                        | SSN statistical annex, Q1 2025 and Q1 2026                          |
+| 15,699,016 occupied private homes                                                              | Published data (INDEC, 2022 Census)                                 |
+| Home penetration 14-18% (ceiling 25.2%)                                                        | My own calc SSN × INDEC; the premium→policies step is my assumption |
+| "17 out of 100 homes"                                                                          | Industry figure (corroborates, not anchor)                          |
+| 45% with home insurance                                                                        | Self-reported Chubb survey; refuted against the ceiling             |
+| The three insurers don't show a home price without asking for data                             | My own review of the quote tools (August 2026)                      |
+| La Caja default building fire sum: AR$202,860,000 (70 m²)                                      | My own review of the quote (August 2026)                            |
+| La Caja car quote: shows the price with only vehicle data, before personal data                | My own review of the quote tool (August 2026)                       |
+| Phone insurance: sold embedded (phone purchase or app), no public quote with a price           | My own review (Claro, Movistar, Mercado Pago, August 2026)          |
+| Construction cost Buenos Aires ~AR$1.5M (Mi Obra, May) to AR$2.02M/m² + VAT (APYMECO, January) | Market references 2026                                              |
+| Home cancellations 9.8% vs 10.6% median                                                        | My own calculation on SSN filings                                   |
+| A frictionless quote binds more policies per visitor                                           | My hypothesis, with a kill criterion (significance) set in advance  |
+
+<TableCaption>
+  The status column governs how each number should be read. My own calculations on the SSN use the
+  policy annex (for the changes) and the direct-insurance filings by sub-line (for premium and
+  cancellations), with the same method as my earlier cases.
+</TableCaption>
+
+## What would change my mind
+
+If one of these insurers sold home with a clean, self-service quote with no strings, and the segment
+still had this penetration, the channel thesis would be refuted: the problem would be demand, and
+you'd have to look for it in disposable income or in the priorities of the Argentine household, not in
+the funnel.
+
+It would also weaken with a number I don't have: the real conversion of these quote tools. If the
+data-capture funnel converted as well as a transparent one, the friction would be apparent, not real.
+That's why the recommendation is an experiment, not a certainty.
+
+Two notes on the edges of this analysis. I checked three players in the segment, two of them among the
+largest; a small, digital player could be quoting home with no friction and I wouldn't see it. And the
+construction-cost references come from market sources, not an official index: they're there to show
+the default sum doesn't underinsure, not for an appraisal.
+
+## Sources
+
+- [SSN: policies, claims and premiums (statistical annexes Q1 2025 and Q1 2026)](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas)
+- [SSN: open data on filings](https://datosabiertos.ssn.gob.ar/dataset/balances)
+- [INDEC: National Census of Population, Homes and Housing 2022, final results (PDF)](https://redatam.indec.gob.ar/redarg/CENSOS/CPV2022/Docs/Redatam_control_de_universos.pdf)
+- [Ámbito: fewer than half of Argentines have home insurance (Chubb survey)](https://www.ambito.com/seguros/proteccion-puertas-adentro-menos-la-mitad-los-argentinos-cuenta-un-seguro-hogar-n6204407)
+- [El Cronista: how much it costs to build a house in 2026, the price per m²](https://www.cronista.com/economia-politica/cuanto-cuesta-construir-una-casa-en-2026-el-precio-real-del-m-en-argentina-rubro-por-rubro/)
+- Home quote tools reviewed: [La Caja](https://seguros.lacaja.com.ar/personas-seguro-de-hogar), [Galicia Seguros](https://www.galiciaseguros.com.ar/segurosparatuscosas/hogar), [Federación Patronal](https://online.fedpat.com.ar/cotizar_seguro_online/)
+- Channel contrast reviewed: [La Caja car quote](https://cotizador.lacaja.com.ar/seguro-auto), and phone insurance at [Claro](https://tienda.claro.com.ar/proteccion-movil) and [Movistar](https://ayuda.movistar.com.ar/pregunta/que-es-y-que-cubre-seguro-movil-para-tu-celular.html) (Mercado Pago lives only inside the app)
+- The case scripts reproduce every calculation: `analysis/seguro-hogar-argentina.py` (premium, cancellations, La Caja's rank, and the year-over-year change) and `charts/seguro-hogar-argentina.py` (the three charts).
