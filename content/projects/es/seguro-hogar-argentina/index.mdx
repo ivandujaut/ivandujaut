@@ -1,0 +1,238 @@
+---
+title: "El seguro de hogar se estancó, y el problema es cómo se vende"
+tagline: "Un ramo plano mientras el mercado crecía 6,57%. Lo fui a comprar a tres aseguradoras y ninguna me mostró el precio sin pedir mis datos."
+description: "Análisis independiente: el seguro de hogar quedó plano en pólizas mientras el mercado creció 6,57%, con una penetración de apenas 14-18% de las viviendas. Relevé los cotizadores de tres jugadores del ramo, dos entre los más grandes, y ninguno muestra un precio online sin pedirte los datos."
+year: 2026
+date: "2026-08-26"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: true
+stack: ["Datos abiertos (SSN)", "Censo (INDEC)", "Relevamiento de producto", "Python", "matplotlib"]
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración editorial nocturna con grano de película: un peaje alto de piedra azulada y metal oscuro bloquea el paso en primer plano, con una ranura estrecha; al fondo, una casa pequeña y humilde brilla en ámbar desde adentro, única fuente de luz cálida; una figura sin rostro, de espaldas, ofrece una tarjeta en blanco a la ranura mientras estira la otra mano hacia la casa lejana."
+metrics:
+  - label: "Variación interanual (pólizas del hogar)"
+    value: "−0,22%"
+    change: "mercado +6,57%"
+    trend: "down"
+    sentiment: "bad"
+  - label: "Penetración estimada del ramo"
+    value: "14-18%"
+  - label: "Aseguradoras que muestran precio sin datos"
+    value: "0 de 3"
+  - label: "Participación del hogar en pólizas vigentes"
+    value: "10,73%"
+    change: "−0,7 pp i.a."
+    trend: "down"
+    sentiment: "bad"
+translationKey: "seguro-hogar-argentina"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+El seguro de hogar en Argentina se quedó quieto. Entre el primer trimestre de 2025 y el de 2026 sus
+pólizas vigentes cayeron 0,22%, mientras el mercado creció 6,57%. En un país donde,
+según mi cálculo sobre datos de la SSN (la Superintendencia de Seguros de la Nación) y el Censo,
+apenas del 14% al 18% de las viviendas tiene cobertura, un ramo que no crece es plata dejada sobre
+la mesa.
+
+Fui a ver por qué. Relevé los cotizadores de tres jugadores del ramo, dos de ellos entre los más
+grandes, y ninguno te deja ver un
+precio de hogar online sin pedirte los datos: La Caja te lo muestra recién después de capturar tu
+teléfono y tu e-mail, Galicia no lo cotiza online y te pide que dejes tus datos para que te llamen,
+y Federación Patronal ni siquiera lo tiene entre sus productos online. El producto está bien. Lo que
+está roto es cómo se vende.
+
+Mi recomendación, y es una apuesta: un cotizador de hogar transparente y self-service mueve la
+penetración más que cualquier retoque al producto. La dejo con un experimento y su criterio de corte
+fijado de antemano, no como un resultado.
+
+Análisis independiente, no afiliado a las empresas mencionadas.
+
+</Abstract>
+
+## El ramo se quedó quieto
+
+El mercado asegurador argentino creció fuerte en pólizas: cerró el primer trimestre de 2026 con casi
+37 millones de pólizas vigentes, un 6,57% más que un año antes. El seguro de hogar no
+acompañó. El ramo Combinado Familiar, donde vive la cobertura de vivienda, pasó de 3.968.852 pólizas
+vigentes a 3.960.095: una caída del 0,22%. Plano.
+
+<Figure
+  src="/projects/seguro-hogar-argentina/g1_estancamiento.png"
+  alt="Gráfico de barras horizontales con la variación interanual de pólizas vigentes por ramo: total del mercado +6,57%, Incendio +4,32%, Combinado Familiar (seguro de hogar) −0,22% y Robo y Riesgos Similares −1,62%"
+  width={1495}
+  height={886}
+  caption="Variación interanual de pólizas vigentes, 1T2025 a 1T2026. Cálculo propio sobre el anexo estadístico de la SSN; el resultado coincide con la variación interanual que publica el propio anexo."
+/>
+
+Quedarse quieto en un mercado que sube es perder terreno. La participación del hogar en las pólizas
+vigentes del país bajó de 11,46% a 10,73% en el año. No hay derrumbe, y por eso pasa desapercibido:
+es una fuga lenta, un ramo que crece más despacio que todo lo que lo rodea.
+
+## Cuánta gente tiene seguro de hogar, de verdad
+
+Antes de buscar culpables conviene medir el tamaño del problema, y acá los números que circulan no
+coinciden. Una cifra que la prensa repite viene de una encuesta de la aseguradora Chubb: el 45% de
+los encuestados dice tener un seguro para su vivienda. Ese número no puede ser la penetración real.
+
+Hagamos la cuenta con datos duros. El Censo 2022 del INDEC (el instituto nacional de estadística)
+contó 15.699.016 viviendas particulares ocupadas.
+Aun contando todas las pólizas del ramo Combinado Familiar (que además incluye integrales de
+comercio, o sea negocios que no son hogares), el techo da 25,2%. Aislando el hogar por su peso dentro
+del ramo, mi cálculo lo ubica entre el 14% y el 18% de las viviendas, en línea con el "17 de cada
+100" que menciona la industria. El 45% de la encuesta queda afuera de lo que permite la aritmética.
+
+<Figure
+  src="/projects/seguro-hogar-argentina/g2_penetracion.png"
+  alt="Gráfico de puntos con estimaciones de penetración del seguro de hogar: Chubb (encuesta) 45% marcado como refutado, techo del ramo sobre viviendas 25,2%, industria 17% y mi cálculo 14-18%, con una banda que marca el rango plausible según los datos duros"
+  width={1495}
+  height={886}
+  caption="Denominador: 15.699.016 viviendas particulares ocupadas (INDEC, Censo 2022). El techo y mi cálculo salen de dividir las pólizas vigentes de la SSN por ese denominador; el paso de prima a pólizas para aislar el hogar es una hipótesis mía, declarada."
+/>
+
+La conclusión no cambia con el método: el seguro de hogar es un producto de baja penetración. Cuatro
+de cada cinco viviendas del país no lo tienen. Es mercado sin atender: hay lugar de sobra para crecer.
+
+## Fui a comprar un seguro de hogar
+
+Si el mercado está sin atender y el ramo no crece, la pregunta es dónde se traba. Así que hice lo que
+haría cualquier persona: entré a cotizar. Relevé en primera persona los cotizadores online de tres
+jugadores del ramo en agosto de 2026: dos de los más grandes por prima, Galicia y Federación Patronal,
+y La Caja, que está más abajo (décima por prima) pero cotiza el hogar online.
+
+<Figure
+  src="/projects/seguro-hogar-argentina/g3_canal.png"
+  alt="Matriz de tres aseguradoras del ramo (La Caja, Galicia, Federación Patronal) con tres columnas: si cotiza el hogar online, si muestra el precio sin pedir datos personales, y cómo te vende. Ninguna muestra el precio sin pedir datos."
+  width={1495}
+  height={760}
+  caption="Relevamiento propio de los cotizadores de La Caja, Galicia y Federación Patronal (agosto 2026). Los ranks que menciono en el texto (Galicia segunda, La Caja décima) salen de la prima emitida sobre balances de la SSN."
+/>
+
+**La Caja** sí cotiza online, pero antes de mostrarte un solo número te hace tildar un reCAPTCHA,
+cargar los datos de la vivienda y después dejar tu teléfono y tu e-mail. Recién ahí aparece el plan.
+El precio queda detrás de un formulario de captura de contacto.
+
+**Galicia**, el número dos del ramo, directamente no cotiza el hogar online. Su página tiene un
+formulario que dice "completá tus datos y nos contactamos con vos" y pide nombre, DNI, teléfono y
+mail. No hay precio en ningún momento: dejás tus datos y esperás el llamado, o vas a un productor.
+
+**Federación Patronal**, uno de los que más creció en el ramo, tiene un cotizador online, pero el
+hogar no está entre los productos que se pueden cotizar ahí. Para asegurar tu casa te derivan a un
+productor asesor.
+
+Tres aseguradoras, tres formas distintas de lo mismo: el precio del seguro de hogar no se muestra. Se
+esconde detrás de tus datos o de un intermediario.
+
+## El producto no es el problema
+
+Vale detenerse en la evidencia que empuja en contra de la tesis, porque es la que la vuelve sólida.
+Sería fácil decir que el hogar no crece porque es un mal producto, o porque cubre poco. Los datos
+dicen otra cosa.
+
+<Thesis>
+
+Cuando finalmente vi el plan de La Caja para una casa de 70 m² en CABA, la suma por defecto para
+incendio del edificio era de $202.860.000, o sea $2.898.000 por metro cuadrado. Está por encima de
+las referencias de costo de construcción que relevé para CABA en 2026: cerca de $1,5 M por m² según
+el portal [Mi Obra](https://www.miobra.com.ar/blog/precio-m2-construccion-caba-argentina/) en mayo, y
+$2,02 M por m² más IVA que [releva APYMECO](https://www.cronista.com/economia-politica/cuanto-cuesta-construir-una-casa-en-2026-el-precio-real-del-m-en-argentina-rubro-por-rubro/),
+la cámara pyme de la construcción bonaerense, en enero. La cobertura por defecto alcanza para reconstruir, y sobra. El
+infraseguro, si aparece, viene de pólizas viejas cuya suma quedó atrás con la inflación; la cobertura
+que te venden hoy alcanza.
+
+</Thesis>
+
+Y la gente que lo tiene, lo conserva: las anulaciones del ramo equivalen al 9,8% de su prima, por
+debajo del 10,6% de mediana que calculé para el mercado con el mismo método en
+[mi caso sobre cobranza](/projects/cobranza-seguros). Un producto que se cancela menos que el
+promedio no es un producto que la gente sienta que no sirve.
+
+La propia La Caja demuestra que ese muro es evitable. Su cotizador de auto te muestra los planes con
+su precio ingresando solo los datos del vehículo (año, marca, modelo); los datos personales llegan
+después, cuando ya viste cuánto sale. El de hogar, de la misma empresa y con la misma tecnología, te
+pide el teléfono y el email antes de mostrarte un solo número. El seguro de celular llega por otro
+camino: en [mi análisis del seguro de celular](/projects/nubank-seguros-argentina) mostré un producto
+que se vende mal, con franquicias que castigan, pero que ni siquiera necesita cotizador, porque viaja
+pegado a la compra del equipo o a una app donde ya estás.
+
+## La recomendación
+
+El problema no es el precio. Es que no te lo muestran. Y eso, en un producto de consumo masivo y baja
+penetración, es el cuello de botella.
+
+Lo que propondría es un cotizador de hogar transparente y self-service: elegís tipo de vivienda y
+localidad, ves el precio y las sumas al instante, y recién das tus datos si querés avanzar a la compra.
+El pedido no es el mismo para los tres: La Caja está a un paso, porque ya corre esa mecánica en su
+cotizador de auto y solo tendría que dejar de esconder el precio del hogar; Galicia y Federación
+Patronal tendrían que construir la cotización online que hoy no ofrecen. Al hogar lo dejaron atrás en
+el canal, con un producto que sigue a la altura.
+
+Ahora, que esa fricción explique el estancamiento es mi hipótesis, no un hecho medido: tengo el canal
+roto documentado y la baja penetración documentada, pero no la conversión real de cada embudo. Así que
+la recomendación va con un experimento y su criterio de corte fijado de antemano, para no enamorarme
+de la tesis:
+
+- **Experimento:** un A/B donde un cotizador sin fricción (precio visible con solo los datos de la
+  vivienda) compite contra el embudo actual de captura de datos. La métrica que decide son las
+  **pólizas emitidas por visitante** de cada embudo. Es la comparación justa: el embudo de captura se
+  defiende con que un asesor cierra mejor al que dejó sus datos, así que hay que medir la venta y no
+  quedarse en cuántos ven un precio. Las cotizaciones completadas sirven de diagnóstico, para ver dónde
+  pierde cada embudo.
+- **Criterio de corte, fijado a priori:** si el cotizador sin fricción no emite más pólizas por
+  visitante que el embudo actual, con significancia estadística, la tesis del canal se cae y el
+  problema es de demanda, no de cómo se vende.
+
+## Qué es dato y qué es supuesto
+
+| Afirmación                                                                                 | Estatus                                                            |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| Hogar: −0,22% de pólizas vigentes interanual; mercado +6,57%                               | Cálculo propio sobre anexo SSN (coincide con lo publicado)         |
+| Participación del hogar en pólizas: 11,46% → 10,73%                                        | Anexo estadístico SSN, 1T2025 y 1T2026                             |
+| 15.699.016 viviendas particulares ocupadas                                                 | Dato publicado (INDEC, Censo 2022)                                 |
+| Penetración del hogar 14-18% (techo 25,2%)                                                 | Cálculo propio SSN × INDEC; el paso prima→pólizas es hipótesis mía |
+| "17 de cada 100 hogares"                                                                   | Cifra de industria (corrobora, no ancla)                           |
+| 45% con seguro de hogar                                                                    | Encuesta autorreportada de Chubb; refutada contra el techo         |
+| Las tres aseguradoras no muestran precio de hogar sin pedir datos                          | Relevamiento propio de los cotizadores (agosto 2026)               |
+| Suma por defecto de incendio de La Caja: $202.860.000 (70 m²)                              | Relevamiento propio de la cotización (agosto 2026)                 |
+| La Caja auto: muestra el precio con solo datos del vehículo, antes de los datos personales | Relevamiento propio del cotizador (agosto 2026)                    |
+| Celular: se vende embebido (compra del equipo o app), sin cotizador público con precio     | Relevamiento propio (Claro, Movistar, Mercado Pago, agosto 2026)   |
+| Costo de construcción CABA ~$1,5 M (Mi Obra, mayo) a $2,02 M/m² + IVA (APYMECO, enero)     | Referencias de mercado 2026                                        |
+| Anulaciones del hogar 9,8% vs 10,6% de mediana                                             | Cálculo propio sobre balances SSN                                  |
+| Un cotizador sin fricción emite más pólizas por visitante                                  | Mi hipótesis, con criterio de kill (significancia) fijado a priori |
+
+<TableCaption>
+  La columna de estatus gobierna cómo se lee cada número. Los cálculos propios sobre la SSN usan el
+  anexo de pólizas (para las variaciones) y los balances de seguros directos por subramo (para prima
+  y anulaciones), con el mismo método de mis casos anteriores.
+</TableCaption>
+
+## Qué me haría cambiar de opinión
+
+Si alguna de estas aseguradoras vendiera el hogar con una cotización limpia, self-service y sin ataduras, y
+aun así el ramo tuviera esta penetración, la tesis del canal quedaría refutada: el problema sería de
+demanda, y habría que buscarlo en el ingreso disponible o en las prioridades del hogar argentino, no
+en el embudo.
+
+También la debilitaría un dato que no tengo: la conversión real de estos cotizadores. Si el embudo de
+captura de datos convirtiera tan bien como uno transparente, la fricción sería aparente y no real. Por
+eso la recomendación es un experimento antes que una certeza.
+
+Dos aclaraciones sobre los bordes del análisis. Relevé a tres jugadores del ramo, dos de ellos entre
+los más grandes; un jugador chico y digital podría estar cotizando el hogar sin fricción y yo no lo vería. Y las referencias de costo de
+construcción salen de fuentes de mercado, no de un índice oficial: sirven para mostrar que la suma por
+defecto no infra-asegura, no para una tasación.
+
+## Fuentes
+
+- [SSN: pólizas, siniestros y primas (anexos estadísticos 1T2025 y 1T2026)](https://www.argentina.gob.ar/superintendencia-de-seguros/estadisticas/polizas-siniestros-y-primas)
+- [SSN: datos abiertos de balances](https://datosabiertos.ssn.gob.ar/dataset/balances)
+- [INDEC: Censo Nacional de Población, Hogares y Viviendas 2022, resultados definitivos (PDF)](https://redatam.indec.gob.ar/redarg/CENSOS/CPV2022/Docs/Redatam_control_de_universos.pdf)
+- [Ámbito: menos de la mitad de los argentinos tiene un seguro de hogar (encuesta Chubb)](https://www.ambito.com/seguros/proteccion-puertas-adentro-menos-la-mitad-los-argentinos-cuenta-un-seguro-hogar-n6204407)
+- [El Cronista: cuánto cuesta construir una casa en 2026, el precio del m²](https://www.cronista.com/economia-politica/cuanto-cuesta-construir-una-casa-en-2026-el-precio-real-del-m-en-argentina-rubro-por-rubro/)
+- Cotizadores de hogar relevados: [La Caja](https://seguros.lacaja.com.ar/personas-seguro-de-hogar), [Galicia Seguros](https://www.galiciaseguros.com.ar/segurosparatuscosas/hogar), [Federación Patronal](https://online.fedpat.com.ar/cotizar_seguro_online/)
+- Contraste de canal relevado: [cotizador de auto de La Caja](https://cotizador.lacaja.com.ar/seguro-auto), y seguro de celular en [Claro](https://tienda.claro.com.ar/proteccion-movil) y [Movistar](https://ayuda.movistar.com.ar/pregunta/que-es-y-que-cubre-seguro-movil-para-tu-celular.html) (Mercado Pago solo vive dentro de la app)
+- Los scripts del caso reproducen cada cálculo: `analysis/seguro-hogar-argentina.py` (prima, anulaciones, rank de La Caja y la variación interanual) y `charts/seguro-hogar-argentina.py` (los tres gráficos).
