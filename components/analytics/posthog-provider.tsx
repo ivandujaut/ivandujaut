@@ -18,9 +18,14 @@ import { isAnalyticsEnabled } from "@/lib/analytics";
  * - **Sin autocapture.** Captura cada clic del DOM con selectores genéricos y
  *   llena el proyecto de ruido en el que después hay que pescar. Los eventos de
  *   este sitio son explícitos y están tipados en `lib/analytics.ts`.
- * - **Sin session replay.** Es la decisión más invasiva de PostHog y consume su
- *   propia cuota. Si algún día se quiere ver cómo lee un caso alguien de una
- *   empresa, se prende a conciencia y con un aviso, no de arranque.
+ * - **Session replay con todo el texto enmascarado.** Es la captura más invasiva
+ *   de PostHog, así que se graba la forma y no el contenido: dónde se hace
+ *   scroll, dónde se frena, qué se clickea y en qué orden se recorre un caso.
+ *   El texto de la página, los inputs y los atributos van enmascarados, y no se
+ *   captura ni red ni consola. Con eso la grabación no guarda datos personales
+ *   y el sitio sigue sin necesitar cartel de consentimiento, que es la razón por
+ *   la que tampoco usa cookies. Si alguna vez se quiere ver el texto real, eso
+ *   ya es otra decisión y arrastra el cartel.
  * - **Pageview manual.** El automático solo dispara en la carga inicial: con el
  *   App Router, navegar entre casos no cuenta ninguno.
  */
@@ -60,7 +65,23 @@ export function PostHogProvider() {
       person_profiles: "identified_only",
       autocapture: false,
       capture_pageview: false,
-      disable_session_recording: true,
+      disable_session_recording: false,
+      session_recording: {
+        // Enmascarado total del contenido. `maskTextSelector: "*"` alcanza a
+        // todo el texto de la página, no solo a los inputs: la grabación queda
+        // como una silueta del layout, que es lo que hace falta para ver
+        // recorrido y atención sin guardar lo que la persona leyó ni escribió.
+        maskTextSelector: "*",
+        maskAllInputs: true,
+        maskAllElementAttributes: true,
+        // Red y consola también están apagadas en el proyecto de PostHog. Van
+        // fijadas acá por el mismo criterio que el resto de la config: el
+        // cliente gana sobre el servidor y no queremos depender de un ajuste
+        // del dashboard que nadie recuerda por qué está.
+        recordHeaders: false,
+        recordBody: false,
+        recordCrossOriginIframes: false,
+      },
       // Los de abajo vienen prendidos en la configuración REMOTA del
       // proyecto, heredada de un producto anterior, y por eso se descargaban sus
       // módulos en cada carga. Apagarlos acá gana sobre el servidor y evita
