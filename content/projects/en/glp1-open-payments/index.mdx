@@ -1,5 +1,5 @@
 ---
-title: "The GLP-1 war has a public ledger"
+title: "Ozempic and Mounjaro: the endocrinologist gets paid 41 times more than the nurse"
 tagline: "Novo and Lilly disclosed USD 180.2 million in payments to healthcare professionals from 2021 to 2025. Inside are two opposite strategies"
 description: "The payments Novo Nordisk and Eli Lilly disclosed to US healthcare professionals for their GLP-1 drugs, the diabetes and obesity medicines, between 2021 and 2025. Lilly concentrates its spending on a few specialist voices, Novo spreads it for reach, and each opened a front in a different specialty."
 year: 2026
@@ -70,37 +70,14 @@ strategies, and both can be read in full in one public file.
 
 ## What is data and what is my call
 
-There is no estimated number in this case. Everything comes from counting rows in an official file.
-What there is instead are **eleven methodological decisions**, and each one changes the numbers. I
-wrote them down before implementing them, with the alternatives I dropped and what would invalidate
-each one, in the
-[decision log of the repository](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
-
-| Element                                               | Status  | Source or decision                                                                   |
-| ----------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
-| Amounts, payment counts and who received each payment | data    | CMS Open Payments, General Payments 2021-2025, downloaded 2026-08-25                 |
-| Declared specialty of each professional               | data    | field of the database itself, under the national specialty classification            |
-| The 2021-2025 window                                  | my call | D-001: 2021 is the first year nurses and assistants enter the registry               |
-| Which legal entities are "Novo" and which are "Lilly" | my call | D-002: full corporate group, seven identifiers                                       |
-| Which products count as GLP-1                         | my call | D-003: nine products, including tirzepatide, a dual GIP/GLP-1                        |
-| How I split a payment that reports several products   | my call | D-004: prorated in equal parts                                                       |
-| Grouping payments into "voice" and "field contact"    | my call | D-006: by what the payment buys, beyond the CMS label                                |
-| Measuring concentration by the top 100                | my call | D-007: the top 1% would mix concentration with network size                          |
-| The specialty categories                              | my call | D-008, reopened in D-009 and D-011                                                   |
-| Current dollars, not adjusted for inflation           | my call | D-010, with the break-even point published                                           |
-| Whether the money changes what gets prescribed        | no data | **out of scope**: the database records payments, and clinical behavior stays outside |
-| Why each specialty gets paid                          | no data | **not in the database**: it does not record indications                              |
-
-<TableCaption>
-  No figure in this case is a model or an estimate. The possible argument is about the rules that
-  produce them, and that is why the rules are written down.
-</TableCaption>
-
-Before publishing any figure, I closed my totals against the aggregates CMS itself publishes through
-its query interface: 36 comparisons, a difference of **0.00%** in all of them. That control covers
-the universe of payments and the row volume of each company. The figures by therapeutic class are my
-own calculation under the rules above, because CMS publishes no aggregates by product or by drug
-category to close them against.
+There is no estimated number in this case. Everything comes from counting rows in an official file,
+and before publishing I closed my totals against the aggregates CMS itself publishes through its
+query interface: 36 comparisons, a difference of **0.00%** in all of them. What there is instead are
+**eleven methodological decisions** that change the numbers, written down before implementing them in
+the [decision log of the repository](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
+The two that move the result the most: which products count as GLP-1 (nine, including tirzepatide, a
+dual GIP/GLP-1) and how I split a payment that reports several products (in equal parts).
+[The full table is at the end of the case](#the-eleven-decisions-in-full).
 
 ## Lilly's lead lives in a single type of payment
 
@@ -272,6 +249,35 @@ for free and what it does not, and what each purchased source drags along with i
 
 **Two of the six decisions are already answered with free material**, and a third one can be narrowed
 down quite a bit before signing anything.
+
+## The eleven decisions, in full
+
+Each one changes the numbers, and each one is written down with the alternatives I dropped and what
+would invalidate it.
+
+| Element                                               | Status  | Source or decision                                                                   |
+| ----------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| Amounts, payment counts and who received each payment | data    | CMS Open Payments, General Payments 2021-2025, downloaded 2026-08-25                 |
+| Declared specialty of each professional               | data    | field of the database itself, under the national specialty classification            |
+| The 2021-2025 window                                  | my call | D-001: 2021 is the first year nurses and assistants enter the registry               |
+| Which legal entities are "Novo" and which are "Lilly" | my call | D-002: full corporate group, seven identifiers                                       |
+| Which products count as GLP-1                         | my call | D-003: nine products, including tirzepatide, a dual GIP/GLP-1                        |
+| How I split a payment that reports several products   | my call | D-004: prorated in equal parts                                                       |
+| Grouping payments into "voice" and "field contact"    | my call | D-006: by what the payment buys, beyond the CMS label                                |
+| Measuring concentration by the top 100                | my call | D-007: the top 1% would mix concentration with network size                          |
+| The specialty categories                              | my call | D-008, reopened in D-009 and D-011                                                   |
+| Current dollars, not adjusted for inflation           | my call | D-010, with the break-even point published                                           |
+| Whether the money changes what gets prescribed        | no data | **out of scope**: the database records payments, and clinical behavior stays outside |
+| Why each specialty gets paid                          | no data | **not in the database**: it does not record indications                              |
+
+<TableCaption>
+  No figure in this case is a model or an estimate. The possible argument is about the rules that
+  produce them, and that is why the rules are written down.
+</TableCaption>
+
+The CMS control covers the universe of payments and the row volume of each company. The figures by
+therapeutic class are my own calculation under these rules, because CMS publishes no aggregates by
+product or by drug category to close them against.
 
 ## What this analysis cannot support
 

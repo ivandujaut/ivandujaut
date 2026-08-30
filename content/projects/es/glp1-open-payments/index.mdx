@@ -1,5 +1,5 @@
 ---
-title: "La guerra del GLP-1 tiene un libro contable público"
+title: "Ozempic y Mounjaro: el endocrinólogo cobra 41 veces más que el enfermero"
 tagline: "Novo y Lilly declararon USD 180,2 millones en pagos a profesionales de la salud entre 2021 y 2025. Adentro hay dos estrategias opuestas"
 description: "Los pagos que Novo Nordisk y Eli Lilly declararon a profesionales de la salud de Estados Unidos por sus GLP-1, los fármacos para diabetes y obesidad, de 2021 a 2025. Lilly concentra el gasto en pocas voces especialistas, Novo lo reparte en alcance, y cada una abrió un frente en otra especialidad."
 year: 2026
@@ -70,37 +70,15 @@ estrategias comerciales opuestas, y las dos se leen enteras en un archivo públi
 
 ## Qué es dato y qué es elección mía
 
-En este caso no hay ningún número estimado: todo sale de contar filas de un archivo
-oficial. Lo que sí hay son **once decisiones metodológicas**, y cada
-una cambia los números. Las registré antes de implementarlas, con las alternativas que
-descarté y qué las invalidaría, en el
+En este caso no hay ningún número estimado: todo sale de contar filas de un archivo oficial,
+y antes de publicar cerré mis totales contra los agregados que el propio CMS difunde por su
+interfaz de consulta: 36 comparaciones, diferencia de **0,00%** en todas. Lo que sí hay son
+**once decisiones metodológicas** que cambian los números, registradas antes de
+implementarlas en el
 [registro de decisiones del repositorio](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
-
-| Elemento                                           | Estatus  | Fuente o decisión                                                                 |
-| -------------------------------------------------- | -------- | --------------------------------------------------------------------------------- |
-| Montos, cantidades de pago y receptor de cada pago | dato     | CMS Open Payments, General Payments 2021-2025, descarga del 25/08/2026            |
-| Especialidad declarada de cada profesional         | dato     | campo de la propia base, según la clasificación nacional de especialidades        |
-| La ventana 2021-2025                               | elección | D-001: 2021 es el primer año en que enfermeros y asistentes entran al registro    |
-| Qué razones sociales son "Novo" y cuáles "Lilly"   | elección | D-002: grupo corporativo completo, siete identificadores                          |
-| Qué productos cuentan como GLP-1                   | elección | D-003: nueve productos, incluida la tirzepatida, que es un dual GIP/GLP-1         |
-| Cómo reparto un pago que declara varios productos  | elección | D-004: prorrateo en partes iguales                                                |
-| Agrupar los pagos en "voz" y "contacto de campo"   | elección | D-006: por lo que compra el pago, más allá de la etiqueta de CMS                  |
-| Medir la concentración por el top 100              | elección | D-007: el top 1% mezclaría concentración con tamaño de red                        |
-| Las categorías de especialidad                     | elección | D-008, reabierta en D-009 y D-011                                                 |
-| Dólares corrientes, sin ajustar por inflación      | elección | D-010, con el punto de quiebre publicado                                          |
-| Si el dinero cambia lo que se receta               | sin dato | **fuera del alcance**: la base registra pagos, y la conducta clínica queda afuera |
-| Por qué se paga a cada especialidad                | sin dato | **no está en la base**: no registra indicaciones                                  |
-
-<TableCaption>
-  Ninguna cifra del caso es un modelo ni una estimación. La discusión posible es sobre las reglas
-  que los producen, y por eso las reglas están escritas.
-</TableCaption>
-
-Antes de publicar cualquier cifra, cerré mis totales contra los agregados que el propio CMS
-difunde por su interfaz de consulta: 36 comparaciones, diferencia de **0,00%** en todas. Ese control cubre el
-universo de pagos y el volumen de filas de cada compañía. Las cifras por clase terapéutica
-son cálculo mío bajo las reglas de arriba, porque CMS no publica agregados por producto ni
-por categoría de fármaco contra los cuales cerrarlas.
+Las dos que más mueven el resultado: qué cuenta como GLP-1 (nueve productos, incluida la
+tirzepatida, que es un dual GIP/GLP-1) y cómo reparto un pago que declara varios productos
+(en partes iguales). [La tabla completa está al final del caso](#las-once-decisiones-completas).
 
 ## La ventaja de Lilly vive en un solo tipo de pago
 
@@ -278,6 +256,35 @@ costado cada fuente comprada.
 
 **Dos de las seis decisiones ya están contestadas con material gratuito**, y una tercera se
 puede acotar bastante antes de firmar nada.
+
+## Las once decisiones, completas
+
+Cada una cambia los números, y cada una está registrada con las alternativas que descarté y
+qué la invalidaría.
+
+| Elemento                                           | Estatus  | Fuente o decisión                                                                 |
+| -------------------------------------------------- | -------- | --------------------------------------------------------------------------------- |
+| Montos, cantidades de pago y receptor de cada pago | dato     | CMS Open Payments, General Payments 2021-2025, descarga del 25/08/2026            |
+| Especialidad declarada de cada profesional         | dato     | campo de la propia base, según la clasificación nacional de especialidades        |
+| La ventana 2021-2025                               | elección | D-001: 2021 es el primer año en que enfermeros y asistentes entran al registro    |
+| Qué razones sociales son "Novo" y cuáles "Lilly"   | elección | D-002: grupo corporativo completo, siete identificadores                          |
+| Qué productos cuentan como GLP-1                   | elección | D-003: nueve productos, incluida la tirzepatida, que es un dual GIP/GLP-1         |
+| Cómo reparto un pago que declara varios productos  | elección | D-004: prorrateo en partes iguales                                                |
+| Agrupar los pagos en "voz" y "contacto de campo"   | elección | D-006: por lo que compra el pago, más allá de la etiqueta de CMS                  |
+| Medir la concentración por el top 100              | elección | D-007: el top 1% mezclaría concentración con tamaño de red                        |
+| Las categorías de especialidad                     | elección | D-008, reabierta en D-009 y D-011                                                 |
+| Dólares corrientes, sin ajustar por inflación      | elección | D-010, con el punto de quiebre publicado                                          |
+| Si el dinero cambia lo que se receta               | sin dato | **fuera del alcance**: la base registra pagos, y la conducta clínica queda afuera |
+| Por qué se paga a cada especialidad                | sin dato | **no está en la base**: no registra indicaciones                                  |
+
+<TableCaption>
+  Ninguna cifra del caso es un modelo ni una estimación. La discusión posible es sobre las reglas
+  que los producen, y por eso las reglas están escritas.
+</TableCaption>
+
+El control contra CMS cubre el universo de pagos y el volumen de filas de cada compañía. Las
+cifras por clase terapéutica son cálculo mío bajo estas reglas, porque CMS no publica
+agregados por producto ni por categoría de fármaco contra los cuales cerrarlas.
 
 ## Lo que este análisis no puede sostener
 
