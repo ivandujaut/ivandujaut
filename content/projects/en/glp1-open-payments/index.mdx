@@ -1,0 +1,329 @@
+---
+title: "The GLP-1 war has a public ledger"
+tagline: "Novo and Lilly disclosed USD 180.2 million in payments to healthcare professionals from 2021 to 2025. Inside are two opposite strategies"
+description: "The payments Novo Nordisk and Eli Lilly disclosed to US healthcare professionals for their GLP-1 drugs, the diabetes and obesity medicines, between 2021 and 2025. Lilly concentrates its spending on a few specialist voices, Novo spreads it for reach, and each opened a front in a different specialty."
+year: 2026
+date: "2026-08-26"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: false
+repo: "https://github.com/ivandujaut/openpayments-glp1"
+cover:
+  src: ./cover.jpg
+  alt: "Charcoal illustration on warm white paper, not a photograph: a hand holds five prefilled auto-injector pens from the GLP-1 family, grouped together and pointing up, with the labels drawn as strokes; the drawing sits on the right side and dissolves into the paper toward the edge, and the left half of the sheet stays empty"
+stack: ["Python", "DuckDB", "Parquet", "Open data (CMS Open Payments)"]
+preview:
+  - src: "/projects/glp1-open-payments/g4_especialidades.en.png"
+    alt: "Horizontal bars of GLP-1 spending by professional profile: endocrinology leads with 35 and 30 million dollars"
+  - src: "/projects/glp1-open-payments/g6_movimiento.en.png"
+    alt: "Change bars between 2023 and 2025 showing each company growing in a different specialty"
+  - src: "/projects/glp1-open-payments/g2_voz_campo.en.png"
+    alt: "Two line panels: on top the speaker payments cross, at the bottom field contact never touches"
+metrics:
+  - label: "GLP-1 payments disclosed, 2021-2025"
+    value: "USD 180.2M"
+  - label: "Per endocrinologist vs. nurse or PA"
+    value: "41× more"
+  - label: "Gap vs. official CMS (Medicare) totals"
+    value: "0.00%"
+  - label: "Attacks run on my own findings"
+    value: "70"
+translationKey: "glp1-open-payments"
+draft: false
+---
+
+<Abstract label="In short">
+
+Novo Nordisk and Eli Lilly buy different things with the same money.
+
+Between 2021 and 2025 they disclosed **USD 180.2 million** in payments to healthcare
+professionals in the United States for their GLP-1 drugs: **Novo 111.05 million and Lilly
+69.13**. Lilly spends less and buys concentration. Its hundred highest-paid professionals
+receive **35.6%** of everything it spends, against **20.4%** at Novo, and almost all of that
+money is speaker and consulting fees. Novo buys reach: **114,861 professionals** in 2025
+against 79,526, and it leads on number of payments in all five years.
+
+None of those figures came from purchased data. In the United States every payment from a
+drugmaker to a professional is disclosed by law, and CMS (the federal agency that runs Medicare
+and Medicaid) publishes all of it: between 11.6 and 16.1 million records per year. From those
+records I rebuilt five years of spending on the GLP-1 drugs for diabetes and obesity (Ozempic,
+Wegovy, Mounjaro, Zepbound).
+
+Both bet on the endocrinologist, who receives **41 times more** than a nurse
+practitioner or physician assistant. But Lilly started to pull back from there and opened a
+front in pulmonology and sleep medicine; Novo held its bet and added another one in cardiology,
+nephrology and gastroenterology, two years earlier.
+
+I close with what a commercial team would do with this: the route left open, the two
+experiments that validate it or kill it, and the map of which data you would have to buy to
+decide it properly, with the limits of each public source noted alongside.
+
+</Abstract>
+
+<Thesis>
+
+Lilly buys voice and Novo buys reach. Same category, same period, two opposite commercial
+strategies, and both can be read in full in one public file.
+
+</Thesis>
+
+## What is data and what is my call
+
+There is no estimated number in this case. Everything comes from counting rows in an official file.
+What there is instead are **eleven methodological decisions**, and each one changes the numbers. I
+wrote them down before implementing them, with the alternatives I dropped and what would invalidate
+each one, in the
+[decision log of the repository](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
+
+| Element                                               | Status  | Source or decision                                                                   |
+| ----------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| Amounts, payment counts and who received each payment | data    | CMS Open Payments, General Payments 2021-2025, downloaded 2026-08-25                 |
+| Declared specialty of each professional               | data    | field of the database itself, under the national specialty classification            |
+| The 2021-2025 window                                  | my call | D-001: 2021 is the first year nurses and assistants enter the registry               |
+| Which legal entities are "Novo" and which are "Lilly" | my call | D-002: full corporate group, seven identifiers                                       |
+| Which products count as GLP-1                         | my call | D-003: nine products, including tirzepatide, a dual GIP/GLP-1                        |
+| How I split a payment that reports several products   | my call | D-004: prorated in equal parts                                                       |
+| Grouping payments into "voice" and "field contact"    | my call | D-006: by what the payment buys, beyond the CMS label                                |
+| Measuring concentration by the top 100                | my call | D-007: the top 1% would mix concentration with network size                          |
+| The specialty categories                              | my call | D-008, reopened in D-009 and D-011                                                   |
+| Current dollars, not adjusted for inflation           | my call | D-010, with the break-even point published                                           |
+| Whether the money changes what gets prescribed        | no data | **out of scope**: the database records payments, and clinical behavior stays outside |
+| Why each specialty gets paid                          | no data | **not in the database**: it does not record indications                              |
+
+<TableCaption>
+  No figure in this case is a model or an estimate. The possible argument is about the rules that
+  produce them, and that is why the rules are written down.
+</TableCaption>
+
+Before publishing any figure, I closed my totals against the aggregates CMS itself publishes through
+its query interface: 36 comparisons, a difference of **0.00%** in all of them. That control covers
+the universe of payments and the row volume of each company. The figures by therapeutic class are my
+own calculation under the rules above, because CMS publishes no aggregates by product or by drug
+category to close them against.
+
+## Lilly's lead lives in a single type of payment
+
+In 2023 and 2024 Lilly is ahead in dollars. That is true as arithmetic and misleading as a
+description of the race, because the whole lead sits in one group of payments: the ones that buy the
+professional's voice, meaning speaker and consulting fees. Take them out and Novo beats Lilly in all
+five years, by 1.5 to 6.8 times.
+
+<Figure
+  src="/projects/glp1-open-payments/g2_voz_campo.en.png"
+  alt="Two panels on the same scale. On top, the payments that buy the professional's voice: Lilly's line climbs from 4.6 to 14.4 million and crosses Novo's in 2023 and 2024. At the bottom, field contact: Novo's line goes from 9.4 to 12.4 million and Lilly's from 1.4 to 4.9, never touching"
+  width={1495}
+  height={886}
+  caption="Top and bottom are the same money split by what it buys. The crossover exists only in the top panel; at the bottom the lines do not get close in five years."
+/>
+
+The mechanism is in the number of payments. Lilly almost doubled its speaker and consulting
+program, from 6,521 payments in 2021 to 12,604 in 2025. Novo cut its own down to two thirds over the
+same period, from 7,361 to 5,201, and did not recover it even in 2025, when its spending on that item
+went up again. Novo pays fewer times and more per time; Lilly pays more times and less per time.
+
+## One hundred professionals, 36% of the spending
+
+Both companies concentrate a lot, and Lilly concentrates **1.74 times more**. Its hundred highest-paid
+professionals take 35.6% of its GLP-1 spending; Novo's take 20.4%. The ordering holds in the five
+cuts I tested, from the top 10 to the top 1,000, and the Gini coefficient confirms it (0.885 against
+0.855).
+
+<Figure
+  src="/projects/glp1-open-payments/g3_concentracion.en.png"
+  alt="Bars grouped by cut: in the top 100, Lilly reaches 35.6% of spending and Novo 20.4%; in the top 500, 72.2% against 54.2%. Lilly is above Novo in all five cuts"
+  width={1495}
+  height={886}
+  caption="The shaded top 100 is the metric I declared as the lead one. The other four cuts are there to show the ordering does not depend on where I put the cut."
+/>
+
+The striking part is not the money, it is the rhythm. **Getting into the top 100 costs almost the
+same at both companies**: USD 172,608 at Lilly and 172,768 at Novo, a difference of 160 dollars over
+172 thousand. But Lilly's hundred accumulate **431 payments on average against 246** at Novo. They
+receive similar amounts spread over almost twice the number of contacts.
+
+The circle that gets paid for its voice is also smaller at Lilly: it spreads USD 48.42 million
+in fees across **657 professionals**, against 61.73 million across **1,139** at Novo. Holding 657
+intense relationships and holding 1,139
+looser ones are two different operations, with different costs, different dependency risks
+and different replacement speeds.
+
+<Callout type="info" title="About the people behind the numbers">
+  The whole analysis works with identifiers and reports aggregates. There are no names anywhere, not
+  in the case and not in the repository, even though the database publishes them. The figure for the
+  professional who received the most is also left out on purpose: with that number and the open
+  file, identifying them is a matter of minutes.
+</Callout>
+
+## The money follows the specialist
+
+**5,367 endocrinologists received USD 65.10 million between 2021 and 2025, while 120,145 nurse
+practitioners and physician assistants received 35.25 million.** That is 12,129 dollars per
+endocrinologist against 293 per nurse or assistant: 41 times more. Endocrinology is 2.1% of the
+professionals reached and 36% of the money.
+
+<Figure
+  src="/projects/glp1-open-payments/g4_especialidades.en.png"
+  alt="Horizontal bars by professional profile with the number of people and the money per recipient written on the right. Endocrinology receives 35 million from Novo and 30 from Lilly across 5,367 professionals; nurses and assistants, 24 and 11 million across 120,145"
+  width={1495}
+  height={886}
+  caption="The right column is the finding: how many people are in each row and how much each one receives. The bar alone does not show it."
+/>
+
+Both bet on the same profile in different doses: endocrinology is 43.6% of Lilly's spending and 31.5%
+of Novo's. Novo compensates on two sides, with more weight on the volume channel (21.8% to nurses and
+assistants against 16.0%) and with a group of specialties Lilly barely touches.
+
+The chart describes who the industry pays, and nothing more than that. The 41 times are the result
+of a commercial decision by both companies, which chose to buy something different from each
+profile.
+
+## Lilly left the endocrinologist, and each one opened a different front
+
+In proportion, the two companies converge. The gap in the weight of endocrinology went from **30
+points in 2023 to 3.2 in 2025**: Lilly fell from 51.6% to 27.8% and Novo rose from 21.6% to 24.5%.
+Any reading of the period total misses this.
+
+<Figure
+  src="/projects/glp1-open-payments/g5_convergencia.en.png"
+  alt="Two lines of the annual percentage going to endocrinology. Lilly's falls from 51.1 to 27.8 and Novo's drops to 20.2 in 2024 and returns to 24.5; the grey area between them shrinks from 30.1 points in 2023 to 3.2 in 2025"
+  width={1495}
+  height={886}
+  caption="The grey area is the gap between the two companies. In 2023 it reaches 30 points; two years later it is 3."
+/>
+
+In dollars they diverge instead, and that is the part that matters for understanding what each one is
+doing. **Lilly pulled USD 1.85 million out of endocrinology**, its only category going down, and put
+it into primary care. **Novo grew in all of them**, and its biggest jump was to cardiology,
+nephrology and gastroenterology: from 0.96 to 7.39 million in two years, 40.8% of everything it
+added.
+
+<Figure
+  src="/projects/glp1-open-payments/g6_movimiento.en.png"
+  alt="Change bars between 2023 and 2025 by professional profile. Novo adds 6.43 million in cardiology, nephrology and gastroenterology, where Lilly adds 0.39; Lilly adds 1.38 million in pulmonology, sleep and critical care, where Novo adds 0.01; endocrinology is the only negative bar and it is Lilly's"
+  width={1495}
+  height={886}
+  caption="The first two rows are the two fronts, and each one is almost empty on the rival company's side. On Novo's the difference is 16 to 1; on Lilly's, it is 1.38 million against 0.01."
+/>
+
+Lilly opened its own front two years later and somewhere else: pulmonology, sleep medicine and
+critical care go from USD 13 thousand in 2023 to **1.39 million in 2025**, 25.7% of its net
+growth, and 98.9% of that money is Zepbound. And it opened that front with new people: **81.5%** of
+the spending went to professionals who **had never received a GLP-1 payment before**. Novo's front
+works the other way around, with three quarters of the money going to people already in the registry.
+
+The overlap with each molecule's newly approved indications is strong and fits in time. I do not
+claim it: the database does not record which indication a payment is for, and without that column the
+cause cannot be held up.
+
+## My recommendation for the third company that enters
+
+Nothing that follows comes out of the file.
+
+The two known routes are taken and they have opposite cost structures. Lilly's is cheap to build and
+expensive to hold: 657 well chosen professionals are enough to move the category, but every exit
+hurts and the whole program depends on those people staying available and staying willing. Novo's
+is expensive to build and hard to copy: 114,861 professionals reached in a year is a field operation
+with people, territories and logistics.
+
+Copying either one means fighting on the other's ground with a two year handicap. The route that
+stays open is in the same table: **the nurse and physician assistant channel receives 293 dollars
+each against 12,129 for the endocrinologist**, and it is 120,145 professionals against 5,367
+endocrinologists, twenty-two times more people. Neither company is really fighting for it, and the
+one that comes closest (Novo, with 21.8% of its spending) does it mostly with meals and educational
+material, which is the cheapest contact to match.
+
+The recommendation has an assumption that can knock it down, and I prefer to say it rather than
+defend it: **I assume that a professional who receives 293 dollars a year responds to investment the
+same way as one who receives 12,129**, and that is not proven anywhere. It may be that the channel is
+cheap because it does not pay off. So I recommend measuring it before investing,
+with two experiments that carry their kill criterion fixed before the first dollar is spent:
+
+1. **Whether the volume channel converts.** A twelve month pilot in a handful of states, comparing
+   new prescriptions per professional reached against a control group. Kill criterion: if it does not
+   reach half the conversion of the specialist channel, the cheap route does not exist and you have
+   to compete where the others already compete.
+2. **How long a bought voice lasts.** How many of the 657 professionals in Lilly's program are
+   still there three years later. Kill criterion: if annual turnover is above 30%, the concentrated
+   model is more fragile than the period total suggests, and its real cost is the cost of rebuilding
+   it every so often. This second one needs no purchase: professional identifiers are stable across
+   years, so it comes out of the same public file. It is the next cut I am going to run.
+
+## Which data you would have to buy to decide this
+
+A case made with open data has to say where the open data ends. This is the map I would hand to
+whoever has to approve the budget: which decision depends on which source, what Open Payments answers
+for free and what it does not, and what each purchased source drags along with it.
+
+| Decision you have to make                      | What the public source answers                                 | What is missing and where it comes from                                     | What it drags along                                                        |
+| ---------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Who the competition pays and how much          | **Everything**: amount, payment type, specialty, year, product | nothing                                                                     | nothing: it is public and reproducible                                     |
+| Whether a rival's speaker program rotates      | **Everything**: identifiers are stable across years            | nothing                                                                     | nothing                                                                    |
+| Whether the spending moves prescriptions       | Nothing: the database records payments, behavior stays outside | prescription data at professional level (IQVIA, Symphony and other vendors) | a contract with usage restrictions: disaggregated results stay unpublished |
+| What happens to the patient after the script   | Nothing                                                        | longitudinal claims databases from payers                                   | health data: anonymization, usage agreements and legal review              |
+| How much direct-to-consumer advertising weighs | Nothing: it falls outside the law that creates the database    | advertising spend trackers                                                  | little: it is market data                                                  |
+| What coverage each product has in each plan    | Partial: formularies of public plans are published             | the formularies of private plans                                            | constant updating: it ages in months                                       |
+
+<TableCaption>
+  Prices for licensed sources are not public and I do not estimate them. What can be decided without
+  asking for a single quote is the order: the first two rows are already answered, and that work is
+  paid for with analysis time.
+</TableCaption>
+
+**Two of the six decisions are already answered with free material**, and a third one can be narrowed
+down quite a bit before signing anything.
+
+## What this analysis cannot support
+
+- **Payments are not prescriptions, and even less causality.** The database records disclosed
+  transfers of value. It does not say what was prescribed, or how much was sold, or whether the money
+  changed any behavior.
+- **It does not record indications.** The two obvious explanations for the new fronts (the
+  cardiovascular and renal indications for semaglutide, the sleep apnoea one for tirzepatide) stay as
+  hypotheses. Testing them requires the approval calendar, which is another source.
+- **The fronts go up for a single year.** With 2025 as the last available data, a commercial front and
+  a launch spike look the same. Lilly's, on top of that, is today almost all speaker program: in
+  field contact it barely shows.
+- **"GLP-1" here is a market label.** I include tirzepatide, which in pharmacology is a
+  dual GIP/GLP-1 agonist, because it competes in the same market. A pharmacologist can object to the
+  label and be right.
+- **All the rest of the spending is missing.** Direct-to-consumer advertising, rebates to payers and
+  the sales force are not in this database. What you see is the disclosed spending toward
+  professionals, which is one part.
+- **The dollars are current, not adjusted for inflation.** One single claim in the case is fragile
+  because of that and I flag it: Novo's growth between 2021 and 2025 is 17.4% nominal and cancels out
+  with 17.4% accumulated inflation, so in real terms its spending is roughly flat. The rest of the
+  time comparisons would need deflators of 2.5 to 7.7 times to flip, and comparisons between companies
+  are always inside the same year.
+
+## What would change my mind
+
+I ran **70 attacks** against my own findings, grouped in three families: data artifacts, sensitivity
+to my decisions, and alternative business explanations. Surviving an attack requires a test that was
+run; the ones that failed are published with the same prominence as the ones that
+passed.
+
+What would no longer change my mind, because it has a test: that Lilly's concentration is a mirage of
+its network size (match the networks at four sizes and it holds), that professional identifiers mix
+up people (zero collisions against the national licence number), that the new cardiologists and
+pulmonologists are the same people as before with a different label (relabelling is 0.7% and 4.8% of
+each front's spending), or that everything depends on my specialty grouping rule (it holds the same
+with the inverse rule).
+
+What would:
+
+- **That the convergence continues.** In 2025 the endocrinology gap is 3.2 points. If 2026 closes it
+  completely, "Lilly bets on the specialist" describes a period that ended.
+- **That Lilly's front never shows up in field contact.** Today it is 41 professionals collecting
+  fees. If in 2026 there are no meals, travel or educational material behind it, it is an opinion
+  program.
+- **That CMS republishes some year.** The data gets refreshed and the repository controls fail on
+  their own if the fingerprint of the files changes.
+
+The repository with the code, the decisions and the attacks is
+[published in full](https://github.com/ivandujaut/openpayments-glp1). If you work in pharma
+commercial or data strategy and you see something badly framed, write to me: that is the kind of
+error I would rather fix with someone who knows the ground.
+
+This is independent work, made with public sources. I have no commercial relationship, and never had
+one, with Novo Nordisk, Eli Lilly or any of the companies mentioned.

@@ -1,7 +1,7 @@
 ---
 title: "La guerra del GLP-1 tiene un libro contable público"
-tagline: "Novo y Lilly declararon USD 180 millones en pagos a profesionales de la salud entre 2021 y 2025. Adentro hay dos estrategias opuestas"
-description: "Los pagos que Novo Nordisk y Eli Lilly declararon a profesionales de la salud de Estados Unidos por sus GLP-1, los fármacos para diabetes y obesidad, entre 2021 y 2025. Lilly concentra el gasto en pocas voces especialistas, Novo lo reparte en alcance, y las dos dejaron atrás al endocrinólogo."
+tagline: "Novo y Lilly declararon USD 180,2 millones en pagos a profesionales de la salud entre 2021 y 2025. Adentro hay dos estrategias opuestas"
+description: "Los pagos que Novo Nordisk y Eli Lilly declararon a profesionales de la salud de Estados Unidos por sus GLP-1, los fármacos para diabetes y obesidad, de 2021 a 2025. Lilly concentra el gasto en pocas voces especialistas, Novo lo reparte en alcance, y cada una abrió un frente en otra especialidad."
 year: 2026
 date: "2026-08-26"
 status: "concept"
@@ -23,37 +23,37 @@ preview:
 metrics:
   - label: "Pagos declarados por GLP-1 (2021-2025)"
     value: "USD 180,2M"
-  - label: "Por endocrinólogo vs. por enfermero o asistente"
+  - label: "Por endocrinólogo vs. enfermero o asistente"
     value: "41 veces más"
-  - label: "Diferencia contra los agregados oficiales (CMS)"
+  - label: "Contra los datos de CMS (Medicare)"
     value: "0,00%"
   - label: "Ataques corridos contra mis propios hallazgos"
     value: "70"
 translationKey: "glp1-open-payments"
-draft: true
+draft: false
 ---
 
 <Abstract label="En resumen">
 
-Dos compañías se reparten el mercado de los GLP-1, y cualquiera que llegue después tiene que
-decidir contra cuál compite y por dónde. Esa decisión se toma
-con datos comprados, pero una parte grande se puede reconstruir gratis: en Estados Unidos
-cada pago de un laboratorio a un profesional de la salud se declara por ley, y CMS (el
-organismo federal que administra Medicare y Medicaid) lo publica entero. Son entre 11,6 y 16,1 millones
-de registros por año, y ahí adentro está, línea por línea, cómo Novo Nordisk y Eli Lilly
-construyeron el mercado de los GLP-1 (los fármacos para diabetes y obesidad: Ozempic, Wegovy,
-Mounjaro, Zepbound).
+Novo Nordisk y Eli Lilly compran cosas distintas con la misma plata.
 
-Reconstruí ese gasto para los cinco años que van de 2021 a 2025. **Novo declaró USD 111,05
-millones y Lilly 69,13.** Lilly gasta menos y compra otra cosa. Sus cien profesionales mejor pagos reciben el **35,6%** de todo su gasto en
-GLP-1, contra el **20,4%** en Novo, y casi todo ese dinero son honorarios de disertante y
-consultoría. Novo, del otro lado, llegó a **114.861 profesionales** en 2025 contra 79.526,
-y lidera en cantidad de pagos los cinco años.
+Entre 2021 y 2025 declararon **USD 180,2 millones** en pagos a profesionales de la salud de
+Estados Unidos por sus GLP-1: **Novo 111,05 millones y Lilly 69,13**. Lilly gasta menos y
+compra concentración. Sus cien profesionales mejor pagos reciben el **35,6%** de todo su
+gasto, contra el **20,4%** en Novo, y casi todo ese dinero son honorarios de disertante y
+consultoría. Novo compra alcance: llegó a **114.861 profesionales** en 2025 contra 79.526, y
+lidera en cantidad de pagos los cinco años.
+
+Ninguna de esas cifras salió de un dato comprado. En Estados Unidos cada pago de un
+laboratorio a un profesional se declara por ley y CMS (el organismo federal que administra
+Medicare y Medicaid) lo publica entero: entre 11,6 y 16,1 millones de registros por año. Ahí
+adentro reconstruí los cinco años de los GLP-1, los fármacos para diabetes y obesidad
+(Ozempic, Wegovy, Mounjaro, Zepbound).
 
 Las dos apuestan al endocrinólogo, que recibe **41 veces más por cabeza** que un enfermero
-o asistente médico. Y las dos se están yendo de ahí, en direcciones opuestas: Novo hacia
-cardiología, nefrología y gastroenterología; Lilly hacia neumonología y medicina del sueño,
-dos años después.
+o asistente médico. Pero Lilly empezó a retirarse de ahí y abrió un frente en neumonología y
+medicina del sueño; Novo sostuvo su apuesta y sumó otro en cardiología, nefrología y
+gastroenterología, dos años antes.
 
 Cierro con lo que haría un equipo comercial con esto: la ruta que quedó libre, los dos
 experimentos que la validan o la descartan, y el mapa de qué datos hay que comprar para
@@ -76,20 +76,20 @@ una cambia los números. Las registré antes de implementarlas, con las alternat
 descarté y qué las invalidaría, en el
 [registro de decisiones del repositorio](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
 
-| Elemento                                           | Estatus  | Fuente o decisión                                                              |
-| -------------------------------------------------- | -------- | ------------------------------------------------------------------------------ |
-| Montos, cantidades de pago y receptor de cada pago | dato     | CMS Open Payments, General Payments 2021-2025, descarga del 25/08/2026         |
-| Especialidad declarada de cada profesional         | dato     | campo de la propia base, según la clasificación nacional de especialidades     |
-| La ventana 2021-2025                               | elección | D-001: 2021 es el primer año en que enfermeros y asistentes entran al registro |
-| Qué razones sociales son "Novo" y cuáles "Lilly"   | elección | D-002: grupo corporativo completo, siete identificadores                       |
-| Qué productos cuentan como GLP-1                   | elección | D-003: nueve productos, incluida la tirzepatida, que es un dual GIP/GLP-1      |
-| Cómo reparto un pago que declara varios productos  | elección | D-004: prorrateo en partes iguales                                             |
-| Agrupar los pagos en "voz" y "contacto de campo"   | elección | D-006: por qué compra el pago, no por la etiqueta de CMS                       |
-| Medir la concentración por el top 100              | elección | D-007: el top 1% mezclaría concentración con tamaño de red                     |
-| Las categorías de especialidad                     | elección | D-008, reabierta en D-009 y D-011                                              |
-| Dólares corrientes, sin ajustar por inflación      | elección | D-010, con el punto de quiebre publicado                                       |
-| Si el dinero cambia lo que se receta               | sin dato | **fuera del alcance**: la base registra pagos, no conducta clínica             |
-| Por qué se paga a cada especialidad                | sin dato | **no está en la base**: no registra indicaciones                               |
+| Elemento                                           | Estatus  | Fuente o decisión                                                                 |
+| -------------------------------------------------- | -------- | --------------------------------------------------------------------------------- |
+| Montos, cantidades de pago y receptor de cada pago | dato     | CMS Open Payments, General Payments 2021-2025, descarga del 25/08/2026            |
+| Especialidad declarada de cada profesional         | dato     | campo de la propia base, según la clasificación nacional de especialidades        |
+| La ventana 2021-2025                               | elección | D-001: 2021 es el primer año en que enfermeros y asistentes entran al registro    |
+| Qué razones sociales son "Novo" y cuáles "Lilly"   | elección | D-002: grupo corporativo completo, siete identificadores                          |
+| Qué productos cuentan como GLP-1                   | elección | D-003: nueve productos, incluida la tirzepatida, que es un dual GIP/GLP-1         |
+| Cómo reparto un pago que declara varios productos  | elección | D-004: prorrateo en partes iguales                                                |
+| Agrupar los pagos en "voz" y "contacto de campo"   | elección | D-006: por lo que compra el pago, más allá de la etiqueta de CMS                  |
+| Medir la concentración por el top 100              | elección | D-007: el top 1% mezclaría concentración con tamaño de red                        |
+| Las categorías de especialidad                     | elección | D-008, reabierta en D-009 y D-011                                                 |
+| Dólares corrientes, sin ajustar por inflación      | elección | D-010, con el punto de quiebre publicado                                          |
+| Si el dinero cambia lo que se receta               | sin dato | **fuera del alcance**: la base registra pagos, y la conducta clínica queda afuera |
+| Por qué se paga a cada especialidad                | sin dato | **no está en la base**: no registra indicaciones                                  |
 
 <TableCaption>
   Ninguna cifra del caso es un modelo ni una estimación. La discusión posible es sobre las reglas
@@ -143,8 +143,9 @@ dos compañías**: USD 172.608 en Lilly y 172.768 en Novo, una diferencia de 160
 172 mil. Pero los cien de Lilly acumulan **431 pagos promedio contra 246** de Novo. Reciben
 cifras parecidas repartidas en casi el doble de contactos.
 
-El círculo de Lilly también es la mitad de grande: reparte USD 48,42 millones entre **657
-profesionales** y Novo, 61,73 millones entre **1.139**. Sostener 657 relaciones intensas y sostener 1.139 relaciones más
+El círculo que cobra por su voz también es más chico en Lilly: reparte USD 48,42
+millones de honorarios entre **657 profesionales**, contra 61,73 millones entre **1.139** en
+Novo. Sostener 657 relaciones intensas y sostener 1.139 relaciones más
 espaciadas son dos operaciones distintas, con costos, riesgos de dependencia y velocidades
 de reemplazo distintos.
 
@@ -155,7 +156,7 @@ de reemplazo distintos.
   cuestión de minutos.
 </Callout>
 
-## El dinero sigue al especialista, no al volumen
+## El dinero sigue al especialista
 
 **5.367 endocrinólogos recibieron USD 65,10
 millones entre 2021 y 2025, mientras 120.145 enfermeros y asistentes médicos recibieron
@@ -175,11 +176,11 @@ Lilly y el 31,5% del de Novo. Novo compensa por dos lados, con más peso en el c
 volumen (21,8% a enfermeros y asistentes contra 16,0%) y con un grupo de especialidades que
 Lilly casi no toca.
 
-El gráfico describe a quién le paga la industria, y nada más que eso. Un endocrinólogo no
-"cuesta" 41 veces más que un enfermero: recibe 41 veces más porque las dos compañías
-decidieron comprarle algo distinto.
+El gráfico describe a quién le paga la industria, y nada más que eso. Las 41 veces son el
+resultado de una decisión comercial de las dos compañías, que eligieron comprarle algo
+distinto a cada perfil.
 
-## Las dos se alejaron del endocrinólogo, en direcciones opuestas
+## Lilly se fue del endocrinólogo y cada una abrió un frente distinto
 
 En proporción, las dos compañías convergen. La brecha en el peso de endocrinología pasó de
 **30 puntos en 2023 a 3,2 en 2025**: Lilly bajó de 51,6% a 27,8% y Novo subió de 21,6% a
@@ -190,7 +191,7 @@ En proporción, las dos compañías convergen. La brecha en el peso de endocrino
   alt="Dos líneas del porcentaje anual destinado a endocrinología. La de Lilly baja de 51,1 a 27,8 y la de Novo cae hasta 20,2 en 2024 y vuelve a 24,5; el área gris entre ambas se achica de 30,1 puntos en 2023 a 3,2 en 2025"
   width={1495}
   height={886}
-  caption="El área gris es la brecha entre las dos compañías. En 2023, el año en que Lilly lanzó Zepbound, llega a 30 puntos; dos años después es de 3."
+  caption="El área gris es la brecha entre las dos compañías. En 2023 llega a 30 puntos; dos años después es de 3."
 />
 
 En dólares, en cambio, divergen, y esa es la parte que importa para entender qué está
@@ -204,12 +205,12 @@ de todo lo que sumó.
   alt="Barras de cambio entre 2023 y 2025 por perfil profesional. Novo suma 6,43 millones en cardiología, nefrología y gastroenterología, donde Lilly suma 0,39; Lilly suma 1,38 millones en neumonología, sueño y cuidados críticos, donde Novo suma 0,01; endocrinología es la única barra negativa y es de Lilly"
   width={1495}
   height={886}
-  caption="Las dos primeras filas son los dos frentes. Cada uno está casi vacío del lado de la compañía contraria: 16 a 1 en el de Novo, 36 a 1 en el de Lilly."
+  caption="Las dos primeras filas son los dos frentes, y cada uno está casi vacío del lado de la compañía contraria. En el de Novo la diferencia es de 16 a 1; en el de Lilly, de 1,38 millones contra 0,01."
 />
 
 Lilly abrió el suyo dos años más tarde y en otro lado: neumonología, medicina del sueño y
-cuidados críticos pasan de USD 13 mil en 2023 a **1,39 millones en 2025**, el 25,7% de todo
-lo que sumó, y el 98,9% de esa plata es Zepbound. Y ese frente lo abrió con gente nueva: el
+cuidados críticos pasan de USD 13 mil en 2023 a **1,39 millones en 2025**, el 25,7% de su
+crecimiento neto, y el 98,9% de esa plata es Zepbound. Y ese frente lo abrió con gente nueva: el
 **81,5%** del gasto fue a profesionales que **nunca habían recibido un pago por un GLP-1**. El frente de Novo funciona al revés, con tres cuartas partes del dinero
 yendo a gente que ya estaba en el registro.
 
@@ -226,7 +227,7 @@ es barata de armar y cara de sostener: con 657 profesionales bien elegidos alcan
 mover la categoría, pero cada salida duele y el programa entero depende de que esas
 personas sigan disponibles y sigan diciendo que sí. La de Novo es cara de armar y difícil
 de copiar: 114.861 profesionales alcanzados en un año son una operación de campo con
-gente, territorios y logística, no una línea de presupuesto que se aprueba en un comité.
+gente, territorios y logística.
 
 Copiar cualquiera de las dos significa pelear en la cancha del otro con dos años de
 desventaja. La ruta que queda libre está en la misma tabla: **el canal de enfermeros y
@@ -239,8 +240,8 @@ que es el contacto más barato de igualar.
 La recomendación tiene un supuesto que puede tumbarla, y prefiero decirlo antes que
 defenderla: **asumo que un profesional que hoy recibe 293 dólares al año responde a la
 inversión igual que uno que recibe 12.129**, y eso no está probado en ninguna parte. Puede
-ser que el canal esté barato porque no rinde. Por eso lo que recomiendo no es empezar a
-invertir sino medirlo, con dos experimentos que llevan su criterio de descarte fijado antes
+ser que el canal esté barato porque no rinde. Por eso recomiendo medirlo antes de
+invertir, con dos experimentos que llevan su criterio de descarte fijado antes
 de gastar el primer peso:
 
 1. **Si el canal de volumen convierte.** Piloto de doce meses en un puñado de estados,
@@ -264,15 +265,15 @@ costado cada fuente comprada.
 | ----------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | A quién le paga la competencia y cuánto         | **Todo**: monto, tipo de pago, especialidad, año, producto     | nada                                                                               | ninguno: es público y reproducible                                        |
 | Si el programa de disertantes de un rival rota  | **Todo**: los identificadores son estables entre años          | nada                                                                               | ninguno                                                                   |
-| Si el gasto mueve prescripción                  | Nada: la base registra pagos, no conducta                      | datos de prescripción a nivel de profesional (IQVIA, Symphony y otros proveedores) | contrato con restricciones de uso: el resultado desagregado no se publica |
+| Si el gasto mueve prescripción                  | Nada: la base registra pagos, la conducta queda afuera         | datos de prescripción a nivel de profesional (IQVIA, Symphony y otros proveedores) | contrato con restricciones de uso: el resultado desagregado no se publica |
 | Qué pasa con el paciente después de la receta   | Nada                                                           | bases longitudinales de reclamos de financiadores                                  | datos de salud: anonimización, acuerdos de uso y revisión legal           |
 | Cuánto pesa la publicidad directa al consumidor | Nada: queda fuera del alcance de la ley que crea la base       | rastreadores de inversión publicitaria                                             | poco: es dato de mercado                                                  |
 | Qué cobertura tiene cada producto en cada plan  | Parcial: los formularios de los planes públicos sí se publican | los formularios de los planes privados                                             | actualización constante: envejece en meses                                |
 
 <TableCaption>
   Los precios de las fuentes licenciadas no son públicos y no los estimo. Lo que sí se puede decidir
-  sin cotizar nada es el orden: las dos primeras filas ya están contestadas, y ese trabajo cuesta
-  tiempo de análisis y no licencias.
+  sin cotizar nada es el orden: las dos primeras filas ya están contestadas, y ese trabajo se paga
+  con tiempo de análisis.
 </TableCaption>
 
 **Dos de las seis decisiones ya están contestadas con material gratuito**, y una tercera se
@@ -290,7 +291,7 @@ puede acotar bastante antes de firmar nada.
 - **Los frentes suben un solo año.** Con 2025 como último dato disponible, un frente
   comercial y un pico de lanzamiento son indistinguibles. El de Lilly, además, hoy es casi
   todo programa de disertantes: en contacto de campo apenas asoma.
-- **"GLP-1" acá es una clase comercial, no farmacológica.** Incluyo la tirzepatida, que es
+- **"GLP-1" acá es una etiqueta de mercado.** Incluyo la tirzepatida, que en farmacología es
   un agonista dual GIP/GLP-1, porque compite en el mismo mercado. Un farmacólogo puede
   objetar la etiqueta con razón.
 - **Falta todo el resto del gasto.** Publicidad al consumidor, descuentos a financiadores y
@@ -307,7 +308,7 @@ puede acotar bastante antes de firmar nada.
 
 Corrí **70 ataques** contra mis propios hallazgos, agrupados en tres familias: artefactos
 del dato, sensibilidad a mis decisiones y explicaciones alternativas de negocio. Sobrevivir
-un ataque exige un test corrido, nunca un argumento; los que fallaron están publicados con
+un ataque exige un test corrido; los que fallaron están publicados con
 la misma prominencia que los que pasaron.
 
 Lo que ya no me haría cambiar de opinión, porque tiene test: que la concentración de Lilly
@@ -321,10 +322,10 @@ Lo que sí:
 
 - **Que la convergencia siga.** En 2025 la brecha en endocrinología es de 3,2 puntos. Si el
   año 2026 la cierra del todo, "Lilly apuesta al especialista" pasa a describir un período
-  terminado y no el presente.
+  terminado.
 - **Que el frente de Lilly no aparezca en contacto de campo.** Hoy son 41 profesionales
   cobrando honorarios. Si en 2026 no hay comidas, viajes ni material educativo detrás, es un
-  programa de opinión y no un movimiento comercial.
+  programa de opinión.
 - **Que CMS republique algún año.** Los datos se refrescan y los controles del repositorio
   se caen solos si cambia la huella de los archivos.
 
