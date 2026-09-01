@@ -1,0 +1,222 @@
+---
+title: "¿Cuánto dura un influencer del Ozempic?"
+tagline: "Novo y Lilly les pagan a cientos de profesionales por hablar de sus GLP-1. Seguí a cada uno, año a año, en el archivo que los registra."
+description: "El seguimiento, persona por persona, de los programas de disertantes de Novo y Lilly por sus GLP-1 (Ozempic, Mounjaro): quién sigue, quién se va y adónde. La rotación nunca tocó el descarte que el caso anterior dejó publicado, y la retención tiene precio de lista."
+year: 2026
+date: "2026-09-01"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: true
+repo: "https://github.com/ivandujaut/openpayments-glp1"
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración en carbón sobre papel blanco cálido, no una fotografía: sobre una tabla de cocina de madera hay espárragos, un morrón y hojas verdes, con una cinta métrica de costura enroscada alrededor de las verduras; delante de la tabla, dos lapiceras precargadas de autoinyección de la familia GLP-1 apoyadas en diagonal, con sus ventanas de dosis dibujadas como trazos. El dibujo se disuelve en el papel hacia los bordes."
+stack: ["Python", "DuckDB", "Parquet", "Datos abiertos (CMS Open Payments)"]
+preview:
+  - src: "/projects/influencers-ozempic/g7_bandas.png"
+    alt: "Barras de retención por banda de gasto anual por cabeza: arriba de USD 25.000 no se va casi nadie"
+  - src: "/projects/influencers-ozempic/g8_descarte.png"
+    alt: "Dos líneas de rotación anual contra el límite del 30%: ninguna lo toca"
+  - src: "/projects/influencers-ozempic/g9_salidas.png"
+    alt: "Salidas anuales apiladas por tipo: la franja del fichaje por el rival es la más chica"
+metrics:
+  - label: "Disertantes seguidos, 2021-2025"
+    value: "1.796"
+  - label: "Rotación anual máxima de Lilly"
+    value: "25,3%"
+  - label: "Retención de Lilly abajo de USD 5 mil"
+    value: "16,9%"
+  - label: "Ataques corridos contra mis hallazgos"
+    value: "8"
+translationKey: "influencers-ozempic"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+El Ozempic tiene influencers, y la mayoría atiende pacientes. Son médicos y otros
+profesionales de la salud que cobran de Novo Nordisk o de Eli Lilly por dar charlas y
+consultorías sobre sus drogas. En Estados Unidos la ley obliga a declarar cada uno de esos
+pagos en un registro que cualquiera puede descargar, y eso permite responder con datos una
+pregunta que en cualquier otra industria quedaría en pura especulación: ¿cuánto dura esa
+relación?
+
+En [el caso anterior](/projects/glp1-open-payments) conté la plata: USD 180,2 millones
+declarados por los GLP-1, los fármacos para diabetes y obesidad, entre 2021 y 2025, con Lilly concentrando y Novo repartiendo. Y
+dejé un compromiso por escrito: iba a medir cuánto duran esos disertantes, y si más del 30%
+del programa cambiaba de un año al otro, iba a admitir que el modelo concentrado de Lilly
+era frágil. Este caso cumple ese compromiso: seguí a los **657** disertantes de Lilly y a
+los **1.139** de Novo, uno por uno, los cinco años.
+
+Nadie llegó a ese 30%. Lo interesante está en el porqué: **la retención se
+compra**. Abajo de USD 5.000 al año, un disertante de Lilly sigue al año siguiente el
+**16,9%** de las veces; arriba de 25.000, se queda casi todo el
+mundo en las dos casas (**96%**, agrupando las bandas altas). Lilly retiene más en el agregado porque estaciona su plata en la banda
+donde nadie se va.
+
+Cierro con lo que esto le sirve a un equipo comercial: cuánto hay que pagar para que un
+disertante se quede, por qué casi nadie se va con la competencia, y qué voy a mirar cuando
+CMS publique los datos del año que viene.
+
+</Abstract>
+
+<Thesis>
+
+La retención se compra. Abajo de USD 5.000 al año un disertante dura poco en cualquier casa;
+arriba de 25.000 no se va casi nadie de ninguna. Lilly no retiene mejor: compró la permanencia.
+
+</Thesis>
+
+## Qué es dato y qué es elección mía
+
+Todo número de este caso sale de contar profesionales en CMS Open Payments (el archivo
+público de pagos de la industria a profesionales de la salud que administra el gobierno
+federal), con las mismas reglas del caso anterior más cinco decisiones nuevas, registradas
+antes de implementarlas en el
+[registro de decisiones](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
+Las dos que más importan: pertenecés al programa de voz de un año si cobraste al menos un
+pago de disertante o consultoría por un GLP-1 ese año, y las bandas de gasto comparan a las
+dos compañías a igual inversión por cabeza. Los ocho ataques corridos contra estos hallazgos
+están publicados en el repositorio, con los que fallaron incluidos.
+
+## El programa que ya existía
+
+La ventana arranca en 2021 con una escena rara: Lilly aparece con 178 disertantes de GLP-1
+como si el programa hubiera nacido ese año. La pre-historia dice otra cosa: el **93,3%** ya
+cobraba honorarios de voz de Lilly entre 2017 y 2020, por otras drogas de la casa (en Novo,
+el **74,1%**). El programa GLP-1 de 2021 fue un redespliegue de disertantes que ya estaban
+en nómina.
+
+El reclutamiento genuino vino después, y con ritmo: de los entrantes de Lilly de 2021, el
+93,3% tenía historia previa con la casa; de los de 2025, apenas el **17,8%**. Ocho de cada
+diez disertantes nuevos de Lilly en 2025 eran caras nuevas de verdad. Los años 2017-2020
+entran a este caso únicamente como este control: ninguna cifra de esa época sostiene una
+figura ni un titular.
+
+## La rotación quedó abajo del límite que dejé escrito
+
+<Figure
+  src="/projects/influencers-ozempic/g8_descarte.png"
+  alt="Dos líneas de rotación anual del programa de voz contra una línea punteada en 30%. Lilly va de 25,3% a 19,3% pasando por un mínimo de 10%; Novo baja de 28,4% a 9,7%. Ninguna cruza el 30%"
+  width={1495}
+  height={886}
+  caption="La línea punteada es el límite que el caso anterior dejó escrito antes de correr este análisis. El pico de Novo es el año previo a su recorte."
+/>
+
+La rotación se mide sobre los miembros de cada año, que son menos que el acumulado: entre
+178 y 357 disertantes por año en Lilly, entre 510 y 690 en Novo. Sobre esas cohortes, la
+rotación anual de Lilly se movió entre **10,0% y 25,3%**; la de Novo, entre 9,7% y
+28,4%. Ninguna de las dos pasó del 30% en ningún año, se cuente como se cuente quién
+pertenece al programa. El único matiz: si cuento sólo a los disertantes de USD 5.000 o más,
+Novo habría llegado a 44,3% el año de su recorte.
+
+La foto a tres años dice lo mismo: de la cohorte 2021 de Lilly, el **62,9%** seguía activa
+en 2024, y de la de 2022, el **78,6%** en 2025 (Novo: 51,7% y 62,8%). De los 657 de Lilly,
+**105** cobraron los cinco años; de los 1.139 de Novo, **318**.
+
+## La retención tiene precio de lista
+
+Hasta acá parece que Lilly gestiona mejor sus relaciones. La partición por gasto desarma esa
+lectura.
+
+<Figure
+  src="/projects/influencers-ozempic/g7_bandas.png"
+  alt="Barras de retención año a año por banda de gasto anual por cabeza. Abajo de USD 5.000: Novo 47,4% y Lilly 16,9%. De 5 a 25 mil: 85,3% contra 69,2%. De 25 a 75 mil: 96,1% y 96,7%. De 75 mil o más: 87,1% y 94,7%"
+  width={1495}
+  height={886}
+  caption="Cada barra anota cuántos profesional-años contiene. A igual inversión, Novo retiene igual o mejor en las bandas bajas; arriba de 25 mil la diferencia desaparece."
+/>
+
+A igual banda de gasto anual por cabeza, **Novo retiene igual o mejor que Lilly abajo de
+USD 25.000**: 47,4% contra 16,9% en la banda más baja, 85,3% contra 69,2% en la de 5 a 25
+mil. Arriba de 25.000 la pregunta se disuelve: se queda casi todo el mundo, de las dos.
+
+La ventaja agregada de Lilly (82,2% de retención contra 79,2%) sale de la composición: seis
+de cada diez de sus profesional-años viven en las bandas de 25 mil o más, contra menos de
+tres de cada diez en Novo, que mantiene a la mayoría de los suyos donde la retención es
+menor. La mezcla de especialidades
+explica otra parte: dentro de cada perfil profesional Lilly retiene algo más, pero
+estandarizar la mezcla achica la brecha a la mitad. Y el resultado no depende de dónde puse
+los cortes: probé moverlos a la mitad y al doble, y comparar a cada compañía contra su
+propia distribución, y el orden no cambió. En las dos casas la retención sube con la plata
+hasta los 25 mil; de ahí para arriba, pagar más ya casi no cambia nada (el detalle de las
+pruebas está en el repositorio).
+
+## Las salidas casi nunca van al rival
+
+<Figure
+  src="/projects/influencers-ozempic/g9_salidas.png"
+  alt="Barras apiladas de salidas anuales por tipo, un panel por compañía. Novo pierde 196 y 171 personas en los dos primeros pares de años y baja a 53; Lilly se mueve entre 20 y 69. La franja del fichaje por el rival es la más chica en todas las barras"
+  width={1495}
+  height={886}
+  caption="Barras en personas. El recorte del 69% del gasto de voz de Novo es el par 2022→2023; la franja del rival nunca pasa de 15."
+/>
+
+El que se va del programa GLP-1 casi nunca cruza de vereda: el fichaje por el rival nunca
+superó las **15 personas** en un año, y contando de la manera más generosa posible llega a
+33 de las 172 salidas de Lilly en toda la ventana. La salida dominante es hacia afuera del
+trabajo de voz, y en Lilly pesa además la reasignación a otras drogas de la casa.
+
+El éxodo de Novo tiene dos capítulos. El segundo tiene causa visible: la rotación de 26,9%
+es la del año del desarme de su programa, cuando su gasto de voz cayó 69%. El primero
+(28,4%) ocurrió con el presupuesto todavía en alza, y queda como el dato que la explicación
+del presupuesto no cubre. Cuando Novo reconstruyó el programa (140% de aumento en 2025), la
+rotación bajó a 9,7%: su fragilidad fue una decisión de presupuesto, y se le fue con el
+presupuesto.
+
+El cuadro completo cabe en una oración: un influencer del Ozempic dura lo que dura su
+presupuesto. Abajo de 5.000 dólares al año la relación se corta sola; arriba de 25.000
+sigue casi siempre; y cuando se corta, casi nadie cruza al rival: la salida típica es dejar
+de cobrar por hablar, porque la casa dejó de pagar.
+
+## Qué haría un equipo comercial con esto
+
+Hasta acá, los datos. Lo que sigue es opinión mía.
+
+Para el que arma o audita un programa de disertantes, este caso deja una tabla de precios
+de la permanencia. El escalón que compra retención está **entre los 5 y los 25 mil dólares
+anuales**: abajo de eso la relación es descartable para las dos compañías; arriba de 25 mil,
+pagar más ya casi no compra permanencia extra, porque no queda rotación que eliminar. Y el
+miedo clásico del programa concentrado (que el rival se lleve las voces caras) no aparece en
+cinco años de archivo: la salida al rival es la más rara de las tres.
+
+La lectura tiene un límite que prefiero declarar: **retener a un disertante y ganar algo con
+esa retención son dos afirmaciones distintas**, y la segunda no está en esta base. El corte
+que sigue es gratis y ya tiene fecha: cuando CMS publique el Program Year 2026, la cohorte
+cara de Lilly (los que hoy cobran 25 mil o más al año) dirá si la permanencia comprada
+aguanta un año más o si el círculo se desarma.
+
+## Lo que este análisis no puede sostener
+
+- **Quién decide la salida.** La base registra pagos; una relación que termina puede ser
+  renuncia del profesional o baja de la compañía, y son indistinguibles.
+- **Que retener compre algo.** Pagos, prescripción y conducta clínica siguen siendo columnas
+  que esta base junta sólo en la imaginación del lector; el límite del caso anterior sigue
+  intacto.
+- **La pre-historia corta en 2017.** CMS retiró el Program Year 2016 de la publicación
+  activa: un disertante de 2015 aparece acá como si hubiera empezado en 2017.
+- **Los entrantes recientes tienen futuro censurado.** La permanencia final de los que
+  entraron en 2024 y 2025 se conoce recién con los próximos Program Years.
+- **La correlación plata-retención tiene dirección discutible.** Puede que pagar más retenga,
+  o que las dos compañías paguen más a los que de todos modos se quedarían. Con este archivo
+  no se separa.
+
+## Qué me haría cambiar de opinión
+
+- **Que la cohorte cara se desarme en 2026.** Si la retención de la banda de 25 mil o más
+  cae del 96% agrupado al rango de las bandas bajas, "la retención se compra" pierde su mitad más
+  fuerte.
+- **Que el patrón de bandas dependa del corte.** Ya lo ataqué corriendo los cortes a la
+  mitad y al doble, y con cuartiles propios de cada compañía, y aguantó; si un corte
+  razonable distinto lo invierte, la tesis muere y el registro lo va a decir.
+- **Que CMS republique algún año.** Los checksums del repositorio se caen solos si cambia la
+  huella de los archivos.
+
+El repositorio con el código, las decisiones, los ocho ataques y el caso anterior está
+[publicado entero](https://github.com/ivandujaut/openpayments-glp1). Si armás o auditás
+programas de disertantes y ves algo mal planteado, escribime: es la clase de error que
+prefiero corregir con alguien que conozca el terreno.
+
+Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación
+comercial con Novo Nordisk, con Eli Lilly ni con ninguna de las empresas mencionadas.
