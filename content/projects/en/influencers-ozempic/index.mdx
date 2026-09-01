@@ -1,0 +1,212 @@
+---
+title: "How long does an Ozempic influencer last?"
+tagline: "Novo and Lilly pay hundreds of professionals to talk about their GLP-1s. I followed each one, year by year, in the file that logs them."
+description: "A person-by-person tracking of Novo's and Lilly's speaker programs for their GLP-1 drugs (Ozempic, Mounjaro): who stays, who leaves, and where they go. Turnover never touched the limit the previous case put in writing, and retention has a list price."
+year: 2026
+date: "2026-09-01"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: false
+repo: "https://github.com/ivandujaut/openpayments-glp1"
+cover:
+  src: ./cover.jpg
+  alt: "Charcoal illustration on warm white paper, not a photograph: on a wooden kitchen board sit asparagus, a bell pepper and leafy greens, with a sewing tape measure coiled around the vegetables; in front of the board, two prefilled GLP-1 auto-injector pens rest at a diagonal, their dose windows drawn as strokes. The drawing dissolves into the paper toward the edges."
+stack: ["Python", "DuckDB", "Parquet", "Open data (CMS Open Payments)"]
+metrics:
+  - label: "Speakers tracked, 2021-2025"
+    value: "1,796"
+  - label: "Lilly's highest annual turnover"
+    value: "25.3%"
+  - label: "Lilly retention under USD 5k a year"
+    value: "16.9%"
+  - label: "Attacks run on my own findings"
+    value: "8"
+translationKey: "influencers-ozempic"
+draft: true
+---
+
+<Abstract label="In short">
+
+Ozempic has influencers, and most of them see patients. They are doctors and other
+healthcare professionals who get paid by Novo Nordisk or Eli Lilly to give talks and
+consulting about their drugs. In the United States the law requires every one of those
+payments to be disclosed in a registry anyone can download, and that makes it possible to
+answer with data a question that in any other industry would stay pure speculation: how long
+does that relationship last?
+
+In [the previous case](/en/projects/glp1-open-payments) I counted the money: USD 180.2
+million disclosed for the GLP-1 drugs for diabetes and obesity between 2021 and 2025, with
+Lilly concentrating and Novo spreading. And I left a commitment in writing: I was going to
+measure how long those speakers last, and if more than 30% of the program changed from one
+year to the next, I was going to admit that Lilly's concentrated model was fragile. This
+case keeps that commitment: I followed Lilly's **657** speakers and Novo's **1,139**, one by
+one, across the five years.
+
+Nobody reached that 30%. The interesting part is why: **retention is bought**. Under USD
+5,000 a year, a Lilly speaker stays into the next year **16.9%** of the time; above 25,000,
+almost everybody stays at both houses (**96%**, grouping the high bands). Lilly retains more
+in the aggregate because it parks its money in the band where nobody leaves.
+
+I close with what this gives a commercial team: how much you have to pay for a speaker to
+stay, why almost nobody leaves for the competition, and what I will watch when CMS publishes
+next year's data.
+
+</Abstract>
+
+<Thesis>
+
+Retention is bought. Under USD 5,000 a year a speaker does not last long at either house;
+above 25,000 almost nobody leaves either one. Lilly does not retain better: it bought the
+permanence.
+
+</Thesis>
+
+## What is data and what is my call
+
+Every number in this case comes from counting professionals in CMS Open Payments (the public
+registry of industry payments to healthcare professionals run by the federal government),
+with the same rules as the previous case plus five new decisions, written down before
+implementing them in the
+[decision log](https://github.com/ivandujaut/openpayments-glp1/blob/main/decisions.md).
+The two that matter most: you belong to a year's speaker program if you received at least
+one speaker or consulting payment for a GLP-1 that year, and the spend bands compare the two
+companies at equal investment per head. The eight attacks I ran against these findings are
+published in the repository, failures included.
+
+## The program that already existed
+
+The window opens in 2021 with a strange scene: Lilly shows up with 178 GLP-1 speakers as if
+the program had been born that year. The pre-history says otherwise: **93.3%** were already
+collecting speaker fees from Lilly between 2017 and 2020, for other house drugs (at Novo,
+**74.1%**). The 2021 GLP-1 program was a redeployment of speakers already on the payroll.
+
+Genuine recruiting came later, and fast: of Lilly's 2021 entrants, 93.3% had prior history
+with the house; of its 2025 entrants, only **17.8%**. Eight out of ten new Lilly speakers in
+2025 were genuinely new faces. The 2017-2020 years enter this case only as this control: no
+figure from that era holds up a chart or a headline.
+
+## Turnover stayed under the limit I put in writing
+
+<Figure
+  src="/projects/influencers-ozempic/g8_descarte.en.png"
+  alt="Two lines of annual speaker-program turnover against a dashed line at 30%. Lilly goes from 25.3% to 19.3% with a low of 10%; Novo drops from 28.4% to 9.7%. Neither crosses the 30%"
+  width={1495}
+  height={886}
+  caption="The dashed line is the limit the previous case put in writing before this analysis ran. Novo's peak is the year before its cut."
+/>
+
+Turnover is measured on each year's members, which are fewer than the running total: between
+178 and 357 speakers per year at Lilly, between 510 and 690 at Novo. On those cohorts,
+Lilly's annual turnover moved between **10.0% and 25.3%**; Novo's, between 9.7% and 28.4%.
+Neither company passed 30% in any year, however you count who belongs to the program. The
+one nuance: counting only speakers at USD 5,000 or more, Novo would have reached 44.3% in
+the year of its cut.
+
+The three-year picture says the same: of Lilly's 2021 cohort, **62.9%** was still active in
+2024, and of its 2022 cohort, **78.6%** in 2025 (Novo: 51.7% and 62.8%). Of Lilly's 657,
+**105** collected in all five years; of Novo's 1,139, **318**.
+
+## Retention has a list price
+
+Up to here it looks like Lilly manages its relationships better. Splitting by spend takes
+that reading apart.
+
+<Figure
+  src="/projects/influencers-ozempic/g7_bandas.en.png"
+  alt="Bars of year-over-year retention by annual spend-per-head band. Under USD 5,000: Novo 47.4% and Lilly 16.9%. From 5 to 25k: 85.3% against 69.2%. From 25 to 75k: 96.1% and 96.7%. At 75k or more: 87.1% and 94.7%"
+  width={1495}
+  height={886}
+  caption="Each bar notes how many professional-years it holds. At equal investment, Novo retains the same or better in the low bands; above 25k the difference disappears."
+/>
+
+At the same annual spend-per-head band, **Novo retains the same or better than Lilly under
+USD 25,000**: 47.4% against 16.9% in the lowest band, 85.3% against 69.2% in the 5-to-25k
+band. Above 25,000 the question dissolves: almost everybody stays, at both.
+
+Lilly's aggregate edge (82.2% retention against 79.2%) comes from composition: six out of
+ten of its professional-years live in the bands of 25k or more, against fewer than three out
+of ten at Novo, which keeps most of its people where retention is lower. The specialty mix
+explains another part: within each professional profile Lilly retains somewhat more, but
+standardizing the mix cuts the gap in half. And the result does not depend on where I put
+the cutoffs: I tried moving them to half and to double, and comparing each company against
+its own distribution, and the ordering did not change. At both houses retention climbs with
+the money up to 25k; from there on, paying more changes almost nothing (the detail of the
+tests is in the repository).
+
+## Exits almost never go to the rival
+
+<Figure
+  src="/projects/influencers-ozempic/g9_salidas.en.png"
+  alt="Stacked bars of annual exits by type, one panel per company. Novo loses 196 and 171 people in the first two year-pairs and drops to 53; Lilly moves between 20 and 69. The rival-signing stripe is the smallest in every bar"
+  width={1495}
+  height={886}
+  caption="Bars are people. Novo's 69% voice-budget cut is the 2022→2023 pair; the rival stripe never passes 15."
+/>
+
+Someone leaving the GLP-1 program almost never crosses the street: rival signings never
+passed **15 people** in a year, and counting in the most generous way possible they reach 33
+of Lilly's 172 exits in the whole window. The dominant exit is out of speaker work
+altogether, and at Lilly reassignment to other house drugs also weighs.
+
+Novo's exodus has two chapters. The second has a visible cause: the 26.9% turnover belongs
+to the year its program was dismantled, when its speaker spending fell 69%. The first
+(28.4%) happened while the budget was still rising, and stands as the piece the budget
+explanation does not cover. When Novo rebuilt the program (a 140% increase in 2025),
+turnover fell to 9.7%: its fragility was a budget decision, and it left with the budget.
+
+The whole picture fits in one sentence: an Ozempic influencer lasts as long as their budget
+line. Under 5,000 dollars a year the relationship cuts itself; above 25,000 it almost always
+continues; and when it ends, almost nobody crosses to the rival: the typical exit is to stop
+getting paid to talk, because the house stopped paying.
+
+## What a commercial team would do with this
+
+Data up to here. What follows is my opinion.
+
+For whoever builds or audits a speaker program, this case leaves a price list for
+permanence. The step that buys retention sits **between 5 and 25 thousand dollars a year**:
+below that, the relationship is disposable for both companies; above 25k, paying more buys
+almost no extra permanence, because there is no turnover left to remove. And the classic
+fear of the concentrated program (the rival taking your expensive voices) does not show up
+in five years of the file: the exit to the rival is the rarest of the three.
+
+The reading has a limit I prefer to declare: **keeping a speaker and gaining something from
+keeping them are two different claims**, and the second is not in this database. The next
+cut is free and already has a date: when CMS publishes Program Year 2026, Lilly's expensive
+cohort (the people collecting 25k or more a year today) will show whether the bought
+permanence holds another year or the circle comes apart.
+
+## What this analysis cannot support
+
+- **Who decides the exit.** The database records payments; a relationship that ends can be
+  the professional quitting or the company dropping them, and they are indistinguishable.
+- **That retaining buys anything.** Payments, prescriptions and clinical behavior are
+  columns this database joins only in the reader's imagination; the previous case's limit
+  stands intact.
+- **Pre-history stops at 2017.** CMS withdrew Program Year 2016 from active publication: a
+  speaker from 2015 shows up here as if they had started in 2017.
+- **Recent entrants have a censored future.** The final tenure of those who entered in 2024
+  and 2025 is only known with the coming Program Years.
+- **The money-retention correlation has a debatable direction.** Maybe paying more retains,
+  or maybe both companies pay more to the people who would stay anyway. This file cannot
+  separate the two.
+
+## What would change my mind
+
+- **That the expensive cohort comes apart in 2026.** If retention in the 25k-or-more bands
+  falls from the grouped 96% to the range of the low bands, "retention is bought" loses its
+  strongest half.
+- **That the band pattern depends on the cutoffs.** I already attacked it by moving the
+  cutoffs to half and to double, and with each company's own quartiles, and it held; if a
+  reasonable different cut inverts it, the thesis dies and the log will say so.
+- **That CMS republishes some year.** The repository's checksums fail on their own if the
+  files' fingerprint changes.
+
+The repository with the code, the decisions, the eight attacks and the previous case is
+[published in full](https://github.com/ivandujaut/openpayments-glp1). If you build or audit
+speaker programs and you see something badly framed, write to me: that is the kind of error
+I would rather fix with someone who knows the ground.
+
+This is independent work, made with public sources. I have no commercial relationship, and
+never had one, with Novo Nordisk, Eli Lilly or any of the companies mentioned.
