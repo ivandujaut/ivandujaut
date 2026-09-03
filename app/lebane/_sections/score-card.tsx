@@ -1,63 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { gsap } from "../_lib/gsap";
-import { useGsapSection } from "../_lib/use-gsap-section";
 import { formatArs, formatPct } from "../_lib/format";
 import { scoreCardExample as data } from "../lebane.data";
 
-const GAUGE_R = 44;
-const GAUGE_LENGTH = 2 * Math.PI * GAUGE_R;
+export const GAUGE_R = 44;
+export const GAUGE_LENGTH = 2 * Math.PI * GAUGE_R;
+
+interface ScoreCardProps {
+  open: boolean;
+  onToggle: () => void;
+}
 
 /**
- * Maqueta interactiva del Score de Obra. Los indicadores se llenan con el
- * scroll y el score sube hasta su valor; el botón es estado React de verdad.
- * Todo lo que muestra es de ejemplo y lo dice arriba.
+ * Maqueta del Score de Obra. Es presentacional: el llenado de barras y gauge
+ * lo maneja `CaseStory` (que sabe en qué paso del relato está el lector), y
+ * el botón es estado React de verdad. Todo lo que muestra es de ejemplo y lo
+ * dice arriba.
  */
-export function ScoreCard() {
-  const [open, setOpen] = useState(false);
-
-  const ref = useGsapSection<HTMLDivElement>(({ root, q }) => {
-    const total = root.querySelector<HTMLElement>(".score-total");
-    const original = total?.textContent ?? "";
-    const proxy = { n: 0 };
-    const gauge = root.querySelector<SVGCircleElement>(".gauge-fill");
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: root, start: "top 80%", end: "center 45%", scrub: 0.5 },
-    });
-    if (gauge) {
-      tl.from(gauge, { strokeDashoffset: GAUGE_LENGTH, duration: 1.6, ease: "none" }, 0);
-    }
-    tl.from(q(".bar-fill"), {
-      scaleX: 0,
-      transformOrigin: "left center",
-      stagger: 0.2,
-      duration: 0.8,
-      ease: "none",
-    });
-    if (total) {
-      tl.to(
-        proxy,
-        {
-          n: data.totalScore,
-          duration: 1.6,
-          ease: "none",
-          onUpdate: () => {
-            total.textContent = String(Math.round(proxy.n));
-          },
-        },
-        0,
-      );
-    }
-    return () => {
-      if (total) total.textContent = original;
-    };
-  });
-
+export function ScoreCard({ open, onToggle }: ScoreCardProps) {
   return (
     <div
-      ref={ref}
-      className="rounded-2xl border border-(--lebane-line) bg-card/60 p-5 md:p-7"
+      className="score-card rounded-2xl border border-(--lebane-line) bg-card/60 p-5 md:p-7"
       aria-label="Maqueta del Score de Obra, datos de ejemplo"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -139,7 +102,7 @@ export function ScoreCard() {
 
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={onToggle}
         aria-expanded={open}
         aria-controls="advance-card"
         className="mt-7 inline-flex w-full items-center justify-center rounded-md bg-(--lebane-accent-strong) px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 md:w-auto"
