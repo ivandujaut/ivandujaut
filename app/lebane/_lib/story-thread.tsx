@@ -106,7 +106,12 @@ export function StoryThread() {
     if (!main || !svg) return;
 
     let local: gsap.Context | null = null;
-    let cableDrawn = false;
+    // El skyline de la portada dibuja sus trazos escalonados desde que carga;
+    // el carro de la grúa es de los últimos. El cable sale justo después.
+    const CABLE_AT = 2.6;
+    const CABLE_DURATION = 1.1;
+    const firstBuildAt = performance.now();
+    let cableTween: gsap.core.Tween | null = null;
     const ns = "http://www.w3.org/2000/svg";
 
     const box = (el: Element) =>
@@ -198,18 +203,35 @@ export function StoryThread() {
         strokeDasharray: `${cableLen} ${cableLen + 8}`,
         strokeDashoffset: cableLen + 4,
       });
-      gsap.to(cable, {
-        strokeDashoffset: 0,
-        duration: cableDrawn ? 0 : 0.6,
-        delay: cableDrawn ? 0 : 2.2,
-        ease: "power1.inOut",
-      });
-      cableDrawn = true;
+      // Se reconstruye en cada refresh (fuentes, resize), así que el dibujo va
+      // atado al reloj de carga y no al momento de la construcción: arranca
+      // cuando el skyline llega al carro y dura lo mismo que un trazo suyo.
+      const elapsed = (performance.now() - firstBuildAt) / 1000;
+      cableTween?.kill();
+      if (elapsed >= CABLE_AT + CABLE_DURATION) {
+        gsap.set(cable, { strokeDashoffset: 0 });
+      } else {
+        cableTween = gsap.to(cable, {
+          strokeDashoffset: 0,
+          duration: CABLE_DURATION,
+          delay: Math.max(0, CABLE_AT - elapsed),
+          ease: "power1.inOut",
+        });
+        if (elapsed > CABLE_AT) cableTween.progress((elapsed - CABLE_AT) / CABLE_DURATION);
+      }
 
       // Desde el extremo del cable, la recta sigue a plomo hasta el espacio
       // entre la portada y la primera sección. La curva empieza recién ahí.
+      // Los disparadores restan media pantalla a la posición, así que este
+      // tramo se ancla explícitamente al scroll cero: si no, quedaría "pasado"
+      // al cargar y aparecería antes que el cable.
+      const halfView = window.innerHeight * 0.5;
       let cursor: Pt = { x: cableEnd.x, y: cableEnd.y + 40 };
-      add(stroke(`M${cableEnd.x} ${cableEnd.y} V${cursor.y}`), 0, heroBottom * 0.4);
+      add(
+        stroke(`M${cableEnd.x} ${cableEnd.y} V${cursor.y}`),
+        halfView,
+        halfView + heroBottom * 0.4,
+      );
 
       sections.slice(1).forEach((section, idx) => {
         const i = idx + 1;
