@@ -1,0 +1,27 @@
+/* Lenis: sin esto el scroll nativo y el suave pelean por el alto del documento. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Paleta propia de la página: fondo oscuro fijo y un azul que no es el de Lebane. */
+.lebane {
+  --lebane-accent: oklch(0.78 0.13 235);
+  --lebane-accent-strong: oklch(0.68 0.16 240);
+  --lebane-accent-soft: oklch(0.78 0.13 235 / 12%);
+  --lebane-line: oklch(1 0 0 / 14%);
+  --lebane-ink-dim: oklch(1 0 0 / 55%);
+}
+
+/* Las secciones pinneadas necesitan el alto de la ventana, no del contenido. */
+.lebane [data-pin] {
+  min-height: 100svh;
+}
