@@ -17,7 +17,20 @@ const TITLE_B = "Esto es lo que vi.";
  * Todo corre al montar, no con el scroll.
  */
 export function Hero() {
-  const ref = useGsapSection<HTMLElement>(({ q }) => {
+  const ref = useGsapSection<HTMLElement>(({ root, q }) => {
+    // Salida: al empezar a bajar, el texto se retira y el plano hace parallax.
+    gsap.to(q(".hero-copy"), {
+      y: -80,
+      opacity: 0.1,
+      ease: "none",
+      scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true },
+    });
+    gsap.to(q(".skyline"), {
+      y: -160,
+      ease: "none",
+      scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true },
+    });
+
     const strokes = q(".sky") as SVGPathElement[];
     strokes.forEach((path) => {
       const len = path.getTotalLength();
@@ -61,12 +74,12 @@ export function Hero() {
       className="mx-auto flex min-h-svh w-full max-w-5xl flex-col justify-center px-6 py-24"
     >
       <div className="grid items-end gap-10 md:grid-cols-[1.4fr_1fr] md:gap-8">
-        <h1 className="font-serif text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="hero-copy font-serif text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl">
           {words(TITLE_A, false)} {words(TITLE_B, true)}
         </h1>
         <svg
           viewBox="0 0 320 170"
-          className="w-full max-w-xs justify-self-start text-(--lebane-accent) md:max-w-sm md:justify-self-end"
+          className="skyline w-full max-w-xs justify-self-start text-(--lebane-accent) md:max-w-sm md:justify-self-end"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.25"
@@ -107,7 +120,7 @@ export function Hero() {
           <path className="sky" d="M0 150 H320" />
         </svg>
       </div>
-      <p className="sub mt-8 font-mono text-sm text-(--lebane-ink-dim) md:text-base">
+      <p className="sub hero-copy mt-8 font-mono text-sm text-(--lebane-ink-dim) md:text-base">
         Iván Dujaut <span aria-hidden>·</span> Product Owner
       </p>
       <div className="rule mt-10 h-px w-full bg-(--lebane-accent)" aria-hidden />
