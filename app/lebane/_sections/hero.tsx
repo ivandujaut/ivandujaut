@@ -128,9 +128,9 @@ export function Hero() {
           <path className="sky" d="M238 49 V60 H254 V49" />
           {/* tirantes desde la punta */}
           <path className="sky" d="M295 18 L350 44 M295 18 L240 44" opacity="0.7" />
-          {/* carro, cable y gancho */}
-          <path className="sky" d="M330 49 H340 V53 H330 Z M335 53 V110" />
-          <path className="sky" d="M335 110 V116 a4 4 0 0 1 -8 0" />
+          {/* carro. El cable y el gancho no están acá: los dibuja el hilo
+              conductor (story-thread), que nace justo en este carro. */}
+          <path className="sky" d="M330 49 H340 V53 H330 Z" />
           {/* suelo */}
           <path className="sky" d="M0 150 H360" />
         </svg>

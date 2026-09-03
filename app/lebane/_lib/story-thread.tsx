@@ -106,6 +106,7 @@ export function StoryThread() {
     if (!main || !svg) return;
 
     let local: gsap.Context | null = null;
+    let cableDrawn = false;
     const ns = "http://www.w3.org/2000/svg";
 
     const box = (el: Element) =>
@@ -171,40 +172,47 @@ export function StoryThread() {
       const add = (el: SVGPathElement, y0: number, y1: number, glow?: SVGElement) =>
         segments.push({ el, y0, y1: Math.max(y1, y0 + 40), glow });
 
-      // Arranque: la línea recorre la grúa del skyline de la portada (mástil,
-      // torreta, tirante, pluma, carro y cable hasta el gancho) y se descuelga
-      // del gancho hacia el margen. El skyline es un viewBox de 360x170 que
-      // ocupa todo el ancho de su caja.
+      // Arranque: el hilo ES el cable de la grúa. Nace en el carro de la
+      // pluma, baja hasta el gancho y desde ahí sigue por toda la página.
+      // El skyline es un viewBox de 360x170 que ocupa todo el ancho de su caja.
       const sk = skyline.getBoundingClientRect();
       const kk = sk.width / 360;
       const skTop = sk.top + window.scrollY - mainTop + (sk.height - 170 * kk) / 2;
       const sp = (x: number, y: number): Pt => ({ x: sk.left + x * kk, y: skTop + y * kk });
-      const route = [
-        sp(295, 150), // base del mástil
-        sp(295, 36), // cabina
-        sp(295, 18), // torreta
-        sp(350, 44), // punta de la pluma, por el tirante
-        sp(335, 49), // carro
-        sp(335, 116), // cable hasta el gancho
-      ];
+      const trolley = sp(335, 53);
+      const hookTop = sp(335, 116);
       const hook = sp(327, 116);
       const heroBottom = toDoc(sections[0]!).bottom;
-      add(
-        stroke(
-          `M${route[0].x} ${route[0].y} ` +
-            route
-              .slice(1)
-              .map((p) => `L${p.x} ${p.y}`)
-              .join(" ") +
-            ` a${4 * kk} ${4 * kk} 0 0 1 ${-8 * kk} 0`,
-        ),
-        0,
-        heroBottom * 0.35,
+
+      // La regla de la portada termina antes del cable, para no cruzarlo.
+      const rule = document.querySelector<HTMLElement>(".rule");
+      if (rule) {
+        const r = rule.getBoundingClientRect();
+        rule.style.width = `${Math.max(0, hook.x - r.left - 18)}px`;
+      }
+
+      // El cable con su gancho se dibuja al cargar, después del skyline, no
+      // con el scroll: la grúa tiene que estar completa antes de bajar.
+      const cable = stroke(
+        `M${trolley.x} ${trolley.y} V${hookTop.y} a${4 * kk} ${4 * kk} 0 0 1 ${-8 * kk} 0`,
       );
-      // Del gancho cae a plomo, como un cable: recto hasta el espacio entre
-      // la portada y la primera sección. La curva empieza recién ahí.
+      const cableLen = cable.getTotalLength();
+      gsap.set(cable, {
+        strokeDasharray: `${cableLen} ${cableLen + 8}`,
+        strokeDashoffset: cableLen + 4,
+      });
+      gsap.to(cable, {
+        strokeDashoffset: 0,
+        duration: cableDrawn ? 0 : 0.7,
+        delay: cableDrawn ? 0 : 2.2,
+        ease: "power1.inOut",
+      });
+      cableDrawn = true;
+
+      // Del gancho cae a plomo hasta el espacio entre la portada y la primera
+      // sección. La curva empieza recién ahí.
       let cursor: Pt = { x: hook.x, y: hook.y + 40 };
-      add(stroke(`M${hook.x} ${hook.y} V${cursor.y}`), heroBottom * 0.35, heroBottom * 0.5);
+      add(stroke(`M${hook.x} ${hook.y} V${cursor.y}`), 0, heroBottom * 0.4);
 
       sections.slice(1).forEach((section, idx) => {
         const i = idx + 1;
@@ -301,7 +309,9 @@ export function StoryThread() {
           // El hueco del patrón es más largo que el trazo: así, antes de
           // dibujarse, ningún tramo asoma ni en el arranque (remate redondo
           // de un dash de largo cero) ni en el final (vuelta del patrón).
-          gsap.set(el, { strokeDasharray: `${len} ${len + 8}`, strokeDashoffset: len });
+          // El desplazamiento arranca 4 unidades adentro del hueco: justo en el
+          // borde, el navegador a veces pinta un punto de largo cero.
+          gsap.set(el, { strokeDasharray: `${len} ${len + 8}`, strokeDashoffset: len + 4 });
           ScrollTrigger.create({
             start: y0 - half,
             end: y1 - half,
