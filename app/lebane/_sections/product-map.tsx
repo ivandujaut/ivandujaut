@@ -156,7 +156,7 @@ export function ProductMap() {
             />
           </svg>
           <p className="arc-label mt-6 text-center text-sm text-(--lebane-ink-dim) md:-mt-1">
-            Payments cierra el círculo: el cobro entra identificado y vuelve a la obra ya
+            Payments cierra el círculo. El cobro entra identificado y vuelve a la obra ya
             conciliado.
           </p>
         </div>

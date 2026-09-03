@@ -42,7 +42,7 @@ export function Close() {
       </div>
 
       <footer className="mt-24 border-t border-border pt-8 text-sm text-(--lebane-ink-dim)">
-        <p>Fuentes: cada dato de esta página tiene su origen en el código.</p>
+        <p>Cada dato de esta página tiene su fuente en el código.</p>
         <details className="mt-3">
           <summary className="cursor-pointer underline-offset-4 hover:underline">
             Ver las {sources.length} fuentes públicas

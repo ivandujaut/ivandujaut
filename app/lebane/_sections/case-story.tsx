@@ -10,17 +10,17 @@ const STEPS = [
   {
     id: "hipotesis",
     eyebrow: "Hipótesis",
-    text: "Buena parte de la tensión de caja de una desarrolladora mediana no es falta de ventas. Es el desfase entre cuotas que van a entrar y compromisos que ya vencieron. Lebane ve las dos puntas.",
+    text: "Buena parte de la tensión de caja de una desarrolladora mediana viene del desfase entre las cuotas que van a entrar y los compromisos que ya vencieron, no de la falta de ventas. Lebane ve las dos puntas.",
   },
   {
     id: "paso-1",
     eyebrow: "Paso 1 · Score de Obra",
-    text: "Mostrarle a cada desarrolladora el score de su proyecto, adentro de Lebane, antes de ofrecerle crédito. Cinco indicadores que ya están cargados. Crea la demanda antes que la oferta, y mejora la calidad de la carga.",
+    text: "Mostrarle a cada desarrolladora el score de su proyecto, adentro de Lebane, antes de ofrecerle crédito. Usa cinco indicadores que ya están cargados. Así la demanda aparece antes que la oferta y la carga de datos mejora.",
   },
   {
     id: "paso-2",
     eyebrow: "Paso 2 · Adelanto de cobranzas",
-    text: "Hasta un porcentaje de las cuotas de los próximos 90 días de compradores con historial en término, repagado solo desde los ingresos por CVU. Va primero porque el repago está embebido, los datos ya existen, el ticket es chico y el ciclo, corto.",
+    text: "Hasta un porcentaje de las cuotas de los próximos 90 días de compradores con historial en término, que se repaga solo desde los ingresos por CVU. Va primero porque el repago sale del mismo flujo, los datos ya existen, el ticket es chico y el ciclo, corto.",
   },
 ];
 

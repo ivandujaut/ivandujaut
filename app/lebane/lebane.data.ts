@@ -317,7 +317,8 @@ export const proofs = [
     title: "FIJI · Prizmstack",
     number: "Operación → valuación",
     line: "Motor que traduce métricas de operación inmobiliaria en valuación financiera.",
-    proves: "Ya hago datos operativos → número financiero. Mismo vertical, lado del inversor.",
+    proves:
+      "Ya convierto datos operativos en un número financiero. Mismo vertical, del lado del inversor.",
     href: "https://app.fijiapp.com/",
     hrefLabel: "Abrir FIJI",
     source: "https://app.fijiapp.com/",
