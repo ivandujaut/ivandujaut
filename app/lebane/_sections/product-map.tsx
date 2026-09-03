@@ -20,9 +20,13 @@ const LAST = 100 - FIRST;
 export function ProductMap() {
   const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
     const arc = root.querySelector<SVGPathElement>(".arc");
+    // Desktop: se dispara una vez y corre solo. Mobile: la misma secuencia,
+    // pero atada al scroll, para que el orden se sienta con el dedo.
     const tl = gsap.timeline({
       defaults: { ease: "power2.out" },
-      scrollTrigger: { trigger: root, start: "top 60%", toggleActions: "play none none none" },
+      scrollTrigger: isDesktop
+        ? { trigger: root, start: "top 60%", toggleActions: "play none none none" }
+        : { trigger: root, start: "top 70%", end: "bottom 95%", scrub: 0.5 },
     });
 
     if (isDesktop) {
@@ -45,20 +49,22 @@ export function ProductMap() {
         tl.from(q(".arc-label"), { opacity: 0, duration: 0.4 }, ">-0.3");
       }
     } else {
-      tl.from(q(".node"), { opacity: 0, y: 12, duration: 0.4, stagger: 0.15 });
-      tl.from(
-        q(".connector"),
-        { scaleY: 0, transformOrigin: "top center", duration: 0.3, stagger: 0.15 },
-        0.15,
-      );
-      tl.from(q(".arc-label"), { opacity: 0, duration: 0.4 }, ">-0.1");
+      q(".node").forEach((node, i) => {
+        tl.from(node.querySelector(".node-dot"), { scale: 0.4, opacity: 0, duration: 0.4 }, i);
+        tl.from(node.querySelector(".node-text"), { opacity: 0, x: -14, duration: 0.5 }, i + 0.1);
+        const connector = node.querySelector(".connector");
+        if (connector) {
+          tl.from(connector, { scaleY: 0, transformOrigin: "top center", duration: 0.5 }, i - 0.5);
+        }
+      });
+      tl.from(q(".arc-label"), { opacity: 0, y: 8, duration: 0.5 }, ">-0.2");
     }
     tl.from(q(".lena"), { opacity: 0, duration: 0.7 }, ">-0.1");
   });
 
   return (
     <Section id="product-map" ref={ref}>
-      <SectionHeading eyebrow="02 · El producto">
+      <SectionHeading index="02" eyebrow="El producto">
         El producto, en el orden en que lo usa un cliente
       </SectionHeading>
 

@@ -6,6 +6,9 @@ import { useGsapSection } from "../_lib/use-gsap-section";
 import { formatArs, formatPct } from "../_lib/format";
 import { scoreCardExample as data } from "../lebane.data";
 
+const GAUGE_R = 44;
+const GAUGE_LENGTH = 2 * Math.PI * GAUGE_R;
+
 /**
  * Maqueta interactiva del Score de Obra. Los indicadores se llenan con el
  * scroll y el score sube hasta su valor; el botón es estado React de verdad.
@@ -18,9 +21,13 @@ export function ScoreCard() {
     const total = root.querySelector<HTMLElement>(".score-total");
     const original = total?.textContent ?? "";
     const proxy = { n: 0 };
+    const gauge = root.querySelector<SVGCircleElement>(".gauge-fill");
     const tl = gsap.timeline({
-      scrollTrigger: { trigger: root, start: "top 80%", end: "top 30%", scrub: 0.5 },
+      scrollTrigger: { trigger: root, start: "top 80%", end: "center 45%", scrub: 0.5 },
     });
+    if (gauge) {
+      tl.from(gauge, { strokeDashoffset: GAUGE_LENGTH, duration: 1.6, ease: "none" }, 0);
+    }
     tl.from(q(".bar-fill"), {
       scaleX: 0,
       transformOrigin: "left center",
@@ -65,11 +72,40 @@ export function ScoreCard() {
         </span>
       </div>
 
-      <div className="mt-6 flex items-end gap-3">
-        <p className="font-serif text-6xl leading-none font-semibold tabular-nums md:text-7xl">
-          <span className="score-total">{data.totalScore}</span>
-        </p>
-        <p className="pb-1 font-mono text-sm text-(--lebane-ink-dim)">/ 100</p>
+      <div className="mt-6 flex items-center gap-5">
+        <div className="relative size-28 shrink-0">
+          <svg viewBox="0 0 100 100" className="size-full -rotate-90" aria-hidden>
+            <circle
+              cx="50"
+              cy="50"
+              r={GAUGE_R}
+              fill="none"
+              stroke="var(--lebane-line)"
+              strokeWidth="5"
+            />
+            <circle
+              className="gauge-fill"
+              cx="50"
+              cy="50"
+              r={GAUGE_R}
+              fill="none"
+              stroke="var(--lebane-accent)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray={GAUGE_LENGTH}
+              strokeDashoffset={GAUGE_LENGTH * (1 - data.totalScore / 100)}
+            />
+          </svg>
+          <p className="absolute inset-0 flex items-center justify-center font-serif text-4xl leading-none font-semibold tabular-nums">
+            <span className="score-total">{data.totalScore}</span>
+          </p>
+        </div>
+        <div>
+          <p className="font-mono text-xs text-(--lebane-ink-dim)">sobre 100</p>
+          <p className="mt-1 max-w-[16rem] text-sm text-(--lebane-ink-dim)">
+            Cinco indicadores que la desarrolladora ya carga. Ninguno viene de afuera.
+          </p>
+        </div>
       </div>
 
       <ol className="mt-6 space-y-4">

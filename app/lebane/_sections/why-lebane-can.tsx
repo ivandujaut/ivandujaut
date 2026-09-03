@@ -13,9 +13,13 @@ const TILTS = [-5, 4, -3, 6];
  * por una). Va con scrub: el contraste se arma a medida que se baja.
  */
 export function WhyLebaneCan() {
-  const ref = useGsapSection<HTMLElement>(({ root, q }) => {
+  const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
+    // En mobile las dos columnas se apilan y la sección es más alta: el rango
+    // se estira para que las filas se enciendan mientras pasan por el centro.
     const tl = gsap.timeline({
-      scrollTrigger: { trigger: root, start: "top 60%", end: "bottom 90%", scrub: 0.6 },
+      scrollTrigger: isDesktop
+        ? { trigger: root, start: "top 60%", end: "bottom 90%", scrub: 0.6 }
+        : { trigger: root, start: "top 50%", end: "bottom 100%", scrub: 0.5 },
     });
     tl.to(q(".paper"), { opacity: 0.3, y: 14, stagger: 0.1, duration: 1 }, 0);
     tl.from(q(".row"), { opacity: 0.15, x: -10, stagger: 0.25, duration: 0.6 }, 0.2);
@@ -28,7 +32,7 @@ export function WhyLebaneCan() {
 
   return (
     <Section id="why-lebane-can" ref={ref}>
-      <SectionHeading eyebrow="04 · Por qué Lebane puede">
+      <SectionHeading index="04" eyebrow="Por qué Lebane puede">
         El banco necesita la historia de la empresa. Lebane tiene la obra en tiempo real.
       </SectionHeading>
       <p className="mt-6 max-w-2xl text-lg text-(--lebane-ink-dim)">
@@ -37,7 +41,11 @@ export function WhyLebaneCan() {
         el único libro mayor del proyecto está en Lebane.
       </p>
 
-      <div className="mt-14 grid gap-12 md:mt-20 md:grid-cols-2 md:gap-10">
+      <div className="relative mt-14 grid gap-12 md:mt-20 md:grid-cols-2 md:gap-16">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-0 bottom-0 left-1/2 hidden w-px bg-(--lebane-line) md:block"
+        />
         <div>
           <h3 className="font-mono text-xs tracking-widest text-(--lebane-ink-dim) uppercase">
             {twoViews.bank.title}
