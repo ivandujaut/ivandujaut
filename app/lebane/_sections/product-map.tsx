@@ -20,12 +20,19 @@ const LAST = 100 - FIRST;
 export function ProductMap() {
   const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
     const arc = root.querySelector<SVGPathElement>(".arc");
-    // Desktop: se dispara una vez y corre solo. Mobile: la misma secuencia,
-    // pero atada al scroll, para que el orden se sienta con el dedo.
+    // Desktop: la pantalla se fija y el flujo se dibuja con el scroll, módulo
+    // a módulo. Mobile: la misma secuencia sin pin, atada al dedo.
     const tl = gsap.timeline({
       defaults: { ease: "power2.out" },
       scrollTrigger: isDesktop
-        ? { trigger: root, start: "top 60%", toggleActions: "play none none none" }
+        ? {
+            trigger: root,
+            pin: true,
+            scrub: 0.6,
+            start: "top top",
+            end: () => `+=${window.innerHeight * 1.8}`,
+            invalidateOnRefresh: true,
+          }
         : { trigger: root, start: "top 70%", end: "bottom 95%", scrub: 0.5 },
     });
 
@@ -60,10 +67,15 @@ export function ProductMap() {
       tl.from(q(".arc-label"), { opacity: 0, y: 8, duration: 0.5 }, ">-0.2");
     }
     tl.from(q(".lena"), { opacity: 0, duration: 0.7 }, ">-0.1");
+    tl.to({}, { duration: 0.4 });
   });
 
   return (
-    <Section id="product-map" ref={ref}>
+    <Section
+      id="product-map"
+      ref={ref}
+      className="md:flex md:min-h-svh md:flex-col md:justify-center md:py-16"
+    >
       <SectionHeading index="02" eyebrow="El producto">
         El producto, en el orden en que lo usa un cliente
       </SectionHeading>
