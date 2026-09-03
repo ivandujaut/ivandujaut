@@ -1,0 +1,76 @@
+/* Lenis: sin esto el scroll nativo y el suave pelean por el alto del documento. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Paleta propia de la página: fondo oscuro fijo y un azul que no es el de Lebane. */
+.lebane {
+  --lebane-accent: oklch(0.78 0.13 235);
+  --lebane-accent-strong: oklch(0.68 0.16 240);
+  --lebane-accent-soft: oklch(0.78 0.13 235 / 12%);
+  --lebane-line: oklch(1 0 0 / 14%);
+  --lebane-ink-dim: oklch(1 0 0 / 55%);
+}
+
+/* Las secciones pinneadas necesitan el alto de la ventana, no del contenido. */
+.lebane [data-pin] {
+  min-height: 100svh;
+}
+
+/* Fondo de plano: grilla fina que se desvanece hacia los bordes. Es textura,
+   no decoración: a 5% de opacidad se siente más de lo que se ve. */
+.lebane {
+  position: relative;
+  isolation: isolate;
+}
+
+.lebane::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--lebane-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--lebane-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 100%);
+  opacity: 0.45;
+}
+
+.lebane .nav-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--lebane-line);
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+}
+
+.lebane .nav-dot.is-active {
+  background: var(--lebane-accent);
+  transform: scale(1.6);
+}
+
+/* Aire entre secciones: es el espacio donde el hilo conductor se abre con
+   lazos y dibuja el hito de la sección que viene. El primer hijo de main es
+   el propio hilo (absoluto) y el segundo la portada, que no lleva margen. */
+.lebane main > *:nth-child(n + 3) {
+  margin-top: 14vh;
+}
+
+@media (min-width: 768px) {
+  .lebane main > *:nth-child(n + 3) {
+    margin-top: 30vh;
+  }
+}
