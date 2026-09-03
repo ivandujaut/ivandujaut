@@ -8,30 +8,35 @@ import { useGsapSection } from "../_lib/use-gsap-section";
 import { Section, SectionHeading } from "../_lib/section";
 import { proofs } from "../lebane.data";
 
-function ProofLink({ href, children, dim }: { href: string; children: string; dim?: boolean }) {
-  const cls = `inline-flex items-center gap-1.5 text-sm underline-offset-4 hover:underline ${
-    dim ? "text-(--lebane-ink-dim)" : "text-(--lebane-accent)"
-  }`;
-  const icon = <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} strokeWidth={1.5} aria-hidden />;
+function Anchor({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
   if (href.startsWith("http")) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
         {children}
-        {icon}
       </a>
     );
   }
   return (
-    <Link href={href} className={cls}>
+    <Link href={href} className={className}>
       {children}
-      {icon}
     </Link>
   );
 }
 
 /**
- * Tres tarjetas que giran sobre el eje Y al entrar. En desktop se disparan
- * juntas; en mobile, apiladas, cada una gira con el scroll.
+ * Tres tarjetas con la misma anatomía: kicker, cifra en un renglón, qué es,
+ * qué prueba, y un solo CTA. En desktop cada fila interna es una fila de
+ * subgrid, así los cuatro bloques quedan alineados entre tarjetas aunque
+ * el texto de una sea más largo. Giran sobre el eje Y al entrar; en mobile,
+ * apiladas, cada una gira con el scroll.
  */
 export function WhyMe() {
   const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
@@ -69,7 +74,7 @@ export function WhyMe() {
         {proofs.map((p, i) => (
           <li
             key={p.id}
-            className="card relative flex flex-col overflow-hidden rounded-2xl border border-(--lebane-line) bg-card/60 p-6 md:p-7"
+            className="card relative grid grid-rows-[auto_auto_auto_1fr_auto] gap-y-4 overflow-hidden rounded-2xl border border-(--lebane-line) bg-card/60 p-6 md:row-span-5 md:grid-rows-subgrid md:p-7"
           >
             <span
               aria-hidden
@@ -80,18 +85,33 @@ export function WhyMe() {
             <p className="font-mono text-xs tracking-widest text-(--lebane-ink-dim) uppercase">
               {p.title}
             </p>
-            <p className="mt-5 font-serif text-3xl leading-tight font-semibold text-balance md:text-4xl">
+            <p className="font-serif text-3xl leading-none font-semibold whitespace-nowrap md:text-4xl">
               {p.number}
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-(--lebane-ink-dim)">{p.line}</p>
-            <p className="mt-4 text-base leading-snug font-medium">{p.proves}</p>
-            <div className="mt-auto flex flex-col gap-2 pt-6">
-              <ProofLink href={p.href}>{p.hrefLabel}</ProofLink>
-              {p.secondary ? (
-                <ProofLink href={p.secondary.href} dim>
-                  {p.secondary.label}
-                </ProofLink>
+            <p className="text-sm leading-relaxed text-(--lebane-ink-dim)">{p.line}</p>
+            <p className="text-base leading-snug font-medium">
+              {p.proves}
+              {p.note ? (
+                <span className="mt-2 block text-sm font-normal text-(--lebane-ink-dim)">
+                  {p.note.before}
+                  <Anchor
+                    href={p.note.href}
+                    className="underline decoration-(--lebane-line) underline-offset-4 hover:text-foreground"
+                  >
+                    {p.note.label}
+                  </Anchor>
+                  .
+                </span>
               ) : null}
+            </p>
+            <div className="pt-2">
+              <Anchor
+                href={p.href}
+                className="inline-flex items-center gap-1.5 text-sm text-(--lebane-accent) underline-offset-4 hover:underline"
+              >
+                {p.hrefLabel}
+                <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} strokeWidth={1.5} aria-hidden />
+              </Anchor>
             </div>
           </li>
         ))}

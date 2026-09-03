@@ -307,7 +307,7 @@ export const proofs = [
     line: "Predictibilidad de sprints tras sacar del roadmap una de cada cinco funcionalidades.",
     proves: "Sé priorizar y decir que no.",
     href: "/about",
-    hrefLabel: "Leer en /about",
+    hrefLabel: "Leer",
     // TODO(Iván): en /about figura "una de cada cinco", no el salto 60% → 90%.
     // Si no querés publicar esa cifra, dejá `number` en "1 de 5".
     source: "/about",
@@ -315,7 +315,7 @@ export const proofs = [
   {
     id: "fiji",
     title: "FIJI · Prizmstack",
-    number: "Operación → valuación",
+    number: "Datos → precio",
     line: "Motor que traduce métricas de operación inmobiliaria en valuación financiera.",
     proves:
       "Ya convierto datos operativos en un número financiero. Mismo vertical, del lado del inversor.",
@@ -329,12 +329,14 @@ export const proofs = [
     number: "64%",
     line: "De las consultas repetidas resueltas sin tocar el modelo, con umbral elegido por curva ROC.",
     proves: "Sé llevar un agente a producción y medirlo.",
+    /** Referencia inline, no un segundo CTA: la política de mora del caso. */
+    note: {
+      before: "La política de mora del caso ya la escribí en ",
+      label: "La prima que no llega",
+      href: "/projects/cobranza-seguros",
+    },
     href: "/projects/insurance-advisor-bot",
     hrefLabel: "Ver el caso",
-    secondary: {
-      href: "/projects/cobranza-seguros",
-      label: "La prima que no llega: mora fabricada vs. real",
-    },
     source: "/projects/insurance-advisor-bot",
   },
 ];
