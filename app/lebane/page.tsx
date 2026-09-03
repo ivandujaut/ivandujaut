@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import { Hero } from "./_sections/hero";
+import { Timeline } from "./_sections/timeline";
+import { ProductMap } from "./_sections/product-map";
+import { Thesis } from "./_sections/thesis";
+import { WhyLebaneCan } from "./_sections/why-lebane-can";
+import { Case } from "./_sections/case";
 
 /**
  * Página privada: se comparte por link después de una entrevista. Sale con
@@ -15,5 +21,14 @@ export const metadata: Metadata = {
 };
 
 export default function LebanePage() {
-  return <main id="main"></main>;
+  return (
+    <main id="main">
+      <Hero />
+      <Timeline />
+      <ProductMap />
+      <Thesis />
+      <WhyLebaneCan />
+      <Case />
+    </main>
+  );
 }
