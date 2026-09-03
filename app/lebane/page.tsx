@@ -6,6 +6,7 @@ import { Thesis } from "./_sections/thesis";
 import { WhyLebaneCan } from "./_sections/why-lebane-can";
 import { Case } from "./_sections/case";
 import { WhyMe } from "./_sections/why-me";
+import { Close } from "./_sections/close";
 
 /**
  * Página privada: se comparte por link después de una entrevista. Sale con
@@ -31,6 +32,7 @@ export default function LebanePage() {
       <WhyLebaneCan />
       <Case />
       <WhyMe />
+      <Close />
     </main>
   );
 }
