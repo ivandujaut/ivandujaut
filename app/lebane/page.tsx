@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Hero } from "./_sections/hero";
 
 /**
  * Página privada: se comparte por link después de una entrevista. Sale con
@@ -16,9 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function LebanePage() {
-  return (
-    <main id="main">
-      <Hero />
-    </main>
-  );
+  return <main id="main"></main>;
 }
