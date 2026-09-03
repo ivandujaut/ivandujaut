@@ -9,7 +9,7 @@ import { ScoreCard } from "./score-card";
 export function Case() {
   return (
     <Section id="case">
-      <SectionHeading eyebrow="05 · Un caso para empezar">
+      <SectionHeading index="05" eyebrow="Un caso para empezar">
         Score de Obra y adelanto de cobranzas
       </SectionHeading>
 

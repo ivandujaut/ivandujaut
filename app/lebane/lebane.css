@@ -25,3 +25,39 @@ html.lenis body {
 .lebane [data-pin] {
   min-height: 100svh;
 }
+
+/* Fondo de plano: grilla fina que se desvanece hacia los bordes. Es textura,
+   no decoración: a 5% de opacidad se siente más de lo que se ve. */
+.lebane {
+  position: relative;
+  isolation: isolate;
+}
+
+.lebane::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--lebane-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--lebane-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 100%);
+  opacity: 0.45;
+}
+
+.lebane .nav-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--lebane-line);
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+}
+
+.lebane .nav-dot.is-active {
+  background: var(--lebane-accent);
+  transform: scale(1.6);
+}

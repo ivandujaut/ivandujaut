@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { LenisProvider } from "./_lib/lenis-provider";
+import { ScrollProgress } from "./_lib/scroll-progress";
 import "./lebane.css";
 
 /**
@@ -11,7 +12,10 @@ import "./lebane.css";
 export default function LebaneLayout({ children }: { children: ReactNode }) {
   return (
     <div className="lebane dark min-h-svh bg-background text-foreground">
-      <LenisProvider>{children}</LenisProvider>
+      <LenisProvider>
+        {children}
+        <ScrollProgress />
+      </LenisProvider>
     </div>
   );
 }

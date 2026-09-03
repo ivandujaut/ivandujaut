@@ -22,18 +22,33 @@ export function Section({ id, ref, className, children }: SectionProps) {
 }
 
 interface HeadingProps {
+  /** "01", "02"... Se imprime enorme y casi invisible detrás del título. */
+  index?: string;
   eyebrow: string;
   children: ReactNode;
   className?: string;
 }
 
-export function SectionHeading({ eyebrow, children, className }: HeadingProps) {
+export function SectionHeading({ index, eyebrow, children, className }: HeadingProps) {
   return (
-    <header className={cn("max-w-3xl", className)}>
-      <p className="font-mono text-xs tracking-widest text-(--lebane-accent) uppercase">
+    <header className={cn("relative max-w-3xl", className)}>
+      {index ? (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -top-12 -left-3 font-serif text-[6rem] leading-none font-semibold text-foreground/[0.05] select-none md:-top-16 md:-left-6 md:text-[9rem]"
+        >
+          {index}
+        </span>
+      ) : null}
+      <p className="relative font-mono text-xs tracking-widest text-(--lebane-accent) uppercase">
+        {index ? (
+          <>
+            {index} <span aria-hidden>·</span>{" "}
+          </>
+        ) : null}
         {eyebrow}
       </p>
-      <h2 className="mt-4 font-serif text-3xl leading-tight font-semibold tracking-tight text-balance md:text-5xl">
+      <h2 className="relative mt-4 font-serif text-3xl leading-tight font-semibold tracking-tight text-balance md:text-5xl">
         {children}
       </h2>
     </header>
