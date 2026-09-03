@@ -136,7 +136,17 @@ export function Hero() {
         </svg>
       </div>
       <p className="sub hero-copy mt-8 font-mono text-sm text-(--lebane-ink-dim) md:text-base">
-        Iván Dujaut <span aria-hidden>·</span> Product Owner
+        <a
+          href="https://www.linkedin.com/in/ivan-dujaut/"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-ph="contact_click"
+          data-ph-kind="linkedin"
+          data-ph-surface="lebane-hero"
+          className="underline decoration-(--lebane-line) underline-offset-4 transition-colors hover:text-foreground hover:decoration-(--lebane-accent)"
+        >
+          Iván Dujaut
+        </a>
       </p>
       <div className="rule mt-10 h-px w-full bg-(--lebane-accent)" aria-hidden />
       <a
