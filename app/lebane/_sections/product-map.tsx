@@ -133,6 +133,8 @@ export function ProductMap() {
             })}
           </ol>
 
+          {/* Sin `vector-effect: non-scaling-stroke`: con el viewBox estirado, el
+              guion se mediría en píxeles de pantalla y el arco quedaría cortado. */}
           <svg
             className="mt-4 hidden h-14 w-full md:block"
             viewBox="0 0 700 56"
@@ -141,18 +143,10 @@ export function ProductMap() {
           >
             <path
               className="arc"
-              d={`M${LAST * 7} 0 V32 Q${LAST * 7} 44 ${LAST * 7 - 12} 44 H${FIRST * 7 + 12} Q${FIRST * 7} 44 ${FIRST * 7} 32 V4`}
+              d={`M${LAST * 7} 0 V32 Q${LAST * 7} 44 ${LAST * 7 - 12} 44 H${FIRST * 7 + 12} Q${FIRST * 7} 44 ${FIRST * 7} 32 V4 M${FIRST * 7 - 5} 9 L${FIRST * 7} 2 L${FIRST * 7 + 5} 9`}
               fill="none"
               stroke="var(--lebane-accent)"
-              strokeWidth="1.5"
-              vectorEffect="non-scaling-stroke"
-            />
-            <path
-              d={`M${FIRST * 7 - 5} 9 L${FIRST * 7} 2 L${FIRST * 7 + 5} 9`}
-              fill="none"
-              stroke="var(--lebane-accent)"
-              strokeWidth="1.5"
-              vectorEffect="non-scaling-stroke"
+              strokeWidth="1.25"
             />
           </svg>
           <p className="arc-label mt-6 text-center text-sm text-(--lebane-ink-dim) md:-mt-1">
