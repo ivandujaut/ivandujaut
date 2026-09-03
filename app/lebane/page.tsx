@@ -7,6 +7,7 @@ import { WhyLebaneCan } from "./_sections/why-lebane-can";
 import { Case } from "./_sections/case";
 import { WhyMe } from "./_sections/why-me";
 import { Close } from "./_sections/close";
+import { StoryThread } from "./_lib/story-thread";
 
 /**
  * Página privada: se comparte por link después de una entrevista. Sale con
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
 
 export default function LebanePage() {
   return (
-    <main id="main">
+    <main id="main" className="relative">
+      <StoryThread />
       <Hero />
       <Timeline />
       <ProductMap />
