@@ -201,14 +201,10 @@ export function StoryThread() {
         0,
         heroBottom * 0.35,
       );
-      let cursor: Pt = { x: marginX, y: hook.y + 260 };
-      add(
-        stroke(
-          `M${hook.x} ${hook.y} C${hook.x} ${hook.y + 120} ${marginX} ${hook.y + 80} ${cursor.x} ${cursor.y}`,
-        ),
-        heroBottom * 0.35,
-        heroBottom * 0.6,
-      );
+      // Del gancho cae a plomo, como un cable: recto hasta el espacio entre
+      // la portada y la primera sección. La curva empieza recién ahí.
+      let cursor: Pt = { x: hook.x, y: hook.y + 40 };
+      add(stroke(`M${hook.x} ${hook.y} V${cursor.y}`), heroBottom * 0.35, heroBottom * 0.5);
 
       sections.slice(1).forEach((section, idx) => {
         const i = idx + 1;
@@ -249,12 +245,12 @@ export function StoryThread() {
         // y entra al hito.
         const entry = at(mark.start);
         const knot: Pt = { x: entry.x - size * 0.35, y: entry.y - size * 0.45 };
-        const side = entry.x < marginX ? 1 : -1;
+        const side = entry.x < cursor.x ? 1 : -1;
         const r = isMobile ? 9 : 16;
         const [s0, s1] = take(0.42);
         add(
           stroke(
-            `M${marginX} ${gapTop} C${marginX} ${gapTop + zone * 0.5} ${knot.x + side * size * 1.6} ${knot.y - size * 0.6} ${knot.x} ${knot.y} ` +
+            `M${cursor.x} ${gapTop} C${cursor.x} ${gapTop + zone * 0.5} ${knot.x + side * size * 1.6} ${knot.y - size * 0.6} ${knot.x} ${knot.y} ` +
               `a${r} ${r} 0 1 1 ${r * 0.2} ${r * 1.9} a${r} ${r} 0 1 1 ${-r * 0.2} ${-r * 1.9} ` +
               `Q${knot.x + (entry.x - knot.x) * 0.2} ${entry.y} ${entry.x} ${entry.y}`,
           ),
