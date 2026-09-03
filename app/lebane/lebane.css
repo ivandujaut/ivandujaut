@@ -61,3 +61,16 @@ html.lenis body {
   background: var(--lebane-accent);
   transform: scale(1.6);
 }
+
+/* Aire entre secciones: es el espacio donde el hilo conductor se abre con
+   lazos y dibuja el hito de la sección que viene. El primer hijo de main es
+   el propio hilo (absoluto) y el segundo la portada, que no lleva margen. */
+.lebane main > *:nth-child(n + 3) {
+  margin-top: 14vh;
+}
+
+@media (min-width: 768px) {
+  .lebane main > *:nth-child(n + 3) {
+    margin-top: 30vh;
+  }
+}

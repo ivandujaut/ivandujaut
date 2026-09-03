@@ -73,7 +73,7 @@ export function Thesis() {
     tl.from(q(".ground"), { scaleX: 0, transformOrigin: "center", duration: 0.6 }, 0);
     floors.forEach((floor, i) => {
       const at = 0.4 + i * 1.3;
-      tl.from(floor, { y: -140, opacity: 0, duration: 1, ease: "power2.in" }, at);
+      tl.from(floor, { y: isDesktop ? -140 : -48, opacity: 0, duration: 1, ease: "power2.in" }, at);
       if (i > 0) tl.to(lines[i], { opacity: 1, duration: 0.4 }, at + 0.6);
     });
     tl.from(q(".comparables"), { opacity: 0, y: 10, duration: 0.6 }, ">");
