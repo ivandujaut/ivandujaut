@@ -74,7 +74,7 @@ export function Hero() {
           {words(TITLE_A, false)} {words(TITLE_B, true)}
         </h1>
         <svg
-          viewBox="0 0 320 170"
+          viewBox="0 0 360 170"
           className="skyline w-full max-w-xs justify-self-start text-(--lebane-accent) md:max-w-sm md:justify-self-end"
           fill="none"
           stroke="currentColor"
@@ -84,36 +84,55 @@ export function Hero() {
           aria-hidden
         >
           {/* edificio bajo, terminado */}
-          <path className="sky" d="M16 150 V70 H86 V150" />
-          <path className="sky" d="M16 90 H86 M16 110 H86 M16 130 H86" opacity="0.5" />
+          <path className="sky" d="M10 150 V70 H70 V150" />
+          <path className="sky" d="M10 90 H70 M10 110 H70 M10 130 H70" opacity="0.5" />
           {/* torre, con un piso encendido */}
-          <path className="sky" d="M104 150 V26 H182 V150" />
+          <path className="sky" d="M86 150 V26 H160 V150" />
           <path
             className="sky"
-            d="M104 46 H182 M104 66 H182 M104 86 H182 M104 106 H182 M104 126 H182"
+            d="M86 46 H160 M86 66 H160 M86 86 H160 M86 106 H160 M86 126 H160"
             opacity="0.5"
           />
           <rect
             className="sky-fill"
-            x="104"
+            x="86"
             y="86"
-            width="78"
+            width="74"
             height="20"
             fill="currentColor"
             opacity="0.22"
             stroke="none"
           />
-          {/* obra en curso: sólo columnas y una losa */}
+          {/* obra en curso: columnas y una losa */}
           <path
             className="sky"
-            d="M212 150 V96 M240 150 V96 M268 150 V96 M296 150 V96 M206 96 H302"
+            d="M184 150 V96 M210 150 V96 M236 150 V96 M262 150 V96 M178 96 H268"
           />
-          <path className="sky" d="M212 123 H296" opacity="0.5" />
-          {/* grúa */}
-          <path className="sky" d="M254 96 V10 M214 10 H312 M236 10 L254 30 L272 10" />
-          <path className="sky" d="M296 10 V52 M291 52 H301" />
+          <path className="sky" d="M184 123 H262" opacity="0.5" />
+          {/* grúa torre: mástil reticulado */}
+          <path className="sky" d="M290 150 V44 M300 150 V44" />
+          <path
+            className="sky"
+            d="M290 136 L300 122 L290 108 L300 94 L290 80 L300 66 L290 52"
+            opacity="0.6"
+          />
+          {/* cabina y torreta en punta */}
+          <path className="sky" d="M286 44 H304 V36 H286 Z M290 36 L295 18 L300 36" />
+          {/* pluma y contrapluma, con contrapeso */}
+          <path className="sky" d="M234 44 H356 M240 49 H350" />
+          <path
+            className="sky"
+            d="M246 44 L252 49 L258 44 L264 49 L270 44 L276 49 L282 44 M308 44 L314 49 L320 44 L326 49 L332 44 L338 49 L344 44"
+            opacity="0.6"
+          />
+          <path className="sky" d="M238 49 V60 H254 V49" />
+          {/* tirantes desde la punta */}
+          <path className="sky" d="M295 18 L350 44 M295 18 L240 44" opacity="0.7" />
+          {/* carro, cable y gancho */}
+          <path className="sky" d="M330 49 H340 V53 H330 Z M335 53 V110" />
+          <path className="sky" d="M335 110 V116 a4 4 0 0 1 -8 0" />
           {/* suelo */}
-          <path className="sky" d="M0 150 H320" />
+          <path className="sky" d="M0 150 H360" />
         </svg>
       </div>
       <p className="sub hero-copy mt-8 font-mono text-sm text-(--lebane-ink-dim) md:text-base">

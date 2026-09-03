@@ -171,21 +171,32 @@ export function StoryThread() {
       const add = (el: SVGPathElement, y0: number, y1: number, glow?: SVGElement) =>
         segments.push({ el, y0, y1: Math.max(y1, y0 + 40), glow });
 
-      // Arranque: la línea recorre la grúa del skyline de la portada (base,
-      // mástil, pluma y cable hasta el gancho) y sale del gancho hacia el
-      // margen. El skyline está en un viewBox de 320x170 centrado en su caja.
+      // Arranque: la línea recorre la grúa del skyline de la portada (mástil,
+      // torreta, tirante, pluma, carro y cable hasta el gancho) y se descuelga
+      // del gancho hacia el margen. El skyline es un viewBox de 360x170 que
+      // ocupa todo el ancho de su caja.
       const sk = skyline.getBoundingClientRect();
-      const kk = sk.width / 320;
+      const kk = sk.width / 360;
       const skTop = sk.top + window.scrollY - mainTop + (sk.height - 170 * kk) / 2;
       const sp = (x: number, y: number): Pt => ({ x: sk.left + x * kk, y: skTop + y * kk });
-      const base = sp(254, 150);
-      const mastTop = sp(254, 10);
-      const jibEnd = sp(296, 10);
-      const hook = sp(296, 52);
+      const route = [
+        sp(295, 150), // base del mástil
+        sp(295, 36), // cabina
+        sp(295, 18), // torreta
+        sp(350, 44), // punta de la pluma, por el tirante
+        sp(335, 49), // carro
+        sp(335, 116), // cable hasta el gancho
+      ];
+      const hook = sp(327, 116);
       const heroBottom = toDoc(sections[0]!).bottom;
       add(
         stroke(
-          `M${base.x} ${base.y} L${mastTop.x} ${mastTop.y} L${jibEnd.x} ${jibEnd.y} L${hook.x} ${hook.y}`,
+          `M${route[0].x} ${route[0].y} ` +
+            route
+              .slice(1)
+              .map((p) => `L${p.x} ${p.y}`)
+              .join(" ") +
+            ` a${4 * kk} ${4 * kk} 0 0 1 ${-8 * kk} 0`,
         ),
         0,
         heroBottom * 0.35,
@@ -193,7 +204,7 @@ export function StoryThread() {
       let cursor: Pt = { x: marginX, y: hook.y + 260 };
       add(
         stroke(
-          `M${hook.x} ${hook.y} C${hook.x} ${hook.y + 90} ${marginX} ${hook.y + 60} ${cursor.x} ${cursor.y}`,
+          `M${hook.x} ${hook.y} C${hook.x} ${hook.y + 120} ${marginX} ${hook.y + 80} ${cursor.x} ${cursor.y}`,
         ),
         heroBottom * 0.35,
         heroBottom * 0.6,
