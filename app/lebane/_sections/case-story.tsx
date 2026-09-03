@@ -10,7 +10,7 @@ const STEPS = [
   {
     id: "hipotesis",
     eyebrow: "Hipótesis",
-    text: "Buena parte de la tensión de caja de una desarrolladora mediana viene del desfase entre las cuotas que van a entrar y los compromisos que ya vencieron, no de la falta de ventas. Lebane ve las dos puntas.",
+    text: "El problema de caja de una desarrolladora mediana suele ser de fechas, no de ventas: las cuotas entran después de que vencen los pagos. Lebane ve las dos puntas.",
   },
   {
     id: "paso-1",
