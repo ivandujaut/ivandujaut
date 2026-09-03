@@ -18,15 +18,11 @@ const TITLE_B = "Esto es lo que vi.";
  */
 export function Hero() {
   const ref = useGsapSection<HTMLElement>(({ root, q }) => {
-    // Salida: al empezar a bajar, el texto se retira y el plano hace parallax.
+    // Salida: al empezar a bajar, el texto se retira. El plano se queda quieto:
+    // el hilo conductor nace de su grúa y tiene que coincidir con él.
     gsap.to(q(".hero-copy"), {
       y: -80,
       opacity: 0.1,
-      ease: "none",
-      scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true },
-    });
-    gsap.to(q(".skyline"), {
-      y: -160,
       ease: "none",
       scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true },
     });

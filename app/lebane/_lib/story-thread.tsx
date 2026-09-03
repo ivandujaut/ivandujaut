@@ -6,61 +6,82 @@ import { useGsapSection } from "./use-gsap-section";
 type Pt = { x: number; y: number };
 
 /**
- * Hitos de trazo continuo, en una caja de 100x100. Cada uno arranca en
- * `start` (por donde llega la línea) y termina en `end` (por donde se va),
+ * Hitos de obra, de trazo continuo, en una caja de 100x100. Cada uno arranca
+ * en `start` (por donde llega la línea) y termina en `end` (por donde se va),
  * para que el hilo entre, lo dibuje y siga de largo, como los edificios del
- * diseño de Carmen Ansio.
+ * diseño de Carmen Ansio. Todos son cosas de una construcción: la misma
+ * familia que el skyline de la portada.
  */
 const LANDMARKS: Record<string, { paths: string[]; start: Pt; end: Pt }> = {
-  // Cuatro saltos: una escalera que sube.
+  // Cuatro saltos: una escalera de obra con cuatro peldaños.
   timeline: {
-    paths: ["M8 92 H30 V72 H50 V52 H70 V32 H92 V12"],
-    start: { x: 8, y: 92 },
-    end: { x: 92, y: 12 },
+    paths: ["M22 94 V10", "M22 30 H70 M22 50 H70 M22 70 H70 M22 90 H70", "M70 94 V6"],
+    start: { x: 22, y: 94 },
+    end: { x: 70, y: 6 },
   },
-  // El producto: un círculo que se cierra sobre sí mismo.
+  // El producto, módulo sobre módulo: una pared de ladrillos.
   "product-map": {
-    paths: ["M50 10 A40 40 0 1 1 12 58", "M12 58 l-8 -12 M12 58 l13 -5"],
-    start: { x: 50, y: 10 },
-    end: { x: 25, y: 53 },
+    paths: [
+      "M8 92 H92 V72 H8 Z",
+      "M8 72 V52 H92 V72 M50 52 V72",
+      "M18 52 V32 H82 V52 M30 72 V92 M70 72 V92",
+      "M30 32 V52 M70 32 V52 M50 12 H50 M40 32 V14 H60 V32",
+    ],
+    start: { x: 8, y: 92 },
+    end: { x: 60, y: 32 },
   },
-  // La tesis: tres pisos y una puerta en planta baja.
+  // La tesis: un edificio en obra, con andamio y la puerta en planta baja.
   thesis: {
-    paths: ["M12 92 V18 H88 V92", "M12 42 H88 M12 67 H88", "M42 92 V74 H58 V92 H92"],
-    start: { x: 12, y: 92 },
+    paths: [
+      "M14 92 V24 H86 V92",
+      "M14 46 H86 M14 68 H86",
+      "M26 24 V12 H74 V24",
+      "M42 92 V76 H58 V92 H92",
+    ],
+    start: { x: 14, y: 92 },
     end: { x: 92, y: 92 },
   },
-  // Por qué Lebane puede: el libro mayor abierto.
+  // Por qué Lebane puede: el plano de la obra, desenrollado.
   "why-lebane-can": {
     paths: [
-      "M10 26 Q50 14 90 26 V82 Q50 70 10 82 Z",
-      "M50 20 V76",
-      "M22 42 H42 M58 42 H78 M22 56 H42 M58 56 H78",
+      "M12 22 H80 V84 H12 Z",
+      "M80 22 a8 8 0 0 1 8 8 V78 a8 8 0 0 1 -8 8",
+      "M24 40 H68 M24 54 H68 M24 68 H50 M46 40 V68",
     ],
-    start: { x: 10, y: 26 },
-    end: { x: 78, y: 56 },
+    start: { x: 12, y: 22 },
+    end: { x: 46, y: 68 },
   },
-  // El caso: el medidor del score, con la aguja.
+  // El caso: un nivel de burbuja; medir antes de prestar.
   case: {
     paths: [
-      "M16 72 A38 38 0 1 1 84 72",
-      "M50 72 L70 40",
-      "M44 72 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0",
+      "M6 62 H94 V78 H6 Z",
+      "M38 62 V42 H62 V62",
+      "M44 52 a6 5 0 1 0 12 0 a6 5 0 1 0 -12 0",
+      "M6 70 H94",
     ],
-    start: { x: 16, y: 72 },
-    end: { x: 56, y: 72 },
+    start: { x: 6, y: 62 },
+    end: { x: 94, y: 70 },
   },
-  // Por qué yo: tres tarjetas apiladas.
+  // Por qué yo: el casco.
   "why-me": {
-    paths: ["M14 36 H58 V88 H14 Z", "M26 24 H70 V76", "M38 12 H84 V64"],
-    start: { x: 14, y: 36 },
-    end: { x: 84, y: 64 },
+    paths: [
+      "M12 66 H88",
+      "M18 66 C18 30 40 20 50 20 C60 20 82 30 82 66",
+      "M50 20 V40 M40 26 V44 M60 26 V44",
+      "M8 66 a6 6 0 0 0 6 6 H86 a6 6 0 0 0 6 -6",
+    ],
+    start: { x: 12, y: 66 },
+    end: { x: 92, y: 66 },
   },
-  // El cierre: un sobre.
+  // El cierre: la puerta, abierta.
   close: {
-    paths: ["M12 30 H88 V76 H12 Z", "M12 30 L50 58 L88 30"],
-    start: { x: 12, y: 30 },
-    end: { x: 88, y: 30 },
+    paths: [
+      "M16 92 V12 H84 V92",
+      "M28 92 V22 L68 12 V82 Z",
+      "M58 48 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0",
+    ],
+    start: { x: 16, y: 92 },
+    end: { x: 64, y: 48 },
   },
 };
 
@@ -150,19 +171,32 @@ export function StoryThread() {
       const add = (el: SVGPathElement, y0: number, y1: number, glow?: SVGElement) =>
         segments.push({ el, y0, y1: Math.max(y1, y0 + 40), glow });
 
-      // Arranque: el extremo derecho del suelo de la grúa, en la portada.
+      // Arranque: la línea recorre la grúa del skyline de la portada (base,
+      // mástil, pluma y cable hasta el gancho) y sale del gancho hacia el
+      // margen. El skyline está en un viewBox de 320x170 centrado en su caja.
       const sk = skyline.getBoundingClientRect();
-      const start: Pt = {
-        x: sk.right - sk.width * 0.02,
-        y: sk.top + window.scrollY - mainTop + sk.height * 0.882,
-      };
-      let cursor: Pt = { x: marginX, y: start.y + 200 };
+      const kk = sk.width / 320;
+      const skTop = sk.top + window.scrollY - mainTop + (sk.height - 170 * kk) / 2;
+      const sp = (x: number, y: number): Pt => ({ x: sk.left + x * kk, y: skTop + y * kk });
+      const base = sp(254, 150);
+      const mastTop = sp(254, 10);
+      const jibEnd = sp(296, 10);
+      const hook = sp(296, 52);
+      const heroBottom = toDoc(sections[0]!).bottom;
       add(
         stroke(
-          `M${start.x} ${start.y} C${start.x + 90} ${start.y} ${marginX} ${start.y + 60} ${cursor.x} ${cursor.y}`,
+          `M${base.x} ${base.y} L${mastTop.x} ${mastTop.y} L${jibEnd.x} ${jibEnd.y} L${hook.x} ${hook.y}`,
         ),
-        start.y,
-        cursor.y,
+        0,
+        heroBottom * 0.35,
+      );
+      let cursor: Pt = { x: marginX, y: hook.y + 260 };
+      add(
+        stroke(
+          `M${hook.x} ${hook.y} C${hook.x} ${hook.y + 90} ${marginX} ${hook.y + 60} ${cursor.x} ${cursor.y}`,
+        ),
+        heroBottom * 0.35,
+        heroBottom * 0.6,
       );
 
       sections.slice(1).forEach((section, idx) => {
@@ -257,9 +291,10 @@ export function StoryThread() {
       local = gsap.context(() => {
         segments.forEach(({ el, y0, y1, glow }) => {
           const len = el.getTotalLength();
-          // Un desplazamiento apenas mayor que el largo: con remates redondos,
-          // un tramo de largo cero igual pinta un punto en el arranque.
-          gsap.set(el, { strokeDasharray: len, strokeDashoffset: len + 2 });
+          // El hueco del patrón es más largo que el trazo: así, antes de
+          // dibujarse, ningún tramo asoma ni en el arranque (remate redondo
+          // de un dash de largo cero) ni en el final (vuelta del patrón).
+          gsap.set(el, { strokeDasharray: `${len} ${len + 8}`, strokeDashoffset: len });
           ScrollTrigger.create({
             start: y0 - half,
             end: y1 - half,
