@@ -227,12 +227,19 @@ export const thesis = {
     {
       key: "erp",
       text: "El ERP es la puerta.",
+      keyword: "puerta",
       floor: "La obra entera, cargada en un solo lugar.",
     },
-    { key: "payments", text: "Payments es el puente.", floor: "El dinero real pasa por adentro." },
+    {
+      key: "payments",
+      text: "Payments es el puente.",
+      keyword: "puente",
+      floor: "El dinero real pasa por adentro.",
+    },
     {
       key: "credit",
       text: "El crédito es el negocio.",
+      keyword: "negocio",
       floor: "Con datos y flujo, se puede prestar.",
     },
   ],
@@ -289,9 +296,8 @@ export const scoreCardExample = {
 };
 
 /**
- * Pruebas de Iván. Los slugs están verificados contra el repo: no existe una
- * página propia de FIJI, así que Banana y FIJI apuntan a /about, donde se
- * cuentan.
+ * Pruebas de Iván. Los slugs están verificados contra el repo. FIJI no tiene
+ * página en el sitio: enlaza a la app. Banana apunta a /about, donde se cuenta.
  */
 export const proofs = [
   {
@@ -312,9 +318,9 @@ export const proofs = [
     number: "Operación → valuación",
     line: "Motor que traduce métricas de operación inmobiliaria en valuación financiera.",
     proves: "Ya hago datos operativos → número financiero. Mismo vertical, lado del inversor.",
-    href: "/about",
-    hrefLabel: "Leer en /about",
-    source: "/about",
+    href: "https://app.fijiapp.com/",
+    hrefLabel: "Abrir FIJI",
+    source: "https://app.fijiapp.com/",
   },
   {
     id: "bot",
