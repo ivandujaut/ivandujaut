@@ -71,7 +71,7 @@ export function Hero() {
       className="mx-auto flex min-h-svh w-full max-w-5xl flex-col justify-center px-6 py-24"
     >
       <div className="grid items-end gap-10 md:grid-cols-[1.4fr_1fr] md:gap-8">
-        <h1 className="hero-copy font-serif text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="hero-copy font-(--font-serif-optional) text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl">
           {words(TITLE_A, false)} {words(TITLE_B, true)}
         </h1>
         <svg
