@@ -34,7 +34,10 @@ export function Hero() {
     });
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.from(q(".word"), { yPercent: 110, opacity: 0, duration: 0.9, stagger: 0.05 })
+    // Las palabras no arrancan invisibles ni recortadas: el título es el
+    // elemento más grande de la portada (LCP) y tiene que estar pintado desde
+    // el primer cuadro. Solo suben unos píxeles hasta su lugar.
+    tl.from(q(".word"), { y: 22, duration: 0.8, stagger: 0.05 })
       .from(q(".sub"), { opacity: 0, y: 12, duration: 0.6 }, "-=0.3")
       .to(strokes, { strokeDashoffset: 0, duration: 1.1, stagger: 0.08, ease: "power1.inOut" }, 0.3)
       .from(q(".sky-fill"), { opacity: 0, duration: 0.6 }, ">-0.2")
@@ -50,15 +53,13 @@ export function Hero() {
     });
   });
 
-  // El espacio va fuera del envoltorio `overflow-hidden`: adentro de un
-  // inline-block el blanco final se colapsa y las palabras se pegan.
+  // El espacio va fuera del `inline-block`: adentro, el blanco final se
+  // colapsa y las palabras se pegan.
   const words = (text: string, italic: boolean) =>
     text.split(" ").map((word, i) => (
       <Fragment key={`${italic}-${i}`}>
-        <span className="inline-block overflow-hidden pb-[0.12em] align-bottom">
-          <span className={`word inline-block ${italic ? "italic text-(--lebane-accent)" : ""}`}>
-            {word}
-          </span>
+        <span className={`word inline-block ${italic ? "italic text-(--lebane-accent)" : ""}`}>
+          {word}
         </span>{" "}
       </Fragment>
     ));
