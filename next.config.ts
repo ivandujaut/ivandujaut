@@ -79,6 +79,10 @@ const nextConfig: NextConfig = {
   // la reescribe a `/es/rl/...` y no llega nada.
   async rewrites() {
     return [
+      // Piezas privadas por empresa (`pitches/`): la URL corta que se comparte
+      // sirve la ruta genérica sin cambiar de dirección. Excluidas del proxy
+      // de next-intl en `proxy.ts`.
+      { source: "/lebane", destination: "/pitch/lebane" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",
