@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "content/posts/**/*.mdx"
+      - "content/projects/**/*.mdx"
   workflow_dispatch:
     inputs:
       urls:
@@ -56,12 +57,12 @@ jobs:
             BEFORE="${AFTER}^"
           fi
 
-          # Filtrar a posts (es|en) agregados o modificados.
+          # Filtrar a posts y casos (es|en) agregados o modificados.
           changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" \
-            | grep -E '^content/posts/(es|en)/.+\.mdx$' || true)
+            | grep -E '^content/(posts|projects)/(es|en)/.+\.mdx$' || true)
 
           if [ -z "$changed" ]; then
-            echo "No post changes detected — skipping"
+            echo "No content changes detected — skipping"
             echo "urls=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -69,8 +70,19 @@ jobs:
           urls=""
           while IFS= read -r file; do
             [ -z "$file" ] && continue
-            # content/posts/<locale>/<...>
+            # Un borrador sale con noindex: pinguearlo no sirve.
+            if grep -qE '^draft: *true' "$file"; then
+              echo "Skipping draft: $file"
+              continue
+            fi
+            # content/<collection>/<locale>/<...>
+            collection=$(echo "$file" | cut -d/ -f2)
             locale=$(echo "$file" | cut -d/ -f3)
+            case "$collection" in
+              posts) route="blog" ;;
+              projects) route="projects" ;;
+              *) continue ;;
+            esac
             base=$(basename "$file" .mdx)
             # Soporta tanto <slug>.mdx como <slug>/index.mdx
             if [ "$base" = "index" ]; then
@@ -80,9 +92,9 @@ jobs:
             fi
             # localePrefix "as-needed": es sin prefijo, otros locales con prefijo.
             if [ "$locale" = "es" ]; then
-              url="$SITE_URL/blog/$slug"
+              url="$SITE_URL/$route/$slug"
             else
-              url="$SITE_URL/$locale/blog/$slug"
+              url="$SITE_URL/$locale/$route/$slug"
             fi
             urls="$urls $url"
           done <<< "$changed"
