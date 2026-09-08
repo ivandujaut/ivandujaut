@@ -3,30 +3,23 @@
 import { ScrollTrigger, gsap } from "./gsap";
 import { useGsapSection } from "./use-gsap-section";
 
-const SECTIONS: Array<{ id: string; label: string }> = [
-  { id: "hero", label: "Inicio" },
-  { id: "timeline", label: "Trayectoria" },
-  { id: "product-map", label: "Producto" },
-  { id: "thesis", label: "Tesis" },
-  { id: "why-lebane-can", label: "Por qué Lebane" },
-  { id: "case", label: "El caso" },
-  { id: "why-me", label: "Por qué yo" },
-  { id: "close", label: "Cierre" },
-];
+interface ScrollProgressProps {
+  sections: Array<{ id: string; label: string }>;
+}
 
 /**
  * Dos ayudas de orientación para una página que se lee bajando: una barra de
  * progreso arriba (en todas las pantallas) y un índice de puntos a la derecha
  * (sólo desktop) que marca la sección activa. Ninguna compite con el contenido.
  */
-export function ScrollProgress() {
+export function ScrollProgress({ sections }: ScrollProgressProps) {
   const ref = useGsapSection<HTMLDivElement>(({ root, q }) => {
     gsap.to(q(".progress"), {
       scaleX: 1,
       ease: "none",
       scrollTrigger: { trigger: document.body, start: 0, end: "max", scrub: 0.3 },
     });
-    SECTIONS.forEach(({ id }) => {
+    sections.forEach(({ id }) => {
       const section = document.getElementById(id);
       const dot = root.querySelector(`[data-dot="${id}"]`);
       if (!section || !dot) return;
@@ -42,14 +35,14 @@ export function ScrollProgress() {
   return (
     <div ref={ref}>
       <div
-        className="progress fixed top-0 left-0 z-50 h-0.5 w-full origin-left scale-x-0 bg-(--lebane-accent)"
+        className="progress fixed top-0 left-0 z-50 h-0.5 w-full origin-left scale-x-0 bg-(--pitch-accent)"
         aria-hidden
       />
       <nav
         aria-label="Secciones"
         className="fixed top-1/2 right-5 z-40 hidden -translate-y-1/2 flex-col gap-3 lg:flex"
       >
-        {SECTIONS.map((s) => (
+        {sections.map((s) => (
           <a
             key={s.id}
             href={`#${s.id}`}

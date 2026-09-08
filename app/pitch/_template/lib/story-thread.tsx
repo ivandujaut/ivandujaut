@@ -3,89 +3,17 @@
 import { gsap, ScrollTrigger } from "./gsap";
 import { useGsapSection } from "./use-gsap-section";
 
-type Pt = { x: number; y: number };
+import type { ThreadStart } from "../illustrations/types";
+import type { LandmarkSet, Pt } from "../landmarks/types";
 
-/**
- * Hitos de obra, de trazo continuo, en una caja de 100x100. Cada uno arranca
- * en `start` (por donde llega la línea) y termina en `end` (por donde se va),
- * para que el hilo entre, lo dibuje y siga de largo, como los edificios del
- * diseño de Carmen Ansio. Todos son cosas de una construcción: la misma
- * familia que el skyline de la portada.
- */
-const LANDMARKS: Record<string, { paths: string[]; start: Pt; end: Pt }> = {
-  // Cuatro saltos: una escalera de obra con cuatro peldaños.
-  timeline: {
-    paths: ["M22 94 V10", "M22 30 H70 M22 50 H70 M22 70 H70 M22 90 H70", "M70 94 V6"],
-    start: { x: 22, y: 94 },
-    end: { x: 70, y: 6 },
-  },
-  // El producto, módulo sobre módulo: una pared de ladrillos.
-  "product-map": {
-    paths: [
-      "M8 92 H92 V72 H8 Z",
-      "M8 72 V52 H92 V72 M50 52 V72",
-      "M18 52 V32 H82 V52 M30 72 V92 M70 72 V92",
-      "M30 32 V52 M70 32 V52 M50 12 H50 M40 32 V14 H60 V32",
-    ],
-    start: { x: 8, y: 92 },
-    end: { x: 60, y: 32 },
-  },
-  // La tesis: un edificio en obra, con andamio y la puerta en planta baja.
-  thesis: {
-    paths: [
-      "M14 92 V24 H86 V92",
-      "M14 46 H86 M14 68 H86",
-      "M26 24 V12 H74 V24",
-      "M42 92 V76 H58 V92 H92",
-    ],
-    start: { x: 14, y: 92 },
-    end: { x: 92, y: 92 },
-  },
-  // Por qué Lebane puede: el plano de la obra, desenrollado.
-  "why-lebane-can": {
-    paths: [
-      "M12 22 H80 V84 H12 Z",
-      "M80 22 a8 8 0 0 1 8 8 V78 a8 8 0 0 1 -8 8",
-      "M24 40 H68 M24 54 H68 M24 68 H50 M46 40 V68",
-    ],
-    start: { x: 12, y: 22 },
-    end: { x: 46, y: 68 },
-  },
-  // El caso: un nivel de burbuja; medir antes de prestar.
-  case: {
-    paths: [
-      "M6 62 H94 V78 H6 Z",
-      "M38 62 V42 H62 V62",
-      "M44 52 a6 5 0 1 0 12 0 a6 5 0 1 0 -12 0",
-      "M6 70 H94",
-    ],
-    start: { x: 6, y: 62 },
-    end: { x: 94, y: 70 },
-  },
-  // Por qué yo: el casco.
-  "why-me": {
-    paths: [
-      "M12 66 H88",
-      "M18 66 C18 30 40 20 50 20 C60 20 82 30 82 66",
-      "M50 20 V40 M40 26 V44 M60 26 V44",
-      "M8 66 a6 6 0 0 0 6 6 H86 a6 6 0 0 0 6 -6",
-    ],
-    start: { x: 12, y: 66 },
-    end: { x: 92, y: 66 },
-  },
-  // El cierre: la puerta, abierta.
-  close: {
-    paths: [
-      "M16 92 V12 H84 V92",
-      "M28 92 V22 L68 12 V82 Z",
-      "M58 48 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0",
-    ],
-    start: { x: 16, y: 92 },
-    end: { x: 64, y: 48 },
-  },
-};
-
-const SECTION_IDS = ["hero", ...Object.keys(LANDMARKS)];
+interface StoryThreadProps {
+  /** Ids de las secciones en orden, empezando por la portada. */
+  sectionIds: string[];
+  /** De dónde nace el cable dentro de la ilustración de la portada. */
+  thread: ThreadStart;
+  /** Una figura por sección (sin la portada), por id. */
+  landmarks: LandmarkSet;
+}
 
 /**
  * El hilo conductor, con el lenguaje del scrollytelling de Carmen Ansio: una
@@ -99,17 +27,15 @@ const SECTION_IDS = ["hero", ...Object.keys(LANDMARKS)];
  * eso se reconstruye en cada `refresh` de ScrollTrigger (fuentes, resize).
  * Es decoración: con `prefers-reduced-motion` no se dibuja nada.
  */
-export function StoryThread() {
+export function StoryThread({ sectionIds, thread, landmarks }: StoryThreadProps) {
   const ref = useGsapSection<HTMLDivElement>(({ root, isMobile }) => {
     const main = root.parentElement;
     const svg = root.querySelector<SVGSVGElement>("svg");
     if (!main || !svg) return;
 
     let local: gsap.Context | null = null;
-    // El skyline de la portada dibuja sus trazos escalonados desde que carga;
-    // el carro de la grúa es de los últimos. El cable sale justo después.
-    const CABLE_AT = 2.6;
-    const CABLE_DURATION = 1.1;
+    const CABLE_AT = thread.cableAt;
+    const CABLE_DURATION = thread.cableDuration;
     const firstBuildAt = performance.now();
     let cableTween: gsap.core.Tween | null = null;
     const ns = "http://www.w3.org/2000/svg";
@@ -128,8 +54,8 @@ export function StoryThread() {
           bottom: r.bottom + window.scrollY - mainTop,
         };
       };
-      const sections = SECTION_IDS.map((id) => document.getElementById(id));
-      const skyline = document.querySelector<SVGElement>(".skyline");
+      const sections = sectionIds.map((id) => document.getElementById(id));
+      const skyline = document.querySelector<SVGElement>("[data-illustration]");
       if (sections.some((s) => !s) || !skyline) return;
 
       const vw = window.innerWidth;
@@ -164,7 +90,7 @@ export function StoryThread() {
           {
             d,
             fill: "none",
-            stroke: "var(--lebane-accent)",
+            stroke: "var(--pitch-accent)",
             "stroke-width": strokeWidth / scale,
             "stroke-linecap": "round",
             "stroke-linejoin": "round",
@@ -177,15 +103,16 @@ export function StoryThread() {
       const add = (el: SVGPathElement, y0: number, y1: number, glow?: SVGElement) =>
         segments.push({ el, y0, y1: Math.max(y1, y0 + 40), glow });
 
-      // Arranque: el hilo ES el cable de la grúa. Nace en el carro de la
-      // pluma, baja recto y esa misma recta sigue por toda la página.
-      // El skyline es un viewBox de 360x170 que ocupa todo el ancho de su caja.
+      // Arranque: el hilo ES el cable que cuelga de la ilustración. Nace en
+      // el punto que declara la ilustración, baja recto y esa misma recta
+      // sigue por toda la página. La ilustración ocupa todo el ancho de su caja.
+      const [vbW, vbH] = thread.viewBox;
       const sk = skyline.getBoundingClientRect();
-      const kk = sk.width / 360;
-      const skTop = sk.top + window.scrollY - mainTop + (sk.height - 170 * kk) / 2;
+      const kk = sk.width / vbW;
+      const skTop = sk.top + window.scrollY - mainTop + (sk.height - vbH * kk) / 2;
       const sp = (x: number, y: number): Pt => ({ x: sk.left + x * kk, y: skTop + y * kk });
-      const trolley = sp(335, 53);
-      const cableEnd = sp(335, 118);
+      const trolley = sp(thread.x, thread.from);
+      const cableEnd = sp(thread.x, thread.to);
       const heroBottom = toDoc(sections[0]!).bottom;
 
       // La regla de la portada termina antes del cable, para no cruzarlo.
@@ -195,8 +122,8 @@ export function StoryThread() {
         rule.style.width = `${Math.max(0, cableEnd.x - r.left - 18)}px`;
       }
 
-      // El cable se dibuja al cargar, después del skyline, no con el scroll:
-      // la grúa tiene que estar completa antes de bajar.
+      // El cable se dibuja al cargar, después de la ilustración, no con el
+      // scroll: la figura tiene que estar completa antes de bajar.
       const cable = stroke(`M${trolley.x} ${trolley.y} V${cableEnd.y}`);
       const cableLen = cable.getTotalLength();
       gsap.set(cable, {
@@ -235,8 +162,9 @@ export function StoryThread() {
 
       sections.slice(1).forEach((section, idx) => {
         const i = idx + 1;
-        const id = SECTION_IDS[i];
-        const mark = LANDMARKS[id];
+        const id = sectionIds[i];
+        const mark = landmarks[id];
+        if (!mark) return;
         const prev = toDoc(sections[i - 1]!);
         const cur = toDoc(section!);
         const gapTop = prev.bottom - (isMobile ? 40 : 90);
@@ -290,7 +218,7 @@ export function StoryThread() {
           cx: center.x,
           cy: center.y,
           r: size * 0.62,
-          fill: "var(--lebane-accent)",
+          fill: "var(--pitch-accent)",
           opacity: 0,
         });
         const group = mk("g", {

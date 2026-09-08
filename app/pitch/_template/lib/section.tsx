@@ -40,7 +40,7 @@ export function SectionHeading({ index, eyebrow, children, className }: HeadingP
           {index}
         </span>
       ) : null}
-      <p className="relative font-mono text-xs tracking-widest text-(--lebane-accent) uppercase">
+      <p className="relative font-mono text-xs tracking-widest text-(--pitch-accent) uppercase">
         {index ? (
           <>
             {index} <span aria-hidden>·</span>{" "}
