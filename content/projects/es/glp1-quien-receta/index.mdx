@@ -1,0 +1,341 @@
+---
+title: "¿El médico que más cobra del Ozempic es el que más lo receta?"
+tagline: "De los 51.099 que cobraron algo por Ozempic en 2024 y lo recetan, 342 cobraron honorarios. Recetan distinto, salvo los endocrinólogos"
+description: "Crucé los pagos que Novo Nordisk y Eli Lilly declararon por sus GLP-1, los fármacos para diabetes y obesidad, contra las recetas de Medicare Part D, médico por médico y hasta 2024. La diferencia aparece en los 342 que cobran honorarios, y sólo fuera de la endocrinología."
+year: 2026
+date: "2026-09-08"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: true
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración a lápiz sobre papel crema, no una fotografía: dos manos sostienen una lapicera precargada de Ozempic con la aguja puesta, mientras debajo se apilan otras cinco lapiceras iguales dibujadas con menos detalle y sin que nadie las toque"
+stack: ["Python", "DuckDB", "Parquet", "Datos abiertos (CMS Open Payments y Part D)"]
+preview:
+  - src: "/projects/glp1-quien-receta/g1_la_puerta.png"
+    alt: "Dos paneles de barras: a la izquierda el volumen de recetas sube con el pago, a la derecha esa proporción sólo sube en el grupo que cobra honorarios y las otras dos barras se emparejan"
+  - src: "/projects/glp1-quien-receta/g2_donde_se_abre.png"
+    alt: "Barras horizontales por especialidad: endocrinología entre 1,22 y 1,47, atención primaria entre 4,36 y 7,16, y enfermería y asistentes médicos entre 6,58 y 7,22"
+  - src: "/projects/glp1-quien-receta/g3_adentro_no_hay_escalera.png"
+    alt: "Tres líneas por cuartil de honorarios: la de Ozempic 2024 sube y después cae en el cuartil que más cobra"
+metrics:
+  - label: "Ozempic en la práctica de quien cobra honorarios"
+    value: "6,46%"
+  - label: "Ozempic en la práctica de quien no cobró por esa marca"
+    value: "0,98%"
+  - label: "Recetaron Ozempic en 2024 y cobraron honorarios"
+    value: "342"
+  - label: "Pares cruzados contra el archivo original, sin diferencias"
+    value: "1.137.205"
+translationKey: "glp1-quien-receta"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+¿El médico que más cobra de un laboratorio es el que más receta su producto? Estados Unidos tiene
+las dos bases públicas que hacen falta para contestarlo: lo que cada laboratorio le paga a cada
+profesional de la salud, y cuántas recetas de cada droga hizo cada médico dentro de Medicare.
+Las crucé médico por médico hasta 2024.
+
+La diferencia existe, y está concentrada en muy poca gente. De los 51.099 profesionales que
+cobraron algo de Novo o de Lilly por Ozempic en 2024 y figuran recetándolo, sólo **342** cobraron
+un honorario por dar una charla o por asesorar. En ellos el Ozempic ocupa seis veces y media
+más lugar en lo que recetan que en un médico que no cobró nada por esa marca, con el tamaño del
+consultorio ya descontado.
+
+Los otros 50.757 recibieron comidas o viajes, y su práctica tiene la misma proporción de Ozempic
+que la de quien no cobró nada.
+
+Y ni siquiera entre los 342 pasa en todas partes. Entre los 196 endocrinólogos, la diferencia es
+de 1,22 veces, o sea casi nada. Entre los 65 médicos de atención primaria y los 38 de enfermería
+y asistentes médicos, va de 4,36 a 6,58 veces.
+
+Adentro de ese grupo tampoco hay escalera: el cuarto que más cobró, 95 personas, receta menos
+que el cuarto anterior.
+
+Lo que estos datos no pueden decir es en qué orden pasaron las cosas: si el honorario cambió la
+receta, o si el laboratorio eligió como orador a alguien que ya recetaba mucho. Lo que sí muestran
+es dónde está el salto, cuánto mide y cuánta gente lo cruza. Y que las dos explicaciones posibles
+le traen el mismo problema a la compañía que paga.
+
+</Abstract>
+
+<Thesis>
+
+En GLP-1 la plata promocional funciona como una puerta: la diferencia
+aparece al cruzar al grupo que cobra honorarios, y sólo donde la receta no era obvia.
+
+</Thesis>
+
+## Qué es dato y qué es supuesto
+
+Estados Unidos obliga por ley a cada laboratorio a declarar lo que le paga a cada profesional
+de la salud, y eso va a una base pública que se llama [Open Payments](https://openpaymentsdata.cms.gov/). Hay otra base, también
+pública, que dice cuántas recetas de cada droga hizo cada médico dentro de Medicare, el seguro
+público: se llama [Part D](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers). Este caso cruza las dos.
+
+El cruce se hace por el número de matrícula nacional, que aparece en las dos bases en el 99,9%
+de los pagos. Vale aclararlo, porque el [manual oficial de Part D](https://data.cms.gov/sites/default/files/2026-05/MUP_DPR_RY26_20260421_Methodology_508.pdf) todavía dice que Open Payments
+no publica ese número y recomienda cruzar por nombre y dirección. Los archivos de 2021 en
+adelante sí lo traen. Lo verifiqué antes de empezar, porque sin ese número el cruce no era posible.
+
+Antes de seguir, dos aclaraciones que hacen falta para leer todo lo que viene.
+
+La primera es que adentro de la palabra "pago" hay dos cosas que no se parecen. Casi todas son
+comida: el representante del laboratorio llega al consultorio con el almuerzo y consigue unos
+minutos para hablar del producto. Es el **96,9% de los pagos** de GLP-1 en 2024 y la mediana es
+de **17,20 dólares**. La otra es el honorario por dar una charla o por asesorar: el **2,1% de
+los pagos** y el **56,3% de la plata**, con una mediana de 900 dólares el de charla y de 2.200
+el de consultoría. Los viajes,
+que uno esperaría encontrar, son el 0,7%.
+
+La segunda es que cuando digo "no cobró nada" quiero decir **no cobró nada por esa marca ese
+año**. Puede haber cobrado por otra, y muchos cobraron.
+
+Los archivos de recetas pesan entre 3,64 y 4,06 gigabytes por año, así que en vez de leerlos
+enteros le pedí a CMS, el organismo que los publica, sólo las filas de las nueve marcas que me
+interesan. Después comparé los dos caminos fila por fila: **1.137.205 pares médico-marca, cero
+diferencias** en los cuatro años.
+
+| Cifra                                                                                       | Estatus                             | De dónde sale                                                                                       |
+| ------------------------------------------------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 61% más de recetas (Ozempic 2024)                                                           | Cálculo propio sobre fuente oficial | Medianas de Part D 2024 según qué cobró cada médico                                                 |
+| Consultorios 33% más grandes                                                                | Cálculo propio sobre fuente oficial | Archivo "by Provider" de Part D 2024                                                                |
+| 1,03% contra 0,98% de lo que receta                                                         | Cálculo propio sobre fuente oficial | Recetas de la marca sobre recetas totales del médico                                                |
+| 6,46% con honorarios, y los 342 médicos                                                     | Cálculo propio sobre fuente oficial | Open Payments 2024 cruzado por matrícula                                                            |
+| 1,22 a 1,47 en endocrinología; 4,36 a 7,22 en primaria y en enfermería y asistentes médicos | Cálculo propio sobre fuente oficial | El mismo cruce, partido por la especialidad que publica Part D                                      |
+| 1.137.205 pares, cero diferencias                                                           | Cálculo propio sobre fuente oficial | El recorte contra los archivos completos, con hash verificado                                       |
+| Umbral de 11 recetas de la supresión de datos                                               | Dato publicado                      | Manual oficial de Part D, abril de 2026                                                             |
+| Cobertura de Wegovy desde 2024                                                              | Dato publicado                      | Aprobación de la FDA (regulador de medicamentos), 8 de marzo de 2024                                |
+| Lo que el regulador y la industria prohíben                                                 | Dato publicado                      | Alerta del OIG (inspector general de Salud), 2020, y el código de PhRMA (la cámara de laboratorios) |
+
+Acá no hay ninguna proyección ni ningún modelo: son conteos y medianas sobre archivos
+publicados. Los datos de recetas llegan hasta **2024**, que es el último año que CMS publicó.
+
+## Los 342 que cruzan la puerta
+
+Empiezo por donde está la diferencia. Los que cobraron un honorario por hablar o por asesorar
+tienen el **6,46%** de su práctica de Medicare en Ozempic. Los que no cobraron nada por esa
+marca, el **0,98%**: una diferencia de seis veces y media.
+
+La objeción obvia a ese número es que esos 342 sean médicos más grandes, que receten más de
+todo. Y es cierto que lo son: atienden un 39% más de recetas que los que no cobran nada. Por eso
+la cuenta compara proporciones y no cantidades, y ese 39% ya está descontado. Pero conviene
+mostrar de dónde viene la objeción, porque es exactamente el error de la forma habitual de medir
+esto.
+
+La cuenta habitual es simple y por eso se usa hace diez años: se agarra a los médicos que
+cobraron por una droga, se agarra a los que no, y se compara cuántas recetas hizo cada grupo.
+[ProPublica lo hizo en 2016](https://projects.propublica.org/graphics/d4dpartd-methodology) sobre las cincuenta marcas más recetadas de
+Medicare y le dio **58% más** (cruzando contra el registro nacional de prescriptores, porque entonces Open Payments
+todavía no publicaba la matrícula). Con Ozempic en 2024 esa misma cuenta me da **61%**.
+
+<Figure
+  src="/projects/glp1-quien-receta/g1_la_puerta.png"
+  alt="Dos paneles de barras con la misma población partida en tres grupos: quien no cobró nada, quien cobró comidas y quien cobró honorarios. En el panel izquierdo, las recetas de la marca suben de 21 a 29 y a 196 en Ozempic 2022, de 31 a 50 y a 297 en Ozempic 2024, y de 25 a 35 y a 197 en Mounjaro 2024. En el panel derecho, esas mismas recetas como proporción de la práctica: 0,57%, 0,55% y 4,35% en Ozempic 2022; 0,98%, 1,03% y 6,46% en Ozempic 2024; 0,65%, 0,74% y 4,74% en Mounjaro 2024"
+  width={2000}
+  height={1280}
+  caption="A la izquierda, la cuenta habitual: las tres barras suben. A la derecha, la misma gente dividida por lo que receta cada uno: las dos primeras se emparejan y sólo la tercera queda arriba. Elaboración propia sobre Open Payments y Part D."
+/>
+
+Ese 61% no dice lo que parece. Part D publica otro archivo con el total de recetas de cada
+médico, de cualquier droga, y con ese denominador aparece que el que recibe comidas tiene el
+consultorio más grande: **4.941 recetas al año contra 3.720,5**, un 33% más. Divididas por su
+propio total, sus recetas de Ozempic pesan **1,03%** contra **0,98%**, o sea que la brecha del
+61% queda en cinco centésimas de punto.
+
+Y no es la casualidad de un año. Ozempic 2022: 0,55% contra 0,57%, esta vez apenas abajo.
+Mounjaro 2024: 0,74% contra 0,65%. Trulicity 2022: 0,63% contra 0,64%. En ninguno de los cuatro
+casos la diferencia llega a una décima de punto.
+
+<Callout type="info" title="Qué mide el denominador que no mide el conteo">
+  Un médico que hace 5.000 recetas por año va a tener más Ozempic que uno que hace 500, sin que eso
+  diga nada sobre promoción. Contar recetas mide, en buena parte, el tamaño del consultorio. Contar
+  proporciones mide qué lugar ocupa esa droga en lo que el médico receta, que es lo que una campaña
+  se propone cambiar.
+</Callout>
+
+Con la misma corrección aplicada, el grupo de honorarios sigue arriba. Por eso digo que esto se
+parece a una puerta: la diferencia aparece al cruzarla, y del lado de adentro
+hay muy poca gente. El **99,3%** de los que cobran algo por Ozempic y figuran recetándolo nunca cobra un
+honorario.
+
+## La puerta sólo se abre donde la receta no era obvia
+
+Hay una explicación aburrida que podría tirar abajo todo lo anterior: que esos 342 sean
+endocrinólogos. El endocrinólogo receta más GLP-1 que cualquier otro médico por razones que no
+tienen nada que ver con ningún pago. Si el grupo que cobra honorarios estuviera lleno de
+endocrinólogos, la diferencia vendría de la especialidad antes que del pago.
+
+Así que hice la misma comparación adentro de cada especialidad.
+
+<Figure
+  src="/projects/glp1-quien-receta/g2_donde_se_abre.png"
+  alt="Barras horizontales agrupadas por especialidad que muestran cuántas veces más receta, como parte de su práctica, quien cobra honorarios frente a quien no cobra nada. Endocrinología queda entre 1,22 y 1,47, cardiología, nefrología, gastroenterología y hepatología entre 1,94 y 2,36, atención primaria entre 4,36 y 7,16, y enfermería y asistentes médicos entre 6,58 y 7,22"
+  width={2000}
+  height={1280}
+  caption="La línea vertical marca el 1, donde no habría ninguna diferencia. El «n» de cada barra es cuánta gente cobró honorarios en esa celda. Elaboración propia sobre Open Payments y Part D."
+/>
+
+La explicación aburrida acertó, pero sólo en un lugar. En endocrinología la diferencia casi
+desaparece: 1,47 en Ozempic 2022, **1,22** en Ozempic 2024, 1,46 en Mounjaro 2024. El
+endocrinólogo que cobra honorarios receta casi lo mismo que el que no cobra un peso.
+
+Afuera de esa especialidad no desaparece. En atención primaria va de 4,36 a 7,16 veces, sobre
+grupos de 55 a 79 profesionales. En enfermería y asistentes médicos, de 6,58 a 7,22, sobre 38 y 48.
+Con la misma plata, el mismo año y la misma marca, el resultado pasa de 1,22 en los 196
+endocrinólogos a 6,58 en los 38 de enfermería y asistentes médicos.
+
+Ese eje ya estaba en este mercado hace quince años. En 2011 la [FDA cambió el programa de riesgos](https://www.justice.gov/opa/press-release/file/994746/dl)
+de Victoza, de Novo, porque una encuesta mostró que cerca de la mitad de los médicos de atención primaria no
+conocía la advertencia más grave del producto, bastante menos que los endocrinólogos. Quedó
+escrito en el acuerdo que Novo firmó con el Departamento de Justicia en 2017 por el manejo de
+ese programa, un expediente que no tiene nada que ver con pagos a médicos.
+
+### Qué pasa con los datos que CMS esconde
+
+Part D no publica los casos en que un médico recetó diez veces o menos una droga: los tapa para
+proteger la privacidad de los pacientes. Así que todas las cuentas de arriba se hacen sobre los
+médicos que quedan visibles, y eso podría estar inflando el resultado.
+
+Ese tapado no cae parejo. Se lleva al **17,0%** de los que no cobran nada y al **0,6%** de los
+que cobran honorarios, que son 2 de 344, en Ozempic 2024. Los que cobran recetan más, así que casi siempre pasan
+el umbral y quedan a la vista.
+
+Para ver si la brecha es un espejismo, les puse a todos los médicos tapados las diez recetas del
+techo, que es el máximo que CMS puede estar escondiendo. Es un escenario imposible, porque supone
+que todos recetaron el máximo. Ni así se cae. Esta prueba corre sobre un universo más amplio
+que el de las cifras de arriba, así que sus números no son "los de antes corregidos", pero la
+conclusión aguanta: la diferencia **no baja de 4,62 veces en ninguna celda de atención primaria
+ni de enfermería y asistentes médicos**, y endocrinología se queda entre 1,23 y 1,65. El tapado de datos, entonces, achica la brecha
+medida.
+
+## Cruzada la puerta, cobrar más no va con recetar más
+
+Falta la pregunta del título. Adentro de los 383 que cobraron honorarios por Ozempic en 2024
+(los 342 de arriba más los que cobraron y no figuran recetando), ¿el que más cobra es el que más
+receta?
+
+<Figure
+  src="/projects/glp1-quien-receta/g3_adentro_no_hay_escalera.png"
+  alt="Líneas por cuartil de honorarios cobrados. Ozempic 2024 sube de 316 a 335 y 343 recetas medianas y cae a 189 en el cuartil que más cobra. Ozempic 2022 sube de 147 a 204,5 y 216 y cae a 179. Mounjaro 2024 sube de 55 a 173 y 283,5 y baja levemente a 275"
+  width={2000}
+  height={1280}
+  caption="Cada punto es la mediana de recetas de los que figuran recetando, adentro del grupo que cobró honorarios por esa marca ese año. Elaboración propia sobre Open Payments y Part D."
+/>
+
+No. En Ozempic 2024, el cuarto de médicos que más cobró receta un **45% menos** que el cuarto
+anterior: 189 recetas contra 343, cobrando un 72% más (9.306 dólares de mediana contra 5.426).
+Son grupos de 96 y 95 profesionales, y las medianas se calculan sobre los que quedan visibles, que ahí
+son el 82,3% y el 93,7%.
+
+En Ozempic 2022 pasa lo mismo con otros números. Si mido la correlación entre plata y recetas
+adentro de ese grupo, da **negativa en tres de los cuatro años** de Ozempic. En Mounjaro 2024 da
+positiva, o sea que las dos marcas se comportan al revés una de la otra.
+
+Y hay un contraejemplo más, que es el más limpio de todos. Lilly le sacó casi toda la plata a
+Trulicity: pasó de pagarle a 39.483 profesionales por esa marca en 2022 a **2.300 en 2024**. Los
+médicos se quedaron: **100.299** siguieron recetando Trulicity en 2024 sin cobrar un peso por
+ella. Y no es que hubieran pasado a cobrar por otra marca de la misma compañía, porque sólo el
+**29,0%** de ellos recibió algo de Lilly ese año, así que siete de cada diez no recibieron nada.
+
+## Qué haría en el lugar de Novo y de Lilly
+
+Ninguna de las dos declara hoy un litigio abierto por pagos a prescriptores. El problema que sí
+tienen enfrente es de dónde poner la plata. Entre los que figuran recetando la marca, el canal de comidas y viajes
+alcanza a entre el 98,6% y el 99,4% de los que reciben algo, y en los datos públicos no
+muestra ninguna diferencia. El programa de oradores llega a unos cientos de personas y sí
+muestra una grande.
+
+**Con las comidas haría un experimento antes que un recorte.** Estos datos son una foto de un momento: no pueden decir si la comida sostiene algo que sin ella se caería. Cortaría las visitas
+en un grupo de territorios elegidos al azar durante dos trimestres, y mediría la proporción de
+GLP-1 sobre el total que receta cada médico, en puntos de la práctica, que es la corrección que
+este caso propone. **Criterio de corte fijado antes de empezar: si a los seis meses la
+diferencia entre los territorios con visitas y los que no se quedó por debajo de 0,15 puntos, que
+es tres veces la brecha que hoy se ve en Ozempic 2024, la plata se mueve a otro lado.**
+
+El costo hay que decirlo. Si el efecto existe, el experimento cuesta ventas en los territorios
+cortados. Y la fuerza de ventas puede compensar por otro lado y arruinar la medición, así que los
+territorios los tiene que asignar la central.
+
+**Con el programa de oradores haría otra cosa: dejar registro de por qué se elige a cada uno.** El
+riesgo acá es de exposición más que de plata. El [código que firmaron las propias compañías](https://cdn.aglty.io/phrma/global/resources/PhRMA%20Code%20-%20Final.pdf), el de
+PhRMA (la cámara de laboratorios de Estados Unidos), prohíbe elegir a un orador "en función de los
+ingresos pasados que haya generado o de los ingresos futuros potenciales que pueda generar
+recetando", y prohíbe que se le pague según "el volumen o el valor" del negocio. El [inspector
+general de Salud](https://oig.hhs.gov/documents/special-fraud-alerts/865/SpecialFraudAlertSpeakerPrograms.pdf) dice que es sospechoso elegir participantes por los ingresos que generaron o van
+a generar.
+
+Las dos explicaciones posibles de lo que este caso mide caen adentro de esa descripción. Y ninguna
+de las dos compañías declara medir nada al respecto: ni el [balance anual de Lilly de 2025](https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm) ni el [de
+Novo de 2024](https://www.novonordisk.com/content/dam/nncorp/global/en/investors/irmaterial/annual_report/2025/novo-nordisk-annual-report-2024.pdf) mencionan sus programas de oradores entre los temas que podrían traerles problemas.
+
+Lo que haría es concreto. Que cada elección de orador deje un expediente con un criterio clínico
+que se pueda verificar: publicaciones, participación en ensayos, docencia. Que alguien audite que
+la cantidad de recetas previas no entró en esa decisión. Y **medir todos los años la misma cuenta
+de este caso**: cuánto más receta un orador que sus colegas de la misma especialidad. Si en
+endocrinología da 1,2, la compañía no puede mostrar que el honorario haya aportado nada, y esa es
+plata que tiene que justificar. Si en atención primaria da más de 4, tiene que poder explicar con su propio expediente por
+qué eligió a esas personas.
+
+Para Lilly nada de esto sería nuevo. El [acuerdo que firmó en 2009](https://oig.hhs.gov/documents/sar/1267/OIG-SAR-SPRING-2009-Complete%20Report.pdf) por la promoción de Zyprexa la
+obligó a publicar en su propio sitio los pagos que hacía a médicos, cuatro años antes de que
+existiera Open Payments, que salió de otra ley. Publicar esos pagos empezó siendo un castigo a
+uno de los dos protagonistas.
+
+## Lo que este trabajo no puede sostener
+
+**En qué orden pasaron las cosas.** Que los que cobran honorarios receten más es igual de
+compatible con que el honorario haya cambiado algo, o con que la compañía haya elegido como orador
+a alguien que ya recetaba mucho. Una foto de un año no distingue las dos cosas, y las tres fuentes
+que revisé lo dicen con sus palabras.
+
+**Esto es Medicare.** Part D cubre a los afiliados a Medicare, y la propia
+CMS avisa que sus datos "pueden no ser representativos del patrón completo de prescripción" de un
+médico. Lo que mido es qué lugar ocupa el GLP-1 adentro de Medicare.
+
+**La plata y las recetas no hablan del todo del mismo mercado.** El 19,82% de lo que Novo y Lilly
+declararon por GLP-1 entre 2021 y 2024 fue por Wegovy, Zepbound y Saxenda, que son las marcas para
+bajar de peso, y en 2024 esa proporción llega al 38,69%. Medicare tiene prohibido por ley cubrir
+drogas para adelgazar; Wegovy aparece en los datos recién después de que la [FDA le aprobó un uso
+cardiovascular](https://www.fda.gov/news-events/press-announcements/fda-approves-first-treatment-reduce-risk-serious-heart-problems-specifically-adults-obesity-or) el 8 de marzo de 2024. Así que el cruce alcanza al 88% de la plata en 2021 y al 61%
+en 2024.
+
+**Los grupos que sostienen el hallazgo son chicos.** Son 342 profesionales con honorarios en Ozempic
+2024, de los cuales 65 son de atención primaria y 38 de enfermería y asistentes médicos. Todo lo que digo sobre
+ellos se apoya en esos números.
+
+**Hay un estudio publicado sobre esta misma pregunta que no pude leer.** Khunte, Chetty, Ross y
+Chen publicaron el 24 de enero de 2026, en el número de marzo de _Mayo Clinic Proceedings_, una
+[carta de investigación](https://pubmed.ncbi.nlm.nih.gov/41579137/) sobre pagos de laboratorios y prescripción de GLP-1, con Part D 2022-2023 y
+Open Payments 2021-2022, sobre enfermería y asistentes, atención primaria, endocrinología,
+cardiología y nefrología. No hay copia de acceso abierto. No digo nada sobre sus resultados porque no los
+conozco, y este caso no pretende ser el primero en mirar esto.
+
+## Qué me haría cambiar de opinión
+
+Esto se caería si alguien siguiera a los mismos médicos en el tiempo y mostrara que los de
+atención primaria y los de enfermería y asistentes médicos que cobran honorarios ya recetaban mucho **antes** del primer
+honorario. Ahí la puerta sería el criterio con el que se elige al orador, y la
+sección de la decisión pasaría a ser una pregunta sobre cómo se gobierna el programa. Ese
+seguimiento necesita el historial de cada médico y no se puede armar con datos públicos.
+
+También se caería si apareciera un tercer factor que explique las dos cosas a la vez. El candidato
+más obvio es a qué se dedica cada médico adentro de su especialidad: un médico de atención primaria dedicado a obesidad
+y diabetes va a tener mucho GLP-1 en su práctica por sus pacientes, y es candidato natural a
+orador. Part D publica una sola etiqueta de especialidad por médico, así que esa posibilidad queda
+abierta.
+
+Y habría que rehacer la sección del tapado de datos si CMS bajara el umbral de once recetas o
+publicara lo que hoy esconde: entre el 17,0% y el 58,8% de los médicos que no cobran nada, según el
+año y la marca, dejaría de estar tapado.
+
+Los datos de recetas llegan hasta 2024, el último año que publicó CMS, y los de pagos hasta 2025.
+Cada número sale de un script que lee los archivos originales, identificados por su dirección de
+descarga y por su hash, así que se pueden volver a calcular sobre los años que se publiquen
+después.
+
+Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación comercial
+con ninguna de las compañías mencionadas.

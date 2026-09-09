@@ -43,6 +43,7 @@ PASOS = [
     ("analysis/part_d/11_share_por_especialidad.py", "¿la puerta es el pago o la especialidad?"),
     ("analysis/part_d/12_censura_imputada.py", "la condición de muerte: censura imputada"),
     ("analysis/part_d/13_trulicity_reasignados.py", "¿los de Trulicity cobran por otra marca?"),
+    ("analysis/part_d/14_naturalezas.py", "de qué está hecho cada tipo de pago"),
 ]
 
 CACHES = [
@@ -58,6 +59,7 @@ CACHES = [
     "part_d-10_share_especialidad.json",
     "part_d-11_censura_imputada.json",
     "part_d-12_trulicity.json",
+    "part_d-13_naturalezas.json",
 ]
 
 

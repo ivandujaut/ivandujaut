@@ -1,0 +1,339 @@
+---
+title: "Is the doctor who gets paid the most for Ozempic the one who prescribes it most?"
+tagline: "Of the 51,099 who got paid for Ozempic in 2024 and prescribe it, 342 got speaking fees. They prescribe differently, except endocrinologists"
+description: "I matched what Novo Nordisk and Eli Lilly disclosed paying for their GLP-1 drugs, the diabetes and obesity medicines, against Medicare Part D prescriptions, doctor by doctor and through 2024. The difference shows up in the 342 who get speaking fees, and only outside endocrinology."
+year: 2026
+date: "2026-09-08"
+status: "concept"
+kind: "case-study"
+subject: "external"
+featured: true
+cover:
+  src: ./cover.jpg
+  alt: "Pencil illustration on cream paper, not a photograph: two hands hold a prefilled Ozempic pen with the needle attached, while five identical pens lie stacked underneath, drawn in less detail and untouched"
+stack: ["Python", "DuckDB", "Parquet", "Open data (CMS Open Payments and Part D)"]
+preview:
+  - src: "/projects/glp1-quien-receta/g1_la_puerta.en.png"
+    alt: "Two bar panels: on the left prescription counts rise with payment, on the right that share only rises for the group with speaking fees and the other two bars level out"
+  - src: "/projects/glp1-quien-receta/g2_donde_se_abre.en.png"
+    alt: "Horizontal bars by specialty: endocrinology between 1.22 and 1.47, primary care between 4.36 and 7.16, and nurses and physician assistants between 6.58 and 7.22"
+  - src: "/projects/glp1-quien-receta/g3_adentro_no_hay_escalera.en.png"
+    alt: "Three lines by quartile of fees: the Ozempic 2024 line rises and then drops in the best paid quartile"
+metrics:
+  - label: "Ozempic share, brand fees paid"
+    value: "6.46%"
+  - label: "Ozempic share, no brand payment"
+    value: "0.98%"
+  - label: "With fees, Ozempic 2024"
+    value: "342"
+  - label: "Rows checked against the source"
+    value: "1,137,205"
+translationKey: "glp1-quien-receta"
+draft: false
+---
+
+<Abstract label="Summary">
+
+Is the doctor who gets paid the most by a drug company the one who prescribes its product most?
+The United States has the two public databases you need to answer that: what each company pays
+each health professional, and how many prescriptions of each drug each doctor wrote inside
+Medicare. I matched them doctor by doctor, through 2024.
+
+The difference is real, and it sits in very few people. Of the 51,099 professionals who got some
+payment from Novo or Lilly for Ozempic in 2024 and appear prescribing it, only **342** got a fee
+for speaking or consulting. For them Ozempic takes six and a half times more room in what they
+prescribe than for a doctor who got no payment for that brand, with practice size already
+subtracted.
+
+The other 50,757 got meals or travel, and their practice has the same share of Ozempic as the
+practice of someone who got nothing.
+
+And even among those 342 it does not happen everywhere. Among the 196 endocrinologists, the
+difference is 1.22 times, which is close to nothing. Among the 65 primary care doctors and the 38
+nurses and physician assistants, it runs from 4.36 to 6.58 times.
+
+Inside that group there is no ladder either: the quartile that got paid most, 95 people,
+prescribes less than the quartile below it.
+
+What this data cannot tell you is the order things happened in: whether the fee changed the
+prescribing, or the company picked as a speaker someone who already prescribed a lot. What it
+does show is where the jump is, how big it is, and how many people cross it. And that both
+possible explanations create the same problem for the company that pays.
+
+</Abstract>
+
+<Thesis>
+
+In GLP-1 drugs, promotional money works like a door: the difference shows up when you cross into
+the group that gets speaking fees, and only where prescribing was not the obvious choice.
+
+</Thesis>
+
+## What is data and what is assumption
+
+United States law requires every drug company to disclose what it pays each health professional.
+That goes into a public database called [Open Payments](https://openpaymentsdata.cms.gov/). There is a second public database with how
+many prescriptions of each drug each doctor wrote inside Medicare, the public insurance program:
+it is called [Part D](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers). This case matches the two.
+
+The match runs on the national provider number, which is in both databases for 99.9% of the
+payments. That is worth saying because the [official Part D manual](https://data.cms.gov/sites/default/files/2026-05/MUP_DPR_RY26_20260421_Methodology_508.pdf) still says Open Payments does
+not publish that number and suggests matching on name and address. The files from 2021 on do carry
+it. I checked before starting, because without that number the match was not possible.
+
+Two things you need before reading the rest.
+
+First, the word "payment" covers two very different things. Almost all of them are meals: the
+company representative comes to the office with lunch and gets a few minutes to talk about the
+product. That is **96.9% of the GLP-1 payments** in 2024, and the median is **$17.20**. The other
+one is the fee for speaking or consulting: **2.1% of the payments** and **56.3% of the money**,
+with a median of $900 for a talk and $2,200 for consulting. Travel, which you would expect to
+find, is 0.7%.
+
+Second, when I say "got no payment" I mean **got no payment for that brand that year**. They may
+have been paid for another brand, and many were.
+
+The prescription files weigh between 3.64 and 4.06 gigabytes per year, so instead of reading them
+whole I asked CMS, the agency that publishes them, only for the rows of the nine brands I care
+about. Then I compared both paths row by row: **1,137,205 doctor-brand pairs, zero differences**
+across the four years.
+
+| Figure                                                                                       | Status                              | Where it comes from                                                                            |
+| -------------------------------------------------------------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 61% more prescriptions (Ozempic 2024)                                                        | My own calculation on official data | Part D 2024 medians by what each doctor was paid                                               |
+| Practices 33% larger                                                                         | My own calculation on official data | Part D 2024 "by Provider" file                                                                 |
+| 1.03% against 0.98% of what they prescribe                                                   | My own calculation on official data | Brand prescriptions over the doctor's total                                                    |
+| 6.46% with fees, and the 342 doctors                                                         | My own calculation on official data | Open Payments 2024 matched on provider number                                                  |
+| 1.22 to 1.47 in endocrinology; 4.36 to 7.22 in primary care, nurses and physician assistants | My own calculation on official data | The same match, split by the specialty Part D publishes                                        |
+| 1,137,205 pairs, zero differences                                                            | My own calculation on official data | The subset against the full files, with verified hashes                                        |
+| The 11-prescription cut in the published data                                                | Published data                      | Official Part D manual, April 2026                                                             |
+| Wegovy covered from 2024                                                                     | Published data                      | FDA approval (the drug regulator), March 8, 2024                                               |
+| What the regulator and the industry forbid                                                   | Published data                      | OIG alert (Health inspector general), 2020, and the PhRMA code (the drug industry association) |
+
+There is no projection and no model here: these are counts and medians over published files.
+Prescription data runs through **2024**, which is the last year CMS published.
+
+## The 342 who cross the door
+
+I start where the difference is. Professionals who got a fee for speaking or consulting have
+**6.46%** of their Medicare practice in Ozempic. Those who got no payment for that brand have
+**0.98%**,
+a difference of six and a half times.
+
+The obvious objection is that those 342 are bigger doctors who prescribe more of everything. And
+they are bigger: they handle 39% more prescriptions than the ones who got no payment. That is why
+the calculation compares shares and not counts, and that 39% is already subtracted. But it is
+worth showing where the objection comes from, because it is exactly the flaw in the usual way of
+measuring this.
+
+The usual calculation is simple, and that is why it has been used for ten years. Take the doctors
+who got paid for a drug, take the ones who did not, and compare how many prescriptions each group
+wrote. [ProPublica did it in 2016](https://projects.propublica.org/graphics/d4dpartd-methodology) across the fifty most prescribed brands in
+Medicare and got **58% more** (matching against the national prescriber registry, because Open Payments did not publish
+the provider number back then). With Ozempic in 2024 the same calculation gives me **61%**.
+
+<Figure
+  src="/projects/glp1-quien-receta/g1_la_puerta.en.png"
+  alt="Two bar panels with the same population split into three groups: no payment, meals, and speaking fees. On the left, brand prescriptions go from 21 to 29 and 196 in Ozempic 2022, from 31 to 50 and 297 in Ozempic 2024, and from 25 to 35 and 197 in Mounjaro 2024. On the right, those same prescriptions as a share of the practice: 0.57%, 0.55% and 4.35% in Ozempic 2022; 0.98%, 1.03% and 6.46% in Ozempic 2024; 0.65%, 0.74% and 4.74% in Mounjaro 2024"
+  width={2000}
+  height={1280}
+  caption="On the left, the usual calculation: all three bars go up. On the right, the same people divided by what each one prescribes: the first two level out and only the third stays high. My own analysis of Open Payments and Part D."
+/>
+
+That 61% does not say what it looks like. Part D publishes another file with each doctor's total
+prescriptions, of any drug, and with that denominator the professional who gets meals turns out to have
+the bigger practice: **4,941 prescriptions a year against 3,720.5**, 33% more. Divided by their
+own total, their Ozempic prescriptions come to **1.03%** against **0.98%**, so the 61% gap ends up
+at five hundredths of a point.
+
+It is not one year by chance. Ozempic 2022: 0.55% against 0.57%, slightly below this time.
+Mounjaro 2024: 0.74% against 0.65%. Trulicity 2022: 0.63% against 0.64%. In none of the four cases
+does the difference reach a tenth of a point.
+
+<Callout type="info" title="What the denominator measures that the count does not">
+  A doctor who writes 5,000 prescriptions a year will have more Ozempic than one who writes 500, and
+  that says nothing about promotion. Counting prescriptions measures, in good part, the size of the
+  practice. Counting shares measures what place that drug holds in what the doctor prescribes, which
+  is what a campaign sets out to change.
+</Callout>
+
+With the same correction applied, the group with fees stays on top. That is why I say this looks
+like a door: the difference shows up when you cross it, and there are very few people on the
+inside. **99.3%** of those who get some payment for Ozempic and appear prescribing it never get a
+fee.
+
+## The door only opens where prescribing was not the obvious choice
+
+There is a boring explanation that could bring down everything above: that those 342 are
+endocrinologists. An endocrinologist prescribes more GLP-1 drugs than any other doctor for reasons
+that have nothing to do with any payment. If the group with fees were full of endocrinologists,
+the difference would come from the specialty rather than the payment.
+
+So I ran the same comparison inside each specialty.
+
+<Figure
+  src="/projects/glp1-quien-receta/g2_donde_se_abre.en.png"
+  alt="Horizontal bars grouped by specialty showing how many times more, as a share of their practice, a professional with fees prescribes compared to one with no payment. Endocrinology sits between 1.22 and 1.47, cardiology, nephrology, gastroenterology and hepatology between 1.94 and 2.36, primary care between 4.36 and 7.16, and nurses and physician assistants between 6.58 and 7.22"
+  width={2000}
+  height={1280}
+  caption="The vertical line marks 1, where there would be no difference at all. The «n» on each bar is how many people got fees in that cell. My own analysis of Open Payments and Part D."
+/>
+
+The boring explanation was right, but only in one place. In endocrinology the difference almost
+disappears: 1.47 in Ozempic 2022, **1.22** in Ozempic 2024, 1.46 in Mounjaro 2024. The
+endocrinologist who gets fees prescribes about the same as the one who gets nothing.
+
+Outside that specialty it does not disappear. In primary care it runs from 4.36 to 7.16 times,
+over groups of 55 to 79 professionals. Among nurses and physician assistants, from 6.58 to 7.22,
+over 38 and 48. With the same money, the same year and the same brand, the result goes from 1.22
+in the 196 endocrinologists to 6.58 in the 38 nurses and physician assistants.
+
+That divide has been in this market for fifteen years. In 2011 the [FDA changed the risk program
+for Victoza](https://www.justice.gov/opa/press-release/file/994746/dl), a Novo drug, because a survey showed that about half of primary care doctors did not
+know the most serious warning on the product, well below endocrinologists. It is written into the
+settlement Novo signed with the Department of Justice in 2017 over how it handled that program, a
+file that has nothing to do with payments to doctors.
+
+### What happens with the data CMS hides
+
+Part D does not publish the cases where a doctor prescribed a drug ten times or fewer: it hides
+them to protect patient privacy. So all the calculations above are made over the doctors who stay
+visible, and that could be inflating the result.
+
+The hiding does not fall evenly. It takes **17.0%** of those who get no payment and **0.6%** of
+those who get fees, 2 out of 344, in Ozempic 2024. Those who get paid prescribe more, so they
+almost always clear the cut and stay visible.
+
+To see if the gap is a mirage, I gave every hidden doctor the ten prescriptions of the ceiling,
+which is the most CMS can be hiding. That scenario is impossible, because it assumes every one of
+them prescribed the maximum. It still does not fall. This test runs on a wider universe than the
+figures above, so its numbers are not "the earlier ones corrected", but the conclusion holds: the
+difference **does not drop below 4.62 times in any cell of primary care or nurses and physician
+assistants**, and endocrinology stays between 1.23 and 1.65. Hiding the data, then, shrinks the gap that gets
+measured.
+
+## Past the door, getting paid more does not go with prescribing more
+
+That leaves the question in the title. Inside the 383 who got fees for Ozempic in 2024 (the 342
+above plus the ones who got paid and do not appear prescribing), is the one who gets paid most the
+one who prescribes most?
+
+<Figure
+  src="/projects/glp1-quien-receta/g3_adentro_no_hay_escalera.en.png"
+  alt="Lines by quartile of fees received. Ozempic 2024 goes from 316 to 335 and 343 median prescriptions and drops to 189 in the best paid quartile. Ozempic 2022 goes from 147 to 204.5 and 216 and drops to 179. Mounjaro 2024 goes from 55 to 173 and 283.5 and dips slightly to 275"
+  width={2000}
+  height={1280}
+  caption="Each point is the median prescriptions of those who appear prescribing, inside the group that got fees for that brand that year. My own analysis of Open Payments and Part D."
+/>
+
+No. In Ozempic 2024, the quartile of doctors that got paid most prescribes **45% less** than the
+quartile below: 189 prescriptions against 343, while getting paid 72% more ($9,306 median against
+$5,426). These are groups of 96 and 95 professionals, and the medians are calculated over the ones
+who stay visible, 82.3% of the third quartile and 93.7% of the fourth.
+
+Ozempic 2022 does the same with other numbers. If I measure the correlation between money and
+prescriptions inside that group, it comes out **negative in three of the four years** of Ozempic.
+In Mounjaro 2024 it comes out positive, so the two brands behave the opposite way from each other.
+
+There is one more counterexample, and it is the cleanest. Lilly pulled almost all its money out of
+Trulicity: it went from paying 39,483 professionals for that brand in 2022 to **2,300 in 2024**,
+while the number of prescribers held. In 2024, **100,299** were still prescribing Trulicity
+without getting a cent for that brand. It is not that they had moved to getting paid for another
+brand from the same company: only **29.0%** of them got anything from Lilly that year, so seven
+out of ten got nothing.
+
+## What I would do at Novo and at Lilly
+
+Neither company declares an open case today over payments to prescribers. The problem they do have
+is where to put the money. Among those who appear prescribing the brand, the meals and travel
+channel reaches between 98.6% and 99.4% of everyone who gets something, and it shows no difference in the
+public data. The speaker program reaches a few hundred people and shows a large one.
+
+**With the meals I would run an experiment before a cut.** This data is a snapshot of one moment:
+it cannot tell you whether the meal holds up something that would fall without it. I would stop
+the visits in a set of territories picked at random for two quarters, and I would measure the
+share of GLP-1 over each doctor's total prescriptions, in points of the practice, which is the
+correction this case proposes. **Cut-off fixed before starting: if after six months the difference
+between territories with visits and without stayed below 0.15 points, which is three times the gap
+seen in Ozempic 2024, the money moves somewhere else.**
+
+The cost has to be said. If the effect is real, the experiment costs sales in the territories that
+were cut. And the sales force can make up for it another way and ruin the measurement, so head
+office has to assign the territories.
+
+**With the speaker program I would do something else: keep a record of why each speaker is
+picked.** The risk here is exposure more than money. The [code the companies signed themselves](https://cdn.aglty.io/phrma/global/resources/PhRMA%20Code%20-%20Final.pdf), the
+PhRMA one, forbids picking a speaker "based on past revenue that the speaker has generated or
+potential future revenue that the speaker could generate by prescribing or ordering a company's
+products", and forbids paying them
+according to "the volume or value" of the business. The [Health inspector general](https://oig.hhs.gov/documents/special-fraud-alerts/865/SpecialFraudAlertSpeakerPrograms.pdf) says it is
+suspicious to pick participants by the revenue they generated or will generate.
+
+Both possible explanations of what this case measures fall inside that description. And neither
+company says it measures anything about it: neither [Lilly's 2025 annual report](https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm) nor [Novo's 2024 one](https://www.novonordisk.com/content/dam/nncorp/global/en/investors/irmaterial/annual_report/2025/novo-nordisk-annual-report-2024.pdf)
+mentions their speaker programs among the matters that could bring them trouble.
+
+What I would do is concrete. Every speaker pick leaves a file with a clinical reason you can
+check: publications, trial work, teaching. Someone audits that past prescription counts did not go
+into that decision. And **measure every year the same calculation as this case**: how much more a
+speaker prescribes than their peers in the same specialty. If endocrinology comes out at 1.2, the
+company cannot show the fee added anything, and that is money it has to justify. If primary care
+comes out above 4, it has to be able to explain from its own file why it picked those people.
+
+For Lilly none of this would be new. The [settlement it signed in 2009](https://oig.hhs.gov/documents/sar/1267/OIG-SAR-SPRING-2009-Complete%20Report.pdf) over Zyprexa promotion made
+it publish on its own site the payments it made to doctors, four years before Open Payments
+existed, which came out of a different law. Publishing those payments started out as a punishment
+for one of the two companies here.
+
+## What this work cannot support
+
+**The order things happened in.** That people with fees prescribe more fits both with the fee
+having changed something and with the company having picked as a speaker someone who already
+prescribed a lot. A snapshot of one year does not tell the two apart, and the three sources I read
+say so in their own words.
+
+**This is Medicare.** Part D covers people enrolled in Medicare, and CMS itself warns that its
+data "may not be representative of a prescriber's entire prescribing pattern". What I measure is
+what place GLP-1 drugs hold inside Medicare.
+
+**The money and the prescriptions are not quite the same market.** 19.82% of what Novo and Lilly
+disclosed for GLP-1 drugs between 2021 and 2024 went to Wegovy, Zepbound and Saxenda, the weight
+loss brands, and in 2024 that share reaches 38.69%. Medicare is barred by law from covering weight
+loss drugs; Wegovy shows up in the data only after the [FDA approved a cardiovascular use](https://www.fda.gov/news-events/press-announcements/fda-approves-first-treatment-reduce-risk-serious-heart-problems-specifically-adults-obesity-or) on
+March 8, 2024. So the match covers 88% of the money in 2021 and 61% in 2024.
+
+**The groups that hold up the finding are small.** They are 342 professionals with fees in Ozempic
+2024, of whom 65 are primary care and 38 are nurses and physician assistants. Everything I say
+about them rests on those numbers.
+
+**There is a published study on this same question that I could not read.** Khunte, Chetty, Ross
+and Chen published on January 24, 2026, in the March issue of _Mayo Clinic Proceedings_, a [research
+letter](https://pubmed.ncbi.nlm.nih.gov/41579137/) on manufacturer payments and GLP-1 prescribing, using Part D 2022-2023 and Open Payments
+2021-2022, over nurses and physician assistants, primary care, endocrinology, cardiology and
+nephrology. There is no open access copy. I say nothing about their results because I do not know
+them, and this case does not claim to be the first to look at this.
+
+## What would change my mind
+
+This would fall if someone followed the same doctors over time and showed that the primary care
+doctors and the nurses and physician assistants who get fees already prescribed a lot **before**
+their first fee. Then the door would be the criteria used to pick the speaker, and the decision
+section would turn into a question about how the program is governed. That kind of follow-up needs
+each doctor's history and cannot be built from public data.
+
+It would also fall if a third factor turned up that explains both things at once. The most obvious
+candidate is what each doctor focuses on inside their specialty: a primary care doctor who works
+on obesity and diabetes will have a lot of GLP-1 in their practice because of their patients, and
+is a natural candidate to be a speaker. Part D publishes one specialty label per doctor, so that
+possibility stays open.
+
+And the section on hidden data would need redoing if CMS lowered the eleven prescription cut or
+published what it hides today: between 17.0% and 58.8% of the doctors who get no payment,
+depending on the year and the brand, would stop being hidden.
+
+Prescription data runs through 2024, the last year CMS published, and payment data through 2025.
+Every number comes from a script that reads the original files, identified by their download
+address and their hash, so they can be recalculated over the years published later.
+
+This is independent work, made with public sources. I have no commercial relationship with any of
+the companies named here, and never had one.
