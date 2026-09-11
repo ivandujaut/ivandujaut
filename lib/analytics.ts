@@ -74,6 +74,12 @@ function esAgenteLector(): boolean {
   // Durante el render en servidor no hay `navigator`. Devolver `false` es lo
   // correcto igual: todo lo que emite eventos corre en el cliente.
   if (typeof navigator === "undefined") return false;
+  // Chrome automatizado (Playwright, Puppeteer, escáneres de links) se declara
+  // con `webdriver`. En la primera lectura de PostHog (10/09/2026), 11 de 154
+  // sesiones venían de un mismo datacenter en Virginia con UA de Chrome normal,
+  // una página cada una y cero segundos: ese tráfico no lo corta el UA, lo
+  // corta esto.
+  if (navigator.webdriver) return false;
   return !AGENTES_NO_LECTORES.some((agente) => agente.test(navigator.userAgent));
 }
 
