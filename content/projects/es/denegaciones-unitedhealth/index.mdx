@@ -1,0 +1,298 @@
+---
+title: "La mayor aseguradora de salud de Estados Unidos rechazó una de cada tres cuentas de los médicos que ella misma eligió"
+tagline: "Es UnitedHealthcare, en 2022 y 2023, y sólo en los planes que vende en el mercado individual: el 0,43% de su padrón."
+description: "Reconstruí con archivos públicos de CMS, el organismo federal que administra Medicare, la cifra de denegaciones que definió a UnitedHealthcare. Es exacta y sale de 224.202 asegurados sobre 51,7 millones. En el año de plan 2024 cayó catorce puntos en las trece entidades que operaban en los dos años."
+year: 2026
+date: "2026-09-09"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+stack: ["Python", "openpyxl", "Datos abiertos (CMS Transparency in Coverage)"]
+preview:
+  - src: "/projects/denegaciones-unitedhealth/g1_la_brecha.png"
+    alt: "Barras por año de plan que comparan la tasa de denegación de UnitedHealthcare contra la tasa agregada del mercado: 31,9% contra 16,0% en 2022, 33,3% contra 19,7% en 2023 y 19,2% contra 18,7% en 2024"
+  - src: "/projects/denegaciones-unitedhealth/g2_no_fue_la_mezcla.png"
+    alt: "Descomposición de la caída de 14,1 puntos: las mismas carteras aportan 13,3 puntos para abajo, las entradas y salidas 1,8, y el cambio de peso entre carteras aporta 0,9 puntos para arriba"
+  - src: "/projects/denegaciones-unitedhealth/g3_trece_de_trece.png"
+    alt: "Trece líneas horizontales, una por entidad de UnitedHealthcare presente en los dos años; todas bajan su tasa entre los años de plan 2023 y 2024, desde 7,6 puntos en Misuri hasta 23,7 en Alabama"
+metrics:
+  - label: "Cuentas denegadas dentro de su red, año de plan 2022"
+    value: "31,9%"
+  - label: "Del padrón de UnitedHealthcare que esa cifra medía"
+    value: "0,43%"
+  - label: "Lo que bajó en el año de plan 2024"
+    value: "14,1 puntos"
+    change: "−14,1 pp"
+    trend: "down"
+    sentiment: "good"
+  - label: "Entidades donde bajó, sobre trece"
+    value: "13"
+translationKey: "denegaciones-unitedhealth"
+draft: true
+---
+
+<Abstract label="En resumen">
+
+El número que le fijó la reputación a UnitedHealthcare, la mayor aseguradora de salud de
+Estados Unidos, era cierto. En el año de plan 2022 denegó el 31,9% de las cuentas que le
+mandaron médicos de su propia red, contra un 16,0% del mercado agregado, ella incluida. Lo reproduje desde el mismo archivo público del que salió, y el
+promedio de industria que declaraba la fuente original también me da igual.
+
+Lo que casi nadie miró es sobre cuánta gente se calculó. Ese archivo cubre solamente los
+planes vendidos en el mercado individual que administra el Estado federal, y ahí
+UnitedHealthcare tenía 224.202 asegurados de los 51.695.000 que cubría. Cuatro décimas de
+un por ciento de su padrón.
+
+Y hay algo más incómodo. En el año de plan 2024 esa tasa cayó a 19,2%, casi la del mercado
+agregado. De las quince entidades con las que operó ese año, las trece que ya estaban
+el año anterior bajaron todas, sin una sola excepción, y la mezcla empujó en sentido
+contrario. Ese dato se publicó el 26 de septiembre de 2025, nueve meses después de que
+cerrara el año que mide.
+
+Adentro va lo que haría un equipo de producto de esa empresa: qué métrica publicar para
+dejar de ser juzgado por una que no controla, cómo medirla y con qué criterio de corte,
+fijado antes de empezar.
+
+</Abstract>
+
+<Thesis>
+
+Cuando el número de 2022 se viralizó, UnitedHealthcare venía de bajar sus denegaciones
+catorce puntos, en las trece entidades que operaban los dos años y sin una sola
+excepción. Nadie podía saberlo: ese dato se publicó nueve meses después.
+
+</Thesis>
+
+## Qué es dato y qué es elección mía
+
+Todos los números salen de contar filas de archivos oficiales y de compararlas contra una
+copia archivada de la fuente original. Lo discutible son cuatro decisiones mías, y cada una
+mueve los resultados.
+
+| Elemento                                           | Estatus  | Fuente o decisión                                                                                                                                     |
+| -------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cuentas recibidas y denegadas por cada aseguradora | dato     | [Transparency in Coverage de CMS](https://www.cms.gov/marketplace/resources/data/public-use-files), releases 2024 a 2026, descargados el 09/09/2026   |
+| Qué año de atención trae cada archivo              | dato     | [CMS lo dice textual en su índice](https://www.cms.gov/marketplace/resources/data/public-use-files): el release 2026 trae el año de plan 2024         |
+| Asegurados de cada aseguradora en ese mercado      | dato     | [Issuer Level Enrollment de CMS](https://www.cms.gov/marketplace/resources/data/issuer-level-enrollment-data), años 2022 y 2024                       |
+| Padrón total de UnitedHealthcare                   | dato     | [balance anual](https://www.sec.gov/Archives/edgar/data/731766/000073176625000063/unh-20241231.htm) presentado al regulador bursátil de EE. UU. (SEC) |
+| Sumar las entidades del grupo antes de dividir     | elección | promediar tasas le daría el mismo peso a Texas que a Oklahoma                                                                                         |
+| Qué razones sociales cuentan como UnitedHealthcare | elección | las que el archivo nombra así, más Golden Rule, All Savers y Oxford                                                                                   |
+| Medir dentro de la red y no fuera                  | elección | es donde la aseguradora eligió al médico, y es la serie que usó la cifra original                                                                     |
+| Separar mezcla de mejora con una descomposición    | elección | a nivel entidad, con los pesos del año anterior                                                                                                       |
+| Por qué bajó la tasa en 2024                       | sin dato | **fuera de alcance**: el archivo registra cuentas, sin el motivo de cada una                                                                          |
+| Qué pasa fuera de ese mercado                      | sin dato | **no existe público** por aseguradora, ni en Medicare ni en planes de empleador                                                                       |
+
+<TableCaption>
+  La discusión posible sobre este caso es la de las cuatro elecciones, y por eso están escritas
+  antes que los números.
+</TableCaption>
+
+Antes de escribir nada verifiqué mis totales contra el análisis de referencia del sector.
+Lo publica KFF, una organización sin fines de lucro que investiga políticas de salud en
+Estados Unidos y que aclara no tener ninguna relación con la aseguradora Kaiser Permanente,
+detalle que acá importa: si fuera el brazo de investigación de una aseguradora, contrastar
+contra ella no probaría nada. Para el año de plan 2024 obtengo 451.249.751 cuentas recibidas
+dentro de la red y 84.502.749 denegadas; [su informe](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/) publica 451 millones recibidas
+in-network y "approximately 85 million" denegadas. Las tres décimas de
+diferencia se explican solas: ellos excluyen a las aseguradoras con menos de mil cuentas.
+
+## El número era cierto
+
+[ValuePenguin](https://www.valuepenguin.com/health-insurance-claim-denials-and-appeals),
+un sitio de finanzas personales de LendingTree, publicó en marzo de 2024 una nota sobre
+denegaciones y la actualizó en mayo. Ahí calculó que UnitedHealthcare denegaba el 32% de las
+cuentas dentro de su red, con un promedio de industria del 16%, y lo puso en una tabla junto
+a sus competidores. Seis meses después seguía en línea: [la captura del 27 de noviembre de
+2024](https://web.archive.org/web/20241127015841/https://www.valuepenguin.com/health-insurance-claim-denials-and-appeals) todavía la tiene.
+
+Un mes más tarde la nota cambió. El 18 de diciembre avisa que actualizó su comparación "para
+reflejar los datos más recientes" de CMS. En [la
+captura del 24 de enero de 2026](https://web.archive.org/web/20260124234506/https://www.valuepenguin.com/health-insurance-claim-denials-and-appeals) el 32% y el 16% ya no están: en su lugar hay
+otra tabla, con los números del año siguiente. Dice **33%** para UnitedHealthcare contra una
+tasa general del **19%**, sobre planes de 2023.
+
+Ese 33% es una tercera comprobación que no busqué. Mi cálculo para el año de plan 2023 da
+33,3% y el de mercado 19,7%. La fuente rehízo su tabla con el archivo nuevo, por su cuenta, y
+llegó a los mismos dos números que yo.
+
+La misma nota registra una objeción. El 5 de diciembre de 2024 avisa que "una aseguradora se
+contactó afirmando que la tasa de denegación publicada no coincide con sus registros
+internos". No dice cuál ni publica los registros, así que no hay con qué contrastarla, pero
+es la única respuesta pública que encontré.
+
+Lo rehice con el mismo archivo. Para el año de plan 2022 me da 31,9%. La fuente original
+declaraba además un promedio de industria del 16%, y mi cálculo sobre el mismo universo da
+16,0%. Los dos números coinciden, y la metodología que ellos publicaron, sumar todas las
+subsidiarias antes de dividir, es la misma que usé yo.
+
+La primera conclusión es la menos cómoda para quien esperaba una desmentida: la cifra no
+estaba inflada. En 2022 y 2023 UnitedHealthcare denegó cerca de una de cada tres cuentas que
+le mandaron médicos de su propia red, el doble del mercado agregado y después casi el doble
+otra vez.
+
+<Figure
+  src="/projects/denegaciones-unitedhealth/g1_la_brecha.png"
+  alt="Barras agrupadas por año de plan que comparan la tasa de denegación de UnitedHealthcare contra la tasa agregada del mercado: 31,9% contra 16,0% en 2022, 33,3% contra 19,7% en 2023, y 19,2% contra 18,7% en 2024"
+  width={2000}
+  height={1280}
+  caption="La distancia contra el mercado pasa de 15,9 puntos a medio punto en dos años. Cada aseguradora declara sus propios números a CMS, sin una definición común de qué cuenta como denegación. Elaboración propia sobre el archivo público Transparency in Coverage de CMS."
+/>
+
+## Y medía a 224.000 de 51,7 millones
+
+Acá aparece lo que la discusión pública se salteó, y no porque estuviera escondido. El
+archivo de CMS cubre solamente los planes que se venden en el mercado individual que
+administra el Estado federal: quedan afuera los que la gente recibe por su trabajo, Medicare,
+Medicaid y los mercados que algunos estados manejan por su cuenta.
+
+Crucé el padrón de ese mercado con el total de la empresa. En 2022 UnitedHealthcare cubría a
+51.695.000 personas según su propio balance, y 224.202 de ellas tenían un plan comprado ahí.
+El número que definió su reputación se calculó sobre el 0,43% de su padrón.
+
+Y es la más grande del país, lo que da la medida de lo chico que es ese recorte. Al cierre
+de 2024 declaraba 50.675.000 afiliados médicos contra los [45.734.000 de Elevance](https://www.sec.gov/Archives/edgar/data/1156039/000115603925000010/elv-20241231.htm),
+que es la segunda y que en su propio balance se describe como "una de las más grandes", no
+como la mayor. Tercero está CVS, con Aetna adentro, en 27.095.000.
+
+Es la diferencia entre medir una sucursal y describir la cadena: la medición de la
+sucursal puede ser impecable y aun así no decir nada sobre las otras doscientas.
+
+Conviene aclarar que la fuente original no ocultó esto. Debajo de su tabla, en la misma
+pantalla que el número, había una línea que avisaba que eran datos de los planes vendidos
+en ese mercado. El recorte estaba declarado. Lo que viajó fue el número sin la línea.
+
+## El año que nadie llegó a ver
+
+En el año de plan 2024, la tasa de UnitedHealthcare cayó a 19,2%, contra un 18,7% del
+mercado agregado. La brecha de casi dieciséis puntos que tenía en 2022 quedó en medio punto.
+
+La explicación fácil sería que creció mucho y que las carteras nuevas le bajaron el
+promedio. Sus asegurados en ese mercado pasaron de 224.202 a 1.377.868 en dos años, así que
+la sospecha es razonable. Fui a medirla.
+
+<Figure
+  src="/projects/denegaciones-unitedhealth/g2_no_fue_la_mezcla.png"
+  alt="Descomposición de la caída de 14,1 puntos entre los años de plan 2023 y 2024: las mismas carteras bajando su tasa aportan 13,3 puntos, las entradas y salidas 1,8 puntos, y el cambio de peso entre carteras aporta 0,9 puntos en sentido contrario"
+  width={2000}
+  height={1280}
+  caption="Descomposición a nivel entidad, con los pesos del año anterior. El efecto composición es positivo: el cambio de mezcla empujó la tasa para arriba. Elaboración propia sobre el archivo público Transparency in Coverage de CMS."
+/>
+
+De los 14,1 puntos que bajó, 13,3 salen de las carteras que ya tenía. El cambio de mezcla apenas atenuó la caída. Hay una comprobación más simple que la
+descomposición y dice lo mismo.
+
+<Figure
+  src="/projects/denegaciones-unitedhealth/g3_trece_de_trece.png"
+  alt="Gráfico de líneas horizontales con las trece entidades de UnitedHealthcare presentes en los dos años. Todas bajan su tasa de denegación entre 2023 y 2024, desde 7,6 puntos en Misuri hasta 23,7 en Alabama"
+  width={2000}
+  height={1280}
+  caption="Las trece entidades que operaban en los dos años bajaron y ninguna subió; en 2024 operó con quince. Elaboración propia sobre el archivo público Transparency in Coverage de CMS."
+/>
+
+Trece de trece, en un solo año, con caídas de entre 7,6 puntos en Misuri y 23,7 en
+Alabama, sobre las quince entidades con las que operó en 2024. Un cambio de cartera no
+produce un patrón así.
+
+Y el momento importa. El año de plan 2024 mide la atención prestada entre enero y diciembre
+de ese año, y el archivo salió el 26 de septiembre de 2025. Mientras la cifra de 2022 seguía
+publicada, en noviembre de 2024, estaba ocurriendo una caída de catorce puntos que todavía no
+existía en ningún lado.
+
+## La objeción más fuerte: se movió todo el mercado
+
+Si la mezcla no explica la caída, queda una explicación que sí compite en serio con la
+tesis, y no la puedo descartar del todo.
+
+[KFF documenta](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/) que las aseguradoras que denegaban el 30% o más de las cuentas pasaron de
+ser el 17% del total en 2023 a ser el 3% en 2024. Se desplomó la cola alta entera, y
+UnitedHealthcare estaba adentro de esa cola. Visto así, la mejora podría ser una corriente
+del mercado antes que una decisión de la empresa.
+
+Se puede medir cuánto de la caída sobra después de descontar esa corriente. El mercado bajó
+1,0 punto entre los años de plan 2023 y 2024, y UnitedHealthcare bajó 14,1. Siguiendo sólo al
+mercado habría terminado en 32,3%: quedan 13,1 puntos sin explicar.
+
+La objeción sigue viva. Movimiento propio y movimiento de cohorte se superponen, y con
+este archivo no se separan.
+
+Una advertencia sobre la cifra que uso para plantearla: el informe de KFF da dos valores
+para esa estadística, 17% en el resumen y 14% en el cuerpo. Uso el 17%, que agranda el
+desplome del mercado y por lo tanto es el que más debilita mi tesis. Con el 14% el caso me
+sale más barato, que es la razón para no elegir ése.
+
+## Lo que este análisis no puede sostener
+
+Dos cosas que el archivo no permite afirmar, y que van en la misma página que el
+hallazgo.
+
+**Por qué bajó.** El archivo registra cuentas y su resultado, sin el motivo de cada una, así
+que no hay con qué decir si la caída salió de un cambio de proceso, de una revisión de
+criterios o de otra cosa. Que el patrón sea transversal alcanza para descartar la mezcla y se
+queda corto para explicar la causa.
+
+**Que el 0,43% sea representativo.** No hay dato público por aseguradora para Medicare,
+Medicaid ni planes de empleador, así que la porción chica es un límite de la medición, y de
+ahí no se deduce nada sobre el resto del padrón.
+
+<Callout type="warning" title="Un límite que hereda cualquier análisis sobre este archivo">
+  El archivo sólo cubre las cuentas que llegan después de la atención. Las autorizaciones previas,
+  que son las que deciden si un tratamiento se hace o no, no están. Es la parte más conflictiva de
+  la experiencia del paciente y no existe públicamente abierta por aseguradora.
+</Callout>
+
+## La decisión que tiene enfrente
+
+La situación, en una línea: la empresa es juzgada por una métrica que no controla, medida
+sobre el 0,43% de su padrón, publicada nueve meses tarde por un tercero, y no tiene con
+qué mostrar su propia mejora.
+
+**Lo que haría yo: publicar la tasa de apelaciones revertidas, por estado y por trimestre.**
+
+No hay que inventarla. Ya está en el mismo archivo de CMS, y en las entidades de
+UnitedHealthcare va del 19,7% al 48,5% según estado y año. La diferencia es que hoy sale
+una vez por año, con nueve meses de demora y mezclada con todo lo demás.
+
+Elijo esa antes que la tasa de denegación por dos razones. Se puede medir en tiempo propio,
+sin esperar el calendario de un organismo federal. Y es incómoda, y por eso creíble: obliga a
+publicar con qué frecuencia la empresa se equivocó y tuvo que corregirse.
+
+El dato que la vuelve urgente está en el mismo informe de KFF, para todo el mercado
+individual y no sólo para UnitedHealthcare: menos del 1% de las denegaciones se apela, y de
+las que se apelan, alrededor de un tercio se revierte.
+
+**El experimento.** Publicar la serie durante cuatro trimestres en un grupo de estados y
+dejar el resto como control. Lo que se mide es si sube la tasa de apelaciones y si baja la
+de denegación.
+
+**El criterio de corte, fijado antes de empezar.** Si al cuarto trimestre las apelaciones
+subieron y la tasa de denegación no bajó, la transparencia atrajo pedidos oportunistas sin
+corregir nada, y se apaga. Si suben las dos, tampoco sirve: querría decir que denegar más
+y revertir más sale más barato que decidir bien la primera vez.
+
+**El trade-off que estoy eligiendo.** Publicar errores propios en un tema con causas
+judiciales abiertas es un riesgo legal y reputacional real. Lo elijo igual porque la
+alternativa es la de los últimos dos años: que la conversación la fije un número ajeno,
+viejo y calculado sobre una porción marginal del negocio, sin nada del otro lado.
+
+## Qué me haría cambiar de opinión
+
+Lo que ya tiene prueba en contra y la aguantó: que la caída de 2024 fuera cambio de mezcla
+(la descomposición dice que la mezcla la frenó), que fuera un puñado de estados moviendo
+el agregado (bajaron los trece), o que la cifra original estuviera mal calculada (se
+reproduce con dos números independientes).
+
+Lo que todavía puede tirar el caso abajo:
+
+- **Que aparezcan datos por aseguradora fuera de ese mercado y muestren tasas parecidas al
+  31,9%.** Ahí el 0,43% dejaría de ser un sesgo de medición y pasaría a ser una muestra
+  representativa, y el caso cambiaría de sentido.
+- **Que la tasa vuelva a subir en el año de plan 2025.** Si el próximo release muestra una
+  reversión, lo de 2024 fue un episodio pasajero, y la recomendación pierde su base.
+- **Que CMS empiece a auditar lo declarado y los números se muevan.** Hoy cada aseguradora
+  reporta los suyos sin definición común y sin validación visible. Si eso se corrige y la
+  serie cambia, cambia todo el caso.
+
+Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación
+comercial con UnitedHealth Group ni con ninguna de las empresas mencionadas.

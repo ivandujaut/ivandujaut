@@ -1,0 +1,303 @@
+---
+title: "The largest US health insurer denied one in three bills sent by the doctors it picked itself"
+tagline: "It is UnitedHealthcare, in 2022 and 2023, and only in the plans it sells on the individual market: 0.43% of its members."
+description: "I rebuilt the denial figure that defined UnitedHealthcare from public files published by CMS, the federal agency that runs Medicare. It is exact, and it comes from 224,202 members out of 51.7 million. In plan year 2024 it fell fourteen points across the thirteen entities present in both years."
+year: 2026
+date: "2026-09-09"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+stack: ["Python", "openpyxl", "Open data (CMS Transparency in Coverage)"]
+preview:
+  - src: "/projects/denegaciones-unitedhealth/g1_la_brecha.en.png"
+    alt: "Bars by plan year comparing UnitedHealthcare's denial rate against the aggregate market rate: 31.9% against 16.0% in 2022, 33.3% against 19.7% in 2023 and 19.2% against 18.7% in 2024"
+  - src: "/projects/denegaciones-unitedhealth/g2_no_fue_la_mezcla.en.png"
+    alt: "Decomposition of the 14.1-point drop: the same entities contribute 13.3 points downward, entries and exits 1.8, and the shift in weight between entities pushes 0.9 points upward"
+  - src: "/projects/denegaciones-unitedhealth/g3_trece_de_trece.en.png"
+    alt: "Thirteen horizontal lines, one per UnitedHealthcare entity present in both years; all of them lower their rate between plan years 2023 and 2024, from 7.6 points in Missouri to 23.7 in Alabama"
+metrics:
+  - label: "In-network bills denied, plan year 2022"
+    value: "31.9%"
+  - label: "Share of its members the figure measured"
+    value: "0.43%"
+  - label: "Drop in plan year 2024"
+    value: "14.1 points"
+    change: "−14.1 pp"
+    trend: "down"
+    sentiment: "good"
+  - label: "Entities where it fell, out of thirteen"
+    value: "13"
+translationKey: "denegaciones-unitedhealth"
+draft: true
+---
+
+<Abstract label="In short">
+
+The number that fixed the reputation of UnitedHealthcare, the largest health insurer in
+the United States, was true. In plan year 2022 it denied 31.9% of the bills sent to it by
+doctors in its own network, against 16.0% for the aggregate market, itself included. I
+reproduced it from the same public file it came from, and I get the same industry average
+the original source published.
+
+What almost nobody looked at is how many people it was calculated on. That file only covers
+plans sold on the individual market the federal government runs, and there UnitedHealthcare
+had 224,202 members out of the 51,695,000 it covered. Four tenths of one percent of its
+membership.
+
+And there is something more uncomfortable. In plan year 2024 that rate fell to 19.2%,
+almost the aggregate market rate. Of the fifteen entities it operated with that year, the
+thirteen already there the year before all went down, without a single exception, and the
+mix pushed the other way. That file was published on 26 September 2025, nine months after
+the year it measures had closed.
+
+Inside is what a product team at that company would do: which metric to publish in
+order to stop being judged by one it does not control, how to measure it, and the kill criterion,
+fixed before it starts.
+
+</Abstract>
+
+<Thesis>
+
+When the 2022 number went viral, UnitedHealthcare had just cut its denials by fourteen
+points, across the thirteen entities present in both years and without a single exception.
+Nobody could have known: that file was published nine months later.
+
+</Thesis>
+
+## What is data and what is my call
+
+Every number here comes from counting rows in official files and comparing them against an
+archived copy of the original source. What can be argued about are four calls of mine, and
+each one moves the results.
+
+| Item                                           | Status  | Source or call                                                                                                                                      |
+| ---------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bills received and denied by each insurer      | data    | [CMS Transparency in Coverage](https://www.cms.gov/marketplace/resources/data/public-use-files), 2024 to 2026 releases, downloaded 09/09/2026       |
+| Which year of care each file carries           | data    | [CMS says it verbatim in its index](https://www.cms.gov/marketplace/resources/data/public-use-files): the 2026 release carries plan year 2024       |
+| Members each insurer has in that market        | data    | [CMS Issuer Level Enrollment](https://www.cms.gov/marketplace/resources/data/issuer-level-enrollment-data), 2022 and 2024                           |
+| UnitedHealthcare's total membership            | data    | [annual report](https://www.sec.gov/Archives/edgar/data/731766/000073176625000063/unh-20241231.htm) filed with the SEC, the US securities regulator |
+| Adding up the group's entities before dividing | my call | averaging rates would give Texas the same weight as Oklahoma                                                                                        |
+| Which legal entities count as UnitedHealthcare | my call | the ones the file names that way, plus Golden Rule, All Savers and Oxford                                                                           |
+| Measuring in-network and not out               | my call | it is where the insurer picked the doctor, and it is the series the original figure used                                                            |
+| Separating mix from improvement                | my call | a decomposition at entity level, weighted by the prior year                                                                                         |
+| Why the rate fell in 2024                      | no data | **out of scope**: the file records bills, not the reason behind each one                                                                            |
+| What happens outside that market               | no data | **not public** by insurer, neither in Medicare nor in employer plans                                                                                |
+
+<TableCaption>
+  The argument worth having about this case is the one about those four calls, which is why they are
+  written down before the numbers.
+</TableCaption>
+
+Before writing anything I checked my totals against the sector's reference analysis. It is
+published by KFF, a nonprofit that researches health policy in the United States and that
+points out it has no connection to the insurer Kaiser Permanente, which matters here: if it
+were an insurer's research arm, checking against it would prove nothing. For plan year 2024 I get
+451,249,751 in-network bills received and 84,502,749 denied; [its report](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)
+publishes 451 million received in-network and "approximately 85 million" denied. The
+three-tenths difference in the rate explains itself: they drop insurers with fewer than a
+thousand bills and I do not.
+
+## The number was true
+
+[ValuePenguin](https://www.valuepenguin.com/health-insurance-claim-denials-and-appeals), a
+personal finance site owned by LendingTree, published a piece on denials in March 2024 and
+updated it in May. In it, it calculated that UnitedHealthcare denied 32% of the bills inside
+its network, against a 16% industry average, and put that in a table alongside its
+competitors. Six months later it was still up: [the 27 November 2024 capture](https://web.archive.org/web/20241127015841/https://www.valuepenguin.com/health-insurance-claim-denials-and-appeals) still
+has it.
+
+A month later the piece changed. On 18 December it notes that it updated the comparison "to
+reflect the most recent data" from CMS. In [the 24
+January 2026 capture](https://web.archive.org/web/20260124234506/https://www.valuepenguin.com/health-insurance-claim-denials-and-appeals) the 32% and the 16% are gone, and in their place
+there is another table, with the following year's numbers. It reads **33%** for
+UnitedHealthcare against an overall rate of **19%**, for 2023 plans.
+
+That 33% is a third check I was not looking for. My own calculation for plan year 2023 gives
+33.3%, and 19.7% for the market. The source redid its table with the new file, on its own,
+and landed on the same two numbers I did.
+
+The same piece carries an objection. On 5 December 2024 it notes that "one insurer contacted
+ValuePenguin claiming that the denial rate listed in this article is not consistent with
+their internal records". It does not say which insurer and does not publish the records, so
+there is nothing to check it against, but it is the only public response I found.
+
+I redid it with the same file. For plan year 2022 I get 31.9%. The original source also
+published a 16% industry average, and my calculation over the same universe gives 16.0%.
+Both numbers match, and the method they published, adding up all subsidiaries before
+dividing, is the one I used.
+
+The first conclusion is the least comfortable one for anyone expecting a debunking: the
+figure was not inflated. In 2022 and 2023 UnitedHealthcare denied close to one in three of
+the bills sent to it by doctors in its own network, twice the aggregate market and then
+almost twice again.
+
+<Figure
+  src="/projects/denegaciones-unitedhealth/g1_la_brecha.en.png"
+  alt="Grouped bars by plan year comparing UnitedHealthcare's denial rate against the aggregate market rate: 31.9% against 16.0% in 2022, 33.3% against 19.7% in 2023, and 19.2% against 18.7% in 2024"
+  width={2000}
+  height={1280}
+  caption="The distance from the market goes from 15.9 points to half a point in two years. Each insurer reports its own figures to CMS, with no shared definition of what counts as a denial. Author's analysis of the public CMS Transparency in Coverage file."
+/>
+
+## And it measured 224,000 out of 51.7 million
+
+Here is what the public argument skipped, and not because it was hidden. The CMS file only
+covers plans sold on the individual market the federal government runs: plans people get
+through work, Medicare, Medicaid and the marketplaces some states run on their own are all
+out.
+
+I matched that market's enrollment against the company's total. In 2022 UnitedHealthcare
+covered 51,695,000 people according to its own annual report, and 224,202 of them had a plan
+bought there. The number that defined its reputation was calculated on 0.43% of its
+membership.
+
+And it is the largest in the country, which gives the measure of how small that slice is. At
+the end of 2024 it reported 50,675,000 medical members against [Elevance's 45,734,000](https://www.sec.gov/Archives/edgar/data/1156039/000115603925000010/elv-20241231.htm),
+the second largest, which in its own report describes itself as "one of the largest", not as
+the largest. Third is CVS, with Aetna inside, at 27,095,000.
+
+It is the difference between measuring one branch and describing the chain: the branch
+measurement can be flawless and still say nothing about the other two hundred.
+
+Worth saying that the original source did not hide this. Under its table, on the same screen
+as the number, there was a line noting that this was data from plans sold on that market.
+The slice was declared. What travelled was the number without the line.
+
+## The year nobody got to see
+
+In plan year 2024, UnitedHealthcare's rate fell to 19.2%, against 18.7% for the aggregate
+market. The gap of almost sixteen points it had in 2022 came down to half a point.
+
+The easy explanation would be that it grew a lot and that the new books dragged the average
+down. Its members in that market went from 224,202 to
+1,377,868 in two years, so the suspicion is reasonable. I went and measured it.
+
+<Figure
+  src="/projects/denegaciones-unitedhealth/g2_no_fue_la_mezcla.en.png"
+  alt="Decomposition of the 14.1-point drop between plan years 2023 and 2024: the same entities lowering their rate contribute 13.3 points, entries and exits 1.8 points, and the shift in weight between entities contributes 0.9 points in the opposite direction"
+  width={2000}
+  height={1280}
+  caption="Decomposition at entity level, weighted by the prior year. The composition effect is positive: the change in mix pushed the rate up. Author's analysis of the public CMS Transparency in Coverage file."
+/>
+
+Of the 14.1 points it fell, 13.3 come from the entities it already had. The change in mix
+barely softened the drop. There is a simpler check than the decomposition, and it says the
+same thing.
+
+<Figure
+  src="/projects/denegaciones-unitedhealth/g3_trece_de_trece.en.png"
+  alt="Horizontal line chart with the thirteen UnitedHealthcare entities present in both years. All of them lower their denial rate between 2023 and 2024, from 7.6 points in Missouri to 23.7 in Alabama"
+  width={2000}
+  height={1280}
+  caption="The thirteen entities operating in both years all went down and none went up; in 2024 it operated with fifteen. Author's analysis of the public CMS Transparency in Coverage file."
+/>
+
+Thirteen out of thirteen, in a single year, with drops of between 7.6 points in Missouri and
+23.7 in Alabama, out of the fifteen entities it operated with in 2024. Shuffling the book of business does not produce a pattern like that.
+
+And the timing matters. Plan year 2024 measures care delivered between January and December
+of that year, and that file was published on 26 September 2025. While the 2022 figure was
+still up, in November 2024, a fourteen-point drop was happening that did not yet exist
+anywhere.
+
+## The strongest objection: the whole market moved
+
+If the mix does not explain the drop, there is one explanation left that genuinely competes
+with the thesis, and I cannot rule it out entirely.
+
+[KFF documents](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)
+that insurers denying 30% or more of bills went from 17% of the total in 2023 to 3% in 2024.
+The entire high tail collapsed, and UnitedHealthcare was inside that tail. Seen that way, the
+improvement could be a market current rather than a company decision.
+
+What can be measured is how much of the drop is left over after subtracting that current. The
+aggregate market rate fell 1.0 point between plan years 2023 and 2024, and UnitedHealthcare
+fell 14.1. Had it only followed the market it would have ended at 32.3%: 13.1 points are
+left that the general current does not explain.
+
+The objection is still alive. Own movement and cohort movement overlap, and this file does
+not separate them.
+
+One warning about the figure I use to raise it. The KFF report itself gives two values for
+that statistic: 17% in the summary and 14% in the body. I use 17%, which is the one that
+makes the market collapse bigger and therefore the one that weakens my thesis most. With 14%
+the objection gets softer and the case comes cheaper for me, which is exactly the reason not
+to pick that one.
+
+## What this analysis cannot support
+
+Two things the file does not allow me to claim, and they go on the same page as the finding.
+
+**Why it fell.** The file records bills and their outcome, without the reason behind each
+one. There is nothing here that says whether the drop came from a process change, a review
+of criteria, or something else. That the pattern is across the board is enough to rule out
+the mix and falls short of explaining the cause.
+
+**That the 0.43% is representative.** It may be that across the rest of its membership it
+denied at the same rate, more, or less. There is no public per-insurer data for Medicare,
+Medicaid or employer plans, so the small slice is a limit of the measurement, and nothing
+about the rest follows from it.
+
+<Callout type="warning" title="A limit any analysis of this file inherits">
+  The file only covers bills that arrive after care was given. Prior authorizations, which are the
+  ones that decide whether a treatment happens at all, are not in it. That is the most contentious
+  part of the patient experience, and no insurer-level data on it is public.
+</Callout>
+
+## The decision in front of it
+
+The situation, in one line: the company is judged by a metric it does not control, measured
+on 0.43% of its membership, published nine months late by a third party, and it has nothing
+to show its own improvement with.
+
+**What I would do: publish the overturned-appeal rate, by state and by quarter.**
+
+It does not need inventing. It is already in the same CMS file, and across UnitedHealthcare's
+entities it runs from 19.7% to 48.5% depending on state and year. The difference is that
+today it comes out once a year, nine months late and mixed in with everything else.
+
+I pick that one over the denial rate for two reasons. The first is that it can be measured on
+its own clock, without waiting for a federal agency's calendar. The second is that it is
+uncomfortable, and therefore credible: it forces the company to publish how often it got it
+wrong and had to correct itself.
+
+What makes it urgent is in the same KFF report, for the whole individual market and not just
+for UnitedHealthcare: fewer than 1% of denials are appealed, and of those that are appealed,
+about a third are overturned.
+
+**The experiment.** Publish the series for four quarters in one group of states and leave the
+rest as a control. What gets measured is whether the appeal rate goes up and whether the
+denial rate comes down.
+
+**The kill criterion, fixed before starting.** If by the fourth quarter appeals went up and
+the denial rate did not come down, transparency attracted opportunistic requests without
+fixing anything, and it gets switched off. If both go up, that does not work either: it would
+mean denying more and reversing more is cheaper than deciding well the first time.
+
+**The trade-off I am choosing.** Publishing your own errors on a subject with open court
+cases is a real legal and reputational risk. I choose it anyway because the alternative is
+what the last two years looked like: the conversation set by someone else's number, old and
+calculated on a marginal slice of the business, with nothing on the other side.
+
+## What would change my mind
+
+What has already been tested and held: that the 2024 drop was a change in mix (the
+decomposition says the mix slowed it), that it was a handful of states moving the aggregate
+(all thirteen went down), or that the original figure was miscalculated (it reproduces
+against two independent numbers).
+
+What could still bring the case down:
+
+- **Per-insurer data appearing from outside that market, showing rates close to 31.9%.** The
+  0.43% would stop being a measurement bias and become a representative sample, and the case
+  would change meaning.
+- **The rate going back up in plan year 2025.** If the next release shows a reversal, 2024 was
+  a passing episode, and the recommendation loses its footing.
+- **CMS starting to audit what is reported, and the numbers moving.** Today each insurer
+  reports its own figures with no shared definition and no visible validation. If that gets
+  fixed and the series shifts, the whole case shifts.
+
+This is independent work, done with public sources. I have no commercial relationship, and
+never had one, with UnitedHealth Group or any of the companies mentioned.
