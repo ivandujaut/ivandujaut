@@ -154,9 +154,9 @@
         "call": "Agendá una call"
       },
       "moreLabel": "Más casos",
-      "newer": "Caso siguiente",
-      "older": "Caso anterior",
-      "allProjects": "Ver todos los proyectos"
+      "allProjects": "Ver todos los proyectos",
+      "sameTopic": "Sobre el mismo tema",
+      "otherCase": "Otro caso"
     },
     "trend": {
       "good": "mejora",

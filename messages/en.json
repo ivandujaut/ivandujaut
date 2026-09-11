@@ -154,9 +154,9 @@
         "call": "Book a call"
       },
       "moreLabel": "More cases",
-      "newer": "Next case",
-      "older": "Previous case",
-      "allProjects": "See all projects"
+      "allProjects": "See all projects",
+      "sameTopic": "On the same topic",
+      "otherCase": "Another case"
     },
     "trend": {
       "good": "improving",

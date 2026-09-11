@@ -142,24 +142,36 @@ export function getLatestProject(locale: Locale) {
 }
 
 /**
- * Casos vecinos en el listado, para que un caso de estudio no termine en un
- * callejón sin salida.
+ * Los casos que se ofrecen al pie de uno, para que no termine en un callejón
+ * sin salida.
  *
- * "next" es el siguiente en el orden del listado (más viejo, porque ordenamos
- * por fecha descendente) y "previous" el anterior (más nuevo). Devuelve
- * `undefined` en los extremos; con un solo caso publicado, ambos son
- * `undefined`.
+ * Primero los del mismo `topic`, del más nuevo al más viejo; si no alcanzan,
+ * se completa con los vecinos por fecha, marcados como `sameTopic: false`
+ * para que la tarjeta no diga "sobre el mismo tema" cuando no lo es.
+ *
+ * Hasta el 11/09/2026 eran los dos vecinos por fecha (el anterior y el
+ * siguiente del listado). En los primeros 24 días de PostHog nadie terminó
+ * dos piezas en la misma sesión, y quien terminaba un caso de seguros
+ * encontraba abajo uno de GLP-1. Se mide con `card_click` (`surface=next`,
+ * `relation=topic|date`) y con `content_continued`.
  */
-export function getAdjacentProjects(locale: Locale, slug: string) {
+export function getRelatedProjects(locale: Locale, slug: string, limit = 2) {
   const all = getProjects(locale);
+  const current = all.find((p) => p.slug === slug);
+  if (!current) return [];
+
+  const others = all.filter((p) => p.slug !== slug);
+  const sameTopic = others.filter((p) => p.topic === current.topic).slice(0, limit);
+
   const index = all.findIndex((p) => p.slug === slug);
+  const byDate = [all[index - 1], all[index + 1]]
+    .filter((p): p is (typeof all)[number] => Boolean(p))
+    .filter((p) => !sameTopic.includes(p));
 
-  if (index === -1) return { previous: undefined, next: undefined };
-
-  return {
-    previous: index > 0 ? all[index - 1] : undefined,
-    next: index < all.length - 1 ? all[index + 1] : undefined,
-  };
+  return [
+    ...sameTopic.map((project) => ({ project, sameTopic: true })),
+    ...byDate.map((project) => ({ project, sameTopic: false })),
+  ].slice(0, limit);
 }
 
 // ============================================================================
