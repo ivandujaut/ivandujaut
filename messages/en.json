@@ -147,8 +147,9 @@
     },
     "close": {
       "title": "Want to talk about this case?",
-      "body": "If you read this far, something about the problem caught your interest. I like discussing these decisions with people who live them: write me what you would do differently, or let's book a call.",
+      "body": "If you read this far, something about the problem caught your interest. I post every new case on LinkedIn and discuss these decisions there with people who live them. To take it private, write me what you would do differently or pick a time to talk.",
       "ctas": {
+        "linkedin": "Follow me on LinkedIn",
         "email": "Write me",
         "call": "Book a call"
       },

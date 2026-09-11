@@ -147,8 +147,9 @@
     },
     "close": {
       "title": "¿Hablamos de este caso?",
-      "body": "Si llegaste hasta acá, algo del problema te interesó. Me gusta discutir estas decisiones con gente que las vive de cerca: escribime lo que harías distinto, o agendemos una call.",
+      "body": "Si llegaste hasta acá, algo del problema te interesó. En LinkedIn publico cada caso nuevo y discuto estas decisiones con gente que las vive de cerca. Si preferís seguirla en privado, escribime lo que harías distinto o agendemos una call.",
       "ctas": {
+        "linkedin": "Seguime en LinkedIn",
         "email": "Escribime",
         "call": "Agendá una call"
       },
