@@ -83,6 +83,7 @@ const nextConfig: NextConfig = {
       // sirve la ruta genérica sin cambiar de dirección. Excluidas del proxy
       // de next-intl en `proxy.ts`.
       { source: "/lebane", destination: "/pitch/lebane" },
+      { source: "/cromodata", destination: "/pitch/cromodata" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",

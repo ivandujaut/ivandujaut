@@ -1,5 +1,6 @@
 import type { Pitch } from "./types";
 import { lebane } from "./lebane";
+import { cromodata } from "./cromodata";
 
 /**
  * Registro de piezas privadas. Para sumar una empresa: copiar `_plantilla.ts`
@@ -9,6 +10,7 @@ import { lebane } from "./lebane";
  */
 export const pitches: Record<string, Pitch> = {
   lebane,
+  cromodata,
 };
 
 export function getPitch(slug: string): Pitch | undefined {

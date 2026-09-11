@@ -10,9 +10,9 @@
 export type Sourced<T> = { value: T; source: string; note?: string };
 
 /** Ilustración de la portada; el hilo nace de ella. Ver `_template/illustrations`. */
-export type IllustrationKey = "obra";
+export type IllustrationKey = "obra" | "datos";
 /** Figuras que el hilo dibuja entre secciones. Ver `_template/landmarks`. */
-export type LandmarkSetKey = "obra";
+export type LandmarkSetKey = "obra" | "datos";
 
 export interface Milestone {
   date: string;
@@ -129,6 +129,11 @@ export interface Pitch {
       indicators: Indicator[];
       cta: { open: string; close: string };
       advance: {
+        /**
+         * Cómo se muestran los dos montos: pesos (el adelanto de Lebane) o
+         * un conteo a secas (registros, pacientes). Default: pesos.
+         */
+        format?: "ars" | "count";
         scheduledLabel: string;
         scheduledAmount: number;
         availableLabel: string;
