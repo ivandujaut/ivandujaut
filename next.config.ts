@@ -61,6 +61,28 @@ const SERIE_LINKEDIN: Record<number, string> = {
   14: "/projects",
 };
 
+// Links cortos de los posts por caso, posteriores a la serie insurtech. La serie
+// vieja quedó clavada en `utm_campaign=serie` porque medía la campaña entera; desde
+// `glp1-quien-receta` cada caso es su propia campaña (`utm_campaign=<slug>`), así que
+// necesita su propio mapa en vez de una entrada más en `SERIE_LINKEDIN`.
+//
+// La clave es corta a propósito: en el primer comentario de LinkedIn se pega
+// `ivandujaut.com/r/uhc1` y no una URL con tres parámetros a la vista. El lector no
+// tiene por qué leer el instrumental de medición, y un link largo con `utm_` colgando
+// se lee como campaña antes que como fuente.
+//
+// La clave abrevia el CASO, no el tema: hay dos casos de GLP-1 y una clave `glp1`
+// sería ambigua el día que el segundo necesite la suya.
+const POSTS_DE_CASO: Record<string, { slug: string; post: number }> = {
+  uhc1: { slug: "denegaciones-unitedhealth", post: 1 },
+  uhc2: { slug: "denegaciones-unitedhealth", post: 2 },
+  gqr1: { slug: "glp1-quien-receta", post: 1 },
+  gqr2: { slug: "glp1-quien-receta", post: 2 },
+  gop1: { slug: "glp1-open-payments", post: 1 },
+  sh1: { slug: "seguro-hogar-argentina", post: 1 },
+  sh2: { slug: "seguro-hogar-argentina", post: 2 },
+};
+
 const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
@@ -107,6 +129,11 @@ const nextConfig: NextConfig = {
       ...Object.entries(SERIE_LINKEDIN).map(([n, destino]) => ({
         source: `/r/${n}`,
         destination: `${destino}?utm_source=linkedin&utm_campaign=serie&utm_content=post-${n.padStart(2, "0")}`,
+        permanent: false,
+      })),
+      ...Object.entries(POSTS_DE_CASO).map(([clave, { slug, post }]) => ({
+        source: `/r/${clave}`,
+        destination: `/projects/${slug}?utm_source=linkedin&utm_campaign=${slug}&utm_content=post-${String(post).padStart(2, "0")}`,
         permanent: false,
       })),
       // Bio de TikTok: la plataforma permite un solo link en el perfil y se
