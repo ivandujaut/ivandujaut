@@ -77,8 +77,45 @@ function esAgenteLector(): boolean {
   return !AGENTES_NO_LECTORES.some((agente) => agente.test(navigator.userAgent));
 }
 
+/**
+ * Marca en `localStorage` que este navegador es del autor.
+ *
+ * El filtro de agentes de arriba corta la app de escritorio, pero no el Chrome
+ * ni el teléfono con los que se trabaja sobre el sitio. En los primeros 24 días
+ * de medición (18/08 al 10/09/2026), 82 de 154 sesiones salían de la ciudad del
+ * autor y dos escritorios solos sumaban 42: cualquier número del dashboard
+ * estaba inflado al doble.
+ *
+ * Va en `localStorage` y no en una cookie para no arrastrar el cartel de
+ * consentimiento que el sitio hoy no necesita. Se pone al visitar `/stats` con
+ * la clave correcta, que es algo que solo hace el autor, así que no hay que
+ * acordarse de ningún paso manual: el primer vistazo a las estadísticas desde
+ * un dispositivo nuevo lo excluye para siempre.
+ */
+export const CLAVE_TRAFICO_PROPIO = "trafico-propio";
+
+export function esTraficoPropio(): boolean {
+  try {
+    return localStorage.getItem(CLAVE_TRAFICO_PROPIO) === "1";
+  } catch {
+    // `localStorage` puede tirar en modo privado o con almacenamiento
+    // bloqueado. Sin marca legible, se mide: preferible a perder lectores.
+    return false;
+  }
+}
+
+/** Excluye este navegador de la medición. Idempotente. */
+export function marcarTraficoPropio(): boolean {
+  try {
+    localStorage.setItem(CLAVE_TRAFICO_PROPIO, "1");
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function isAnalyticsEnabled(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY) && esAgenteLector();
+  return Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY) && esAgenteLector() && !esTraficoPropio();
 }
 
 interface TrackOptions {
