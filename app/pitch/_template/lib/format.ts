@@ -7,3 +7,10 @@ export function formatArs(n: number): string {
 export function formatPct(fraction: number): string {
   return `${Math.round(fraction * 100)}%`;
 }
+
+/** "69600" → "69.600", sin signo de moneda. */
+export function formatCount(n: number): string {
+  return Math.round(n)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}

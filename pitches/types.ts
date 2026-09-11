@@ -129,6 +129,11 @@ export interface Pitch {
       indicators: Indicator[];
       cta: { open: string; close: string };
       advance: {
+        /**
+         * Cómo se muestran los dos montos: pesos (el adelanto de Lebane) o
+         * un conteo a secas (registros, pacientes). Default: pesos.
+         */
+        format?: "ars" | "count";
         scheduledLabel: string;
         scheduledAmount: number;
         availableLabel: string;

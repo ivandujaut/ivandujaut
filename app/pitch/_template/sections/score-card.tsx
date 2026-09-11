@@ -1,7 +1,7 @@
 "use client";
 
 import type { Pitch } from "@/pitches/types";
-import { formatArs, formatPct } from "../lib/format";
+import { formatArs, formatCount, formatPct } from "../lib/format";
 
 export const GAUGE_R = 44;
 export const GAUGE_LENGTH = 2 * Math.PI * GAUGE_R;
@@ -20,6 +20,7 @@ interface ScoreCardProps {
  */
 export function ScoreCard({ card, open, onToggle }: ScoreCardProps) {
   const { advance } = card;
+  const money = advance.format === "count" ? formatCount : formatArs;
   return (
     <div
       className="score-card rounded-2xl border border-(--pitch-line) bg-card/60 p-5 md:p-7"
@@ -117,7 +118,7 @@ export function ScoreCard({ card, open, onToggle }: ScoreCardProps) {
           <div>
             <dt className="text-(--pitch-ink-dim)">{advance.scheduledLabel}</dt>
             <dd className="mt-0.5 font-mono text-base tabular-nums">
-              {formatArs(advance.scheduledAmount)}
+              {money(advance.scheduledAmount)}
             </dd>
           </div>
           <div>
@@ -125,7 +126,7 @@ export function ScoreCard({ card, open, onToggle }: ScoreCardProps) {
               {advance.availableLabel} (hasta {formatPct(advance.maxAdvancePct)})
             </dt>
             <dd className="mt-0.5 font-mono text-base font-semibold text-(--pitch-accent) tabular-nums">
-              {formatArs(advance.maxAdvance)}
+              {money(advance.maxAdvance)}
             </dd>
           </div>
         </dl>
