@@ -45,7 +45,11 @@ export function PaperToc({
     );
     let section = 0;
     let subsection = 0;
-    const list: Heading[] = Array.from(nodes).map((node) => {
+    // Los títulos adentro de un `<Annex>` (un `<details>` plegado) no van a la
+    // tabla: el anexo es material de apoyo, y un ancla a un título oculto
+    // dejaría al lector mirando un bloque cerrado.
+    const visibles = Array.from(nodes).filter((node) => !node.closest("details"));
+    const list: Heading[] = visibles.map((node) => {
       const level = node.tagName === "H2" ? 2 : 3;
       if (level === 2) {
         section += 1;
