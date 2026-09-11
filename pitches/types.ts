@@ -10,9 +10,9 @@
 export type Sourced<T> = { value: T; source: string; note?: string };
 
 /** Ilustración de la portada; el hilo nace de ella. Ver `_template/illustrations`. */
-export type IllustrationKey = "obra";
+export type IllustrationKey = "obra" | "datos";
 /** Figuras que el hilo dibuja entre secciones. Ver `_template/landmarks`. */
-export type LandmarkSetKey = "obra";
+export type LandmarkSetKey = "obra" | "datos";
 
 export interface Milestone {
   date: string;

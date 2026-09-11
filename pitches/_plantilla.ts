@@ -17,7 +17,8 @@ export const plantilla: Pitch = {
     description: "Una lectura del producto, una tesis sobre el negocio y un caso para empezar.",
   },
   // Conjuntos disponibles en app/pitch/_template: "obra" (skyline con grúa y
-  // figuras de construcción). Para otro rubro, agregar un conjunto nuevo.
+  // figuras de construcción) y "datos" (hub de datos clínicos: hospitales, nodo
+  // y tabla). Para otro rubro, agregar un conjunto nuevo.
   illustration: "obra",
   landmarks: "obra",
   author: {
