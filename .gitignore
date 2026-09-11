@@ -74,3 +74,12 @@ public/static/
 # Config de Claude Code: local, nunca se versiona.
 .claude/
 scripts/**/__pycache__/
+
+# Candidatas de cover generadas (se commitea sólo la elegida, junto al MDX)
+.covers/
+
+# Clips generados (se commitea sólo el que se usa)
+.video/
+
+# Capturas del verificador de render (.claude/scripts/render-check.mjs)
+.render-check/
