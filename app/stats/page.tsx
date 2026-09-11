@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { OwnTrafficMarker } from "@/components/analytics/own-traffic-marker";
 import { getPosts, getProjects } from "@/lib/content";
 import { getCachedViews } from "@/lib/views";
 import { getCachedContinued, getCachedReads } from "@/lib/reads";
@@ -85,6 +86,7 @@ export default async function StatsPage({ searchParams }: Props) {
         menos un cuarto del tiempo declarado, con la pestaña a la vista. El read-through es lo único
         que dice si el texto funcionó.
       </p>
+      <OwnTrafficMarker />
 
       <dl className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[

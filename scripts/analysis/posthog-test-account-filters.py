@@ -38,6 +38,18 @@ FILTROS = [
         "value": "Shap-User",
         "operator": "not_icontains",
     },
+    # Tráfico propio y bots de datacenter, por ciudad del GeoIP. En los primeros
+    # 24 días (18/08 al 10/09/2026), Posadas (la ciudad del autor) puso 82 de 154
+    # sesiones y Dulles (AWS us-east-1: escáneres con UA de Chrome, una página,
+    # cero segundos) otras 11. Hacia adelante los corta `lib/analytics.ts`
+    # (marca en localStorage + `navigator.webdriver`); esto limpia el histórico.
+    # El costo asumido: un lector real de Posadas tampoco cuenta.
+    {
+        "key": "$geoip_city_name",
+        "type": "event",
+        "value": ["Posadas", "Dulles"],
+        "operator": "is_not",
+    },
 ]
 
 
