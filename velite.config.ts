@@ -94,6 +94,14 @@ const projects = defineCollection({
       // debajo de un título que afirma algo falso, así que el campo es
       // obligatorio y sin default: cada caso nuevo tiene que declararlo.
       subject: s.enum(["own", "external"]),
+      // Tema de la pieza. Elige los "siguientes casos" al pie de cada una:
+      // seguros con seguros, salud con salud. Existe desde el 11/09/2026
+      // porque los vecinos por fecha no funcionaban: en los primeros 24 días
+      // de PostHog nadie terminó dos piezas en la misma sesión, y quien
+      // terminaba un caso de seguros encontraba abajo uno de GLP-1. Sin
+      // default y obligatorio por la misma razón que `subject`: un caso sin
+      // tema aparecería como "siguiente" de cualquier otro.
+      topic: s.enum(["seguros", "salud", "fintech", "proptech", "educacion", "web"]),
       featured: s.boolean().default(false),
       stack: s.array(s.string()).min(1),
       repo: s.string().url().optional(),
