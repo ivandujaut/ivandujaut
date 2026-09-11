@@ -1,6 +1,6 @@
 ---
-title: "The largest US health insurer denied one in three bills sent by the doctors it picked itself"
-tagline: "It is UnitedHealthcare, in 2022 and 2023, and only in the plans it sells on the individual market: 0.43% of its members."
+title: "The largest health insurer in the United States denied one in three medical bills"
+tagline: "It is UnitedHealthcare, in 2022, and the number came from 224,202 of its 51.7 million members."
 description: "I rebuilt the denial figure that defined UnitedHealthcare from public files published by CMS, the federal agency that runs Medicare. It is exact, and it comes from 224,202 members out of 51.7 million. In plan year 2024 it fell fourteen points across the thirteen entities present in both years."
 year: 2026
 date: "2026-09-09"
@@ -38,34 +38,37 @@ draft: false
 
 <Abstract label="In short">
 
-The number that fixed the reputation of UnitedHealthcare, the largest health insurer in
-the United States, was true. In plan year 2022 it denied 31.9% of the bills sent to it by
-doctors in its own network, against 16.0% for the aggregate market, itself included. I
-reproduced it from the same public file it came from, and I get the same industry average
-the original source published.
+Most people in the United States are covered by private health insurance: they pay a premium
+every month so that, when they see a doctor, the insurer covers the bill. You get treated first
+and the bill comes later. If the insurer says no, the patient is the one left owing the money.
 
-What almost nobody looked at is how many people it was calculated on. That file only covers
-plans sold on the individual market the federal government runs, and there UnitedHealthcare
-had 224,202 members out of the 51,695,000 it covered. Four tenths of one percent of its
-membership.
+UnitedHealthcare, the largest health insurer in the country, said no to one in three of those
+bills in 2022. And the doctors sending them were on its own list: it had picked them.
 
-And there is something more uncomfortable. In plan year 2024 that rate fell to 19.2%,
-almost the aggregate market rate. Of the fifteen entities it operated with that year, the
-thirteen already there the year before all went down, without a single exception, and the
-mix pushed the other way. That file was published on 26 September 2025, nine months after
-the year it measures had closed.
+The number is true. I recalculated it from the same public file it came from and got **31.9%**,
+against 16.0% for the whole market, itself included.
 
-Inside is what a product team at that company would do: which metric to publish in
-order to stop being judged by one it does not control, how to measure it, and the kill criterion,
-fixed before it starts.
+What almost nobody checked is how many people that number comes from. The file covers one kind
+of plan only, the one a person buys for themselves on the marketplace the federal government
+set up, and there UnitedHealthcare had **224,202 members** out of the **51,695,000** it covered
+in total. The figure that fixed its reputation came from **0.43%** of its customers.
+
+And there is something worse for anyone who kept repeating it. By 2024 that rate had already
+fallen to **19.2%**, almost the market's, and it fell in all thirteen states where it already
+operated, without a single exception. That file came out in September 2025: while the old number
+circulated as if it were current, there was no way to find out.
+
+Inside is what a product team at that company would do: which metric to publish in order to stop
+being judged by one it does not control, how to measure it, and on what criterion they would
+switch it off.
 
 </Abstract>
 
 <Thesis>
 
-When the 2022 number went viral, UnitedHealthcare had just cut its denials by fourteen
-points, across the thirteen entities present in both years and without a single exception.
-Nobody could have known: that file was published nine months later.
+When the 2022 number went viral, UnitedHealthcare had just cut its denials by fourteen points,
+across the thirteen states where it already operated and without a single exception. Nobody
+could have known: that file came out nine months later.
 
 </Thesis>
 
@@ -146,23 +149,20 @@ almost twice again.
 
 ## And it measured 224,000 out of 51.7 million
 
-Here is what the public argument skipped, and not because it was hidden. The CMS file only
-covers plans sold on the individual market the federal government runs: plans people get
-through work, Medicare, Medicaid and the marketplaces some states run on their own are all
-out.
+Here is what the public argument skipped, and not because it was hidden. The CMS file covers one
+kind of plan only: the one a person buys for themselves on the marketplace the federal government
+set up. Plans people get through work, Medicare and Medicaid are all out.
 
-I matched that market's enrollment against the company's total. In 2022 UnitedHealthcare
+I matched how many people it had there against the company's total. In 2022 UnitedHealthcare
 covered 51,695,000 people according to its own annual report, and 224,202 of them had a plan
 bought there. The number that defined its reputation was calculated on 0.43% of its
 membership.
 
-And it is the largest in the country, which gives the measure of how small that slice is. At
-the end of 2024 it reported 50,675,000 medical members against [Elevance's 45,734,000](https://www.sec.gov/Archives/edgar/data/1156039/000115603925000010/elv-20241231.htm),
-the second largest, which in its own report describes itself as "one of the largest", not as
-the largest. Third is CVS, with Aetna inside, at 27,095,000.
+And it is the largest in the country, which gives the measure of how small that slice is: at the
+end of 2024 it reported 50,675,000 members against [Elevance's 45,734,000](https://www.sec.gov/Archives/edgar/data/1156039/000115603925000010/elv-20241231.htm),
+the second largest.
 
-It is the difference between measuring one branch and describing the chain: the branch
-measurement can be flawless and still say nothing about the other two hundred.
+It is the difference between measuring one branch and describing the whole chain.
 
 Worth saying that the original source did not hide this. Under its table, on the same screen
 as the number, there was a line noting that this was data from plans sold on that market.
@@ -185,8 +185,8 @@ down. Its members in that market went from 224,202 to
   caption="Decomposition at entity level, weighted by the prior year. The composition effect is positive: the change in mix pushed the rate up. Author's analysis of the public CMS Transparency in Coverage file."
 />
 
-Of the 14.1 points it fell, 13.3 come from the entities it already had. The change in mix
-barely softened the drop. There is a simpler check than the decomposition, and it says the
+Of the 14.1 points it fell, 13.3 come from the states it already had. The ones that came later
+barely moved the average. There is a simpler check than the decomposition, and it says the
 same thing.
 
 <Figure
@@ -198,10 +198,10 @@ same thing.
 />
 
 Thirteen out of thirteen, in a single year, with drops of between 7.6 points in Missouri and
-23.7 in Alabama, out of the fifteen entities it operated with in 2024. Shuffling the book of business does not produce a pattern like that.
+23.7 in Alabama, out of the fifteen states where it operated in 2024. Shuffling the book of business does not produce a pattern like that.
 
-And the timing matters. Plan year 2024 measures care delivered between January and December
-of that year, and that file was published on 26 September 2025. While the 2022 figure was
+And the timing matters. That file measures care delivered from January to December 2024 and came
+out on 26 September 2025. While the 2022 figure was
 still up, in November 2024, a fourteen-point drop was happening that did not yet exist
 anywhere.
 
@@ -215,9 +215,8 @@ that insurers denying 30% or more of bills went from 17% of the total in 2023 to
 The entire high tail collapsed, and UnitedHealthcare was inside that tail. Seen that way, the
 improvement could be a market current rather than a company decision.
 
-What can be measured is how much of the drop is left over after subtracting that current. The
-aggregate market rate fell 1.0 point between plan years 2023 and 2024, and UnitedHealthcare
-fell 14.1. Had it only followed the market it would have ended at 32.3%: 13.1 points are
+What can be measured is how much of the drop is left over after subtracting that current. The market
+fell 1.0 point between 2023 and 2024, and UnitedHealthcare 14.1. Had it only followed the market it would have ended at 32.3%: 13.1 points are
 left that the general current does not explain.
 
 The objection is still alive. Own movement and cohort movement overlap, and this file does
@@ -296,7 +295,7 @@ What could still bring the case down:
 - **Per-insurer data appearing from outside that market, showing rates close to 31.9%.** The
   0.43% would stop being a measurement bias and become a representative sample, and the case
   would change meaning.
-- **The rate going back up in plan year 2025.** If the next release shows a reversal, 2024 was
+- **The rate going back up in 2025.** If the next release shows a reversal, 2024 was
   a passing episode, and the recommendation loses its footing.
 - **CMS starting to audit what is reported, and the numbers moving.** Today each insurer
   reports its own figures with no shared definition and no visible validation. If that gets
