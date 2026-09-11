@@ -83,8 +83,8 @@ export async function CaseStudyClose({
           aria-label={t("moreLabel")}
           className={`mt-10 grid gap-3 ${previous && next ? "sm:grid-cols-2" : "grid-cols-1"}`}
         >
-          {previous && <NeighbourCard project={previous} label={t("newer")} />}
-          {next && <NeighbourCard project={next} label={t("older")} />}
+          {previous && <NeighbourCard project={previous} label={t("newer")} relation="newer" />}
+          {next && <NeighbourCard project={next} label={t("older")} relation="older" />}
         </nav>
       )}
 
@@ -98,12 +98,25 @@ export async function CaseStudyClose({
   );
 }
 
-function NeighbourCard({ project, label }: { project: AdjacentProject; label: string }) {
+function NeighbourCard({
+  project,
+  label,
+  relation,
+}: {
+  project: AdjacentProject;
+  label: string;
+  /** Cuál de las dos vecinas es: va a PostHog para saber si se elige la nueva o la vieja. */
+  relation: "newer" | "older";
+}) {
   return (
     // Sin `asChild`: rompe con el `Link` de next-intl (ver stats-grid.tsx).
     <AnimateIcon animateOnHover className="block h-full">
       <Link
         href={`/projects/${project.slug}`}
+        data-ph="card_click"
+        data-ph-slug={project.slug}
+        data-ph-surface="next"
+        data-ph-relation={relation}
         className="group flex h-full flex-col rounded-lg border border-border p-4 transition-colors hover:bg-muted/40"
       >
         {/* La flecha apunta siempre a la derecha: significa "abrí este caso",

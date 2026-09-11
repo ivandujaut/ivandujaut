@@ -49,6 +49,7 @@ export function FeaturedProjects({ locale }: FeaturedProjectsProps) {
             stack={project.stack}
             status={project.status}
             kind={project.kind}
+            surface="home"
           />
         ))}
       </div>
