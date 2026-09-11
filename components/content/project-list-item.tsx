@@ -26,6 +26,12 @@ interface ProjectListItemProps {
   /** "row" es el bloque compacto de la home; "list" es el listado de /projects. */
   variant?: "row" | "list";
   cover?: ProjectCover;
+  /**
+   * Desde dónde se muestra la tarjeta. Va a PostHog como `surface` del evento
+   * `card_click`, para saber qué tarjeta se elige y desde qué página. Es
+   * obligatorio para que ninguna tarjeta quede sin medir.
+   */
+  surface: "home" | "index";
 }
 
 /** Cuántas tecnologías entran antes de pasar a contador. */
@@ -41,6 +47,7 @@ export function ProjectListItem({
   kind,
   variant = "row",
   cover,
+  surface,
 }: ProjectListItemProps) {
   // Para casos de mejora y diseños, "Concepto" es redundante con el tipo de
   // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
@@ -51,6 +58,9 @@ export function ProjectListItem({
     return (
       <Link
         href={`/projects/${slug}`}
+        data-ph="card_click"
+        data-ph-slug={slug}
+        data-ph-surface={surface}
         className="group -mx-3 flex items-center gap-4 rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
       >
         <article className="min-w-0 flex-1">
@@ -111,6 +121,9 @@ export function ProjectListItem({
   return (
     <Link
       href={`/projects/${slug}`}
+      data-ph="card_click"
+      data-ph-slug={slug}
+      data-ph-surface={surface}
       className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
     >
       <article>

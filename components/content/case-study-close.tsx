@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Mail01Icon } from "@hugeicons/core-free-icons";
+import { LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
@@ -30,10 +30,18 @@ interface CaseStudyCloseProps {
  * Un caso son entre 2.500 y 6.000 palabras: quien llega al final ya invirtió
  * varios minutos y es el lector más calificado que va a tener la página. Antes
  * este bloque no existía y el artículo terminaba en "me gusta" y "compartir",
- * sin ninguna salida. Ahora reúne las tres acciones que tienen sentido ahí, en
- * orden de valor: escribir, agendar, compartir. El me gusta se sacó del sitio
- * porque en una página cuyo trabajo es empezar una conversación, un toque
- * anónimo es la forma más barata de descargar el impulso de escribir.
+ * sin ninguna salida. El me gusta se sacó del sitio porque en una página cuyo
+ * trabajo es empezar una conversación, un toque anónimo es la forma más barata
+ * de descargar el impulso de escribir.
+ *
+ * Orden de los botones, decidido el 11/09/2026 sobre PostHog: en los primeros
+ * 24 días de medición el mail no recibió un solo clic en ninguna de sus cinco
+ * superficies y Calendly tampoco; lo único que alguien clickeó para contactar
+ * fue LinkedIn. Y como el sitio no guarda cookies, la única forma de que un
+ * lector vuelva es que siga la cuenta donde sale cada caso nuevo. Por eso
+ * LinkedIn va primero y con el estilo principal; mail y Calendly quedan para
+ * quien quiera seguir la conversación en privado. Se mide con `contact_click`
+ * por `surface`: si el mail vuelve a ganar, se invierte.
  */
 export async function CaseStudyClose({
   locale,
@@ -51,12 +59,24 @@ export async function CaseStudyClose({
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
 
       <div className="mt-5 flex flex-wrap gap-3">
+        <a
+          href="https://www.linkedin.com/in/ivan-dujaut/"
+          data-ph="contact_click"
+          data-ph-kind="linkedin"
+          data-ph-surface="case-close"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+        >
+          <HugeiconsIcon icon={LinkedinIcon} size={16} strokeWidth={1.5} aria-hidden />
+          <span>{t("ctas.linkedin")}</span>
+        </a>
         <ObfuscatedEmailTrigger
           surface="case-close"
           userReversed="navituajud"
           domainReversed="moc.liamg"
           label={t("ctas.email")}
-          className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
         >
           <HugeiconsIcon icon={Mail01Icon} size={16} strokeWidth={1.5} aria-hidden />
           <span>{t("ctas.email")}</span>
@@ -83,8 +103,8 @@ export async function CaseStudyClose({
           aria-label={t("moreLabel")}
           className={`mt-10 grid gap-3 ${previous && next ? "sm:grid-cols-2" : "grid-cols-1"}`}
         >
-          {previous && <NeighbourCard project={previous} label={t("newer")} />}
-          {next && <NeighbourCard project={next} label={t("older")} />}
+          {previous && <NeighbourCard project={previous} label={t("newer")} relation="newer" />}
+          {next && <NeighbourCard project={next} label={t("older")} relation="older" />}
         </nav>
       )}
 
@@ -98,12 +118,25 @@ export async function CaseStudyClose({
   );
 }
 
-function NeighbourCard({ project, label }: { project: AdjacentProject; label: string }) {
+function NeighbourCard({
+  project,
+  label,
+  relation,
+}: {
+  project: AdjacentProject;
+  label: string;
+  /** Cuál de las dos vecinas es: va a PostHog para saber si se elige la nueva o la vieja. */
+  relation: "newer" | "older";
+}) {
   return (
     // Sin `asChild`: rompe con el `Link` de next-intl (ver stats-grid.tsx).
     <AnimateIcon animateOnHover className="block h-full">
       <Link
         href={`/projects/${project.slug}`}
+        data-ph="card_click"
+        data-ph-slug={project.slug}
+        data-ph-surface="next"
+        data-ph-relation={relation}
         className="group flex h-full flex-col rounded-lg border border-border p-4 transition-colors hover:bg-muted/40"
       >
         {/* La flecha apunta siempre a la derecha: significa "abrí este caso",

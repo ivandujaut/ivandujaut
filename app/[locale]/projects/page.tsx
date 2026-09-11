@@ -75,6 +75,7 @@ export default async function ProjectsPage({ params }: Props) {
                       status={project.status}
                       kind={project.kind}
                       variant="list"
+                      surface="index"
                       cover={
                         project.cover
                           ? {
