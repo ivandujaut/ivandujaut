@@ -9,17 +9,18 @@ import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
 
-interface AdjacentProject {
+interface RelatedProject {
   slug: string;
   title: string;
   tagline: string;
   kind: ProjectKind;
+  /** `true` si comparte `topic` con el caso actual; `false` si es un vecino por fecha. */
+  sameTopic: boolean;
 }
 
 interface CaseStudyCloseProps {
   locale: "es" | "en";
-  previous?: AdjacentProject;
-  next?: AdjacentProject;
+  related: RelatedProject[];
   shareUrl: string;
   shareTitle: string;
 }
@@ -45,13 +46,11 @@ interface CaseStudyCloseProps {
  */
 export async function CaseStudyClose({
   locale,
-  previous,
-  next,
+  related,
   shareUrl,
   shareTitle,
 }: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
-  const hasNeighbours = Boolean(previous || next);
 
   return (
     <section className="mt-16 border-t border-border pt-10">
@@ -96,15 +95,20 @@ export async function CaseStudyClose({
         <ShareLinkButton url={shareUrl} title={shareTitle} alwaysShowLabel />
       </div>
 
-      {hasNeighbours && (
-        // Dos columnas solo si hay dos casos vecinos: en los extremos del
-        // listado hay uno solo y a media columna queda huérfano.
+      {related.length > 0 && (
+        // Dos columnas solo si hay dos casos: con uno solo, a media columna
+        // queda huérfano.
         <nav
           aria-label={t("moreLabel")}
-          className={`mt-10 grid gap-3 ${previous && next ? "sm:grid-cols-2" : "grid-cols-1"}`}
+          className={`mt-10 grid gap-3 ${related.length > 1 ? "sm:grid-cols-2" : "grid-cols-1"}`}
         >
-          {previous && <NeighbourCard project={previous} label={t("newer")} relation="newer" />}
-          {next && <NeighbourCard project={next} label={t("older")} relation="older" />}
+          {related.map((project) => (
+            <RelatedCard
+              key={project.slug}
+              project={project}
+              label={project.sameTopic ? t("sameTopic") : t("otherCase")}
+            />
+          ))}
         </nav>
       )}
 
@@ -118,16 +122,7 @@ export async function CaseStudyClose({
   );
 }
 
-function NeighbourCard({
-  project,
-  label,
-  relation,
-}: {
-  project: AdjacentProject;
-  label: string;
-  /** Cuál de las dos vecinas es: va a PostHog para saber si se elige la nueva o la vieja. */
-  relation: "newer" | "older";
-}) {
+function RelatedCard({ project, label }: { project: RelatedProject; label: string }) {
   return (
     // Sin `asChild`: rompe con el `Link` de next-intl (ver stats-grid.tsx).
     <AnimateIcon animateOnHover className="block h-full">
@@ -136,7 +131,9 @@ function NeighbourCard({
         data-ph="card_click"
         data-ph-slug={project.slug}
         data-ph-surface="next"
-        data-ph-relation={relation}
+        // `topic` o `date`: dice si se eligió un caso del mismo tema o un
+        // vecino de relleno. Es la comparación que justifica este cambio.
+        data-ph-relation={project.sameTopic ? "topic" : "date"}
         className="group flex h-full flex-col rounded-lg border border-border p-4 transition-colors hover:bg-muted/40"
       >
         {/* La flecha apunta siempre a la derecha: significa "abrí este caso",

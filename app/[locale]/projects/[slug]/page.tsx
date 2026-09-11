@@ -13,7 +13,7 @@ import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
   findTranslatedProjectInLocale,
-  getAdjacentProjects,
+  getRelatedProjects,
   getProjectBySlug,
   getProjects,
   getProjectTranslations,
@@ -182,7 +182,7 @@ export default async function ProjectPage({ params }: Props) {
       { name: project.title, path: projectPath },
     ]),
   ];
-  const { previous, next } = getAdjacentProjects(typedLocale, slug);
+  const related = getRelatedProjects(typedLocale, slug);
 
   return (
     <main id="main">
@@ -362,21 +362,13 @@ export default async function ProjectPage({ params }: Props) {
           locale={typedLocale}
           shareUrl={`${SITE_URL}${projectPath}`}
           shareTitle={project.title}
-          previous={
-            previous
-              ? {
-                  slug: previous.slug,
-                  title: previous.title,
-                  tagline: previous.tagline,
-                  kind: previous.kind,
-                }
-              : undefined
-          }
-          next={
-            next
-              ? { slug: next.slug, title: next.title, tagline: next.tagline, kind: next.kind }
-              : undefined
-          }
+          related={related.map(({ project: p, sameTopic }) => ({
+            slug: p.slug,
+            title: p.title,
+            tagline: p.tagline,
+            kind: p.kind,
+            sameTopic,
+          }))}
         />
       </article>
     </main>
