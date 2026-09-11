@@ -73,7 +73,16 @@ export function PostHogProvider() {
         // recorrido y atención sin guardar lo que la persona leyó ni escribió.
         maskTextSelector: "*",
         maskAllInputs: true,
-        maskAllElementAttributes: true,
+        // Los atributos NO se enmascaran (desde el 11/09/2026). Con
+        // `maskAllElementAttributes: true` se borraban también `class` y
+        // `src`, y la grabación se reproducía sin CSS: links azules
+        // subrayados, imágenes como cajas grises, todo apilado. La primera
+        // lectura de replays del sitio diagnosticó "tres cajas de imagen
+        // tapan los casos en móvil" sobre ese artefacto; el índice real no
+        // tiene ninguna caja. En un sitio de contenido público los atributos
+        // no llevan datos personales: lo personal es el texto, y ese sigue
+        // enmascarado.
+        maskAllElementAttributes: false,
         // Red y consola también están apagadas en el proyecto de PostHog. Van
         // fijadas acá por el mismo criterio que el resto de la config: el
         // cliente gana sobre el servidor y no queremos depender de un ajuste
