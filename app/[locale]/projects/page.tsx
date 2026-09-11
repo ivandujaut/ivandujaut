@@ -40,14 +40,17 @@ export default async function ProjectsPage({ params }: Props) {
   const allProjects = getProjects(locale as "es" | "en");
   const t = await getTranslations({ locale, namespace: "projects.sections" });
 
-  // Los productos propios van arriba, y no por ser lo más nuevo (hoy no lo
-  // son). Los análisis tienen otras puertas de entrada: el link del primer
-  // comentario en LinkedIn y los destacados de la home. Un producto construido
-  // no tiene ninguna, así que el lugar visible es para lo que no llega por
-  // otro lado.
+  // Los análisis van arriba desde el 11/09/2026. Antes iban los productos
+  // propios, con el argumento de que no tenían otra puerta de entrada. Los
+  // primeros 24 días de PostHog dijeron lo contrario: el bot recibió 4 clics a
+  // su demo, todos de gente que llegó con el link en la mano, y los casos son
+  // lo que 20 de 37 sesiones reales vinieron a abrir. En un teléfono, los dos
+  // productos empujaban el primer caso 420 px abajo, y los replays del índice
+  // mostraban gente recorriendo la lista entera sin elegir nada. Se mide con
+  // `card_click` por `surface=index`: la partida es 3 de 21 sesiones.
   const groups = [
-    { key: "own" as const, projects: getProjectsBySubject(locale as "es" | "en", "own") },
     { key: "external" as const, projects: getProjectsBySubject(locale as "es" | "en", "external") },
+    { key: "own" as const, projects: getProjectsBySubject(locale as "es" | "en", "own") },
   ];
 
   return (

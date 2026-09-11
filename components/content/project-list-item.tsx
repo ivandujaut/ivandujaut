@@ -71,10 +71,14 @@ export function ProjectListItem({
           <ViewTransition name={`project-title-${slug}`} share="morph">
             <h3 className="text-lg font-medium leading-snug">{title}</h3>
           </ViewTransition>
-          {/* Dos líneas y corte. Antes algunas taglines ocupaban tres y, sumadas
-              a la portada y a las píldoras de stack, dejaban dos proyectos por
-              pantalla en un teléfono. */}
-          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{tagline}</p>
+          {/* La tagline es la tesis del caso en una oración, y es lo que decide
+              el clic. Con dos líneas, en un teléfono 8 de 12 quedaban cortadas
+              justo en la tensión ("...y ninguna me mostró el precio sin..."),
+              medido el 11/09/2026. Tres líneas en móvil las muestran enteras;
+              desde `sm` la portada ocupa el ancho que sobra y dos alcanzan. */}
+          <p className="mt-1 line-clamp-3 text-sm text-muted-foreground sm:line-clamp-2">
+            {tagline}
+          </p>
           <p className="mt-2 font-mono text-xs text-muted-foreground">
             <ViewTransition name={`project-year-${slug}`} share="morph">
               <span>{year}</span>
