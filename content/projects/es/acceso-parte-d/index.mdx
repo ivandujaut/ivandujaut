@@ -1,0 +1,318 @@
+---
+title: "Cinco empresas ya decidieron el futuro de Xarelto en Medicare y todavía no lo dijeron"
+tagline: "Son 2.290 millones de dólares al año. Las listas de 2027 ya se presentaron y todavía no se publicaron."
+description: "Xarelto pierde en 2027 la cobertura obligatoria de Medicare y Eliquis la mantiene. Crucé formularios, padrón, precios negociados y el estado de los genéricos para ver qué está en juego y qué haría un equipo de acceso antes de que se cierre el año."
+year: 2026
+date: "2026-09-16"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración en carbón sobre papel crema, no una fotografía: dos manos gastadas, con las arrugas marcadas, sostienen en la palma un puñado de pastillas y cápsulas"
+stack:
+  [
+    "Python",
+    "matplotlib",
+    "Datos abiertos de CMS (Part D, formularios, padrón y precios negociados)",
+  ]
+preview:
+  - src: "/projects/acceso-parte-d/g5_la_serie.png"
+    alt: "Línea de la parte de Xarelto en las recetas de Xarelto y Eliquis en Medicare: 92,3 de cada 100 en 2013, 49,7 en 2016, 21,7 en 2024, y 19,8 en 2025 y 18,4 en el primer trimestre de 2026 según el archivo trimestral"
+  - src: "/projects/acceso-parte-d/g8_acceso_2026.png"
+    alt: "Barras horizontales de afiliados de Medicare en 2026: los comprimidos que compiten de Xarelto y de Eliquis están cubiertos para 47,85 millones cada uno, con cero afiliados con terapia escalonada y cero con autorización previa, y topes de cantidad parejos"
+  - src: "/projects/acceso-parte-d/g1_cuota_de_pacientes.png"
+    alt: "Barras de pacientes de Xarelto y Eliquis en Medicare por año, de 3,83 millones en 2020 a 5,75 millones en 2024; la parte de Xarelto baja de 31 a 29, 27, 25 y 23 de cada 100"
+metrics:
+  - label: "Afiliados identificados con Xarelto cubierto, 2026"
+    value: "47,85 millones"
+  - label: "De ellos, en distinto escalón de copago que Eliquis"
+    value: "247"
+  - label: "Recetas de Xarelto en Medicare, 2025"
+    value: "6,5 millones"
+  - label: "Parte de los afiliados de Part D que están en cinco empresas"
+    value: "74%"
+translationKey: "acceso-parte-d"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+El 1 de enero de 2027, Medicare deja de obligar a sus planes a cubrir Xarelto, el anticoagulante que
+Johnson & Johnson vende en Estados Unidos. Eliquis, de Bristol Myers Squibb y Pfizer, sigue protegido.
+[Medicare](https://www.medicare.gov/basics/get-started-with-medicare) es el seguro público para mayores
+de 65 años y personas con discapacidad.
+
+Hoy Xarelto está cubierto para 47,85 de los 47,86 millones de afiliados cuyo plan y condado pude
+identificar, sin trabas y en el mismo escalón de copago que Eliquis salvo para 247 personas. La cobertura no es mérito comercial: es obligatoria mientras rige el precio que Medicare negoció con cada laboratorio, aunque el escalón y las trabas los decide cada plan igual. Desde 2027 lo decide cada plan, y cinco empresas
+tienen el 74% de los afiliados: ya presentaron sus listas y todavía no se publicaron.
+
+Si el volumen se reparte como los afiliados, que es un supuesto mío, hay unas 4,8 millones de recetas al
+año en juego, sobre las 6,5 millones que Xarelto tuvo en Medicare en 2025. Al precio que Medicare le negoció, ese libro entero factura unos 2.290 millones de dólares al
+año, contra los 2.633 millones que J&J declara de Xarelto en todo Estados Unidos. Es un techo, y aun
+descontado deja la mayor parte del negocio estadounidense de la marca adentro de Medicare. Los genéricos de las dosis que compiten con Eliquis están aprobados desde 2025 y todavía no registran
+venta, así que la lista de cada plan es lo que decide.
+
+Mi recomendación es pelear esa lista con las cinco empresas y fijar antes el precio mínimo al que conviene hacerlo. Abajo están los números, qué cambia exactamente y qué tiene enfrente el equipo de acceso. Son dos decisiones y en este orden:
+primero defender la base, después decidir si se vuelve a invertir en demanda, que es lo que cuento en
+[el otro caso](/projects/xarelto-sin-visita).
+
+</Abstract>
+
+<Thesis>
+
+Xarelto llega a 2027 sin trabas de acceso y en el mismo escalón que Eliquis, pero la cobertura es obligatoria sólo mientras rige el precio negociado, así que lo único que todavía controla es cuánto está dispuesto a pagar
+para que los planes lo sigan cubriendo igual.
+
+</Thesis>
+
+## El síntoma: una ventaja que ya se dio vuelta
+
+Xarelto llegó primero: la FDA, la agencia que aprueba los medicamentos en Estados Unidos, lo aprobó
+para fibrilación auricular
+[en noviembre de 2011](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=202439),
+y a Eliquis
+[en diciembre de 2012](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=202155).
+En 2013 tenía
+[92 de cada 100 recetas de los dos en Medicare](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug).
+Eliquis lo pasó en 2016, en 2024 le quedaban 22 y en el primer trimestre de 2026, según el
+[archivo trimestral de gasto](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug),
+18,4.
+
+<Figure
+  src="/projects/acceso-parte-d/g5_la_serie.png"
+  alt="Línea de la parte de Xarelto en las recetas de Xarelto y Eliquis en Medicare: 92,3 de cada 100 en 2013, 49,7 en 2016, 21,7 en 2024, y 19,8 en 2025 y 18,4 en el primer trimestre de 2026 según el archivo trimestral"
+  width={2000}
+  height={1280}
+  caption="Recetas de cada marca en Part D, la parte de Medicare que cubre medicamentos. 2013 a 2024: fila nacional del archivo de prescriptores; 2025 y 2026: archivo trimestral de gasto. Las marcas de fechas son los hitos que analiza el caso sobre la visita; la de noviembre de 2024 es lo que alega Bayer en su demanda, no un hecho probado. Elaboración propia."
+/>
+
+Las ventas cuentan lo mismo fuera de Medicare: en 2025 Xarelto facturó
+[2.633 millones de dólares en Estados Unidos](https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm)
+y Eliquis,
+[10.239](https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm).
+Perdió esa ventaja sin trabas de acceso y gastando más que su rival en médicos, que está contado en
+[el otro caso](/projects/xarelto-sin-visita). Lo que sigue es lo que todavía tiene para defender.
+
+## La traba que no era
+
+[Cada plan publica su formulario](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information),
+la lista de medicamentos que cubre y con qué condiciones, como la terapia escalonada (probar antes otro
+medicamento) o el escalón de copago (cuánto paga el paciente).
+
+Sobre los comprimidos de Xarelto de 10, 15 y 20 mg, los que compiten con Eliquis, **ningún plan de
+Medicare exigía terapia escalonada ni en 2023 ni en 2026**, ni autorización previa, y en 2026 están en el mismo escalón que Eliquis
+[para todos los afiliados con plan y condado identificados menos 247](https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-advantagepart-d-contract-and-enrollment-data). En 2023 la única traba sobre esos comprimidos era de Eliquis, en un formulario de
+UnitedHealth (839.524 afiliados). Donde sí hay terapia escalonada es en dos presentaciones que, según su
+[etiqueta](https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=10db92f9-2300-4a80-836b-673e1ae91610),
+se usan para otros casos: la suspensión oral, aprobada para chicos (9,47 millones de afiliados, todos de Humana), y el comprimido
+de 2,5 mg, para enfermedad coronaria o arterial periférica (448.621).
+
+<Figure
+  src="/projects/acceso-parte-d/g8_acceso_2026.png"
+  alt="Barras horizontales de afiliados de Medicare en 2026: los comprimidos que compiten de Xarelto y de Eliquis están cubiertos para 47,85 millones cada uno, con cero afiliados con terapia escalonada y cero con autorización previa, y topes de cantidad parejos"
+  width={2000}
+  height={1280}
+  caption="Formulario de agosto de 2026. Comprimidos de Xarelto de 10, 15 y 20 mg contra comprimidos de Eliquis de 2,5 y 5 mg. Elaboración propia."
+/>
+
+En los seguros comerciales el acceso también jugó a favor suyo: la única exclusión de un administrador
+de beneficios farmacéuticos (PBM) grande fue contra Eliquis,
+[el de la cadena de farmacias más grande lo sacó de su formulario en 2022 "in favor of Janssen's Xarelto"](https://www.drugchannels.net/2022/01/five-takeaways-from-big-three-pbms-2022.html)
+y lo [repuso en julio](https://www.managedhealthcareexecutive.com/view/cvs-caremark-puts-eliquis-back-on-its-formularies).
+Express Scripts
+[no excluyó a ninguno de los dos entre 2019 y 2026](https://www.express-scripts.com/art/open_enrollment/DrugListExclusionsAndAlternatives.pdf).
+J&J les dice hoy a los médicos que Xarelto tiene
+[cobertura para más del 99% de los pacientes comerciales y de Part D](https://www.xareltohcp.com/access/).
+
+## El trato con Medicare, y qué cambia en 2027
+
+Desde 2026, Xarelto y Eliquis tienen un
+[precio negociado con Medicare](https://www.cms.gov/files/document/fact-sheet-negotiated-prices-initial-price-applicability-year-2026.pdf),
+dentro del programa que creó la ley de reducción de la inflación (IRA): 197 dólares por 30 días de
+Xarelto, 62% menos que su precio de lista de 2023, y 231 de Eliquis. El trato tiene tres partes:
+
+- **Todos los planes lo tienen que cubrir** mientras rige el precio.
+- **El laboratorio no paga los descuentos del programa de Part D**; en su lugar,
+  [el gobierno le paga al plan un subsidio del 10% del precio negociado](https://www.cms.gov/newsroom/fact-sheets/final-cy-2026-part-d-redesign-program-instructions).
+- **No es del todo voluntario:** según la
+  [guía de CMS](https://www.cms.gov/files/document/medicare-drug-price-negotiation-final-guidance-ipay-2027-and-manufacturer-effectuation-mfp-2026-2027.pdf),
+  el organismo que administra Medicare,
+  un laboratorio sólo sale sin multas si además deja el programa de descuentos de Part D y el de Medicaid. La Corte Suprema rechazó revisar los casos de
+  [Janssen](https://www.supremecourt.gov/search.aspx?filename=/docket/docketfiles/html/public/25-749.html)
+  y de
+  [Bristol Myers Squibb](https://www.supremecourt.gov/search.aspx?filename=/docket/docketfiles/html/public/25-751.html)
+  en mayo de 2026.
+
+El efecto se ve en el gasto: en el primer trimestre de 2026, Medicare pagó
+[374 dólares por receta de Xarelto](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug),
+contra 1.006 en 2025.
+
+CMS sacó a Xarelto del programa
+[al llegar la competencia genérica](https://ncpa.org/newsroom/qam/2025/12/02/entresto-stelara-and-xarelto-will-exit-medicare-drug-price-negotiation),
+así que el 1 de enero de 2027 pierde la cobertura obligatoria y vuelve a pagar los descuentos del
+programa de Part D. Desde ahí cada plan decide también si lo cubre, además del escalón y las trabas que ya decidía, con la única regla general de cubrir
+[al menos dos medicamentos de cada clase](https://www.cms.gov/medicare/prescription-drug-coverage/prescriptiondrugcovcontra/downloads/part-d-benefits-manual-chapter-6.pdf).
+Eliquis sigue en el programa en 2027, a
+[237,25](https://www.cms.gov/initiatives/medicare-prescription-drug-affordability/overview/medicare-drug-price-negotiation-program/selected-drugs-negotiated-prices),
+y no puede tener genérico
+[antes del 1 de abril de 2028](https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm).
+Esa fecha fija la ventana: quedan 19 meses hasta que los dos productos puedan tener genérico, y lo
+que se invierta ahora tiene que pagarse adentro de ese plazo. La fecha está sujeta a apelaciones.
+
+**Los genéricos: aprobados y sin venta visible.** Las farmacias compran el de 2,5 mg a 0,66 dólares por comprimido,
+contra 9,78 el de marca, según la
+[encuesta de precios de compra](https://data.medicaid.gov/dataset/fbb83258-11c7-47f5-8b18-5f8e79f7e704).
+Los de 10, 15 y 20 mg, los que compiten con Eliquis,
+[tienen 16 fabricantes aprobados](https://www.fda.gov/media/76860/download) desde mayo de 2025, pero en
+2026 no aparece ninguna compra en esa encuesta ni figuran en los
+[formularios de Medicare](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information).
+La única patente que sigue listada sobre esas potencias es la de la toma diaria, hasta febrero de 2034,
+con exclusividad pediátrica hasta agosto, y
+los juicios contra los fabricantes terminaron en desestimaciones y en al menos un
+[acuerdo confidencial](https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm),
+en enero de 2026. Que esos acuerdos fijen una fecha de entrada es mi inferencia.
+
+Fuera de Estados Unidos, donde los genéricos ya llegaron, la venta de Xarelto de Bayer
+[cayó 31,6% en 2025](https://reports.bayer.com/annual-report-2025/en/report-on-economic-position/earnings-asset-and-financial-position/business-development-by-division/pharmaceuticals.html)
+y
+[41,4% en el primer semestre de 2026](https://reports.bayer.com/half-year-financial-report-q2-2026/en/interim-group-management-report/sales-earnings-and-financial-position/business-development-by-division/pharmaceuticals.html),
+ajustado por moneda.
+
+## La decisión que tiene enfrente
+
+**De quién es la decisión, y cuál es el objetivo.** Es del equipo de acceso de J&J en Estados Unidos, que
+responde por esos 2.290 millones: llegar a 2027 con la cobertura y el escalón que Xarelto tiene hoy, y
+enterarse a tiempo si alguno de los planes grandes se mueve.
+
+**Hacia dónde puede ir, y por qué puede.** El acceso es lo único que todavía controla sin fuerza de
+ventas. Cinco empresas tienen el 74% de los afiliados, según
+[KFF](https://www.kff.org/medicare/medicare-part-d-enrollment-premiums-and-cost-sharing-in-2026/): son
+cinco mesas, no cientos. Y tiene con qué sentarse: al salir del programa recupera la libertad de fijar su
+precio, mientras Eliquis no puede cobrar más de 237,25 dólares por 30 días durante 2027. Hoy Medicare paga 374
+dólares por receta de Xarelto y 399 por una de Eliquis, pero las recetas no traen los mismos días:
+normalizadas a envases de 30 días con la proporción de envases por receta de 2024, son unos 210 contra 248, así que por mes de tratamiento Medicare ya
+paga menos por Xarelto.
+
+Hay además un número que ya conoce: el precio que aceptó para 2026, 197 dólares por 30 días, está 40 por
+debajo del que protege a Eliquis en 2027. Lo que Eliquis ofrezca por debajo de ese techo, en reintegros, no es público, y tampoco lo son los márgenes del plan.
+
+**Cuánto está en juego, en dólares.** Xarelto tuvo
+[6.511.197 recetas en Medicare en 2025](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug).
+Son unos 11,6 millones de envases de 30 días, convertidos con la proporción de envases
+por receta que medí en 2024, y al precio negociado facturan 2.290 millones de dólares al año, el 87% de lo que J&J declara de Xarelto en todo Estados Unidos. La misma
+cuenta para Eliquis da 9.811 millones contra 10.239 declarados, y Eliquis también vende fuera de
+Medicare: el precio negociado quedó por encima del neto promedio, así que mi número es un techo para
+los dos por igual. Aun con ese descuento, la mayor parte del negocio pasa por Medicare. Si el volumen se reparte como los afiliados, y es un
+supuesto mío, unas 4,8 millones de recetas por año dependen de esas cinco decisiones, y cada punto de
+cuota del par vale 328.702 recetas, unos 115,6 millones de dólares.
+
+<Figure
+  src="/projects/acceso-parte-d/g1_cuota_de_pacientes.png"
+  alt="Barras de pacientes de Xarelto y Eliquis en Medicare por año, de 3,83 millones en 2020 a 5,75 millones en 2024; la parte de Xarelto baja de 31 a 29, 27, 25 y 23 de cada 100"
+  width={2000}
+  height={1280}
+  caption="Pacientes de cada marca en Medicare, con la parte de Xarelto sobre el total de los dos. El padrón de los dos productos creció todos los años; lo que se achicó es la parte que atiende Xarelto. Elaboración propia sobre el archivo anual de gasto de Part D por medicamento."
+/>
+
+**El primer paso: el mapa de 2027, y por qué ése.** Las listas de 2027 se presentaron
+[entre el 11 de mayo y el 1 de junio de 2026](https://www.cms.gov/files/document/cy-2027-part-d-bidding-instructions-final-g.pdf):
+la decisión ya está tomada y todavía no se ve. Apenas CMS
+publique el
+[formulario de 2027](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information),
+hay que clasificar plan por plan en cuatro cubetas: mantiene el escalón, lo baja, agrega una traba o lo
+saca. Sale del mismo archivo que usa este análisis y dice en qué mesa sentarse.
+Para 2027 quedan las ventanas de cambio que CMS abre durante el año; la ronda que se gana entera cierra el primer lunes de junio
+de 2027.
+
+**Las dos ramas, y cómo saber en cuál está.** Sin genérico de 10, 15 o 20 mg en el mostrador, la lista de
+cada plan decide esos 2.290 millones y la pelea vale lo que cuesta. Con genérico, la farmacia sustituye
+sola, el escalón de la marca deja de importar y la jugada pasa a ser cosechar o vender el genérico
+propio. Los dos avisos son gratis y mensuales: compras en la encuesta de precios y aparición en los
+formularios.
+
+**Las definiciones, antes de medir.** Para que esto se repita cada mes y se pueda comparar contra el año pasado hacen
+falta tres reglas: que la cobertura se cuente por presentación y no por molécula,
+que el escalón se compare siempre contra Eliquis, y que cada plan pese por los afiliados del padrón del
+mismo mes. Sin eso, dos informes sobre el mismo archivo dan números distintos.
+
+**Qué mediría, y hasta dónde.**
+
+_Cobertura de 2027: ¿los planes lo sostienen sin obligación?_
+
+- **Principal:** afiliados con los comprimidos de Xarelto cubiertos, hoy 47,85 de 47,86 millones.
+- **De guarda:** los que están en el mismo escalón que Eliquis (hoy todos menos 247) y los que tienen tope de cantidad, hoy parejo
+  (43,7 millones contra 43,6).
+- **Avisa antes:** cualquiera de las cinco empresas grandes que agregue terapia escalonada o autorización
+  previa, hoy cero en los dos productos.
+- **Hasta acá:** con más del 95% cubierto y al menos el 80% en el mismo escalón, no hace falta ceder
+  precio; por debajo, se negocia plan por plan; si alguno pide un precio neto que perfora el piso de margen,
+  se lo deja caer.
+
+_Volumen, que avisa antes que el formulario_
+
+- **Principal:** las recetas de Xarelto del trimestre, 1.465.876 en el primero de 2026, que el archivo
+  de gasto publica meses antes que el formulario.
+- **Hasta acá:** dos trimestres seguidos por debajo de la tendencia de los cuatro anteriores obligan a
+  sentarse a negociar sin esperar la lista.
+
+**Lo que cuesta cada cosa.** Con 6,5 millones de recetas, cada dólar por receta que se cede son
+6,5 millones de dólares, y hay que recuperarlos adentro de los 19 meses que faltan para el genérico de
+Eliquis. El payback (en cuánto se recupera lo invertido) pide además un dato interno: el margen de una receta.
+
+**Qué no construiría.**
+
+- **Paridad a cualquier precio.** Comprar volumen bajo el piso de margen es cambiar plata por recetas
+  que no pagan.
+- **Una campaña de acceso para médicos.** Sobre los comprimidos que compiten no hay traba contra la cual
+  pelear.
+- **Un programa de copago para Medicare.** La ley no lo permite: las tarjetas de ahorro excluyen a los
+  planes públicos.
+
+**El criterio de corte y el trade-off (lo que se arriesga).** Si en el primer trimestre de 2027 la
+cobertura sigue arriba del 95% y la paridad arriba del 80% sin resignar precio, no hay nada que gastar.
+Si sostenerlas cuesta más que el margen que defienden, la decisión correcta es dejar caer esos planes y
+cuidar el margen, que es la estrategia que J&J ya viene aplicando con la visita médica.
+
+## Qué es dato y qué es elección mía
+
+Los archivos de CMS se descargaron entre el 12 y el 15 de septiembre de 2026. No hay números proyectados.
+
+| Elemento                                                 | Estatus                     | Fuente o decisión                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------------------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cobertura, trabas y escalón de cada plan                 | dato                        | [formularios](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information), CMS, 2023 y 2026                                                                                                                                                                                                                  |
+| Afiliados por plan y condado                             | dato                        | [padrón](https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-advantagepart-d-contract-and-enrollment-data), CMS                                                                                                                                                                                                                     |
+| Comparar el acceso entre los comprimidos que compiten    | elección                    | [Xarelto de 10, 15 y 20 mg contra Eliquis de 2,5 y 5 mg](https://www.fda.gov/drugs/drug-approvals-and-databases/national-drug-code-directory)                                                                                                                                                                                                            |
+| Serie de recetas y pacientes, 2013 a 2026                | dato                        | [prescriptores por geografía y medicamento](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug) y [gasto trimestral](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug), CMS |
+| Ventas de cada empresa en Estados Unidos                 | lo que informa cada empresa | informes anuales de [J&J](https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm) y [Bristol Myers Squibb](https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm)                                                                                                                                |
+| Valorizar el libro de Medicare al precio negociado       | elección                    | volumen de 2025 por el precio de 2026, que rige por envase de 30 días; las recetas se pasan a envases con la proporción medida en 2024 (1,785 en Xarelto), la misma que normaliza el gasto por receta. Es un techo, no la venta neta: la misma cuenta para Eliquis da 9.811 millones contra 10.239 declarados                                            |
+| Que el volumen de Medicare se reparta como los afiliados | supuesto                    | para dimensionar lo que está en juego en 2027; los planes no publican su volumen por producto                                                                                                                                                                                                                                                            |
+| Lo que decidan los planes para 2027                      | sin dato                    | las listas se presentaron hasta el 1 de junio de 2026 y todavía no se publicaron                                                                                                                                                                                                                                                                         |
+
+<TableCaption>
+  El padrón cierra en 56.904.293 afiliados con cobertura de medicamentos, el 99,5% de los
+  [57.191.935 que publica CMS para mayo de
+  2026](https://data.cms.gov/summary-statistics-on-beneficiary-enrollment/medicare-and-medicaid-reports/medicare-monthly-enrollment).
+</TableCaption>
+
+## Lo que este análisis no puede sostener
+
+- **Los precios netos con los planes.** Son confidenciales; acá la comparación usa el precio negociado y
+  el gasto por receta que publica Medicare, y los 2.290 millones no son la venta neta.
+- **Que un genérico de 10, 15 o 20 mg llegue al mostrador.** Están aprobados y no registran compras.
+- **Nada clínico ni del mercado comercial.** No dice que un anticoagulante sea mejor que otro, y las
+  recetas son sólo de Medicare.
+
+## Qué me haría cambiar de opinión
+
+Lo que refutaría la tesis:
+
+- **Que el formulario de 2027 muestre la misma cobertura y el mismo escalón sin que J&J ceda precio.** No habría nada que negociar.
+- **Que aparezca un genérico de 10, 15 o 20 mg a la venta.** El problema dejaría de ser la lista del plan
+  y pasaría a ser el precio del mostrador.
+- **Que los planes grandes muevan a Eliquis en vez de a Xarelto.** La presión caería del otro lado.
+
+Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación comercial con
+Johnson & Johnson, Bayer, Bristol Myers Squibb ni Pfizer.

@@ -1,0 +1,369 @@
+---
+title: "Xarelto les pagó a los médicos el doble que Eliquis y vende cuatro veces menos"
+tagline: "Y en octubre de 2024 dejó de visitarlos: de 6.082 comidas en septiembre a 184 en octubre, y 53 en todo 2025."
+description: "Xarelto perdió la elección del paciente nuevo sin trabas de acceso sobre los comprimidos que compiten y gastando más, y en octubre de 2024 dejó de declarar comidas con médicos. Crucé pagos, recetas de Medicare, estudios clínicos y una demanda de Bayer para ver qué pasó y qué mediría."
+year: 2026
+date: "2026-09-16"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración en carbón sobre papel crema, no una fotografía: una médica con ambo y estetoscopio, con la cara fuera de cuadro, escribe una receta en su escritorio junto a un sello y a un frasco de vidrio lleno de cápsulas"
+stack: ["Python", "matplotlib", "Datos abiertos de CMS (Part D, formularios y Open Payments)"]
+preview:
+  - src: "/projects/xarelto-sin-visita/g7_comidas_por_mes.png"
+    alt: "Líneas de comidas declaradas con médicos por mes, 2022 a 2025: Xarelto con picos de 22.904 en 2022, a la mitad desde octubre de 2022 y menos de 200 desde octubre de 2024; Eliquis entre 6.844 y 16.403 en todo el período"
+  - src: "/projects/xarelto-sin-visita/g6_quien_suma.png"
+    alt: "Barras de pacientes sumados contra el año anterior, en miles: en 2014 Xarelto suma más que Eliquis; desde 2015 suma más Eliquis todos los años; en 2024 Xarelto resta 2,8 mil"
+  - src: "/projects/xarelto-sin-visita/g4_donde_van_las_visitas.png"
+    alt: "Barras por grupo de médicos: el 10% que más receta escribe el 49,4% de las recetas de Xarelto y Eliquis y recibe el 25,8% de las visitas de Xarelto"
+metrics:
+  - label: "Comidas de Xarelto con médicos declaradas en septiembre de 2024"
+    value: "6.082"
+  - label: "Las mismas, en octubre de 2024"
+    value: "184"
+  - label: "Comidas de Xarelto en todo 2025 (Eliquis: 115.819)"
+    value: "53"
+  - label: "Del 10% que más receta ambos, sin visita de Xarelto, 2023"
+    value: "71,7%"
+translationKey: "xarelto-sin-visita"
+draft: false
+---
+
+<Abstract label="En resumen">
+
+En octubre de 2024, Xarelto dejó de pagarles comidas a los médicos. En septiembre había declarado
+6.082; en octubre, 184, y en diciembre, 13. En todo 2025 declaró 53. Eliquis, en el
+mismo año, 115.819.
+
+Antes de ese corte ya venía perdiendo, y no por falta de esfuerzo: en 2023 declaró en pagos a médicos más del doble de dólares que su rival, y en [Medicare](https://www.medicare.gov/basics/get-started-with-medicare), el seguro público para mayores de 65 años y personas con discapacidad, hoy vende cuatro veces menos
+(6,5 contra 26,4 millones de recetas en 2025). Lo
+que perdió fue la elección del médico con el paciente nuevo: desde 2015 Eliquis suma más pacientes que
+él todos los años, contados en neto, porque el archivo público no separa el inicio nuevo del cambio de
+marca.
+
+Mi hipótesis, con las fechas a la vista, es que le pesó la fama de causar más sangrados que Eliquis: la
+instalaron la publicidad y las demandas, y desde 2019 la reforzaron estudios de Medicare y los criterios
+de geriatría. Hay evidencia en contra, y está abajo.
+
+Bayer, que cobra regalías en Estados Unidos, demandó a Johnson & Johnson por abandonar la visita presencial, y los pagos coinciden con lo que alega. Mi recomendación es no reconstruir la visita y medir
+con las recetas por médico de 2025 cuánto costó el corte, porque los dos productos pueden tener genérico en 19 meses y, con mis supuestos de costo, una fuerza de ventas no se paga en ese plazo. Antes va la otra decisión, defender el acceso de
+2027, que cuento en [el otro caso](/projects/acceso-parte-d).
+
+</Abstract>
+
+<Thesis>
+
+Xarelto perdió frente a Eliquis la elección del paciente nuevo en los años en que la publicidad, las
+demandas y la evidencia de Medicare le dieron la fama de causar más sangrados, y cuando en octubre de 2024 sus comidas declaradas con médicos cayeron de 6.082 a 184, dejó, sin buscarlo, la única forma pública de medir cuánto valía
+esa visita.
+
+</Thesis>
+
+## El síntoma: una ventaja que se dio vuelta
+
+Xarelto llegó primero al mercado y en 2013 tenía
+[92 de cada 100 recetas de los dos en Medicare](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug),
+pero Eliquis lo pasó en 2016.
+
+Xarelto no perdió pacientes hasta 2024. Lo que perdió fue la mayor parte de los que se sumaban cada
+año, en un mercado que pasaba de la warfarina a los anticoagulantes directos. En 2014 todavía sumó más
+pacientes que Eliquis; desde 2015 suma más Eliquis todos los años, y entre 2020 y 2024 se quedó con 93
+de cada 100 pacientes que sumaron los dos.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g6_quien_suma.png"
+  alt="Barras de pacientes sumados contra el año anterior, en miles: en 2014 Xarelto suma más que Eliquis; desde 2015 suma más Eliquis todos los años; en 2024 Xarelto resta 2,8 mil"
+  width={2000}
+  height={1280}
+  caption="Diferencia neta de pacientes de cada marca contra el año anterior. No son pacientes nuevos: quien deja una marca y empieza la otra resta en una y suma en la otra. Elaboración propia sobre el archivo de prescriptores de Part D."
+/>
+
+Con los pacientes que ya tiene no le va mal. Medido en días de tratamiento por paciente y por año, que
+sale de estandarizar los envases a 30 días, Xarelto entregó 270 días en 2024 y Eliquis 263, y le gana
+todos los años desde 2016. En recetas crudas parece lo contrario, 5,04 contra 5,44, nada más que porque
+Xarelto despacha más envases de 90 días. Tampoco hay que leerlo como que retiene mejor: el paciente que
+empieza a mitad de año baja el promedio, y Eliquis suma pacientes todos los años, así que el sesgo juega
+en su contra. Lo que sí dice es dónde no está el problema. No está en los que se quedan, está entero en
+los que empiezan.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g9_persistencia.png"
+  alt="Líneas de días de tratamiento por paciente y por año, 2016 a 2024: Xarelto sube de 221 a 270 y Eliquis de 213 a 263, con Xarelto siempre arriba"
+  width={2000}
+  height={1280}
+  caption="Envases de 30 días que estandariza CMS, divididos por los pacientes con al menos una receta en el año y multiplicados por 30. El que empieza a mitad de año baja el promedio, y Eliquis suma pacientes todos los años: el sesgo juega en contra de Eliquis. Elaboración propia sobre el archivo de prescriptores de Part D."
+/>
+
+Las trabas de los planes no lo explican: sobre los comprimidos de 10, 15 y 20 mg, los que un médico
+elige en lugar de Eliquis, ningún plan de Medicare pidió terapia escalonada, que es exigir que el paciente pruebe antes otro
+medicamento, ni en 2023 ni en 2026. Eso
+está contado en [el caso de acceso](/projects/acceso-parte-d).
+
+## Le sobraban plata y visitas
+
+La segunda sospecha es que Eliquis ponía más. Los laboratorios declaran cada pago a un médico en un
+registro público, [Open Payments](https://openpaymentsdata.cms.gov/dataset/fb3a65aa-c901-4a38-a813-b04b00dfa2a9).
+En 2023, lo que nombra a Xarelto suma 6,73 millones de dólares y lo que nombra a Eliquis, 3,14. Casi la
+mitad de lo de Xarelto son honorarios a 340 médicos por dar charlas, más de diez veces lo que pagó
+Eliquis.
+
+Con las visitas, contadas por las comidas declaradas, pasa lo mismo: de cada 100 comidas que nombran a
+uno de los dos productos, 44 son de Xarelto, y de cada 100
+[recetas](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug)
+de los dos en Medicare, 23. Es la cuota de voz contra la cuota de mercado (share of voice y share of market), y casi la duplica.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g2_pagos_visitas_recetas.png"
+  alt="Tres barras de cien: en pagos declarados a médicos, Xarelto tiene 68,2 y Eliquis 31,8; en visitas, 44,0 y 56,0; en recetas de Medicare, 22,6 y 77,4"
+  width={2000}
+  height={1280}
+  caption="Pagos: todo lo declarado en 2023 que nombra a cada producto, en todo el país. Visitas y recetas: 1.043 condados y 254.022 visitas de 2023. Elaboración propia sobre Open Payments y recetas de Part D."
+/>
+
+El 57% de las comidas de Eliquis nombra también otros productos de Pfizer y acá cuenta entera para
+Eliquis; repartida, la ventaja de Xarelto sería mayor.
+
+## Dónde iban las visitas y las charlas
+
+Si no le faltaban plata ni visitas, la pregunta es adónde iban en 2023, el último año completo con
+visitas. Cada punto del gráfico es un condado: a la derecha, donde Xarelto vende más que su 22,6%
+nacional entre los dos; arriba, donde visita más de lo que vende.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g3_cuadrantes.png"
+  alt="Cada condado es un punto según la cuota de Xarelto frente a Eliquis y según cuánto visita frente a lo que vende; la esquina de vende poco y visita más tiene 439 condados, el 49,1% de las visitas y el 51,2% de las recetas"
+  width={2000}
+  height={1280}
+  caption="Cada punto es un condado y su tamaño, las visitas de 2023. Elaboración propia sobre Open Payments y recetas de Part D."
+/>
+
+**Casi la mitad de las visitas de los dos productos (49,1%) cae arriba a la izquierda**, en los 439
+condados donde Xarelto vende poco y visita más de lo que vende.
+
+El 10% que más receta estos productos escribe el 49,4% de las recetas de los dos, la concentración que en
+consultoría se llama Pareto, y recibe el 25,8% de las visitas de Xarelto. En alcance, cuántos de esos
+médicos ve cada marca, Eliquis llegó al 37,3% y Xarelto al 28,3%. Y 29 de cada 100 visitas de Xarelto van a profesionales con
+[menos de 11 recetas de cada producto](https://data.cms.gov/sites/default/files/2026-05/MUP_DPR_RY26_20260421_Methodology_508.pdf).
+
+<Figure
+  src="/projects/xarelto-sin-visita/g4_donde_van_las_visitas.png"
+  alt="Barras por grupo de médicos, del que más receta al que menos: el 10% que más receta escribe el 49,4% de las recetas de Xarelto y Eliquis y recibe el 25,8% de las visitas de Xarelto; una última barra muestra que el 29,3% de las visitas va a profesionales con menos de 11 recetas de cada producto"
+  width={2000}
+  height={1280}
+  caption="Médicos agrupados de a diez por ciento, del que más receta al que menos. Elaboración propia sobre recetas de Part D y Open Payments, 2023."
+/>
+
+## ¿Rendían las visitas?
+
+Visitar donde se vende poco podría estar construyendo cuota. Para saberlo miré 2024, con la vara fijada
+antes de abrir el dato: un punto o más de cuota frente a Eliquis.
+
+**Por condado.** Donde vende poco, los condados muy visitados perdieron 1,86 puntos y los parecidos
+poco visitados, 1,91; donde vende mucho, 2,58 contra 3,23. Las diferencias, 0,05 y 0,65 puntos,
+quedan debajo del punto.
+
+**Por médico.** Entre los que recibieron 4 a 9 visitas y parecidos sin visitas, la diferencia va de −0,15
+a +2,94 puntos según qué se suponga de los que en 2024
+[dejaron de figurar en el archivo](https://data.cms.gov/sites/default/files/2026-05/MUP_DPR_RY26_20260421_Methodology_508.pdf)
+por recetar menos de 11 veces, más frecuentes entre los no visitados.
+
+## Por qué los médicos eligieron Eliquis
+
+Si no fueron las trabas ni la plata, queda por qué el médico elegía Eliquis. Con
+datos públicos no se ve qué pensó cada uno, así que lo que sigue es **una hipótesis**: que lo publicado,
+las noticias y la publicidad le dieron a Xarelto la fama de causar más sangrados, y que esa fama pesó en
+la elección.
+
+**Hasta 2016 no había con qué compararlos.** Los dos ensayos que los aprobaron salieron el mismo mes de
+2011 y midieron contra warfarina, no entre ellos.
+[ARISTOTLE](https://pubmed.ncbi.nlm.nih.gov/21870978/), pagado por BMS y Pfizer, dio a apixabán superior
+en prevenir el accidente cerebrovascular (ACV) y con menos sangrado mayor;
+[ROCKET AF](https://pubmed.ncbi.nlm.nih.gov/21830957/), pagado por J&J y Bayer, dio a rivaroxabán no
+inferior, sin superioridad.
+Leídos lado a lado parecen favorecer a Eliquis, pero la
+[guía de cardiología de 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC11095842/) recuerda que la
+warfarina estuvo mejor dosificada en ARISTOTLE, así que la comparación es despareja.
+
+Lo que sí creció en esos años fue el ruido. En diciembre de 2014 se unificaron las
+[demandas por sangrado contra Xarelto](https://www.jpml.uscourts.gov/sites/jpml/files/MDL-2592-Initial_Transfer-12-14.pdf),
+que J&J contaba en
+[5.000 en enero de 2016 y 16.900 un año después](https://www.sec.gov/Archives/edgar/data/200406/000020040617000006/form10-k20170101.htm);
+Bristol Myers Squibb y Pfizer pusieron
+[712 millones de dólares en publicidad entre 2014 y 2016](https://www.gao.gov/assets/gao-21-380.pdf),
+y un informe de salud pública describía a Eliquis como
+["heavily marketed as a safer alternative to Xarelto"](https://dchealth.dc.gov/sites/default/files/dc/sites/doh/publication/attachments/Impacts%20Report%202018%20-%20FINAL.pdf).
+
+**Desde 2019 la evidencia acompañó esa fama.** La
+[FDA, la agencia que aprueba los medicamentos en Estados Unidos, con datos de Medicare](https://pubmed.ncbi.nlm.nih.gov/30639551/),
+asoció a rivaroxabán con 2,7
+veces el sangrado extracraneal de apixabán; los
+[criterios Beers](https://pubmed.ncbi.nlm.nih.gov/30693946/) de la Sociedad Americana de Geriatría
+pidieron precaución en mayores de 75 y en
+[2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/) pasaron a pedir que se evite en tratamientos
+largos de fibrilación auricular y de tromboembolismo venoso (VTE); el
+[estudio más grande en Medicare](https://pmc.ncbi.nlm.nih.gov/articles/PMC8693217/), con 581.451 pacientes y financiamiento público, asoció a rivaroxabán con 18% más eventos graves. Son estudios observacionales: miden
+asociación, y sus autores advierten sobre confusión no medida. En esos años Xarelto sumó cada vez menos pacientes: 83.508 en 2019, 12.425 en 2023, y en 2024 restó 2.831.
+
+**El primer ensayo cara a cara llegó en 2026, y no en fibrilación auricular.**
+[COBRRA](https://pubmed.ncbi.nlm.nih.gov/41812192/), con fondos públicos de Canadá, comparó a los dos en tromboembolismo venoso y
+encontró sangrado relevante en el 3,3% con apixabán y en el 7,1% con rivaroxabán. Para
+fibrilación auricular, los ensayos
+[siguen reclutando](https://clinicaltrials.gov/study/NCT04642430) y terminarían a fines de 2027.
+
+**Lo que no calza con la hipótesis:**
+
+- **Ninguna guía de cardiología prefirió a Eliquis**, ni la de
+  [2014](https://pmc.ncbi.nlm.nih.gov/articles/PMC4676081/) ni la de
+  [2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC11095842/); sólo Beers, y para adultos mayores.
+- **La evidencia que ordena a los dos llegó después del cruce de 2016.**
+- **Según Bayer, Xarelto ganó los seis juicios** que llegaron a veredicto, aunque en 2019 las dos
+  empresas acordaron 775 millones de dólares por unas 25.000 demandas. La FDA sí cerró a su favor la
+  controversia sobre el ensayo.
+- **Hay evidencia a favor de Xarelto**: un [estudio en Israel](https://pubmed.ncbi.nlm.nih.gov/36341531/),
+  observacional, 56.553 pacientes y sin industria detrás, encontró menos mortalidad y menos ACV que con
+  apixabán, y también más sangrado gastrointestinal.
+
+## El corte: octubre de 2024
+
+Según la
+[demanda que Bayer presentó contra Janssen en octubre de 2025](https://storage.courtlistener.com/recap/gov.uscourts.nysd.651272/gov.uscourts.nysd.651272.1.0.pdf),
+J&J bajó a fines de 2022 la gente que visitaba médicos por Xarelto de 1.198 a 345 y en noviembre de 2024
+eliminó su fuerza de ventas presencial. Es una alegación: en agosto de 2026 el juez
+[rechazó desestimarla](https://storage.courtlistener.com/recap/gov.uscourts.nysd.651272/gov.uscourts.nysd.651272.35.0.pdf)
+sin juzgar los hechos.
+
+Los pagos que declara J&J confirman las fechas con un dato independiente. En
+[Open Payments](https://openpaymentsdata.cms.gov/), las comidas de Xarelto con médicos fueron de 5.745 a
+11.080 por mes entre enero y septiembre de 2024, y cayeron a 184 en octubre. Los pagos por charlas terminaron en noviembre y en todo 2025 declaró 53 comidas. El recorte de 2022 también se ve: las comidas mensuales bajaron de 14.907 en
+septiembre a 7.256 en octubre de ese año.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g7_comidas_por_mes.png"
+  alt="Líneas de comidas declaradas con médicos por mes, 2022 a 2025: Xarelto con picos de 22.904 en 2022, a la mitad desde octubre de 2022 y menos de 200 desde octubre de 2024; Eliquis entre 6.844 y 16.403 en todo el período"
+  width={2000}
+  height={1280}
+  caption="Comidas declaradas en Open Payments que nombran a cada producto, por mes de pago; una comida compartida con otros productos cuenta entera para cada uno. Elaboración propia."
+/>
+
+Una comida declarada no es una visita ni dice el motivo del corte, pero muestra que el esfuerzo
+presencial de Xarelto se detuvo. Su
+[canal de información médica](https://www.jnjmedicalconnect.com/products/xarelto/medical-content/real-world-data-of-xarelto-vs-apixaban-in-nonvalvular-atrial-fibrillation)
+reconoce además que ningún ensayo aleatorizado comparó a los dos en fibrilación auricular. En el primer trimestre de 2026 su venta en Estados Unidos
+[bajó 7,0%](https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm) por
+"continued share erosion".
+
+## La decisión: medir qué costó el corte
+
+**Lo que J&J ya eligió.** Cortó la visita y dejó de pagar charlas: en el ciclo de vida de un producto eso
+se parece a cosechar (harvest), cuidar el margen hasta que llegue el genérico en lugar de defender la
+cuota.
+
+**De quién es la decisión, y cuál es el objetivo.** De J&J, que responde por la marca en Estados Unidos,
+y en parte de Bayer, que cobra regalías sin controlar la promoción: saber cuánto valía la visita que se
+cortó, antes de decidir si se reconstruye o si la cosecha sigue.
+
+**Cuánto está en juego.** Un punto de cuota con los 4.142 médicos grandes que sólo ve Eliquis son 20.415
+recetas al año, unos 7,2 millones de dólares como techo, al precio negociado para 2026. Con mi supuesto de 150 a 175 médicos por representante y 250.000 a 300.000 dólares al año por cada uno, volver a cubrirlos pide 24 a 28 representantes, entre 6,0 y 8,4 millones por año: la cuenta es de cobertura y no de visitas, porque están repartidos por todo el país.
+
+**Por qué se puede medir.** El corte de octubre de 2024 es un experimento que nadie diseñó: todos los
+médicos que recibían visitas de Xarelto las perdieron el mismo mes, mientras los de Eliquis las siguieron
+recibiendo. Se compara sin inventar un control.
+
+**El primer paso.** Cuando CMS, el organismo que administra Medicare, publique las
+[recetas por médico de 2025](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug)
+(las de 2024 salieron en mayo de 2026), comparar la cuota frente a Eliquis de los médicos que recibían
+visitas con la de médicos parecidos que nunca las recibieron, con el mismo método que usé para 2023 y 2024. Contesta la pregunta que decide el resto.
+
+**Las definiciones, antes de medir.** Para que la comparación de 2025 valga contra la de 2023 hay que
+fijar tres reglas antes de abrir el archivo: qué cuenta como visita, qué cuenta como salida del archivo y qué cuenta como paciente en tratamiento, que acá son envases de 30 días y no recetas. Si el equipo comercial
+y el análisis usan definiciones distintas, el resultado no se compara con nada.
+
+**Qué mediría, y hasta dónde.**
+
+_Médicos que perdieron la visita_
+
+- **Principal:** su cuota frente a Eliquis en 2025 contra la de médicos parecidos que nunca recibieron
+  visitas, porque la cuota cae en todo el país y sólo la comparación aísla la visita.
+- **Avisa antes:** cuántos dejan de recetar Xarelto 11 veces o más. Entre 2023 y 2024 salió del archivo
+  el 15,2% de los médicos sin visitas y el 5,1% de los que recibían de 4 a 9, sobre el panel de 121.110
+  que tenían receta de los dos productos.
+- **Hasta acá:** un punto o más de pérdida extra y conviene volver a visitar a los médicos grandes; menos
+  de medio punto y la decisión de cosechar queda respaldada; en el medio, se repite con 2026.
+
+_Volumen, que avisa antes que el dato por médico_
+
+- **Principal:** recetas de Xarelto por trimestre, 1.465.876 en el primero de 2026.
+- **Hasta acá:** dos trimestres seguidos por debajo de la tendencia de los cuatro anteriores adelantan la
+  decisión sin esperar el archivo por médico.
+
+**Con qué le hablaría al médico sin visita.** Con lo único que tiene sustento público: la toma única
+diaria, que hasta los [criterios Beers de 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/)
+aceptan como razón para elegirlo. En días de tratamiento por paciente Xarelto no queda atrás, aunque esa
+medida no alcance para hablar de mejor retención.
+
+**Qué no construiría.**
+
+- **Una campaña de seguridad contra Eliquis.** No hay ensayo cara a cara en fibrilación auricular, y
+  COBRRA y Beers van en contra.
+- **Volver a la visita en todo el país antes de medir.** El primer paso dice si valía lo que costaba.
+- **Charlas elegidas por lo que receta cada médico.** La
+  [Oficina del Inspector General del Departamento de Salud](https://oig.hhs.gov/documents/special-fraud-alerts/865/SpecialFraudAlertSpeakerPrograms.pdf)
+  lo marca como sospechoso.
+
+**El criterio de corte y el trade-off (lo que se arriesga).** Con esos supuestos míos, la visita tendría que
+sostener entre 0,8 y 1,2 puntos con esos médicos sólo para empatar, y el reloj corre en contra porque
+Eliquis no puede tener genérico
+[antes del 1 de abril de 2028](https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm),
+quedan 19 meses, y una fuerza de ventas, calculo, tarda dos o tres trimestres en armarse y en verse en las recetas.
+Por eso la medición no está para reabrir la discusión de campo, sino para saber si la cosecha salió
+barata o cara. Lo que se arriesga mientras tanto es la relación con Bayer y el juicio que abrió.
+
+## Qué es dato y qué es elección mía
+
+Los archivos de CMS se descargaron entre el 12 y el 15 de septiembre de 2026. No hay proyecciones de
+mercado: el único bloque modelado es lo que costaría reconstruir la visita.
+
+| Elemento                                                   | Estatus                                      | Fuente o decisión                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Recetas por médico y medicamento                           | dato                                         | [recetas de Part D](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug), CMS, 2023 y 2024                                                                                                                                                                             |
+| Pagos de cada laboratorio a cada médico                    | dato                                         | [Open Payments](https://openpaymentsdata.cms.gov/dataset/fb3a65aa-c901-4a38-a813-b04b00dfa2a9), CMS, 2023 a 2025                                                                                                                                                                                                                                         |
+| Contar las visitas por las comidas declaradas              | elección                                     | son el 97,5% de los pagos de Xarelto y el 99,8% de los de Eliquis                                                                                                                                                                                                                                                                                        |
+| Contar entera para Eliquis la comida compartida            | elección                                     | el 57% de sus comidas; repartirla favorece a Xarelto                                                                                                                                                                                                                                                                                                     |
+| Ubicar cada visita donde receta el médico                  | elección                                     | el [código postal del médico en Part D](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider); el del pago falla en una de cada cinco comidas de Xarelto                                                                                                                         |
+| Serie de recetas y pacientes, 2013 a 2026                  | dato                                         | [prescriptores por geografía y medicamento](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug) y [gasto trimestral](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug), CMS |
+| Días de tratamiento por paciente                           | dato                                         | envases de 30 días estandarizados por CMS sobre los pacientes del año; el que empieza a mitad de año baja el promedio, y eso juega en contra de Eliquis                                                                                                                                                                                                  |
+| Lo que costaría reconstruir la visita                      | supuesto                                     | 150 a 175 médicos por representante y 250.000 a 300.000 dólares al año cargados, rangos de industria; J&J no publica ninguna de las dos cosas                                                                                                                                                                                                            |
+| Estudios, guías y criterios clínicos                       | atribuido                                    | cada uno con su diseño y sus límites; el caso no afirma qué anticoagulante es mejor                                                                                                                                                                                                                                                                      |
+| Que la percepción clínica explique la elección             | hipótesis                                    | fechas que calzan en parte; no hay dato de qué pensó cada médico                                                                                                                                                                                                                                                                                         |
+| Recorte y fin de la visita presencial de Xarelto           | alegación, con el corte visible en los pagos | [demanda de Bayer](https://storage.courtlistener.com/recap/gov.uscourts.nysd.651272/gov.uscourts.nysd.651272.1.0.pdf), sin sentencia; las comidas caen en octubre de 2024 en Open Payments                                                                                                                                                               |
+| Medir el corte de visitas con los médicos que la perdieron | elección                                     | contra médicos parecidos que nunca recibieron visitas, con la vara de un punto fijada antes                                                                                                                                                                                                                                                              |
+
+## Lo que este análisis no puede sostener
+
+- **Que el pago o la visita causen la receta**, ni que la fama del sangrado cause la elección: el
+  laboratorio elige a quién visita, las fechas calzan en parte y no hay dato de qué pensó cada médico.
+- **Lo que cuesta la fuerza de ventas.** Los pagos declarados no incluyen sueldos ni publicidad.
+- **Nada clínico.** No dice que un anticoagulante sea mejor que otro: cita lo que publicó cada estudio,
+  con su diseño y sus límites.
+- **Lo que pasó después de 2024 por médico.** Ese archivo
+  [llega con más de un año de demora](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug).
+- **Lo que se vería desde adentro.** Las recetas que compra la industria, el registro de visitas del
+  equipo comercial y los precios netos por plan lo medirían mejor.
+
+## Qué me haría cambiar de opinión
+
+Lo que refutaría la tesis:
+
+- **Que el registro interno muestre visitas sin comida después de octubre de 2024.** El corte que
+  muestran los pagos sería de las comidas, no de la visita.
+- **Que las recetas por médico de 2025 muestren que los que perdieron la visita no perdieron cuota.**
+  La visita no sostenía nada y la parte del esfuerzo se cae.
+- **Que un relevamiento de médicos muestre que eligen Eliquis por otra razón**, como el costo para el
+  paciente o la costumbre de su hospital. La hipótesis de la fama quedaría sin base.
+
+Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación comercial con
+Johnson & Johnson, Bayer, Bristol Myers Squibb ni Pfizer.

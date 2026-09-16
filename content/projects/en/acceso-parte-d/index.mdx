@@ -1,0 +1,319 @@
+---
+title: "Five companies already decided Xarelto's future in Medicare, and nobody has seen it"
+tagline: "That is $2.29 billion a year. The 2027 formularies were filed by June 1 and have not been published."
+description: "Xarelto loses mandatory Medicare coverage in 2027 and Eliquis keeps it. I matched plan formularies, enrollment, negotiated prices and the status of generics to see what is at stake and what a market access team would do before the year closes."
+year: 2026
+date: "2026-09-16"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Charcoal illustration on cream paper, not a photograph: two worn hands with deep lines hold a handful of pills and capsules in the palm"
+stack:
+  ["Python", "matplotlib", "CMS open data (Part D, formularies, enrollment and negotiated prices)"]
+preview:
+  - src: "/projects/acceso-parte-d/g5_la_serie.en.png"
+    alt: "Line of Xarelto's share of Xarelto and Eliquis prescriptions in Medicare: 92.3 of every 100 in 2013, 49.7 in 2016, 21.7 in 2024, and 19.8 in 2025 and 18.4 in the first quarter of 2026 according to the quarterly file"
+  - src: "/projects/acceso-parte-d/g8_acceso_2026.en.png"
+    alt: "Horizontal bars of Medicare members in 2026: the competing tablets of Xarelto and Eliquis are covered for 47.85 million each, with zero members under step therapy and zero under prior authorization, and matching quantity limits"
+  - src: "/projects/acceso-parte-d/g1_cuota_de_pacientes.en.png"
+    alt: "Bars of Xarelto and Eliquis patients in Medicare by year, from 3.83 million in 2020 to 5.75 million in 2024; Xarelto's share falls from 31 to 29, 27, 25 and 23 of every 100"
+metrics:
+  - label: "Identified members with Xarelto covered, 2026"
+    value: "47.85 million"
+  - label: "Of those, on a different copay tier than Eliquis"
+    value: "247"
+  - label: "Xarelto prescriptions in Medicare, 2025"
+    value: "6.5 million"
+  - label: "Share of Part D members held by five companies"
+    value: "74%"
+translationKey: "acceso-parte-d"
+draft: false
+---
+
+<Abstract label="In short">
+
+On January 1, 2027, Medicare stops requiring its plans to cover Xarelto, the blood thinner Johnson &
+Johnson sells in the United States. Eliquis, from Bristol Myers Squibb and Pfizer, stays protected.
+[Medicare](https://www.medicare.gov/basics/get-started-with-medicare) is the public insurance for people
+over 65 and people with disabilities.
+
+Today Xarelto is covered for 47.85 of the 47.86 million members whose plan and county I could identify,
+with no restrictions and on the same copay tier as Eliquis except for 247 people. Coverage is not a commercial win: it is mandatory while the price Medicare negotiated with each manufacturer is in force, although each plan still decides the tier and the restrictions. From 2027 each plan decides, and five companies
+hold 74% of the members: they already filed their lists and the lists have not been published.
+
+If volume splits the way members do, and that is an assumption of mine, about 4.8 million prescriptions
+a year are at stake, out of the 6.5 million Xarelto had in Medicare in 2025. At the price Medicare negotiated, that whole book bills around $2.29 billion a year, against the
+$2.633 billion J&J reports for Xarelto across the United States. That is a ceiling, and even discounted
+it leaves most of the brand's American business inside Medicare. Generic versions of the doses that compete with Eliquis have been
+approved since 2025 and still record no sale, so each plan's list is what decides.
+
+My recommendation is to fight for that list with the five companies, and to set the floor price for
+doing so before sitting down. Below are the numbers, what exactly changes, and what the access team has
+in front of it. These are two decisions, in this order: first defend the base, then decide whether to
+invest in demand again, which is what I cover in [the other case](/en/projects/xarelto-sin-visita).
+
+</Abstract>
+
+<Thesis>
+
+Xarelto reaches 2027 with no access restrictions and on the same tier as Eliquis, but coverage is mandatory only while the negotiated price is in force, so the one thing it still controls is how much it is
+willing to pay for plans to keep covering it the same way.
+
+</Thesis>
+
+## The symptom: an advantage that already flipped
+
+Xarelto came first: the FDA, the agency that approves drugs in the United States, approved it for atrial
+fibrillation
+[in November 2011](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=202439),
+and Eliquis
+[in December 2012](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=202155).
+In 2013 it held
+[92 of every 100 prescriptions of the two in Medicare](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug).
+Eliquis passed it in 2016, by 2024 it was down to 22, and in the first quarter of 2026, according to the
+[quarterly spending file](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug),
+18.4.
+
+<Figure
+  src="/projects/acceso-parte-d/g5_la_serie.en.png"
+  alt="Line of Xarelto's share of Xarelto and Eliquis prescriptions in Medicare: 92.3 of every 100 in 2013, 49.7 in 2016, 21.7 in 2024, and 19.8 in 2025 and 18.4 in the first quarter of 2026 according to the quarterly file"
+  width={2000}
+  height={1280}
+  caption="Prescriptions for each brand in Part D, the piece of Medicare that covers drugs. 2013 to 2024: national row of the prescriber file; 2025 and 2026: quarterly spending file. The date markers are the milestones analyzed in the case about detailing; the November 2024 one is what Bayer alleges in its lawsuit, not a proven fact. Author's analysis."
+/>
+
+Sales tell the same story outside Medicare: in 2025 Xarelto billed
+[$2.633 billion in the United States](https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm)
+and Eliquis,
+[$10.239 billion](https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm).
+It lost that lead with no access restrictions and while spending more than its rival on physicians,
+which I cover in [the other case](/en/projects/xarelto-sin-visita). What follows is what it still has to
+defend.
+
+## The restriction that was not there
+
+[Every plan publishes its formulary](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information),
+the list of drugs it covers and under what conditions, such as step therapy (try another drug first) or
+the copay tier (how much the patient pays).
+
+On Xarelto's 10, 15 and 20 mg tablets, the ones that compete with Eliquis, **no Medicare plan required
+step therapy in 2023 or in 2026**, nor prior authorization, and in 2026 they sit on the same tier as
+Eliquis
+[for every member with an identified plan and county except 247](https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-advantagepart-d-contract-and-enrollment-data).
+In 2023 the only restriction on those tablets was on Eliquis, in one UnitedHealth formulary (839,524
+members). Step therapy does exist on two presentations that, according to Xarelto's
+[label](https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=10db92f9-2300-4a80-836b-673e1ae91610), are
+used for other cases: the oral suspension, approved for children (9.47 million members, all at Humana),
+and the 2.5 mg tablet, for coronary or peripheral artery disease (448,621).
+
+<Figure
+  src="/projects/acceso-parte-d/g8_acceso_2026.en.png"
+  alt="Horizontal bars of Medicare members in 2026: the competing tablets of Xarelto and Eliquis are covered for 47.85 million each, with zero members under step therapy and zero under prior authorization, and matching quantity limits"
+  width={2000}
+  height={1280}
+  caption="August 2026 formulary. Xarelto 10, 15 and 20 mg tablets against Eliquis 2.5 and 5 mg tablets. Author's analysis."
+/>
+
+In commercial insurance, access also worked in its favor: the only exclusion by a large pharmacy benefit
+manager (PBM) was against Eliquis. The
+[one run by the largest pharmacy chain dropped it from its formulary in 2022 "in favor of Janssen's Xarelto"](https://www.drugchannels.net/2022/01/five-takeaways-from-big-three-pbms-2022.html)
+and [put it back in July](https://www.managedhealthcareexecutive.com/view/cvs-caremark-puts-eliquis-back-on-its-formularies).
+Express Scripts
+[excluded neither of them between 2019 and 2026](https://www.express-scripts.com/art/open_enrollment/DrugListExclusionsAndAlternatives.pdf).
+J&J tells physicians today that Xarelto has
+[coverage for more than 99% of commercial and Part D patients](https://www.xareltohcp.com/access/).
+
+## The deal with Medicare, and what changes in 2027
+
+Since 2026, Xarelto and Eliquis have a
+[negotiated price with Medicare](https://www.cms.gov/files/document/fact-sheet-negotiated-prices-initial-price-applicability-year-2026.pdf),
+inside the program created by the Inflation Reduction Act (IRA): $197 for 30 days of Xarelto, 62% below
+its 2023 list price, and $231 for Eliquis. The deal has three parts:
+
+- **Every plan has to cover it** while the price is in force.
+- **The manufacturer does not pay the Part D discounts**; instead,
+  [the government pays the plan a subsidy of 10% of the negotiated price](https://www.cms.gov/newsroom/fact-sheets/final-cy-2026-part-d-redesign-program-instructions).
+- **It is not entirely voluntary:** according to
+  [CMS guidance](https://www.cms.gov/files/document/medicare-drug-price-negotiation-final-guidance-ipay-2027-and-manufacturer-effectuation-mfp-2026-2027.pdf),
+  the agency that runs Medicare, a manufacturer only leaves without penalties if it also exits the Part D discount program and
+  Medicaid. The Supreme Court declined to review the cases of
+  [Janssen](https://www.supremecourt.gov/search.aspx?filename=/docket/docketfiles/html/public/25-749.html)
+  and
+  [Bristol Myers Squibb](https://www.supremecourt.gov/search.aspx?filename=/docket/docketfiles/html/public/25-751.html)
+  in May 2026.
+
+The effect shows up in spending: in the first quarter of 2026, Medicare paid
+[$374 per Xarelto prescription](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug),
+against $1,006 in 2025.
+
+CMS removed Xarelto from the program
+[once generic competition arrived](https://ncpa.org/newsroom/qam/2025/12/02/entresto-stelara-and-xarelto-will-exit-medicare-drug-price-negotiation),
+so on January 1, 2027 it loses mandatory coverage and goes back to paying the Part D discounts. From there each plan also decides whether to cover it, on top of the tier and the restrictions it already decided, with the only general rule being to cover
+[at least two drugs in each class](https://www.cms.gov/medicare/prescription-drug-coverage/prescriptiondrugcovcontra/downloads/part-d-benefits-manual-chapter-6.pdf).
+Eliquis stays in the program in 2027, at
+[$237.25](https://www.cms.gov/initiatives/medicare-prescription-drug-affordability/overview/medicare-drug-price-negotiation-program/selected-drugs-negotiated-prices),
+and cannot have a generic
+[before April 1, 2028](https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm).
+That date sets the window: 19 months remain until both products can go generic, and whatever is invested
+now has to pay for itself inside that period. The date is subject to appeals.
+
+**The generics: approved, with no visible sale.** Pharmacies buy the 2.5 mg one at $0.66 per tablet, against $9.78 for the
+brand, according to the
+[pharmacy acquisition price survey](https://data.medicaid.gov/dataset/fbb83258-11c7-47f5-8b18-5f8e79f7e704).
+The 10, 15 and 20 mg ones, which compete with Eliquis,
+[have 16 approved manufacturers](https://www.fda.gov/media/76860/download) since May 2025, but in 2026 no
+purchase shows up in that survey and they do not appear in
+[Medicare formularies](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information).
+The only patent still listed on those strengths is the once-daily one, through February 2034, with
+pediatric exclusivity to August, and the
+suits against the manufacturers ended in dismissals and in at least one
+[confidential settlement](https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm),
+in January 2026. That those settlements set an entry date is my inference.
+
+Outside the United States, where generics already arrived, Bayer's Xarelto sales
+[fell 31.6% in 2025](https://reports.bayer.com/annual-report-2025/en/report-on-economic-position/earnings-asset-and-financial-position/business-development-by-division/pharmaceuticals.html)
+and
+[41.4% in the first half of 2026](https://reports.bayer.com/half-year-financial-report-q2-2026/en/interim-group-management-report/sales-earnings-and-financial-position/business-development-by-division/pharmaceuticals.html),
+currency adjusted.
+
+## The decision in front of it
+
+**Whose decision it is, and what the goal is.** It belongs to J&J's market access team in the United
+States, which answers for those $2.29 billion: reach 2027 with the coverage and the tier Xarelto has
+today, and find out in time if any of the large plans moves.
+
+**Where it can go, and why it can.** Access is the one thing it still controls without a sales force.
+Five companies hold 74% of the members, according to
+[KFF](https://www.kff.org/medicare/medicare-part-d-enrollment-premiums-and-cost-sharing-in-2026/): five
+tables, not hundreds. And it has something to bring to the table: leaving the program restores its
+freedom to set its price, while Eliquis cannot charge more than $237.25 per 30 days through 2027. Today Medicare pays $374 per
+Xarelto prescription and $399 for an Eliquis one, but the prescriptions do not carry the same number of
+days: normalized to 30-day fills with the 2024 fills-per-prescription ratio, they are about $210 against $248, so per month of therapy Medicare
+already pays less for Xarelto.
+
+There is also a number it already knows: the price it accepted for 2026, $197 per 30 days, sits $40
+below the one protecting Eliquis in 2027. Whatever Eliquis offers below that ceiling, in rebates, is not public, and neither are the plan's margins.
+
+**What is at stake, in dollars.** Xarelto had
+[6,511,197 prescriptions in Medicare in 2025](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug).
+That is about 11.6 million 30-day fills, converted with the fills-per-prescription ratio I measured in
+2024, and at the negotiated price they bill $2.29 billion a year, 87% of what
+J&J reports for Xarelto across the United States. The same arithmetic for Eliquis gives $9.811 billion
+against $10.239 billion reported, and Eliquis also sells outside Medicare: the negotiated price landed
+above the average net price, so my number is a ceiling for both. Even after that discount, most of
+the business runs through Medicare. If volume splits the way members do, and that is an assumption of
+mine, about 4.8 million prescriptions a year depend on those five decisions, and each share point of the
+pair is worth 328,702 prescriptions, around $115.6 million.
+
+<Figure
+  src="/projects/acceso-parte-d/g1_cuota_de_pacientes.en.png"
+  alt="Bars of Xarelto and Eliquis patients in Medicare by year, from 3.83 million in 2020 to 5.75 million in 2024; Xarelto's share falls from 31 to 29, 27, 25 and 23 of every 100"
+  width={2000}
+  height={1280}
+  caption="Patients on each brand in Medicare, with Xarelto's share of the two. The patient base for both products grew every year; what shrank is the part Xarelto serves. Author's analysis of the annual Part D spending by drug file."
+/>
+
+**The first step: the 2027 map, and why that one.** The 2027 lists were filed
+[between May 11 and June 1, 2026](https://www.cms.gov/files/document/cy-2027-part-d-bidding-instructions-final-g.pdf):
+the decision is already made and still cannot be seen. As soon as CMS publishes the
+[2027 formulary](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information),
+the job is to sort plan by plan into four buckets: keeps the tier, lowers it, adds a restriction, or
+drops it. It comes out of the same file this analysis uses and says which table to sit at. For 2027 what
+remains are the change windows CMS opens during the year; the round that can be won whole closes the
+first Monday of June 2027.
+
+**The two branches, and how to tell which one it is in.** With no 10, 15 or 20 mg generic at the
+counter, each plan's list decides those $2.29 billion and the fight is worth what it costs. With a
+generic, the pharmacy substitutes on its own, the brand's tier stops mattering, and the play becomes
+harvesting or selling its own generic. Both warnings are free and monthly: purchases in the price survey
+and appearances in the formularies.
+
+**The definitions, before measuring.** For this to repeat every month and be comparable against last
+year, three rules have to be written down: that coverage is counted by presentation and not by molecule,
+that the tier is always compared against Eliquis, and that each plan is weighted by the members in that
+same month's enrollment file. Without that, two reports on the same file give different numbers.
+
+**What I would measure, and how far.**
+
+_2027 coverage: do plans hold it without the mandate?_
+
+- **Primary:** members with Xarelto's tablets covered, today 47.85 of 47.86 million.
+- **Guardrail:** those on the same tier as Eliquis (today all but 247) and those with a quantity limit,
+  today even between the two (43.7 million against 43.6).
+- **Early warning:** any of the five large companies adding step therapy or prior authorization, today
+  zero on both products.
+- **Line in the sand:** above 95% covered and at least 80% on the same tier, there is no need to give up
+  price; below that, it is negotiated plan by plan; if one asks for a net price that breaks the margin
+  floor, it is let go.
+
+_Volume, which warns earlier than the formulary_
+
+- **Primary:** the quarter's Xarelto prescriptions, 1,465,876 in the first quarter of 2026, which the
+  spending file publishes months before the formulary.
+- **Line in the sand:** two straight quarters below the trend of the previous four force a return to the
+  negotiating table without waiting for the list.
+
+**What each thing costs.** With 6.5 million prescriptions, every dollar per prescription given up is
+$6.5 million, and it has to be recovered inside the 19 months left before the Eliquis generic. Payback
+(how long it takes to earn back what was invested) also needs one internal number: the margin on a
+prescription.
+
+**What I would not build.**
+
+- **Parity at any price.** Buying volume below the margin floor trades money for prescriptions that do
+  not pay.
+- **An access campaign aimed at physicians.** On the competing tablets there is no restriction to fight
+  against.
+- **A copay program for Medicare.** The law does not allow it: manufacturer savings cards exclude public
+  plans.
+
+**The kill criterion and the trade-off (what is being risked).** If in the first quarter of 2027 coverage
+stays above 95% and parity above 80% without giving up price, there is nothing to spend. If holding them
+costs more than the margin they defend, the right call is to let those plans go and protect the margin,
+which is the strategy J&J has already been applying with physician detailing.
+
+## What is data and what is my call
+
+The CMS files were downloaded between September 12 and 15, 2026. There are no projected numbers.
+
+| Item                                              | Status                    | Source or decision                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Coverage, restrictions and tier for each plan     | data                      | [formularies](https://data.cms.gov/dataset/monthly-prescription-drug-plan-formulary-and-pharmacy-network-information), CMS, 2023 and 2026                                                                                                                                                                                                            |
+| Members by plan and county                        | data                      | [enrollment file](https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-advantagepart-d-contract-and-enrollment-data), CMS                                                                                                                                                                                                        |
+| Comparing access between the competing tablets    | my call                   | [Xarelto 10, 15 and 20 mg against Eliquis 2.5 and 5 mg](https://www.fda.gov/drugs/drug-approvals-and-databases/national-drug-code-directory)                                                                                                                                                                                                         |
+| Prescription and patient series, 2013 to 2026     | data                      | [prescribers by geography and drug](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug) and [quarterly spending](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug), CMS |
+| United States sales for each company              | what each company reports | annual reports from [J&J](https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm) and [Bristol Myers Squibb](https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm)                                                                                                                          |
+| Valuing the Medicare book at the negotiated price | my call                   | 2025 volume at the 2026 price, which applies per 30-day fill; prescriptions are converted to fills with the ratio measured in 2024 (1.785 for Xarelto), the same one that normalizes spending per prescription. It is a ceiling, not net sales: the same arithmetic for Eliquis gives $9.811 billion against $10.239 billion reported                |
+| That Medicare volume splits the way members do    | assumption                | to size what is at stake in 2027; plans do not publish their volume by product                                                                                                                                                                                                                                                                       |
+| What the plans decided for 2027                   | no data                   | the lists were filed by June 1, 2026 and have not been published                                                                                                                                                                                                                                                                                     |
+
+<TableCaption>
+  Enrollment reconciles at 56,904,293 members with drug coverage, 99.5% of the [57,191,935 CMS
+  publishes for May
+  2026](https://data.cms.gov/summary-statistics-on-beneficiary-enrollment/medicare-and-medicaid-reports/medicare-monthly-enrollment).
+</TableCaption>
+
+## What this analysis cannot support
+
+- **Net prices with the plans.** They are confidential; the comparison here uses the negotiated price and
+  the spending per prescription Medicare publishes, and the $2.29 billion is not net sales.
+- **That a 10, 15 or 20 mg generic reaches the counter.** They are approved and record no purchases.
+- **Nothing clinical, and nothing about the commercial market.** It does not say one blood thinner is
+  better than another, and the prescriptions are Medicare only.
+
+## What would change my mind
+
+What would refute the thesis:
+
+- **The 2027 formulary showing the same coverage and the same tier without J&J giving up price.** There
+  would be nothing to negotiate.
+- **A 10, 15 or 20 mg generic going on sale.** The problem would stop being the plan's list and become
+  the price at the counter.
+- **Large plans moving Eliquis instead of Xarelto.** The pressure would fall on the other side.
+
+This is independent work, built from public sources. I have no commercial relationship, past or present,
+with Johnson & Johnson, Bayer, Bristol Myers Squibb or Pfizer.
