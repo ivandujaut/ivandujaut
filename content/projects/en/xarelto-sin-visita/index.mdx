@@ -1,0 +1,371 @@
+---
+title: "Xarelto paid doctors twice what Eliquis did, and sells a quarter as much"
+tagline: "Then, in October 2024, it stopped visiting them: 6,082 meals in September, 184 in October, and 53 in all of 2025."
+description: "Xarelto lost the new patient to Eliquis with no restrictions on the competing tablets and while spending more, and in October 2024 it stopped reporting meals with physicians. I matched payments, Medicare prescriptions, clinical studies and a Bayer lawsuit to see what happened and what to measure."
+year: 2026
+date: "2026-09-16"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Charcoal illustration on cream paper, not a photograph: a doctor in scrubs with a stethoscope, face out of frame, writes a prescription at a desk beside a stamp and a glass jar full of capsules"
+stack: ["Python", "matplotlib", "CMS open data (Part D, formularies and Open Payments)"]
+preview:
+  - src: "/projects/xarelto-sin-visita/g7_comidas_por_mes.en.png"
+    alt: "Lines of reported meals with physicians per month, 2022 to 2025: Xarelto peaks at 22,904 in 2022, halves from October 2022 and stays under 200 from October 2024; Eliquis runs between 6,844 and 16,403 across the period"
+  - src: "/projects/xarelto-sin-visita/g6_quien_suma.en.png"
+    alt: "Bars of patients added against the previous year, in thousands: in 2014 Xarelto adds more than Eliquis; from 2015 Eliquis adds more every year; in 2024 Xarelto loses 2.8 thousand"
+  - src: "/projects/xarelto-sin-visita/g4_donde_van_las_visitas.en.png"
+    alt: "Bars by group of physicians: the top 10% by prescribing writes 49.4% of Xarelto and Eliquis prescriptions and receives 25.8% of Xarelto's visits"
+metrics:
+  - label: "Xarelto meals with physicians reported in September 2024"
+    value: "6,082"
+  - label: "The same, in October 2024"
+    value: "184"
+  - label: "Xarelto meals in all of 2025 (Eliquis: 115,819)"
+    value: "53"
+  - label: "Top 10% by prescriptions of both, no Xarelto visit, 2023"
+    value: "71.7%"
+translationKey: "xarelto-sin-visita"
+draft: true
+---
+
+<Abstract label="In short">
+
+In October 2024, Xarelto stopped paying for meals with physicians. In September it had reported 6,082;
+in October, 184, and in December, 13. In all of 2025 it reported 53. Eliquis, that same year, 115,819.
+
+Before that cut it was already losing, and not for lack of effort: in 2023 it reported more than twice the dollars in payments to physicians that its rival did, and in [Medicare](https://www.medicare.gov/basics/get-started-with-medicare), the public insurance for people over 65 and people with disabilities, it now sells a quarter as much (6.5 against 26.4 million prescriptions in
+2025). What it lost was the physician's choice with a new patient: since 2015 Eliquis adds more patients
+than it does every year, counted net, because the public file does not separate a new start from a
+brand switch.
+
+My hypothesis, with the dates in view, is that it was weighed down by the reputation of causing more
+bleeding than Eliquis: advertising and the lawsuits built it, and from 2019 Medicare studies and the
+geriatrics criteria reinforced it. There is evidence against, and it is below.
+
+Bayer, which collects royalties in the United States, sued Johnson & Johnson for abandoning in-person detailing,
+and the payments line up with what it alleges. My recommendation is not to rebuild detailing, and to
+measure with the 2025 physician-level prescriptions what the cut cost, because both products can go generic in 19 months and, with my cost assumptions, a sales force does not pay for itself in that window. The other decision comes
+first, defending access in 2027, which I cover in [the other case](/en/projects/acceso-parte-d).
+
+</Abstract>
+
+<Thesis>
+
+Xarelto lost the new patient to Eliquis in the years when advertising, the lawsuits and Medicare evidence
+gave it the reputation of causing more bleeding, and when its reported meals with physicians fell from 6,082 to 184 in October 2024, it left behind, without meaning to, the only public way to measure what that detailing was worth.
+
+</Thesis>
+
+## The symptom: an advantage that flipped
+
+Xarelto reached the market first and in 2013 held
+[92 of every 100 prescriptions of the two in Medicare](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug),
+but Eliquis passed it in 2016.
+
+Xarelto did not lose patients until 2024. What it lost was most of the ones being added each year, in a
+market moving from warfarin to direct anticoagulants. In 2014 it still added more patients than Eliquis;
+from 2015 Eliquis adds more every year, and between 2020 and 2024 it took 93 of every 100 patients the
+two of them added.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g6_quien_suma.en.png"
+  alt="Bars of patients added against the previous year, in thousands: in 2014 Xarelto adds more than Eliquis; from 2015 Eliquis adds more every year; in 2024 Xarelto loses 2.8 thousand"
+  width={2000}
+  height={1280}
+  caption="Net difference in patients for each brand against the previous year. These are not new patients: someone who leaves one brand and starts the other subtracts from one and adds to the other. Author's analysis of the Part D prescriber file."
+/>
+
+With the patients it already has, it does fine. Measured in days of therapy per patient per year, which
+comes from standardizing fills to 30 days, Xarelto delivered 270 days in 2024 and Eliquis 263, and it
+comes out ahead every year since 2016. In raw prescriptions it looks like the opposite, 5.04 against
+5.44, only because Xarelto dispenses more 90-day fills. Nor should this be read as retaining better: a
+patient who starts mid-year lowers the average, and Eliquis adds patients every year, so the bias works
+against Eliquis. What this does say is where the problem is not. It is not in the ones who stay, it is
+entirely in the ones who start.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g9_persistencia.en.png"
+  alt="Lines of days of therapy per patient per year, 2016 to 2024: Xarelto rises from 221 to 270 and Eliquis from 213 to 263, with Xarelto always above"
+  width={2000}
+  height={1280}
+  caption="CMS-standardized 30-day fills divided by the patients with at least one prescription that year, times 30. Patients starting mid-year lower the average, and Eliquis adds patients every year: the bias works against Eliquis. Author's analysis of the Part D prescriber file."
+/>
+
+Plan restrictions do not explain it: on the 10, 15 and 20 mg tablets, the ones a physician picks instead
+of Eliquis, no Medicare plan required step therapy, which means making the patient try another drug first,
+in 2023 or in 2026. That is covered in
+[the access case](/en/projects/acceso-parte-d).
+
+## It had money and visits to spare
+
+The second suspicion is that Eliquis was putting in more. Manufacturers report every payment to a
+physician in a public registry,
+[Open Payments](https://openpaymentsdata.cms.gov/dataset/fb3a65aa-c901-4a38-a813-b04b00dfa2a9). In 2023,
+payments that name Xarelto add up to $6.73 million; those that name Eliquis, $3.14 million. Almost half of
+Xarelto's are fees to 340 physicians for speaking, more than ten times what Eliquis paid.
+
+The same holds for visits, counted through reported meals: of every 100 meals that name one of the two products,
+44 are Xarelto's, and of every 100 Medicare
+[prescriptions](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug)
+for the two, 23. That is share of voice against share of market, and the first nearly doubles the second.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g2_pagos_visitas_recetas.en.png"
+  alt="Three bars of one hundred: in reported payments to physicians, Xarelto has 68.2 and Eliquis 31.8; in visits, 44.0 and 56.0; in Medicare prescriptions, 22.6 and 77.4"
+  width={2000}
+  height={1280}
+  caption="Payments: everything reported in 2023 that names each product, nationwide. Visits and prescriptions: 1,043 counties and 254,022 visits in 2023. Author's analysis of Open Payments and Part D prescribing."
+/>
+
+57% of Eliquis meals also name other Pfizer products and here they count in full for Eliquis; split up,
+Xarelto's lead would be larger.
+
+## Where the visits and the talks went
+
+If it was short of neither money nor visits, the question is where they went in 2023, the last full year
+with visits. Each dot on the chart is a county: to the right, where Xarelto sells above its 22.6%
+national share of the two; above, where it visits more than it sells.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g3_cuadrantes.en.png"
+  alt="Each county is a dot by Xarelto's share against Eliquis and by how much it visits against what it sells; the corner of sells little and visits more holds 439 counties, 49.1% of the visits and 51.2% of the prescriptions"
+  width={2000}
+  height={1280}
+  caption="Each dot is a county and its size, the visits in 2023. Author's analysis of Open Payments and Part D prescribing."
+/>
+
+**Almost half of the visits by the two products (49.1%) fall in the upper left**, in the 439 counties
+where Xarelto sells little and visits more than it sells.
+
+The top 10% who prescribe the two the most write 49.4% of their prescriptions, the concentration consulting calls Pareto,
+and receives 25.8% of Xarelto's visits. In reach, how many of those physicians each brand sees, Eliquis
+got to 37.3% and Xarelto to 28.3%. And 29 of every 100 Xarelto visits go to professionals with
+[fewer than 11 prescriptions of each product](https://data.cms.gov/sites/default/files/2026-05/MUP_DPR_RY26_20260421_Methodology_508.pdf).
+
+<Figure
+  src="/projects/xarelto-sin-visita/g4_donde_van_las_visitas.en.png"
+  alt="Bars by group of physicians, from the highest prescriber to the lowest: the top 10% writes 49.4% of Xarelto and Eliquis prescriptions and receives 25.8% of Xarelto's visits; a last bar shows that 29.3% of the visits goes to professionals with fewer than 11 prescriptions of each product"
+  width={2000}
+  height={1280}
+  caption="Physicians grouped in tenths, from the highest prescriber to the lowest. Author's analysis of Part D prescribing and Open Payments, 2023."
+/>
+
+## Did the visits pay off?
+
+Visiting where it sells little could be building share. To find out I looked at 2024, with the bar set
+before opening the data: one share point or more against Eliquis.
+
+**By county.** Where it sells little, heavily visited counties lost 1.86 points and comparable lightly
+visited ones, 1.91; where it sells a lot, 2.58 against 3.23. The differences, 0.05 and 0.65 points, stay
+below the bar.
+
+**By physician.** Between those who received 4 to 9 visits and comparable ones with none, the difference
+runs from −0.15 to +2.94 points depending on what is assumed about those who in 2024
+[dropped out of the file](https://data.cms.gov/sites/default/files/2026-05/MUP_DPR_RY26_20260421_Methodology_508.pdf)
+for prescribing fewer than 11 times, more common among the unvisited.
+
+## Why physicians chose Eliquis
+
+If it was not the restrictions or the money, what remains is why the physician chose Eliquis. Public data
+does not show what each one thought, so what follows is **a hypothesis**: that the literature, the news
+and the advertising gave Xarelto the reputation of causing more bleeding, and that this reputation
+weighed on the choice.
+
+**Until 2016 there was nothing to compare them with.** The two trials that approved them came out the
+same month of 2011 and measured against warfarin, not against each other.
+[ARISTOTLE](https://pubmed.ncbi.nlm.nih.gov/21870978/), paid for by BMS and Pfizer, found apixaban
+superior at preventing stroke and with less major bleeding;
+[ROCKET AF](https://pubmed.ncbi.nlm.nih.gov/21830957/), paid for by J&J and Bayer, found rivaroxaban
+non-inferior, without superiority. Read side by side they seem to favor Eliquis, but the
+[2023 cardiology guideline](https://pmc.ncbi.nlm.nih.gov/articles/PMC11095842/) points out that warfarin
+was better dosed in ARISTOTLE, so the comparison is uneven.
+
+What did grow in those years was the noise. In December 2014 the
+[bleeding lawsuits against Xarelto](https://www.jpml.uscourts.gov/sites/jpml/files/MDL-2592-Initial_Transfer-12-14.pdf)
+were consolidated, and J&J counted
+[5,000 of them in January 2016 and 16,900 a year later](https://www.sec.gov/Archives/edgar/data/200406/000020040617000006/form10-k20170101.htm);
+Bristol Myers Squibb and Pfizer put
+[$712 million into advertising between 2014 and 2016](https://www.gao.gov/assets/gao-21-380.pdf), and a
+public health report described Eliquis as
+["heavily marketed as a safer alternative to Xarelto"](https://dchealth.dc.gov/sites/default/files/dc/sites/doh/publication/attachments/Impacts%20Report%202018%20-%20FINAL.pdf).
+
+**From 2019 the evidence followed that reputation.** The
+[FDA, the agency that approves drugs in the United States, using Medicare data](https://pubmed.ncbi.nlm.nih.gov/30639551/), associated rivaroxaban with 2.7
+times the extracranial bleeding of apixaban; the
+[Beers Criteria](https://pubmed.ncbi.nlm.nih.gov/30693946/) of the American Geriatrics Society asked for
+caution in people over 75 and in [2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/) moved to
+asking that it be avoided in long-term treatment of atrial fibrillation and venous thromboembolism
+(VTE); the [largest study in Medicare](https://pmc.ncbi.nlm.nih.gov/articles/PMC8693217/), with 581,451 patients and public funding, associated rivaroxaban with 18% more serious events. These are observational studies: they
+measure association, and their authors warn about unmeasured confounding. In those years Xarelto added
+fewer and fewer patients: 83,508 in 2019, 12,425 in 2023, and in 2024 it lost 2,831.
+
+**The first head-to-head trial arrived in 2026, and not in atrial fibrillation.**
+[COBRRA](https://pubmed.ncbi.nlm.nih.gov/41812192/), publicly funded in Canada, compared the two in venous thromboembolism and found
+relevant bleeding in 3.3% with apixaban and 7.1% with rivaroxaban. For atrial fibrillation, the trials [are still recruiting](https://clinicaltrials.gov/study/NCT04642430) and would
+finish at the end of 2027.
+
+**What does not fit the hypothesis:**
+
+- **No cardiology guideline preferred Eliquis**, neither the
+  [2014](https://pmc.ncbi.nlm.nih.gov/articles/PMC4676081/) one nor the
+  [2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC11095842/) one; only Beers, and for older adults.
+- **The evidence that ranks the two arrived after the 2016 crossover.**
+- **According to Bayer, Xarelto won all six trials** that reached a verdict, although in 2019 the two
+  companies settled about 25,000 lawsuits for $775 million. The FDA did close the controversy over its
+  study in its favor.
+- **There is evidence in Xarelto's favor**: a
+  [study in Israel](https://pubmed.ncbi.nlm.nih.gov/36341531/), observational, with 56,553 patients and
+  no industry behind it, found lower mortality and fewer strokes than with apixaban, and also more gastrointestinal bleeding.
+
+## The cut: October 2024
+
+According to the
+[lawsuit Bayer filed against Janssen in October 2025](https://storage.courtlistener.com/recap/gov.uscourts.nysd.651272/gov.uscourts.nysd.651272.1.0.pdf),
+J&J cut the people visiting physicians for Xarelto from 1,198 to 345 at the end of 2022 and in November
+2024 eliminated its in-person sales force. This is an allegation: in August 2026 the judge
+[refused to dismiss it](https://storage.courtlistener.com/recap/gov.uscourts.nysd.651272/gov.uscourts.nysd.651272.35.0.pdf)
+without ruling on the facts.
+
+The payments J&J reports confirm the dates with independent data. In
+[Open Payments](https://openpaymentsdata.cms.gov/), Xarelto meals with physicians ran from 5,745 to
+11,080 per month between January and September 2024, and fell to 184 in October. Speaker payments ended
+in November and in all of 2025 it reported 53 meals. The 2022 cut shows up too: monthly meals fell from
+14,907 in September to 7,256 in October of that year.
+
+<Figure
+  src="/projects/xarelto-sin-visita/g7_comidas_por_mes.en.png"
+  alt="Lines of reported meals with physicians per month, 2022 to 2025: Xarelto peaks at 22,904 in 2022, halves from October 2022 and stays under 200 from October 2024; Eliquis runs between 6,844 and 16,403 across the period"
+  width={2000}
+  height={1280}
+  caption="Meals reported in Open Payments that name each product, by payment month; a meal shared with other products counts in full for each one. Author's analysis."
+/>
+
+A reported meal is not a visit and does not give the reason for the cut, but it shows that Xarelto's
+in-person effort stopped. Its
+[medical information channel](https://www.jnjmedicalconnect.com/products/xarelto/medical-content/real-world-data-of-xarelto-vs-apixaban-in-nonvalvular-atrial-fibrillation)
+also acknowledges that no randomized trial compared the two in atrial fibrillation. In the first quarter
+of 2026 its United States sales
+[fell 7.0%](https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm) on
+"continued share erosion".
+
+## The decision: measure what the cut cost
+
+**What J&J already chose.** It cut detailing and stopped paying for talks: in a product's life cycle that
+looks like harvesting, protecting margin until the generic arrives instead of defending share.
+
+**Whose decision it is, and what the goal is.** J&J's, which answers for the brand in the United States,
+and in part Bayer's, which collects royalties without controlling promotion: to know what the detailing
+that was cut was worth, before deciding whether to rebuild it or keep harvesting.
+
+**What is at stake.** One share point with the 4,142 high-volume prescribers only Eliquis sees is 20,415
+prescriptions a year, around $7.2 million as a ceiling, at the price negotiated for 2026. With my assumption of 150 to 175 physicians per representative at $250,000 to $300,000 a year each, covering them again takes 24 to 28 representatives, between $6.0 and $8.4 million a year: the count is driven by coverage rather than by calls, because they are spread across the country.
+
+**Why it can be measured.** The October 2024 cut is an experiment nobody designed: every physician who
+was receiving Xarelto visits lost them the same month, while the ones getting Eliquis visits kept them. The
+comparison works without inventing a control group.
+
+**The first step.** When CMS, the agency that runs Medicare, publishes the
+[2025 physician-level prescriptions](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug)
+(the 2024 ones came out in May 2026), compare the share against Eliquis of the physicians who were
+receiving visits with that of comparable physicians who never received any, using the same method I used
+for 2023 and 2024. It answers the question that decides the rest.
+
+**The definitions, before measuring.** For the 2025 comparison to hold against the 2023 one, three rules
+have to be set before opening the file: what counts as a visit, what counts as dropping out of the file, and what counts as a patient on therapy, which here means 30-day fills and not prescriptions. If the commercial
+team and the analysis use different definitions, the result compares to nothing.
+
+**What I would measure, and how far.**
+
+_Physicians who lost the visit_
+
+- **Primary:** their share against Eliquis in 2025 against that of comparable physicians who never
+  received visits, because share falls across the whole country and only the comparison isolates the
+  visit.
+- **Early warning:** how many stop prescribing Xarelto 11 times or more. Between 2023 and 2024, 15.2% of
+  the physicians with no visits dropped out of the file and 5.1% of those receiving 4 to 9, out of the
+  panel of 121,110 who prescribed both products.
+- **Line in the sand:** one point or more of extra loss and it is worth visiting the large prescribers
+  again; less than half a point and the decision to harvest holds; in between, repeat it with 2026.
+
+_Volume, which warns earlier than the physician-level data_
+
+- **Primary:** Xarelto prescriptions per quarter, 1,465,876 in the first quarter of 2026.
+- **Line in the sand:** two straight quarters below the trend of the previous four move the decision
+  forward, without waiting for the physician-level file.
+
+**What I would say to the physician with no visit.** The one thing with public backing: once-daily
+dosing, which even the
+[2023 Beers Criteria](https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/) accept as a reason to choose
+it. In days of therapy per patient Xarelto does not fall behind, although that measure cannot support
+better retention.
+
+**What I would not build.**
+
+- **A safety campaign against Eliquis.** There is no head-to-head trial in atrial fibrillation, and
+  COBRRA and Beers cut the other way.
+- **Going back to nationwide detailing before measuring.** The first step says whether it was worth what
+  it cost.
+- **Talks assigned by how much each physician prescribes.** The Department of Health and Human Services
+  [Office of Inspector General](https://oig.hhs.gov/documents/special-fraud-alerts/865/SpecialFraudAlertSpeakerPrograms.pdf)
+  flags that as suspect.
+
+**The kill criterion and the trade-off (what is being risked).** With those assumptions of mine, detailing would have
+to hold between 0.8 and 1.2 points with those physicians just to break even, and the clock runs against
+it because Eliquis cannot have a generic
+[before April 1, 2028](https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm),
+19 months away, while a sales force, by my estimate, takes two or three quarters to build and to show up in
+prescriptions. So the measurement is not there to reopen the field discussion, but to know whether the
+harvest came out cheap or expensive. What is being risked meanwhile is the relationship with Bayer and
+the lawsuit it opened.
+
+## What is data and what is my call
+
+The CMS files were downloaded between September 12 and 15, 2026. There are no market projections: the
+only modeled block is what rebuilding detailing would cost.
+
+| Item                                              | Status                                       | Source or decision                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Prescriptions by physician and drug               | data                                         | [Part D prescribing](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug), CMS, 2023 and 2024                                                                                                                                                                      |
+| Payments from each manufacturer to each physician | data                                         | [Open Payments](https://openpaymentsdata.cms.gov/dataset/fb3a65aa-c901-4a38-a813-b04b00dfa2a9), CMS, 2023 to 2025                                                                                                                                                                                                                                    |
+| Counting visits through reported meals            | my call                                      | they are 97.5% of Xarelto's payments and 99.8% of Eliquis's                                                                                                                                                                                                                                                                                          |
+| Counting a shared meal in full for Eliquis        | my call                                      | 57% of its meals; splitting it favors Xarelto                                                                                                                                                                                                                                                                                                        |
+| Placing each visit where the physician prescribes | my call                                      | the [physician's ZIP code in Part D](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider); the payment's own ZIP fails in one of every five Xarelto meals                                                                                                                   |
+| Prescription and patient series, 2013 to 2026     | data                                         | [prescribers by geography and drug](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug) and [quarterly spending](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-d-spending-by-drug), CMS |
+| Days of therapy per patient                       | data                                         | CMS-standardized 30-day fills over the patients of that year; someone starting mid-year lowers the average, and that works against Eliquis                                                                                                                                                                                                           |
+| What rebuilding detailing would cost              | assumption                                   | 150 to 175 physicians per representative and $250,000 to $300,000 a year fully loaded, industry ranges; J&J publishes neither                                                                                                                                                                                                                        |
+| Studies, guidelines and clinical criteria         | attributed                                   | each one with its design and its limits; the case does not claim which blood thinner is better                                                                                                                                                                                                                                                       |
+| That clinical perception explains the choice      | hypothesis                                   | dates that partly line up; there is no data on what each physician thought                                                                                                                                                                                                                                                                           |
+| The cut and end of Xarelto's in-person detailing  | allegation, with the cut visible in payments | [Bayer's lawsuit](https://storage.courtlistener.com/recap/gov.uscourts.nysd.651272/gov.uscourts.nysd.651272.1.0.pdf), undecided; the meals fall in October 2024 in Open Payments                                                                                                                                                                     |
+| Measuring the cut with the physicians who lost it | my call                                      | against comparable physicians who never received visits, with the one-point bar set beforehand                                                                                                                                                                                                                                                       |
+
+## What this analysis cannot support
+
+- **That the payment or the visit causes the prescription**, nor that the bleeding reputation causes the
+  choice: the manufacturer picks who to visit, the dates partly line up, and there is no data on what
+  each physician thought.
+- **What the sales force costs.** Reported payments do not include salaries or advertising.
+- **Nothing clinical.** It does not say one blood thinner is better than another: it cites what each
+  study published, with its design and its limits.
+- **What happened after 2024 at the physician level.** That file
+  [arrives more than a year late](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug).
+- **What would be visible from the inside.** The prescription data the industry buys, the commercial
+  team's call records and net prices by plan would measure all of this better.
+
+## What would change my mind
+
+What would refute the thesis:
+
+- **Internal records showing visits without meals after October 2024.** The cut the payments show would
+  be in the meals, not in the visit.
+- **The 2025 physician-level prescriptions showing that those who lost the visit did not lose share.**
+  Detailing was holding nothing up, and the effort side of the argument falls.
+- **A physician survey showing they choose Eliquis for another reason**, such as the cost to the patient
+  or their hospital's habit. The reputation hypothesis would be left with no base.
+
+This is independent work, built from public sources. I have no commercial relationship, past or present,
+with Johnson & Johnson, Bayer, Bristol Myers Squibb or Pfizer.
