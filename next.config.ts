@@ -81,6 +81,10 @@ const POSTS_DE_CASO: Record<string, { slug: string; post: number }> = {
   gop1: { slug: "glp1-open-payments", post: 1 },
   sh1: { slug: "seguro-hogar-argentina", post: 1 },
   sh2: { slug: "seguro-hogar-argentina", post: 2 },
+  xsv1: { slug: "xarelto-sin-visita", post: 1 },
+  xsv2: { slug: "xarelto-sin-visita", post: 2 },
+  apd1: { slug: "acceso-parte-d", post: 1 },
+  apd2: { slug: "acceso-parte-d", post: 2 },
 };
 
 const nextConfig: NextConfig = {
