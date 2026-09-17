@@ -13,9 +13,9 @@ import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
   findTranslatedProjectInLocale,
+  getAllProjects,
   getRelatedProjects,
   getProjectBySlug,
-  getProjects,
   getProjectTranslations,
 } from "@/lib/content";
 import { TranslationMissingPage } from "@/components/common/translation-missing-page";
@@ -39,7 +39,9 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  const allProjects = [...getProjects("es"), ...getProjects("en")];
+  // Todos, listados o no: un análisis no aparece en el índice pero se
+  // prerenderiza igual que su pitch.
+  const allProjects = [...getAllProjects("es"), ...getAllProjects("en")];
   return allProjects.map((project) => ({
     locale: project.locale,
     slug: project.slug,
@@ -182,7 +184,9 @@ export default async function ProjectPage({ params }: Props) {
       { name: project.title, path: projectPath },
     ]),
   ];
-  const related = getRelatedProjects(typedLocale, slug);
+  // Un análisis no está en los listados, así que sus siguientes casos son los
+  // de su pitch; sin esto `getRelatedProjects` no lo encuentra y devuelve nada.
+  const related = getRelatedProjects(typedLocale, project.parent ?? slug);
 
   return (
     <main id="main">

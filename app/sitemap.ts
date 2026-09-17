@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getPosts, getProjects, getResearch } from "@/lib/content";
+import { getAllProjects, getPosts, getResearch } from "@/lib/content";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 
 import { RESEARCH_ENABLED } from "@/lib/features";
@@ -86,7 +86,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  const projects = [...getProjects("es"), ...getProjects("en")];
+  // Con los análisis: quedan fuera de los listados del sitio pero se indexan,
+  // porque son la pieza con más contenido para quien llega buscando el tema.
+  const projects = [...getAllProjects("es"), ...getAllProjects("en")];
   const projectGroups = groupByTranslationKey(projects);
   const projectEntries: MetadataRoute.Sitemap = projectGroups.flatMap((group) => {
     const languages = buildLanguages(group, "/projects");
