@@ -161,6 +161,13 @@
     "trend": {
       "good": "improving",
       "bad": "worsening"
+    },
+    "layers": {
+      "analysisLabel": "Full analysis",
+      "analysisTitle": "How I got here",
+      "analysisBody": "This is the short version. The full analysis has the data, the definitions and the assumptions behind every number.",
+      "analysisCta": "Read the full analysis",
+      "parentNote": "This is the full analysis behind <link>{title}</link>. If you landed here directly, that {minutes}-minute version has the answer and the recommendation."
     }
   },
   "paper": {
