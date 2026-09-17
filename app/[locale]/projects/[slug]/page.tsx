@@ -13,9 +13,10 @@ import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
   findTranslatedProjectInLocale,
+  getAllProjects,
   getRelatedProjects,
+  getProjectAnalysis,
   getProjectBySlug,
-  getProjects,
   getProjectTranslations,
 } from "@/lib/content";
 import { TranslationMissingPage } from "@/components/common/translation-missing-page";
@@ -28,6 +29,7 @@ import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { CaseStudyClose } from "@/components/content/case-study-close";
+import { AnalysisCta, ParentNote } from "@/components/content/analysis-layer";
 import { StackList } from "@/components/content/stack-list";
 import { ReadingProgress } from "@/components/content/reading-progress";
 import { PaperToc } from "@/components/mdx/paper-toc";
@@ -39,7 +41,9 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  const allProjects = [...getProjects("es"), ...getProjects("en")];
+  // Todos, listados o no: un análisis no aparece en el índice pero se
+  // prerenderiza igual que su pitch.
+  const allProjects = [...getAllProjects("es"), ...getAllProjects("en")];
   return allProjects.map((project) => ({
     locale: project.locale,
     slug: project.slug,
@@ -182,7 +186,11 @@ export default async function ProjectPage({ params }: Props) {
       { name: project.title, path: projectPath },
     ]),
   ];
-  const related = getRelatedProjects(typedLocale, slug);
+  // Un análisis no está en los listados, así que sus siguientes casos son los
+  // de su pitch; sin esto `getRelatedProjects` no lo encuentra y devuelve nada.
+  const related = getRelatedProjects(typedLocale, project.parent ?? slug);
+  const parent = project.parent ? getProjectBySlug(typedLocale, project.parent) : undefined;
+  const analysis = project.parent ? undefined : getProjectAnalysis(typedLocale, project.slug);
 
   return (
     <main id="main">
@@ -231,6 +239,18 @@ export default async function ProjectPage({ params }: Props) {
               className="ml-auto"
             />
           </div>
+
+          {parent && (
+            <ParentNote
+              locale={typedLocale}
+              from={project.slug}
+              parent={{
+                slug: parent.slug,
+                title: parent.title,
+                readingMinutes: parent.metadata.readingTime,
+              }}
+            />
+          )}
 
           {(project.repo || project.demo || project.figma) && (
             <div className="mt-6 flex flex-wrap gap-3">
@@ -296,6 +316,18 @@ export default async function ProjectPage({ params }: Props) {
         <div id="case-study-content" className="prose-content">
           <MDXContent code={project.content} />
         </div>
+
+        {analysis && (
+          <AnalysisCta
+            locale={typedLocale}
+            from={project.slug}
+            analysis={{
+              slug: analysis.slug,
+              title: analysis.title,
+              readingMinutes: analysis.metadata?.readingTime,
+            }}
+          />
+        )}
 
         {/* Ficha técnica al pie y no en el encabezado. Arriba, el stack y las
             métricas empujaban el primer párrafo a 1,24 pantallas: son datos

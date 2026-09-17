@@ -161,6 +161,13 @@
     "trend": {
       "good": "mejora",
       "bad": "empeora"
+    },
+    "layers": {
+      "analysisLabel": "Análisis completo",
+      "analysisTitle": "Cómo llegué a esto",
+      "analysisBody": "Esta es la versión corta. El análisis completo tiene los datos, las definiciones y los supuestos que hay detrás de cada número.",
+      "analysisCta": "Ver el análisis completo",
+      "parentNote": "Este es el análisis completo de <link>{title}</link>. Si llegaste directo acá, esa versión de {minutes, plural, one {# minuto} other {# minutos}} tiene la respuesta y la recomendación."
     }
   },
   "paper": {

@@ -157,12 +157,24 @@ const projects = defineCollection({
         )
         .default([]),
       translationKey: s.string().optional(),
+      // Slug del pitch del que esta pieza es el análisis completo, en el mismo
+      // idioma. Existe desde el 17/09/2026: los lectores decían que un caso de
+      // 9 a 12 minutos se lee "como un paper", así que la pieza sale en dos
+      // capas, un pitch corto que se lista y el análisis que lo respalda. Con
+      // `parent`, la pieza no aparece en ningún listado (índice, home, RSS,
+      // llms.txt, siguientes casos): se llega desde el botón al pie del pitch.
+      // Sigue en el sitemap y en /stats. Necesita su propio `translationKey`:
+      // si comparte el del pitch, el sitemap y los hreflang los mezclan.
+      parent: s.string().optional(),
       draft: s.boolean().default(false),
       metadata: s.metadata(),
       content: s.mdx(),
     })
     .refine((data) => !data.featured || data.cover !== undefined, {
       message: "Featured projects require a cover image",
+    })
+    .refine((data) => !(data.featured && data.parent), {
+      message: "An analysis with a parent cannot be featured: readers reach it from its pitch",
     })
     .transform((data, { meta }) => ({
       ...data,

@@ -14,6 +14,14 @@ const byLocale =
   (item: T): boolean =>
     item.locale === locale;
 
+/**
+ * Un análisis completo (`parent` definido) se lee desde su pitch y no compite
+ * con él en los listados: si apareciera suelto, el índice mostraría dos veces
+ * el mismo caso y la tarjeta del análisis anunciaría 12 minutos, justo la
+ * barrera que el pitch existe para bajar.
+ */
+const isListed = <T extends { parent?: string }>(item: T): boolean => !item.parent;
+
 const byDateDesc = <T extends { date: string }>(a: T, b: T): number =>
   +new Date(b.date) - +new Date(a.date);
 
@@ -87,8 +95,22 @@ export function getRelatedPosts(
 // Projects
 // ============================================================================
 
+/** Lo que se lista: índice, home, RSS, llms.txt y siguientes casos. Sin análisis. */
 export function getProjects(locale: Locale) {
+  return getAllProjects(locale).filter(isListed);
+}
+
+/**
+ * Todo lo publicado, listado o no. Para las superficies que tienen que ver
+ * también los análisis: el build estático, el sitemap y /stats.
+ */
+export function getAllProjects(locale: Locale) {
   return projects.filter(byLocale(locale)).filter(isVisible).sort(byDateDesc);
+}
+
+/** El análisis completo de un pitch, si tiene. */
+export function getProjectAnalysis(locale: Locale, pitchSlug: string) {
+  return getAllProjects(locale).find((p) => p.parent === pitchSlug);
 }
 
 /** Curaduría para la home. El listado ya no la usa: agrupa por `subject`. */

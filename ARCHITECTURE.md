@@ -61,6 +61,10 @@ scripts/charts/    chart generation, matplotlib
   announces.
 - **Drafts are `noindex`.** `getProjectBySlug` deliberately does not filter by `draft` so a preview can
   be shared by link; without the robots tag that would make a draft unlisted rather than unpublished.
+- **A case can ship in two layers.** A project with `parent` is the full analysis behind a short pitch.
+  `getProjects` drops it from every listing (index, home, RSS, `llms.txt`, next cases) and
+  `getAllProjects` keeps it in the static build, the sitemap and `/stats`. It needs its own
+  `translationKey`: sharing the pitch's merges both pages in the sitemap and the hreflang links.
 - **Wide tables scroll inside their own container.** They used to be `w-full` with no wrapper, which did
   not overflow the page, it squeezed cells up to eleven lines tall.
 - **`/research` is behind a flag** in `lib/features.ts`, single source of truth. Flipping it also means

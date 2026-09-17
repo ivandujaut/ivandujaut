@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { OwnTrafficMarker } from "@/components/analytics/own-traffic-marker";
-import { getPosts, getProjects } from "@/lib/content";
+import { getAllProjects, getPosts } from "@/lib/content";
 import { getCachedViews } from "@/lib/views";
 import { getCachedContinued, getCachedReads } from "@/lib/reads";
 import { CONTENT_LOCALES, type ContentLocale, type ViewKind } from "@/lib/views";
@@ -44,7 +44,9 @@ export default async function StatsPage({ searchParams }: Props) {
   // Una fila por pieza Y por idioma: los slugs se repiten entre idiomas, así
   // que hasta ahora una lectura en inglés era indistinguible de una española.
   const pieces = CONTENT_LOCALES.flatMap((locale) => [
-    ...getProjects(locale).map((p) => ({ kind: "projects" as const, locale, item: p })),
+    // Con los análisis: no se listan en el sitio, pero sus lecturas son la mitad
+    // de lo que mide el test de dos capas.
+    ...getAllProjects(locale).map((p) => ({ kind: "projects" as const, locale, item: p })),
     ...getPosts(locale).map((p) => ({ kind: "blog" as const, locale, item: p })),
   ]);
 
