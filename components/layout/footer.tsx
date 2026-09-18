@@ -2,6 +2,9 @@ import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
+import { RssIcon } from "@/components/icons/rss-icon";
+import { useLocale } from "next-intl";
+import { localePath } from "@/lib/seo";
 
 const socialLinks = [
   {
@@ -19,6 +22,8 @@ const socialLinks = [
 export function Footer() {
   const t = useTranslations("common.footer");
   const tA11y = useTranslations("common.a11y");
+  const tFeed = useTranslations("common.feed");
+  const locale = useLocale() as "es" | "en";
   const currentYear = new Date().getFullYear();
   const newTabLabel = tA11y("opensInNewTab");
 
@@ -58,6 +63,19 @@ export function Footer() {
               <HugeiconsIcon icon={link.icon} size={16} strokeWidth={1.5} />
             </a>
           ))}
+          {/* El feed entre los íconos y no en el texto: es una forma de seguir
+              el sitio, igual que las otras tres, y acá está en todas las
+              páginas sin ocupar nada. */}
+          <a
+            href={localePath(locale, "/rss.xml")}
+            data-ph="feed_click"
+            data-ph-surface="footer"
+            data-ph-locale={locale}
+            aria-label={tFeed("label")}
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <RssIcon size={16} />
+          </a>
           <ObfuscatedEmailTrigger
             surface="footer"
             userReversed="navituajud"

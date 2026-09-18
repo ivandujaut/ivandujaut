@@ -56,7 +56,15 @@ export type AnalyticsEvent =
    * la lista entera sin clickear) y un pageview no dice qué tarjeta se eligió
    * ni desde dónde.
    */
-  | "card_click";
+  | "card_click"
+  /**
+   * Clic a la dirección del feed, con la superficie desde la que salió
+   * (`footer`, `index`, `blog`, `case-close`). Existe desde el 18/09/2026, que
+   * es cuando el feed pasó a ofrecerse en algún lado: sin cookies ni lista de
+   * correo, es el único modo de volver al sitio que no pasa por LinkedIn, y la
+   * pregunta que contesta es si alguien lo usa.
+   */
+  | "feed_click";
 
 /**
  * Agentes que no son lectores.

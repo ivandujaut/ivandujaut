@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getEntryProject, getProjects, getProjectsBySubject } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
+import { FeedLink } from "@/components/common/feed-link";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
 type Props = {
@@ -125,6 +126,12 @@ export default async function ProjectsPage({ params }: Props) {
 
         {allProjects.length === 0 && <p className="text-muted-foreground">No projects yet.</p>}
       </div>
+
+      <FeedLink
+        locale={typedLocale}
+        surface="index"
+        className="mt-14 border-t border-border pt-8"
+      />
     </main>
   );
 }
