@@ -88,13 +88,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Con los análisis: quedan fuera de los listados del sitio pero se indexan,
   // porque son la pieza con más contenido para quien llega buscando el tema.
+  //
+  // `lastModified` sale de la fecha de la pieza y no de `now`. Con `now`, cada
+  // deploy le decía a Google que los treinta y cuatro casos se habían
+  // modificado hoy, así que el caso publicado ayer y el de mayo llegaban con la
+  // misma señal de frescura. Un `lastmod` que siempre miente es un `lastmod`
+  // que el buscador aprende a ignorar, y ahí se pierde lo único que distingue
+  // a la pieza nueva. Los posts ya lo hacían bien.
   const projects = [...getAllProjects("es"), ...getAllProjects("en")];
   const projectGroups = groupByTranslationKey(projects);
   const projectEntries: MetadataRoute.Sitemap = projectGroups.flatMap((group) => {
     const languages = buildLanguages(group, "/projects");
     return group.map((project) => ({
       url: absoluteUrl(project.locale, `/projects/${project.slug}`),
-      lastModified: now,
+      lastModified: new Date(project.updated ?? project.date),
       changeFrequency: "monthly" as const,
       priority: 0.6,
       alternates: { languages },
