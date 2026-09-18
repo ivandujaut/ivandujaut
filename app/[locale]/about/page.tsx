@@ -33,13 +33,13 @@ export async function generateMetadata({ params }: Props) {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Acerca de mí · Iván Dujaut, Product Engineer"
-    : "About · Iván Dujaut, Product Engineer";
+    ? "Acerca de mí · Iván Dujaut, product strategy y decision analytics"
+    : "About · Iván Dujaut, product strategy and decision analytics";
   // La descripción vende el trabajo publicado, no el cargo: es lo que
   // diferencia el perfil y lo que sostiene el resto de la página.
   const description = isEs
-    ? "Analizo mercados y productos con datos públicos: seguros, fintech y pagos en Argentina y Brasil. Bioingeniero del ITBA, product engineer, Techstars W24."
-    : "I analyze markets and products with public data: insurance, fintech and payments in Argentina and Brazil. ITBA bioengineer, product engineer, Techstars W24.";
+    ? "Analizo mercados y productos con datos públicos: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Bioingeniero del ITBA, Techstars W24."
+    : "I analyze markets and products with public data: US healthcare, insurance and payments in Argentina and Brazil. ITBA bioengineer, Techstars W24.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,

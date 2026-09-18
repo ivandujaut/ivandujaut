@@ -27,15 +27,18 @@ export async function generateMetadata({ params }: Props) {
   const typedLocale = locale as "es" | "en";
 
   const ogTitle = "Iván Dujaut";
+  // El título es lo que filtra una búsqueda de reclutador. Hasta el 18/09/2026
+  // decía "Product Engineer", que es el puesto actual y ninguno de los roles
+  // que Iván busca; el puesto sigue nombrado donde es cierto, en /about.
   const seoTitle = isEs
-    ? "Iván Dujaut · Product Engineer & Bioingeniero"
-    : "Iván Dujaut · Product Engineer & Bioengineer";
+    ? "Iván Dujaut · Product Strategy y Decision Analytics"
+    : "Iván Dujaut · Product Strategy and Decision Analytics";
   // El remate anterior era "y escribo el código", y era la última frase del
   // resultado de búsqueda para quien busca el nombre. El código es la palanca,
   // no el oficio: lo que distingue el perfil son los análisis publicados.
   const description = isEs
-    ? "Analizo mercados y productos con datos públicos: seguros, fintech y pagos en Argentina y Brasil. Product engineer y bioingeniero del ITBA, Techstars W24."
-    : "I analyze markets and products with public data: insurance, fintech and payments in Argentina and Brazil. Product engineer and ITBA bioengineer, Techstars W24.";
+    ? "Analizo mercados y productos con datos públicos: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Cada cifra trazada a su fuente. Bioingeniero ITBA."
+    : "I analyze markets and products with public data: US healthcare, insurance and payments in Argentina and Brazil. Every figure traced to its source. ITBA bioengineer.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title: ogTitle,

@@ -17,8 +17,8 @@ export function personSchema(locale: Locale) {
     // literal. Acá se declara el trabajo que diferencia, no el stack.
     description:
       locale === "es"
-        ? "Analizo mercados y productos con datos públicos y termino en recomendaciones: seguros, fintech y pagos en Argentina y Brasil. Bioingeniero del ITBA."
-        : "I analyze markets and products with public data and end in recommendations: insurance, fintech and payments in Argentina and Brazil. Bioengineer from ITBA.",
+        ? "Analizo mercados y productos con datos públicos y termino en recomendaciones: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Bioingeniero del ITBA."
+        : "I analyze markets and products with public data and end in recommendations: US healthcare, insurance and payments in Argentina and Brazil. Bioengineer from ITBA.",
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",
@@ -35,6 +35,9 @@ export function personSchema(locale: Locale) {
     knowsAbout:
       locale === "es"
         ? [
+            "Acceso al mercado en salud",
+            "Análisis de decisiones",
+            "Medicare",
             "Seguros",
             "Insurtech",
             "Fintech",
@@ -46,6 +49,9 @@ export function personSchema(locale: Locale) {
             "Aprendizaje automático",
           ]
         : [
+            "Market access",
+            "Decision analytics",
+            "Medicare",
             "Insurance",
             "Insurtech",
             "Fintech",

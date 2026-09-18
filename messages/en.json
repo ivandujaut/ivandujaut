@@ -88,10 +88,10 @@
   "home": {
     "hero": {
       "name": "Iván Dujaut",
-      "role": "Product Engineer",
+      "role": "Product Strategy and Decision Analytics",
       "location": "Argentina",
       "available": "Available",
-      "tagline": "I decide what the team builds, measure whether it worked, and write the code.",
+      "tagline": "I decide with data and build what I decide. Every figure traced back to its source.",
       "credentials": "Bioengineer at ITBA · Techstars W24",
       "badge": "Latest case: {title}",
       "ctas": {
@@ -104,7 +104,7 @@
       "paragraph1": "I'm a Product Engineer at Prizmstack, where I build FIJI, which prices a real estate business from how it has been operating.",
       "stack": "Current stack: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "In parallel I teach Digital Techniques to Electronics students at IPSAJ (Instituto Politécnico San Arnoldo Janssen), the technical school I graduated from.",
-      "paragraph3": "Open to remote roles in LATAM, mostly healthtech and fintech. Email me or book a call."
+      "paragraph3": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. Email me or book a call."
     },
     "sections": {
       "featuredWork": "Featured projects",
@@ -122,7 +122,7 @@
   },
   "projects": {
     "title": "Projects",
-    "description": "Case studies and featured work.",
+    "description": "Business decisions answered with public data. Every figure traces back to its source and every assumption is declared as one.",
     "sections": {
       "own": "I built",
       "external": "I analyzed",
@@ -191,7 +191,7 @@
       "paragraph1": "I take a business question nobody has structured, work out whether the data can answer it, and end in a recommendation with its trade-offs in plain sight. I've been doing it as a product engineer for four years: the most useful thing I did at Banana Software was cutting roughly one in five planned features from the roadmap, because they didn't earn what they cost. I live in Argentina and work remotely with teams in the US and LATAM.",
       "paragraph2": "I'm a bioengineer from ITBA. My thesis predicted 2-year mortality in patients with colorectal cancer liver metastasis, using radiomics and machine learning on real data from Hospital Italiano de Buenos Aires. Before that I was a teaching assistant in Biomedical Image Processing and in Biosensors. It left me in the habit of asking a decision for a number before making it.",
       "paragraph3": "Since 2026 I publish analyses of real markets and products, using public data only: the balance sheets insurers file with the regulator, workers' compensation statistics, the companies' own digital channels. Every figure traces back to its source, and every assumption is declared as one.",
-      "paragraph4": "I'm looking for a strategy or product role in consulting, insurtech, fintech or healthtech. If your team has decisions that today get made without numbers, email me. And if it's a product you're thinking about and you want a second head on it, book a call.",
+      "paragraph4": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. If your team has decisions that today get made without numbers, email me. And if it's a product you're thinking about and you want a second head on it, book a call.",
       "ctas": {
         "email": "Email me",
         "calendly": "Book a call",

@@ -88,10 +88,10 @@
   "home": {
     "hero": {
       "name": "Iván Dujaut",
-      "role": "Product Engineer",
+      "role": "Product Strategy y Decision Analytics",
       "location": "Argentina",
       "available": "Disponible",
-      "tagline": "Decido qué construye el equipo, mido si funcionó y escribo el código.",
+      "tagline": "Decido con datos y construyo lo que decido. Cada cifra trazada a su fuente.",
       "credentials": "Bioingeniero ITBA · Techstars W24",
       "badge": "Último caso: {title}",
       "ctas": {
@@ -104,7 +104,7 @@
       "paragraph1": "Soy Product Engineer en Prizmstack, donde armo FIJI, que le pone precio a un negocio inmobiliario a partir de cómo viene operando.",
       "stack": "Stack actual: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "En paralelo enseño Técnicas Digitales a estudiantes de Electrónica en el IPSAJ (Instituto Politécnico San Arnoldo Janssen), la escuela técnica donde me recibí.",
-      "paragraph3": "Busco oportunidades remotas en LATAM, con preferencia por healthtech y fintech. Escribime o agendá una call."
+      "paragraph3": "Busco un rol de product strategy o decision analytics en consultoría, salud, seguros o fintech. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Escribime o agendá una call."
     },
     "sections": {
       "featuredWork": "Proyectos destacados",
@@ -122,7 +122,7 @@
   },
   "projects": {
     "title": "Proyectos",
-    "description": "Casos de estudio y trabajos destacados.",
+    "description": "Decisiones de negocio contestadas con datos públicos. Cada cifra traza a su fuente y cada supuesto se declara como supuesto.",
     "sections": {
       "own": "Construí",
       "external": "Analicé",
@@ -191,7 +191,7 @@
       "paragraph1": "Agarro una pregunta de negocio que nadie estructuró, averiguo si los datos pueden contestarla, y termino en una recomendación con los trade-offs a la vista. Lo hago como product engineer desde hace cuatro años: lo más útil que hice en Banana Software fue sacar del roadmap cerca de una de cada cinco funcionalidades planificadas, porque no justificaban lo que costaban. Vivo en Argentina y trabajo remoto con equipos de Estados Unidos y LATAM.",
       "paragraph2": "Soy bioingeniero del ITBA. Mi tesis predijo la mortalidad a dos años en pacientes con metástasis hepática de cáncer colorrectal, con radiómica y aprendizaje automático sobre datos reales del Hospital Italiano. Antes fui ayudante de Procesamiento de Imágenes Biomédicas y de Biosensores. De ahí me quedó la costumbre de pedirle un número a una decisión antes de tomarla.",
       "paragraph3": "Desde 2026 publico análisis de mercados y productos reales, sólo con datos públicos: los balances que las aseguradoras presentan ante el regulador, las estadísticas de riesgos del trabajo, los canales digitales de las propias compañías. Cada cifra traza a su fuente y cada supuesto se declara como supuesto.",
-      "paragraph4": "Busco un rol de estrategia o producto en consultoría, insurtech, fintech o healthtech. Si en tu equipo hay decisiones que hoy se toman sin números, escribime. Y si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
+      "paragraph4": "Busco un rol de product strategy o decision analytics en consultoría, salud, seguros o fintech. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Si en tu equipo hay decisiones que hoy se toman sin números, escribime. Y si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
       "ctas": {
         "email": "Escribime",
         "calendly": "Agendá una call",
