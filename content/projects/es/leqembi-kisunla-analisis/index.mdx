@@ -1,0 +1,291 @@
+---
+title: "Leqembi contra Kisunla en Medicare tradicional: el análisis completo"
+tagline: "Los archivos, las definiciones, los límites que me fijé antes de medir y lo que estos datos no pueden sostener, detrás de la versión corta."
+description: "El respaldo de la versión corta sobre Leqembi y Kisunla en Medicare tradicional: gasto, pacientes, precio por miligramo, lo que le deja al centro cada infusión, pagos a profesionales y la inyección subcutánea, con la decisión de Eisai escrita como la entregaría un equipo de análisis de decisiones."
+year: 2026
+date: "2026-09-17"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración en carbón sobre papel crema, no una fotografía: las manos de una persona mayor apoyadas sobre una mesa de madera frente a un rompecabezas con forma de cerebro al que le falta una pieza, con la pieza suelta debajo de un dedo"
+stack: ["Python", "matplotlib", "Datos abiertos de CMS (parte B, parte D y Open Payments)"]
+metrics:
+  - label: "Gasto por paciente: Kisunla sobre Leqembi"
+    value: "+33%"
+  - label: "Precio por mg: Kisunla sobre Leqembi"
+    value: "+55%"
+  - label: "Leqembi en consultorio, 2024 (Kisunla: 88%)"
+    value: "60%"
+  - label: "Inyección (parte D) por 100 de Leqembi (parte B)"
+    value: "4,8"
+translationKey: "leqembi-kisunla-analisis"
+parent: "leqembi-kisunla"
+draft: false
+---
+
+<Thesis>
+  Kisunla, de Lilly, le cuesta más a Medicare tradicional que Leqembi, de Eisai, aunque trata a
+  menos pacientes: 5.605 dólares por paciente contra 4.219 en el primer trimestre de 2026, porque
+  Medicare paga un 55% más por cada miligramo. Aparte, Kisunla pide la mitad de las infusiones, y en
+  mi cuenta cada una le deja al centro entre 1,6 y 1,9 veces más, una ventaja que pesa donde falta
+  lugar. Eisai tiene una inyección de Leqembi aprobada para empezar el tratamiento sin sillón, y la
+  decisión es usarla primero donde hay espera, midiendo centro por centro si los que tienen lugar
+  castigan la jugada.
+</Thesis>
+
+## Qué mide este análisis, y qué no
+
+**El universo es Medicare tradicional.** Los archivos de gasto de la parte B, la que paga lo que aplica un profesional, dejan afuera a los afiliados de Medicare Advantage, que son más de la mitad. La [metodología de CMS](https://data.cms.gov/resources/medicare-quarterly-part-b-spending-by-drug-methodology), el organismo que administra Medicare, lo dice así: "exclude any beneficiaries in the Medicare Advantage program (which represents over 50% of the Medicare population as of 2024". La parte D, la de farmacia, [incluye todos los planes](https://data.cms.gov/resources/medicare-quarterly-part-d-spending-by-drug-methodology), Medicare Advantage también, y cada vez que un número mezcla las dos, lo digo.
+
+**Los archivos.**
+
+- **Gasto de la parte B por medicamento** ([anual](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-part-b-spending-by-drug) y [trimestral](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-b-spending-by-drug)): el anual llega hasta 2024; el trimestral trae 2025 completo y el primer trimestre de 2026, es preliminar y CMS pide cautela al compararlo con el anual.
+- **[Planilla del profesional](https://data.cms.gov/provider-summary-by-type-of-service/medicare-physician-other-practitioners/medicare-physician-other-practitioners-by-geography-and-service) por geografía y por prestador (2023 y 2024):** sólo ve lo que se factura en consultorio.
+- **[Hospitales](https://data.cms.gov/provider-summary-by-type-of-service/medicare-outpatient-hospitals/medicare-outpatient-hospitals-by-provider-and-service):** el archivo viene por grupo de pago y no trae medicamentos, así que la parte hospitalaria la estimo por diferencia.
+- **[Límites de pago de la parte B](https://www.cms.gov/medicare/payment/part-b-drugs/asp-pricing-files):** de ahí sale el precio por miligramo.
+- **[Open Payments](https://openpaymentsdata.cms.gov/) 2023 a 2025:** el registro público de pagos de la industria a profesionales.
+
+**Las unidades no se comparan.** El código de Leqembi (J0174) mide 1 mg y el de Kisunla (J0175), 2 mg. Todo se compara en dólares, en pacientes, en infusiones o en mg, nunca en unidades del código.
+
+**Cuánto del negocio se ve.** Biogen, socia de Eisai, informa las ventas de Leqembi en Estados Unidos. En 2025
+sumaron unos 262 millones de dólares, y el gasto de Medicare tradicional en Leqembi fue 194,53 millones: el
+74%. En el primer trimestre de 2026, 54,32 contra 86 millones, el 63%. El gasto de Medicare se mide a lo que
+Medicare reconoce, que es más que el precio neto de la empresa, así que ese cociente es un techo. Lilly no
+separa las ventas de Kisunla por país.
+
+## El síntoma: el gasto se cruzó y los pacientes todavía no
+
+Leqembi recibió la aprobación completa en julio de 2023 y Kisunla un año después, en julio de 2024. Desde entonces, en Medicare tradicional:
+
+| período               | Leqembi                                    | Kisunla                          |
+| --------------------- | ------------------------------------------ | -------------------------------- |
+| 2024                  | 90,37 millones de dólares, 7.907 pacientes | 5,25 millones, 1.299 pacientes   |
+| 2025                  | 194,53 millones, 14.029 pacientes          | 125,21 millones, 9.993 pacientes |
+| 1er trimestre de 2026 | 54,32 millones, 12.876 pacientes           | 60,44 millones, 10.782 pacientes |
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g3_gasto_y_pacientes.png"
+  alt="Barras de gasto y de pacientes por período: Leqembi arriba en gasto hasta 2025 y Kisunla arriba en el primer trimestre de 2026, 60,4 contra 54,3 millones; en pacientes Leqembi sigue arriba, 12,9 mil contra 10,8 mil"
+  width={2000}
+  height={1280}
+  caption="Gasto y pacientes de Medicare tradicional. 2023 y 2024 salen del archivo anual y 2025 y el primer trimestre de 2026 del trimestral, preliminar. Elaboración propia sobre los archivos de gasto de la parte B."
+/>
+
+<Figure
+  src="/projects/leqembi-kisunla/g1_el_cruce.png"
+  alt="Barras de cien por ciento: en 2025 Kisunla tiene el 41,6% de los pacientes y el 39,2% del gasto de los dos; en el primer trimestre de 2026, el 45,6% de los pacientes y el 52,7% del gasto"
+  width={2000}
+  height={1280}
+  caption="Parte de Kisunla en los pacientes y en el gasto de Medicare tradicional de los dos. Elaboración propia sobre el archivo trimestral de gasto de la parte B."
+/>
+
+Por paciente, en el primer trimestre de 2026 fueron 5.605 dólares con Kisunla y 4.219 con Leqembi: un tercio más. Cada paciente de Kisunla recibió 2,34 infusiones en el trimestre y cada uno de Leqembi, 4,04, y por infusión Medicare reconoció 2.399 dólares contra 1.044. En 2025 pasaba lo contrario: 12.530 dólares por paciente de Kisunla contra 13.866 de Leqembi. Mi hipótesis es que en 2025 muchos pacientes de Kisunla todavía estaban subiendo la dosis, porque el tratamiento arranca con dosis más bajas y recién después llega a la completa: lo que Medicare reconoció por cada infusión de Kisunla pasó de 2.247 dólares en 2025 a 2.399 en el primer trimestre de 2026. El archivo trimestral no abre 2025 trimestre por trimestre, así que no puedo fechar el cruce.
+
+Las dos empresas dicen ir adelante, y las dos tienen sus motivos, porque miden cosas distintas. Lilly, en la [llamada del primer trimestre de 2026](https://www.fool.com/earnings/call-transcripts/2026/04/30/eli-lilly-lly-q1-2026-earnings-transcript/): "Kisunla continued to be the US leader in amyloid-targeting therapies". Eisai, en la [de agosto de 2026](https://finance.biggo.com/news/JP_4523.T_2026-08-03), según un resumen traducido que tomo con cuidado: los pacientes nuevos van "roughly a 50:50 share" y Leqembi
+"maintains the leading share of treated patients in the US".
+
+## Primera causa: cada paciente de Kisunla cuesta más
+
+**El precio por miligramo.** En julio de 2026, Medicare reconocía 1,34 dólares por mg de Leqembi y 2,08 por
+mg de Kisunla, un 55% más. Es el [precio promedio de venta más 6%](https://www.cms.gov/medicare/payment/fee-for-service-providers/part-b-drugs/average-drug-sales-price), y los dos casi no se movieron desde que entraron a los [archivos de pago](https://www.cms.gov/medicare/payment/part-b-drugs/asp-pricing-files), Leqembi en octubre de 2023 y Kisunla en octubre de 2024.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g4_precio_por_mg.png"
+  alt="Líneas del límite de pago por mg, trimestre a trimestre: Leqembi entre 1,32 y 1,35 dólares desde fines de 2023; Kisunla entre 2,05 y 2,09 desde fines de 2024"
+  width={2000}
+  height={1280}
+  caption="Límite de pago trimestral de la parte B dividido por los mg de la unidad de cada código. Elaboración propia sobre los archivos de límite de pago de CMS."
+/>
+
+**La cantidad y la dosis.** La diferencia sale del precio. En cantidad de remedio, Kisunla está incluso por debajo: en mi cuenta, con lo que Medicare reconoció por infusión y el precio de enero de 2026, en el primer trimestre cada paciente de Kisunla recibió unos 2.690 mg y cada uno de Leqembi unos 3.170. La [etiqueta de Leqembi](https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9d1ff786-e577-410a-a273-c4d7d0e4e975.xml) pide 10 mg por kilo cada dos semanas, y en consultorio en 2024 la infusión media fue de 766 mg; la [de Kisunla](https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/190352d4-ef62-4679-b4fa-e846e2766afa.xml) sube de 350 a 700 y a 1.050 mg y después se queda en 1.400 mg cada cuatro semanas.
+
+**El precio de lista que anunciaron las empresas.** Eisai [lanzó Leqembi](https://www.eisai.com/news/2023/news202302.html) a 26.500 dólares por año para un paciente de 75 kilos. Lilly [puso Kisunla](https://www.prnewswire.com/news-releases/lillys-kisunla-donanemab-azbt-approved-by-the-fda-for-the-treatment-of-early-symptomatic-alzheimers-disease-302188299.html) a 695,65 dólares por frasco, 32.000 dólares por 12 meses y 48.696
+por 18.
+
+**La duración, que puede dar vuelta la cuenta.** La etiqueta de Kisunla dice "Consider stopping dosing [...]
+based on reduction of amyloid plaques to minimal levels on amyloid PET imaging", es decir, cuando la
+tomografía muestra que las placas bajaron a un mínimo. En el ensayo, [el 17%, el 47% y el 69%](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761248) de los pacientes eran elegibles para dejar a las semanas 24, 52 y 76. Leqembi no tiene criterio para dejar, y Eisai [informa](https://www.eisai.com/news/2026/news202616.html), con una base de facturación que no cubre a todos los pacientes, que el 78,4% sigue a los 18 meses. Si los
+pacientes de Kisunla empiezan a terminar, su gasto por paciente al año baja: parte de la ventaja de hoy puede
+ser el momento del ciclo.
+
+## Segunda causa: el sillón
+
+**Las visitas.** Según su [etiqueta](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9d1ff786-e577-410a-a273-c4d7d0e4e975), Leqembi se aplica cada dos semanas en una infusión de alrededor de una hora: 26 al año al empezar. [Kisunla](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=190352d4-ef62-4679-b4fa-e846e2766afa), cada cuatro semanas en alrededor de media hora, más media hora de observación como mínimo: 13 al año. Las resonancias de control son las mismas, la inicial y cuatro más en los primeros seis meses, así que la diferencia de carga está en el sillón. Después de 18 meses, Leqembi puede pasar a una infusión cada cuatro semanas.
+
+**Lo que le deja al centro.** El centro compra el frasco, lo aplica y le factura a Medicare, que le reconoce el precio promedio más 6% y un monto por aplicarlo.
+
+<Figure
+  src="/projects/leqembi-kisunla/g2_el_sillon.png"
+  alt="A la izquierda, infusiones al año al empezar: Leqembi 26 y Kisunla 13. A la derecha, lo que le deja al centro cada infusión a dosis completa según mi cuenta: Leqembi entre 119 y 183 dólares, Kisunla entre 225 y 290"
+  width={2000}
+  height={1280}
+  caption="Hipótesis del modelo: el centro compra el remedio a un precio que no es público. Elaboración propia sobre los límites de pago y la planilla del profesional de CMS."
+/>
+
+| lo que le deja al centro, en mi cuenta                                          | Leqembi       | Kisunla       |
+| ------------------------------------------------------------------------------- | ------------- | ------------- |
+| por infusión a dosis completa, en dólares                                       | 119 a 183     | 225 a 290     |
+| por paciente en el primer año, en dólares                                       | 3.081 a 4.765 | 2.684 a 3.526 |
+| por todos los pacientes de Medicare tradicional en 2025, en millones de dólares | 22 a 34       | 10,5 a 14,1   |
+
+Por infusión tomo el 6% sobre el precio de julio de 2026 (Kisunla a su dosis completa de 1.400 mg) más el monto que Medicare permitió en consultorio en 2024 por aplicarla: 60,45 dólares con el código de infusión terapéutica o 125,21 con el de biológico complejo, y uso el rango porque no encontré una fuente oficial que diga con cuál se factura cada uno. Para 2025 tomo el 6% sobre el gasto real de cada producto más ese monto por cada infusión facturada, con el valor de consultorio también para las de hospital, que es un supuesto mío.
+
+Por infusión, Kisunla le deja entre 1,6 y 1,9 veces más; por paciente en el primer año, Leqembi le deja entre un 15% y un 35% más. La diferencia aparece cuando el recurso escaso es el turno: con Kisunla el centro atiende a dos pacientes en los turnos que uno de Leqembi ocupa al empezar.
+
+**Dónde se aplica.** En 2024, el 60% de los pacientes de Leqembi se trató en consultorio y el resto, en mi
+estimación, en hospital. En Kisunla, el 88%.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g5_donde_se_aplica.png"
+  alt="Barras de cien por ciento de 2024: Leqembi 60% en consultorio y 40% en hospital estimado; Kisunla 88% en consultorio y 12% en hospital estimado"
+  width={2000}
+  height={1280}
+  caption="Consultorio según la planilla del profesional; hospital como diferencia con el total del archivo anual, una estimación. Elaboración propia sobre archivos de CMS."
+/>
+
+**La espera.** El único dato público que encontré es viejo: en febrero de 2024, según Eisai y contado por [BioPharma Dive](https://www.biopharmadive.com/news/eisai-leqembi-alzheimers-target-revenue-earnings/706668/), había 2.000 pacientes tratados con Leqembi en Estados Unidos y unos 8.000 en lista de espera. Que hoy la haya en unos centros y en otros no es el supuesto de toda la decisión, y lo primero que hay que medir.
+
+## Lo que no calza con esta explicación
+
+**Lilly promociona más.** En 2025, Lilly declaró en [Open Payments](https://openpaymentsdata.cms.gov/) 3,80 millones de dólares en pagos a profesionales que nombran a Kisunla, y Eisai y Biogen 3,14 millones por Leqembi. En 2024 era al revés. Lilly además llegó a más profesionales con menos pagos: 12.576 receptores en 29.316 pagos, contra 10.943 en 33.527.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g6_pagos_a_profesionales.png"
+  alt="Barras de pagos declarados por año: Leqembi 1,62 millones en 2023, 4,02 en 2024 y 3,14 en 2025; Kisunla 2,22 en 2024 y 3,80 en 2025"
+  width={2000}
+  height={1280}
+  caption="Todos los pagos de Open Payments que nombran a cada producto, a profesionales de todo el país. Un pago que nombra a más de un producto cuenta entero para cada uno. Elaboración propia."
+/>
+
+**Lilly vende el diagnóstico junto con el remedio.** Uno de cada cinco pagos de Lilly por Kisunla en 2025 nombra también a Amyvid, su trazador para la tomografía que muestra las placas: 5.976 de 29.316. Eisai y Biogen tienen un solo pago compartido en 33.527, y en el archivo no aparece ningún producto suyo de diagnóstico. Son pagos, en su mayoría comidas, y muestran con qué productos coincide cada visita: hasta ahí llega el dato. Que en una parte de las visitas Lilly hable del diagnóstico y del tratamiento en la misma conversación está en el archivo; que eso mueva recetas es hipótesis mía. Si la ventaja de Kisunla naciera ahí, en mi lectura la inyección no la contestaría, y lo que la contestaría es llegar antes, cuando se confirman las placas, donde desde mayo de 2025 hay un análisis de sangre de Fujirebio [autorizado por la FDA](https://www.fda.gov/news-events/press-announcements/fda-clears-first-blood-test-used-diagnosing-alzheimers-disease), la agencia que regula los medicamentos.
+
+**El empate en pacientes nuevos.** Si es cierto que los pacientes nuevos van mitad y mitad, el sillón no está
+volcando a los centros hacia Kisunla en masa, y el cruce en gasto es sobre todo precio por paciente. La
+fuente es débil, y es justo lo que la decisión tiene que medir.
+
+**El momento del lanzamiento.** Que Kisunla estuviera más en consultorio en 2024 puede deberse a dónde arrancó
+Lilly.
+
+**Medicare Advantage.** Más de la mitad de Medicare no está en estos archivos. El reparto ahí puede ser otro.
+
+## La jugada de Eisai: sacar al paciente del sillón
+
+El 29 de agosto de 2025 la FDA, la agencia que regula los medicamentos, aprobó Leqembi Iqlik, un
+autoinyector semanal, para mantenimiento. El [13 de julio de 2026](https://media-us.eisai.com/2026-07-13-FDA-Approves-LEQEMBI-IQLIK-R-lecanemab-irmb-Subcutaneous-Injection-as-an-Initiation-Dose-for-Early-Alzheimers-Disease) lo aprobó para empezar el tratamiento: 500 mg por semana en dos inyecciones de 250 mg. La [etiqueta](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761375) pide empezar "under the guidance and supervision of a healthcare provider" y que al menos las dos primeras dosis tengan guía directa de un profesional; después la puede aplicar el paciente o quien lo cuida, sin sillón de infusión. Eisai la presenta como tratamiento en casa y dice que desde el 25 de agosto de 2026 se consigue en farmacias especializadas.
+
+**Eisai nombra el sillón.** En su [documento de precios](https://us.eisai.com/-/media/Files/USEisaiRedesign/Leqembi_iQLIK_Statement_Pricing.pdf), Eisai dice que tener la opción en casa "may make more infusion chairs available", que queden más sillones libres, para los pacientes que necesitan o prefieren la infusión por vena. Es la empresa poniendo al sillón como el recurso escaso, que es el supuesto sobre el que se arma toda la decisión.
+
+**Y le conviene por precio.** Ahí mismo fijó el precio de lista en 385 dólares por autoinyector: con dos por semana, mi cuenta da 40.040 dólares por año de inicio, contra los 26.500 que anunció en 2023 para la infusión. Los dos números no se comparan derecho, porque son de años distintos y porque la inyección da más remedio: 26.000 mg al año contra los 19.500 de aquel anuncio, que era para un paciente de 75 kilos. Por miligramo, que es como comparo todo lo demás, son 1,54 dólares de lista con la inyección contra 1,36 con la infusión: un 13% más caro el miligramo y un 33% más de miligramos al año. Ninguno de los dos es el precio neto, pero de lista la inyección deja más por paciente. El paciente la recibe por la parte D, donde, según Eisai, "The current annual cap is $2,100" de gasto de bolsillo al año.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g7_inyeccion_en_casa.png"
+  alt="Barras de pacientes de la inyección en la parte D por cada 100 de Leqembi en la parte B: 1,6 en 2025 y 4,8 en el primer trimestre de 2026, con una línea de corte en 10 y 2026 completo pendiente"
+  width={2000}
+  height={1280}
+  caption="Pacientes de Leqembi Iqlik en la parte D sobre pacientes de Leqembi en la parte B. La parte D incluye a Medicare Advantage y la B no, así que el cociente favorece a la inyección. Elaboración propia sobre los archivos trimestrales de CMS."
+/>
+
+En la parte D, que incluye Medicare Advantage, Leqembi Iqlik tuvo 222 pacientes en 2025 y 619 en el primer
+trimestre de 2026, dos períodos en los que sólo estaba aprobada para mantenimiento: 1,6 y 4,8 por cada 100
+pacientes de Leqembi en la parte B, que no incluye Medicare Advantage. Quien usa la inyección no aparece en el gasto de la parte B, y eso ya pasaba desde octubre de 2025, cuando según Eisai [empezó a venderse](https://www.eisai.com/news/2025/news202571.html) la de mantenimiento: ese número tiende a mostrar a Kisunla más adelante de lo que está, y más desde el tercer trimestre de 2026. En mi cuenta no alcanza para deshacer el cruce del primer trimestre: aun suponiendo que los 619 pacientes de la inyección fueran todos de Medicare tradicional y que sin ella se hubieran infundido cada cuatro semanas a lo que Medicare reconoce por infusión de Leqembi, sumarían como mucho 2,1 millones de dólares, contra una diferencia de 6,1.
+
+Lilly no tiene hoy una versión subcutánea aprobada: Kisunla sólo se aplica por vena. Remternetug, otro anticuerpo de Lilly, tiene una fase 3 con un brazo subcutáneo ya terminada y otra, sólo subcutánea, con [fin primario estimado en abril de 2029](https://clinicaltrials.gov/study/NCT06653153), según ClinicalTrials.gov, el registro público de ensayos.
+
+## La decisión
+
+**De quién es la decisión, y cuál es el objetivo.** Del equipo de Leqembi de Eisai en Estados Unidos, con
+Biogen como socia. El objetivo es que el paciente nuevo que empieza un anticuerpo contra el amiloide empiece
+con Leqembi y siga.
+
+**Hacia dónde puede ir, y por qué puede.** Hacia el inicio con la inyección, que saca al paciente del sillón, donde, en mi cuenta, Kisunla le deja más al centro por turno. Puede porque hoy es el único de los dos aprobado para
+empezar así.
+
+**Cuánto está en juego, en dólares.** La unidad de la decisión es un punto de la base: el 1% de los 14.029 pacientes de Leqembi de 2025 en Medicare tradicional son 140 personas y 1,95 millones de dólares de gasto al año. Es un techo, porque Medicare reconoce más que el precio neto de Eisai, y mide la escala de toda la base, que es distinta de la cuota entre pacientes nuevos. Para dimensionarlo, Leqembi vendió unos 262 millones de dólares en todo Estados Unidos en 2025 y [97 millones en el segundo trimestre de 2026](https://www.sec.gov/Archives/edgar/data/875045/000087504526000073/exhibit991-q22026pressrele.htm), según Biogen. Y del otro lado está lo que se arriesga: en mi hipótesis, los centros cobraron entre 22 y 34 millones de dólares en 2025 por aplicar Leqembi, y ésa es la plata que la inyección mueve de lugar.
+
+**El primer paso, y por qué ése.** Clasificar a los centros que infunden Leqembi por espera y por uso del
+sillón antes de fin de 2026. Va primero porque la inyección para empezar llegó el 25 de agosto y el próximo
+archivo público con 2026 completo sale en 2027: sin la clasificación, cuando llegue el dato no hay con qué
+separar el efecto en cada tipo de centro. Ese dato no es público; supongo que Eisai lo tiene por sus ventas.
+
+**Las definiciones, antes de medir.** Elecciones mías, fijadas el 17 de septiembre de 2026 para que la medición se repita igual cada trimestre:
+
+- **Paciente nuevo:** primera dosis de Leqembi o de Kisunla sin ninguna de los dos en los 12 meses anteriores. **Inicio con la inyección:** su primera dosis es de Leqembi Iqlik.
+- **En tratamiento:** al menos una dosis en las últimas 8 semanas, que cubre el mantenimiento con margen. **Sigue a los seis meses:** en tratamiento 26 semanas después de la primera dosis.
+- **Centro con espera:** la primera infusión disponible queda a más de cuatro semanas de la indicación. **Centro con lugar:** dos semanas o menos. Los del medio se informan aparte y no entran en ningún corte.
+
+**Qué mediría, por segmento.** Los cortes se fijaron el mismo día, antes de que exista el dato que los prueba:
+
+| segmento           | métrica                                                                                                                                   | corte                       | qué hago si se cruza                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Centros con espera | parte de los pacientes nuevos de Leqembi que empiezan con la inyección, del 25 de agosto de 2026 al 31 de marzo de 2027                   | menos de 1 de cada 3        | la inyección no resuelve el sillón: revisar el apoyo de la farmacia antes de sumar centros           |
+| Centros con lugar  | cambio de la cuota de Kisunla en pacientes nuevos, dos trimestres antes y dos después de ofrecer la inyección                             | más de 5 puntos             | el centro castiga la jugada: dejar de ofrecer la inyección ahí                                       |
+| Todos              | sigue a los seis meses, inicio con la inyección contra infusión                                                                           | más de 10 puntos por debajo | la inyección gana inicios y pierde pacientes: no escalar                                             |
+| Desde afuera (CMS) | pacientes de Leqembi Iqlik en la parte D, que incluye Medicare Advantage, por cada 100 de Leqembi en la parte B, que no, en 2026 completo | menos de 10                 | no despegó; como el cociente favorece a la inyección, un 10 o más no alcanza para decir lo contrario |
+
+**Lo que cuesta, y en qué ventana.** El costo principal para Eisai es un riesgo. En los centros con
+lugar, cada paciente que empieza con la inyección deja de ocupar el sillón y el centro deja de cobrar esas infusiones. El remedio lo elige el médico, pero en consultorio la misma práctica compra el remedio y cobra la infusión, y en mi hipótesis esa plata puede pesar en qué receta después. Por eso el corte de 5
+puntos en esos centros. La ventana es corta: los dos estudios de fase 3 de trontinemab, el anticuerpo de
+Roche, tienen fin primario estimado en junio de 2028, y la fase 3 sólo subcutánea de remternetug, fin primario estimado en abril de 2029, mientras otra con brazo subcutáneo ya terminó.
+
+**Qué no construiría.**
+
+- **Una baja de precio de la infusión.** Medicare reconoce el precio promedio más 6%: un precio más bajo le deja al centro todavía menos por turno, justo donde, en mi cuenta, Leqembi queda atrás.
+- **Nada que pelee con las prácticas que recetan:** ni una red propia de sillones, ni la inyección como reemplazo de la infusión donde hay lugar, que ahí conviene sostener hasta el mantenimiento cada cuatro semanas a los 18 meses, como permite la etiqueta.
+- **Una estrategia que dependa de que Medicare levante el registro** que exige para pagar. No encontré una propuesta de CMS para hacerlo; sí un [pedido de reconsideración](https://pubmed.ncbi.nlm.nih.gov/42552749/) publicado en agosto de 2026 por autores que, en ocho de nueve casos, trabajan en Lilly.
+
+**Lo que acepto a cambio.** Los cortes que matan la jugada ya están en la tabla. Lo que acepto mientras no se crucen es que en los centros con lugar la inyección se ofrezca sin empujarla y Eisai siga dependiendo de la infusión.
+
+## Qué es dato y qué es elección mía
+
+| afirmación                                                                    | tipo                                             | de dónde sale                                               |
+| ----------------------------------------------------------------------------- | ------------------------------------------------ | ----------------------------------------------------------- |
+| Gasto y pacientes de cada uno, y el 33% más por paciente de Kisunla           | dato y cálculo sobre dato                        | gasto de la parte B, anual y trimestral                     |
+| 1,34 y 2,08 dólares por mg                                                    | cálculo sobre dato                               | límite de pago de julio de 2026                             |
+| 2.690 y 3.170 mg por paciente                                                 | hipótesis del modelo                             | gasto por reclamo y precio de enero de 2026                 |
+| 26 y 13 infusiones al año                                                     | dato                                             | etiquetas de la FDA                                         |
+| 17%, 47% y 69% elegibles para dejar Kisunla                                   | dato                                             | etiqueta de Kisunla, julio de 2024                          |
+| 78,4% sigue con Leqembi a 18 meses                                            | lo que dice la empresa                           | Eisai, marzo de 2026                                        |
+| Lo que le deja al centro cada infusión, y lo que cobraron los centros en 2025 | hipótesis del modelo                             | límite de pago, monto por aplicar de 2024, dosis y reclamos |
+| 60% y 88% en consultorio                                                      | estimación                                       | planilla del profesional sobre el total anual               |
+| Pagos a profesionales y Amyvid                                                | dato                                             | Open Payments                                               |
+| Ventas de Leqembi en Estados Unidos                                           | lo que informa la empresa                        | comunicados de Biogen                                       |
+| Pacientes nuevos mitad y mitad                                                | lo que dice la empresa, vía un resumen traducido | llamada de Eisai, agosto de 2026                            |
+| Precio de la inyección, tope de 2.100 dólares y los 1,54 y 1,36 por mg        | lo que dice la empresa, y mi cálculo sobre eso   | declaración de precio de Eisai y anuncio de 2023            |
+| Definiciones, segmentos y cortes                                              | elección mía                                     | fijados el 17 de septiembre de 2026                         |
+
+## Lo que este análisis no puede sostener
+
+- **Nada sobre Medicare Advantage,** más de la mitad de Medicare.
+- **La venta de Kisunla en Estados Unidos,** que Lilly no separa.
+- **Quién gana los pacientes nuevos.** No hay dato público; el empate viene de un resumen traducido.
+- **Por qué elige un médico o un centro.** No hay trabajo de campo: el sillón es una hipótesis sobre
+  incentivos.
+- **La ganancia del centro.** El precio al que compra el remedio y el código con que factura no son públicos.
+- **Cuál es mejor para el paciente.** Este análisis no compara eficacia ni seguridad.
+
+## Qué me haría cambiar de opinión
+
+- **Que la ventaja de Kisunla en pacientes nuevos sea la misma con espera y sin espera.** Se cae el sillón
+  como explicación de por qué un centro elegiría Kisunla.
+- **Que el gasto por paciente de Kisunla baje a medida que sus pacientes terminan el tratamiento** y Leqembi
+  recupere la delantera en gasto sin la inyección.
+- **Que en Medicare Advantage el reparto sea otro.** En ese caso, lo dicho vale sólo para Medicare tradicional.
+
+## Conclusión
+
+Medicare tradicional gasta más en Kisunla que en Leqembi porque cada paciente de Kisunla cuesta un tercio más, no porque Kisunla trate a más gente: en el primer trimestre de 2026, Leqembi seguía tratando a 12.876 personas contra 10.782. La diferencia entra entera en el precio por miligramo, un 55% más alto. Hasta acá, el cruce es un problema de precio.
+
+Se vuelve un problema de mercado si el sillón empieza a mover pacientes. Kisunla ocupa la mitad de los turnos y, en mi cuenta, le deja al centro entre 1,6 y 1,9 veces más por cada uno, así que donde el turno es el recurso escaso el incentivo del centro apunta a Kisunla. La inyección es lo único que saca esa variable del tablero, y la propia Eisai dice que sirve para liberar sillones. Del otro lado, el archivo de pagos deja una explicación alternativa que la inyección no contesta: una de cada cinco visitas de Lilly por Kisunla habla del diagnóstico y del tratamiento juntos, y en ese archivo Eisai no tiene con qué hacer lo mismo.
+
+Por eso la lanzaría como dos jugadas distintas según el centro, y el dato que decide en qué grupo cae cada uno, si tiene espera o no, no está en ningún archivo público. Lo tiene Eisai, por sus ventas y su equipo de campo. Sin esa clasificación hecha antes, va a empujar la inyección también donde le vacía turnos a la práctica que receta, y a los seis meses va a tener un promedio que mezcla dos efectos opuestos, sin manera de separarlos.
+
+Y hay un tercero en camino. Trontinemab, de Roche, es el candidato de un laboratorio de afuera de esta pelea, con dos estudios de fase 3 con fin primario estimado en junio de 2028. Se aplica por vena, así que sumaría un rival más en el sillón sin tocar lo que hoy distingue a Eisai. Al sillón lo toca el de Lilly: remternetug, subcutáneo, con fin primario estimado en abril de 2029. Ésa es la ventana, y dura más que esas fechas, porque entre el resultado de un estudio y una aprobación pasa tiempo. Pero tiene fecha: la exclusividad de Eisai para sacar al paciente del sillón se termina, y lo que para entonces no haya convertido en pacientes que sigan tratándose lo va a pelear contra dos rivales en vez de uno.
+
+<small>
+  Análisis independiente con datos públicos. No tengo ni tuve relación comercial con Eisai, Biogen,
+  Lilly ni Roche.
+</small>

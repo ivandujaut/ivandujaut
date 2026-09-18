@@ -1,0 +1,158 @@
+---
+title: "The Alzheimer's drug that came out a year after its rival already costs more to the Medicare the government runs"
+tagline: "It treats fewer patients than its rival, but each one costs a third more. And the company that is behind has a move to make."
+description: "Kisunla, from Lilly, passed Leqembi, from Eisai and Biogen, in traditional Medicare spending without having more patients. I matched Medicare spending, the prices it recognizes, the labels and what the site charges for each infusion to see why, and what Eisai would do with its advantage today."
+year: 2026
+date: "2026-09-17"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Charcoal illustration on cream paper, not a photograph: the hands of an older person resting on a wooden table in front of a brain-shaped jigsaw puzzle with one piece missing, the loose piece under a finger"
+stack: ["Python", "CMS open data (Part B, Part D and Open Payments)"]
+metrics:
+  - label: "Traditional Medicare spending on Kisunla, Q1 2026"
+    value: "USD 60.4M"
+  - label: "The same spending on Leqembi"
+    value: "USD 54.3M"
+  - label: "Leqembi patients that quarter (Kisunla: 10,782)"
+    value: "12,876"
+  - label: "Infusions a year at the start: Leqembi (Kisunla: 13)"
+    value: "26"
+translationKey: "leqembi-kisunla"
+draft: false
+---
+
+Medicare is the public health insurance of the United States, mostly for people over 65, and it works in
+two ways. In traditional Medicare, the government pays the site that treats the patient directly. In
+Medicare Advantage, chosen by more than half of enrollees, it pays a private insurer. The public data by
+drug covers only traditional Medicare.
+
+<Thesis>
+  Kisunla, from the American company Lilly, came out a year after Leqembi, from the Japanese company
+  Eisai, and already costs traditional Medicare more even though it treats fewer patients: each
+  patient costs a third more. Eisai has a move Lilly does not have today: an injectable version of
+  Leqembi that, after the first doses, the patient can give themselves, without going back to the
+  infusion site. I would use it first where there is a waiting list.
+</Thesis>
+
+## The numbers
+
+In the first quarter of 2026, traditional Medicare spent USD 60.4 million on Kisunla and 54.3 million on
+Leqembi, the two antibodies it pays for in early Alzheimer's. Leqembi still treats more people: 12,876
+against 10,782.
+
+## How this market works, in three questions
+
+### How does the site that gives the infusion get paid?
+
+Think about it: if the site charges a percentage of the price of the drug, which one suits it better?
+
+Medicare pays differently depending on where the drug is given: if a professional gives it in an office or
+a hospital, as with these intravenous infusions, that is Part B; if it is picked up at the pharmacy, Part D.
+
+Under Part B, the site buys the vial, gives it, and charges the average sales price plus 6%, and on top of
+that a fixed amount for administering it.
+
+### What has to happen to reach the infusion chair?
+
+Think about how many steps come before the first dose.
+
+- Confirming the plaques with a PET scan, a lumbar puncture or, since May 2025, a [blood test cleared by the FDA](https://www.fda.gov/news-events/press-announcements/fda-clears-first-blood-test-used-diagnosing-alzheimers-disease), the agency that regulates drugs.
+- An MRI before starting and four more within six months, to watch for swelling and microbleeds.
+- The doctor being enrolled in a [registry Medicare requires](https://www.cms.gov/medicare/coverage/coverage-evidence-development/monoclonal-antibodies-directed-against-amyloid-treatment-alzheimers-disease-ad) in order to pay.
+- Sitting in the chair: Leqembi every two weeks, around an hour; Kisunla every four, half an hour plus half an hour of observation.
+
+### Why does Medicare spend more on Kisunla, if it treats fewer patients?
+
+I divided each one's spending by its patients.
+
+In the first quarter of 2026 it was USD 5,605 per Kisunla patient and 4,219 per Leqembi patient: a third
+more. The difference is in the price: each milligram of Kisunla is charged 55% higher.
+
+**And what suits the site?** It depends on how many patients it can treat. In my calculation, each Kisunla
+infusion leaves the site between 1.6 and 1.9 times more than a Leqembi one, but Leqembi is given twice as
+often, so over a year, per patient, Leqembi leaves more. In my hypothesis, with free chairs Leqembi suits
+the site; with more patients than chairs, Kisunla.
+
+<Figure
+  src="/projects/leqembi-kisunla/g2_el_sillon.en.png"
+  alt="On the left, infusions a year at the start: Leqembi 26 and Kisunla 13. On the right, what each infusion at full dose leaves the site in my calculation: Leqembi between USD 119 and 183, Kisunla between 225 and 290"
+  width={2000}
+  height={1280}
+  caption="Infusions a year per the label, and per infusion at full dose the 6% of the July 2026 payment limit plus the amount allowed for administering it. Model hypothesis: the site buys the drug at a price that is not public."
+/>
+
+## What is happening
+
+Kisunla went from 41.6% of the patients and 39.2% of the spending in 2025 to 45.6% and 52.7% in the first
+quarter of 2026.
+
+<Figure
+  src="/projects/leqembi-kisunla/g1_el_cruce.en.png"
+  alt="Hundred percent bars: in 2025 Kisunla has 41.6% of the patients and 39.2% of the spending of the two; in the first quarter of 2026, 45.6% of the patients and 52.7% of the spending"
+  width={2000}
+  height={1280}
+  caption="Patients and traditional Medicare spending on the two antibodies. Author's analysis of the quarterly Part B spending file, which is preliminary."
+/>
+
+Eisai has already moved. Leqembi comes in two forms, and the doctor chooses with the patient which one to
+use and can switch: the infusion, or an injection, Leqembi Iqlik, picked up at a pharmacy and, after the
+first doses given under a professional's guidance, administered by the patient or their care partner.
+According to Eisai, since October 2025 it served to continue treatment at 18 months, and since 25 August
+2026, to start it.
+
+Whoever uses the injection does not show up in Part B spending, where the figures above come from: in the
+first quarter of 2026 there were already 619 patients like that in Part D, which does include Medicare
+Advantage. Even adding them in, in my calculation Kisunla would still be ahead in spending.
+
+## What I would do, and what it is worth
+
+Eisai's goal is for the new patient to start on Leqembi and stay. Leqembi sold USD 97 million in the United
+States in the second quarter of 2026, according to Biogen, which markets it with Eisai.
+
+The one who chooses the drug is the doctor. But in 2024, 6 out of 10 Leqembi patients were treated in an
+office, where the same practice that treats them buys the drug and charges for each infusion: in my
+calculation, between USD 3,081 and 4,765 per patient in the first year. With the injection, the patient
+saves the trip and the hour in the chair, and the practice stops charging for those visits. That is where
+the risk is: in my hypothesis, if the injection empties its slots, that practice may be better off
+prescribing Kisunla, which is only given in the chair.
+
+Where there are more patients than chairs, in my hypothesis the injection does not take money away: the
+slot it frees is taken by another patient who was waiting. There I would push it from the start. Where
+chairs are to spare, every patient who moves to the injection is an empty slot: there I would offer it
+without pushing it.
+
+The first step is listing the sites that infuse Leqembi and marking where there is a wait, something that
+is not public and that I assume Eisai has from its sales.
+
+**How I would know it works**, with cutoffs set before seeing the data (a new patient is one who received
+neither of the two in the previous 12 months):
+
+- **Sites with a wait:** if between 25 August 2026 and 31 March 2027 fewer than one in three new Leqembi
+  patients starts with the injection, it is not solving the wait.
+- **Sites with room:** if Kisunla gains more than five points among new patients in the six months after
+  the injection is offered, against the six before, those sites punish the move and I stop it there.
+- **From the outside:** if across all of 2026 there are not 10 patients on the injection for every 100 on
+  Leqembi by infusion, it did not take off. In the first quarter it was 4.8, counting Medicare Advantage
+  for the injection as well.
+- **What would change my mind:** Kisunla gaining new patients equally with and without a wait. That would
+  mean the chair does not explain the choice.
+
+I would not lower the price of the infusion: since the site charges a percentage of the price, it would
+charge even less per slot. What I accept in exchange is that, where chairs are to spare, Eisai keeps
+depending on the infusion. And the clock is running: Roche expects results for its antibody, trontinemab,
+by the middle of 2028.
+
+## What would you do?
+
+If you were on the Eisai team, would you push the injection at every site even though some would stop
+charging for infusions, or would you go site by site as I propose?
+
+<small>
+  Independent analysis with public data. I have no commercial relationship with Eisai, Biogen, Lilly
+  or Roche, and never have had one.
+</small>
