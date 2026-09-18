@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon, GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { Download } from "@/components/animate-ui/icons/download";
@@ -31,6 +31,37 @@ export function Hero({ locale }: { locale: "es" | "en" }) {
 
   return (
     <section>
+      {/* El badge anuncia el caso más nuevo, tenga o no `preview`. Hasta el
+          18/09/2026 todo el bloque colgaba de `latestProject?.preview`, así que
+          un caso sin sus tres imágenes (el pitch de Leqembi fue el primero) no
+          degradaba el badge: lo borraba entero, y arriba del pliegue no quedaba
+          ninguna evidencia de que el sitio publica algo. Sólo 7 de 19 piezas
+          declaran `preview`, o sea que era la regla y no la excepción. Con
+          abanico si lo hay; si no, el mismo anuncio como pastilla de texto. */}
+      {latestProject && !latestProject.preview && (
+        <div className="mb-10">
+          {/* La flecha va adentro del mismo `span` y no como hermano de un
+              flex: con títulos de dos líneas, un flex la manda al borde
+              derecho de la pastilla y queda flotando lejos del texto. En el
+              flujo de texto cae pegada a la última palabra. */}
+          <Link
+            href={`/projects/${latestProject.slug}`}
+            className="inline-block max-w-full rounded-full border border-border px-3.5 py-1.5 text-sm font-medium leading-snug transition-colors hover:bg-muted"
+          >
+            <span>
+              {badgeText}{" "}
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                size={14}
+                strokeWidth={1.5}
+                aria-hidden
+                className="inline align-[-2px]"
+              />
+            </span>
+          </Link>
+        </div>
+      )}
+
       {latestProject?.preview && (
         // El abanico se abre hacia arriba y hacia los costados desde la carpeta,
         // que arranca pegada al borde izquierdo de la columna. En tamaño LARGE
