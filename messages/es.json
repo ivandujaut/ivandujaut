@@ -178,6 +178,11 @@
       "proptech": "Proptech",
       "educacion": "Educación",
       "web": "Web"
+    },
+    "code": {
+      "title": "Código",
+      "body": "Los números de este caso salen de estos scripts. Están en el repositorio del sitio, con la URL de descarga de cada dataset adentro, así que se pueden volver a correr sin creerme nada.",
+      "methodLink": "Cómo trabajo cada caso"
     }
   },
   "paper": {
