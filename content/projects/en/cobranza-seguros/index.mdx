@@ -9,7 +9,7 @@ kind: "case-study"
 subject: "external"
 topic: "seguros"
 featured: true
-stack: ["Open data (SSN · SRT)", "Python", "pandas"]
+stack: ["Open data (SSN · SRT)", "Python", "openpyxl", "matplotlib"]
 cover:
   src: ./cover.jpg
   alt: "Cinematic editorial illustration with film grain: on the left, a wall covered in long paper receipts glowing with amber light, hanging in disorder; on the right, an immense archive of dark empty slots receding into the distance, with a single lit receipt in one of them; between them, a small human figure crosses a walkway over the void carrying one receipt in both hands"
@@ -29,6 +29,9 @@ metrics:
     value: "2.0"
   - label: "Premium annulled (excl. ART and retirement)"
     value: "10.6%"
+code:
+  - "scripts/analysis/cobranza-seguros.py"
+  - "scripts/charts/cobranza-seguros.py"
 translationKey: "cobranza-seguros"
 draft: false
 ---
@@ -145,7 +148,7 @@ annuls 1.38 million policies per quarter.
   alt="Ranking of annulment rate by line of business in Q1 2026: surety 43.3%, theft 31.5%, motorcycles 25.6%, homeowners 23.8%, with the market total reference at 18.9%. Chart labels are in Spanish."
   width={890}
   height={601}
-  caption="Annulments as a percentage of gross policies issued (net issued + annulled), property & casualty lines with over 30 thousand issuances in the quarter. Own work on the SSN's policies release (Q1 2026), processed with pandas."
+  caption="Annulments as a percentage of gross policies issued (net issued + annulled), property & casualty lines with over 30 thousand issuances in the quarter. Own work on the SSN's policies release (Q1 2026), processed with Python."
 />
 
 ### The cost lives on the balance sheet: 2 months of premium trapped
