@@ -16,6 +16,12 @@ interface LayerLink {
  * dos capas mide si quien terminó la versión corta quiere más, y un link en el
  * medio sacaría al lector antes de terminarla. Se mide con `card_click`
  * (`surface=pitch-cta`).
+ *
+ * Manda también `family`, el caso al que pertenece el clic, igual que los
+ * eventos de contenido. Sin eso, el embudo tiene que sacar la familia de un
+ * campo distinto en cada punta (acá el pitch es `from`; en la nota de vuelta es
+ * `slug`) y la consulta se llena de casos especiales que se rompen en silencio
+ * al agregar una superficie nueva.
  */
 export async function AnalysisCta({
   locale,
@@ -47,6 +53,7 @@ export async function AnalysisCta({
           data-ph-slug={analysis.slug}
           data-ph-surface="pitch-cta"
           data-ph-from={from}
+          data-ph-family={from}
           className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
         >
           <span>{t("analysisCta")}</span>
@@ -85,6 +92,7 @@ export async function ParentNote({
             data-ph-slug={parent.slug}
             data-ph-surface="analysis-back"
             data-ph-from={from}
+            data-ph-family={parent.slug}
             className="font-medium text-foreground underline underline-offset-4"
           >
             {chunks}
