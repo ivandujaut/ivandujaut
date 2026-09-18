@@ -67,6 +67,7 @@ function build(): string {
   lines.push(
     "## Páginas",
     "",
+    `- [Método](${absoluteUrl("es", "/method")}): las reglas con las que se produce cada análisis, de la fuente a la recomendación.`,
     `- [Sobre mí](${absoluteUrl("es", "/about")}): experiencia, formación y stack.`,
     `- [Sitemap](${SITE_URL}/sitemap.xml): todas las URLs, con sus alternates por idioma.`,
     "",
@@ -92,6 +93,7 @@ function build(): string {
   lines.push(
     "### Pages (English)",
     "",
+    `- [Method](${absoluteUrl("en", "/method")}): the rules every analysis is produced under, from source to recommendation.`,
     `- [About](${absoluteUrl("en", "/about")}): experience, education and stack.`,
     "",
   );

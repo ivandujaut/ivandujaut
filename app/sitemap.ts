@@ -53,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(RESEARCH_ENABLED
       ? ([{ path: "/research", priority: 0.8, changeFrequency: "monthly" }] as const)
       : []),
+    { path: "/method", priority: 0.7, changeFrequency: "monthly" },
     { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   ];
 
