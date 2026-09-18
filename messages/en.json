@@ -84,6 +84,10 @@
       "minutes": "{count} min read",
       "progress": "Reading progress",
       "contents": "Contents"
+    },
+    "feed": {
+      "label": "RSS feed",
+      "body": "Every new case goes out on the feed. Copy the address into your reader:"
     }
   },
   "home": {

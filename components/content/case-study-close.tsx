@@ -7,6 +7,7 @@ import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
+import { FeedLink } from "@/components/common/feed-link";
 import { Link } from "@/i18n/navigation";
 
 interface RelatedProject {
@@ -94,6 +95,11 @@ export async function CaseStudyClose({
         </a>
         <ShareLinkButton url={shareUrl} title={shareTitle} alwaysShowLabel />
       </div>
+
+      {/* Debajo de los botones y no entre ellos: LinkedIn es el canal que la
+          medición eligió, y el feed es la salida para el que no quiere una red
+          de por medio. Un cuarto botón los pondría a competir. */}
+      <FeedLink locale={locale} surface="case-close" className="mt-4" />
 
       {related.length > 0 && (
         // Dos columnas solo si hay dos casos: con uno solo, a media columna
