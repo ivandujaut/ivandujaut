@@ -234,19 +234,32 @@ const projects = defineCollection({
     .refine((data) => !(data.featured && data.parent), {
       message: "An analysis with a parent cannot be featured: readers reach it from its pitch",
     })
-    .refine((data) => data.code.every((path) => existsSync(path)), {
-      message: "A script in `code` does not exist: the path is relative to the repo root",
-    })
-    .refine((data) => !trackedScripts || data.code.every((path) => trackedScripts.has(path)), {
-      message:
-        "A script in `code` is not committed: the case would link to a file GitHub does not have",
-    })
-    .transform((data, { meta }) => ({
-      ...data,
-      slug: slugFromPath(meta.path),
-      locale: localeFromPath(meta.path),
-      url: `/${localeFromPath(meta.path)}/projects/${slugFromPath(meta.path)}`,
-    })),
+    .transform((data, { meta }) => {
+      // Va en el transform y no en un `.refine()`: velite trata un refine que
+      // falla como `info`, sigue de largo y deja el caso en la salida igual, o
+      // sea que avisa donde nadie mira. Acá corta el build.
+      //
+      // Se valida que el archivo exista **y que git lo trackee**: un script que
+      // vive en la máquina y nunca se commiteó da un link roto en producción y,
+      // peor, una promesa de reproducibilidad que no se puede cumplir.
+      const rotos = data.code.filter(
+        (ruta) => !existsSync(ruta) || (trackedScripts && !trackedScripts.has(ruta)),
+      );
+      if (rotos.length > 0) {
+        throw new Error(
+          `${meta.path}: el campo \`code\` apunta a ${rotos.join(", ")}, que no existe en disco ` +
+            "o que git no trackea. El caso linkea esa ruta a GitHub, así que el archivo tiene que " +
+            "estar commiteado antes de declararlo.",
+        );
+      }
+
+      return {
+        ...data,
+        slug: slugFromPath(meta.path),
+        locale: localeFromPath(meta.path),
+        url: `/${localeFromPath(meta.path)}/projects/${slugFromPath(meta.path)}`,
+      };
+    }),
 });
 
 // ============================================================================
