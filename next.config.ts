@@ -142,6 +142,15 @@ const nextConfig: NextConfig = {
         destination: `/projects/${slug}?utm_source=linkedin&utm_campaign=${slug}&utm_content=post-${String(post).padStart(2, "0")}`,
         permanent: false,
       })),
+      // Mensajes directos. Van aparte de `POSTS_DE_CASO` porque miden otra
+      // cosa: no el alcance de un posteo sino si alguien a quien le escribí
+      // abrió el caso. `utm_medium=dm` los separa de la serie y del perfil.
+      {
+        source: "/r/dm1",
+        destination:
+          "/projects/leqembi-kisunla?utm_source=linkedin&utm_medium=dm&utm_campaign=zs-directo",
+        permanent: false,
+      },
       // Bio de TikTok: la plataforma permite un solo link en el perfil y se
       // muestra como texto, así que va lo más corto y legible posible. El UTM
       // separa esta señal de la serie de LinkedIn en el panel de analytics.
