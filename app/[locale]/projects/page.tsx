@@ -13,9 +13,14 @@ export async function generateMetadata({ params }: Props) {
   const isEs = locale === "es";
   const typedLocale = locale as "es" | "en";
   const title = isEs ? "Proyectos" : "Projects";
+  // La descripción anterior hablaba de proptech, fintech y herramientas internas
+  // construidas con Next.js: quedó de la primera versión del sitio y describía
+  // un portfolio de desarrollo. Catorce de los dieciséis casos publicados son
+  // análisis de mercado con datos públicos, y siete de los ocho más recientes
+  // son del mercado de salud de Estados Unidos.
   const description = isEs
-    ? "Casos de estudio de producto end-to-end: proptech, fintech y herramientas internas construidas con Next.js, TypeScript y stack moderno."
-    : "End-to-end product case studies: proptech, fintech and internal tools built with Next.js, TypeScript and a modern stack.";
+    ? "Decisiones de negocio contestadas con datos públicos: acceso y comercialización en salud en Estados Unidos, seguros en Argentina y pagos en Brasil. Cada cifra traza a su fuente."
+    : "Business decisions answered with public data: access and commercial strategy in US healthcare, insurance in Argentina and payments in Brazil. Every figure traces back to its source.";
   const pageUrl = `${SITE_URL}${localePath(typedLocale, "/projects")}`;
 
   return {
