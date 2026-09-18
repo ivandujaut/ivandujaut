@@ -31,6 +31,7 @@ import { ShareLinkButton } from "@/components/common/share-link-button";
 import { CaseStudyClose } from "@/components/content/case-study-close";
 import { AnalysisCta, ParentNote } from "@/components/content/analysis-layer";
 import { StackList } from "@/components/content/stack-list";
+import { CaseSourceCode } from "@/components/content/case-source-code";
 import { ReadingProgress } from "@/components/content/reading-progress";
 import { PaperToc } from "@/components/mdx/paper-toc";
 import { useMDXComponents } from "@/mdx-components";
@@ -354,6 +355,8 @@ export default async function ProjectPage({ params }: Props) {
             </h2>
             <StackList items={project.stack} />
           </div>
+
+          <CaseSourceCode locale={typedLocale} slug={project.slug} code={project.code} />
 
           {project.metrics.length > 0 && (
             <div className="mt-8">

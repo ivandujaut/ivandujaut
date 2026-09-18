@@ -8,7 +8,8 @@
       "about": "Acerca de",
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú",
-      "skipToContent": "Saltar al contenido"
+      "skipToContent": "Saltar al contenido",
+      "method": "Método"
     },
     "a11y": {
       "opensInNewTab": "se abre en pestaña nueva"
@@ -177,6 +178,11 @@
       "proptech": "Proptech",
       "educacion": "Educación",
       "web": "Web"
+    },
+    "code": {
+      "title": "Código",
+      "body": "Los números de este caso salen de estos scripts. Están en el repositorio del sitio, con la URL de descarga de cada dataset adentro, así que se pueden volver a correr sin creerme nada.",
+      "methodLink": "Cómo trabajo cada caso"
     }
   },
   "paper": {
@@ -262,5 +268,41 @@
       "intro": "Si querés hablar, escribime por <email>email</email>. Respondo dentro de 24h.",
       "alsoFind": "También en"
     }
+  },
+  "method": {
+    "title": "Método",
+    "intro": "Un caso sobre una empresa real es consejo que nadie pidió, así que el estándar de rigor sube en vez de bajar. Estas son las reglas con las que se escribe cada análisis de este sitio, y lo que garantizan cuando lo leés.",
+    "sections": {
+      "sources": {
+        "title": "De dónde sale cada cifra",
+        "body": "Hay tres niveles de fuente y cada uno sostiene cosas distintas. Un archivo donde la empresa es una fila (los balances que presenta ante el regulador, las bases de Medicare, las tablas de un 10-K) es el más fuerte: permite calcular algo que nadie publicó. Una cifra publicada por un tercero identificable se puede usar, pero hereda su método, así que entra con cita textual y fecha. Y lo que una empresa dice de sí misma es dato sobre lo que esa empresa afirma, nunca sobre el mundo: se escribe \"la compañía dice que\" y no se lo usa para sostener la tesis del caso."
+      },
+      "facts": {
+        "title": "Ningún número llega al texto sin pasar por la hoja de hechos",
+        "body": "Antes del artículo existe una hoja donde cada dato entra con tres cosas: el valor exacto, su estatus (dato publicado, cálculo propio sobre fuente oficial, versión periodística o hipótesis del modelo) y su fuente. Los redondeos se declaran, las hipótesis llevan la fórmula y no sólo el resultado, y los datos que dependen de una fecha se citan fechados."
+      },
+      "code": {
+        "title": "Los cálculos son código, no números sueltos",
+        "body": "Todo lo que dice \"elaboración propia\" tiene un script commiteado y la URL de descarga del dataset crudo. Al pie de cada caso están los links a esos scripts. Un cálculo que no se puede volver a correr es una opinión con decimales."
+      },
+      "archive": {
+        "title": "Las páginas citadas quedan archivadas",
+        "body": "Las páginas cambian abajo de la cita: en un caso la fuente reescribió su tabla dos veces mientras el análisis estaba en revisión. Por eso cada página que se cita se archiva en el Internet Archive y el artículo linkea la captura, no la página viva."
+      },
+      "audit": {
+        "title": "Se revisa cifra por cifra antes de publicar",
+        "body": "Antes de salir, cada número del artículo, incluidos los de las tarjetas del encabezado, se cruza contra la hoja: valor, estatus y fuente. La aritmética interna se recomprueba. El caso se publica cuando ese cruce queda sin hallazgos de severidad alta, y se corrige en público si aparece uno después."
+      },
+      "decision": {
+        "title": "La recomendación se escribe para que la puedas evaluar",
+        "body": "Cada caso termina en una decisión, no en una conclusión. Dice qué decisión tiene enfrente la empresa, cuánta plata hay en juego, cuál sería el primer paso, qué métricas la miden abiertas por segmento con el corte fijado antes de mirar el resultado, qué no vale la pena construir, y con qué criterio se abandona. Si no se puede discutir, no es una recomendación."
+      },
+      "limits": {
+        "title": "Lo que no vas a encontrar",
+        "body": "Cifras que no se puedan rastrear hasta una fuente. Supuestos disfrazados de datos: cuando hay un supuesto, se declara como tal. Y relato de proceso: las tesis que no sobrevivieron y los errores que se corrigieron quedan en el registro de trabajo, que no se publica."
+      }
+    },
+    "repoCta": "Ver el repositorio del sitio",
+    "projectsCta": "Ver los casos"
   }
 }

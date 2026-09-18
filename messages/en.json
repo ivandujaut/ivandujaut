@@ -8,7 +8,8 @@
       "about": "About",
       "openMenu": "Open menu",
       "closeMenu": "Close menu",
-      "skipToContent": "Skip to content"
+      "skipToContent": "Skip to content",
+      "method": "Method"
     },
     "a11y": {
       "opensInNewTab": "opens in a new tab"
@@ -177,6 +178,11 @@
       "proptech": "Proptech",
       "educacion": "Education",
       "web": "Web"
+    },
+    "code": {
+      "title": "Code",
+      "body": "The numbers in this case come from these scripts. They live in this site's repository, with each dataset's download URL inside, so anyone can rerun them without taking my word for it.",
+      "methodLink": "How I work each case"
     }
   },
   "paper": {
@@ -262,5 +268,41 @@
       "intro": "If you want to talk, reach me via <email>email</email>. I reply within 24h.",
       "alsoFind": "Also on"
     }
+  },
+  "method": {
+    "title": "Method",
+    "intro": "A case study about a real company is advice nobody asked for, so the bar for rigor goes up rather than down. These are the rules every analysis on this site is written under, and what they guarantee when you read one.",
+    "sections": {
+      "sources": {
+        "title": "Where each figure comes from",
+        "body": "There are three levels of source and each one supports different claims. An archive where the company is a row (the filings it submits to its regulator, the Medicare files, the tables in a 10-K) is the strongest: it allows calculating something nobody published. A figure published by an identifiable third party can be used, but it inherits that party's method, so it comes in with a verbatim quote and a date. And what a company says about itself is data about what that company claims, never about the world: it is written as \"the company says that\", and it never carries the thesis of a case."
+      },
+      "facts": {
+        "title": "No number reaches the text without going through the fact sheet",
+        "body": "Before the article there is a sheet where every data point enters with three things: the exact value, its status (published figure, own calculation over an official source, press version, or model assumption) and its source. Rounding is declared, assumptions carry the formula and not just the result, and date-dependent data is quoted with its date."
+      },
+      "code": {
+        "title": "Calculations are code, not loose numbers",
+        "body": "Everything labelled as my own calculation has a committed script and the download URL of the raw dataset. The links to those scripts are at the foot of each case. A calculation that cannot be rerun is an opinion with decimals."
+      },
+      "archive": {
+        "title": "Cited pages are archived",
+        "body": "Pages change underneath the quote: in one case the source rewrote its table twice while the analysis was in review. So every page cited is archived on the Internet Archive, and the article links the snapshot, not the live page."
+      },
+      "audit": {
+        "title": "Every figure is checked before publishing",
+        "body": "Before it ships, every number in the article, including the ones on the header cards, is cross-checked against the sheet: value, status and source. The internal arithmetic is recomputed. A case publishes when that pass comes back with no high-severity findings, and it gets corrected in public if one shows up later."
+      },
+      "decision": {
+        "title": "The recommendation is written so you can judge it",
+        "body": "Each case ends in a decision, not in a conclusion. It says what decision the company has in front of it, how much money is at stake, what the first step would be, which metrics measure it broken down by segment with the threshold set before looking at the result, what is not worth building, and on what criterion it gets dropped. If it cannot be argued with, it is not a recommendation."
+      },
+      "limits": {
+        "title": "What you will not find",
+        "body": "Figures that cannot be traced back to a source. Assumptions dressed as data: when there is an assumption, it is declared as one. And process narrative: the theses that did not survive and the mistakes that got caught stay in the working log, which is not published."
+      }
+    },
+    "repoCta": "See the site's repository",
+    "projectsCta": "See the cases"
   }
 }

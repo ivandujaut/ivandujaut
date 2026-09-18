@@ -1,3 +1,5 @@
+import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { defineConfig, defineCollection, s } from "velite";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -21,6 +23,24 @@ const slugFromPath = (filePath: string): string => {
   }
   return fileName.replace(/\.mdx$/, "");
 };
+
+/**
+ * Los scripts que git conoce, para validar el campo `code` de un caso.
+ *
+ * El caso linkea su script a GitHub, así que un archivo que existe en la
+ * máquina pero nunca se commiteó daría un link roto en producción y, peor, una
+ * promesa de reproducibilidad que no se puede cumplir. Se consulta una vez por
+ * build. Si `git` no está disponible (algún entorno de build sin repo), la
+ * validación cae a la existencia en disco y no frena nada.
+ */
+const trackedScripts: Set<string> | null = (() => {
+  try {
+    const output = execFileSync("git", ["ls-files", "scripts"], { encoding: "utf8" });
+    return new Set(output.split("\n").filter(Boolean));
+  } catch {
+    return null;
+  }
+})();
 
 const localeFromPath = (filePath: string): "es" | "en" => {
   if (filePath.includes("/es/")) return "es";
@@ -179,6 +199,21 @@ const projects = defineCollection({
             }),
         )
         .default([]),
+      // Scripts que producen los números del caso, como rutas desde la raíz
+      // del repo ("scripts/analysis/pix-brasil.py"). El pie del caso los
+      // linkea a GitHub.
+      //
+      // Existe desde el 18/09/2026. Los scripts estaban commiteados y los
+      // casos hablaban de ellos en prosa ("el modelo completo está en el
+      // script del caso") sin un solo enlace: la afirmación que sostiene todo
+      // el sitio, que cada cifra se puede recalcular, quedaba como algo que el
+      // lector tenía que creer.
+      //
+      // Dos piezas pueden compartir script (`xarelto-sin-visita` y
+      // `acceso-parte-d` salen del mismo análisis), y una pieza puede no tener
+      // ninguno: un caso hecho a mano sobre cifras publicadas no gana nada con
+      // un archivo vacío.
+      code: s.array(s.string()).default([]),
       translationKey: s.string().optional(),
       // Slug del pitch del que esta pieza es el análisis completo, en el mismo
       // idioma. Existe desde el 17/09/2026: los lectores decían que un caso de
@@ -198,6 +233,13 @@ const projects = defineCollection({
     })
     .refine((data) => !(data.featured && data.parent), {
       message: "An analysis with a parent cannot be featured: readers reach it from its pitch",
+    })
+    .refine((data) => data.code.every((path) => existsSync(path)), {
+      message: "A script in `code` does not exist: the path is relative to the repo root",
+    })
+    .refine((data) => !trackedScripts || data.code.every((path) => trackedScripts.has(path)), {
+      message:
+        "A script in `code` is not committed: the case would link to a file GitHub does not have",
     })
     .transform((data, { meta }) => ({
       ...data,
