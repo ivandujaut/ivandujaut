@@ -9,7 +9,7 @@ kind: "case-study"
 subject: "external"
 topic: "seguros"
 featured: true
-stack: ["Datos abiertos (SSN · SRT)", "Python", "pandas"]
+stack: ["Datos abiertos (SSN · SRT)", "Python", "openpyxl", "matplotlib"]
 cover:
   src: ./cover.jpg
   alt: "Ilustración editorial cinematográfica con grano de película: a la izquierda, un muro cubierto de largos comprobantes de papel que brillan con luz ámbar y cuelgan en desorden; a la derecha, un archivo inmenso de casilleros oscuros y vacíos que se pierde en la distancia, con apenas un comprobante iluminado en uno de ellos; entre ambos, una pequeña figura humana cruza una pasarela sobre el vacío llevando un único comprobante en las manos"
@@ -29,6 +29,9 @@ metrics:
     value: "2,0"
   - label: "Prima anulada (mediana, sin ART ni retiro)"
     value: "10,6%"
+code:
+  - "scripts/analysis/cobranza-seguros.py"
+  - "scripts/charts/cobranza-seguros.py"
 translationKey: "cobranza-seguros"
 draft: false
 ---
@@ -143,7 +146,7 @@ millones de pólizas por trimestre.
   alt="Ranking de tasa de anulación por ramo en el primer trimestre 2026: Caución 43,3%, Robo 31,5%, Motovehículos 25,6%, Combinado Familiar 23,8%, con la referencia del total de mercado en 18,9%"
   width={890}
   height={601}
-  caption="Anulaciones como porcentaje de las pólizas emitidas brutas (emitidas netas + anuladas), ramos patrimoniales con más de 30 mil emisiones en el trimestre. Elaboración propia sobre el cuadro de pólizas de la SSN (1º trim. 2026), procesado con pandas."
+  caption="Anulaciones como porcentaje de las pólizas emitidas brutas (emitidas netas + anuladas), ramos patrimoniales con más de 30 mil emisiones en el trimestre. Elaboración propia sobre el cuadro de pólizas de la SSN (1º trim. 2026), procesado con Python."
 />
 
 ### El costo vive en el balance: 2 meses de prima atrapados
