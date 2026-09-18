@@ -1,0 +1,405 @@
+---
+title: "Leqembi against Kisunla in traditional Medicare: the full analysis"
+tagline: "The files, the definitions, the limits I set for myself before measuring and what this data cannot support, behind the short version."
+description: "The backing for the short version on Leqembi and Kisunla in traditional Medicare: spending, patients, price per milligram, what each infusion leaves the site, payments to clinicians and the subcutaneous injection, with Eisai's decision written as a decision analytics team would hand it over."
+year: 2026
+date: "2026-09-17"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "salud"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Charcoal illustration on cream paper, not a photograph: the hands of an older person resting on a wooden table in front of a brain-shaped jigsaw puzzle with one piece missing, the loose piece under a finger"
+stack: ["Python", "matplotlib", "CMS open data (Part B, Part D and Open Payments)"]
+metrics:
+  - label: "Spending per patient: Kisunla over Leqembi"
+    value: "+33%"
+  - label: "Price per mg: Kisunla over Leqembi"
+    value: "+55%"
+  - label: "Leqembi in an office, 2024 (Kisunla: 88%)"
+    value: "60%"
+  - label: "Injection (Part D) per 100 Leqembi (Part B)"
+    value: "4.8"
+translationKey: "leqembi-kisunla-analisis"
+parent: "leqembi-kisunla"
+draft: false
+---
+
+<Thesis>
+  Kisunla, from Lilly, costs traditional Medicare more than Leqembi, from Eisai, even though it
+  treats fewer patients: USD 5,605 per patient against 4,219 in the first quarter of 2026, because
+  Medicare pays 55% more for each milligram. On top of that, Kisunla asks for half the infusions,
+  and in my calculation each one leaves the site between 1.6 and 1.9 times more, an advantage that
+  weighs where there is no room. Eisai has a Leqembi injection approved to start treatment without a
+  chair, and the decision is to use it first where there is a wait, measuring site by site whether
+  the ones with room punish the move.
+</Thesis>
+
+## What this analysis measures, and what it does not
+
+**The universe is traditional Medicare.** The Part B spending files, the part that pays for what a
+professional administers, leave out Medicare Advantage enrollees, who are more than half. The
+[CMS methodology](https://data.cms.gov/resources/medicare-quarterly-part-b-spending-by-drug-methodology),
+from the agency that runs Medicare, puts it this way: "exclude any beneficiaries in the Medicare Advantage
+program (which represents over 50% of the Medicare population as of 2024". Part D, the pharmacy side,
+[includes every plan](https://data.cms.gov/resources/medicare-quarterly-part-d-spending-by-drug-methodology),
+Medicare Advantage as well, and every time a number mixes the two, I say so.
+
+**The files.**
+
+- **Part B spending by drug** ([annual](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-part-b-spending-by-drug) and [quarterly](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-quarterly-part-b-spending-by-drug)): the annual one runs through 2024; the quarterly one carries all of 2025 and the first quarter of 2026, it is preliminary and CMS asks for caution when comparing it with the annual file.
+- **[Physician and other practitioners file](https://data.cms.gov/provider-summary-by-type-of-service/medicare-physician-other-practitioners/medicare-physician-other-practitioners-by-geography-and-service) by geography and by provider (2023 and 2024):** it only sees what is billed in an office.
+- **[Hospitals](https://data.cms.gov/provider-summary-by-type-of-service/medicare-outpatient-hospitals/medicare-outpatient-hospitals-by-provider-and-service):** the file comes by payment group and does not carry drugs, so I estimate the hospital share by difference.
+- **[Part B payment limits](https://www.cms.gov/medicare/payment/part-b-drugs/asp-pricing-files):** the price per milligram comes from here.
+- **[Open Payments](https://openpaymentsdata.cms.gov/) 2023 to 2025:** the public record of industry payments to clinicians.
+
+**The units are not comparable.** Leqembi's code (J0174) measures 1 mg and Kisunla's (J0175), 2 mg.
+Everything is compared in dollars, in patients, in infusions or in mg, never in code units.
+
+**How much of the business is visible.** Biogen, Eisai's partner, reports Leqembi's sales in the United
+States. In 2025 they added up to about USD 262 million, and traditional Medicare spending on Leqembi was
+194.53 million: 74%. In the first quarter of 2026, 54.32 against 86 million, 63%. Medicare spending is
+measured at what Medicare recognizes, which is more than the company's net price, so that ratio is a
+ceiling. Lilly does not break out Kisunla sales by country.
+
+## The symptom: spending crossed over and patients have not
+
+Leqembi received full approval in July 2023 and Kisunla a year later, in July 2024. Since then, in
+traditional Medicare:
+
+| period  | Leqembi                             | Kisunla                            |
+| ------- | ----------------------------------- | ---------------------------------- |
+| 2024    | USD 90.37 million, 7,907 patients   | USD 5.25 million, 1,299 patients   |
+| 2025    | USD 194.53 million, 14,029 patients | USD 125.21 million, 9,993 patients |
+| Q1 2026 | USD 54.32 million, 12,876 patients  | USD 60.44 million, 10,782 patients |
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g3_gasto_y_pacientes.en.png"
+  alt="Bars of spending and patients by period: Leqembi ahead in spending through 2025 and Kisunla ahead in the first quarter of 2026, USD 60.4 against 54.3 million; in patients Leqembi is still ahead, 12.9 thousand against 10.8 thousand"
+  width={2000}
+  height={1280}
+  caption="Traditional Medicare spending and patients. 2023 and 2024 come from the annual file and 2025 and the first quarter of 2026 from the quarterly one, which is preliminary. Author's analysis of the Part B spending files."
+/>
+
+<Figure
+  src="/projects/leqembi-kisunla/g1_el_cruce.en.png"
+  alt="Hundred percent bars: in 2025 Kisunla has 41.6% of the patients and 39.2% of the spending of the two; in the first quarter of 2026, 45.6% of the patients and 52.7% of the spending"
+  width={2000}
+  height={1280}
+  caption="Kisunla's share of the patients and of the traditional Medicare spending of the two. Author's analysis of the quarterly Part B spending file."
+/>
+
+Per patient, in the first quarter of 2026 it was USD 5,605 with Kisunla and 4,219 with Leqembi: a third
+more. Each Kisunla patient received 2.34 infusions in the quarter and each Leqembi patient 4.04, and per
+infusion Medicare recognized USD 2,399 against 1,044. In 2025 the opposite was true: USD 12,530 per Kisunla
+patient against 13,866 for Leqembi. My hypothesis is that in 2025 many Kisunla patients were still ramping
+up the dose, because treatment starts at lower doses and only later reaches the full one: what Medicare
+recognized per Kisunla infusion went from USD 2,247 in 2025 to 2,399 in the first quarter of 2026. The
+quarterly file does not break 2025 down quarter by quarter, so I cannot date the crossover.
+
+Both companies say they are ahead, and both have their reasons, because they measure different things.
+Lilly, on the [first quarter 2026 call](https://www.fool.com/earnings/call-transcripts/2026/04/30/eli-lilly-lly-q1-2026-earnings-transcript/):
+"Kisunla continued to be the US leader in amyloid-targeting therapies". Eisai, on the
+[August 2026 one](https://finance.biggo.com/news/JP_4523.T_2026-08-03), per a translated summary I take with
+care: new patients run at "roughly a 50:50 share" and Leqembi "maintains the leading share of treated
+patients in the US".
+
+## First cause: each Kisunla patient costs more
+
+**The price per milligram.** In July 2026, Medicare recognized USD 1.34 per mg of Leqembi and 2.08 per mg of
+Kisunla, 55% more. It is the [average sales price plus 6%](https://www.cms.gov/medicare/payment/fee-for-service-providers/part-b-drugs/average-drug-sales-price),
+and neither has moved much since they entered the [payment files](https://www.cms.gov/medicare/payment/part-b-drugs/asp-pricing-files),
+Leqembi in October 2023 and Kisunla in October 2024.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g4_precio_por_mg.en.png"
+  alt="Lines of the payment limit per mg, quarter by quarter: Leqembi between USD 1.32 and 1.35 since late 2023; Kisunla between 2.05 and 2.09 since late 2024"
+  width={2000}
+  height={1280}
+  caption="Quarterly Part B payment limit divided by the mg in each code's unit. Author's analysis of the CMS payment limit files."
+/>
+
+**The quantity and the dose.** The difference comes from the price. In quantity of drug, Kisunla is even
+below: in my calculation, using what Medicare recognized per infusion and the January 2026 price, in the
+first quarter each Kisunla patient received around 2,690 mg and each Leqembi patient around 3,170. The
+[Leqembi label](https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9d1ff786-e577-410a-a273-c4d7d0e4e975.xml)
+asks for 10 mg per kilo every two weeks, and in an office in 2024 the average infusion was 766 mg; the
+[Kisunla one](https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/190352d4-ef62-4679-b4fa-e846e2766afa.xml)
+climbs from 350 to 700 to 1,050 mg and then stays at 1,400 mg every four weeks.
+
+**The list price the companies announced.** Eisai [launched Leqembi](https://www.eisai.com/news/2023/news202302.html)
+at USD 26,500 a year for a 75 kilo patient. Lilly [set Kisunla](https://www.prnewswire.com/news-releases/lillys-kisunla-donanemab-azbt-approved-by-the-fda-for-the-treatment-of-early-symptomatic-alzheimers-disease-302188299.html)
+at USD 695.65 per vial, 32,000 for 12 months and 48,696 for 18.
+
+**Duration, which can flip the calculation.** The Kisunla label says "Consider stopping dosing [...] based on
+reduction of amyloid plaques to minimal levels on amyloid PET imaging", that is, when the scan shows the
+plaques are down to a minimum. In the trial, [17%, 47% and 69%](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761248)
+of patients were eligible to stop at weeks 24, 52 and 76. Leqembi has no stopping criterion, and Eisai
+[reports](https://www.eisai.com/news/2026/news202616.html), on a billing base that does not cover every
+patient, that 78.4% are still on it at 18 months. If Kisunla patients start finishing, its spending per
+patient per year goes down: part of today's advantage may be where each drug sits in the cycle.
+
+## Second cause: the chair
+
+**The visits.** Per its [label](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9d1ff786-e577-410a-a273-c4d7d0e4e975),
+Leqembi is given every two weeks in an infusion of about an hour: 26 a year at the start.
+[Kisunla](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=190352d4-ef62-4679-b4fa-e846e2766afa), every
+four weeks in about half an hour, plus half an hour of observation at minimum: 13 a year. The monitoring
+MRIs are the same, the baseline one and four more in the first six months, so the difference in burden is
+in the chair. After 18 months, Leqembi can move to one infusion every four weeks.
+
+**What it leaves the site.** The site buys the vial, administers it, and bills Medicare, which recognizes the
+average price plus 6% and an amount for administering it.
+
+<Figure
+  src="/projects/leqembi-kisunla/g2_el_sillon.en.png"
+  alt="On the left, infusions a year at the start: Leqembi 26 and Kisunla 13. On the right, what each infusion at full dose leaves the site in my calculation: Leqembi between USD 119 and 183, Kisunla between 225 and 290"
+  width={2000}
+  height={1280}
+  caption="Model hypothesis: the site buys the drug at a price that is not public. Author's analysis of the CMS payment limits and physician file."
+/>
+
+| what it leaves the site, in my calculation                        | Leqembi        | Kisunla        |
+| ----------------------------------------------------------------- | -------------- | -------------- |
+| per infusion at full dose, in USD                                 | 119 to 183     | 225 to 290     |
+| per patient in the first year, in USD                             | 3,081 to 4,765 | 2,684 to 3,526 |
+| across all traditional Medicare patients in 2025, in USD millions | 22 to 34       | 10.5 to 14.1   |
+
+Per infusion I take 6% of the July 2026 price (Kisunla at its full 1,400 mg dose) plus the amount Medicare
+allowed in an office in 2024 for administering it: USD 60.45 with the therapeutic infusion code or 125.21
+with the complex biologic one, and I use the range because I found no official source saying which one each
+is billed with. For 2025 I take 6% of each drug's actual spending plus that amount for every infusion
+billed, using the office value for hospital ones too, which is an assumption of mine.
+
+Per infusion, Kisunla leaves between 1.6 and 1.9 times more; per patient in the first year, Leqembi leaves
+between 15% and 35% more. The difference shows up when the scarce resource is the slot: with Kisunla the
+site treats two patients in the slots one Leqembi patient takes at the start.
+
+**Where it is given.** In 2024, 60% of Leqembi patients were treated in an office and the rest, in my
+estimate, in a hospital. For Kisunla, 88%.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g5_donde_se_aplica.en.png"
+  alt="Hundred percent bars for 2024: Leqembi 60% in an office and 40% in a hospital, estimated; Kisunla 88% in an office and 12% in a hospital, estimated"
+  width={2000}
+  height={1280}
+  caption="Office from the physician file; hospital as the difference against the annual file total, an estimate. Author's analysis of CMS files."
+/>
+
+**The wait.** The only public figure I found is old: in February 2024, per Eisai and reported by
+[BioPharma Dive](https://www.biopharmadive.com/news/eisai-leqembi-alzheimers-target-revenue-earnings/706668/),
+there were 2,000 patients treated with Leqembi in the United States and some 8,000 on a waiting list. That
+some sites have a wait today and others do not is the assumption the whole decision rests on, and the first
+thing to measure.
+
+## What does not fit this explanation
+
+**Lilly promotes more.** In 2025, Lilly reported in [Open Payments](https://openpaymentsdata.cms.gov/) USD
+3.80 million in payments to clinicians naming Kisunla, and Eisai and Biogen 3.14 million for Leqembi. In
+2024 it was the other way around. Lilly also reached more clinicians with fewer payments: 12,576 recipients
+across 29,316 payments, against 10,943 across 33,527.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g6_pagos_a_profesionales.en.png"
+  alt="Bars of reported payments by year: Leqembi USD 1.62 million in 2023, 4.02 in 2024 and 3.14 in 2025; Kisunla 2.22 in 2024 and 3.80 in 2025"
+  width={2000}
+  height={1280}
+  caption="All Open Payments records naming each drug, to clinicians nationwide. A payment naming more than one product counts in full for each. Author's analysis."
+/>
+
+**Lilly sells the diagnosis together with the drug.** One in five Lilly payments for Kisunla in 2025 also
+names Amyvid, its tracer for the scan that shows the plaques: 5,976 out of 29,316. Eisai and Biogen have a
+single shared payment across 33,527, and no diagnostic product of theirs shows up in the file. These are
+payments, mostly meals, and they show which products each visit coincides with: that is as far as the data
+goes. That in part of those visits Lilly talks about the diagnosis and the treatment in the same
+conversation is in the file; that this moves prescriptions is a hypothesis of mine. If Kisunla's advantage
+were born there, in my reading the injection would not answer it, and what would answer it is arriving
+earlier, when the plaques are confirmed, where since May 2025 there is a Fujirebio blood test
+[cleared by the FDA](https://www.fda.gov/news-events/press-announcements/fda-clears-first-blood-test-used-diagnosing-alzheimers-disease),
+the agency that regulates drugs.
+
+**The tie in new patients.** If it is true that new patients split half and half, the chair is not tipping
+sites toward Kisunla en masse, and the crossover in spending is mostly price per patient. The source is
+weak, and it is exactly what the decision has to measure.
+
+**The timing of the launch.** That Kisunla was more of an office drug in 2024 may come from where Lilly
+started.
+
+**Medicare Advantage.** More than half of Medicare is not in these files. The split there may be another one.
+
+## Eisai's move: taking the patient out of the chair
+
+On 29 August 2025 the FDA, the agency that regulates drugs, approved Leqembi Iqlik, a weekly autoinjector,
+for maintenance. On [13 July 2026](https://media-us.eisai.com/2026-07-13-FDA-Approves-LEQEMBI-IQLIK-R-lecanemab-irmb-Subcutaneous-Injection-as-an-Initiation-Dose-for-Early-Alzheimers-Disease)
+it approved it to start treatment: 500 mg a week in two 250 mg injections. The
+[label](https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761375) asks
+that it be started "under the guidance and supervision of a healthcare provider" and that at least the
+first two doses have direct guidance from a professional; after that the patient or their care partner can
+give it, with no infusion chair. Eisai presents it as at-home treatment and says that since 25 August 2026
+it is available through specialty pharmacies.
+
+**Eisai names the chair.** In its [pricing document](https://us.eisai.com/-/media/Files/USEisaiRedesign/Leqembi_iQLIK_Statement_Pricing.pdf),
+Eisai says that having the at-home option "may make more infusion chairs available for those who require or
+prefer IV therapy", meaning intravenous. That is the company itself putting the chair forward as the scarce
+resource, which is the assumption the whole decision is built on.
+
+**And it suits Eisai on price.** In that same document it set the list price at USD 385 per autoinjector:
+with two a week, my calculation gives USD 40,040 for a year of starting on the injection, against the
+26,500 it announced in 2023 for the infusion. The two numbers do not compare cleanly, because they are from
+different years and because the injection delivers more drug: 26,000 mg a year against the 19,500 of that
+announcement, which was for a 75 kilo patient. Per milligram, which is how I compare everything else, it is
+USD 1.54 of list price with the injection against 1.36 with the infusion: 13% more expensive per milligram
+and 33% more milligrams a year. Neither one is the net price, but at list the injection leaves more per
+patient. The patient receives it through Part D, where, per Eisai, "The current annual cap is $2,100" of
+out-of-pocket spending a year.
+
+<Figure
+  src="/projects/leqembi-kisunla-analisis/g7_inyeccion_en_casa.en.png"
+  alt="Bars of injection patients in Part D per 100 Leqembi patients in Part B: 1.6 in 2025 and 4.8 in the first quarter of 2026, with a cutoff line at 10 and full-year 2026 pending"
+  width={2000}
+  height={1280}
+  caption="Leqembi Iqlik patients in Part D over Leqembi patients in Part B. Part D includes Medicare Advantage and Part B does not, so the ratio favors the injection. Author's analysis of the CMS quarterly files."
+/>
+
+In Part D, which includes Medicare Advantage, Leqembi Iqlik had 222 patients in 2025 and 619 in the first
+quarter of 2026, two periods in which it was only approved for maintenance: 1.6 and 4.8 per 100 Leqembi
+patients in Part B, which does not include Medicare Advantage. Whoever uses the injection does not show up
+in Part B spending, and that has been the case since October 2025, when per Eisai the maintenance version
+[went on sale](https://www.eisai.com/news/2025/news202571.html): that number tends to show Kisunla further
+ahead than it is, and more so from the third quarter of 2026. In my calculation it is not enough to undo
+the first quarter crossover: even assuming the 619 injection patients were all in traditional Medicare and
+that without it they would have been infused every four weeks at what Medicare recognizes per Leqembi
+infusion, they would add up to at most USD 2.1 million, against a difference of 6.1.
+
+Lilly has no approved subcutaneous version today: Kisunla is only given intravenously. Remternetug, another
+Lilly antibody, has one phase 3 trial with a subcutaneous arm already completed and another, subcutaneous
+only, with an [estimated primary completion in April 2029](https://clinicaltrials.gov/study/NCT06653153),
+per ClinicalTrials.gov, the public trial registry.
+
+## The decision
+
+**Whose decision it is, and what the goal is.** Eisai's Leqembi team in the United States, with Biogen as
+partner. The goal is for the new patient starting an anti-amyloid antibody to start on Leqembi and stay.
+
+**Where it can go, and why it can.** Toward starting on the injection, which takes the patient out of the
+chair, where, in my calculation, Kisunla leaves the site more per slot. It can because today it is the only
+one of the two approved to start that way.
+
+**What is at stake, in dollars.** The unit of the decision is one point of the base: 1% of Leqembi's 14,029
+traditional Medicare patients in 2025 is 140 people and USD 1.95 million of spending a year. It is a
+ceiling, because Medicare recognizes more than Eisai's net price, and it measures the scale of the whole
+base, which is a different thing from the share of new patients. For scale, Leqembi sold about USD 262
+million across the United States in 2025 and
+[97 million in the second quarter of 2026](https://www.sec.gov/Archives/edgar/data/875045/000087504526000073/exhibit991-q22026pressrele.htm),
+according to Biogen. And on the other side is what is at risk: in my hypothesis, sites charged between USD
+22 and 34 million in 2025 for administering Leqembi, and that is the money the injection moves around.
+
+**The first step, and why that one.** Classifying the sites that infuse Leqembi by wait and by chair use
+before the end of 2026. It goes first because the injection for starting arrived on 25 August and the next
+public file with all of 2026 comes out in 2027: without the classification, when the data arrives there is
+nothing to separate the effect at each type of site with. That data is not public; I assume Eisai has it
+from its sales.
+
+**The definitions, before measuring.** Choices of mine, set on 17 September 2026 so the measurement repeats
+the same way every quarter:
+
+- **New patient:** first dose of Leqembi or Kisunla with neither of the two in the previous 12 months. **Starting on the injection:** their first dose is Leqembi Iqlik.
+- **On treatment:** at least one dose in the last 8 weeks, which covers maintenance with margin. **Still on it at six months:** on treatment 26 weeks after the first dose.
+- **Site with a wait:** the first available infusion is more than four weeks from the indication. **Site with room:** two weeks or less. The ones in between are reported separately and enter no cutoff.
+
+**What I would measure, by segment.** The cutoffs were set the same day, before the data that tests them
+exists:
+
+| segment            | metric                                                                                                                                      | cutoff                    | what I do if it is crossed                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Sites with a wait  | share of new Leqembi patients starting on the injection, 25 August 2026 to 31 March 2027                                                    | fewer than 1 in 3         | the injection does not solve the chair: review pharmacy support before adding sites                    |
+| Sites with room    | change in Kisunla's share of new patients, two quarters before and two after offering the injection                                         | more than 5 points        | the site punishes the move: stop offering the injection there                                          |
+| All                | still on it at six months, starting on the injection against infusion                                                                       | more than 10 points below | the injection wins starts and loses patients: do not scale                                             |
+| From outside (CMS) | Leqembi Iqlik patients in Part D, which includes Medicare Advantage, per 100 Leqembi patients in Part B, which does not, across all of 2026 | fewer than 10             | it did not take off; since the ratio favors the injection, a 10 or more is not enough to say otherwise |
+
+**What it costs, and in what window.** The main cost for Eisai is a risk. At sites with room, each patient
+who starts on the injection stops taking the chair and the site stops charging for those infusions. The
+doctor chooses the drug, but in an office the same practice buys the drug and charges for the infusion, and
+in my hypothesis that money may weigh on what it prescribes next. That is why the 5 point cutoff at those
+sites. The window is short: the two phase 3 trials of trontinemab, Roche's antibody, have an estimated
+primary completion in June 2028, and the subcutaneous-only phase 3 of remternetug, an estimated primary
+completion in April 2029, while another with a subcutaneous arm has already finished.
+
+**What I would not build.**
+
+- **A price cut on the infusion.** Medicare recognizes the average price plus 6%: a lower price leaves the site even less per slot, exactly where, in my calculation, Leqembi is behind.
+- **Anything that fights the practices that prescribe:** neither a chair network of its own, nor the injection as a replacement for the infusion where there is room, where it is better to keep it until maintenance every four weeks at 18 months, as the label allows.
+- **A strategy that depends on Medicare lifting the registry** it requires in order to pay. I found no CMS proposal to do so; I did find a [reconsideration request](https://pubmed.ncbi.nlm.nih.gov/42552749/) published in August 2026 by authors who, in eight out of nine cases, work at Lilly.
+
+**What I accept in exchange.** The cutoffs that kill the move are already in the table. What I accept while
+they are not crossed is that at sites with room the injection is offered without being pushed and Eisai
+keeps depending on the infusion.
+
+## What is data and what is a choice of mine
+
+| claim                                                                 | type                                              | where it comes from                                         |
+| --------------------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------- |
+| Spending and patients of each one, and Kisunla's 33% more per patient | data and calculation on data                      | Part B spending, annual and quarterly                       |
+| USD 1.34 and 2.08 per mg                                              | calculation on data                               | July 2026 payment limit                                     |
+| 2,690 and 3,170 mg per patient                                        | model hypothesis                                  | spending per claim and January 2026 price                   |
+| 26 and 13 infusions a year                                            | data                                              | FDA labels                                                  |
+| 17%, 47% and 69% eligible to stop Kisunla                             | data                                              | Kisunla label, July 2024                                    |
+| 78.4% still on Leqembi at 18 months                                   | what the company says                             | Eisai, March 2026                                           |
+| What each infusion leaves the site, and what sites charged in 2025    | model hypothesis                                  | payment limit, 2024 administration amount, doses and claims |
+| 60% and 88% in an office                                              | estimate                                          | physician file against the annual total                     |
+| Payments to clinicians and Amyvid                                     | data                                              | Open Payments                                               |
+| Leqembi sales in the United States                                    | what the company reports                          | Biogen press releases                                       |
+| New patients half and half                                            | what the company says, via a translated summary   | Eisai call, August 2026                                     |
+| Injection price, the USD 2,100 cap and the 1.54 and 1.36 per mg       | what the company says, and my calculation on that | Eisai pricing statement and the 2023 announcement           |
+| Definitions, segments and cutoffs                                     | a choice of mine                                  | set on 17 September 2026                                    |
+
+## What this analysis cannot support
+
+- **Anything about Medicare Advantage,** more than half of Medicare.
+- **Kisunla sales in the United States,** which Lilly does not break out.
+- **Who wins the new patients.** There is no public figure; the tie comes from a translated summary.
+- **Why a doctor or a site chooses.** There is no fieldwork: the chair is a hypothesis about incentives.
+- **The site's profit.** The price it buys the drug at and the code it bills with are not public.
+- **Which one is better for the patient.** This analysis does not compare efficacy or safety.
+
+## What would change my mind
+
+- **Kisunla's advantage in new patients being the same with and without a wait.** That drops the chair as an explanation for why a site would choose Kisunla.
+- **Kisunla's spending per patient falling as its patients finish treatment** and Leqembi taking the lead in spending back without the injection.
+- **The split in Medicare Advantage being another one.** In that case, what is said here holds only for traditional Medicare.
+
+## Conclusion
+
+Traditional Medicare spends more on Kisunla than on Leqembi because each Kisunla patient costs a third
+more, not because Kisunla treats more people: in the first quarter of 2026, Leqembi was still treating
+12,876 people against 10,782. The whole difference fits inside the price per milligram, 55% higher. So far,
+the crossover is a price problem.
+
+It becomes a market problem if the chair starts moving patients. Kisunla takes half the slots and, in my
+calculation, leaves the site between 1.6 and 1.9 times more for each one, so where the slot is the scarce
+resource the site's incentive points at Kisunla. The injection is the only thing that takes that variable
+off the board, and Eisai itself says it serves to free up chairs. On the other side, the payments file
+leaves an alternative explanation the injection does not answer: one in five Lilly visits for Kisunla talks
+about the diagnosis and the treatment together, and in that file Eisai has nothing to do the same with.
+
+That is why I would launch it as two different moves depending on the site, and the figure that decides
+which group each one falls into, whether it has a wait or not, is in no public file. Eisai has it, from its
+sales and its field team. Without that classification done beforehand, it will push the injection where it
+also empties slots at the practice that prescribes, and at six months it will have an average that mixes
+two opposite effects, with no way to separate them.
+
+And there is a third one on the way. Trontinemab, from Roche, is the candidate of a company from outside
+this fight, with two phase 3 trials with an estimated primary completion in June 2028. It is given
+intravenously, so it would add one more rival in the chair without touching what sets Eisai apart today.
+The one that touches the chair is Lilly's: remternetug, subcutaneous, with an estimated primary completion
+in April 2029. That is the window, and it lasts longer than those dates, because time passes between a
+trial result and an approval. But it has a date: Eisai's exclusivity for taking the patient out of the
+chair ends, and whatever it has not converted by then into patients who stay on treatment it will fight
+for against two rivals instead of one.
+
+<small>
+  Independent analysis with public data. I have no commercial relationship with Eisai, Biogen, Lilly
+  or Roche, and never have had one.
+</small>
