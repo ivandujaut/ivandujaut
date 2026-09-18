@@ -8,6 +8,11 @@ import { cn } from "@/lib/utils";
 /**
  * Origen: Aceternity UI (`shadcn add @aceternity/images-badge`).
  *
+ * Sin uso desde el 18/09/2026: lo consumía el badge del hero, que salió cuando
+ * la home pasó a abrir con el caso más nuevo en una tarjeta con su imagen (ver
+ * `components/home/hero.tsx`). Queda acá, como `lib/github.ts`, porque las
+ * modificaciones locales de abajo costaron más que el componente.
+ *
  * MODIFICACIONES LOCALES respecto del original. Si actualizás desde el
  * registry, hay que volver a aplicarlas a mano:
  *

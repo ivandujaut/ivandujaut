@@ -1,5 +1,13 @@
 import { unstable_cache } from "next/cache";
 
+/**
+ * Cliente de la API de GitHub. Desde el 18/09/2026 no lo consume ninguna
+ * página: la home mostraba commits del último año y repos públicos, y en un
+ * perfil que se presenta por su criterio de producto y sus análisis, esos dos
+ * números describían al autor equivocado. Queda disponible, como
+ * `lib/leetcode.ts`, para cuando algún número de acá vuelva a sumar.
+ */
+
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 const REVALIDATE_SECONDS = 60 * 60 * 6; // 6 horas
 

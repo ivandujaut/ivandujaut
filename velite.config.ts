@@ -106,7 +106,25 @@ const projects = defineCollection({
       // default y obligatorio por la misma razón que `subject`: un caso sin
       // tema aparecería como "siguiente" de cualquier otro.
       topic: s.enum(["seguros", "salud", "fintech", "proptech", "educacion", "web"]),
+      // Marca de curaduría. Desde el 18/09/2026 no la lee ninguna página: la
+      // home mostraba las tres piezas marcadas más nuevas y el flag se
+      // desactualizaba solo (las cuatro piezas más recientes del sitio no
+      // estaban marcadas, así que la home mostraba trabajo viejo). Ahora la
+      // home toma las tres más nuevas y no hay nada que mantener. El campo
+      // queda porque lo declaran los dieciocho casos ya escritos, y porque las
+      // dos reglas de abajo siguen siendo ciertas si vuelve a usarse.
       featured: s.boolean().default(false),
+      // La pieza por la que conviene empezar a leer el sitio. El índice la
+      // ancla arriba de todo, fuera de los grupos, con su propia etiqueta.
+      //
+      // Existe desde el 18/09/2026: catorce análisis con el mismo badge, el
+      // mismo año y portadas abstractas dejaban al visitante eligiendo entre
+      // titulares equivalentes, y los replays mostraban gente recorriendo la
+      // lista entera sin abrir ninguno. Elegir es trabajo; esto lo hace por él.
+      //
+      // Se marca una sola pieza por idioma. Si hay más de una, el índice toma
+      // la más nueva y las demás quedan en su grupo, sin etiqueta.
+      entry: s.boolean().default(false),
       stack: s.array(s.string()).min(1),
       repo: s.string().url().optional(),
       demo: s.string().url().optional(),
@@ -117,17 +135,18 @@ const projects = defineCollection({
           alt: s.string(),
         })
         .optional(),
-      // Imágenes para el badge de la home (`ImagesBadge`). Exactamente 3:
-      // el abanico en tamaño LARGE está diseñado para ese número y con menos
-      // queda flojo. Son rutas públicas y no `s.image()` porque las imágenes
-      // de los casos ya viven en `public/`, no junto al MDX.
+      // Gráficos del caso, exactamente 3. Son rutas públicas y no `s.image()`
+      // porque las imágenes de los casos ya viven en `public/`, no junto al
+      // MDX.
       //
-      // Ojo con la proporción: se muestran a 140x108 (ratio 1.30) con
-      // `object-cover`. Una panorámica de 2000x250 se recorta a una tira
-      // central sin sentido. Elegí imágenes entre ~1.1 y ~1.7 de ratio.
+      // El primero es la imagen de la tarjeta grande de la home cuando el caso
+      // es el más nuevo: un gráfico dice que adentro hay análisis, cosa que la
+      // portada (una ilustración) no dice. Se muestra entero, sin recorte, así
+      // que cualquier proporción entra; queda letterbox si es muy angosto.
       //
-      // El campo es opcional a propósito: la home toma el caso más nuevo que
-      // lo tenga, así que un caso sin imágenes buenas simplemente no compite.
+      // Los tres los usaba el abanico del badge del hero, que salió el
+      // 18/09/2026. El campo sigue siendo opcional: sin él, la tarjeta de la
+      // home cae a la portada.
       preview: s
         .array(
           s.object({

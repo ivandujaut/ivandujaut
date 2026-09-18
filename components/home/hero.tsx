@@ -1,14 +1,11 @@
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowRight01Icon, GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { Download } from "@/components/animate-ui/icons/download";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
-import { ImagesBadge } from "@/components/ui/images-badge";
-import { getLatestProject } from "@/lib/content";
 import { Link } from "@/i18n/navigation";
-import { localePath } from "@/lib/seo";
 
 const socialLinks = [
   {
@@ -23,89 +20,29 @@ const socialLinks = [
   },
 ];
 
-export function Hero({ locale }: { locale: "es" | "en" }) {
+/**
+ * Acá vivía el badge que anunciaba el caso más nuevo: una carpeta con tres
+ * miniaturas que se abrían en abanico al pasar el mouse. Se fue el 18/09/2026,
+ * cuando `PublishedWork` pasó a abrir con ese mismo caso en una tarjeta con su
+ * imagen. Los dos anunciaban lo mismo con 300px de diferencia, y entre un
+ * anuncio y la cosa anunciada gana la cosa.
+ *
+ * El componente sigue en `components/ui/images-badge.tsx` por si vuelve.
+ */
+export function Hero() {
   const t = useTranslations("home.hero");
-  const latestProject = getLatestProject(locale);
-  const badgeText = latestProject ? t("badge", { title: latestProject.title }) : "";
-  const badgeHref = latestProject ? localePath(locale, `/projects/${latestProject.slug}`) : "";
 
   return (
     <section>
-      {/* El badge anuncia el caso más nuevo, tenga o no `preview`. Hasta el
-          18/09/2026 todo el bloque colgaba de `latestProject?.preview`, así que
-          un caso sin sus tres imágenes (el pitch de Leqembi fue el primero) no
-          degradaba el badge: lo borraba entero, y arriba del pliegue no quedaba
-          ninguna evidencia de que el sitio publica algo. Sólo 7 de 19 piezas
-          declaran `preview`, o sea que era la regla y no la excepción. Con
-          abanico si lo hay; si no, el mismo anuncio como pastilla de texto. */}
-      {latestProject && !latestProject.preview && (
-        <div className="mb-10">
-          {/* La flecha va adentro del mismo `span` y no como hermano de un
-              flex: con títulos de dos líneas, un flex la manda al borde
-              derecho de la pastilla y queda flotando lejos del texto. En el
-              flujo de texto cae pegada a la última palabra. */}
-          <Link
-            href={`/projects/${latestProject.slug}`}
-            className="inline-block max-w-full rounded-full border border-border px-3.5 py-1.5 text-sm font-medium leading-snug transition-colors hover:bg-muted"
-          >
-            <span>
-              {badgeText}{" "}
-              <HugeiconsIcon
-                icon={ArrowRight01Icon}
-                size={14}
-                strokeWidth={1.5}
-                aria-hidden
-                className="inline align-[-2px]"
-              />
-            </span>
-          </Link>
-        </div>
-      )}
-
-      {latestProject?.preview && (
-        // El abanico se abre hacia arriba y hacia los costados desde la carpeta,
-        // que arranca pegada al borde izquierdo de la columna. En tamaño LARGE
-        // el borde izquierdo del abanico cae 96px a la izquierda de ese borde,
-        // así que hace falta un viewport de ~816px para que no se corte fuera
-        // de pantalla.
-        //
-        // Abajo de `lg` no hay lugar para un abanico legible: con la carpeta a
-        // 24px del borde, lo más ancho que entra son previews de ~64px, y a ese
-        // tamaño un gráfico de barras es una mancha. Así que ahí el badge no
-        // revela nada y es un link común de un solo tap. Prefiero no prometer
-        // una interacción que no devuelve información; el texto y las imágenes
-        // asomando ya cuentan que hay un caso nuevo con material visual.
-        //
-        // Son dos instancias y no una con props calculadas por JS para que la
-        // decisión la tome CSS: sin hook de media query no hay parpadeo en la
-        // primera pintura ni desajuste de hidratación.
-        <div className="mb-10">
-          <ImagesBadge
-            className="lg:hidden"
-            text={badgeText}
-            href={badgeHref}
-            images={latestProject.preview}
-            revealOnInteraction={false}
-          />
-          <ImagesBadge
-            className="hidden lg:inline-flex"
-            text={badgeText}
-            href={badgeHref}
-            images={latestProject.preview}
-            folderSize={{ width: 48, height: 36 }}
-            teaserImageSize={{ width: 40, height: 28 }}
-            hoverImageSize={{ width: 140, height: 108 }}
-            hoverTranslateY={-110}
-            hoverSpread={50}
-          />
-        </div>
-      )}
-
       <h1 className="text-4xl font-semibold tracking-tight">{t("name")}</h1>
 
-      <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-muted-foreground">
-        <span>{t("role")}</span>
-        <span aria-hidden>·</span>
+      {/* El rol va en su propio renglón. Cuando los tres datos compartían una
+          fila con separadores, el rol nuevo ("Product Strategy y Decision
+          Analytics", más largo que "Product Engineer") partía en un teléfono y
+          el renglón siguiente empezaba con un "·" suelto. */}
+      <p className="mt-2 font-mono text-sm text-muted-foreground">{t("role")}</p>
+
+      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-muted-foreground">
         <span>{t("location")}</span>
         <span aria-hidden>·</span>
         <span className="inline-flex items-center gap-1.5">

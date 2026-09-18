@@ -19,7 +19,13 @@ interface ProjectListItemProps {
   slug: string;
   title: string;
   tagline: string;
-  year: number;
+  /**
+   * Fecha de publicación. Antes acá iba sólo `year`, y con dieciséis piezas
+   * del mismo año el listado entero mostraba "2026" dieciséis veces: la
+   * cadencia de publicación, que es el mejor argumento del sitio, no se veía.
+   */
+  date: string;
+  locale: "es" | "en";
   stack: string[];
   status: ProjectStatus;
   kind: ProjectKind;
@@ -41,7 +47,8 @@ export function ProjectListItem({
   slug,
   title,
   tagline,
-  year,
+  date,
+  locale,
   stack,
   status,
   kind,
@@ -53,6 +60,11 @@ export function ProjectListItem({
   // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
   // información en productos construidos.
   const showStatus = kind === "build" || status !== "concept";
+
+  const publishedAt = new Date(date).toLocaleDateString(locale, {
+    month: "short",
+    year: "numeric",
+  });
 
   if (variant === "list") {
     return (
@@ -81,7 +93,7 @@ export function ProjectListItem({
           </p>
           <p className="mt-2 font-mono text-xs text-muted-foreground">
             <ViewTransition name={`project-year-${slug}`} share="morph">
-              <span>{year}</span>
+              <time dateTime={date}>{publishedAt}</time>
             </ViewTransition>
             {" · "}
             {stack.slice(0, STACK_VISIBLE).join(" · ")}
@@ -140,13 +152,21 @@ export function ProjectListItem({
             <h3 className="text-base font-medium">{title}</h3>
           </ViewTransition>
           <ViewTransition name={`project-year-${slug}`} share="morph">
-            <span className="shrink-0 font-mono text-xs text-muted-foreground">{year}</span>
+            <time dateTime={date} className="shrink-0 font-mono text-xs text-muted-foreground">
+              {publishedAt}
+            </time>
           </ViewTransition>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">{tagline}</p>
+        {/* Dos entradas y no tres: las fuentes de datos tienen nombres largos
+            ("Datos abiertos de CMS (parte B, parte D y Open Payments)") y con
+            tres la fila se iba a dos renglones de monospace gris, que era lo
+            más pesado de una tarjeta cuyo trabajo es que se lea el título. */}
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          <span className="font-mono">{stack.slice(0, 3).join(" · ")}</span>
-          {stack.length > 3 && <span className="font-mono">+{stack.length - 3}</span>}
+          <span className="font-mono">{stack.slice(0, STACK_VISIBLE).join(" · ")}</span>
+          {stack.length > STACK_VISIBLE && (
+            <span className="font-mono">+{stack.length - STACK_VISIBLE}</span>
+          )}
         </div>
       </article>
     </Link>
