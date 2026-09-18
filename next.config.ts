@@ -85,6 +85,8 @@ const POSTS_DE_CASO: Record<string, { slug: string; post: number }> = {
   xsv2: { slug: "xarelto-sin-visita", post: 2 },
   apd1: { slug: "acceso-parte-d", post: 1 },
   apd2: { slug: "acceso-parte-d", post: 2 },
+  lk1: { slug: "leqembi-kisunla", post: 1 },
+  lk2: { slug: "leqembi-kisunla", post: 2 },
 };
 
 const nextConfig: NextConfig = {
