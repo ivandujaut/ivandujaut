@@ -90,9 +90,10 @@ const POSTS_DE_CASO: Record<string, { slug: string; post: number }> = {
 };
 
 const nextConfig: NextConfig = {
-  experimental: {
-    viewTransition: true,
-  },
+  // Hasta 16.2 las view transitions pedían `experimental.viewTransition: true`.
+  // En 16.3 la opción dejó de existir (el typecheck la rechaza) porque el App
+  // Router las soporta sin configuración: el `<ViewTransition>` de React sigue
+  // funcionando igual en las tarjetas de casos y en la cabecera de cada uno.
   // La API de ingestión de PostHog usa barra final (`/e/`). Sin esto Next.js la
   // redirige y los eventos se pierden en silencio.
   skipTrailingSlashRedirect: true,
