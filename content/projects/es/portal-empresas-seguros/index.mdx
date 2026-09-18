@@ -1,15 +1,24 @@
 ---
 title: "La autogestión que el promedio esconde"
-tagline: "Un portal de empresas puede reportar 95% de autogestión en consultas y 0% real en transacciones, con el call center igual de cargado"
-description: "Cómo medir el portal B2B de una aseguradora: consultas y transacciones por separado, la tasa de resolución directa como métrica norte, la latencia de vigencia como riesgo y el recontacto como control de honestidad. Continúa el análisis del canal digital de La Caja."
+tagline: "Recorrí diez aseguradoras y conté 25 accesos de autogestión. Cada uno cuenta usuarios, y la misma persona aparece en varios a la vez"
+description: "Relevamiento propio de la autogestión de diez aseguradoras argentinas: 25 accesos dedicados en siete compañías, repartidos en cinco audiencias que entran cada una por su puerta. Por qué los números de adopción describen cuentas antes que personas, y qué mediría en su lugar."
 year: 2026
-date: "2026-08-12"
+date: "2026-08-14"
 status: "concept"
 kind: "case-study"
 subject: "external"
 topic: "seguros"
 featured: false
-stack: ["Recorrido de producto", "Datos abiertos (SSN)"]
+stack: ["Recorrido de producto", "Python", "Datos abiertos (SSN)"]
+metrics:
+  - label: "Accesos de autogestión relevados"
+    value: "25"
+  - label: "Audiencias con entrada propia"
+    value: "5"
+  - label: "Productores matriculados en el país"
+    value: "53.575"
+  - label: "Máximo en una sola compañía"
+    value: "6"
 code:
   - "scripts/analysis/portal-empresas-seguros.py"
   - "scripts/charts/portal-empresas-seguros.py"
@@ -17,73 +26,169 @@ translationKey: "portal-empresas-seguros"
 draft: true
 ---
 
-**[BORRADOR EN PREPARACIÓN. Este caso sale de separar la sección del portal de
-empresas del caso canal-digital-seguros (decisión del 2026-08-12: dos temas, dos
-casos). Lo que sigue es el material movido, todavía con la voz vieja; se reescribe
-charlado en su propio ciclo de trabajo, con hoja de hechos propia en
-`data/portal-empresas-seguros/facts.md`.]**
+<Abstract label="En resumen">
 
-**[PENDIENTE: Abstract + Thesis. Tesis candidata: el promedio de autogestión
-esconde el trabajo manual; el portal se mide por las transacciones que se cierran
-solas.]**
+Quería ver cuántos portales de autogestión tiene una aseguradora, así que fui a contarlos.
+Recorrí diez compañías argentinas por el HTML que entregan sus sitios, sin credenciales y
+sin cargar un dato, y encontré **25 accesos dedicados en siete de ellas**. El titular de una
+póliza, el productor, el taller que sube un presupuesto y el que denuncia un siniestro
+entran cada uno por su puerta.
 
-**[PENDIENTE: intro propia que presente el caso como continuación del relevamiento
-del canal digital, con link a /projects/canal-digital-seguros.]**
+Cada una de esas puertas puede tener su propio registro de usuarios, y desde afuera no se
+puede confirmar si lo tiene. Si lo tiene, aparece el problema: una misma persona cruza
+varias. Mi hipótesis es que un productor asesor promedio trabaja con más de una
+aseguradora, y entonces es usuario de cada una; si además tiene su auto asegurado en
+alguna, ahí adentro es dos usuarios distintos. La Superintendencia de Seguros de la Nación
+(SSN) publica el padrón: **53.575 productores matriculados**, cada uno multiplicándose por
+las compañías que opera.
 
-## Material movido del caso canal (reescribir)
+Los números de adopción que salen de ahí describen cuentas antes que gente. Y no todas
+las compañías eligieron lo mismo: Sancor mantiene su autogestión sobre un solo dominio.
 
-El otro frente del canal digital es el portal B2B, y medirlo con el árbol de altas es un
-error de categoría. El portal no produce prima, evita llamadas. Su métrica norte es la tasa
-de autogestión, y el ahorro operativo son las gestiones deflectadas multiplicadas por el
-costo de una atención asistida.
+</Abstract>
 
-Lo que reorganiza el eje es una distinción que el número agregado esconde. Las **consultas**
-(pólizas vigentes, deuda, siniestros, nómina, certificados) se resuelven cuando el dato está
-y se encuentra. Las **transacciones**, que en una compañía de flotas son sobre todo el alta y
-la baja de vehículos, se resuelven cuando el trámite se cierra solo. **Un portal puede tener
-95% de autogestión en consultas y 0% real en transacciones, reportar un promedio excelente y
-tener el call center igual de cargado.** Las dos familias se miden y se reportan por
-separado, o el promedio miente.
+<Thesis>
 
-De ahí sale la métrica que me parece la más valiosa del eje: **la tasa de resolución
-directa**, solicitudes de alta y baja de vehículos completadas sin intervención humana sobre
-el total de solicitudes. En una compañía donde automotores es el 82,7% de la producción,
-hasta el portal B2B es de auto, y las flotas rotan todo el tiempo. Si ese trámite es una
-solicitud que cae en una bandeja y no una transacción que se cierra sola, hay un volumen
-alto que figura como autogestión y es trabajo manual. Desde afuera no se puede confirmar, y
-es la primera pregunta que haría adentro.
+Cada sistema cuenta usuarios. Nadie cuenta personas: la misma persona aparece como usuario
+distinto en cada acceso que cruza.
 
-Hay además una métrica del portal que no es de eficiencia sino de riesgo: **la latencia entre
-la solicitud de alta de un vehículo y su vigencia**. Mientras esa ventana está abierta hay un
-auto de la flota circulando sin cobertura. Es el número que saca la conversación de la
-eficiencia del área y la lleva a la exposición de la compañía.
+</Thesis>
 
-Y una que lo mantiene honesto: **el recontacto posterior a la gestión**. Sin ella la tasa de
-autogestión se infla sola, empujando al usuario al portal sin registrar el ticket que llama
-después. Medir el recontacto es aceptar de entrada que la métrica principal se puede
-manipular.
+## Qué es dato y qué es elección mía
 
-Tres cosas se ven desde la puerta del portal, sin credenciales y sin cargar un dato. Pide
-**número de documento**, no CUIT, así que la identidad es de la persona y contar «empresas
-activas» exige un join usuario a empresa que puede no ser uno a uno. Corre la versión
-V 3.7.7.2, mientras el portal de productores usa un sistema de identidad distinto y más
-viejo. Y avisa que **«estamos mejorando nuestra seguridad y el proceso de registro e inicio
-de sesión está cambiando»**: una migración de login en curso es una discontinuidad en la
-serie de adopción, y cualquier caída de usuarios activos durante ese período va a ser
-ambigua entre desinterés y fricción de re-registro. Eso se deja anotado antes de que pase,
-para no tener que explicarlo después.
+| Cifra                                                   | Estatus                 | Fuente                                                    |
+| ------------------------------------------------------- | ----------------------- | --------------------------------------------------------- |
+| 25 accesos de autogestión en 7 aseguradoras             | dato + curaduría manual | relevamiento propio sobre el HTML servido, 14/08/2026     |
+| Esos 25 accesos viven en 18 subdominios distintos       | dato                    | ídem                                                      |
+| Cinco audiencias con entrada propia                     | dato                    | ídem, clasificadas por host y ruta                        |
+| Mercantil Andina, 6 accesos en 3 subdominios            | dato                    | ídem                                                      |
+| San Cristóbal, 5 accesos en 5 subdominios               | dato                    | ídem                                                      |
+| Federación Patronal, 4 accesos sobre un solo host       | dato                    | ídem, verificado uno por uno                              |
+| Sancor, autogestión sobre un solo dominio               | dato                    | ídem, verificado sobre la URL final, no sobre el estado   |
+| 53.575 productores asesores matriculados                | dato                    | SSN, dataset abierto al 12/2025 (actualizado 19/01/2026)  |
+| Promedio de 3,6 accesos en las siete que tienen accesos | derivado                | 25 dividido 7 (3,57 ≈ 3,6)                                |
+| Con cuántas compañías trabaja un productor              | sin dato                | no publicado: el caso no lo estima                        |
+| Zurich y Rivadavia                                      | sin dato                | **inconclusos**, cada uno por su motivo (ver los límites) |
+| Qué pasa detrás de cada login                           | sin dato                | **no observable desde afuera**: el caso no lo afirma      |
 
-## Preguntas que se llevan a la entrevista (movidas del caso canal)
+<TableCaption>
+  El conteo es una lista curada: el script busca candidatos en el HTML servido y cada acceso se
+  verificó a mano, con las exclusiones y su motivo anotados en el script. Lo que no aparece en el
+  HTML queda inconcluso, y no se anota como cero. Un conteo bajo tampoco significa que la compañía
+  esté unificada, salvo que se haya verificado el patrón de dominio único.
+</TableCaption>
 
-1. **La solicitud de alta de vehículo del portal de empresas, ¿se resuelve sola o cae en una
-   bandeja, y cuánto tarda en quedar vigente?** Si cae en una bandeja hay un trámite de
-   altísimo volumen que figura como autogestión y es trabajo manual. Y mientras tarda, hay
-   un auto de flota circulando sin cobertura.
-2. **¿Cuánto cuesta una gestión asistida?** Es el multiplicador que convierte gestiones
-   evitadas en pesos, y sin él el ahorro es una estimación mía.
+## Siete de diez reparten la autogestión en una constelación de accesos
 
-**[PENDIENTE: decidir si entra un benchmark de portales B2B de otras aseguradoras,
-espejando el benchmark de cotizadores del caso canal.]**
+Busqué los accesos de autogestión de cada aseguradora en el HTML que entrega su página
+principal y los clasifiqué por a quién apuntan. Cuenta como acceso una dirección dedicada a
+una audiencia, del estilo `productores.`, `prestadores.` o `siniestros.`: cuando una
+compañía le da a un público su propia dirección, le está dando una entrada, un registro y
+una forma de medir aparte.
 
-**[PENDIENTE: cierre + la línea de independencia: análisis independiente, sin
-relación comercial con La Caja.]**
+El resultado no fue el que esperaba. Buscaba un portal por compañía y encontré, en las
+siete que tienen accesos dedicados, un promedio de 3,6 por compañía.
+
+<Figure
+  src="/projects/portal-empresas-seguros/constelacion-autogestion.png"
+  alt="Matriz de aseguradoras por audiencia: cada punto marca un acceso dedicado a clientes, productores, prestadores y talleres, siniestros y terceros o alianzas. Mercantil Andina aparece con seis accesos en tres subdominios, San Cristóbal con cinco accesos en cinco subdominios y Federación Patronal con cuatro accesos sobre un solo host; Sancor aparece con una línea que indica un solo dominio"
+  width={2000}
+  height={1280}
+  caption="Un punto es un acceso dedicado a esa audiencia; el número adentro, cuántos. Las dos últimas columnas separan accesos de subdominios, porque no dicen lo mismo: cuatro aplicaciones sobre un mismo host pueden compartir la identidad; cuatro subdominios traen cada uno la suya."
+/>
+
+Mercantil Andina es el extremo, con seis accesos repartidos en tres direcciones. San
+Cristóbal tiene cinco, cada uno en una dirección separada, que cubren cuatro audiencias.
+Federación Patronal tiene cuatro puertas, pero las sirve todas desde un mismo
+host, así que ahí lo que se separa es la aplicación, y la identidad puede ser compartida.
+Provincia tiene cuatro repartidas en tres direcciones. Mapfre tiene tres, en tres
+direcciones y para tres audiencias. La Caja tiene dos: la de titulares y
+la de su canal de alianzas. La Segunda muestra un solo acceso dedicado, el de reclamos de
+terceros, y su home no enlaza autogestión de titulares.
+
+Del otro lado está Sancor, que mantiene su autogestión sobre el dominio principal. Un solo
+dominio puede ser una sola sesión, y en ese caso la actividad de una persona se seguiría
+de punta a punta sin pegar registros de sistemas que no se conocen entre sí; desde afuera
+tampoco se puede confirmar.
+
+## La misma persona, contada muchas veces
+
+Hasta acá el conteo es por compañía. Lo que cambia el problema es mirarlo desde la persona.
+
+Mi hipótesis es que un productor asesor promedio coloca pólizas en más de una compañía, y
+en cada una entra por el sistema de productores de esa compañía, con una credencial propia.
+El padrón de la SSN tiene **53.575 productores matriculados**, y ese número se multiplica
+por cuántas compañías opera cada uno, que no está publicado en ningún lado.
+
+Lo mismo pasa hacia adentro de una sola compañía. Un taller que repara autos de una
+aseguradora entra por el sistema de prestadores; si además tiene la flota del taller
+asegurada ahí, entra por el de clientes con otro usuario. En los registros son dos. En la
+vereda es una persona con dos contraseñas.
+
+De ahí sale el problema de medición, y no depende de cómo reporte cada área. Los sistemas
+cuentan usuarios, que es lo único que pueden contar. Contar personas exige unir bases
+distintas, y esa unión hay que construirla. Mientras no exista, «usuarios activos»
+significa cuentas activas, y las dos cosas se parecen lo suficiente como para que nadie
+note la diferencia hasta que una decisión sale mal.
+
+## Qué mediría en su lugar
+
+Empezaría por decir qué se está contando. Una tasa por audiencia, cada una con su nombre,
+muestra dónde hay uso y dónde no, que es lo que hace falta para decidir dónde invertir.
+
+Después, dentro de cada audiencia, separaría dos familias que hoy se suman. Las
+**consultas** son mirar algo que ya existe, como una póliza vigente o el estado de un
+siniestro. Se resuelven cuando el dato está y se encuentra. Las **transacciones** cambian
+algo, como dar de alta un vehículo o cargar el presupuesto de una reparación. Se resuelven
+cuando el trámite se cierra solo. Un portal puede tener las consultas impecables y
+transacciones que en realidad son formularios esperando que alguien los procese, y el
+promedio de las dos familias esconde esa diferencia.
+
+De ahí salen las tres que empezaría a medir. La **tasa de resolución directa**:
+transacciones completadas sin intervención humana sobre el total de solicitudes. La
+**latencia entre la solicitud y su efecto**, que es una medida de riesgo: cuando lo que se
+pide es dar de alta un vehículo, mientras esa ventana está abierta hay un auto en
+circulación sin cobertura. Y el **recontacto posterior a la gestión**, que es el control
+que mantiene honesta a la primera: sin él, empujar gente al portal sube la tasa de
+autogestión aunque el llamado llegue igual unos días después.
+
+## Lo que este trabajo no puede sostener
+
+- **Es un piso observado.** Cuento lo que viaja en el HTML servido, así que una compañía
+  que publique sus accesos por JavaScript aparece con menos de los que tiene.
+- **Zurich y Rivadavia quedan afuera por motivos distintos.** Zurich no entrega texto sin
+  ejecutar JavaScript, así que de su autogestión no sé nada. Rivadavia sí entrega su página
+  y sólo declara un acceso para productores, sin autogestión de titulares a la vista: puede
+  no tenerla, o puede estar en un lugar que su home no enlaza.
+- **No sé qué hay detrás de cada login.** Dos direcciones pueden compartir base de usuarios
+  y verse separadas sólo de puertas para afuera. Es la primera pregunta que haría adentro.
+- **No hay dato público de con cuántas compañías trabaja un productor.** El padrón dice
+  cuántos hay; en cuántos sistemas está cada uno no está publicado, así que el
+  multiplicador queda enunciado y sin número. Existen productores exclusivos de una
+  compañía, y por eso lo anterior queda como hipótesis.
+- **El costo de una gestión asistida tampoco es público.** Lo busqué: hay precios sueltos de
+  proveedores que se contradicen entre sí y licitaciones que empaquetan el call center con la
+  telefonía, sin forma de despejar el costo por contacto. Sin ese número, cualquier cuenta
+  de ahorro operativo es una estimación, así que este caso no la hace.
+- **La clasificación por audiencia la hice yo**, leyendo el nombre de cada dirección. Una
+  ambigua la puedo haber puesto en la familia equivocada, y por eso el detalle acceso por
+  acceso queda publicado para que se pueda revisar:
+  [accesos.csv](/projects/portal-empresas-seguros/accesos.csv).
+- **Un dato menor que encontré de paso:** San Cristóbal enlaza desde su home un portal de
+  suscripciones cuyo host no responde. No lo conté como acceso, porque no hay forma de saber
+  si el sistema existe.
+
+## Las cuatro preguntas que sólo se contestan puertas adentro
+
+1. **¿Esas direcciones comparten base de usuarios, o son registros de verdad distintos?** Es
+   la condición de muerte de la tesis: si comparten base, el conteo describe puertas, y lo que
+   hay detrás queda abierto.
+2. **¿Cuántas cuentas de las que tienen corresponden a la misma persona?** Sin esa cuenta, el
+   total de cuentas no dice a cuánta gente se atiende.
+3. **El alta de un vehículo, ¿se cierra sola o queda esperando que alguien la procese, y
+   cuánto tarda en tener efecto?** Si espera, hay volumen figurando como autogestión que en
+   realidad es trabajo manual.
+4. **¿Cuánto cuesta una gestión asistida?** Sin ese número, una gestión evitada no se puede expresar en pesos.
+
+Este es un trabajo independiente, hecho con fuentes públicas. No tengo ni tuve relación
+comercial con ninguna de las compañías mencionadas.
