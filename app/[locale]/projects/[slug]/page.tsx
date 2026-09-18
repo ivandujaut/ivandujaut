@@ -201,6 +201,11 @@ export default async function ProjectPage({ params }: Props) {
         slug={slug}
         targetSelector="#case-study-article"
         readingMinutes={project.metadata?.readingTime}
+        // `parent` sólo lo tiene un análisis, y `analysis` sólo aparece cuando
+        // este caso tiene una segunda capa colgando. Un caso de una sola pieza
+        // no cumple ninguna de las dos y queda como `single`.
+        layer={project.parent ? "analysis" : analysis ? "pitch" : "single"}
+        family={project.parent ?? slug}
       />
       <PaperToc
         containerSelector="#case-study-content"

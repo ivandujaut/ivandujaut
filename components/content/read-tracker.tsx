@@ -13,6 +13,22 @@ interface ReadTrackerProps {
   targetSelector: string;
   /** Minutos declarados de lectura, para calcular cuánto tiempo exige contar una lectura. */
   readingMinutes?: number;
+  /**
+   * Qué capa del caso es esta pieza, para el test de dos capas.
+   *
+   * Va como propiedad y no se deduce del slug en la consulta: el sufijo
+   * `-analisis` es una convención de nombres de hoy, y un embudo que dependa de
+   * ella se rompe en silencio el día que un caso se llame distinto.
+   */
+  layer?: "pitch" | "analysis" | "single";
+  /**
+   * El caso al que pertenece la pieza: para un pitch es su propio slug y para
+   * un análisis, el de su pitch. Las dos capas comparten familia.
+   *
+   * Sirve para dos cosas: agrupar el embudo por caso sin pegar strings, y
+   * excluir a la otra capa de `content_continued` (ver `marcarContinuidad`).
+   */
+  family?: string;
 }
 
 /** Porcentaje del artículo que hay que recorrer para que cuente como leído. */
@@ -64,6 +80,8 @@ export function ReadTracker({
   slug,
   targetSelector,
   readingMinutes,
+  layer = "single",
+  family,
 }: ReadTrackerProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -106,6 +124,13 @@ export function ReadTracker({
       for (let i = 0; i < sessionStorage.length; i++) {
         const k = sessionStorage.key(i);
         if (!k?.startsWith("read:") || k === `read:${kind}:${locale}:${slug}`) continue;
+        // La otra capa del MISMO caso no es continuidad. `content_continued`
+        // mide que alguien pase de un caso a otro, que es lo que dice si el
+        // sitio engancha; terminar el pitch y después el análisis es terminar
+        // un caso en dos partes. Sin esta guarda, un caso de dos capas se
+        // anota una continuidad que los de una sola no pueden tener, y deja
+        // de ser comparable con el resto.
+        if (family && sessionStorage.getItem(k.replace(/^read:/, "fam:")) === family) continue;
         const t = Number(sessionStorage.getItem(k));
         if (Number.isFinite(t) && t < primeraMarca) {
           primeraMarca = t;
@@ -136,6 +161,8 @@ export function ReadTracker({
       kind,
       locale,
       slug,
+      layer,
+      family: family ?? slug,
     });
 
     const target = document.querySelector(targetSelector);
@@ -173,7 +200,14 @@ export function ReadTracker({
         if (pct < hito || hito <= hitoMax) continue;
         hitoMax = hito;
         sessionStorage.setItem(claveProgreso, String(hito));
-        track("content_progress", { kind, locale, slug, depth: hito });
+        track("content_progress", {
+          kind,
+          locale,
+          slug,
+          layer,
+          family: family ?? slug,
+          depth: hito,
+        });
       }
     };
 
@@ -185,7 +219,7 @@ export function ReadTracker({
       if (!abstract || sessionStorage.getItem(claveAbstract)) return;
       if (abstract.getBoundingClientRect().bottom >= 0) return;
       sessionStorage.setItem(claveAbstract, "1");
-      track("content_abstract_passed", { kind, locale, slug });
+      track("content_abstract_passed", { kind, locale, slug, layer, family: family ?? slug });
     };
 
     /**
@@ -201,6 +235,8 @@ export function ReadTracker({
           kind,
           locale,
           slug,
+          layer,
+          family: family ?? slug,
           depth_max: profundidadMax,
           seconds_visible: Math.round(visibleMs / 1000),
           reached_read: leido,
@@ -255,10 +291,16 @@ export function ReadTracker({
       // Y va antes de marcar esta como leída, para que su propia clave no
       // compita por ser la primera de la sesión.
       if (!sessionStorage.getItem(`read:${kind}:${locale}:${slug}`)) marcarContinuidad();
+      // Se guarda antes del `post`, porque `post` es el que escribe la marca
+      // `read:` y la familia tiene que estar disponible cuando la lea la
+      // siguiente pieza de la sesión.
+      if (family) sessionStorage.setItem(`fam:${kind}:${locale}:${slug}`, family);
       post(`reads/${kind}/${slug}`, `read:${kind}:${locale}:${slug}`, locale, "content_read", {
         kind,
         locale,
         slug,
+        layer,
+        family: family ?? slug,
         // Cuánto tardó en alcanzar el umbral. Permite distinguir al que leyó
         // rápido del que se quedó, sin cambiar la definición de lectura.
         seconds_visible: Math.round(visibleMs / 1000),
@@ -275,7 +317,7 @@ export function ReadTracker({
       // La página sigue viva, así que no hace falta el beacon.
       registrarSalida(false);
     };
-  }, [kind, locale, slug, targetSelector, readingMinutes]);
+  }, [kind, locale, slug, targetSelector, readingMinutes, layer, family]);
 
   return null;
 }
