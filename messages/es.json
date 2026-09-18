@@ -93,7 +93,6 @@
       "available": "Disponible",
       "tagline": "Decido con datos y construyo lo que decido. Cada cifra trazada a su fuente.",
       "credentials": "Bioingeniero ITBA · Techstars W24",
-      "badge": "Último caso: {title}",
       "ctas": {
         "work": "Ver mi trabajo",
         "cv": "Bajá mi CV"
@@ -106,11 +105,10 @@
       "paragraph2": "En paralelo enseño Técnicas Digitales a estudiantes de Electrónica en el IPSAJ (Instituto Politécnico San Arnoldo Janssen), la escuela técnica donde me recibí.",
       "paragraph3": "Busco un rol de product strategy o decision analytics en consultoría, salud, seguros o fintech. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Escribime o agendá una call."
     },
-    "sections": {
-      "featuredWork": "Proyectos destacados",
-      "stats": "Estadísticas",
-      "recentWriting": "Escritos recientes",
-      "openSource": "Open source"
+    "work": {
+      "title": "Trabajo publicado",
+      "viewAll": "Ver todos",
+      "cadence": "{count} casos publicados desde {since}, uno cada {days, plural, one {día} other {# días}}."
     }
   },
   "blog": {
@@ -168,6 +166,17 @@
       "analysisBody": "Esta es la versión corta. El análisis completo tiene los datos, las definiciones y los supuestos que hay detrás de cada número.",
       "analysisCta": "Ver el análisis completo",
       "parentNote": "Este es el análisis completo de <link>{title}</link>. Si llegaste directo acá, esa versión de {minutes, plural, one {# minuto} other {# minutos}} tiene la respuesta y la recomendación."
+    },
+    "index": {
+      "entryTitle": "Empezá por acá"
+    },
+    "topics": {
+      "salud": "Salud · Estados Unidos",
+      "seguros": "Seguros · Argentina",
+      "fintech": "Pagos · Brasil",
+      "proptech": "Proptech",
+      "educacion": "Educación",
+      "web": "Web"
     }
   },
   "paper": {

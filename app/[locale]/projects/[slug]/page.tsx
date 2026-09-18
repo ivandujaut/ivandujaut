@@ -222,8 +222,16 @@ export default async function ProjectPage({ params }: Props) {
           <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
+            {/* Mes y año, el mismo formato que la tarjeta del listado: los dos
+                extremos del morph tienen que decir lo mismo, y el año solo no
+                distinguía dieciséis piezas publicadas en 2026. */}
             <ViewTransition name={`project-year-${project.slug}`} share="morph">
-              <span>{project.year}</span>
+              <time dateTime={project.date}>
+                {new Date(project.date).toLocaleDateString(typedLocale, {
+                  month: "short",
+                  year: "numeric",
+                })}
+              </time>
             </ViewTransition>
             <span aria-hidden>·</span>
             <KindBadge kind={project.kind} />

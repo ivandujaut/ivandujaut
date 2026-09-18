@@ -113,9 +113,42 @@ export function getProjectAnalysis(locale: Locale, pitchSlug: string) {
   return getAllProjects(locale).find((p) => p.parent === pitchSlug);
 }
 
-/** Curaduría para la home. El listado ya no la usa: agrupa por `subject`. */
-export function getFeaturedProjects(locale: Locale) {
-  return getProjects(locale).filter((p) => p.featured);
+/**
+ * La pieza por la que conviene empezar, para el ancla del índice.
+ *
+ * Si hay más de una marcada, gana la más nueva: `getProjects` ya viene
+ * ordenado por fecha descendente.
+ */
+export function getEntryProject(locale: Locale) {
+  return getProjects(locale).find((p) => p.entry);
+}
+
+/**
+ * Ritmo de publicación, calculado y no escrito a mano: cuántas piezas hay,
+ * desde cuándo, y cada cuántos días sale una.
+ *
+ * La constancia es el mejor argumento del sitio y hasta el 18/09/2026 era
+ * invisible: las tarjetas sólo mostraban el año, así que dieciséis piezas en
+ * tres meses se leían igual que dieciséis piezas en tres años.
+ *
+ * El promedio se calcula sobre la ventana cerrada (de la primera a la última
+ * publicación) y no contra hoy: si no, la cifra se degrada sola entre
+ * publicaciones y el sitio se acusa de inactivo en su propia home.
+ */
+export function getPublishingCadence(locale: Locale) {
+  const all = getProjects(locale);
+  if (all.length < 2) return undefined;
+
+  const newest = new Date(all[0].date);
+  const oldest = new Date(all[all.length - 1].date);
+  const days = Math.round((+newest - +oldest) / 86_400_000);
+  if (days <= 0) return undefined;
+
+  return {
+    count: all.length,
+    since: all[all.length - 1].date,
+    everyDays: Math.max(1, Math.round(days / (all.length - 1))),
+  };
 }
 
 /**
@@ -148,19 +181,6 @@ export function getProjectTranslations(project: { translationKey?: string; local
   return projects.filter(
     (p) => p.translationKey === project.translationKey && p.locale !== project.locale,
   );
-}
-
-/**
- * Caso que anuncia el badge del hero: siempre **el más nuevo publicado**.
- *
- * Antes elegía el más nuevo que tuviera `preview` definido, y eso lo hacía
- * envejecer en silencio: si un caso nuevo no declaraba sus 3 imágenes, el badge
- * seguía anunciando uno viejo sin que nada fallara. Ahora el texto del badge no
- * puede quedar desactualizado, y el abanico de imágenes queda como decoración
- * opcional: se muestra solo si ese caso trae `preview` (ver `Hero`).
- */
-export function getLatestProject(locale: Locale) {
-  return getProjects(locale)[0];
 }
 
 /**

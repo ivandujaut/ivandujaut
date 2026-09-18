@@ -1,13 +1,10 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Hero } from "@/components/home/hero";
 import { Currently } from "@/components/home/currently";
-import { FeaturedProjects } from "@/components/home/featured-projects";
-import { StatsGrid } from "@/components/home/stats-grid";
-import { RecentPosts } from "@/components/home/recent-posts";
-import { getAllStats } from "@/lib/stats";
+import { PublishedWork } from "@/components/home/published-work";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -83,30 +80,27 @@ export default async function Home({ params }: Props) {
 
   setRequestLocale(locale);
 
-  const stats = await getAllStats(locale as "es" | "en");
-  const tSections = await getTranslations({ locale, namespace: "home.sections" });
-
   return (
-    // Más padding arriba que el `py-24` original: el abanico del badge sube
-    // desde arriba del h1 y con 24 se metía abajo del navbar sticky. En `lg`
-    // el abanico es el grande y sube ~114px, así que ahí hace falta más aire.
-    <main id="main" className="mx-auto max-w-2xl px-6 pt-28 pb-24 lg:pt-40">
+    // El padding extra de arriba (`pt-28 lg:pt-40`) existía para que el
+    // abanico del badge no se metiera abajo del navbar sticky. Sin badge, ese
+    // aire es un hueco.
+    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
       <JsonLd data={personSchema(locale as "es" | "en")} />
-      <Hero locale={locale as "es" | "en"} />
+      <Hero />
 
+      {/* La obra antes que la biografía. Hasta el 18/09/2026 el orden era
+          "Actualmente" (dónde trabajo hoy) y después los casos, o sea el CV
+          primero y la prueba después; es el mismo orden que /about ya había
+          dado vuelta. Y detrás de los casos venían dos bloques que jugaban en
+          contra: las estadísticas, donde un tercio del espacio eran commits y
+          repos de GitHub (ruido para un perfil de producto y análisis), y
+          "Escritos recientes", tres posts de mayo sobre el propio proceso,
+          que era lo último que leía el que llegaba al final. El blog sigue en
+          el nav; lo que se saca es su lugar de cierre de la home. */}
       <div className="mt-16 space-y-16">
+        <PublishedWork locale={locale as "es" | "en"} />
+
         <Currently />
-
-        <FeaturedProjects locale={locale as "es" | "en"} />
-
-        <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {tSections("stats")}
-          </h2>
-          <StatsGrid stats={stats} locale={locale as "es" | "en"} />
-        </section>
-
-        <RecentPosts locale={locale as "es" | "en"} />
       </div>
     </main>
   );

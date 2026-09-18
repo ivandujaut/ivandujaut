@@ -93,7 +93,6 @@
       "available": "Available",
       "tagline": "I decide with data and build what I decide. Every figure traced back to its source.",
       "credentials": "Bioengineer at ITBA · Techstars W24",
-      "badge": "Latest case: {title}",
       "ctas": {
         "work": "See my work",
         "cv": "Download my CV"
@@ -106,11 +105,10 @@
       "paragraph2": "In parallel I teach Digital Techniques to Electronics students at IPSAJ (Instituto Politécnico San Arnoldo Janssen), the technical school I graduated from.",
       "paragraph3": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. Email me or book a call."
     },
-    "sections": {
-      "featuredWork": "Featured projects",
-      "stats": "Stats",
-      "recentWriting": "Recent writing",
-      "openSource": "Open source"
+    "work": {
+      "title": "Published work",
+      "viewAll": "View all",
+      "cadence": "{count} case studies published since {since}, one every {days, plural, one {day} other {# days}}."
     }
   },
   "blog": {
@@ -168,6 +166,17 @@
       "analysisBody": "This is the short version. The full analysis has the data, the definitions and the assumptions behind every number.",
       "analysisCta": "Read the full analysis",
       "parentNote": "This is the full analysis behind <link>{title}</link>. If you landed here directly, that {minutes}-minute version has the answer and the recommendation."
+    },
+    "index": {
+      "entryTitle": "Start here"
+    },
+    "topics": {
+      "salud": "Healthcare · United States",
+      "seguros": "Insurance · Argentina",
+      "fintech": "Payments · Brazil",
+      "proptech": "Proptech",
+      "educacion": "Education",
+      "web": "Web"
     }
   },
   "paper": {
