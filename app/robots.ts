@@ -24,11 +24,11 @@ const FUERA_DE_ALCANCE = ["/api/", "/r/", "/li", "/tt"];
  * Nombrarlos no cambia lo que pueden hacer: cambia que sea una decisión escrita
  * y no un descuido, y deja el lugar donde revocar a uno si algún día conviene.
  *
- * La decisión es dejarlos entrar a todos, y es deliberada. El objetivo de este
- * sitio no es proteger el texto, es que cuando alguien pregunte algo que un caso
- * contesta, el modelo tenga el número y sepa de dónde salió. El costo es real y
- * conviene decirlo: el texto entra a corpus de entrenamiento sin ninguna
- * garantía de atribución.
+ * La decisión es dejar entrar a los que devuelven algo, y es deliberada. El
+ * objetivo de este sitio no es proteger el texto, es que cuando alguien pregunte
+ * algo que un caso contesta, el modelo tenga el número y sepa de dónde salió. El
+ * costo es real y conviene decirlo: el texto entra a corpus de entrenamiento sin
+ * ninguna garantía de atribución.
  *
  * `Google-Extended` merece mención aparte porque no es un rastreador: es la
  * señal con la que Google decide si el contenido que ya rastreó puede usarse
@@ -46,10 +46,26 @@ const AGENTES_DE_IA = [
   "Perplexity-User",
   "Google-Extended",
   "Applebot-Extended",
-  "CCBot",
   "meta-externalagent",
-  "Bytespider",
 ];
+
+/**
+ * Los que se llevan el texto y no devuelven una cita.
+ *
+ * Decisión de Iván, 2026-09-19. Los dos raspan para armar corpus, no para
+ * contestarle a nadie con un enlace de vuelta, así que no pagan el costo de
+ * estar adentro.
+ *
+ * Necesitan grupo propio con `Disallow: /`. Sacarlos de la lista de arriba no
+ * los bloquea: los devuelve al grupo `*`, que permite todo. Es la misma regla de
+ * robots.txt que obliga a repetir los `Disallow` en cada grupo, leída al revés.
+ *
+ * Dos avisos honestos. Bloquear a `CCBot` deja el sitio fuera de Common Crawl,
+ * que es la base de la que se sirven muchos otros; es exactamente lo que se
+ * quiere acá, pero el efecto es más ancho que un solo rastreador. Y `Bytespider`
+ * tiene antecedentes de ignorar robots.txt: esto es un pedido, no una reja.
+ */
+const AGENTES_BLOQUEADOS = ["CCBot", "Bytespider"];
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -63,6 +79,10 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: AGENTES_DE_IA,
         allow: "/",
         disallow: FUERA_DE_ALCANCE,
+      },
+      {
+        userAgent: AGENTES_BLOQUEADOS,
+        disallow: "/",
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
