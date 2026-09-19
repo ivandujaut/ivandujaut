@@ -146,6 +146,16 @@ const projects = defineCollection({
       // la más nueva y las demás quedan en su grupo, sin etiqueta.
       entry: s.boolean().default(false),
       stack: s.array(s.string()).min(1),
+      // Las entidades que el caso analiza: empresas, programas, productos y
+      // organismos con nombre propio. Van al `about` del JSON-LD, al lado del
+      // tema, y son lo que permite que una máquina entienda que la pieza habla
+      // de Medicare y de Xarelto, y no sólo de "acceso al mercado en salud".
+      //
+      // Se escriben con el nombre por el que se los busca, y son los mismos en
+      // castellano y en inglés porque son nombres propios. Tres a seis por
+      // caso: más que eso diluye, y una entidad que el caso apenas menciona no
+      // entra, porque `about` declara de qué habla la pieza y no qué nombra.
+      entities: s.array(s.string()).default([]),
       repo: s.string().url().optional(),
       demo: s.string().url().optional(),
       figma: s.string().url().optional(),
