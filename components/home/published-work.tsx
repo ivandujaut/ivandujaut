@@ -30,12 +30,13 @@ const HOME_LIMIT = 3;
  * La primera pieza va con imagen porque la home no tenía ninguna evidencia de
  * que acá se publica algo.
  *
- * Manda la portada y el gráfico queda de reserva, al revés que el 18/09/2026.
- * El argumento de entonces era que un gráfico prueba que adentro hay análisis;
- * el problema es que un gráfico llega como una ruta suelta, sin medidas, así
- * que hay que meterlo en una caja fija y ahí aparecen las bandas vacías a los
- * costados. La portada trae sus medidas desde Velite y está dibujada a 16:9
- * para este lugar: entra exacta. Todos los casos publicados tienen una.
+ * Manda el gráfico y la portada queda de reserva: una barra con cifras dice
+ * que adentro hay análisis, y una ilustración no.
+ *
+ * Eso se pudo hacer recién el 19/09/2026, cuando `preview` pasó a declararse
+ * como imagen en el esquema y trae ancho, alto y blur igual que la portada.
+ * Antes llegaba como una ruta suelta sin medidas, obligaba a una caja de
+ * proporción fija y el gráfico aparecía con bandas vacías a los costados.
  */
 export async function PublishedWork({ locale }: PublishedWorkProps) {
   const projects = getProjects(locale).slice(0, HOME_LIMIT);
@@ -46,20 +47,14 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
   const tReading = await getTranslations({ locale, namespace: "common.reading" });
   const cadence = getPublishingCadence(locale);
 
-  // La portada trae sus medidas desde Velite, así que se dibuja con su propia
-  // proporción y llena la caja exacto. El `preview` es una ruta suelta sin
-  // dimensiones: ahí hace falta una caja fija, y va sin recortar porque son
-  // gráficos (un recorte se come el título o el eje).
-  const portada = lead.cover
-    ? {
-        src: lead.cover.src.src,
-        alt: lead.cover.alt,
-        width: lead.cover.src.width,
-        height: lead.cover.src.height,
-        blurDataURL: lead.cover.src.blurDataURL,
-      }
-    : null;
-  const grafico = portada ? null : (lead.preview?.[0] ?? null);
+  // Las dos traen medidas y blur desde Velite, así que la que toque se dibuja
+  // con su propia proporción y llena la caja exacto.
+  const grafico = lead.preview?.[0] ?? null;
+  const imagen = grafico
+    ? { ...grafico.src, alt: grafico.alt }
+    : lead.cover
+      ? { ...lead.cover.src, alt: lead.cover.alt }
+      : null;
 
   return (
     <section>
@@ -83,12 +78,12 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
         className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
       >
         <article>
-          {portada && (
+          {imagen && (
             <Image
-              src={portada.src}
-              alt={portada.alt}
-              width={portada.width}
-              height={portada.height}
+              src={imagen.src}
+              alt={imagen.alt}
+              width={imagen.width}
+              height={imagen.height}
               sizes="(max-width: 768px) 100vw, 672px"
               // Es el LCP de la home en escritorio. `priority` está deprecado
               // en Next 16: para una imagen que ya está en el HTML inicial, la
@@ -96,25 +91,11 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
               // prioridad alta.
               loading="eager"
               fetchPriority="high"
-              {...(portada.blurDataURL
-                ? { placeholder: "blur" as const, blurDataURL: portada.blurDataURL }
+              {...(imagen.blurDataURL
+                ? { placeholder: "blur" as const, blurDataURL: imagen.blurDataURL }
                 : {})}
               className="mb-3 h-auto w-full rounded-lg border border-border"
             />
-          )}
-
-          {grafico && (
-            <div className="relative mb-3 aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted/30">
-              <Image
-                src={grafico.src}
-                alt={grafico.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, 672px"
-                loading="eager"
-                fetchPriority="high"
-                className="object-contain"
-              />
-            </div>
           )}
 
           <span className="mb-2 inline-flex flex-wrap gap-1.5">
