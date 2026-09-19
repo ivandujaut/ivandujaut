@@ -130,10 +130,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             - Nada de aforismos de cierre ("me quedó la costumbre de pedirle un
               número a una decisión"). Los párrafos terminan en un hecho.
             - No son "análisis de mercado" ni "temas que me interesan". El eje
-              está en el frontmatter: de dieciocho casos, ocho son `salud` y
-              siete `seguros`, y el porqué es estructural (la empresa decide
-              por el cliente y esa decisión deja rastro público, que es lo
-              único que permite reconstruirla desde afuera).
+              está en el frontmatter: de los diecisiete casos publicados, ocho
+              son `salud` y seis `seguros`, y el porqué es estructural (la
+              empresa decide por el cliente y esa decisión deja rastro público,
+              que es lo único que permite reconstruirla desde afuera).
             - Los números van en primera persona del singular. Acá se vende él,
               no el equipo en el que estaba.
             - El cierre no pide un cargo. Analista, product manager y product
