@@ -171,6 +171,7 @@ type ArticleInput = {
   wordCount?: number;
   readingTimeMinutes?: number;
   about?: string;
+  entities?: string[];
 };
 
 /**
@@ -197,7 +198,18 @@ function articleSchema(input: ArticleInput) {
       width: 1200,
       height: 630,
     },
-    ...(input.about ? { about: { "@type": "Thing", name: input.about } } : {}),
+    // `about` es una lista: primero el tema, después cada entidad con nombre
+    // propio. El tema hace que la pieza se ubique en un campo; las entidades son
+    // las que la hacen aparecer cuando alguien pregunta por Medicare o por
+    // Xarelto, que es como se pregunta en realidad.
+    ...(input.about || input.entities?.length
+      ? {
+          about: [
+            ...(input.about ? [{ "@type": "Thing", name: input.about }] : []),
+            ...(input.entities ?? []).map((name) => ({ "@type": "Thing", name })),
+          ],
+        }
+      : {}),
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     url,
     author: AUTHOR,
@@ -236,6 +248,7 @@ type ProjectArticleInput = {
   datePublished: string;
   topic: string;
   kind?: string;
+  entities?: string[];
   image: string;
   wordCount?: number;
   readingTimeMinutes?: number;
