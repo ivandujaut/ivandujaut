@@ -221,7 +221,6 @@
       "experience": "Experience",
       "education": "Education",
       "tools": "Toolbox",
-      "languages": "Languages",
       "contact": "Contact"
     },
     "work": {
@@ -232,33 +231,7 @@
       "all": "See all case studies"
     },
     "tools": {
-      "intro": "I do the analysis in Python over PostgreSQL and the measurement with PostHog. When I need to see the product working, I prototype it in Next.js and TypeScript. I've integrated payments with Stripe, Mercado Pago and PayPal, and moved a product off Bubble to rewrite it in Next.js.",
-      "categories": {
-        "frontend": {
-          "label": "Frontend",
-          "items": "React, Next.js, TypeScript, Tailwind CSS, shadcn/ui, MaterialUI"
-        },
-        "backend": {
-          "label": "Backend & Data",
-          "items": "Node.js, PostgreSQL, Supabase, REST APIs"
-        },
-        "payments": {
-          "label": "Payments",
-          "items": "Stripe, Mercado Pago, PayPal"
-        },
-        "productDesign": {
-          "label": "Product & Design",
-          "items": "Figma, JIRA, Linear, Notion"
-        },
-        "infrastructure": {
-          "label": "Infrastructure",
-          "items": "Vercel, GitHub Actions, CI/CD"
-        },
-        "data": {
-          "label": "Data & Analysis",
-          "items": "Python, NumPy, Pandas, matplotlib, PostHog"
-        }
-      }
+      "intro": "I do the analysis in Python over PostgreSQL and the measurement with PostHog. When I need to see the product working, I prototype it in Next.js and TypeScript. I've integrated payments with Stripe, Mercado Pago and PayPal, and moved a product off Bubble to rewrite it in Next.js."
     },
     "languages": {
       "spanish": "Spanish",

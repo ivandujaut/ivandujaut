@@ -8,7 +8,8 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
-import { getProjectsBySubject } from "@/lib/content";
+import { getEntryProject, getProjects, getPublishingCadence } from "@/lib/content";
+import { ProjectListItem } from "@/components/content/project-list-item";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -22,11 +23,11 @@ type Props = {
 };
 
 /**
- * Piezas que no entran en el listado del /about. En `/projects` tienen sentido;
- * acá el sitio hablando del sitio es autorreferencial y resta. Es la única
- * excepción manual a un listado que por lo demás sale de Velite solo.
+ * Cuántas piezas se muestran: la de entrada del índice y las tres más nuevas.
+ * Cuatro entran en media pantalla y alcanzan para mostrar de qué se trata; el
+ * cuerpo completo vive en `/projects`, que es la página hecha para recorrerlo.
  */
-const FUERA_DEL_ABOUT: string[] = ["portfolio"];
+const PIEZAS_EN_ABOUT = 4;
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
@@ -83,6 +84,23 @@ export default async function AboutPage({ params }: Props) {
 
 function AboutContent({ locale }: { locale: "es" | "en" }) {
   const t = useTranslations("about");
+  const tWork = useTranslations("home.work");
+
+  // La de entrada primero y después una por mercado, de la más nueva a la más
+  // vieja. No son "las cuatro más recientes" a propósito: las siete piezas más
+  // nuevas del sitio son todas de salud, y cuatro seguidas del mismo mercado
+  // dicen que eso es lo único que hace. Lo que esta página tiene que mostrar es
+  // que el método viaja entre industrias, que es el argumento del perfil.
+  const entrada = getEntryProject(locale);
+  const porFecha = getProjects(locale).filter((pieza) => pieza.slug !== entrada?.slug);
+  const mercadosUsados = new Set(entrada ? [entrada.topic] : []);
+  const unaPorMercado = porFecha.filter((pieza) => {
+    if (mercadosUsados.has(pieza.topic)) return false;
+    mercadosUsados.add(pieza.topic);
+    return true;
+  });
+  const destacados = [...(entrada ? [entrada] : []), ...unaPorMercado].slice(0, PIEZAS_EN_ABOUT);
+  const cadencia = getPublishingCadence(locale);
 
   return (
     <main id="main" className="mx-auto max-w-2xl px-6 py-24">
@@ -145,43 +163,52 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         {/* Trabajo publicado. Se arma desde Velite y no a mano: si se hardcodea,
             queda desactualizado en la primera pieza que se publique. Va antes
             que Experiencia a propósito: la obra es el argumento y el CV es el
-            respaldo, no al revés. Cada link de acá le pasa autoridad al caso,
-            que es lo que puede rankear; esta página no. */}
+            respaldo, no al revés.
+            
+            Hasta el 19/09/2026 listaba los dieciséis casos con su bajada, o sea
+            `/projects` otra vez, en letra más chica y sin fecha ni agrupación
+            por mercado: 1.176px en escritorio y 1.836 en un teléfono, dos
+            pantallas y cuarto de lista plana. Ahora van cuatro piezas con la
+            misma tarjeta del índice, la cadencia calculada y el link al resto.
+            Los casos que salen de acá siguen enlazados desde el índice, la
+            home, el sitemap, el RSS y los "siguientes casos" al pie de cada
+            pieza, así que no pierden autoridad interna. */}
         <section>
           <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {t("sections.work")}
           </h2>
-          <div className="space-y-8">
-            {(["external", "own"] as const).map((grupo) => {
-              const piezas = getProjectsBySubject(locale, grupo).filter(
-                (pieza) => !FUERA_DEL_ABOUT.includes(pieza.slug),
-              );
-              if (piezas.length === 0) return null;
-              return (
-                <div key={grupo}>
-                  <h3 className="mb-3 text-sm font-semibold tracking-tight">
-                    {t(`work.groups.${grupo}`)}
-                  </h3>
-                  <ul className="space-y-3">
-                    {piezas.map((pieza) => (
-                      <li key={pieza.slug} className="text-sm leading-relaxed">
-                        <Link
-                          href={`/projects/${pieza.slug}`}
-                          className="font-medium underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-                        >
-                          {pieza.title}
-                        </Link>{" "}
-                        <span className="text-muted-foreground">{pieza.tagline}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+          <div className="space-y-1">
+            {destacados.map((pieza) => (
+              <ProjectListItem
+                key={pieza.slug}
+                slug={pieza.slug}
+                title={pieza.title}
+                tagline={pieza.tagline}
+                date={pieza.date}
+                stack={pieza.stack}
+                showStack={false}
+                status={pieza.status}
+                kind={pieza.kind}
+                locale={locale}
+                surface="home"
+              />
+            ))}
           </div>
+          {cadencia && (
+            <p className="mt-5 text-sm text-muted-foreground">
+              {tWork("cadence", {
+                count: cadencia.count,
+                days: cadencia.everyDays,
+                since: new Date(cadencia.since).toLocaleDateString(locale, {
+                  month: "long",
+                  year: "numeric",
+                }),
+              })}
+            </p>
+          )}
           <Link
             href="/projects"
-            className="mt-6 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+            className="mt-4 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
           >
             {t("work.all")}
             <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} aria-hidden />
@@ -202,7 +229,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               title="Product Engineer"
               company="Prizmstack"
               location={locale === "es" ? "Remoto · California" : "Remote · California"}
-              stack="Next.js, TypeScript, PostgreSQL, Supabase, Vercel"
             >
               {locale === "es" ? (
                 <>
@@ -212,10 +238,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     motor de simulaciones, que traduce métricas de operación a valuaciones
                     financieras.
                   </p>
-                  <p>
-                    Trabajo sobre flujos de usuario, dashboards, el marketplace y las herramientas
-                    internas de administración.
-                  </p>
                 </>
               ) : (
                 <>
@@ -224,7 +246,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     I lead the migration from no-code (Bubble) to Next.js and build the simulation
                     engine that turns operating metrics into financial valuations.
                   </p>
-                  <p>I work on user flows, dashboards, the marketplace and internal admin tools.</p>
                 </>
               )}
             </ExperienceItem>
@@ -264,7 +285,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 locale === "es" ? "Trainee → Product Engineer" : "Trainee → Product Engineer"
               }
               location={locale === "es" ? "Remoto" : "Remote"}
-              stack="Next.js, TypeScript, Node.js, ExpressJS, Tailwind CSS, shadcn/ui, MaterialUI, Stripe, PayPal, Figma, JIRA"
             >
               {locale === "es" ? (
                 <>
@@ -290,10 +310,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     B2C y B2B con hasta <strong>1.500 usuarios activos</strong>. Integré pagos con
                     Mercado Pago, PayPal y Stripe; optimicé checkout B2C aumentando tasa de
                     finalización de reservas.
-                  </p>
-                  <p>
-                    Como <strong>Junior</strong> (Ene 2023 – Jun 2024), implementé Next.js,
-                    Tailwind, shadcn y MaterialUI por primera vez en la empresa.
                   </p>
                 </>
               ) : (
@@ -321,10 +337,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     with Mercado Pago, PayPal and Stripe; optimized B2C checkout, increasing booking
                     completion rates.
                   </p>
-                  <p>
-                    As <strong>Junior</strong> (Jan 2023 – Jun 2024), I introduced Next.js,
-                    Tailwind, shadcn and MaterialUI for the first time at the company.
-                  </p>
                 </>
               )}
             </ExperienceItem>
@@ -337,7 +349,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               company="Tumo (Techstars '24)"
               location={locale === "es" ? "Remoto · Nueva York" : "Remote · New York"}
               parallel={locale === "es" ? "paralelo a Banana" : "parallel to Banana"}
-              stack="Next.js, TypeScript, AWS"
             >
               {locale === "es" ? (
                 <>
@@ -379,33 +390,24 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               title="Planner Contract Business"
               company="Dräger"
               location={locale === "es" ? "Buenos Aires" : "Buenos Aires"}
-              stack="Microsoft Dynamics NAV, ERP, KPIs"
               stackLabel={locale === "es" ? "Herramientas" : "Tools"}
             >
               {locale === "es" ? (
                 <>
                   <p>
-                    Mi primer rol full-time, antes de pasarme a software. Planificaba mantenimientos
-                    preventivos a nivel nacional usando <strong>Microsoft Dynamics NAV</strong>:
-                    Service Requests, Sales Orders, Service Orders, gestión de recursos y KPIs
-                    digitales.
-                  </p>
-                  <p>
-                    Duró tres meses y me mostró cómo una empresa grande diseña sus procesos y mide
-                    su rendimiento.
+                    Mi primer rol full-time, antes de pasarme a software: planificaba mantenimientos
+                    preventivos a nivel nacional sobre <strong>Microsoft Dynamics NAV</strong>. Duró
+                    tres meses y me mostró cómo una empresa grande diseña sus procesos y mide su
+                    rendimiento.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    My first full-time role, before moving into software. Planned preventive
-                    maintenance at a national level using <strong>Microsoft Dynamics NAV</strong>:
-                    Service Requests, Sales Orders, Service Orders, resource management and digital
-                    KPIs.
-                  </p>
-                  <p>
-                    It lasted three months and showed me how a large company designs its processes
-                    and measures its performance.
+                    My first full-time role, before moving into software: I planned preventive
+                    maintenance at a national level on <strong>Microsoft Dynamics NAV</strong>. It
+                    lasted three months and showed me how a large company designs its processes and
+                    measures its performance.
                   </p>
                 </>
               )}
@@ -504,40 +506,22 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             {t("sections.tools")}
           </h2>
 
+          {/* Sólo la prosa. Hasta el 19/09/2026 abajo iba una matriz de seis
+              filas de tecnologías (React, Tailwind, shadcn/ui, MaterialUI,
+              Figma, JIRA...), que es la misma señal de desarrollo que sacamos
+              de la home: en una página que argumenta criterio de producto y
+              análisis, enumerar el stack del frontend corre el foco. Este
+              párrafo ya dice lo que importa, que el análisis es Python sobre
+              PostgreSQL y la medición PostHog. */}
           <p className="text-sm leading-relaxed text-foreground">{t("tools.intro")}</p>
-
-          <dl className="mt-6 space-y-3">
-            <ToolCategory
-              label={t("tools.categories.data.label")}
-              items={t("tools.categories.data.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.frontend.label")}
-              items={t("tools.categories.frontend.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.backend.label")}
-              items={t("tools.categories.backend.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.payments.label")}
-              items={t("tools.categories.payments.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.productDesign.label")}
-              items={t("tools.categories.productDesign.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.infrastructure.label")}
-              items={t("tools.categories.infrastructure.items")}
-            />
-          </dl>
         </section>
 
-        {/* Idiomas */}
+        {/* Cierre: idiomas y contacto juntos. Eran dos secciones con su
+            encabezado para 16 palabras cada una, al final de una página que ya
+            venía larga. */}
         <section>
           <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {t("sections.languages")}
+            {t("sections.contact")}
           </h2>
           <div className="space-y-3 text-sm leading-relaxed">
             <p>
@@ -576,14 +560,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               </a>
             </div>
           </div>
-        </section>
 
-        {/* Contacto */}
-        <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {t("sections.contact")}
-          </h2>
-          <p className="text-sm leading-relaxed">
+          <p className="mt-6 text-sm leading-relaxed">
             {t.rich("contact.intro", {
               email: (chunks) => (
                 <ObfuscatedEmailTrigger
@@ -631,11 +609,3 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
  * un proyecto. Los logos quedan reservados para /projects y el detalle de un
  * caso, donde acompañan a un trabajo concreto.
  */
-function ToolCategory({ label, items }: { label: string; items: string }) {
-  return (
-    <div className="grid grid-cols-1 gap-1 sm:grid-cols-[180px_1fr] sm:gap-4">
-      <dt className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</dt>
-      <dd className="text-sm text-foreground">{items}</dd>
-    </div>
-  );
-}
