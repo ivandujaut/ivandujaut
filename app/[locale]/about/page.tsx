@@ -153,6 +153,14 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               que era el índice repetido. */}
           <p>
             {t.rich("intro.paragraph3", {
+              pagos: (chunks) => (
+                <Link
+                  href="/projects/glp1-open-payments"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
               balances: (chunks) => (
                 <Link
                   href="/projects/seguro-hogar-argentina"
