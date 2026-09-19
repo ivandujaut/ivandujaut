@@ -30,13 +30,14 @@ const HOME_LIMIT = 3;
  * La primera pieza va con imagen porque la home no tenía ninguna evidencia de
  * que acá se publica algo.
  *
- * Manda el gráfico y la portada queda de reserva: una barra con cifras dice
- * que adentro hay análisis, y una ilustración no.
+ * Manda la portada y el gráfico queda de reserva. Decisión de Iván el
+ * 19/09/2026: la portada es la cara que él le dibuja a cada caso, y es lo que
+ * quiere ver anunciando el último publicado.
  *
- * Eso se pudo hacer recién el 19/09/2026, cuando `preview` pasó a declararse
- * como imagen en el esquema y trae ancho, alto y blur igual que la portada.
- * Antes llegaba como una ruta suelta sin medidas, obligaba a una caja de
- * proporción fija y el gráfico aparecía con bandas vacías a los costados.
+ * Las dos entran exactas igual, porque las dos traen ancho, alto y blur desde
+ * Velite: la portada siempre los tuvo y el `preview` los declara desde el
+ * 19/09. Antes el gráfico llegaba como una ruta suelta sin medidas, había que
+ * meterlo en una caja de proporción fija y aparecían bandas vacías al costado.
  */
 export async function PublishedWork({ locale }: PublishedWorkProps) {
   const projects = getProjects(locale).slice(0, HOME_LIMIT);
@@ -49,11 +50,10 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
 
   // Las dos traen medidas y blur desde Velite, así que la que toque se dibuja
   // con su propia proporción y llena la caja exacto.
-  const grafico = lead.preview?.[0] ?? null;
-  const imagen = grafico
-    ? { ...grafico.src, alt: grafico.alt }
-    : lead.cover
-      ? { ...lead.cover.src, alt: lead.cover.alt }
+  const imagen = lead.cover
+    ? { ...lead.cover.src, alt: lead.cover.alt }
+    : lead.preview?.[0]
+      ? { ...lead.preview[0].src, alt: lead.preview[0].alt }
       : null;
 
   return (
