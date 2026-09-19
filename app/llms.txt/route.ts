@@ -43,8 +43,12 @@ function build(): string {
   const lines: string[] = [
     "# Iván Dujaut",
     "",
-    "> Product Engineer. Casos de estudio sobre producto y seguros, fintech y" +
-      " cobranzas en Argentina y Brasil, más un blog sobre oficio y carrera.",
+    // Misma frase que el `description` del `Person` y que la meta de `/about`.
+    // La anterior decía "Product Engineer. Casos de estudio sobre producto y
+    // seguros, fintech y cobranzas": no nombraba salud, que son 8 de los 18
+    // casos y el tema principal desde hace tres meses.
+    "> Escribo casos sobre salud y seguros: reconstruyo el problema, los actores" +
+      " y los datos públicos, y termino en una decisión. Bioingeniero del ITBA.",
     "",
     "El sitio es bilingüe. El español es la versión canónica y las traducciones" +
       " al inglés viven bajo `/en/`. Cada pieza declara `hreflang` y su canonical.",

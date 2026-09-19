@@ -15,10 +15,16 @@ export function personSchema(locale: Locale) {
     // era la única frase que un buscador tenía para resumir el perfil, y la
     // resumía como desarrollo web: el AI Overview de Google la parafraseaba
     // literal. Acá se declara el trabajo que diferencia, no el stack.
+    // Una sola frase, la misma acá, en la meta de `/about` y en el encabezado de
+    // `llms.txt`. Repetirla palabra por palabra es lo que hace que un buscador o
+    // un modelo la tome como la descripción del perfil en vez de fabricar una.
+    // La anterior decía "analizo mercados", encuadre que Iván rechazó el
+    // 2026-09-19: no analiza mercados, agarra un problema, reconstruye contexto
+    // y actores, y termina en una decisión.
     description:
       locale === "es"
-        ? "Analizo mercados y productos con datos públicos y termino en recomendaciones: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Bioingeniero del ITBA."
-        : "I analyze markets and products with public data and end in recommendations: US healthcare, insurance and payments in Argentina and Brazil. Bioengineer from ITBA.",
+        ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
+        : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.",
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",
@@ -27,6 +33,17 @@ export function personSchema(locale: Locale) {
     worksFor: {
       "@type": "Organization",
       name: "Prizmstack",
+    },
+    // `jobTitle` es el cargo (Product Engineer en Prizmstack, que es el real) y
+    // `hasOccupation` es la práctica. Son campos distintos y hacían falta los
+    // dos: con sólo el cargo, el perfil se resume como ingeniería y el trabajo
+    // que lo diferencia no queda declarado en ningún lado legible por máquina.
+    hasOccupation: {
+      "@type": "Occupation",
+      name:
+        locale === "es"
+          ? "Estrategia de producto y decision analytics"
+          : "Product strategy and decision analytics",
     },
     // `knowsAbout` es el campo con el que schema.org declara sobre qué temas
     // hay expertise. Sin él, el buscador infiere los temas del texto suelto de
@@ -90,6 +107,55 @@ const PUBLISHER = {
   },
 };
 
+/**
+ * Qué tema trata cada caso, para `about` y `keywords`.
+ *
+ * Hasta el 2026-09-19 las `keywords` de un caso salían del `stack`, así que el
+ * análisis del acceso a Medicare declaraba, en producción, que trataba sobre
+ * "Python, matplotlib". El comentario del código lo admitía: describía con qué
+ * está hecho y no de qué habla. El tema ya existía en el frontmatter, en
+ * `topic`, y sus etiquetas ya estaban curadas en `messages` bajo
+ * `projects.topics`; esto es la misma clasificación en forma de entidad.
+ */
+const TOPIC_SUBJECT: Record<string, { es: string; en: string }> = {
+  salud: {
+    es: "Acceso al mercado en salud en Estados Unidos",
+    en: "Market access in US healthcare",
+  },
+  seguros: { es: "Mercado asegurador argentino", en: "Argentine insurance market" },
+  fintech: { es: "Medios de pago en Brasil", en: "Payments in Brazil" },
+  proptech: { es: "Proptech", en: "Proptech" },
+  educacion: { es: "Educación", en: "Education" },
+  web: { es: "Desarrollo web", en: "Web development" },
+};
+
+const TOPIC_KEYWORDS: Record<string, { es: string[]; en: string[] }> = {
+  salud: {
+    es: ["Acceso al mercado en salud", "Medicare", "Industria farmacéutica", "Estados Unidos"],
+    en: ["Market access", "Medicare", "Pharmaceutical industry", "United States"],
+  },
+  seguros: {
+    es: ["Seguros", "Insurtech", "Argentina", "Superintendencia de Seguros de la Nación"],
+    en: ["Insurance", "Insurtech", "Argentina", "Argentine insurance regulator"],
+  },
+  fintech: {
+    es: ["Medios de pago", "Fintech", "Brasil"],
+    en: ["Payments", "Fintech", "Brazil"],
+  },
+  proptech: {
+    es: ["Proptech", "Mercado inmobiliario"],
+    en: ["Proptech", "Real estate"],
+  },
+  educacion: { es: ["Educación"], en: ["Education"] },
+  web: { es: ["Desarrollo web"], en: ["Web development"] },
+};
+
+const KIND_KEYWORD: Record<string, { es: string; en: string }> = {
+  "case-study": { es: "Caso de estudio", en: "Case study" },
+  build: { es: "Producto", en: "Product" },
+  design: { es: "Diseño", en: "Design" },
+};
+
 type ArticleInput = {
   type: "BlogPosting" | "Article";
   basePath: "/blog" | "/projects";
@@ -104,6 +170,7 @@ type ArticleInput = {
   inLanguage?: string;
   wordCount?: number;
   readingTimeMinutes?: number;
+  about?: string;
 };
 
 /**
@@ -130,6 +197,7 @@ function articleSchema(input: ArticleInput) {
       width: 1200,
       height: 630,
     },
+    ...(input.about ? { about: { "@type": "Thing", name: input.about } } : {}),
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     url,
     author: AUTHOR,
@@ -166,7 +234,8 @@ type ProjectArticleInput = {
   slug: string;
   locale: Locale;
   datePublished: string;
-  stack?: string[];
+  topic: string;
+  kind?: string;
   image: string;
   wordCount?: number;
   readingTimeMinutes?: number;
@@ -182,15 +251,21 @@ type ProjectArticleInput = {
  * con Article, NewsArticle y BlogPosting). Vale igual para los tres `kind`:
  * la página es un artículo sobre el trabajo, sea propio o ajeno.
  *
- * `keywords` sale del stack, que es lo único con forma de etiqueta que declara
- * un caso. No describe el tema, describe con qué está hecho.
+ * `keywords` y `about` salen de `topic` y de `kind`, no del `stack`. El stack
+ * sigue a la vista en la sección de código del caso, que es donde significa
+ * algo: ahí dice con qué se calculó, no de qué trata.
  */
 export function projectArticleSchema(project: ProjectArticleInput) {
+  const { topic, kind, ...rest } = project;
+  const temas = TOPIC_KEYWORDS[topic]?.[project.locale] ?? [];
+  const tipo = kind ? KIND_KEYWORD[kind]?.[project.locale] : undefined;
+
   return articleSchema({
     type: "Article",
     basePath: "/projects",
-    ...project,
-    keywords: project.stack,
+    ...rest,
+    about: TOPIC_SUBJECT[topic]?.[project.locale],
+    keywords: [...temas, ...(tipo ? [tipo] : [])],
   });
 }
 

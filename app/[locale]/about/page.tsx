@@ -29,10 +29,13 @@ export async function generateMetadata({ params }: Props) {
     ? "Acerca de mí · Iván Dujaut, product strategy y decision analytics"
     : "About · Iván Dujaut, product strategy and decision analytics";
   // La descripción vende el trabajo publicado, no el cargo: es lo que
-  // diferencia el perfil y lo que sostiene el resto de la página.
+  // diferencia el perfil y lo que sostiene el resto de la página. Es la misma
+  // frase, palabra por palabra, que el `description` del `Person` en
+  // `lib/jsonld.ts` y que el encabezado de `llms.txt`: repetirla igual es lo que
+  // hace que un buscador o un modelo la tome en vez de fabricar una propia.
   const description = isEs
-    ? "Analizo mercados y productos con datos públicos: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Bioingeniero del ITBA, Techstars W24."
-    : "I analyze markets and products with public data: US healthcare, insurance and payments in Argentina and Brazil. ITBA bioengineer, Techstars W24.";
+    ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
+    : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
