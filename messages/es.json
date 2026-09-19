@@ -107,7 +107,7 @@
       "paragraph1": "Soy Product Engineer en Prizmstack, donde armo FIJI, que le pone precio a un negocio inmobiliario a partir de cómo viene operando.",
       "stack": "Stack actual: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "En paralelo enseño Técnicas Digitales a estudiantes de Electrónica en el IPSAJ (Instituto Politécnico San Arnoldo Janssen), la escuela técnica donde me recibí.",
-      "paragraph3": "Busco un rol de product strategy o decision analytics en consultoría, salud, seguros o fintech. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Escribime o agendá una call."
+      "paragraph3": "Busco un rol de decision analytics en consultoría, o de producto en pagos, seguros o salud. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Escribime o agendá una call."
     },
     "work": {
       "title": "Trabajo publicado",
@@ -206,10 +206,10 @@
     "title": "Acerca de mí",
     "intro": {
       "greeting": "Hola, soy Iván",
-      "paragraph1": "Agarro una pregunta de negocio que nadie estructuró, averiguo si los datos pueden contestarla, y termino en una recomendación con los trade-offs a la vista. Lo hago como product engineer desde hace cuatro años: lo más útil que hice en Banana Software fue sacar del roadmap cerca de una de cada cinco funcionalidades planificadas, porque no justificaban lo que costaban. Vivo en Argentina y trabajo remoto con equipos de Estados Unidos y LATAM.",
+      "paragraph1": "Agarro la decisión que nadie terminó de estructurar (qué se construye, qué no, y con qué número se sabe después si sirvió), la dejo escrita con los trade-offs a la vista y después la construyo. Cuatro años en Banana Software, de trainee a product engineer: llevé proyectos de punta a punta con equipos de tres o cuatro personas, plataformas B2C y B2B con pagos de por medio, y saqué del roadmap cerca de una de cada cinco funcionalidades planificadas porque no devolvían lo que costaban. La predictibilidad de los sprints pasó del 60% al 90% cuando empecé a modelar el esfuerzo real.",
       "paragraph2": "Soy bioingeniero del ITBA. Mi tesis predijo la mortalidad a dos años en pacientes con metástasis hepática de cáncer colorrectal, con radiómica y aprendizaje automático sobre datos reales del Hospital Italiano. Antes fui ayudante de Procesamiento de Imágenes Biomédicas y de Biosensores. De ahí me quedó la costumbre de pedirle un número a una decisión antes de tomarla.",
-      "paragraph3": "Desde 2026 publico análisis de mercados y productos reales, sólo con datos públicos: <balances>los balances que las aseguradoras presentan ante el regulador</balances>, <srt>las estadísticas de riesgos del trabajo</srt>, <canales>los canales digitales de las propias compañías</canales>. Cada cifra traza a su fuente y cada supuesto se declara como supuesto.",
-      "paragraph4": "Busco un rol de product strategy o decision analytics en consultoría, salud, seguros o fintech. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Si en tu equipo hay decisiones que hoy se toman sin números, escribime. Y si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
+      "paragraph3": "Desde 2026 publico análisis de mercados y productos reales, sólo con datos públicos: <balances>los balances que las aseguradoras presentan ante el regulador</balances>, <srt>las estadísticas de riesgos del trabajo</srt>, <canales>los canales digitales de las propias compañías</canales>. Cada caso termina en una decisión: cuánta plata hay en juego, cuál sería el primer paso, qué métricas la miden por segmento y qué no conviene construir. Las cifras trazan a su fuente y los supuestos van declarados como supuestos.",
+      "paragraph4": "Busco un rol de decision analytics en consultoría, o de producto en pagos, seguros o salud. Trabajo remoto desde Argentina con equipos de Estados Unidos y LATAM, y me mudo a Buenos Aires por un puesto híbrido. Si en tu equipo hay decisiones que hoy se toman sin números, escribime. Y si es un producto que estás pensando y querés una segunda cabeza, agendá una call.",
       "ctas": {
         "email": "Escribime",
         "calendly": "Agendá una call",

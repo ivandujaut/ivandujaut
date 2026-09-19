@@ -105,6 +105,15 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             className="mt-2"
           />
         </div>
+        {/* La descripción se reescribió el 19/09/2026 contra los avisos de los
+            tres roles que Iván persigue: decision analytics en consultoría
+            (ZS), product management de tarjetas (Mastercard) y producto en
+            infraestructura de pagos (Pomelo). Los tres piden lo mismo dicho de
+            tres maneras: contestar la pregunta de negocio y no narrar el
+            procedimiento, priorizar qué entra y qué no al roadmap, y medir
+            después si rindió. La versión anterior lo decía en abstracto
+            ("una pregunta de negocio que nadie estructuró"); ésta lo dice con
+            los números que ya están en el CV de más abajo. */}
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>

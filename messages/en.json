@@ -107,7 +107,7 @@
       "paragraph1": "I'm a Product Engineer at Prizmstack, where I build FIJI, which prices a real estate business from how it has been operating.",
       "stack": "Current stack: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "In parallel I teach Digital Techniques to Electronics students at IPSAJ (Instituto Politécnico San Arnoldo Janssen), the technical school I graduated from.",
-      "paragraph3": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. Email me or book a call."
+      "paragraph3": "I'm looking for a decision analytics role in consulting, or a product role in payments, insurance or health. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. Email me or book a call."
     },
     "work": {
       "title": "Published work",
@@ -206,10 +206,10 @@
     "title": "About me",
     "intro": {
       "greeting": "Hi, I'm Iván",
-      "paragraph1": "I take a business question nobody has structured, work out whether the data can answer it, and end in a recommendation with its trade-offs in plain sight. I've been doing it as a product engineer for four years: the most useful thing I did at Banana Software was cutting roughly one in five planned features from the roadmap, because they didn't earn what they cost. I live in Argentina and work remotely with teams in the US and LATAM.",
+      "paragraph1": "I take the decision nobody finished structuring (what gets built, what doesn't, and which number tells you afterwards whether it worked), write it down with the trade-offs in plain sight, and then build it. Four years at Banana Software, from trainee to product engineer: I led end-to-end projects with teams of three or four, B2C and B2B platforms with payments in the middle, and pulled roughly one in five planned features off the roadmap because they didn't earn what they cost. Sprint predictability went from 60% to 90% once I started modelling real effort.",
       "paragraph2": "I'm a bioengineer from ITBA. My thesis predicted 2-year mortality in patients with colorectal cancer liver metastasis, using radiomics and machine learning on real data from Hospital Italiano de Buenos Aires. Before that I was a teaching assistant in Biomedical Image Processing and in Biosensors. It left me in the habit of asking a decision for a number before making it.",
-      "paragraph3": "Since 2026 I publish analyses of real markets and products, using public data only: <balances>the balance sheets insurers file with the regulator</balances>, <srt>workers' compensation statistics</srt>, <canales>the companies' own digital channels</canales>. Every figure traces back to its source, and every assumption is declared as one.",
-      "paragraph4": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. If your team has decisions that today get made without numbers, email me. And if it's a product you're thinking about and you want a second head on it, book a call.",
+      "paragraph3": "Since 2026 I publish analyses of real markets and products, using public data only: <balances>the balance sheets insurers file with the regulator</balances>, <srt>workers' compensation statistics</srt>, <canales>the companies' own digital channels</canales>. Every case ends in a decision: how much money is at stake, what the first step would be, which metrics measure it by segment, and what is not worth building. The figures trace back to their source and the assumptions are declared as assumptions.",
+      "paragraph4": "I'm looking for a decision analytics role in consulting, or a product role in payments, insurance or health. I work remotely from Argentina with teams in the US and LATAM, and I'll move to Buenos Aires for a hybrid role. If your team has decisions that today get made without numbers, email me. And if it's a product you're thinking about and you want a second head on it, book a call.",
       "ctas": {
         "email": "Email me",
         "calendly": "Book a call",
