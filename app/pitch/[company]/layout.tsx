@@ -45,7 +45,13 @@ const sourceSerif = Source_Serif_4({
 
 export default function PitchLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    // `dark` va en el `<html>` y no sólo en el wrapper de adentro. Los tokens
+    // de `globals.css` se redefinen bajo `.dark`, y `body` los toma de ahí: sin
+    // esto el documento entero queda con los tokens claros y todo lo que caiga
+    // fuera del wrapper se ve blanco. En estas páginas se veía como una banda
+    // blanca al pie, de los 270px que Lenis agrega al alto del documento por
+    // encima del `<body>`.
+    <html lang="es" className="dark" suppressHydrationWarning>
       <body
         suppressHydrationWarning
         className={`${figTree.variable} ${geistMono.variable} ${sourceSerif.variable} antialiased`}
