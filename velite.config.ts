@@ -155,33 +155,23 @@ const projects = defineCollection({
           alt: s.string(),
         })
         .optional(),
-      // Gráficos del caso, exactamente 3.
+      // Gráficos del caso, exactamente 3. Son rutas públicas y no `s.image()`
+      // porque las imágenes de los casos ya viven en `public/`, no junto al
+      // MDX.
       //
-      // El primero es la imagen de la tarjeta grande de la home cuando el caso
-      // es el más nuevo: un gráfico con cifras dice que adentro hay análisis,
-      // cosa que la portada (una ilustración) no dice.
-      //
-      // `s.image({ absoluteRoot: "public" })` y no un string: así velite lee el
-      // archivo y devuelve ancho, alto y el `blurDataURL`, igual que con las
-      // portadas. Sin las medidas, la tarjeta tenía que meter el gráfico en una
-      // caja de proporción fija y aparecían bandas vacías a los costados; con
-      // ellas se dibuja con su propia proporción y entra exacto. Las rutas
-      // siguen siendo públicas (`/projects/<slug>/...`) porque las imágenes de
-      // los casos viven en `public/`, no junto al MDX.
-      //
-      // Eran exactamente 3 porque el abanico del badge del hero estaba diseñado
-      // para ese número. Ese badge salió el 18/09/2026 y hoy sólo se usa el
-      // primero, así que la regla pasa a 1-3: un caso con dos gráficos buenos
-      // ya no tiene que inventar un tercero para poder mostrarlos.
+      // Hoy no lo lee ninguna página, y conviene saberlo antes de apoyarse en
+      // él: los tres los usaba el abanico del badge del hero, que salió el
+      // 18/09/2026, y la tarjeta de la home muestra la portada (decisión de
+      // Iván el 19/09). El campo queda porque siete casos ya lo declaran y
+      // porque es el material listo para cuando algo vuelva a mostrar gráficos.
       preview: s
         .array(
           s.object({
-            src: s.image({ absoluteRoot: "public" }),
+            src: s.string(),
             alt: s.string(),
           }),
         )
-        .min(1)
-        .max(3)
+        .length(3)
         .optional(),
       // Tarjetas del encabezado. Regla: el `value` es UN valor que aterriza
       // solo, nunca una secuencia ("6,9 → 6,9 → 9,2%" no la pudo leer ni el

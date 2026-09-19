@@ -48,13 +48,11 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
   const tReading = await getTranslations({ locale, namespace: "common.reading" });
   const cadence = getPublishingCadence(locale);
 
-  // Las dos traen medidas y blur desde Velite, así que la que toque se dibuja
-  // con su propia proporción y llena la caja exacto.
-  const imagen = lead.cover
-    ? { ...lead.cover.src, alt: lead.cover.alt }
-    : lead.preview?.[0]
-      ? { ...lead.preview[0].src, alt: lead.preview[0].alt }
-      : null;
+  // La portada trae ancho, alto y blur desde Velite, así que se dibuja con su
+  // propia proporción y llena la caja exacto. Sin portada no va imagen: un
+  // `preview` es una ruta suelta sin medidas y habría que meterlo en una caja
+  // de proporción fija, que es lo que producía las bandas vacías al costado.
+  const imagen = lead.cover ? { ...lead.cover.src, alt: lead.cover.alt } : null;
 
   return (
     <section>
