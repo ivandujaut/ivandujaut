@@ -27,10 +27,15 @@ const HOME_LIMIT = 3;
  * atrás. Acá la curaduría es la fecha: no hay nada que mantener y la home
  * nunca queda vieja.
  *
- * La primera pieza va con imagen porque un gráfico es la evidencia de que
- * adentro hay análisis, y la home no tenía ninguna. Se prefiere el primer
- * `preview` (un gráfico del caso) antes que la portada (una ilustración): la
- * portada es editorial y no dice qué se midió.
+ * La primera pieza va con imagen porque la home no tenía ninguna evidencia de
+ * que acá se publica algo.
+ *
+ * Manda la portada y el gráfico queda de reserva, al revés que el 18/09/2026.
+ * El argumento de entonces era que un gráfico prueba que adentro hay análisis;
+ * el problema es que un gráfico llega como una ruta suelta, sin medidas, así
+ * que hay que meterlo en una caja fija y ahí aparecen las bandas vacías a los
+ * costados. La portada trae sus medidas desde Velite y está dibujada a 16:9
+ * para este lugar: entra exacta. Todos los casos publicados tienen una.
  */
 export async function PublishedWork({ locale }: PublishedWorkProps) {
   const projects = getProjects(locale).slice(0, HOME_LIMIT);
@@ -41,7 +46,20 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
   const tReading = await getTranslations({ locale, namespace: "common.reading" });
   const cadence = getPublishingCadence(locale);
 
-  const leadImage = lead.preview?.[0] ?? (lead.cover ? { src: lead.cover.src.src, alt: "" } : null);
+  // La portada trae sus medidas desde Velite, así que se dibuja con su propia
+  // proporción y llena la caja exacto. El `preview` es una ruta suelta sin
+  // dimensiones: ahí hace falta una caja fija, y va sin recortar porque son
+  // gráficos (un recorte se come el título o el eje).
+  const portada = lead.cover
+    ? {
+        src: lead.cover.src.src,
+        alt: lead.cover.alt,
+        width: lead.cover.src.width,
+        height: lead.cover.src.height,
+        blurDataURL: lead.cover.src.blurDataURL,
+      }
+    : null;
+  const grafico = portada ? null : (lead.preview?.[0] ?? null);
 
   return (
     <section>
@@ -65,27 +83,40 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
         className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
       >
         <article>
-          {leadImage && (
-            // `fill` con `object-contain` y no `object-cover`: estas imágenes
-            // son gráficos, y un recorte a 16:9 de un gráfico de ratio 1,3 se
-            // come el título o el eje. La caja reserva el alto, así que la
-            // tarjeta no salta cuando la imagen llega.
+          {portada && (
+            <Image
+              src={portada.src}
+              alt={portada.alt}
+              width={portada.width}
+              height={portada.height}
+              sizes="(max-width: 768px) 100vw, 672px"
+              // Es el LCP de la home en escritorio. `priority` está deprecado
+              // en Next 16: para una imagen que ya está en el HTML inicial, la
+              // recomendación es cargarla sin esperar al viewport y pedirla con
+              // prioridad alta.
+              loading="eager"
+              fetchPriority="high"
+              {...(portada.blurDataURL
+                ? { placeholder: "blur" as const, blurDataURL: portada.blurDataURL }
+                : {})}
+              className="mb-3 h-auto w-full rounded-lg border border-border"
+            />
+          )}
+
+          {grafico && (
             <div className="relative mb-3 aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted/30">
               <Image
-                src={leadImage.src}
-                alt={leadImage.alt}
+                src={grafico.src}
+                alt={grafico.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, 672px"
-                // Es el LCP de la home en escritorio. `priority` está
-                // deprecado en Next 16: la recomendación para una imagen que
-                // ya está en el HTML inicial es cargarla sin esperar al
-                // viewport y pedirla con prioridad alta.
                 loading="eager"
                 fetchPriority="high"
                 className="object-contain"
               />
             </div>
           )}
+
           <span className="mb-2 inline-flex flex-wrap gap-1.5">
             <KindBadge kind={lead.kind} />
           </span>
