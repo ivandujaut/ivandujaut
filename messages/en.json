@@ -95,7 +95,7 @@
       "role": "Product Strategy and Decision Analytics",
       "location": "Argentina",
       "available": "Available",
-      "tagline": "I decide with data and build what I decide. Every figure traced back to its source.",
+      "tagline": "I decide with data and build what I decide.",
       "credentials": "Bioengineer at ITBA · Techstars W24",
       "ctas": {
         "work": "See my work",
@@ -124,7 +124,7 @@
   },
   "projects": {
     "title": "Projects",
-    "description": "Business decisions answered with public data. Every figure traces back to its source and every assumption is declared as one.",
+    "description": "Cases on health in the United States and insurance in Argentina. Each one takes a problem a company has in front of it and carries it through to a decision: how much money is at stake, what the first step is, and what is not worth building.",
     "sections": {
       "own": "I built",
       "external": "I analyzed",

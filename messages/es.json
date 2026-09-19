@@ -95,7 +95,7 @@
       "role": "Product Strategy y Decision Analytics",
       "location": "Argentina",
       "available": "Disponible",
-      "tagline": "Decido con datos y construyo lo que decido. Cada cifra trazada a su fuente.",
+      "tagline": "Decido con datos y construyo lo que decido.",
       "credentials": "Bioingeniero ITBA · Techstars W24",
       "ctas": {
         "work": "Ver mi trabajo",
@@ -124,7 +124,7 @@
   },
   "projects": {
     "title": "Proyectos",
-    "description": "Decisiones de negocio contestadas con datos públicos. Cada cifra traza a su fuente y cada supuesto se declara como supuesto.",
+    "description": "Casos sobre salud en Estados Unidos y seguros en Argentina. Cada uno agarra un problema que una empresa tiene enfrente y lo lleva hasta una decisión: cuánta plata hay en juego, cuál es el primer paso y qué no conviene construir.",
     "sections": {
       "own": "Construí",
       "external": "Analicé",

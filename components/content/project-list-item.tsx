@@ -27,6 +27,11 @@ interface ProjectListItemProps {
   date: string;
   locale: "es" | "en";
   stack: string[];
+  /**
+   * Minutos de lectura, ya formateados por quien llama (que es el que tiene las
+   * traducciones). En un caso ocupa el lugar del stack.
+   */
+  readingTime?: string;
   status: ProjectStatus;
   kind: ProjectKind;
   /** "row" es el bloque compacto de la home; "list" es el listado de /projects. */
@@ -57,6 +62,7 @@ export function ProjectListItem({
   date,
   locale,
   stack,
+  readingTime,
   status,
   kind,
   variant = "row",
@@ -68,6 +74,25 @@ export function ProjectListItem({
   // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
   // información en productos construidos.
   const showStatus = kind === "build" || status !== "concept";
+
+  // Qué se muestra al pie de la tarjeta.
+  //
+  // En un caso de estudio, las tecnologías no aportan: nadie elige leer un
+  // análisis de Medicare porque esté hecho con matplotlib. Lo que decide si
+  // alguien lo abre es cuánto le va a llevar, así que ahí va el tiempo de
+  // lectura (feedback de un lector, 2026-09-19).
+  //
+  // En lo que se construyó sí aportan, porque el stack ES parte de lo que se
+  // muestra. Eso incluye el diseño: "Figma" dice qué se hizo.
+  const pieDeTarjeta =
+    kind === "case-study"
+      ? readingTime
+      : [
+          stack.slice(0, STACK_VISIBLE).join(" · "),
+          stack.length > STACK_VISIBLE ? `+${stack.length - STACK_VISIBLE}` : "",
+        ]
+          .filter(Boolean)
+          .join(" ");
 
   const publishedAt = new Date(date).toLocaleDateString(locale, {
     month: "short",
@@ -103,9 +128,12 @@ export function ProjectListItem({
             <ViewTransition name={`project-year-${slug}`} share="morph">
               <time dateTime={date}>{publishedAt}</time>
             </ViewTransition>
-            {" · "}
-            {stack.slice(0, STACK_VISIBLE).join(" · ")}
-            {stack.length > STACK_VISIBLE && ` +${stack.length - STACK_VISIBLE}`}
+            {pieDeTarjeta && (
+              <>
+                {" · "}
+                {pieDeTarjeta}
+              </>
+            )}
           </p>
         </article>
 
@@ -170,12 +198,9 @@ export function ProjectListItem({
             ("Datos abiertos de CMS (parte B, parte D y Open Payments)") y con
             tres la fila se iba a dos renglones de monospace gris, que era lo
             más pesado de una tarjeta cuyo trabajo es que se lea el título. */}
-        {showStack && (
+        {showStack && pieDeTarjeta && (
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-            <span className="font-mono">{stack.slice(0, STACK_VISIBLE).join(" · ")}</span>
-            {stack.length > STACK_VISIBLE && (
-              <span className="font-mono">+{stack.length - STACK_VISIBLE}</span>
-            )}
+            <span className="font-mono">{pieDeTarjeta}</span>
           </div>
         )}
       </article>
