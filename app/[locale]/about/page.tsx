@@ -110,43 +110,37 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             (ZS), product management de tarjetas (Mastercard) y producto en
             infraestructura de pagos (Pomelo). Los tres piden lo mismo dicho de
             tres maneras: contestar la pregunta de negocio y no narrar el
-            procedimiento, priorizar qué entra y qué no al roadmap, y medir
+            procedimiento, decidir qué entra y qué no al roadmap, y medir
             después si rindió.
 
-            Va contado como relato y no como ficha, por devolución de Iván sobre
-            el primer intento. Lo que sacó, y por qué:
+            Va contado como relato y no como ficha. Los cinco párrafos son: qué
+            construye hoy y de dónde viene, el criterio de producto contado
+            donde se aprendió (en Banana, no en la bioingeniería), por qué
+            escribe de salud y seguros, qué hace en cada caso, y qué ofrece.
 
-            - "Agarro la decisión que nadie terminó de estructurar (...), la dejo
-              escrita con los trade-offs a la vista y después la construyo":
-              tres cláusulas paralelas con una glosa entre paréntesis, o sea un
-              eslogan. Ahora el párrafo cuenta FIJI y los cuatro años de Banana,
-              y el criterio aparece en lo que pasó ("lo que más sirvió fue
-              frenar") en vez de estar declarado.
-            - "De ahí me quedó la costumbre de pedirle un número a una decisión
-              antes de tomarla": aforismo de cierre sin cohesión con lo de
-              arriba. Lo reemplaza el encargo real del Hospital Italiano, que
-              además dice sin eslogan lo que pide ZS: ver si los datos que ya
-              existen contestan la pregunta.
-            - "publico análisis de mercados": encuadre equivocado. No analiza
-              mercados; elige un problema, reconstruye contexto y actores, y
-              muestra cómo lo piensa hasta una decisión.
-            - "temas que me interesan" sonaba a pasatiempo. El eje real está en
-              el frontmatter: de dieciocho casos, ocho son `salud` y siete
-              `seguros`. El porqué no es un gusto, es una estructura: los dos
-              son negocios donde la empresa decide por el cliente y esa decisión
-              deja rastro público, que es lo único que hace posible
-              reconstruirla desde afuera.
-            - "Las cifras trazan a su fuente y los supuestos van declarados como
-              supuestos": ya lo dicen /method y el índice de proyectos.
-            - La logística (remoto, mudarse a Buenos Aires) vive en la home, en
-              "Actualmente", que es donde corresponde.
+            Las reglas salieron de iterar con él, y están acá para no volver a
+            romperlas:
 
-            El hilo entre párrafos es literal: el segundo dice "la pregunta no la
-            puse yo" y el tercero arranca con "las preguntas las elijo yo". */}
+            - Nada de eslóganes. Una oración con tres cláusulas paralelas y una
+              glosa entre paréntesis suena a IA aunque diga algo cierto. El
+              criterio se muestra en lo que pasó, no se declara.
+            - Nada de aforismos de cierre ("me quedó la costumbre de pedirle un
+              número a una decisión"). Los párrafos terminan en un hecho.
+            - No son "análisis de mercado" ni "temas que me interesan". El eje
+              está en el frontmatter: de dieciocho casos, ocho son `salud` y
+              siete `seguros`, y el porqué es estructural (la empresa decide
+              por el cliente y esa decisión deja rastro público, que es lo
+              único que permite reconstruirla desde afuera).
+            - Los números van en primera persona del singular. Acá se vende él,
+              no el equipo en el que estaba.
+            - El cierre no pide un cargo. Analista, product manager y product
+              owner comparten el trabajo, así que el título queda de lado.
+            - Lo que ya está dicho en otro lado no se repite: la trazabilidad
+              vive en /method, la logística de trabajo remoto en "Actualmente"
+              de la home, y la tesis en Educación, dos secciones más abajo. */}
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
-          <p>{t("intro.paragraph3")}</p>
           {/* Los links van adentro de la frase y no en una lista aparte: la
               afirmación ("estos dos mercados dejan rastro público") y su prueba
               quedan en el mismo lugar, y cada fuente apunta al caso donde se
@@ -155,7 +149,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               niveles de fuente del método: el archivo donde la empresa es una
               fila, y lo que la empresa dice de sí misma. */}
           <p>
-            {t.rich("intro.paragraph4", {
+            {t.rich("intro.paragraph3", {
               pagos: (chunks) => (
                 <Link
                   href="/projects/glp1-open-payments"
@@ -190,8 +184,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ),
             })}
           </p>
+          <p>{t("intro.paragraph4")}</p>
           <p>{t("intro.paragraph5")}</p>
-          <p>{t("intro.paragraph6")}</p>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -507,8 +501,15 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     , desarrollada en conjunto con el{" "}
                     <strong>Hospital Italiano de Buenos Aires</strong>. La investigación partió de
                     una necesidad del hospital: anticipar la evolución clínica de un paciente
-                    oncológico a partir de sus datos históricos. Trabajé con datos clínicos reales,
-                    modelos predictivos y estadística aplicada a oncología.
+                    oncológico a partir de sus datos históricos.
+                  </p>
+                  <p>
+                    Lo que entregué fue un algoritmo que toma un paciente nuevo y estima su riesgo,
+                    medido en precisión y exactitud sobre datos que el modelo no había visto. Lo
+                    armé con radiómica y aprendizaje automático sobre datos clínicos reales.
+                  </p>
+                  <p>
+                    También fui ayudante de Procesamiento de Imágenes Biomédicas y de Biosensores.
                   </p>
                 </>
               ) : (
@@ -533,8 +534,16 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     , developed in collaboration with{" "}
                     <strong>Hospital Italiano de Buenos Aires</strong>. The research came from a
                     need the hospital had: predicting how an oncology patient would evolve from
-                    their historical data. I worked with real clinical data, predictive models and
-                    statistics applied to oncology.
+                    their historical data.
+                  </p>
+                  <p>
+                    What I delivered was an algorithm that takes a new patient and estimates their
+                    risk, measured for precision and accuracy on data the model had not seen. I
+                    built it with radiomics and machine learning on real clinical data.
+                  </p>
+                  <p>
+                    I was also a teaching assistant in Biomedical Image Processing and in
+                    Biosensors.
                   </p>
                 </>
               )}
