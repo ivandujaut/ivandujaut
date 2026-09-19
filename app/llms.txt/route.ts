@@ -57,6 +57,11 @@ function build(): string {
       " sin afiliación con las empresas que analizan. Cada uno declara qué es dato" +
       " medido y qué es supuesto propio.",
     "",
+    // Este archivo es el índice; el texto completo vive aparte. Va arriba de
+    // todo porque un modelo que corta la lectura temprano se lleva igual la
+    // dirección del cuerpo.
+    `El texto completo de todos los casos, en un solo archivo: ${SITE_URL}/llms-full.txt`,
+    "",
   ];
 
   lines.push(
