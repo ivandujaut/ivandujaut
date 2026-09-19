@@ -14,7 +14,15 @@ interface CloseProps {
 /** Cierre estático: sin animación a propósito, es donde se toma una decisión. */
 export function Close({ data, author, sources }: CloseProps) {
   return (
-    <Section id="close" className="pb-16">
+    // El pie va más corto que el resto de las secciones: es el final de la
+    // página y abajo no hay nada, así que el aire de `py-32` se lee como que
+    // falta contenido.
+    //
+    // Va con variante responsive y no como `pb-16` suelto: la clase base pierde
+    // contra el `md:py-32` del `Section` de `md` para arriba, así que la
+    // intención de acortar el pie no se estaba aplicando justo en escritorio,
+    // que es donde más se nota (eran 128px, no 64).
+    <Section id="close" className="pb-10 md:pb-12">
       <h2 className="font-serif text-4xl leading-tight font-semibold tracking-tight text-balance md:text-6xl">
         {data.heading}
       </h2>
