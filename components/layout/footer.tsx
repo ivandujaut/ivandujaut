@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
+import { Link } from "@/i18n/navigation";
 import { RssIcon } from "@/components/icons/rss-icon";
 import { useLocale } from "next-intl";
 import { localePath } from "@/lib/seo";
@@ -22,6 +23,7 @@ const socialLinks = [
 export function Footer() {
   const t = useTranslations("common.footer");
   const tA11y = useTranslations("common.a11y");
+  const tNav = useTranslations("common.navigation");
   const tFeed = useTranslations("common.feed");
   const locale = useLocale() as "es" | "en";
   const currentYear = new Date().getFullYear();
@@ -47,7 +49,18 @@ export function Footer() {
                 {chunks}
               </a>
             ),
-          })}
+          })}{" "}
+          <span aria-hidden>·</span>{" "}
+          {/* El método vivía en el nav y bajó acá el 19/09/2026, por decisión de
+              Iván: es la letra chica que respalda lo que el sitio afirma, no un
+              destino que compita con los casos. Va con el resto de la firma,
+              donde se busca ese tipo de cosa. */}
+          <Link
+            href="/method"
+            className="underline-offset-2 transition-colors hover:text-foreground hover:underline"
+          >
+            {tNav("method")}
+          </Link>
         </p>
 
         <div className="flex items-center gap-3">

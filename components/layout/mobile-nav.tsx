@@ -14,7 +14,6 @@ const navLinks = [
   { href: "/", labelKey: "home" },
   { href: "/blog", labelKey: "blog" },
   { href: "/projects", labelKey: "projects" },
-  { href: "/method", labelKey: "method" },
   // TODO: re-enable when /research has published content. Route still works
   // via direct URL; only the nav entry is hidden.
   // { href: "/research", labelKey: "research" },
