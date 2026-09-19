@@ -58,11 +58,14 @@ export type AnalyticsEvent =
    */
   | "card_click"
   /**
-   * Clic a la dirección del feed, con la superficie desde la que salió
-   * (`footer`, `index`, `blog`, `case-close`). Existe desde el 18/09/2026, que
-   * es cuando el feed pasó a ofrecerse en algún lado: sin cookies ni lista de
-   * correo, es el único modo de volver al sitio que no pasa por LinkedIn, y la
-   * pregunta que contesta es si alguien lo usa.
+   * Clic al ícono del feed en el footer (`surface: "footer"`). Sin cookies ni
+   * lista de correo, el feed es el único modo de volver al sitio que no pasa
+   * por LinkedIn, y la pregunta que contesta es si alguien lo usa.
+   *
+   * El 19/09/2026 dejó de medirse en el índice, el blog y el cierre del caso:
+   * ahí había una línea que explicaba cómo suscribirse, y se sacó porque le
+   * hablaba a una minoría con vocabulario que el resto no tiene por qué
+   * conocer ("pegá la dirección en tu lector"). Quien usa RSS busca el ícono.
    */
   | "feed_click";
 
