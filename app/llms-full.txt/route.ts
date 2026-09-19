@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { getProjects } from "@/lib/content";
+import { getAllProjects } from "@/lib/content";
 import { SITE_URL } from "@/lib/seo";
 
 /**
@@ -20,6 +20,14 @@ import { SITE_URL } from "@/lib/seo";
  * Sólo los casos. El blog está indexado en `llms.txt` con su bajada; son tres
  * piezas de mayo sobre oficio y carrera, y no es por lo que este sitio quiere
  * ser citado.
+ *
+ * Usa `getAllProjects` y no `getProjects`, que es la diferencia entre lo
+ * publicado y lo *listado*. El análisis completo de un pitch (hoy
+ * `leqembi-kisunla-analisis`) no aparece en el índice del sitio a propósito,
+ * para no duplicar la pieza corta, pero es la que tiene los datos, las
+ * definiciones y los supuestos detrás de cada número: justo lo que un modelo
+ * necesita para citar. El sitemap ya la incluye por la misma razón, así que
+ * esta superficie se comporta igual que el sitemap y no igual que el menú.
  *
  * Se lee del disco porque Velite entrega `content` como MDX ya compilado a
  * JavaScript, que no sirve para esto. Como la ruta es estática, el `readFileSync`
@@ -77,7 +85,7 @@ function aTextoPlano(mdx: string): string {
 }
 
 function build(): string {
-  const casos = getProjects("es");
+  const casos = getAllProjects("es");
 
   const lines: string[] = [
     "# Iván Dujaut · texto completo de los casos",
