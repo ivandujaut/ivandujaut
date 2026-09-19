@@ -111,9 +111,32 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             infraestructura de pagos (Pomelo). Los tres piden lo mismo dicho de
             tres maneras: contestar la pregunta de negocio y no narrar el
             procedimiento, priorizar qué entra y qué no al roadmap, y medir
-            después si rindió. La versión anterior lo decía en abstracto
-            ("una pregunta de negocio que nadie estructuró"); ésta lo dice con
-            los números que ya están en el CV de más abajo. */}
+            después si rindió.
+
+            Va contado como relato y no como ficha, por devolución de Iván sobre
+            el primer intento. Lo que sacó, y por qué:
+
+            - "Agarro la decisión que nadie terminó de estructurar (...), la dejo
+              escrita con los trade-offs a la vista y después la construyo":
+              tres cláusulas paralelas con una glosa entre paréntesis, o sea un
+              eslogan. Ahora el párrafo cuenta FIJI y los cuatro años de Banana,
+              y el criterio aparece en lo que pasó ("lo que más sirvió fue
+              frenar") en vez de estar declarado.
+            - "De ahí me quedó la costumbre de pedirle un número a una decisión
+              antes de tomarla": aforismo de cierre sin cohesión con lo de
+              arriba. Lo reemplaza el encargo real del Hospital Italiano, que
+              además dice sin eslogan lo que pide ZS: ver si los datos que ya
+              existen contestan la pregunta.
+            - "publico análisis de mercados": encuadre equivocado. No analiza
+              mercados; elige un problema, reconstruye contexto y actores, y
+              muestra cómo lo piensa hasta una decisión.
+            - "Las cifras trazan a su fuente y los supuestos van declarados como
+              supuestos": ya lo dicen /method y el índice de proyectos.
+            - La logística (remoto, mudarse a Buenos Aires) vive en la home, en
+              "Actualmente", que es donde corresponde.
+
+            El hilo entre párrafos es literal: el segundo dice "la pregunta no la
+            puse yo" y el tercero arranca con "las preguntas las elijo yo". */}
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
