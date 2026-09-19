@@ -94,8 +94,10 @@ function build(): string {
       " y los datos públicos, y termino en una decisión. Bioingeniero del ITBA.",
     "",
     `Este archivo trae el texto completo de los ${casos.length} casos publicados,` +
-      " en castellano, que es la versión canónica. El índice, las traducciones al" +
-      ` inglés y las páginas sueltas están en ${SITE_URL}/llms.txt`,
+      " en castellano, que es la versión canónica. Son uno más que los que lista" +
+      " el índice del sitio, porque acá entra también el análisis completo que" +
+      " acompaña a un pitch. El índice, las traducciones al inglés y las páginas" +
+      ` sueltas están en ${SITE_URL}/llms.txt`,
     "",
     "Los casos sobre productos ajenos son análisis independientes, sin afiliación" +
       " con las empresas que analizan. Cada cifra traza a su fuente y cada supuesto" +
