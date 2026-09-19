@@ -156,6 +156,27 @@ const projects = defineCollection({
       // caso: más que eso diluye, y una entidad que el caso apenas menciona no
       // entra, porque `about` declara de qué habla la pieza y no qué nombra.
       entities: s.array(s.string()).default([]),
+      // Los archivos de los que el caso calcula: el dataset abierto, el registro
+      // público, la tabla del regulador. Van al `citation` del JSON-LD, que es
+      // el campo con el que una página dice de dónde sacó sus números.
+      //
+      // Sólo fuentes de primer nivel, las del nodo 2 del flujo de contenido: el
+      // archivo donde el anfitrión es una fila. Las notas, los informes de
+      // terceros y lo que la empresa dice de sí misma se citan en el texto, con
+      // su cita textual y su fecha, y no entran acá: `citation` declara de dónde
+      // salieron los cálculos, y meter las cuarenta y seis páginas archivadas de
+      // un caso sólo lo vuelve ilegible.
+      //
+      // Entre una y cinco por caso. Se llenan al escribir el caso, no después:
+      // ver `.claude/docs/content-workflow.md`, nodo 2, regla 10.
+      sources: s
+        .array(
+          s.object({
+            name: s.string(),
+            url: s.string().url(),
+          }),
+        )
+        .default([]),
       repo: s.string().url().optional(),
       demo: s.string().url().optional(),
       figma: s.string().url().optional(),

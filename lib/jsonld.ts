@@ -172,6 +172,7 @@ type ArticleInput = {
   readingTimeMinutes?: number;
   about?: string;
   entities?: string[];
+  sources?: Array<{ name: string; url: string }>;
 };
 
 /**
@@ -208,6 +209,18 @@ function articleSchema(input: ArticleInput) {
             ...(input.about ? [{ "@type": "Thing", name: input.about }] : []),
             ...(input.entities ?? []).map((name) => ({ "@type": "Thing", name })),
           ],
+        }
+      : {}),
+    // `citation` dice de dónde salieron los números. Es lo que separa a una
+    // página que afirma algo de una que lo puede sostener, y es lo primero que
+    // mira cualquiera (o cualquier modelo) que evalúe si vale citarla.
+    ...(input.sources?.length
+      ? {
+          citation: input.sources.map((s) => ({
+            "@type": "CreativeWork",
+            name: s.name,
+            url: s.url,
+          })),
         }
       : {}),
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
@@ -249,6 +262,7 @@ type ProjectArticleInput = {
   topic: string;
   kind?: string;
   entities?: string[];
+  sources?: Array<{ name: string; url: string }>;
   image: string;
   wordCount?: number;
   readingTimeMinutes?: number;

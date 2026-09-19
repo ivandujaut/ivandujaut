@@ -179,6 +179,7 @@ export default async function ProjectPage({ params }: Props) {
       topic: project.topic,
       kind: project.kind,
       entities: project.entities,
+      sources: project.sources,
       image: articleImage,
       wordCount: project.metadata?.wordCount,
       readingTimeMinutes: project.metadata?.readingTime,
