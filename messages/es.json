@@ -86,8 +86,7 @@
       "contents": "Contenido"
     },
     "feed": {
-      "label": "Feed RSS",
-      "body": "Cada caso nuevo sale en el feed. Copiá la dirección en tu lector:"
+      "label": "Feed RSS"
     }
   },
   "home": {

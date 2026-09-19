@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getPosts } from "@/lib/content";
 import { PostListItem } from "@/components/content/post-list-item";
-import { FeedLink } from "@/components/common/feed-link";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
@@ -94,12 +93,6 @@ export default async function BlogPage({ params }: Props) {
           ))
         )}
       </div>
-
-      <FeedLink
-        locale={locale as "es" | "en"}
-        surface="blog"
-        className="mt-14 border-t border-border pt-8"
-      />
     </main>
   );
 }
