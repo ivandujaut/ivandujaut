@@ -146,13 +146,16 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
+          <p>{t("intro.paragraph3")}</p>
           {/* Los links van adentro de la frase y no en una lista aparte: la
-              afirmación ("publico análisis sólo con datos públicos") y su
-              prueba quedan en el mismo lugar, y cada fuente apunta al caso
-              donde se usó. Es lo que reemplazó a la lista de dieciséis casos,
-              que era el índice repetido. */}
+              afirmación ("estos dos mercados dejan rastro público") y su prueba
+              quedan en el mismo lugar, y cada fuente apunta al caso donde se
+              usó. Es lo que reemplazó a la lista de dieciséis casos, que era el
+              índice repetido. Las cuatro cubren los dos mercados y los dos
+              niveles de fuente del método: el archivo donde la empresa es una
+              fila, y lo que la empresa dice de sí misma. */}
           <p>
-            {t.rich("intro.paragraph3", {
+            {t.rich("intro.paragraph4", {
               pagos: (chunks) => (
                 <Link
                   href="/projects/glp1-open-payments"
@@ -187,9 +190,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ),
             })}
           </p>
-          <p>{t("intro.paragraph4")}</p>
           <p>{t("intro.paragraph5")}</p>
+          <p>{t("intro.paragraph6")}</p>
         </div>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <ObfuscatedEmailTrigger
             surface="about-intro"
