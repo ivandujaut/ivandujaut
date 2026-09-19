@@ -208,7 +208,7 @@
       "greeting": "Hi, I'm Iván",
       "paragraph1": "I take a business question nobody has structured, work out whether the data can answer it, and end in a recommendation with its trade-offs in plain sight. I've been doing it as a product engineer for four years: the most useful thing I did at Banana Software was cutting roughly one in five planned features from the roadmap, because they didn't earn what they cost. I live in Argentina and work remotely with teams in the US and LATAM.",
       "paragraph2": "I'm a bioengineer from ITBA. My thesis predicted 2-year mortality in patients with colorectal cancer liver metastasis, using radiomics and machine learning on real data from Hospital Italiano de Buenos Aires. Before that I was a teaching assistant in Biomedical Image Processing and in Biosensors. It left me in the habit of asking a decision for a number before making it.",
-      "paragraph3": "Since 2026 I publish analyses of real markets and products, using public data only: the balance sheets insurers file with the regulator, workers' compensation statistics, the companies' own digital channels. Every figure traces back to its source, and every assumption is declared as one.",
+      "paragraph3": "Since 2026 I publish analyses of real markets and products, using public data only: <balances>the balance sheets insurers file with the regulator</balances>, <srt>workers' compensation statistics</srt>, <canales>the companies' own digital channels</canales>. Every figure traces back to its source, and every assumption is declared as one.",
       "paragraph4": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. If your team has decisions that today get made without numbers, email me. And if it's a product you're thinking about and you want a second head on it, book a call.",
       "ctas": {
         "email": "Email me",
@@ -221,7 +221,8 @@
       "experience": "Experience",
       "education": "Education",
       "tools": "Toolbox",
-      "contact": "Contact"
+      "contact": "Contact",
+      "languages": "Languages"
     },
     "work": {
       "groups": {
@@ -231,7 +232,21 @@
       "all": "See all case studies"
     },
     "tools": {
-      "intro": "I do the analysis in Python over PostgreSQL and the measurement with PostHog. When I need to see the product working, I prototype it in Next.js and TypeScript. I've integrated payments with Stripe, Mercado Pago and PayPal, and moved a product off Bubble to rewrite it in Next.js."
+      "intro": "I do the analysis in Python over PostgreSQL and the measurement with PostHog. When I need to see the product working, I prototype it in Next.js and TypeScript. I've integrated payments with Stripe, Mercado Pago and PayPal, and moved a product off Bubble to rewrite it in Next.js.",
+      "categories": {
+        "data": {
+          "label": "Data and analysis",
+          "items": "Python, NumPy, Pandas, matplotlib, PostHog, PostgreSQL, Supabase"
+        },
+        "productDesign": {
+          "label": "Product and design",
+          "items": "Figma, JIRA, Linear, Notion"
+        },
+        "build": {
+          "label": "Engineering and payments",
+          "items": "React, Next.js, TypeScript, Tailwind CSS, shadcn/ui, MaterialUI, Node.js, REST APIs, Stripe, Mercado Pago, PayPal, Vercel, GitHub Actions"
+        }
+      }
     },
     "languages": {
       "spanish": "Spanish",

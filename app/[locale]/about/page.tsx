@@ -8,8 +8,7 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
-import { getEntryProject, getProjects, getPublishingCadence } from "@/lib/content";
-import { ProjectListItem } from "@/components/content/project-list-item";
+import { getPublishingCadence } from "@/lib/content";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -21,13 +20,6 @@ import { Link } from "@/i18n/navigation";
 type Props = {
   params: Promise<{ locale: string }>;
 };
-
-/**
- * Cuántas piezas se muestran: la de entrada del índice y las tres más nuevas.
- * Cuatro entran en media pantalla y alcanzan para mostrar de qué se trata; el
- * cuerpo completo vive en `/projects`, que es la página hecha para recorrerlo.
- */
-const PIEZAS_EN_ABOUT = 4;
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
@@ -82,24 +74,22 @@ export default async function AboutPage({ params }: Props) {
   return <AboutContent locale={locale as "es" | "en"} />;
 }
 
+/** Una fila de la ficha de herramientas: rótulo a la izquierda, lista al lado. */
+function ToolCategory({ label, items }: { label: string; items: string }) {
+  return (
+    <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
+      <dt className="shrink-0 font-mono text-xs uppercase tracking-wider text-muted-foreground sm:w-40">
+        {label}
+      </dt>
+      <dd className="text-sm leading-relaxed">{items}</dd>
+    </div>
+  );
+}
+
 function AboutContent({ locale }: { locale: "es" | "en" }) {
   const t = useTranslations("about");
   const tWork = useTranslations("home.work");
 
-  // La de entrada primero y después una por mercado, de la más nueva a la más
-  // vieja. No son "las cuatro más recientes" a propósito: las siete piezas más
-  // nuevas del sitio son todas de salud, y cuatro seguidas del mismo mercado
-  // dicen que eso es lo único que hace. Lo que esta página tiene que mostrar es
-  // que el método viaja entre industrias, que es el argumento del perfil.
-  const entrada = getEntryProject(locale);
-  const porFecha = getProjects(locale).filter((pieza) => pieza.slug !== entrada?.slug);
-  const mercadosUsados = new Set(entrada ? [entrada.topic] : []);
-  const unaPorMercado = porFecha.filter((pieza) => {
-    if (mercadosUsados.has(pieza.topic)) return false;
-    mercadosUsados.add(pieza.topic);
-    return true;
-  });
-  const destacados = [...(entrada ? [entrada] : []), ...unaPorMercado].slice(0, PIEZAS_EN_ABOUT);
   const cadencia = getPublishingCadence(locale);
 
   return (
@@ -118,7 +108,39 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
-          <p>{t("intro.paragraph3")}</p>
+          {/* Los links van adentro de la frase y no en una lista aparte: la
+              afirmación ("publico análisis sólo con datos públicos") y su
+              prueba quedan en el mismo lugar, y cada fuente apunta al caso
+              donde se usó. Es lo que reemplazó a la lista de dieciséis casos,
+              que era el índice repetido. */}
+          <p>
+            {t.rich("intro.paragraph3", {
+              balances: (chunks) => (
+                <Link
+                  href="/projects/seguro-hogar-argentina"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+              srt: (chunks) => (
+                <Link
+                  href="/projects/cobranza-seguros"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+              canales: (chunks) => (
+                <Link
+                  href="/projects/canal-digital-seguros"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
           <p>{t("intro.paragraph4")}</p>
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -177,25 +199,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {t("sections.work")}
           </h2>
-          <div className="space-y-1">
-            {destacados.map((pieza) => (
-              <ProjectListItem
-                key={pieza.slug}
-                slug={pieza.slug}
-                title={pieza.title}
-                tagline={pieza.tagline}
-                date={pieza.date}
-                stack={pieza.stack}
-                showStack={false}
-                status={pieza.status}
-                kind={pieza.kind}
-                locale={locale}
-                surface="home"
-              />
-            ))}
-          </div>
           {cadencia && (
-            <p className="mt-5 text-sm text-muted-foreground">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               {tWork("cadence", {
                 count: cadencia.count,
                 days: cadencia.everyDays,
@@ -208,7 +213,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           )}
           <Link
             href="/projects"
-            className="mt-4 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+            className="mt-3 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
           >
             {t("work.all")}
             <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} aria-hidden />
@@ -501,27 +506,13 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </section>
 
         {/* Herramientas */}
+        {/* Idiomas. Va acá, entre Educación y Herramientas, y no al lado del
+            contacto: es una credencial del recorrido, no una forma de
+            escribirme. Estuvo unas horas dentro de Contacto el 19/09/2026 por
+            un recorte de la página, y no tenía sentido. */}
         <section>
           <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {t("sections.tools")}
-          </h2>
-
-          {/* Sólo la prosa. Hasta el 19/09/2026 abajo iba una matriz de seis
-              filas de tecnologías (React, Tailwind, shadcn/ui, MaterialUI,
-              Figma, JIRA...), que es la misma señal de desarrollo que sacamos
-              de la home: en una página que argumenta criterio de producto y
-              análisis, enumerar el stack del frontend corre el foco. Este
-              párrafo ya dice lo que importa, que el análisis es Python sobre
-              PostgreSQL y la medición PostHog. */}
-          <p className="text-sm leading-relaxed text-foreground">{t("tools.intro")}</p>
-        </section>
-
-        {/* Cierre: idiomas y contacto juntos. Eran dos secciones con su
-            encabezado para 16 palabras cada una, al final de una página que ya
-            venía larga. */}
-        <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {t("sections.contact")}
+            {t("sections.languages")}
           </h2>
           <div className="space-y-3 text-sm leading-relaxed">
             <p>
@@ -560,8 +551,43 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               </a>
             </div>
           </div>
+        </section>
 
-          <p className="mt-6 text-sm leading-relaxed">
+        <section>
+          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            {t("sections.tools")}
+          </h2>
+
+          {/* Tres filas y no seis, con las mismas herramientas adentro. La lista
+              se queda porque dice de dónde venís y qué hiciste, que es
+              información que la página tiene que dar (decisión de Iván el
+              19/09/2026, después de que yo la sacara entera). El orden sí
+              cambia: datos y análisis primero, desarrollo al final, que es el
+              orden en que este perfil quiere ser leído. */}
+          <p className="text-sm leading-relaxed text-foreground">{t("tools.intro")}</p>
+
+          <dl className="mt-6 space-y-3">
+            <ToolCategory
+              label={t("tools.categories.data.label")}
+              items={t("tools.categories.data.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.productDesign.label")}
+              items={t("tools.categories.productDesign.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.build.label")}
+              items={t("tools.categories.build.items")}
+            />
+          </dl>
+        </section>
+
+        {/* Contacto */}
+        <section>
+          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            {t("sections.contact")}
+          </h2>
+          <p className="text-sm leading-relaxed">
             {t.rich("contact.intro", {
               email: (chunks) => (
                 <ObfuscatedEmailTrigger
