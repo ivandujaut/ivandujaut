@@ -27,10 +27,16 @@ const HOME_LIMIT = 3;
  * atrás. Acá la curaduría es la fecha: no hay nada que mantener y la home
  * nunca queda vieja.
  *
- * La primera pieza va con imagen porque un gráfico es la evidencia de que
- * adentro hay análisis, y la home no tenía ninguna. Se prefiere el primer
- * `preview` (un gráfico del caso) antes que la portada (una ilustración): la
- * portada es editorial y no dice qué se midió.
+ * La primera pieza va con imagen porque la home no tenía ninguna evidencia de
+ * que acá se publica algo.
+ *
+ * Manda el gráfico y la portada queda de reserva: una barra con cifras dice
+ * que adentro hay análisis, y una ilustración no.
+ *
+ * Eso se pudo hacer recién el 19/09/2026, cuando `preview` pasó a declararse
+ * como imagen en el esquema y trae ancho, alto y blur igual que la portada.
+ * Antes llegaba como una ruta suelta sin medidas, obligaba a una caja de
+ * proporción fija y el gráfico aparecía con bandas vacías a los costados.
  */
 export async function PublishedWork({ locale }: PublishedWorkProps) {
   const projects = getProjects(locale).slice(0, HOME_LIMIT);
@@ -41,7 +47,14 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
   const tReading = await getTranslations({ locale, namespace: "common.reading" });
   const cadence = getPublishingCadence(locale);
 
-  const leadImage = lead.preview?.[0] ?? (lead.cover ? { src: lead.cover.src.src, alt: "" } : null);
+  // Las dos traen medidas y blur desde Velite, así que la que toque se dibuja
+  // con su propia proporción y llena la caja exacto.
+  const grafico = lead.preview?.[0] ?? null;
+  const imagen = grafico
+    ? { ...grafico.src, alt: grafico.alt }
+    : lead.cover
+      ? { ...lead.cover.src, alt: lead.cover.alt }
+      : null;
 
   return (
     <section>
@@ -65,27 +78,26 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
         className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
       >
         <article>
-          {leadImage && (
-            // `fill` con `object-contain` y no `object-cover`: estas imágenes
-            // son gráficos, y un recorte a 16:9 de un gráfico de ratio 1,3 se
-            // come el título o el eje. La caja reserva el alto, así que la
-            // tarjeta no salta cuando la imagen llega.
-            <div className="relative mb-3 aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted/30">
-              <Image
-                src={leadImage.src}
-                alt={leadImage.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, 672px"
-                // Es el LCP de la home en escritorio. `priority` está
-                // deprecado en Next 16: la recomendación para una imagen que
-                // ya está en el HTML inicial es cargarla sin esperar al
-                // viewport y pedirla con prioridad alta.
-                loading="eager"
-                fetchPriority="high"
-                className="object-contain"
-              />
-            </div>
+          {imagen && (
+            <Image
+              src={imagen.src}
+              alt={imagen.alt}
+              width={imagen.width}
+              height={imagen.height}
+              sizes="(max-width: 768px) 100vw, 672px"
+              // Es el LCP de la home en escritorio. `priority` está deprecado
+              // en Next 16: para una imagen que ya está en el HTML inicial, la
+              // recomendación es cargarla sin esperar al viewport y pedirla con
+              // prioridad alta.
+              loading="eager"
+              fetchPriority="high"
+              {...(imagen.blurDataURL
+                ? { placeholder: "blur" as const, blurDataURL: imagen.blurDataURL }
+                : {})}
+              className="mb-3 h-auto w-full rounded-lg border border-border"
+            />
           )}
+
           <span className="mb-2 inline-flex flex-wrap gap-1.5">
             <KindBadge kind={lead.kind} />
           </span>
