@@ -107,7 +107,7 @@
       "paragraph1": "I'm a Product Engineer at Prizmstack, where I build FIJI, which prices a real estate business from how it has been operating.",
       "stack": "Current stack: TypeScript, Next.js, PostgreSQL, Supabase.",
       "paragraph2": "In parallel I teach Digital Techniques to Electronics students at IPSAJ (Instituto Politécnico San Arnoldo Janssen), the technical school I graduated from.",
-      "paragraph3": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. Email me or book a call."
+      "paragraph3": "I'm looking for a decision analytics role in consulting, or a product role in payments, insurance or health. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. Email me or book a call."
     },
     "work": {
       "title": "Published work",
@@ -206,10 +206,11 @@
     "title": "About me",
     "intro": {
       "greeting": "Hi, I'm Iván",
-      "paragraph1": "I take a business question nobody has structured, work out whether the data can answer it, and end in a recommendation with its trade-offs in plain sight. I've been doing it as a product engineer for four years: the most useful thing I did at Banana Software was cutting roughly one in five planned features from the roadmap, because they didn't earn what they cost. I live in Argentina and work remotely with teams in the US and LATAM.",
-      "paragraph2": "I'm a bioengineer from ITBA. My thesis predicted 2-year mortality in patients with colorectal cancer liver metastasis, using radiomics and machine learning on real data from Hospital Italiano de Buenos Aires. Before that I was a teaching assistant in Biomedical Image Processing and in Biosensors. It left me in the habit of asking a decision for a number before making it.",
-      "paragraph3": "Since 2026 I publish analyses of real markets and products, using public data only: the balance sheets insurers file with the regulator, workers' compensation statistics, the companies' own digital channels. Every figure traces back to its source, and every assumption is declared as one.",
-      "paragraph4": "I'm looking for a product strategy or decision analytics role in consulting, health, insurance or fintech. I work remotely from Argentina and will move to Buenos Aires for a hybrid role. If your team has decisions that today get made without numbers, email me. And if it's a product you're thinking about and you want a second head on it, book a call.",
+      "paragraph1": "Before building anything I ask what real value it gives the user, and whether it comes from a hypothesis of ours or from something the user needs. Today I build FIJI at Prizmstack, a platform that prices a real estate business from how it has been operating.",
+      "paragraph2": "I came to product at Banana Software: four years, from trainee to product engineer, projects run end to end, B2C and B2B platforms with payment methods integrated. That is where I realised I had been asking that question by default, and that my whole job revolved around it. Clients arrived with lists of features that did not follow that line, and I negotiated with data. The answer was almost always to do less, because what was planned did not earn what it cost, and doing less is what lets you iterate fast. Sprint predictability went from 60% to 90% once I stopped estimating by eye and modelled real effort.",
+      "paragraph3": "Since 2026 I pick the questions myself. I write about health, which comes from my bioengineering background and a machine learning thesis on real clinical data, and about insurance, a market that publishes everything and explains little. Both are businesses where the company decides for you what you are covered for, how much you are charged and what you get shown before you buy, and that decision leaves a public trace: <pagos>every payment to a doctor that the pharmaceutical industry has to disclose</pagos>, <balances>the balance sheets insurers file with the regulator</balances>, <srt>workers' compensation statistics</srt>, <canales>what they show (or don't) on their own digital channels</canales>.",
+      "paragraph4": "In each case I rebuild the problem and the players involved, and take it through to a decision: how much money is at stake, what the first step is, which metrics measure it by segment, and what is not worth building.",
+      "paragraph5": "If your team has a roadmap full of features nobody has proved are worth what they cost, a decision that keeps getting made by eye because nobody has worked out the number, or a launch you cannot tell whether it worked, that is what I solve. Email me with yours and I'll tell you what I would do. And if it's a product you're thinking about and you want a second head on it, book a call.",
       "ctas": {
         "email": "Email me",
         "calendly": "Book a call",
@@ -221,8 +222,8 @@
       "experience": "Experience",
       "education": "Education",
       "tools": "Toolbox",
-      "languages": "Languages",
-      "contact": "Contact"
+      "contact": "Contact",
+      "languages": "Languages"
     },
     "work": {
       "groups": {
@@ -232,31 +233,19 @@
       "all": "See all case studies"
     },
     "tools": {
-      "intro": "I do the analysis in Python over PostgreSQL and the measurement with PostHog. When I need to see the product working, I prototype it in Next.js and TypeScript. I've integrated payments with Stripe, Mercado Pago and PayPal, and moved a product off Bubble to rewrite it in Next.js.",
+      "intro": "I do the analysis in Python and SQL, and the measurement with PostHog. When I need to see the product working, I prototype it in Next.js and TypeScript. I've integrated payments with Stripe, Mercado Pago and PayPal, and moved a product off Bubble to rewrite it in Next.js.",
       "categories": {
-        "frontend": {
-          "label": "Frontend",
-          "items": "React, Next.js, TypeScript, Tailwind CSS, shadcn/ui, MaterialUI"
-        },
-        "backend": {
-          "label": "Backend & Data",
-          "items": "Node.js, PostgreSQL, Supabase, REST APIs"
-        },
-        "payments": {
-          "label": "Payments",
-          "items": "Stripe, Mercado Pago, PayPal"
+        "data": {
+          "label": "Data and analysis",
+          "items": "Python, SQL, NumPy, Pandas, matplotlib, PostHog, PostgreSQL, Supabase"
         },
         "productDesign": {
-          "label": "Product & Design",
+          "label": "Product and design",
           "items": "Figma, JIRA, Linear, Notion"
         },
-        "infrastructure": {
-          "label": "Infrastructure",
-          "items": "Vercel, GitHub Actions, CI/CD"
-        },
-        "data": {
-          "label": "Data & Analysis",
-          "items": "Python, NumPy, Pandas, matplotlib, PostHog"
+        "build": {
+          "label": "Engineering and payments",
+          "items": "React, Next.js, TypeScript, Tailwind CSS, shadcn/ui, MaterialUI, Node.js, REST APIs, Stripe, Mercado Pago, PayPal, Vercel, GitHub Actions"
         }
       }
     },

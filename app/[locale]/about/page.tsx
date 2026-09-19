@@ -8,7 +8,7 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
-import { getProjectsBySubject } from "@/lib/content";
+import { getPublishingCadence } from "@/lib/content";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -20,13 +20,6 @@ import { Link } from "@/i18n/navigation";
 type Props = {
   params: Promise<{ locale: string }>;
 };
-
-/**
- * Piezas que no entran en el listado del /about. En `/projects` tienen sentido;
- * acá el sitio hablando del sitio es autorreferencial y resta. Es la única
- * excepción manual a un listado que por lo demás sale de Velite solo.
- */
-const FUERA_DEL_ABOUT: string[] = ["portfolio"];
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
@@ -81,8 +74,23 @@ export default async function AboutPage({ params }: Props) {
   return <AboutContent locale={locale as "es" | "en"} />;
 }
 
+/** Una fila de la ficha de herramientas: rótulo a la izquierda, lista al lado. */
+function ToolCategory({ label, items }: { label: string; items: string }) {
+  return (
+    <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
+      <dt className="shrink-0 font-mono text-xs uppercase tracking-wider text-muted-foreground sm:w-40">
+        {label}
+      </dt>
+      <dd className="text-sm leading-relaxed">{items}</dd>
+    </div>
+  );
+}
+
 function AboutContent({ locale }: { locale: "es" | "en" }) {
   const t = useTranslations("about");
+  const tWork = useTranslations("home.work");
+
+  const cadencia = getPublishingCadence(locale);
 
   return (
     <main id="main" className="mx-auto max-w-2xl px-6 py-24">
@@ -97,12 +105,89 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             className="mt-2"
           />
         </div>
+        {/* La descripción se reescribió el 19/09/2026 contra los avisos de los
+            tres roles que Iván persigue: decision analytics en consultoría
+            (ZS), product management de tarjetas (Mastercard) y producto en
+            infraestructura de pagos (Pomelo). Los tres piden lo mismo dicho de
+            tres maneras: contestar la pregunta de negocio y no narrar el
+            procedimiento, decidir qué entra y qué no al roadmap, y medir
+            después si rindió.
+
+            Va contado como relato y no como ficha. Los cinco párrafos son: qué
+            construye hoy y de dónde viene, el criterio de producto contado
+            donde se aprendió (en Banana, no en la bioingeniería), por qué
+            escribe de salud y seguros, qué hace en cada caso, y qué ofrece.
+
+            Las reglas salieron de iterar con él, y están acá para no volver a
+            romperlas:
+
+            - Nada de eslóganes. Una oración con tres cláusulas paralelas y una
+              glosa entre paréntesis suena a IA aunque diga algo cierto. El
+              criterio se muestra en lo que pasó, no se declara.
+            - Nada de aforismos de cierre ("me quedó la costumbre de pedirle un
+              número a una decisión"). Los párrafos terminan en un hecho.
+            - No son "análisis de mercado" ni "temas que me interesan". El eje
+              está en el frontmatter: de dieciocho casos, ocho son `salud` y
+              siete `seguros`, y el porqué es estructural (la empresa decide
+              por el cliente y esa decisión deja rastro público, que es lo
+              único que permite reconstruirla desde afuera).
+            - Los números van en primera persona del singular. Acá se vende él,
+              no el equipo en el que estaba.
+            - El cierre no pide un cargo. Analista, product manager y product
+              owner comparten el trabajo, así que el título queda de lado.
+            - Lo que ya está dicho en otro lado no se repite: la trazabilidad
+              vive en /method, la logística de trabajo remoto en "Actualmente"
+              de la home, y la tesis en Educación, dos secciones más abajo. */}
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
           <p>{t("intro.paragraph2")}</p>
-          <p>{t("intro.paragraph3")}</p>
+          {/* Los links van adentro de la frase y no en una lista aparte: la
+              afirmación ("estos dos mercados dejan rastro público") y su prueba
+              quedan en el mismo lugar, y cada fuente apunta al caso donde se
+              usó. Es lo que reemplazó a la lista de dieciséis casos, que era el
+              índice repetido. Las cuatro cubren los dos mercados y los dos
+              niveles de fuente del método: el archivo donde la empresa es una
+              fila, y lo que la empresa dice de sí misma. */}
+          <p>
+            {t.rich("intro.paragraph3", {
+              pagos: (chunks) => (
+                <Link
+                  href="/projects/glp1-open-payments"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+              balances: (chunks) => (
+                <Link
+                  href="/projects/seguro-hogar-argentina"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+              srt: (chunks) => (
+                <Link
+                  href="/projects/cobranza-seguros"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+              canales: (chunks) => (
+                <Link
+                  href="/projects/canal-digital-seguros"
+                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
           <p>{t("intro.paragraph4")}</p>
+          <p>{t("intro.paragraph5")}</p>
         </div>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <ObfuscatedEmailTrigger
             surface="about-intro"
@@ -145,43 +230,35 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         {/* Trabajo publicado. Se arma desde Velite y no a mano: si se hardcodea,
             queda desactualizado en la primera pieza que se publique. Va antes
             que Experiencia a propósito: la obra es el argumento y el CV es el
-            respaldo, no al revés. Cada link de acá le pasa autoridad al caso,
-            que es lo que puede rankear; esta página no. */}
+            respaldo, no al revés.
+            
+            Hasta el 19/09/2026 listaba los dieciséis casos con su bajada, o sea
+            `/projects` otra vez, en letra más chica y sin fecha ni agrupación
+            por mercado: 1.176px en escritorio y 1.836 en un teléfono, dos
+            pantallas y cuarto de lista plana. Ahora van cuatro piezas con la
+            misma tarjeta del índice, la cadencia calculada y el link al resto.
+            Los casos que salen de acá siguen enlazados desde el índice, la
+            home, el sitemap, el RSS y los "siguientes casos" al pie de cada
+            pieza, así que no pierden autoridad interna. */}
         <section>
           <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {t("sections.work")}
           </h2>
-          <div className="space-y-8">
-            {(["external", "own"] as const).map((grupo) => {
-              const piezas = getProjectsBySubject(locale, grupo).filter(
-                (pieza) => !FUERA_DEL_ABOUT.includes(pieza.slug),
-              );
-              if (piezas.length === 0) return null;
-              return (
-                <div key={grupo}>
-                  <h3 className="mb-3 text-sm font-semibold tracking-tight">
-                    {t(`work.groups.${grupo}`)}
-                  </h3>
-                  <ul className="space-y-3">
-                    {piezas.map((pieza) => (
-                      <li key={pieza.slug} className="text-sm leading-relaxed">
-                        <Link
-                          href={`/projects/${pieza.slug}`}
-                          className="font-medium underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-                        >
-                          {pieza.title}
-                        </Link>{" "}
-                        <span className="text-muted-foreground">{pieza.tagline}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
+          {cadencia && (
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {tWork("cadence", {
+                count: cadencia.count,
+                days: cadencia.everyDays,
+                since: new Date(cadencia.since).toLocaleDateString(locale, {
+                  month: "long",
+                  year: "numeric",
+                }),
+              })}
+            </p>
+          )}
           <Link
             href="/projects"
-            className="mt-6 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+            className="mt-3 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
           >
             {t("work.all")}
             <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} aria-hidden />
@@ -202,7 +279,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               title="Product Engineer"
               company="Prizmstack"
               location={locale === "es" ? "Remoto · California" : "Remote · California"}
-              stack="Next.js, TypeScript, PostgreSQL, Supabase, Vercel"
             >
               {locale === "es" ? (
                 <>
@@ -212,10 +288,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     motor de simulaciones, que traduce métricas de operación a valuaciones
                     financieras.
                   </p>
-                  <p>
-                    Trabajo sobre flujos de usuario, dashboards, el marketplace y las herramientas
-                    internas de administración.
-                  </p>
                 </>
               ) : (
                 <>
@@ -224,7 +296,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     I lead the migration from no-code (Bubble) to Next.js and build the simulation
                     engine that turns operating metrics into financial valuations.
                   </p>
-                  <p>I work on user flows, dashboards, the marketplace and internal admin tools.</p>
                 </>
               )}
             </ExperienceItem>
@@ -264,7 +335,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 locale === "es" ? "Trainee → Product Engineer" : "Trainee → Product Engineer"
               }
               location={locale === "es" ? "Remoto" : "Remote"}
-              stack="Next.js, TypeScript, Node.js, ExpressJS, Tailwind CSS, shadcn/ui, MaterialUI, Stripe, PayPal, Figma, JIRA"
             >
               {locale === "es" ? (
                 <>
@@ -290,10 +360,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     B2C y B2B con hasta <strong>1.500 usuarios activos</strong>. Integré pagos con
                     Mercado Pago, PayPal y Stripe; optimicé checkout B2C aumentando tasa de
                     finalización de reservas.
-                  </p>
-                  <p>
-                    Como <strong>Junior</strong> (Ene 2023 – Jun 2024), implementé Next.js,
-                    Tailwind, shadcn y MaterialUI por primera vez en la empresa.
                   </p>
                 </>
               ) : (
@@ -321,10 +387,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     with Mercado Pago, PayPal and Stripe; optimized B2C checkout, increasing booking
                     completion rates.
                   </p>
-                  <p>
-                    As <strong>Junior</strong> (Jan 2023 – Jun 2024), I introduced Next.js,
-                    Tailwind, shadcn and MaterialUI for the first time at the company.
-                  </p>
                 </>
               )}
             </ExperienceItem>
@@ -337,7 +399,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               company="Tumo (Techstars '24)"
               location={locale === "es" ? "Remoto · Nueva York" : "Remote · New York"}
               parallel={locale === "es" ? "paralelo a Banana" : "parallel to Banana"}
-              stack="Next.js, TypeScript, AWS"
             >
               {locale === "es" ? (
                 <>
@@ -379,33 +440,24 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               title="Planner Contract Business"
               company="Dräger"
               location={locale === "es" ? "Buenos Aires" : "Buenos Aires"}
-              stack="Microsoft Dynamics NAV, ERP, KPIs"
               stackLabel={locale === "es" ? "Herramientas" : "Tools"}
             >
               {locale === "es" ? (
                 <>
                   <p>
-                    Mi primer rol full-time, antes de pasarme a software. Planificaba mantenimientos
-                    preventivos a nivel nacional usando <strong>Microsoft Dynamics NAV</strong>:
-                    Service Requests, Sales Orders, Service Orders, gestión de recursos y KPIs
-                    digitales.
-                  </p>
-                  <p>
-                    Duró tres meses y me mostró cómo una empresa grande diseña sus procesos y mide
-                    su rendimiento.
+                    Mi primer rol full-time, antes de pasarme a software: planificaba mantenimientos
+                    preventivos a nivel nacional sobre <strong>Microsoft Dynamics NAV</strong>. Duró
+                    tres meses y me mostró cómo una empresa grande diseña sus procesos y mide su
+                    rendimiento.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    My first full-time role, before moving into software. Planned preventive
-                    maintenance at a national level using <strong>Microsoft Dynamics NAV</strong>:
-                    Service Requests, Sales Orders, Service Orders, resource management and digital
-                    KPIs.
-                  </p>
-                  <p>
-                    It lasted three months and showed me how a large company designs its processes
-                    and measures its performance.
+                    My first full-time role, before moving into software: I planned preventive
+                    maintenance at a national level on <strong>Microsoft Dynamics NAV</strong>. It
+                    lasted three months and showed me how a large company designs its processes and
+                    measures its performance.
                   </p>
                 </>
               )}
@@ -449,8 +501,15 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     , desarrollada en conjunto con el{" "}
                     <strong>Hospital Italiano de Buenos Aires</strong>. La investigación partió de
                     una necesidad del hospital: anticipar la evolución clínica de un paciente
-                    oncológico a partir de sus datos históricos. Trabajé con datos clínicos reales,
-                    modelos predictivos y estadística aplicada a oncología.
+                    oncológico a partir de sus datos históricos.
+                  </p>
+                  <p>
+                    Lo que entregué fue un algoritmo que toma un paciente nuevo y estima su riesgo,
+                    medido en precisión y exactitud sobre datos que el modelo no había visto. Lo
+                    armé con radiómica y aprendizaje automático sobre datos clínicos reales.
+                  </p>
+                  <p>
+                    También fui ayudante de Procesamiento de Imágenes Biomédicas y de Biosensores.
                   </p>
                 </>
               ) : (
@@ -475,8 +534,16 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                     , developed in collaboration with{" "}
                     <strong>Hospital Italiano de Buenos Aires</strong>. The research came from a
                     need the hospital had: predicting how an oncology patient would evolve from
-                    their historical data. I worked with real clinical data, predictive models and
-                    statistics applied to oncology.
+                    their historical data.
+                  </p>
+                  <p>
+                    What I delivered was an algorithm that takes a new patient and estimates their
+                    risk, measured for precision and accuracy on data the model had not seen. I
+                    built it with radiomics and machine learning on real clinical data.
+                  </p>
+                  <p>
+                    I was also a teaching assistant in Biomedical Image Processing and in
+                    Biosensors.
                   </p>
                 </>
               )}
@@ -499,42 +566,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </section>
 
         {/* Herramientas */}
-        <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {t("sections.tools")}
-          </h2>
-
-          <p className="text-sm leading-relaxed text-foreground">{t("tools.intro")}</p>
-
-          <dl className="mt-6 space-y-3">
-            <ToolCategory
-              label={t("tools.categories.data.label")}
-              items={t("tools.categories.data.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.frontend.label")}
-              items={t("tools.categories.frontend.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.backend.label")}
-              items={t("tools.categories.backend.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.payments.label")}
-              items={t("tools.categories.payments.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.productDesign.label")}
-              items={t("tools.categories.productDesign.items")}
-            />
-            <ToolCategory
-              label={t("tools.categories.infrastructure.label")}
-              items={t("tools.categories.infrastructure.items")}
-            />
-          </dl>
-        </section>
-
-        {/* Idiomas */}
+        {/* Idiomas. Va acá, entre Educación y Herramientas, y no al lado del
+            contacto: es una credencial del recorrido, no una forma de
+            escribirme. Estuvo unas horas dentro de Contacto el 19/09/2026 por
+            un recorte de la página, y no tenía sentido. */}
         <section>
           <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {t("sections.languages")}
@@ -576,6 +611,35 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               </a>
             </div>
           </div>
+        </section>
+
+        <section>
+          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            {t("sections.tools")}
+          </h2>
+
+          {/* Tres filas y no seis, con las mismas herramientas adentro. La lista
+              se queda porque dice de dónde venís y qué hiciste, que es
+              información que la página tiene que dar (decisión de Iván el
+              19/09/2026, después de que yo la sacara entera). El orden sí
+              cambia: datos y análisis primero, desarrollo al final, que es el
+              orden en que este perfil quiere ser leído. */}
+          <p className="text-sm leading-relaxed text-foreground">{t("tools.intro")}</p>
+
+          <dl className="mt-6 space-y-3">
+            <ToolCategory
+              label={t("tools.categories.data.label")}
+              items={t("tools.categories.data.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.productDesign.label")}
+              items={t("tools.categories.productDesign.items")}
+            />
+            <ToolCategory
+              label={t("tools.categories.build.label")}
+              items={t("tools.categories.build.items")}
+            />
+          </dl>
         </section>
 
         {/* Contacto */}
@@ -631,11 +695,3 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
  * un proyecto. Los logos quedan reservados para /projects y el detalle de un
  * caso, donde acompañan a un trabajo concreto.
  */
-function ToolCategory({ label, items }: { label: string; items: string }) {
-  return (
-    <div className="grid grid-cols-1 gap-1 sm:grid-cols-[180px_1fr] sm:gap-4">
-      <dt className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</dt>
-      <dd className="text-sm text-foreground">{items}</dd>
-    </div>
-  );
-}

@@ -31,6 +31,13 @@ interface ProjectListItemProps {
   kind: ProjectKind;
   /** "row" es el bloque compacto de la home; "list" es el listado de /projects. */
   variant?: "row" | "list";
+  /**
+   * Muestra las fuentes de datos debajo del título. Va en `false` en /about,
+   * donde las tarjetas son una muestra del trabajo y no un catálogo: ahí la
+   * línea repite el párrafo de herramientas que está más abajo en la misma
+   * página.
+   */
+  showStack?: boolean;
   cover?: ProjectCover;
   /**
    * Desde dónde se muestra la tarjeta. Va a PostHog como `surface` del evento
@@ -53,6 +60,7 @@ export function ProjectListItem({
   status,
   kind,
   variant = "row",
+  showStack = true,
   cover,
   surface,
 }: ProjectListItemProps) {
@@ -162,12 +170,14 @@ export function ProjectListItem({
             ("Datos abiertos de CMS (parte B, parte D y Open Payments)") y con
             tres la fila se iba a dos renglones de monospace gris, que era lo
             más pesado de una tarjeta cuyo trabajo es que se lea el título. */}
-        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          <span className="font-mono">{stack.slice(0, STACK_VISIBLE).join(" · ")}</span>
-          {stack.length > STACK_VISIBLE && (
-            <span className="font-mono">+{stack.length - STACK_VISIBLE}</span>
-          )}
-        </div>
+        {showStack && (
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+            <span className="font-mono">{stack.slice(0, STACK_VISIBLE).join(" · ")}</span>
+            {stack.length > STACK_VISIBLE && (
+              <span className="font-mono">+{stack.length - STACK_VISIBLE}</span>
+            )}
+          </div>
+        )}
       </article>
     </Link>
   );
