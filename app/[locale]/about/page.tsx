@@ -130,6 +130,12 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             - "publico análisis de mercados": encuadre equivocado. No analiza
               mercados; elige un problema, reconstruye contexto y actores, y
               muestra cómo lo piensa hasta una decisión.
+            - "temas que me interesan" sonaba a pasatiempo. El eje real está en
+              el frontmatter: de dieciocho casos, ocho son `salud` y siete
+              `seguros`. El porqué no es un gusto, es una estructura: los dos
+              son negocios donde la empresa decide por el cliente y esa decisión
+              deja rastro público, que es lo único que hace posible
+              reconstruirla desde afuera.
             - "Las cifras trazan a su fuente y los supuestos van declarados como
               supuestos": ya lo dicen /method y el índice de proyectos.
             - La logística (remoto, mudarse a Buenos Aires) vive en la home, en
@@ -174,6 +180,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             })}
           </p>
           <p>{t("intro.paragraph4")}</p>
+          <p>{t("intro.paragraph5")}</p>
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
           <ObfuscatedEmailTrigger
