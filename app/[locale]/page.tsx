@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: Props) {
   // resultado de búsqueda para quien busca el nombre. El código es la palanca,
   // no el oficio: lo que distingue el perfil son los análisis publicados.
   const description = isEs
-    ? "Analizo mercados y productos con datos públicos: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Cada cifra trazada a su fuente. Bioingeniero ITBA."
-    : "I analyze markets and products with public data: US healthcare, insurance and payments in Argentina and Brazil. Every figure traced to its source. ITBA bioengineer.";
+    ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
+    : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title: ogTitle,

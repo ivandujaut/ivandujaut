@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: Props) {
   // análisis de mercado con datos públicos, y siete de los ocho más recientes
   // son del mercado de salud de Estados Unidos.
   const description = isEs
-    ? "Decisiones de negocio contestadas con datos públicos: acceso y comercialización en salud en Estados Unidos, seguros en Argentina y pagos en Brasil. Cada cifra traza a su fuente."
-    : "Business decisions answered with public data: access and commercial strategy in US healthcare, insurance in Argentina and payments in Brazil. Every figure traces back to its source.";
+    ? "Casos sobre acceso y comercialización en salud en Estados Unidos, seguros en Argentina y pagos en Brasil. Cada uno termina en una decisión, con los datos públicos a la vista."
+    : "Cases on access and commercial strategy in US healthcare, insurance in Argentina and payments in Brazil. Each one ends in a decision, with the public data in plain sight.";
   const pageUrl = `${SITE_URL}${localePath(typedLocale, "/projects")}`;
 
   return {
@@ -47,7 +47,11 @@ export default async function ProjectsPage({ params }: Props) {
   const entry = getEntryProject(typedLocale);
   const t = await getTranslations({ locale, namespace: "projects.sections" });
   const tTopics = await getTranslations({ locale, namespace: "projects.topics" });
+  // El formateo de los minutos vive acá, que es donde están las traducciones; la
+  // tarjeta sólo recibe el texto ya armado.
+  const minutos = (count?: number) => (count ? tReading("minutes", { count }) : undefined);
   const tIndex = await getTranslations({ locale, namespace: "projects.index" });
+  const tReading = await getTranslations({ locale, namespace: "common.reading" });
 
   // Los análisis van arriba desde el 11/09/2026. Antes iban los productos
   // propios, con el argumento de que no tenían otra puerta de entrada. Los
@@ -84,7 +88,7 @@ export default async function ProjectsPage({ params }: Props) {
           <section>
             <h2 className="mb-6 text-lg font-semibold tracking-tight">{tIndex("entryTitle")}</h2>
             <div className="divide-y divide-border/60">
-              <ProjectCard project={entry} locale={typedLocale} />
+              <ProjectCard project={entry} locale={typedLocale} minutos={minutos} />
             </div>
           </section>
         )}
@@ -103,7 +107,12 @@ export default async function ProjectsPage({ params }: Props) {
                   </h3>
                   <div className="divide-y divide-border/60">
                     {projectsInTopic.map((project) => (
-                      <ProjectCard key={project.slug} project={project} locale={typedLocale} />
+                      <ProjectCard
+                        key={project.slug}
+                        project={project}
+                        locale={typedLocale}
+                        minutos={minutos}
+                      />
                     ))}
                   </div>
                 </div>
@@ -117,7 +126,12 @@ export default async function ProjectsPage({ params }: Props) {
             <h2 className="mb-6 text-lg font-semibold tracking-tight">{t("own")}</h2>
             <div className="divide-y divide-border/60">
               {built.map((project) => (
-                <ProjectCard key={project.slug} project={project} locale={typedLocale} />
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  locale={typedLocale}
+                  minutos={minutos}
+                />
               ))}
             </div>
           </section>
@@ -137,9 +151,11 @@ export default async function ProjectsPage({ params }: Props) {
 function ProjectCard({
   project,
   locale,
+  minutos,
 }: {
   project: ReturnType<typeof getProjects>[number];
   locale: "es" | "en";
+  minutos: (count?: number) => string | undefined;
 }) {
   return (
     <ProjectListItem
@@ -149,6 +165,7 @@ function ProjectCard({
       date={project.date}
       locale={locale}
       stack={project.stack}
+      readingTime={minutos(project.metadata?.readingTime)}
       status={project.status}
       kind={project.kind}
       variant="list"

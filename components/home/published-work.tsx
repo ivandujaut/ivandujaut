@@ -129,6 +129,11 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
             tagline={project.tagline}
             date={project.date}
             stack={project.stack}
+            readingTime={
+              project.metadata
+                ? tReading("minutes", { count: project.metadata.readingTime })
+                : undefined
+            }
             status={project.status}
             kind={project.kind}
             locale={locale}

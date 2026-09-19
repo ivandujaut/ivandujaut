@@ -77,13 +77,13 @@ export async function generateMetadata({
       template: "%s · Iván Dujaut",
     },
     description:
-      "Analizo mercados y productos con datos públicos: salud en Estados Unidos, seguros y pagos en Argentina y Brasil. Cada cifra trazada a su fuente.",
+      "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA.",
     authors: [{ name: "Iván Dujaut", url: baseUrl }],
     creator: "Iván Dujaut",
     openGraph: {
       title: "Iván Dujaut",
       description:
-        "Analizo mercados y productos con datos públicos: salud en Estados Unidos, seguros y pagos en Argentina y Brasil.",
+        "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión.",
       url: baseUrl,
       siteName: "Iván Dujaut",
       images: [
