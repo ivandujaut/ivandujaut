@@ -232,11 +232,11 @@
       "all": "Ver todos los casos"
     },
     "tools": {
-      "intro": "El análisis lo hago en Python sobre PostgreSQL y la medición con PostHog. Cuando necesito ver el producto funcionando lo prototipo en Next.js y TypeScript. Integré pagos con Stripe, Mercado Pago y PayPal, y saqué un producto de Bubble para reescribirlo en Next.js.",
+      "intro": "El análisis lo hago en Python y SQL, y la medición con PostHog. Cuando necesito ver el producto funcionando lo prototipo en Next.js y TypeScript. Integré pagos con Stripe, Mercado Pago y PayPal, y saqué un producto de Bubble para reescribirlo en Next.js.",
       "categories": {
         "data": {
           "label": "Datos y análisis",
-          "items": "Python, NumPy, Pandas, matplotlib, PostHog, PostgreSQL, Supabase"
+          "items": "Python, SQL, NumPy, Pandas, matplotlib, PostHog, PostgreSQL, Supabase"
         },
         "productDesign": {
           "label": "Producto y diseño",
