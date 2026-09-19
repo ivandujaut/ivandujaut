@@ -90,6 +90,13 @@ const POSTS_DE_CASO: Record<string, { slug: string; post: number }> = {
 };
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // El 404 de las URLs que no matchean ninguna ruta vive en
+    // `app/global-not-found.tsx`. Hay que declararlo porque el sitio tiene más
+    // de un layout raíz (`[locale]`, `/stats`, `/pitch`) y entonces no existe
+    // un layout con el que componer ese 404.
+    globalNotFound: true,
+  },
   // Hasta 16.2 las view transitions pedían `experimental.viewTransition: true`.
   // En 16.3 la opción dejó de existir (el typecheck la rechaza) porque el App
   // Router las soporta sin configuración: el `<ViewTransition>` de React sigue

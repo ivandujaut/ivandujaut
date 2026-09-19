@@ -39,3 +39,14 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # Desde que las páginas se prerenderizan, `generateMetadata` corre en
+          # el build y firma la URL de la imagen OG, así que `lib/og-sign.ts`
+          # exige el secreto (tira si falta y NODE_ENV es production, que es lo
+          # que pone `next build`). Antes no hacía falta porque el build no
+          # renderizaba ninguna página.
+          #
+          # Acá va un valor de mentira a propósito: este job sólo verifica que
+          # el build pase y tira el resultado. Las firmas que llegan a
+          # producción las hace el build de Vercel con el secreto de verdad.
+          OG_SECRET: ci-build-check-not-a-real-secret
