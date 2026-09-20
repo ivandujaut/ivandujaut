@@ -27,9 +27,14 @@ export async function generateMetadata({ params }: Props) {
   // El título es lo que filtra una búsqueda de reclutador. Hasta el 18/09/2026
   // decía "Product Engineer", que es el puesto actual y ninguno de los roles
   // que Iván busca; el puesto sigue nombrado donde es cierto, en /about.
-  const seoTitle = isEs
-    ? "Iván Dujaut · Product Strategy y Decision Analytics"
-    : "Iván Dujaut · Product Strategy and Decision Analytics";
+  //
+  // Del 18 al 20/09/2026 dijo "Product Strategy y Decision Analytics". El 19 se
+  // relevaron los avisos y esa etiqueta no existe en el mercado: cero de treinta
+  // puestos usan "Product Strategy" y "Decision Analytics" tenía un aviso abierto
+  // en el país. El hero y el titular de LinkedIn pasaron a "Product Manager" ese
+  // día y este título había quedado atrás, que es lo que muestra Google cuando
+  // alguien busca el nombre.
+  const seoTitle = "Iván Dujaut · Product Manager";
   // El remate anterior era "y escribo el código", y era la última frase del
   // resultado de búsqueda para quien busca el nombre. El código es la palanca,
   // no el oficio: lo que distingue el perfil son los análisis publicados.

@@ -23,9 +23,10 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
+  // Mismo rol que el hero, el `<title>` de la home y el titular de LinkedIn.
   const title = isEs
-    ? "Acerca de mí · Iván Dujaut, product strategy y decision analytics"
-    : "About · Iván Dujaut, product strategy and decision analytics";
+    ? "Acerca de mí · Iván Dujaut, Product Manager"
+    : "About · Iván Dujaut, Product Manager";
   // La descripción vende el trabajo publicado, no el cargo: es lo que
   // diferencia el perfil y lo que sostiene el resto de la página. Es la misma
   // frase, palabra por palabra, que el `description` del `Person` en
