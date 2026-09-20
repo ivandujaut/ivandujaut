@@ -94,7 +94,7 @@ export function Footer({ theme = "light" }: { theme?: OgTheme }) {
           fontWeight: 400,
         }}
       >
-        Product Engineer · ivandujaut.com
+        ivandujaut.com
       </span>
     </div>
   );

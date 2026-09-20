@@ -27,8 +27,8 @@ export function DefaultTemplate({
   // Default description según locale
   const defaultDescription =
     locale === "es"
-      ? "Product Engineer · Bioingeniero ITBA"
-      : "Product Engineer · Bioengineer ITBA";
+      ? "Product Manager · Bioingeniero ITBA"
+      : "Product Manager · Biomedical Engineer (ITBA)";
 
   const finalDescription = description ?? defaultDescription;
 
