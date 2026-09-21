@@ -224,6 +224,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <a
               href={CV_PDF[locale]}
               download
+              data-ph="contact_click"
+              data-ph-kind="cv"
+              data-ph-surface="about-intro"
               className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
             >
               <Download size={14} strokeWidth={1.5} aria-hidden />
