@@ -4,9 +4,12 @@ import { ExperienceItem } from "@/components/about/experience-item";
 import { EducationItem } from "@/components/about/education-item";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
 import { getPublishingCadence } from "@/lib/content";
+import { CV_PDF } from "@/lib/cv";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -214,9 +217,22 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <CalendlyIcon size={14} aria-hidden />
             <span>{t("intro.ctas.calendly")}</span>
           </a>
-          {/* Acá iba el botón del CV. Se sacó el 20/09/2026 por la misma razón que
-              en el hero: el PDF era de mayo y contradecía a esta misma página
-              en empresa actual, cargo, fechas y título de grado. */}
+          {/* El CV baja en el idioma de la página, igual que en el hero.
+              Sin `asChild`: esta página es Server Component y `AnimateIcon` es
+              cliente; ver el comentario en `components/home/hero.tsx`. */}
+          <AnimateIcon animateOnHover className="inline-flex">
+            <a
+              href={CV_PDF[locale]}
+              download
+              data-ph="contact_click"
+              data-ph-kind="cv"
+              data-ph-surface="about-intro"
+              className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+            >
+              <Download size={14} strokeWidth={1.5} aria-hidden />
+              <span>{t("intro.ctas.cv")}</span>
+            </a>
+          </AnimateIcon>
         </div>
       </section>
 
