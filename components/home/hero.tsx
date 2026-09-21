@@ -1,10 +1,13 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
+import { Download } from "@/components/animate-ui/icons/download";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { CV_PDF } from "@/lib/cv";
 
 const socialLinks = [
   {
@@ -30,6 +33,7 @@ const socialLinks = [
  */
 export function Hero() {
   const t = useTranslations("home.hero");
+  const locale = useLocale() as Locale;
 
   return (
     <section>
@@ -55,14 +59,11 @@ export function Hero() {
       <p className="mt-2 font-mono text-sm text-muted-foreground">{t("credentials")}</p>
 
       {/* Arriba del pliegue tiene que haber algo para hacer, no solo algo para
-          leer. El destino es el trabajo.
+          leer. El destino primario es el trabajo; el CV es la salida rápida
+          para quien vino a evaluar un perfil, y baja en el idioma de la página.
 
-          Hasta el 20/09/2026 había un segundo botón que bajaba el CV. Se sacó
-          porque el PDF era de mayo: se presentaba como frontend, decía que
-          seguía en Banana y no nombraba Prizmstack ni este sitio, o sea que
-          desmentía a la página que lo ofrecía. Un CV ausente cuesta menos que
-          uno que contradice. Vuelve cuando exista el nuevo; las claves
-          `ctas.cv` siguen en `messages/` para ese día. */}
+          Entre el 20 y el 21/09/2026 el botón del CV no estuvo: el PDF viejo
+          era de mayo y desmentía a esta misma página. Volvió con el CV nuevo. */}
       <div className="mt-8 flex flex-wrap items-center gap-3">
         {/* Nunca `asChild` desde un Server Component. `AnimateIcon` es cliente,
             y los children que cruzan el borde servidor → cliente no llegan
@@ -79,6 +80,16 @@ export function Hero() {
             <span>{t("ctas.work")}</span>
             <ArrowRight size={16} strokeWidth={1.5} aria-hidden />
           </Link>
+        </AnimateIcon>
+        <AnimateIcon animateOnHover className="inline-flex">
+          <a
+            href={CV_PDF[locale]}
+            download
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
+          >
+            <Download size={16} strokeWidth={1.5} aria-hidden />
+            <span>{t("ctas.cv")}</span>
+          </a>
         </AnimateIcon>
       </div>
 
