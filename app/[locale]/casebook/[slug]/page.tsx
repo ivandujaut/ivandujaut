@@ -130,7 +130,9 @@ export default async function CasebookDetailPage({ params }: Props) {
 
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
             <ViewTransition name={`casebook-level-${item.slug}`} share="morph">
-              <span>{tCasebook("level", { level: item.level })}</span>
+              <span className="rounded-full bg-casebook-soft px-2.5 py-0.5 text-casebook">
+                {tCasebook("level", { level: item.level })}
+              </span>
             </ViewTransition>
             <span aria-hidden>·</span>
             <span className="uppercase tracking-wider">{tCasebook(`kind.${item.kind}`)}</span>
@@ -173,7 +175,7 @@ export default async function CasebookDetailPage({ params }: Props) {
               {item.concepts.map((concept) => (
                 <li
                   key={concept}
-                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
+                  className="rounded-full border border-casebook/25 bg-casebook-soft px-2.5 py-0.5 font-mono text-xs text-casebook"
                 >
                   {concept}
                 </li>

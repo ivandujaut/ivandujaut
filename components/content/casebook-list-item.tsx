@@ -45,7 +45,7 @@ export function CasebookListItem({
       <article>
         <div className="flex items-baseline justify-between gap-4">
           <h3 className="font-serif text-lg font-semibold leading-snug">{title}</h3>
-          <span className="shrink-0 font-mono text-xs text-muted-foreground">
+          <span className="shrink-0 rounded-full bg-casebook-soft px-2.5 py-0.5 font-mono text-xs text-casebook">
             {t("level", { level })}
           </span>
         </div>
