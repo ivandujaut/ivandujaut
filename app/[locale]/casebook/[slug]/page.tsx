@@ -12,6 +12,7 @@ import {
 } from "@/lib/content";
 import { TranslationMissingPage } from "@/components/common/translation-missing-page";
 import { buildContentAlternates, localePath, SITE_URL } from "@/lib/seo";
+import { buildCoverUrl } from "@/lib/og";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -42,6 +43,11 @@ export async function generateMetadata({ params }: Props) {
   const isEs = typedLocale === "es";
   const pageUrl = `${SITE_URL}${localePath(typedLocale, `/casebook/${item.slug}`)}`;
 
+  // La portada va como imagen social tal cual, sin pasar por la tarjeta que
+  // genera /api/og para los casos del portfolio: un semitono es legible en
+  // miniatura y no necesita que le estampen el título encima.
+  const coverUrl = buildCoverUrl(item.cover?.src.src);
+
   return {
     title: item.title,
     description: item.description,
@@ -60,11 +66,24 @@ export async function generateMetadata({ params }: Props) {
       url: pageUrl,
       locale: isEs ? "es_AR" : "en_US",
       alternateLocale: isEs ? ["en_US"] : ["es_AR"],
+      ...(coverUrl
+        ? {
+            images: [
+              {
+                url: coverUrl,
+                width: item.cover?.src.width,
+                height: item.cover?.src.height,
+                alt: item.cover?.alt,
+              },
+            ],
+          }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: item.title,
       description: item.description,
+      ...(coverUrl ? { images: [coverUrl] } : {}),
     },
   };
 }
