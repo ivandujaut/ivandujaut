@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 
-type Help = "guided" | "hints" | "solo";
 type Kind = "rentabilidad" | "market-sizing" | "crecimiento" | "entrada-a-mercado" | "otro";
 
 interface CasebookListItemProps {
@@ -10,31 +9,17 @@ interface CasebookListItemProps {
   title: string;
   tagline: string;
   level: number;
-  help: Help;
   kind: Kind;
-  concepts: string[];
 }
 
 /**
- * La ayuda se muestra con color, no sólo con texto: es el dato que sostiene la
- * curva de la serie, y en una lista de diez casos la diferencia entre "con
- * guía" y "sin ayuda" tiene que leerse de un vistazo.
+ * La tarjeta del listado muestra cuatro cosas y ninguna más: título,
+ * descripción, nivel y tipo de caso. La ayuda recibida y los conceptos que
+ * entrena siguen declarados, pero en la ficha del caso: en una lista sirven
+ * para elegir sólo si son pocos, y con nueve conceptos por caso la tarjeta se
+ * convertía en un muro de etiquetas que tapaba el título.
  */
-const helpStyles: Record<Help, string> = {
-  guided: "text-muted-foreground",
-  hints: "text-amber-700 dark:text-amber-400",
-  solo: "text-emerald-700 dark:text-emerald-400",
-};
-
-export function CasebookListItem({
-  slug,
-  title,
-  tagline,
-  level,
-  help,
-  kind,
-  concepts,
-}: CasebookListItemProps) {
+export function CasebookListItem({ slug, title, tagline, level, kind }: CasebookListItemProps) {
   const t = useTranslations("casebook");
 
   return (
@@ -50,18 +35,8 @@ export function CasebookListItem({
           </span>
         </div>
         <p className="mt-1 font-serif text-sm italic text-muted-foreground">{tagline}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-          <span>{t(`kind.${kind}`)}</span>
-          <span aria-hidden>·</span>
-          <span className={helpStyles[help]}>{t(`help.${help}`)}</span>
-          {concepts.length > 0 && (
-            <>
-              <span aria-hidden>·</span>
-              <span className="normal-case tracking-normal">
-                {concepts.slice(0, 3).join(" · ")}
-              </span>
-            </>
-          )}
+        <div className="mt-3 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          {t(`kind.${kind}`)}
         </div>
       </article>
     </Link>

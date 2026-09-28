@@ -54,9 +54,7 @@ export default async function CasebookPage({ params }: Props) {
                 title={item.title}
                 tagline={item.tagline}
                 level={item.level}
-                help={item.help}
                 kind={item.kind}
-                concepts={item.concepts}
               />
             ))}
           </div>
