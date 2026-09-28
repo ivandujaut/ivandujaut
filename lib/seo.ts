@@ -55,7 +55,7 @@ export function buildContentAlternates({
 }: {
   current: ContentItem;
   translations: ContentItem[];
-  basePath: "/blog" | "/projects" | "/research";
+  basePath: "/blog" | "/projects" | "/research" | "/casebook";
 }): NonNullable<Metadata["alternates"]> {
   const byLocale = new Map<Locale, string>();
   for (const item of [current, ...translations]) {
