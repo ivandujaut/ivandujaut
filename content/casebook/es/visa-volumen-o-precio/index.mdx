@@ -1,0 +1,334 @@
+---
+title: "A Visa le conviene que pagues el café con tarjeta"
+tagline: "Sus ingresos crecen más rápido que el volumen que procesa, y no es porque haya subido los precios."
+description: "Caso de entrevista de consultoría resuelto paso a paso sobre los 10-K de Visa: separar crecimiento por volumen de crecimiento por precio, y descubrir por qué el take rate sube solo cuando cada compra es más chica."
+date: "2026-09-28"
+level: 1
+help: "guided"
+kind: "rentabilidad"
+sector: "pagos"
+origin:
+  kind: "propio"
+  note: "Escrito sobre los formularios 10-K que Visa presenta ante la SEC. No es un caso oficial de ninguna consultora: los de McKinsey, BCG, Bain y Deloitte tienen derechos y se practican en sus propios sitios."
+concepts:
+  - "Modelo de cuatro partes"
+  - "Interchange y merchant discount rate"
+  - "Take rate"
+  - "Puntos básicos contra porcentaje"
+  - "Árbol de drivers"
+  - "Descomposición volumen por precio"
+  - "Contribución en dólares contra tasa de crecimiento"
+  - "Efecto mezcla"
+  - "Ticket promedio"
+entities:
+  - "Visa"
+  - "Mastercard"
+  - "SEC EDGAR"
+sources:
+  - name: "Visa Inc., Form 10-K FY2025 (SEC EDGAR)"
+    url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm"
+  - name: "Visa Inc., Form 10-K FY2024"
+    url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316124000058/v-20240930.htm"
+  - name: "Visa Inc., Form 10-K FY2023"
+    url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316123000099/v-20230930.htm"
+translationKey: "visa-volumen-o-precio"
+draft: true
+---
+
+<Abstract label="Cómo usar este caso">
+
+Esto es un caso de entrevista de consultoría resuelto, escrito para que puedas resolverlo vos también.
+Cada paso tiene la pregunta que hace el entrevistador, lo que pensé antes de ver el dato, el dato con su
+fuente y la cuenta. Si querés practicar, leé el planteo, tapá el resto y avanzá de a un paso.
+
+Es un caso de **rentabilidad**, el tipo más común, y el más simple de la serie: nivel 1. Lo resolví
+guiado, con alguien haciéndome las preguntas y corrigiéndome cuando me equivocaba. Los casos que siguen
+bajan esa ayuda.
+
+Los números salen de los formularios 10-K que Visa presenta todos los años ante la SEC, el regulador de mercados de Estados Unidos. El planteo es mío: los casos
+oficiales de las firmas tienen derechos y se practican en sus sitios, no acá.
+
+</Abstract>
+
+<Thesis>
+
+Visa crece principalmente por volumen, pero el tercio restante de su crecimiento no viene de subir
+precios: viene de que cada compra es más chica, y la línea que más aporta se cobra por transacción y no
+por monto.
+
+</Thesis>
+
+## El planteo
+
+> Visa factura más todos los años. La pregunta del CEO es simple: ¿crecemos porque se usa más la
+> tarjeta, o porque cobramos más caro cada vez que se usa? Y si es lo segundo, ¿lo decidimos nosotros?
+
+Es la forma clásica de un caso de rentabilidad: te dan un resultado que se mueve y te piden que digas
+**qué lo mueve**, con números y no con adjetivos.
+
+## De dónde salen los datos
+
+Antes de pensar conviene saber qué se puede mirar. Visa cotiza en bolsa en Estados Unidos, así que todos
+los años presenta un **10-K** ante la SEC, el regulador de mercados. Es el informe anual obligatorio:
+mucho más que un balance, va firmado por los directivos y mentir ahí es un delito federal. Se busca gratis
+en [EDGAR](https://www.sec.gov/edgar/search/), el archivo público de la SEC, por ticker (V para Visa,
+MA para Mastercard, que presenta exactamente el mismo formulario).
+
+Las partes que sirven en un caso:
+
+| Ítem del 10-K                      | Qué hay                                                      | Para qué sirve                                     |
+| ---------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- |
+| 1. Business                        | Cómo gana plata la empresa, en sus palabras                  | Las definiciones exactas de cada línea de ingresos |
+| 1A. Risk Factors                   | Qué la puede romper, según ella misma                        | La parte de riesgos de la recomendación            |
+| 7. MD&A (análisis de la dirección) | Por qué se movieron los números, con las métricas operativas | Volumen, transacciones e ingresos por categoría    |
+| 8. Financial Statements            | Estados contables y notas                                    | Los números duros                                  |
+
+<Callout type="warning" title="Dos trampas al comparar">
+
+El año fiscal de Visa cierra el 30 de septiembre y el de Mastercard sigue el año calendario: no son los
+mismos doce meses. Y dentro del propio 10-K de Visa, el volumen de pagos se mide sobre los doce meses a
+junio mientras los ingresos y las transacciones van al año fiscal a septiembre. Las dos cosas están
+declaradas en el documento y las dos se olvidan.
+
+</Callout>
+
+En una entrevista real no vas a poder buscar nada: el entrevistador tiene los datos. El 10-K se lee
+**antes**, para llegar sabiendo cómo gana plata la empresa. Adentro de la entrevista se pide una cifra
+puntual y se dice para qué: _"para separar volumen de precio necesito el volumen de pagos y los ingresos
+netos de los últimos tres años, ¿los tenemos?"_. Pedir "todos los datos que haya" resta puntos.
+
+## Paso 1: quién se queda con qué
+
+**La pregunta:** pagás un café de $100 con tu tarjeta. La cafetería no recibe $100, recibe unos $97,50.
+¿Quién se queda con esos $2,50, y cuánto de eso es de Visa?
+
+**Lo que pensé:** que el que mueve la plata del titular al comercio se lleva la parte grande, y ahí acerté.
+Después me contradije solo: al repartir los $2,50 le di $1,75 a Visa, la porción más grande, olvidando lo
+que acababa de decir. Es el error natural, porque la marca está en la tarjeta y parece que se queda con
+todo.
+
+**El reparto real.** Los que participan son cuatro, y se llama **modelo de cuatro partes**: el titular, el
+comercio, el **banco emisor** (el que te dio la tarjeta) y el **banco adquirente** (el que le da el servicio
+de cobro al comercio). Visa no es ninguno de los cuatro: es la red que los conecta y pone las reglas. El
+posnet, la pasarela y el procesador son infraestructura.
+
+| Quién                          | De los $2,50       | Por qué                                                 |
+| ------------------------------ | ------------------ | ------------------------------------------------------- |
+| Banco emisor (**interchange**) | La porción grande  | Corre el riesgo de crédito y financia puntos y cashback |
+| Adquirente                     | La porción mediana | Da el servicio de cobro y compite por precio            |
+| Visa (la red)                  | **~$0,29**         | No presta plata ni corre riesgo: conecta y fija reglas  |
+
+<TableCaption>
+  Los $0,29 salen de dividir los ingresos netos de Visa en FY2025 por todo su volumen de pagos:
+  28,79 puntos básicos, es decir 0,2879% de cada dólar. Es un techo, porque el numerador incluye
+  ingresos que no vienen de un café pagado a la vuelta de tu casa. Elaboración propia sobre el 10-K
+  FY2025.
+</TableCaption>
+
+El total que paga el comercio se llama **merchant discount rate** o arancel. Y la regla que explica el
+reparto: **en los pagos, el que asume el riesgo se lleva la tajada grande.**
+
+Esa fracción que se queda cada uno tiene nombre: **take rate**. El de Visa es diminuto, 28,79 puntos
+básicos, y aun así Visa es una de las empresas más rentables del mundo. Ahí empieza el caso.
+
+<Callout type="insight" title="Cuidado con los diagramas de pagos que circulan">
+
+Antes de mirar el 10-K yo tenía en la cabeza un diagrama de un blog: el titular paga $100, el emisor se
+queda $0,20 y gira $99,80, el adquirente se queda $0,50 y el comercio cobra $99,30. Hasta ahí cierra.
+Pero el mismo dibujo dice, arriba a la derecha, que el comercio pagó $2,20 de arancel. Según las flechas
+pagó $0,70. Hay $1,50 sin dueño, y la red no aparece en ninguna flecha.
+
+Dos lecciones, y la segunda vale para cualquier caso: **si el número no tiene fuente y la cuenta no
+cierra, no es un dato**; y cuando tapás un hueco con una suposición, hay que decirlo en voz alta. Yo
+asumí que ese $1,50 era de la infraestructura y usé el resultado como si fuera un dato. Un entrevistador
+premia la asunción declarada y castiga la escondida.
+
+</Callout>
+
+## Paso 2: armar el árbol
+
+**La pregunta:** sos el CEO y querés más ingresos el año que viene. ¿Qué palancas tenés?
+
+Una **palanca** es una variable que podés mover y que cambia el resultado que te importa. El oficio acá es
+escribir el resultado como una fórmula y recorrerla término por término:
+
+```
+ingresos = volumen × take rate
+              │
+              └── volumen = transacciones × ticket promedio
+                                 │
+                                 └── transacciones = tarjetas activas × veces que se usa cada una
+```
+
+Eso es un **árbol de drivers**, y es lo que el entrevistador espera ver en el minuto dos. Del lado del
+volumen las palancas son dos y las dos son el negocio histórico de Visa: que se pague con tarjeta lo que
+antes se pagaba en efectivo (**desplazamiento del efectivo**) y que haya más tarjetas y más comercios que
+las acepten. Esto último es una **red de dos lados**: cada lado empuja al otro.
+
+## Paso 3: volumen o precio
+
+**El dato.** Crecimiento año contra año, calculado sobre las cifras publicadas en los 10-K:
+
+| Año fiscal | Volumen de pagos | Ingresos netos |
+| ---------- | ---------------- | -------------- |
+| FY2022     | 15,00%           | 21,59%         |
+| FY2023     | 5,40%            | 11,41%         |
+| FY2024     | 7,45%            | 10,02%         |
+| FY2025     | 6,98%            | 11,34%         |
+
+Los ingresos crecen más rápido que el volumen **todos los años**. Si `ingresos = volumen × take rate`,
+eso solo puede significar una cosa: el take rate sube. Y sube sin excepción, de 24,17 puntos básicos en
+FY2021 a 28,79 en FY2025.
+
+**La cuenta.** Si `A = B × C`, entonces `(1 + crecimiento de A) = (1 + crecimiento de B) × (1 + crecimiento de C)`.
+De ahí salen las dos versiones que conviene tener:
+
+- **Rápida**, la que se dice en voz alta: para tasas chicas los crecimientos se suman, así que
+  `11,34% − 6,98% ≈ 4,36%`.
+- **Exacta**: `1,1134 / 1,0698 = 1,0408`, o sea **4,08%**.
+
+Verificación por un segundo camino, que es la costumbre más valiosa de todas: `28,79 / 27,66 = 1,0408`.
+El mismo número desde otros datos.
+
+<Callout type="warning" title="Dos errores de unidades que cometí acá">
+
+El take rate pasó de 27,66 a 28,79: eso es **1,13 puntos básicos** (cambio absoluto), no 1,13%. En
+relativo creció 4,08%. Y las tasas de crecimiento **no se dividen entre sí**: se dividen los niveles.
+Dividir 11,34 por 6,98 da un número que no significa nada.
+
+</Callout>
+
+Así que el crecimiento de FY2025 se reparte: **6,98 puntos de volumen y 4,08 de take rate**, que dan los
+11,34 de ingresos. Dos tercios y un tercio.
+
+## Paso 4: el take rate sube, pero nadie subió un precio
+
+Acá está la parte que hace interesante al caso. El take rate no lo fija nadie en Visa: es un número que
+calculamos nosotros dividiendo ingresos por volumen. Que suba **no prueba** que Visa le haya subido el
+precio a nadie.
+
+Pensalo con un kiosco: si vendés los mismos cafés de $100 y además más tortas de $500, tu ticket promedio
+sube sin que hayas tocado un precio. Cambió la **mezcla**.
+
+**El dato.** Ingresos por categoría, en millones de dólares, publicados en el 10-K FY2025:
+
+| Línea                         | FY2024     | FY2025     | Creció     | Qué la mueve, según Visa             |
+| ----------------------------- | ---------- | ---------- | ---------- | ------------------------------------ |
+| Servicio                      | 16.114     | 17.539     | 8,84%      | El volumen de pagos                  |
+| Procesamiento de datos        | 17.714     | 19.993     | 12,87%     | La cantidad de transacciones         |
+| Transacciones internacionales | 12.665     | 14.166     | 11,85%     | El volumen cross-border              |
+| Otros                         | 3.197      | 4.053      | 26,78%     | Consultoría y servicios a los bancos |
+| Incentivos a clientes (resta) | (13.764)   | (15.751)   | 14,44%     | Lo que Visa le devuelve a los bancos |
+| **Ingresos netos**            | **35.926** | **40.000** | **11,34%** |                                      |
+
+<TableCaption>
+  Tabla "components of our net revenue", Item 7 del 10-K FY2025. La cuarta columna es cálculo
+  propio. Los incentivos a clientes son contra-ingreso: se publican en negativo y se restan.
+</TableCaption>
+
+Todas las líneas crecen más rápido que el volumen (6,98%), y por eso el take rate sube: no hay ninguna
+que lo frene.
+
+**La trampa de ordenar por tasa.** "Otros" creció 26,78%, la tasa más alta, sobre una base de 3.197
+millones. Crecer mucho sobre poco aporta menos plata que crecer poco sobre mucho. Lo que decide es la
+**contribución en dólares**: sobre los 4.074 millones que crecieron los ingresos netos,
+
+| Línea                         | Aportó | Del crecimiento |
+| ----------------------------- | ------ | --------------- |
+| Procesamiento de datos        | +2.279 | **55,9%**       |
+| Transacciones internacionales | +1.501 | 36,8%           |
+| Servicio                      | +1.425 | 35,0%           |
+| Otros                         | +856   | 21,0%           |
+| Incentivos a clientes         | −1.987 | **−48,8%**      |
+
+Suman 100% contando el signo negativo. Si no cierra en 100, hay un error en algún lado.
+
+## Paso 5: por qué sube el take rate
+
+La línea que manda, con el 55,9% del crecimiento, es **procesamiento de datos**. Y esa línea **se cobra
+por transacción, no por monto**. Con eso, dos números del 10-K alcanzan para cerrar el caso:
+
+<MetricGrid>
+  <Metric label="Volumen de pagos FY2025" value="+6,98%" />
+  <Metric label="Transacciones procesadas FY2025" value="+10,18%" />
+  <Metric label="Ticket promedio" value="−2,90%" trend="down" sentiment="good" />
+</MetricGrid>
+
+Si las compras crecen más rápido que la plata, cada compra es más chica: el ticket promedio cae 2,90%
+(`1,0698 / 1,1018 = 0,9710`).
+
+Y ahí está el mecanismo. Un café de $100 paga **una** tarifa de procesamiento. Cinco compras de $20 pagan
+**cinco**. Mismo volumen, cinco veces el ingreso en esa línea. El take rate es ingresos sobre volumen: el
+denominador no se movió y el numerador se multiplicó. **Nadie subió ningún precio.**
+
+Por eso el desplazamiento del efectivo, que parece una historia de marketing, es literalmente el motor:
+cada propina, cada colectivo y cada café que sale del efectivo y entra a la tarjeta empuja el take rate
+para arriba.
+
+Dos matices para no vender de más, porque el ticket explica una parte y no todo:
+
+- Lo **internacional** (36,8% del crecimiento) sube el take rate por **mezcla**: rinde más por dólar.
+- Los **servicios de valor agregado** pasaron de 8.800 a 10.900 millones (+23,9%) y suben el take rate
+  **por construcción de la métrica**: suman al numerador sin sumar volumen al denominador. No son más
+  rentabilidad por transacción.
+
+## El cierre, en 30 segundos
+
+Así termina un caso: el entrevistador pide la respuesta como si estuvieras en el ascensor con el CEO.
+Primero la respuesta, después la evidencia, después el riesgo.
+
+<Steps>
+
+### La respuesta
+
+Visa crece principalmente por volumen, pero también sube el take rate sin aumentos de precio.
+
+### La evidencia
+
+El volumen creció 6,98% y los ingresos 11,34%. La línea que más aporta es procesamiento de datos, con el
+55,9% del crecimiento, y se cobra por transacción y no por monto. El ticket promedio cayó 2,90% mientras
+las transacciones crecieron 10,18%.
+
+### El riesgo
+
+Los incentivos a clientes crecen 14,44%, más rápido que los ingresos, y se comen el 48,8% de lo que
+generan las demás líneas: es la plata que Visa le devuelve a los bancos para que emitan sus tarjetas y no
+las de la competencia. Y parte de la mejora del take rate viene de servicios de valor agregado, que
+inflan la métrica sin ser más rentabilidad por transacción.
+
+</Steps>
+
+## Los conceptos que usa este caso
+
+<Annex title="Glosario" hint="En el orden en que aparecen">
+
+- **Modelo de cuatro partes:** titular, comercio, banco emisor y banco adquirente. La red no es ninguno
+  de los cuatro.
+- **Interchange:** lo que el emisor se queda de cada compra. Cambia por tipo de tarjeta, rubro y
+  país, así que se lee en una tabla y nunca como un número único.
+- **Merchant discount rate (arancel):** el total que paga el comercio, del que salen interchange,
+  adquirente y red.
+- **Take rate:** la fracción de cada dólar transaccionado que se queda la empresa. En Visa, 28,79 puntos
+  básicos en FY2025.
+- **Punto básico:** 0,01%. Unidad absoluta, no relativa. Confundirla con el porcentaje cambia el
+  resultado por un factor de cuatro.
+- **Palanca y árbol de drivers:** escribir el resultado como fórmula y recorrer cada término preguntando
+  cuál se puede mover.
+- **Descomposición volumen por precio:** `(1 + a) = (1 + b) × (1 + c)`, con el atajo de sumar tasas
+  cuando son chicas.
+- **Contribución en dólares:** lo que decide es cuánta plata aporta cada línea, no a qué tasa crece.
+- **Efecto mezcla:** el promedio se mueve porque cambia la composición, sin que cambie ningún precio.
+- **Ticket promedio:** volumen dividido transacciones. Cuando cae y se cobra por transacción, el take
+  rate sube solo.
+
+</Annex>
+
+## Si querés practicarlo vos
+
+Tomá el 10-K de Mastercard en [EDGAR](https://www.sec.gov/edgar/search/) y repetí los cinco pasos con sus
+números. Es el mismo negocio con otra mezcla, y el año fiscal es distinto, así que el primer trabajo es
+darte cuenta de que no podés comparar los doce meses de una con los de la otra sin decirlo.
+
+Tres preguntas para llevarte, que son las que este caso entrena: ¿qué fórmula explica el resultado?,
+¿cuánto aporta cada término en plata y no en porcentaje?, y ¿el número que se movió lo decidió alguien o
+se movió solo?
