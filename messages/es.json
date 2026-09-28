@@ -9,7 +9,8 @@
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú",
       "skipToContent": "Saltar al contenido",
-      "method": "Método"
+      "method": "Método",
+      "casebook": "Casebook"
     },
     "a11y": {
       "opensInNewTab": "se abre en pestaña nueva"
@@ -296,5 +297,30 @@
     },
     "repoCta": "Ver el repositorio del sitio",
     "projectsCta": "Ver los casos"
+  },
+  "casebook": {
+    "title": "Casebook",
+    "description": "Casos de entrevista de consultoría resueltos paso a paso, con los datos a la vista y la fuente de cada número. Ordenados por dificultad, para leer o para practicar.",
+    "level": "Nivel {level}",
+    "help": {
+      "label": "Ayuda",
+      "guided": "Resuelto con guía",
+      "hints": "Resuelto con pistas",
+      "solo": "Resuelto sin ayuda"
+    },
+    "kind": {
+      "rentabilidad": "Rentabilidad",
+      "market-sizing": "Market sizing",
+      "crecimiento": "Crecimiento",
+      "entrada-a-mercado": "Entrada a mercado",
+      "otro": "Otro"
+    },
+    "origin": {
+      "propio": "Planteo propio",
+      "adaptado": "Adaptado de un caso publicado"
+    },
+    "concepts": "Conceptos que entrena",
+    "empty": "Todavía no hay casos publicados.",
+    "sourcesLabel": "Los archivos que usa este caso"
   }
 }
