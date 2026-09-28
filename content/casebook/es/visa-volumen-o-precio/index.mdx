@@ -14,6 +14,7 @@ concepts:
   - "Modelo de cuatro partes"
   - "Interchange y merchant discount rate"
   - "Interchange regulado (Regulación II)"
+  - "Incidencia: quién paga contra quién soporta"
   - "Take rate"
   - "Puntos básicos contra porcentaje"
   - "Árbol de drivers"
@@ -264,6 +265,30 @@ Dos cosas que el diagrama separa a propósito, porque son donde más se confunde
   compra. El titular le paga al emisor recién en el resumen. Por eso el emisor es el que corre el riesgo:
   adelanta una plata que quizás no cobre, y ahí se entiende que su tajada sea la más grande de las tres.
 
+<Callout type="insight" title="El concepto: incidencia, quién paga contra quién soporta">
+
+A quién se le factura y quién termina poniendo la plata son dos preguntas distintas, y confundirlas es la
+forma más común de equivocarse con una regulación de pagos.
+
+**Quién recibe la factura.** El interchange lo paga el comercio, adentro del arancel. Los cargos de la
+red los pagan los bancos: Visa le factura al emisor y al adquirente, nunca al comercio ni al titular.
+
+**Quién soporta el costo.** Casi todo baja un escalón. El adquirente le traslada al comercio lo que le
+paga a la red, adentro del mismo arancel; el propio 10-K de Visa aclara que fija sus tarifas al
+adquirente de forma independiente de lo que el adquirente después le cobre al comercio, o sea que
+reconoce dos precios distintos y el segundo no lo decide Visa. El emisor no absorbe nada: cubre su costo
+con el interchange, que es varias veces mayor, y con lo que sobra financia los puntos. Y el comercio lo
+carga al precio, salvo donde la ley lo deja recargar la tarjeta aparte.
+
+Eso se llama **incidencia**, y es la pregunta que decide si una regulación consigue lo que promete: si se
+baja el interchange por ley y el comercio no baja los precios, el ahorro se queda en el comercio y el
+consumidor pierde los puntos que financiaba el emisor.
+
+Ahí está lo elegante del negocio de la red: **le cobra a los bancos, que son los que se quedan con la
+tajada grande de la cadena.** Su cliente es el que más gana, no el que más se queja del costo.
+
+</Callout>
+
 | Quién                          | De un pago de $100   | De dónde sale ese número                                                                 |
 | ------------------------------ | -------------------- | ---------------------------------------------------------------------------------------- |
 | Banco emisor (**interchange**) | **$1,53**            | Publicado por Visa: 1,43% + $0,10 para crédito de consumo minorista con tarjeta presente |
@@ -509,8 +534,10 @@ inflan la métrica sin ser más rentabilidad por transacción.
 - **Interchange:** lo que el emisor se queda de cada compra. Cambia por tipo de tarjeta, rubro y país,
   así que se lee en una tabla y nunca como un número único: sobre $100, $1,53 en un crédito común y
   $0,26 en un débito regulado.
-- **Merchant discount rate (arancel):** el total que paga el comercio, del que salen interchange,
-  adquirente y red.
+- **Merchant discount rate (arancel):** el total que paga el comercio: interchange, más lo que el
+  adquirente le paga a la red, más el margen del adquirente.
+- **Incidencia:** quién recibe la factura contra quién termina soportando el costo, una vez que cada
+  escalón lo traslada al siguiente.
 - **Take rate:** la fracción de cada dólar transaccionado que se queda la empresa. En Visa, 28,79 puntos
   básicos en FY2025.
 - **Punto básico:** 0,01%. Unidad absoluta, no relativa.
