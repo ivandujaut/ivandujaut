@@ -1,4 +1,4 @@
-import { posts, projects, research } from "#site/content";
+import { posts, projects, research, casebook } from "#site/content";
 
 type Locale = "es" | "en";
 
@@ -245,5 +245,45 @@ export function getResearchTranslations(paper: { translationKey?: string; locale
   if (!paper.translationKey) return [];
   return research.filter(
     (r) => r.translationKey === paper.translationKey && r.locale !== paper.locale,
+  );
+}
+
+// ============================================================================
+// Casebook (casos de entrevista resueltos como material de estudio)
+// ============================================================================
+
+export function getCasebook(locale: Locale) {
+  return casebook.filter(byLocale(locale)).filter(isVisible).sort(byDateDesc);
+}
+
+/**
+ * El casebook se lee en orden de dificultad, no de publicación: la serie
+ * afirma una curva, y una curva ordenada por fecha no se ve. Ante el mismo
+ * nivel, el más nuevo primero.
+ */
+export function getCasebookByLevel(locale: Locale) {
+  return getCasebook(locale).sort((a, b) => a.level - b.level || byDateDesc(a, b));
+}
+
+export function getCasebookCaseBySlug(locale: Locale, slug: string) {
+  return casebook.find((c) => c.locale === locale && c.slug === slug);
+}
+
+export function findCasebookCaseInAnyLocale(slug: string) {
+  return casebook.find((c) => c.slug === slug);
+}
+
+export function findTranslatedCasebookCaseInLocale(
+  translationKey: string | undefined,
+  locale: Locale,
+) {
+  if (!translationKey) return undefined;
+  return casebook.find((c) => c.translationKey === translationKey && c.locale === locale);
+}
+
+export function getCasebookTranslations(item: { translationKey?: string; locale: Locale }) {
+  if (!item.translationKey) return [];
+  return casebook.filter(
+    (c) => c.translationKey === item.translationKey && c.locale !== item.locale,
   );
 }
