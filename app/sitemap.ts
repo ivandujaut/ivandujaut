@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllProjects, getPosts, getResearch } from "@/lib/content";
+import { getAllProjects, getCasebook, getPosts, getResearch } from "@/lib/content";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 
 import { RESEARCH_ENABLED } from "@/lib/features";
@@ -25,7 +25,10 @@ function groupByTranslationKey<T extends Translatable>(items: T[]): T[][] {
   return [...groups.values()];
 }
 
-function buildLanguages(group: Translatable[], basePath: "/blog" | "/projects" | "/research") {
+function buildLanguages(
+  group: Translatable[],
+  basePath: "/blog" | "/projects" | "/research" | "/casebook",
+) {
   const byLocale = new Map<Locale, string>();
   for (const item of group) {
     byLocale.set(item.locale, absoluteUrl(item.locale, `${basePath}/${item.slug}`));
@@ -53,6 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(RESEARCH_ENABLED
       ? ([{ path: "/research", priority: 0.8, changeFrequency: "monthly" }] as const)
       : []),
+    { path: "/casebook", priority: 0.8, changeFrequency: "monthly" },
     { path: "/method", priority: 0.7, changeFrequency: "monthly" },
     { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   ];
@@ -122,5 +126,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       })
     : [];
 
-  return [...staticEntries, ...postEntries, ...projectEntries, ...paperEntries];
+  const casebookEntries: MetadataRoute.Sitemap = groupByTranslationKey([
+    ...getCasebook("es"),
+    ...getCasebook("en"),
+  ]).flatMap((group) => {
+    const languages = buildLanguages(group, "/casebook");
+    return group.map((item) => ({
+      url: absoluteUrl(item.locale, `/casebook/${item.slug}`),
+      lastModified: new Date(item.updated ?? item.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+      alternates: { languages },
+    }));
+  });
+
+  return [...staticEntries, ...postEntries, ...projectEntries, ...paperEntries, ...casebookEntries];
 }
