@@ -73,8 +73,8 @@ monto.
 > Visa factura más todos los años. La pregunta del CEO es simple: ¿crecemos porque se usa más la
 > tarjeta, o porque cobramos más caro cada vez que se usa? Y si es lo segundo, ¿lo decidimos nosotros?
 
-Es la forma clásica de un caso de rentabilidad: dan un resultado que se mueve y piden decir **qué lo
-mueve**, con números y no con adjetivos.
+Es la forma clásica de un caso de rentabilidad: dan un resultado que se mueve y piden decir qué lo mueve,
+con números y no con adjetivos.
 
 ## De dónde salen los datos
 
@@ -101,8 +101,8 @@ declaradas en el documento y las dos se pasan por alto.
 
 </Callout>
 
-En una entrevista real no se puede buscar nada: el entrevistador tiene los datos. El 10-K se lee
-**antes**, para llegar sabiendo cómo gana plata la empresa. Adentro de la entrevista se pide una cifra
+En una entrevista real no se puede buscar nada: el entrevistador tiene los datos. El 10-K se lee antes, para llegar
+sabiendo cómo gana plata la empresa. Adentro de la entrevista se pide una cifra
 puntual y se dice para qué: _"para separar volumen de precio necesito el volumen de pagos y los ingresos
 netos de los últimos tres años, ¿los tenemos?"_. Pedir "todos los datos que haya" resta puntos.
 
@@ -116,7 +116,7 @@ el comercio, el **banco emisor** (el que dio la tarjeta) y el **banco adquirente
 servicio de cobro al comercio). Visa no es ninguno de los cuatro: es la red que los conecta y pone las
 reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero no deciden el modelo.
 
-<Diagram framePadding="px-4 py-8" caption="Dos circuitos, no uno. Punteado es el mensaje que pide permiso: sale del comercio, pasa por su banco y por la red, y lo aprueba el emisor, todo en segundos y sin mover un peso. Lleno es la plata, que se mueve después y por afuera: el emisor le paga al adquirente, el adquirente le acredita al comercio, y el titular le paga al emisor recién en el resumen. El ejemplo es una compra de $100 con una tarjeta de crédito de consumo en un comercio minorista, con la tarjeta presente: ahí el interchange que Visa publica es 1,43% + $0,10.">
+<Diagram framePadding="px-4 py-8" caption="El diagrama tiene dos circuitos. Punteado es el mensaje que pide permiso: sale del comercio, pasa por su banco y por la red, y lo aprueba el emisor, todo en segundos y sin mover un peso. Lleno es la plata, que se mueve después y por afuera: el emisor le paga al adquirente, el adquirente le acredita al comercio, y el titular le paga al emisor recién en el resumen. El ejemplo es una compra de $100 con una tarjeta de crédito de consumo en un comercio minorista, con la tarjeta presente: ahí el interchange que Visa publica es 1,43% + $0,10.">
   <div className="overflow-x-auto" tabIndex={0}>
     {/*
       En un teléfono el diagrama entra a menos de 300px de ancho y su
@@ -260,7 +260,7 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
   </div>
 </Diagram>
 
-Dos cosas que el diagrama separa a propósito, porque son donde más se confunde el modelo:
+El diagrama separa a propósito las dos cosas que más se confunden del modelo:
 
 - **Autoriza el emisor, no el adquirente.** El adquirente y la red transportan el pedido; el que mira el
   límite, el saldo y el riesgo de fraude, y dice que sí, es el banco que va a poner la plata.
@@ -287,8 +287,8 @@ Eso se llama **incidencia**, y es la pregunta que decide si una regulación cons
 baja el interchange por ley y el comercio no baja los precios, el ahorro se queda en el comercio y el
 consumidor pierde los puntos que financiaba el emisor.
 
-Ahí está lo elegante del negocio de la red: **le cobra a los bancos, que son los que se quedan con la
-tajada grande de la cadena.** Su cliente es el que más gana, no el que más se queja del costo.
+La red le cobra a los bancos, que son los que se quedan con la tajada grande de la cadena. Su cliente
+es el que más gana de los cuatro.
 
 </Callout>
 
@@ -332,8 +332,8 @@ La regla que explica el reparto: **en los pagos, el que asume el riesgo se lleva
 emisor le paga al comercio ahora y le cobra al titular a fin de mes; si el titular no paga, pierde él. El
 total que paga el comercio se llama **merchant discount rate** o arancel.
 
-Esa fracción que se queda cada uno tiene nombre: **take rate**. El de Visa es diminuto, 28,79 puntos
-básicos, y aun así Visa es una de las empresas más rentables del mundo. Ahí empieza el caso.
+Esa fracción que se queda cada uno se llama **take rate**. El de Visa es de 28,79 puntos básicos, y con
+eso es una de las empresas más rentables del mundo.
 
 <Callout type="warning" title="Error común: darle a la red la tajada más grande">
 
@@ -354,8 +354,8 @@ Con las tablas a la vista se entiende de dónde sale el enredo: esos $0,20 de in
 tope del débito regulado ($0,21 más 5 puntos básicos), mientras que un arancel de $2,20 es de otro
 mundo, el del crédito. El dibujo mezcló dos productos distintos en la misma transacción.
 
-Dos reglas salen de ahí. **Si el número no tiene fuente y la cuenta no cierra, no es un dato.** Y cuando
-hay que tapar un hueco con una suposición, se declara en voz alta ("asumo que ese resto va a la
+**Si el número no tiene fuente y la cuenta no cierra, no es un dato.** Y cuando hay que tapar un hueco
+con una suposición, se declara en voz alta ("asumo que ese resto va a la
 infraestructura; si eso no vale, mi conclusión cambia"): un entrevistador premia la asunción declarada y
 castiga la escondida.
 
@@ -365,8 +365,8 @@ castiga la escondida.
 
 **La pregunta:** para que los ingresos crezcan el año que viene, ¿qué palancas hay?
 
-Una **palanca** es una variable que se puede mover y que cambia el resultado. El oficio acá es escribir
-el resultado como fórmula y recorrerla término por término:
+Una **palanca** es una variable que se puede mover y que cambia el resultado. Acá se escribe el
+resultado como fórmula y se recorre término por término:
 
 ```
 ingresos = volumen × take rate
@@ -392,7 +392,7 @@ las acepten. Esto último es una **red de dos lados**: cada lado empuja al otro.
 | FY2024     | 7,45%            | 10,02%         |
 | FY2025     | 6,98%            | 11,34%         |
 
-Los ingresos crecen más rápido que el volumen **todos los años**. Si `ingresos = volumen × take rate`,
+Los ingresos crecen más rápido que el volumen todos los años. Si `ingresos = volumen × take rate`,
 eso solo puede significar una cosa: el take rate sube. Y sube sin excepción, de 24,17 puntos básicos en
 FY2021 a 28,79 en FY2025.
 
@@ -404,8 +404,7 @@ versiones que conviene tener a mano:
   `11,34% − 6,98% ≈ 4,36%`.
 - **Exacta**: `1,1134 / 1,0698 = 1,0408`, o sea **4,08%**.
 
-Verificación por un segundo camino, que es la costumbre más valiosa del oficio: `28,79 / 27,66 = 1,0408`.
-El mismo número desde otros datos.
+Conviene verificar por un segundo camino: `28,79 / 27,66 = 1,0408`, el mismo número desde otros datos.
 
 <Callout type="warning" title="Error común: mezclar unidades en la misma frase">
 
@@ -422,13 +421,13 @@ dividir "subió 5 grados" por "subió 2 grados".
 
 </Callout>
 
-El crecimiento de FY2025 queda repartido: **6,98 puntos de volumen y 4,08 de take rate**, que dan los
-11,34 de ingresos. Dos tercios y un tercio.
+El crecimiento de FY2025 queda repartido en 6,98 puntos de volumen y 4,08 de take rate, que dan los
+11,34 de ingresos: dos tercios y un tercio.
 
 ## Paso 4: el take rate sube, y no hace falta que suban los precios
 
-Acá está la parte que hace interesante al caso. El take rate no lo fija nadie en Visa: es un número
-calculado, ingresos divididos volumen. Que suba **no prueba** que Visa le haya subido el precio a nadie.
+El take rate no lo fija nadie en Visa: sale de dividir ingresos por volumen. Que suba no prueba que
+Visa le haya subido el precio a nadie.
 
 La analogía del kiosco: si vende los mismos cafés de $100 y además más tortas de $500, su ticket promedio
 sube sin que haya tocado un precio. Cambió la **mezcla**.
@@ -487,16 +486,15 @@ por transacción, no por monto**. Con eso, dos números del 10-K alcanzan para c
 Si las compras crecen más rápido que la plata, cada compra es más chica: el ticket promedio cae 2,90%
 (`1,0698 / 1,1018 = 0,9710`).
 
-Ahí está el mecanismo. Un café de $100 paga **una** tarifa de procesamiento. Cinco compras de $20 pagan
-**cinco**. Mismo volumen, cinco veces el ingreso en esa línea. El take rate es ingresos sobre volumen: el
-denominador no se movió y el numerador se multiplicó. **El take rate sube sin que nadie toque una
-tarifa.**
+Un café de $100 paga una tarifa de procesamiento. Cinco compras de $20 pagan cinco. Mismo volumen,
+cinco veces el ingreso en esa línea. El take rate es ingresos sobre volumen: el
+denominador no se movió y el numerador se multiplicó, así que el take rate sube sin que nadie toque una
+tarifa.
 
-Por eso el desplazamiento del efectivo, que suena a relato de marketing, es literalmente el motor: cada
-propina, cada colectivo y cada café que sale del efectivo y entra a la tarjeta empuja el take rate para
-arriba.
+Por eso el desplazamiento del efectivo es el motor del negocio: cada propina y cada café que sale del
+efectivo y entra a la tarjeta empuja el take rate para arriba.
 
-Dos matices para no vender de más, porque el ticket explica una parte y no todo:
+El ticket explica una parte y no todo:
 
 - Lo **internacional** (36,8% del crecimiento) sube el take rate por **mezcla**: rinde más por dólar.
 - Los **servicios de valor agregado** pasaron de 8.800 a 10.900 millones (+23,9%) y suben el take rate

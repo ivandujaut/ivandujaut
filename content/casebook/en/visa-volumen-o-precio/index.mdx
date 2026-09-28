@@ -118,7 +118,7 @@ bank** (the one that gives the merchant its card-acceptance service). Visa is no
 the network that connects them and sets the rules. The terminal, the gateway and the processor are
 plumbing; they charge, but they do not decide the model.
 
-<Diagram framePadding="px-4 py-8" caption="Two circuits, not one. Dashed is the message asking for permission: it leaves the merchant, goes through its bank and the network, and the issuer approves it, all in seconds and without moving a cent. Solid is the money, which moves afterwards and around the outside: the issuer pays the acquirer, the acquirer credits the merchant, and the cardholder pays the issuer only on the statement. The example is a $100 purchase with a consumer credit card at a retail merchant, card present: there the interchange Visa publishes is 1.43% + $0.10.">
+<Diagram framePadding="px-4 py-8" caption="The diagram has two circuits. Dashed is the message asking for permission: it leaves the merchant, goes through its bank and the network, and the issuer approves it, all in seconds and without moving a cent. Solid is the money, which moves afterwards and around the outside: the issuer pays the acquirer, the acquirer credits the merchant, and the cardholder pays the issuer only on the statement. The example is a $100 purchase with a consumer credit card at a retail merchant, card present: there the interchange Visa publishes is 1.43% + $0.10.">
   <div className="overflow-x-auto" tabIndex={0}>
     {/*
       On a phone the diagram fits in under 300px of width and its type becomes
@@ -261,7 +261,7 @@ plumbing; they charge, but they do not decide the model.
   </div>
 </Diagram>
 
-Two things the diagram deliberately keeps apart, because this is where the model gets confused most:
+The diagram deliberately keeps apart the two things that get confused most:
 
 - **The issuer authorises, not the acquirer.** The acquirer and the network carry the request; the one
   that checks the limit, the balance and the fraud risk, and says yes, is the bank that will put up the
@@ -291,9 +291,8 @@ That is called **incidence**, and it is the question that decides whether a regu
 promises: if interchange is capped by law and merchants do not lower prices, the saving stays with the
 merchant and the consumer loses the rewards the issuer was funding.
 
-That is the elegant part of the network's business: **it bills the banks, which are the ones keeping the
-largest slice of the chain.** Its customer is the one making the most money, not the one complaining
-most about the cost.
+The network bills the banks, which are the ones keeping the largest slice of the chain. Its customer is
+the one making the most money of the four.
 
 </Callout>
 
@@ -337,8 +336,8 @@ The rule that explains the split: **in payments, whoever takes the risk takes th
 issuer pays the merchant now and bills the cardholder at the end of the month; if the cardholder does
 not pay, the issuer loses. The total the merchant pays is called the **merchant discount rate**.
 
-That fraction each party keeps has a name: **take rate**. Visa's is tiny, 28.79 basis points, and Visa
-is still one of the most profitable companies in the world. That is where the case starts.
+That fraction each party keeps is called the **take rate**. Visa's is 28.79 basis points, and on that it
+is one of the most profitable companies in the world.
 
 <Callout type="warning" title="Common mistake: giving the network the biggest slice">
 
@@ -360,8 +359,8 @@ With the tables in front of you the mix-up is clear: that $0.20 of interchange l
 debit cap ($0.21 plus 5 basis points), while a $2.20 discount rate belongs to another world, the credit
 one. The drawing merged two different products into one transaction.
 
-Two rules come out of that. **If a number has no source and the arithmetic does not add up, it is not
-data.** And when a gap has to be filled with an assumption, say it out loud ("I am assuming that
+**If a number has no source and the arithmetic does not add up, it is not data.** And when a gap has to
+be filled with an assumption, say it out loud ("I am assuming that
 remainder goes to the infrastructure; if that does not hold, my conclusion changes"): an interviewer
 rewards a stated assumption and punishes a hidden one.
 
@@ -371,8 +370,8 @@ rewards a stated assumption and punishes a hidden one.
 
 **The question:** for revenue to grow next year, what levers are there?
 
-A **lever** is a variable you can move that changes the result. The craft here is writing the result as
-a formula and walking through it term by term:
+A **lever** is a variable you can move that changes the result. Here the result gets written as a
+formula and walked through term by term:
 
 ```
 revenue = volume × take rate
@@ -398,7 +397,7 @@ latter is a **two-sided network**: each side pushes the other.
 | FY2024      | 7.45%           | 10.02%      |
 | FY2025      | 6.98%           | 11.34%      |
 
-Revenue grows faster than volume **every single year**. If `revenue = volume × take rate`, that can only
+Revenue grows faster than volume every single year. If `revenue = volume × take rate`, that can only
 mean one thing: the take rate is rising. And it rises without exception, from 24.17 basis points in
 FY2021 to 28.79 in FY2025.
 
@@ -409,8 +408,8 @@ Two versions are worth having at hand:
   `11.34% − 6.98% ≈ 4.36%`.
 - **The exact one**: `1.1134 / 1.0698 = 1.0408`, that is **4.08%**.
 
-Checking it by a second route, which is the most valuable habit of the craft: `28.79 / 27.66 = 1.0408`.
-The same number from different data.
+It is worth checking by a second route: `28.79 / 27.66 = 1.0408`, the same number from different
+data.
 
 <Callout type="warning" title="Common mistake: mixing units in the same sentence">
 
@@ -428,13 +427,13 @@ degrees" by "it rose 2 degrees".
 
 </Callout>
 
-So FY2025 growth splits up: **6.98 points of volume and 4.08 of take rate**, which give the 11.34 of
-revenue. Two thirds and one third.
+So FY2025 growth splits into 6.98 points of volume and 4.08 of take rate, which give the 11.34 of
+revenue: two thirds and one third.
 
 ## Step 4: the take rate rises, and prices do not have to
 
-Here is the part that makes the case interesting. Nobody at Visa sets the take rate: it is a calculated
-number, revenue divided by volume. Its rising **does not prove** that Visa raised the price for anyone.
+Nobody at Visa sets the take rate: it comes from dividing revenue by volume. Its rising does not prove
+that Visa raised the price for anyone.
 
 The corner-shop analogy: if it sells the same $100 coffees and also more $500 cakes, its average ticket
 rises without a single price being touched. The **mix** changed.
@@ -494,14 +493,14 @@ transaction, not per amount**. With that, two numbers from the 10-K are enough t
 If purchases grow faster than money, every purchase is smaller: the average ticket falls 2.90%
 (`1.0698 / 1.1018 = 0.9710`).
 
-There is the mechanism. A $100 coffee pays **one** processing fee. Five $20 purchases pay **five**. Same
-volume, five times the revenue on that line. The take rate is revenue over volume: the denominator did
-not move and the numerator multiplied. **The take rate rises without anyone touching a fee.**
+A $100 coffee pays one processing fee. Five $20 purchases pay five. Same volume, five times the revenue
+on that line. The take rate is revenue over volume: the denominator did
+not move and the numerator multiplied, so the take rate rises without anyone touching a fee.
 
-That is why cash displacement, which sounds like a marketing story, is literally the engine: every tip,
-every bus fare and every coffee that leaves cash and enters the card pushes the take rate up.
+That is why cash displacement is the engine of the business: every tip and every coffee that leaves
+cash and enters the card pushes the take rate up.
 
-Two caveats so as not to oversell it, because the ticket explains part of it and not all:
+The ticket explains part of it and not all:
 
 - **International** (36.8% of the growth) lifts the take rate through **mix**: it yields more per dollar.
 - **Value-added services** went from $8.8 billion to $10.9 billion (+23.9%) and lift the take rate **by
