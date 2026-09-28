@@ -69,6 +69,7 @@ export function Anchor({ id, children }: AnchorProps) {
 
 // MdxLink queda igual que antes
 export function MdxLink({ href = "#", children, className, ...props }: MdxLinkProps) {
+  const t = useTranslations("common.a11y");
   const isExternal = href.startsWith("http");
   const isAnchor = href.startsWith("#");
 
@@ -90,7 +91,15 @@ export function MdxLink({ href = "#", children, className, ...props }: MdxLinkPr
           size={12}
           strokeWidth={1.5}
           className="opacity-60"
+          aria-hidden
         />
+        {/*
+          La flecha diagonal avisa de la pestaña nueva a quien ve la página; un
+          lector de pantalla no la lee, así que el aviso va también en texto.
+          No se usa `aria-label` en el enlace porque reemplazaría el texto del
+          link, que es lo que el lector necesita oír primero.
+        */}
+        <span className="sr-only">({t("opensInNewTab")})</span>
       </a>
     );
   }

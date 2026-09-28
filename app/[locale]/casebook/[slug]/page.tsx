@@ -98,6 +98,7 @@ export default async function CasebookDetailPage({ params }: Props) {
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const tCasebook = await getTranslations({ locale: typedLocale, namespace: "casebook" });
   const tPaper = await getTranslations({ locale: typedLocale, namespace: "paper" });
+  const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
   const tocLabel = tPaper("contents");
   const homePath = localePath(typedLocale, "/");
   const casebookIndexPath = localePath(typedLocale, "/casebook");
@@ -157,6 +158,7 @@ export default async function CasebookDetailPage({ params }: Props) {
                 className="underline underline-offset-4"
               >
                 {item.origin.note}
+                <span className="sr-only"> ({tA11y("opensInNewTab")})</span>
               </a>
             ) : (
               item.origin.note
@@ -200,6 +202,7 @@ export default async function CasebookDetailPage({ params }: Props) {
                   className="underline underline-offset-4"
                 >
                   {source.name}
+                  <span className="sr-only"> ({tA11y("opensInNewTab")})</span>
                 </a>
               </li>
             ))}
