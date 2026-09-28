@@ -13,6 +13,7 @@ origin:
 concepts:
   - "Modelo de cuatro partes"
   - "Interchange y merchant discount rate"
+  - "Interchange regulado (Regulación II)"
   - "Take rate"
   - "Puntos básicos contra porcentaje"
   - "Árbol de drivers"
@@ -24,6 +25,7 @@ entities:
   - "Visa"
   - "Mastercard"
   - "SEC EDGAR"
+  - "Reserva Federal de Estados Unidos"
 sources:
   - name: "Visa Inc., Form 10-K FY2025 (SEC EDGAR)"
     url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm"
@@ -31,6 +33,10 @@ sources:
     url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316124000058/v-20240930.htm"
   - name: "Visa Inc., Form 10-K FY2023"
     url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316123000099/v-20230930.htm"
+  - name: "Visa U.S.A. Interchange Reimbursement Fees, vigente 18-abr-2026"
+    url: "https://usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf"
+  - name: "12 CFR Parte 235 (Regulación II), eCFR"
+    url: "https://www.ecfr.gov/current/title-12/chapter-II/subchapter-A/part-235"
 translationKey: "visa-volumen-o-precio"
 draft: true
 ---
@@ -98,15 +104,15 @@ netos de los últimos tres años, ¿los tenemos?"_. Pedir "todos los datos que h
 
 ## Paso 1: quién se queda con qué
 
-**La pregunta:** un café de $100 pagado con tarjeta deja en la cafetería unos $97,50. ¿Quién se queda con
-esos $2,50, y cuánto de eso es de Visa?
+**La pregunta:** un café de $100 pagado con tarjeta deja en la cafetería menos de $100: el comercio paga
+un arancel. ¿Quién se queda con esa diferencia, y cuánto de eso es de Visa?
 
 En una compra con tarjeta participan cuatro, y por eso se llama **modelo de cuatro partes**: el titular,
 el comercio, el **banco emisor** (el que dio la tarjeta) y el **banco adquirente** (el que le da el
 servicio de cobro al comercio). Visa no es ninguno de los cuatro: es la red que los conecta y pone las
 reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero no deciden el modelo.
 
-<Diagram caption="La plata vuelve por el mismo camino por el que fue la autorización, y cada escala se queda con su parte. Visa no toca la plata del comercio: le cobra a los bancos, que son sus clientes (10-K FY2025, Nota 1). Las porciones del emisor y del adquirente se muestran sin cifra a propósito: dependen del tipo de tarjeta, del rubro y del país.">
+<Diagram caption="La plata vuelve por el mismo camino por el que fue la autorización, y cada escala se queda con su parte. El ejemplo es una compra de $100 con una tarjeta de crédito de consumo en un comercio minorista, con la tarjeta presente: ahí el interchange que Visa publica es 1,43% + $0,10. Visa no toca la plata del comercio: le cobra a los dos bancos, que son sus clientes, y su propio 10-K aclara que esos cargos no salen del interchange ni del arancel.">
   <div className="overflow-x-auto" tabIndex={0}>
     {/*
       En un teléfono el diagrama entra a 277px de ancho y su tipografía queda
@@ -115,9 +121,9 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
     */}
   <svg
     viewBox="0 0 720 540"
-    className="h-auto w-full min-w-[640px]"
+    className="h-auto w-full min-w-[640px] sm:min-w-0"
     role="img"
-    aria-label="Diagrama del modelo de cuatro partes: el titular paga 100 al comercio; el comercio presenta la compra al banco adquirente; adquirente y banco emisor se conectan a través de la red Visa, que autoriza, compensa y liquida; el emisor liquida al adquirente 100 menos el interchange; el adquirente le paga al comercio 100 menos el arancel; el emisor le cobra 100 al titular a fin de mes. Visa se queda con unos 29 centavos de cada 100."
+    aria-label="Diagrama del modelo de cuatro partes: el titular paga 100 al comercio; el comercio presenta la compra al banco adquirente; adquirente y banco emisor se conectan a través de la red Visa, que autoriza, compensa y liquida; el emisor liquida al adquirente 100 menos 1,53 de interchange; el adquirente le paga al comercio 100 menos el arancel y se queda el resto; el emisor le cobra 100 al titular a fin de mes. Visa se queda con unos 29 centavos de cada 100."
   >
     <defs>
       <marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -130,7 +136,9 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
         <line x1="600" y1="100" x2="600" y2="224" />
         <line x1="560" y1="410" x2="560" y2="106" />
         <line x1="120" y1="400" x2="120" y2="106" />
-        <line x1="500" y1="420" x2="222" y2="420" />
+      </g>
+      <g stroke="currentColor" strokeWidth="1.5" fill="none" markerEnd="url(#punta)">
+        <path d="M 590 470 L 590 508 L 130 508 L 130 474" />
       </g>
       <g stroke="currentColor" strokeWidth="1.5" fill="none" markerStart="url(#punta)" markerEnd="url(#punta)">
         <line x1="240" y1="300" x2="160" y2="394" />
@@ -153,14 +161,14 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
         <rect width="180" height="70" rx="6" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" />
         <text x="90" y="26" textAnchor="middle" fontSize="14" fontWeight="600">Banco emisor</text>
         <text x="90" y="44" textAnchor="middle" fontSize="12" fillOpacity="0.7">te dio la tarjeta</text>
-        <text x="90" y="60" textAnchor="middle" fontSize="12" fillOpacity="0.7">se queda el interchange</text>
+        <text x="90" y="60" textAnchor="middle" fontSize="12" fillOpacity="0.7">se queda $1,53</text>
       </g>
 
       <g transform="translate(500 400)">
         <rect width="180" height="70" rx="6" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" />
         <text x="90" y="26" textAnchor="middle" fontSize="14" fontWeight="600">Banco adquirente</text>
         <text x="90" y="44" textAnchor="middle" fontSize="12" fillOpacity="0.7">le cobra al comercio</text>
-        <text x="90" y="60" textAnchor="middle" fontSize="12" fillOpacity="0.7">se queda su margen</text>
+        <text x="90" y="60" textAnchor="middle" fontSize="12" fillOpacity="0.7">se queda el resto</text>
       </g>
 
       <g transform="translate(250 224)">
@@ -181,7 +189,7 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
         <text x="132" y="216" textAnchor="start">a fin de mes</text>
         <text x="52" y="358" textAnchor="start">3 · autoriza</text>
         <text x="668" y="358" textAnchor="end">3 · autoriza</text>
-        <text x="360" y="444" textAnchor="middle">4 · liquida $100 menos el interchange</text>
+        <text x="360" y="500" textAnchor="middle">4 · liquida $100 menos los $1,53 de interchange</text>
       </g>
     </g>
 
@@ -189,17 +197,38 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
   </div>
 </Diagram>
 
-| Quién                          | De los $2,50       | Por qué                                                 |
-| ------------------------------ | ------------------ | ------------------------------------------------------- |
-| Banco emisor (**interchange**) | La porción grande  | Corre el riesgo de crédito y financia puntos y cashback |
-| Adquirente                     | La porción mediana | Da el servicio de cobro y compite por precio            |
-| Visa (la red)                  | **~$0,29**         | No presta plata ni corre riesgo: conecta y fija reglas  |
+| Quién                          | De un pago de $100   | De dónde sale ese número                                                                 |
+| ------------------------------ | -------------------- | ---------------------------------------------------------------------------------------- |
+| Banco emisor (**interchange**) | **$1,53**            | Publicado por Visa: 1,43% + $0,10 para crédito de consumo minorista con tarjeta presente |
+| Adquirente                     | El resto del arancel | Lo negocia con cada comercio. Ninguna fuente primaria publica un promedio de mercado     |
+| Visa (la red)                  | **≈ $0,29**          | Cálculo propio: ingresos netos sobre volumen de pagos, 10-K FY2025                       |
 
 <TableCaption>
-  Los $0,29 salen de dividir los ingresos netos de Visa en FY2025 por todo su volumen de pagos:
-  28,79 puntos básicos, es decir 0,2879% de cada dólar. Es un techo, porque el numerador incluye
-  ingresos que no vienen de un café pagado a la vuelta de casa. Elaboración propia sobre el 10-K
-  FY2025.
+  El interchange sale de la fila "Retail Credit-Performance Threshold* I", columna "All Other
+  Products", del arancel que Visa publica para Estados Unidos, vigente desde el 18 de abril de 2026
+  (Visa reemplaza ese documento cada seis meses en la misma dirección, así que la versión importa).
+  Los $0,29 son 28,79 puntos básicos: ingresos netos sobre volumen de pagos del 10-K FY2025, un
+  promedio de todo lo que Visa factura y por lo tanto un techo para un café. Las tres cifras no se
+  suman entre sí: el comercio le paga el arancel a su adquirente, y lo que Visa cobra se lo cobra a
+  los bancos, aparte.
+</TableCaption>
+
+Y el interchange se lee siempre en una tabla, nunca como un número único. Con la misma compra de
+$100, cambiando solo el plástico:
+
+| Con qué se paga                                        | Interchange | Fuente                                                           |
+| ------------------------------------------------------ | ----------- | ---------------------------------------------------------------- |
+| Crédito de consumo, "All Other Products"               | $1,53       | Arancel publicado por Visa (1,43% + $0,10)                       |
+| Crédito de consumo, Visa Infinite con gasto calificado | $2,40       | Arancel publicado por Visa (2,30% + $0,10)                       |
+| Débito regulado                                        | $0,26       | Tope que fija la Reserva Federal: 21 centavos + 5 puntos básicos |
+
+<TableCaption>
+  Crédito: tabla "Visa U.S.A. Consumer Credit Interchange Reimbursement Fees", programa con tarjeta
+  presente, vigente desde el 18 de abril de 2026. Débito regulado: el tope de la Regulación II (12
+  CFR 235.3(b)), que la Reserva Federal le fija a los emisores con más de US$10.000 millones en
+  activos, más un centavo adicional si el emisor certifica sus estándares antifraude. La misma
+  compra de $100 le deja al emisor nueve veces más si la pagás con una tarjeta premium que con un
+  débito regulado: por eso el emisor prefiere que uses crédito, y por eso te da puntos.
 </TableCaption>
 
 La regla que explica el reparto: **en los pagos, el que asume el riesgo se lleva la tajada grande.** El
@@ -223,6 +252,10 @@ Circulan diagramas de pagos que se contradicen solos. Uno bastante difundido mue
 $100, al emisor quedándose $0,20 y girando $99,80, al adquirente quedándose $0,50 y al comercio cobrando
 $99,30. Según esas flechas el comercio perdió $0,70, pero el mismo dibujo dice, arriba a la derecha, que
 pagó $2,20 de arancel. Hay $1,50 sin dueño y la red no aparece en ninguna flecha.
+
+Con las tablas a la vista se entiende de dónde sale el enredo: esos $0,20 de interchange se parecen al
+tope del débito regulado ($0,21 más 5 puntos básicos), mientras que un arancel de $2,20 es de otro
+mundo, el del crédito. El dibujo mezcló dos productos distintos en la misma transacción.
 
 Dos reglas salen de ahí. **Si el número no tiene fuente y la cuenta no cierra, no es un dato.** Y cuando
 hay que tapar un hueco con una suposición, se declara en voz alta ("asumo que ese resto va a la
@@ -405,7 +438,8 @@ inflan la métrica sin ser más rentabilidad por transacción.
 - **Modelo de cuatro partes:** titular, comercio, banco emisor y banco adquirente. La red no es ninguno
   de los cuatro.
 - **Interchange:** lo que el emisor se queda de cada compra. Cambia por tipo de tarjeta, rubro y país,
-  así que se lee en una tabla y nunca como un número único.
+  así que se lee en una tabla y nunca como un número único: sobre $100, $1,53 en un crédito común y
+  $0,26 en un débito regulado.
 - **Merchant discount rate (arancel):** el total que paga el comercio, del que salen interchange,
   adquirente y red.
 - **Take rate:** la fracción de cada dólar transaccionado que se queda la empresa. En Visa, 28,79 puntos
