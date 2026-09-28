@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 
 interface AnnexProps {
   /** Lo que se lee con el anexo cerrado. Tiene que decir qué hay adentro. */
@@ -35,12 +37,19 @@ export function Annex({ title, hint, children }: AnnexProps) {
     >
       <summary className="cursor-pointer list-none px-5 py-4 [&::-webkit-details-marker]:hidden">
         <span className="flex items-start gap-3">
-          <span
+          {/*
+            El mismo ícono que usan las migas de pan y los submenús, y no el
+            glifo "▶": ese carácter lo dibuja la fuente de cada sistema, así que
+            cambiaba de tamaño y de peso entre plataformas y no acompañaba al
+            resto de la interfaz.
+          */}
+          <HugeiconsIcon
+            icon={ArrowRight01Icon}
+            size={16}
+            strokeWidth={1.5}
             aria-hidden
-            className="mt-1 inline-block font-mono text-xs text-muted-foreground transition-transform group-open:rotate-90"
-          >
-            ▶
-          </span>
+            className="mt-0.5 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
+          />
           <span className="flex-1">
             <span className="block font-semibold">{title}</span>
             {hint && (

@@ -16,6 +16,7 @@ import { Footnote } from "@/components/mdx/footnote";
 import { Cite, Reference, References } from "@/components/mdx/references";
 import { FrameGrid } from "@/components/mdx/frame-grid";
 import { Diagram } from "@/components/mdx/diagram";
+import { IconBanco, IconComercio, IconTitular } from "@/components/mdx/diagram-icons";
 import { AnnotatedShot } from "@/components/mdx/annotated-shot";
 import { DemoFrame } from "@/components/mdx/demo-frame";
 import { FigmaEmbed } from "@/components/mdx/figma-embed";
@@ -58,6 +59,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Cite,
     FrameGrid,
     Diagram,
+    IconTitular,
+    IconComercio,
+    IconBanco,
     AnnotatedShot,
     DemoFrame,
     FigmaEmbed,

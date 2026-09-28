@@ -334,6 +334,93 @@ const research = defineCollection({
 // ============================================================================
 // Config principal
 // ============================================================================
+// Casebook: casos de entrevista de consultoría, resueltos como material de estudio
+// ============================================================================
+
+const casebook = defineCollection({
+  name: "Casebook",
+  pattern: "casebook/**/*.mdx",
+  schema: s
+    .object({
+      title: s.string().max(120),
+      tagline: s.string().max(140),
+      description: s.string().max(300),
+      date: s.isodate(),
+      updated: s.isodate().optional(),
+      // Dificultad del caso, de 1 a 5. Es el eje de la serie: el casebook se
+      // lee en orden y el nivel es lo que hace visible la progresión. Un caso
+      // sin nivel no tendría dónde ubicarse en esa línea, así que no hay
+      // default: cada caso lo declara.
+      level: s.number().int().min(1).max(5),
+      // Cuánta ayuda hubo para resolverlo. Se publica porque la serie afirma
+      // una curva de aprendizaje, y una curva sin esta marca no se puede
+      // verificar: "resuelto solo" en el caso 1 y en el caso 20 significan
+      // cosas distintas y el lector no tiene cómo saberlo.
+      //
+      // guided: alguien fue guiando el razonamiento pregunta por pregunta.
+      // hints: resuelto por Iván, con pistas puntuales cuando se trabó.
+      // solo: sin ayuda, como en una entrevista real.
+      help: s.enum(["guided", "hints", "solo"]),
+      // Tipo de caso, que es lo que un candidato busca cuando practica: no se
+      // prepara "un caso", se prepara rentabilidad o market sizing.
+      kind: s.enum(["rentabilidad", "market-sizing", "crecimiento", "entrada-a-mercado", "otro"]),
+      // Sector del caso. Mismo rol que `topic` en projects: agrupa el listado
+      // y elige qué caso sigue.
+      sector: s.enum(["pagos", "salud", "consumo", "banca", "industria", "tecnologia"]),
+      // De dónde sale el planteo. Existe por una razón concreta: los casos
+      // oficiales de McKinsey, BCG, Bain y Deloitte tienen derechos, y
+      // publicarlos resueltos o apenas disfrazados no es una opción. El campo
+      // obliga a declararlo en cada caso.
+      //
+      // propio: el planteo lo escribimos nosotros sobre datos públicos.
+      // adaptado: parte de un caso ajeno, y entonces `note` dice cuál y `url`
+      // linkea al original para que el lector vaya a la fuente.
+      origin: s.object({
+        kind: s.enum(["propio", "adaptado"]),
+        note: s.string(),
+        url: s.string().url().optional(),
+      }),
+      // Los conceptos de negocio que el caso enseña, en el orden en que
+      // aparecen. Son la promesa del casebook para quien lo usa para estudiar:
+      // el listado los muestra, así que se puede elegir un caso por lo que
+      // enseña y no sólo por su título.
+      concepts: s.array(s.string()).min(1),
+      // Las empresas y organismos de los que habla el caso. Mismo uso que en
+      // projects: van al `about` del JSON-LD.
+      entities: s.array(s.string()).default([]),
+      // Los archivos de los que salen los números. En un caso del casebook son
+      // siempre de primer nivel (el 10-K, el balance, la tabla del regulador),
+      // porque el caso enseña de dónde se sacan los datos, no sólo cuáles son.
+      // Al menos uno: un caso con datos reales que no puede decir de dónde
+      // salieron no sirve como material de estudio.
+      sources: s
+        .array(
+          s.object({
+            name: s.string(),
+            url: s.string().url(),
+          }),
+        )
+        .min(1),
+      cover: s
+        .object({
+          src: s.image(),
+          alt: s.string(),
+        })
+        .optional(),
+      translationKey: s.string().optional(),
+      draft: s.boolean().default(false),
+      metadata: s.metadata(),
+      content: s.mdx(),
+    })
+    .transform((data, { meta }) => ({
+      ...data,
+      slug: slugFromPath(meta.path),
+      locale: localeFromPath(meta.path),
+      url: `/${localeFromPath(meta.path)}/casebook/${slugFromPath(meta.path)}`,
+    })),
+});
+
+// ============================================================================
 
 export default defineConfig({
   root: "content",
@@ -344,7 +431,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { posts, projects, research },
+  collections: { posts, projects, research, casebook },
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
