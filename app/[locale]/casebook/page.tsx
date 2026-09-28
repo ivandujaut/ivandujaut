@@ -55,6 +55,16 @@ export default async function CasebookPage({ params }: Props) {
                 tagline={item.tagline}
                 level={item.level}
                 kind={item.kind}
+                cover={
+                  item.cover
+                    ? {
+                        src: item.cover.src.src,
+                        width: item.cover.src.width,
+                        height: item.cover.src.height,
+                        blurDataURL: item.cover.src.blurDataURL,
+                      }
+                    : undefined
+                }
               />
             ))}
           </div>
