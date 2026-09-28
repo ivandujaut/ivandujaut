@@ -54,8 +54,8 @@ Un caso de entrevista de consultoría resuelto paso a paso. Cada paso trae la pr
 entrevistador, el dato con su fuente y la cuenta. Para practicarlo, leé el planteo, tapá el resto y
 avanzá de a un paso.
 
-Los recuadros de **error común** marcan las trampas donde se cae con más frecuencia: unidades mezcladas,
-tablas mal leídas y fuentes que no cierran. Son las que un entrevistador corrige en el momento.
+Los recuadros de **error común** marcan las trampas donde se cae con más frecuencia: unidades
+mezcladas, cuentas contadas con el método equivocado, tablas mal leídas y fuentes que no cierran. Son las que un entrevistador corrige en el momento.
 
 Es un caso de rentabilidad, el tipo más frecuente, y el más simple de la serie: nivel 1. Los números
 salen de los formularios 10-K que Visa presenta todos los años ante la SEC, el regulador de mercados de
@@ -429,6 +429,22 @@ dividir "subió 5 grados" por "subió 2 grados".
 
 El crecimiento de FY2025 sale de multiplicar las dos partes: 6,98% de volumen por 4,08% de take rate
 da 11,34% de ingresos. Por la vía rápida, la que suma, son 6,98 más 4,36.
+
+<Callout type="warning" title="Error común: hacer la cuenta exacta y contarla como si fuera la rápida">
+
+Los dos caminos dan números distintos y los dos están bien: 4,36 sale de restar y 4,08 de dividir. El
+problema aparece al juntarlos en una oración, porque "6,98 de volumen y 4,08 de take rate dan 11,34" no
+suma: da 11,06.
+
+La diferencia entre los dos caminos es el término cruzado, o sea el producto de las dos tasas:
+6,98% × 4,08% = 0,28 puntos porcentuales, que es justo lo que separa 4,36 de 4,08. De ahí sale la regla
+práctica: **el error de sumar es más o menos el producto de las tasas.** Con tasas de un dígito queda
+por debajo de medio punto y a nadie le molesta; arriba de 10% cada una, ya conviene dividir.
+
+Este tropiezo no se ve mientras hacés la cuenta, porque en ese momento sabés qué método estás usando. Se
+ve cuando alguien lee la frase sin haber estado ahí, que es lo que hace un entrevistador.
+
+</Callout>
 
 ## Paso 4: el take rate sube, y no hace falta que suban los precios
 

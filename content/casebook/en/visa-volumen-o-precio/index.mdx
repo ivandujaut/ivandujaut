@@ -54,8 +54,8 @@ A consulting interview case solved step by step. Each step carries the question 
 the data with its source, and the arithmetic. To practise it, read the prompt, cover the rest and move
 one step at a time.
 
-The **common mistake** boxes mark the traps people fall into most: mixed units, tables read the wrong
-way, and sources that do not add up. They are the ones an interviewer corrects on the spot.
+The **common mistake** boxes mark the traps people fall into most: mixed units, arithmetic told with
+the wrong method, tables read the wrong way, and sources that do not add up. They are the ones an interviewer corrects on the spot.
 
 It is a profitability case, the most frequent type, and the simplest in the series: level 1. The numbers
 come from the Form 10-K filings Visa submits every year to the SEC, the market regulator in the United
@@ -431,6 +431,23 @@ degrees" by "it rose 2 degrees".
 
 FY2025 growth comes from multiplying the two parts: 6.98% of volume by 4.08% of take rate gives 11.34%
 of revenue. By the quick route, the one that adds, it is 6.98 plus 4.36.
+
+<Callout type="warning" title="Common mistake: doing the exact arithmetic and telling it as the quick one">
+
+The two routes give different numbers and both are right: 4.36 comes from subtracting and 4.08 from
+dividing. The problem shows up when they are put in one sentence, because "6.98 of volume and 4.08 of
+take rate give 11.34" does not add: it gives 11.06.
+
+What separates the two routes is the cross term, the product of the two rates: 6.98% × 4.08% = 0.28
+percentage points, exactly the gap between 4.36 and 4.08. Hence the rule of thumb: **the error of adding
+is roughly the product of the rates.** With single-digit rates it stays under half a point and nobody
+minds; above 10% each, dividing is worth it.
+
+This slip is invisible while you do the arithmetic, because at that moment you know which method you
+used. It shows up when someone reads the sentence without having been there, which is what an
+interviewer does.
+
+</Callout>
 
 ## Step 4: the take rate rises, and prices do not have to
 
