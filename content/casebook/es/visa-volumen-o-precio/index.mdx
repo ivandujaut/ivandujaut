@@ -112,88 +112,145 @@ el comercio, el **banco emisor** (el que dio la tarjeta) y el **banco adquirente
 servicio de cobro al comercio). Visa no es ninguno de los cuatro: es la red que los conecta y pone las
 reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero no deciden el modelo.
 
-<Diagram caption="La plata vuelve por el mismo camino por el que fue la autorización, y cada escala se queda con su parte. El ejemplo es una compra de $100 con una tarjeta de crédito de consumo en un comercio minorista, con la tarjeta presente: ahí el interchange que Visa publica es 1,43% + $0,10. Visa no toca la plata del comercio: le cobra a los dos bancos, que son sus clientes, y su propio 10-K aclara que esos cargos no salen del interchange ni del arancel.">
+<Diagram framePadding="px-4 py-6" caption="La plata vuelve por el mismo camino por el que fue la autorización, y cada escala se queda con su parte. El ejemplo es una compra de $100 con una tarjeta de crédito de consumo en un comercio minorista, con la tarjeta presente: ahí el interchange que Visa publica es 1,43% + $0,10. Visa no toca la plata del comercio: le cobra a los dos bancos, que son sus clientes, y su propio 10-K aclara que esos cargos no salen del interchange ni del arancel.">
   <div className="overflow-x-auto" tabIndex={0}>
     {/*
       En un teléfono el diagrama entra a 277px de ancho y su tipografía queda
-      en 5px, ilegible. Se desplaza de costado con un ancho mínimo, igual que
-      las tablas anchas del sitio, en vez de encogerse hasta no leerse.
+      ilegible. Se desplaza de costado con un ancho mínimo, igual que las
+      tablas anchas del sitio, en vez de encogerse hasta no leerse.
     */}
-  <svg
-    viewBox="0 0 720 540"
-    className="h-auto w-full min-w-[640px] sm:min-w-0"
-    role="img"
-    aria-label="Diagrama del modelo de cuatro partes: el titular paga 100 al comercio; el comercio presenta la compra al banco adquirente; adquirente y banco emisor se conectan a través de la red Visa, que autoriza, compensa y liquida; el emisor liquida al adquirente 100 menos 1,53 de interchange; el adquirente le paga al comercio 100 menos el arancel y se queda el resto; el emisor le cobra 100 al titular a fin de mes. Visa se queda con unos 29 centavos de cada 100."
-  >
-    <defs>
-      <marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-      </marker>
-    </defs>
-    <g fontFamily="ui-monospace, monospace" fill="currentColor">
-      <g stroke="currentColor" strokeWidth="1.5" fill="none" markerEnd="url(#punta)">
-        <line x1="220" y1="70" x2="494" y2="70" />
-        <line x1="600" y1="100" x2="600" y2="224" />
-        <line x1="560" y1="410" x2="560" y2="106" />
-        <line x1="120" y1="400" x2="120" y2="106" />
-      </g>
-      <g stroke="currentColor" strokeWidth="1.5" fill="none" markerEnd="url(#punta)">
-        <path d="M 590 470 L 590 508 L 130 508 L 130 474" />
-      </g>
-      <g stroke="currentColor" strokeWidth="1.5" fill="none" markerStart="url(#punta)" markerEnd="url(#punta)">
-        <line x1="240" y1="300" x2="160" y2="394" />
-        <line x1="480" y1="300" x2="560" y2="394" />
-      </g>
+    <svg
+      viewBox="0 0 760 640"
+      className="h-auto w-full min-w-[680px] sm:min-w-0"
+      role="img"
+      aria-label="Diagrama del modelo de cuatro partes. Paso 1: el titular le paga 100 al comercio. Paso 2: el comercio le presenta la compra a su banco adquirente. Paso 3: adquirente y banco emisor se autorizan a través de la red Visa, que autoriza, compensa y liquida y se queda unos 29 centavos de cada 100. Paso 4: el emisor le liquida al adquirente 100 menos 1,53 de interchange. Paso 5: el adquirente le paga al comercio 100 menos el arancel. Paso 6: el emisor le cobra los 100 al titular a fin de mes."
+    >
+      <g fontFamily="var(--font-sans), system-ui, sans-serif" fill="currentColor">
+        {/* ---------- vínculos ---------- */}
+        <g stroke="currentColor" strokeWidth="1.5" fill="none" strokeOpacity="0.45" markerEnd="url(#flecha)">
+          <line x1="172" y1="116" x2="318" y2="116" />
+          <line x1="470" y1="116" x2="588" y2="116" />
+          <line x1="672" y1="140" x2="672" y2="232" />
+          <line x1="672" y1="300" x2="672" y2="452" />
+          <line x1="608" y1="452" x2="608" y2="308" />
+          <line x1="608" y1="240" x2="608" y2="140" />
+          <line x1="88" y1="452" x2="88" y2="308" />
+          <line x1="88" y1="240" x2="88" y2="140" />
+          <line x1="172" y1="512" x2="268" y2="512" />
+          <line x1="492" y1="512" x2="588" y2="512" />
+        </g>
+        <g stroke="currentColor" strokeWidth="1.5" fill="none" strokeOpacity="0.45" markerStart="url(#flecha)" markerEnd="url(#flecha)">
+          <line x1="286" y1="330" x2="180" y2="424" />
+          <line x1="474" y1="330" x2="580" y2="424" />
+        </g>
 
-      <g transform="translate(40 40)">
-        <rect width="180" height="60" rx="6" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" />
-        <text x="90" y="27" textAnchor="middle" fontSize="14" fontWeight="600">Titular</text>
-        <text x="90" y="46" textAnchor="middle" fontSize="12" fillOpacity="0.7">vos, con la tarjeta</text>
-      </g>
+        {/* ---------- titular ---------- */}
+        <g transform="translate(120 116)">
+          <circle r="44" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.35" />
+          <g stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round">
+            <circle cx="0" cy="-8" r="10" />
+            <path d="M -17 18 a 17 15 0 0 1 34 0" />
+          </g>
+          <text y="-74" textAnchor="middle" fontSize="17" fontWeight="600">Titular</text>
+          <text y="-54" textAnchor="middle" fontSize="13" fillOpacity="0.65">vos, con la tarjeta</text>
+        </g>
 
-      <g transform="translate(500 40)">
-        <rect width="180" height="60" rx="6" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" />
-        <text x="90" y="27" textAnchor="middle" fontSize="14" fontWeight="600">Comercio</text>
-        <text x="90" y="46" textAnchor="middle" fontSize="12" fillOpacity="0.7">la cafetería</text>
-      </g>
+        {/* ---------- comercio ---------- */}
+        <g transform="translate(640 116)">
+          <circle r="44" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.35" />
+          <g stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinejoin="round">
+            <path d="M -20 -10 l 6 -12 h 28 l 6 12 z" />
+            <path d="M -16 -10 v 26 h 32 v -26" />
+            <path d="M -5 16 v -12 h 10 v 12" />
+          </g>
+          <text y="-74" textAnchor="middle" fontSize="17" fontWeight="600">Comercio</text>
+          <text y="-54" textAnchor="middle" fontSize="13" fillOpacity="0.65">la cafetería</text>
+        </g>
 
-      <g transform="translate(40 400)">
-        <rect width="180" height="70" rx="6" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" />
-        <text x="90" y="26" textAnchor="middle" fontSize="14" fontWeight="600">Banco emisor</text>
-        <text x="90" y="44" textAnchor="middle" fontSize="12" fillOpacity="0.7">te dio la tarjeta</text>
-        <text x="90" y="60" textAnchor="middle" fontSize="12" fillOpacity="0.7">se queda $1,53</text>
-      </g>
+        {/* ---------- banco emisor ---------- */}
+        <g transform="translate(120 496)">
+          <circle r="44" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.35" />
+          <g stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M -20 -8 l 20 -13 l 20 13 z" />
+            <path d="M -13 -2 v 16 M 0 -2 v 16 M 13 -2 v 16" />
+            <path d="M -20 20 h 40" />
+          </g>
+          <text y="66" textAnchor="middle" fontSize="17" fontWeight="600">Banco emisor</text>
+          <text y="86" textAnchor="middle" fontSize="13" fillOpacity="0.65">te dio la tarjeta</text>
+          <text y="104" textAnchor="middle" fontSize="13" fontWeight="600">se queda $1,53</text>
+        </g>
 
-      <g transform="translate(500 400)">
-        <rect width="180" height="70" rx="6" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" />
-        <text x="90" y="26" textAnchor="middle" fontSize="14" fontWeight="600">Banco adquirente</text>
-        <text x="90" y="44" textAnchor="middle" fontSize="12" fillOpacity="0.7">le cobra al comercio</text>
-        <text x="90" y="60" textAnchor="middle" fontSize="12" fillOpacity="0.7">se queda el resto</text>
-      </g>
+        {/* ---------- banco adquirente ---------- */}
+        <g transform="translate(640 496)">
+          <circle r="44" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.35" />
+          <g stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M -20 -8 l 20 -13 l 20 13 z" />
+            <path d="M -13 -2 v 16 M 0 -2 v 16 M 13 -2 v 16" />
+            <path d="M -20 20 h 40" />
+          </g>
+          <text y="66" textAnchor="middle" fontSize="17" fontWeight="600">Banco adquirente</text>
+          <text y="86" textAnchor="middle" fontSize="13" fillOpacity="0.65">le cobra al comercio</text>
+          <text y="104" textAnchor="middle" fontSize="13" fontWeight="600">se queda el resto</text>
+        </g>
 
-      <g transform="translate(250 224)">
-        <rect width="220" height="92" rx="6" fill="currentColor" fillOpacity="0.14" stroke="currentColor" strokeWidth="1.5" />
-        <text x="110" y="28" textAnchor="middle" fontSize="15" fontWeight="600">Visa · la red</text>
-        <text x="110" y="48" textAnchor="middle" fontSize="12" fillOpacity="0.75">autoriza, compensa y liquida</text>
-        <text x="110" y="66" textAnchor="middle" fontSize="12" fillOpacity="0.75">le cobra a los dos bancos</text>
-        <text x="110" y="84" textAnchor="middle" fontSize="13" fontWeight="600">≈ $0,29 de cada $100</text>
-      </g>
+        {/* ---------- la red ---------- */}
+        <g transform="translate(380 268)">
+          <rect x="-98" y="-62" width="196" height="124" rx="62" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.5" />
+          <text y="-30" textAnchor="middle" fontSize="18" fontWeight="600">Visa · la red</text>
+          <text y="-8" textAnchor="middle" fontSize="13" fillOpacity="0.7">autoriza, compensa</text>
+          <text y="10" textAnchor="middle" fontSize="13" fillOpacity="0.7">y liquida</text>
+          <text y="32" textAnchor="middle" fontSize="13" fillOpacity="0.7">le cobra a los dos bancos</text>
+          <text y="52" textAnchor="middle" fontSize="14" fontWeight="600">≈ $0,29 de cada $100</text>
+        </g>
 
-      <g fontSize="12" fillOpacity="0.85">
-        <text x="357" y="58" textAnchor="middle">1 · paga $100</text>
-        <text x="612" y="150" textAnchor="start">2 · presenta</text>
-        <text x="612" y="166" textAnchor="start">la compra</text>
-        <text x="548" y="200" textAnchor="end">5 · le paga $100</text>
-        <text x="548" y="216" textAnchor="end">menos el arancel</text>
-        <text x="132" y="200" textAnchor="start">6 · le cobra $100</text>
-        <text x="132" y="216" textAnchor="start">a fin de mes</text>
-        <text x="52" y="358" textAnchor="start">3 · autoriza</text>
-        <text x="668" y="358" textAnchor="end">3 · autoriza</text>
-        <text x="360" y="500" textAnchor="middle">4 · liquida $100 menos los $1,53 de interchange</text>
+        {/* ---------- pasos ---------- */}
+        <g>
+          <circle cx="340" cy="116" r="13" fill="currentColor" />
+          <text x="340" y="121" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">1</text>
+          <text x="362" y="121" textAnchor="start" fontSize="14">paga $100</text>
+        </g>
+        <g>
+          <circle cx="672" cy="266" r="13" fill="currentColor" />
+          <text x="672" y="271" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">2</text>
+          <text x="694" y="262" textAnchor="start" fontSize="14">presenta</text>
+          <text x="694" y="280" textAnchor="start" fontSize="14">la compra</text>
+        </g>
+        <g>
+          <circle cx="214" cy="382" r="13" fill="currentColor" />
+          <text x="214" y="387" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">3</text>
+          <text x="196" y="387" textAnchor="end" fontSize="14">autoriza</text>
+        </g>
+        <g>
+          <circle cx="546" cy="382" r="13" fill="currentColor" />
+          <text x="546" y="387" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">3</text>
+          <text x="564" y="387" textAnchor="start" fontSize="14">autoriza</text>
+        </g>
+        <g>
+          <circle cx="286" cy="512" r="13" fill="currentColor" />
+          <text x="286" y="517" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">4</text>
+          <text x="392" y="505" textAnchor="middle" fontSize="14">liquida $100 menos</text>
+          <text x="392" y="523" textAnchor="middle" fontSize="14">los $1,53 de interchange</text>
+        </g>
+        <g>
+          <circle cx="608" cy="274" r="13" fill="currentColor" />
+          <text x="608" y="279" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">5</text>
+          <text x="586" y="270" textAnchor="end" fontSize="14">le paga $100</text>
+          <text x="586" y="288" textAnchor="end" fontSize="14">menos el arancel</text>
+        </g>
+        <g>
+          <circle cx="88" cy="274" r="13" fill="currentColor" />
+          <text x="88" y="279" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--background)">6</text>
+          <text x="110" y="270" textAnchor="start" fontSize="14">te cobra $100</text>
+          <text x="110" y="288" textAnchor="start" fontSize="14">a fin de mes</text>
+        </g>
       </g>
-    </g>
+      <defs>
+        <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+        </marker>
+      </defs>
+    </svg>
 
-  </svg>
   </div>
 </Diagram>
 
