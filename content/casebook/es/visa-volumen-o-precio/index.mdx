@@ -45,6 +45,9 @@ translationKey: "visa-volumen-o-precio"
 draft: false
 ---
 
+{/* facts: data/visa-volumen-o-precio/facts.md */}
+{/* facts: data/visa-volumen-o-precio/interchange.md */}
+
 <Abstract label="Cómo usar este caso">
 
 Un caso de entrevista de consultoría resuelto paso a paso. Cada paso trae la pregunta que hace el
@@ -56,7 +59,7 @@ tablas mal leídas y fuentes que no cierran. Son las que un entrevistador corrig
 
 Es un caso de rentabilidad, el tipo más frecuente, y el más simple de la serie: nivel 1. Los números
 salen de los formularios 10-K que Visa presenta todos los años ante la SEC, el regulador de mercados de
-Estados Unidos.
+Estados Unidos. Es un análisis independiente, no afiliado a las empresas mencionadas.
 
 </Abstract>
 
@@ -260,13 +263,13 @@ reglas. El posnet, la pasarela y el procesador son infraestructura, cobran pero 
   </div>
 </Diagram>
 
-El diagrama separa a propósito las dos cosas que más se confunden del modelo:
+En el diagrama, las dos cosas que más se confunden del modelo:
 
 - **Autoriza el emisor, no el adquirente.** El adquirente y la red transportan el pedido; el que mira el
   límite, el saldo y el riesgo de fraude, y dice que sí, es el banco que va a poner la plata.
 - **El titular no le paga al comercio.** Al comercio le paga su adquirente, uno o dos días después de la
   compra. El titular le paga al emisor recién en el resumen. Por eso el emisor es el que corre el riesgo:
-  adelanta una plata que quizás no cobre, y ahí se entiende que su tajada sea la más grande de las tres.
+  adelanta una plata que quizás no cobre, y su tajada es la que paga ese riesgo.
 
 <Callout type="insight" title="El concepto: incidencia, quién paga contra quién soporta">
 
@@ -274,21 +277,22 @@ A quién se le factura y quién termina poniendo la plata son dos preguntas dist
 forma más común de equivocarse con una regulación de pagos.
 
 **Quién recibe la factura.** El interchange lo paga el comercio, adentro del arancel. Los cargos de la
-red los pagan los bancos: Visa le factura al emisor y al adquirente, nunca al comercio ni al titular.
+red los pagan los bancos: el 10-K dice que Visa gana sus ingresos "principalmente" de emisores y
+adquirentes, no del comercio ni del titular.
 
 **Quién soporta el costo.** Casi todo baja un escalón. El adquirente le traslada al comercio lo que le
 paga a la red, adentro del mismo arancel; el propio 10-K de Visa aclara que fija sus tarifas al
 adquirente de forma independiente de lo que el adquirente después le cobre al comercio, o sea que
 reconoce dos precios distintos y el segundo no lo decide Visa. El emisor no absorbe nada: cubre su costo
-con el interchange, que es varias veces mayor, y con lo que sobra financia los puntos. Y el comercio lo
-carga al precio, salvo donde la ley lo deja recargar la tarjeta aparte.
+con el interchange, y con lo que sobra financia los puntos, que es como funciona el modelo aunque ni
+Visa ni los bancos publiquen esa cuenta. Y el comercio lo carga al precio, salvo donde la ley lo deja
+recargar la tarjeta aparte.
 
 Eso se llama **incidencia**, y es la pregunta que decide si una regulación consigue lo que promete: si se
 baja el interchange por ley y el comercio no baja los precios, el ahorro se queda en el comercio y el
 consumidor pierde los puntos que financiaba el emisor.
 
-La red le cobra a los bancos, que son los que se quedan con la tajada grande de la cadena. Su cliente
-es el que más gana de los cuatro.
+La red le cobra a los bancos, y de las tres porciones del arancel la suya es la más chica.
 
 </Callout>
 
@@ -322,7 +326,7 @@ $100, cambiando solo el plástico:
 <TableCaption>
   Crédito: tabla "Visa U.S.A. Consumer Credit Interchange Reimbursement Fees", programa con tarjeta
   presente, vigente desde el 18 de abril de 2026. Débito regulado: el tope de la Regulación II (12
-  CFR 235.3(b)), que la Reserva Federal le fija a los emisores con más de US$10.000 millones en
+  CFR 235.3(b)), que la Reserva Federal le fija a los emisores con US$10.000 millones o más en
   activos, más un centavo adicional si el emisor certifica sus estándares antifraude. La misma
   compra de $100 le deja al emisor nueve veces más si la pagás con una tarjeta premium que con un
   débito regulado: por eso el emisor prefiere que uses crédito, y por eso te da puntos.
@@ -333,7 +337,7 @@ emisor le paga al comercio ahora y le cobra al titular a fin de mes; si el titul
 total que paga el comercio se llama **merchant discount rate** o arancel.
 
 Esa fracción que se queda cada uno se llama **take rate**. El de Visa es de 28,79 puntos básicos, y con
-eso es una de las empresas más rentables del mundo.
+eso su resultado operativo fue el 60% de sus ingresos netos en FY2025.
 
 <Callout type="warning" title="Error común: darle a la red la tajada más grande">
 
@@ -345,7 +349,8 @@ que cobra por eso.
 
 <Callout type="warning" title="Error común: tomar por dato un diagrama que no cierra">
 
-Circulan diagramas de pagos que se contradicen solos. Uno bastante difundido muestra al titular pagando
+Circulan diagramas de pagos que se contradicen solos. El que sigue no tiene fuente citable, así que va
+como ejemplo y no como dato. Muestra al titular pagando
 $100, al emisor quedándose $0,20 y girando $99,80, al adquirente quedándose $0,50 y al comercio cobrando
 $99,30. Según esas flechas el comercio perdió $0,70, pero el mismo dibujo dice, arriba a la derecha, que
 pagó $2,20 de arancel. Hay $1,50 sin dueño y la red no aparece en ninguna flecha.
@@ -392,7 +397,7 @@ las acepten. Esto último es una **red de dos lados**: cada lado empuja al otro.
 | FY2024     | 7,45%            | 10,02%         |
 | FY2025     | 6,98%            | 11,34%         |
 
-Los ingresos crecen más rápido que el volumen todos los años. Si `ingresos = volumen × take rate`,
+Los ingresos crecen más rápido que el volumen en los cuatro años de la tabla. Si `ingresos = volumen × take rate`,
 eso solo puede significar una cosa: el take rate sube. Y sube sin excepción, de 24,17 puntos básicos en
 FY2021 a 28,79 en FY2025.
 
@@ -409,7 +414,8 @@ Conviene verificar por un segundo camino: `28,79 / 27,66 = 1,0408`, el mismo nú
 <Callout type="warning" title="Error común: mezclar unidades en la misma frase">
 
 El take rate pasó de 27,66 a 28,79. Eso es **1,13 puntos básicos**, un cambio absoluto, y no 1,13%. En
-relativo creció 4,08%, cuatro veces más. Decir "subió 1,13%" describe algo que no pasó.
+relativo creció 4,08%. Los dos números describen el mismo movimiento en unidades distintas, así que no
+se comparan entre sí, y decir "subió 1,13%" describe algo que no pasó.
 
 </Callout>
 
@@ -421,8 +427,8 @@ dividir "subió 5 grados" por "subió 2 grados".
 
 </Callout>
 
-El crecimiento de FY2025 queda repartido en 6,98 puntos de volumen y 4,08 de take rate, que dan los
-11,34 de ingresos: dos tercios y un tercio.
+El crecimiento de FY2025 sale de multiplicar las dos partes: 6,98% de volumen por 4,08% de take rate
+da 11,34% de ingresos. Por la vía rápida, la que suma, son 6,98 más 4,36.
 
 ## Paso 4: el take rate sube, y no hace falta que suban los precios
 
@@ -438,7 +444,7 @@ sube sin que haya tocado un precio. Cambió la **mezcla**.
 | ----------------------------- | ---------- | ---------- | ---------- | ------------------------------------ |
 | Servicio                      | 16.114     | 17.539     | 8,84%      | El volumen de pagos                  |
 | Procesamiento de datos        | 17.714     | 19.993     | 12,87%     | La cantidad de transacciones         |
-| Transacciones internacionales | 12.665     | 14.166     | 11,85%     | El volumen cross-border              |
+| Transacciones internacionales | 12.665     | 14.166     | 11,85%     | El volumen entre países              |
 | Otros                         | 3.197      | 4.053      | 26,78%     | Consultoría y servicios a los bancos |
 | Incentivos a clientes (resta) | (13.764)   | (15.751)   | 14,44%     | Lo que Visa le devuelve a los bancos |
 | **Ingresos netos**            | **35.926** | **40.000** | **11,34%** |                                      |
@@ -448,8 +454,9 @@ sube sin que haya tocado un precio. Cambió la **mezcla**.
   propio. Los incentivos a clientes son contra-ingreso: se publican en negativo y se restan.
 </TableCaption>
 
-Todas las líneas crecen más rápido que el volumen (6,98%), y por eso el take rate sube: no hay ninguna
-que lo frene. Lo que falta es saber cuál manda.
+Todas las líneas de ingreso crecen más rápido que el volumen (6,98%), y por eso el take rate sube. La
+única que empuja en contra son los incentivos, que también crecen y se restan. Lo que falta es saber
+cuál manda.
 
 <Callout type="warning" title="Error común: ordenar por tasa en vez de por plata">
 
@@ -486,8 +493,9 @@ por transacción, no por monto**. Con eso, dos números del 10-K alcanzan para c
 Si las compras crecen más rápido que la plata, cada compra es más chica: el ticket promedio cae 2,90%
 (`1,0698 / 1,1018 = 0,9710`).
 
-Un café de $100 paga una tarifa de procesamiento. Cinco compras de $20 pagan cinco. Mismo volumen,
-cinco veces el ingreso en esa línea. El take rate es ingresos sobre volumen: el
+Un café de $100 paga un cargo de procesamiento. Cinco compras de $20 pagan cinco cargos. Cuánto es
+cada cargo no lo publica Visa, así que el múltiplo exacto es un supuesto mío; lo que no es supuesto es
+la dirección, porque el propio 10-K dice que las transacciones procesadas son el driver de esa línea. El take rate es ingresos sobre volumen: el
 denominador no se movió y el numerador se multiplicó, así que el take rate sube sin que nadie toque una
 tarifa.
 
@@ -496,7 +504,9 @@ efectivo y entra a la tarjeta empuja el take rate para arriba.
 
 El ticket explica una parte y no todo:
 
-- Lo **internacional** (36,8% del crecimiento) sube el take rate por **mezcla**: rinde más por dólar.
+- Lo **internacional** (36,8% del crecimiento) crece más rápido que el volumen total, así que empuja el
+  take rate para arriba. Que rinda más por cada dólar es mi hipótesis: Visa no publica el volumen
+  internacional en dólares, así que el rendimiento por dólar no se puede calcular.
 - Los **servicios de valor agregado** pasaron de 8.800 a 10.900 millones (+23,9%) y suben el take rate
   **por construcción de la métrica**: suman al numerador sin sumar volumen al denominador. No son más
   rentabilidad por transacción.
