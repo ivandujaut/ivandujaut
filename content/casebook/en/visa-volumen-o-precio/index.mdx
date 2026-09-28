@@ -1,0 +1,570 @@
+---
+title: "Visa wants you to pay for coffee with a card"
+tagline: "Its revenue grows faster than the volume it processes, and not because it raised any price."
+description: "A consulting interview case solved step by step on Visa's 10-K filings: separating growth by volume from growth by price, and finding out why the take rate climbs on its own when every purchase gets smaller."
+date: "2026-09-28"
+level: 1
+help: "guided"
+kind: "rentabilidad"
+sector: "pagos"
+origin:
+  kind: "propio"
+  note: "Written on the Form 10-K filings Visa submits to the SEC. It is not an official case from any consulting firm: the McKinsey, BCG, Bain and Deloitte ones are copyrighted and are practised on their own sites."
+concepts:
+  - "Four-party model"
+  - "Interchange and merchant discount rate"
+  - "Regulated debit interchange (Regulation II)"
+  - "Incidence: who pays against who bears the cost"
+  - "Take rate"
+  - "Basis points against percentages"
+  - "Driver tree"
+  - "Volume by price decomposition"
+  - "Contribution in dollars against growth rate"
+  - "Mix effect"
+  - "Average ticket"
+entities:
+  - "Visa"
+  - "Mastercard"
+  - "SEC EDGAR"
+  - "Federal Reserve"
+sources:
+  - name: "Visa Inc., Form 10-K FY2025 (SEC EDGAR)"
+    url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm"
+  - name: "Visa Inc., Form 10-K FY2024"
+    url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316124000058/v-20240930.htm"
+  - name: "Visa Inc., Form 10-K FY2023"
+    url: "https://www.sec.gov/Archives/edgar/data/1403161/000140316123000099/v-20230930.htm"
+  - name: "Visa U.S.A. Interchange Reimbursement Fees, effective 18 April 2026"
+    url: "https://usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf"
+  - name: "12 CFR Part 235 (Regulation II), eCFR"
+    url: "https://www.ecfr.gov/current/title-12/chapter-II/subchapter-A/part-235"
+translationKey: "visa-volumen-o-precio"
+draft: false
+---
+
+<Abstract label="How to use this case">
+
+A consulting interview case solved step by step. Each step carries the question the interviewer asks,
+the data with its source, and the arithmetic. To practise it, read the prompt, cover the rest and move
+one step at a time.
+
+The **common mistake** boxes mark the traps people fall into most: mixed units, tables read the wrong
+way, and sources that do not add up. They are the ones an interviewer corrects on the spot.
+
+It is a profitability case, the most frequent type, and the simplest in the series: level 1. The numbers
+come from the Form 10-K filings Visa submits every year to the SEC, the market regulator in the United
+States.
+
+</Abstract>
+
+<Thesis>
+
+Visa grows mainly by volume, but the remaining third of its growth does not come from raising prices: it
+comes from every purchase getting smaller, and the line that contributes most is charged per
+transaction, not per amount.
+
+</Thesis>
+
+## The prompt
+
+> Visa bills more every year. The CEO's question is simple: are we growing because the card gets used
+> more, or because we charge more every time it is used? And if it is the second, are we the ones
+> deciding it?
+
+This is the classic shape of a profitability case: you are handed a result that moves and asked to say
+**what moves it**, with numbers instead of adjectives.
+
+## Where the data comes from
+
+Visa is listed in the United States, so every year it files a **10-K**: the mandatory annual report to
+the SEC. It is far more than a balance sheet, it is signed by the executives, and lying in it is a
+federal crime. It is free to search on [EDGAR](https://www.sec.gov/edgar/search/), the SEC's public
+archive, by ticker (V for Visa, MA for Mastercard, which files exactly the same form).
+
+The parts that are useful in a case:
+
+| 10-K item               | What is in it                                      | What it is for                               |
+| ----------------------- | -------------------------------------------------- | -------------------------------------------- |
+| 1. Business             | How the company makes money, in its own words      | The exact definition of each revenue line    |
+| 1A. Risk Factors        | What can break it, according to the company itself | The risk part of the recommendation          |
+| 7. MD&A                 | Why the numbers moved, with the operating metrics  | Volume, transactions and revenue by category |
+| 8. Financial Statements | Financial statements and notes                     | The hard numbers                             |
+
+<Callout type="warning" title="Common mistake: comparing periods that do not line up">
+
+Visa's fiscal year closes on 30 September and Mastercard's follows the calendar year: they are not the
+same twelve months. And inside Visa's own 10-K, payments volume is measured over the twelve months to
+June while revenue and transactions follow the fiscal year to September. Both are stated in the document
+and both get overlooked.
+
+</Callout>
+
+In a real interview you cannot look anything up: the interviewer holds the data. The 10-K is read
+**beforehand**, so you arrive knowing how the company makes money. Inside the interview you ask for one
+specific figure and say what for: _"to separate volume from price I need payments volume and net revenue
+for the last three years, do we have them?"_. Asking for "all the data you have" costs you points.
+
+## Step 1: who keeps what
+
+**The question:** a $100 coffee paid by card leaves the shop with less than $100, because the merchant
+pays a discount rate. Who keeps that difference, and how much of it is Visa's?
+
+Four parties take part in a card purchase, which is why it is called the **four-party model**: the
+cardholder, the merchant, the **issuing bank** (the one that gave out the card) and the **acquiring
+bank** (the one that gives the merchant its card-acceptance service). Visa is none of the four: it is
+the network that connects them and sets the rules. The terminal, the gateway and the processor are
+plumbing; they charge, but they do not decide the model.
+
+<Diagram framePadding="px-4 py-8" caption="Two circuits, not one. Dashed is the message asking for permission: it leaves the merchant, goes through its bank and the network, and the issuer approves it, all in seconds and without moving a cent. Solid is the money, which moves afterwards and around the outside: the issuer pays the acquirer, the acquirer credits the merchant, and the cardholder pays the issuer only on the statement. The example is a $100 purchase with a consumer credit card at a retail merchant, card present: there the interchange Visa publishes is 1.43% + $0.10.">
+  <div className="overflow-x-auto" tabIndex={0}>
+    {/*
+      On a phone the diagram fits in under 300px of width and its type becomes
+      illegible. It scrolls sideways with a minimum width, like the wide tables
+      of the site, instead of shrinking until it cannot be read.
+    */}
+    <svg
+      viewBox="0 0 900 720"
+      className="h-auto w-full min-w-[800px] sm:min-w-0"
+      role="img"
+      aria-label="Diagram of the four-party model, as two circuits. The message, in seconds and without moving money: step 1, the cardholder taps the card at the merchant; step 2, the merchant asks its acquiring bank for approval, and the acquirer sends the request to the Visa network; step 3, the network takes it to the issuing bank, the only one that approves or declines, and the reply comes back the same way. The money, a day or two later: step 4, the issuer pays the acquirer 98.47, which is 100 minus 1.53 of interchange; step 5, the acquirer credits the merchant 100 minus the discount rate and keeps the difference; step 6, at the end of the month the issuer bills the cardholder the 100. Visa keeps about 29 cents of every 100 and charges them to the two banks."
+    >
+      <defs>
+        <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--casebook)" />
+        </marker>
+      </defs>
+
+      <g fontFamily="var(--font-sans), system-ui, sans-serif">
+        {/* ---------- el mensaje: punteado, por adentro, no mueve plata ---------- */}
+        <g stroke="var(--casebook)" strokeWidth="2" fill="none" strokeOpacity="0.5" strokeDasharray="7 6" markerEnd="url(#flecha)">
+          <line x1="196" y1="130" x2="360" y2="130" />
+          <line x1="524" y1="130" x2="654" y2="130" />
+          <line x1="668" y1="176" x2="668" y2="514" />
+          <line x1="668" y1="520" x2="556" y2="356" />
+          <line x1="294" y1="356" x2="182" y2="520" />
+        </g>
+
+        {/* ---------- la plata: línea llena, por afuera ---------- */}
+        <g stroke="var(--casebook)" strokeWidth="2.5" fill="none" markerEnd="url(#flecha)">
+          <line x1="196" y1="560" x2="300" y2="560" />
+          <line x1="556" y1="560" x2="654" y2="560" />
+          <line x1="740" y1="514" x2="740" y2="176" />
+          <line x1="150" y1="514" x2="150" y2="176" />
+        </g>
+
+        {/* ---------- titular ---------- */}
+        <g transform="translate(150 130)">
+          <circle r="46" fill="var(--casebook-soft)" stroke="var(--casebook)" strokeWidth="1.5" strokeOpacity="0.45" />
+          <g style={{ color: "var(--casebook)" }}>
+            <IconTitular size={40} />
+          </g>
+          <text y="-72" textAnchor="middle" fontSize="18" fontWeight="600" fill="currentColor">Cardholder</text>
+          <text y="-52" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.6">you, with the card</text>
+        </g>
+
+        {/* ---------- comercio ---------- */}
+        <g transform="translate(700 130)">
+          <circle r="46" fill="var(--casebook-soft)" stroke="var(--casebook)" strokeWidth="1.5" strokeOpacity="0.45" />
+          <g style={{ color: "var(--casebook)" }}>
+            <IconComercio size={40} />
+          </g>
+          <text y="-72" textAnchor="middle" fontSize="18" fontWeight="600" fill="currentColor">Merchant</text>
+          <text y="-52" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.6">the coffee shop</text>
+        </g>
+
+        {/* ---------- la red ---------- */}
+        <g transform="translate(425 300)">
+          <rect x="-112" y="-46" width="224" height="92" rx="46" fill="var(--casebook)" fillOpacity="0.14" stroke="var(--casebook)" strokeWidth="1.5" strokeOpacity="0.6" />
+          <text y="-16" textAnchor="middle" fontSize="19" fontWeight="600" fill="currentColor">Visa · the network</text>
+          <text y="6" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.65">carries the message both ways</text>
+          <text y="30" textAnchor="middle" fontSize="14" fontWeight="600" fill="var(--casebook)">≈ $0.29 of every $100</text>
+        </g>
+
+        {/* ---------- banco emisor ---------- */}
+        <g transform="translate(150 560)">
+          <circle r="46" fill="var(--casebook-soft)" stroke="var(--casebook)" strokeWidth="1.5" strokeOpacity="0.45" />
+          <g style={{ color: "var(--casebook)" }}>
+            <IconBanco size={40} />
+          </g>
+          <text y="74" textAnchor="middle" fontSize="18" fontWeight="600" fill="currentColor">Issuing bank</text>
+          <text y="94" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.6">gave you the card, approves</text>
+          <text y="114" textAnchor="middle" fontSize="14" fontWeight="600" fill="var(--casebook)">keeps $1.53</text>
+        </g>
+
+        {/* ---------- banco adquirente ---------- */}
+        <g transform="translate(700 560)">
+          <circle r="46" fill="var(--casebook-soft)" stroke="var(--casebook)" strokeWidth="1.5" strokeOpacity="0.45" />
+          <g style={{ color: "var(--casebook)" }}>
+            <IconBanco size={40} />
+          </g>
+          <text y="74" textAnchor="middle" fontSize="18" fontWeight="600" fill="currentColor">Acquiring bank</text>
+          <text y="94" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.6">bills the merchant</text>
+          <text y="114" textAnchor="middle" fontSize="14" fontWeight="600" fill="var(--casebook)">keeps the rest</text>
+        </g>
+
+        {/* ---------- pasos ---------- */}
+        <g fontSize="14" fill="currentColor">
+          <g>
+            <circle cx="382" cy="130" r="14" fill="var(--casebook)" />
+            <text x="382" y="135" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--casebook-foreground)">1</text>
+            <text x="406" y="135" textAnchor="start">you tap the card</text>
+          </g>
+          <g>
+            <circle cx="668" cy="250" r="14" fill="var(--casebook)" />
+            <text x="668" y="255" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--casebook-foreground)">2</text>
+            <text x="646" y="246" textAnchor="end">asks its bank</text>
+            <text x="646" y="264" textAnchor="end">for approval</text>
+          </g>
+          <g>
+            <circle cx="238" cy="438" r="14" fill="var(--casebook)" />
+            <text x="238" y="443" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--casebook-foreground)">3</text>
+            <text x="262" y="434" textAnchor="start">the issuer approves</text>
+            <text x="262" y="452" textAnchor="start">and the reply returns</text>
+          </g>
+          <g>
+            <circle cx="318" cy="560" r="14" fill="var(--casebook)" />
+            <text x="318" y="565" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--casebook-foreground)">4</text>
+            <text x="440" y="554" textAnchor="middle" fontWeight="600">pays $98.47</text>
+            <text x="440" y="572" textAnchor="middle">($100 minus its interchange)</text>
+          </g>
+          <g>
+            <circle cx="740" cy="360" r="14" fill="var(--casebook)" />
+            <text x="740" y="365" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--casebook-foreground)">5</text>
+            <text x="764" y="356" textAnchor="start">credits $100</text>
+            <text x="764" y="374" textAnchor="start">minus the discount rate</text>
+          </g>
+          <g>
+            <circle cx="150" cy="350" r="14" fill="var(--casebook)" />
+            <text x="150" y="355" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--casebook-foreground)">6</text>
+            <text x="174" y="346" textAnchor="start" fontWeight="600">bills you $100</text>
+            <text x="174" y="364" textAnchor="start">at month end</text>
+          </g>
+        </g>
+
+        {/* ---------- referencia de los dos circuitos ---------- */}
+        <g fontSize="13" fill="currentColor">
+          <g stroke="var(--casebook)" strokeWidth="2" strokeOpacity="0.5" strokeDasharray="7 6">
+            <line x1="286" y1="664" x2="330" y2="664" />
+          </g>
+          <text x="340" y="669" textAnchor="start" fillOpacity="0.75">the message, in seconds, no money</text>
+          <g stroke="var(--casebook)" strokeWidth="2.5">
+            <line x1="286" y1="692" x2="330" y2="692" />
+          </g>
+          <text x="340" y="697" textAnchor="start" fillOpacity="0.75">the money, a day or two later</text>
+        </g>
+      </g>
+    </svg>
+
+  </div>
+</Diagram>
+
+Two things the diagram deliberately keeps apart, because this is where the model gets confused most:
+
+- **The issuer authorises, not the acquirer.** The acquirer and the network carry the request; the one
+  that checks the limit, the balance and the fraud risk, and says yes, is the bank that will put up the
+  money.
+- **The cardholder does not pay the merchant.** The merchant is paid by its acquirer, a day or two after
+  the purchase. The cardholder pays the issuer only on the statement. That is why the issuer is the one
+  taking the risk: it fronts money it may never collect, and that is what makes its slice the largest of
+  the three.
+
+<Callout type="insight" title="The concept: incidence, who pays against who bears the cost">
+
+Who gets the invoice and who ends up putting up the money are two different questions, and confusing
+them is the most common way to get a payments regulation wrong.
+
+**Who gets the invoice.** Interchange is paid by the merchant, inside the discount rate. The network's
+fees are paid by the banks: Visa bills the issuer and the acquirer, never the merchant or the
+cardholder.
+
+**Who bears the cost.** Almost all of it moves down one step. The acquirer passes what it pays the
+network on to the merchant, inside that same discount rate; Visa's own 10-K states that it sets its fees
+to acquirers independently of whatever the acquirer then charges the merchant, which is to say it
+recognises two separate prices and does not set the second one. The issuer absorbs nothing: it covers
+its cost out of interchange, which is several times larger, and funds the rewards with what is left. And
+the merchant prices it in, except where the law lets it surcharge cards separately.
+
+That is called **incidence**, and it is the question that decides whether a regulation delivers what it
+promises: if interchange is capped by law and merchants do not lower prices, the saving stays with the
+merchant and the consumer loses the rewards the issuer was funding.
+
+That is the elegant part of the network's business: **it bills the banks, which are the ones keeping the
+largest slice of the chain.** Its customer is the one making the most money, not the one complaining
+most about the cost.
+
+</Callout>
+
+| Who                            | Out of a $100 payment         | Where that number comes from                                                |
+| ------------------------------ | ----------------------------- | --------------------------------------------------------------------------- |
+| Issuing bank (**interchange**) | **$1.53**                     | Published by Visa: 1.43% + $0.10 for consumer credit, retail, card present  |
+| Acquirer                       | The rest of the discount rate | Negotiated with each merchant. No primary source publishes a market average |
+| Visa (the network)             | **≈ $0.29**                   | Own calculation: net revenue over payments volume, 10-K FY2025              |
+
+<TableCaption>
+  Interchange comes from the "Retail Credit-Performance Threshold* I" row, "All Other Products"
+  column, of the fee schedule Visa publishes for the United States, effective 18 April 2026 (Visa
+  replaces that document every six months at the same address, so the version matters). The $0.29 is
+  28.79 basis points: net revenue over payments volume from the 10-K FY2025, an average across
+  everything Visa bills and therefore a ceiling for a coffee. The three figures do not add up to
+  each other. The discount rate the merchant pays is interchange, plus what the acquirer pays the
+  network, plus the acquirer's own margin, and nobody publishes those last two parts. Visa's $0.29
+  is a different calculation: an average of what it bills per $100 transacted, charged to the two
+  banks and not to the merchant.
+</TableCaption>
+
+And interchange is always read off a table, never as a single number. Same $100 purchase, changing only
+the plastic:
+
+| What it is paid with                           | Interchange | Source                                                    |
+| ---------------------------------------------- | ----------- | --------------------------------------------------------- |
+| Consumer credit, "All Other Products"          | $1.53       | Fee schedule published by Visa (1.43% + $0.10)            |
+| Consumer credit, Visa Infinite spend qualified | $2.40       | Fee schedule published by Visa (2.30% + $0.10)            |
+| Regulated debit                                | $0.26       | Cap set by the Federal Reserve: 21 cents + 5 basis points |
+
+<TableCaption>
+  Credit: "Visa U.S.A. Consumer Credit Interchange Reimbursement Fees" table, card-present fee
+  program, effective 18 April 2026. Regulated debit: the Regulation II cap (12 CFR 235.3(b)) that
+  the Federal Reserve sets for issuers with more than $10 billion in assets, plus one extra cent if
+  the issuer certifies its fraud-prevention standards. The same $100 purchase leaves the issuer nine
+  times more when it is paid with a premium card than with regulated debit: that is why the issuer
+  would rather you use credit, and why it gives you rewards.
+</TableCaption>
+
+The rule that explains the split: **in payments, whoever takes the risk takes the big slice.** The
+issuer pays the merchant now and bills the cardholder at the end of the month; if the cardholder does
+not pay, the issuer loses. The total the merchant pays is called the **merchant discount rate**.
+
+That fraction each party keeps has a name: **take rate**. Visa's is tiny, 28.79 basis points, and Visa
+is still one of the most profitable companies in the world. That is where the case starts.
+
+<Callout type="warning" title="Common mistake: giving the network the biggest slice">
+
+The brand is printed on the card, so it looks like the network keeps almost the whole discount rate. It
+keeps the smallest of the three slices. The one putting up the money and taking the risk is the issuer,
+and that is what it gets paid for.
+
+</Callout>
+
+<Callout type="warning" title="Common mistake: taking a diagram that does not add up as data">
+
+Payment diagrams that contradict themselves are everywhere. A widely shared one shows the cardholder
+paying $100, the issuer keeping $0.20 and wiring $99.80, the acquirer keeping $0.50 and the merchant
+receiving $99.30. By those arrows the merchant lost $0.70, yet the same drawing says, top right, that it
+paid a $2.20 discount fee. There is $1.50 with no owner, and the network does not appear on a single
+arrow.
+
+With the tables in front of you the mix-up is clear: that $0.20 of interchange looks like the regulated
+debit cap ($0.21 plus 5 basis points), while a $2.20 discount rate belongs to another world, the credit
+one. The drawing merged two different products into one transaction.
+
+Two rules come out of that. **If a number has no source and the arithmetic does not add up, it is not
+data.** And when a gap has to be filled with an assumption, say it out loud ("I am assuming that
+remainder goes to the infrastructure; if that does not hold, my conclusion changes"): an interviewer
+rewards a stated assumption and punishes a hidden one.
+
+</Callout>
+
+## Step 2: building the tree
+
+**The question:** for revenue to grow next year, what levers are there?
+
+A **lever** is a variable you can move that changes the result. The craft here is writing the result as
+a formula and walking through it term by term:
+
+```
+revenue = volume × take rate
+              │
+              └── volume = transactions × average ticket
+                                 │
+                                 └── transactions = active cards × times each one is used
+```
+
+That is a **driver tree**, and it is what the interviewer expects to see by minute two. On the volume
+side there are two levers, and both are Visa's historical business: paying by card for what used to be
+paid in cash (**cash displacement**) and having more cards and more merchants that accept them. The
+latter is a **two-sided network**: each side pushes the other.
+
+## Step 3: volume or price
+
+**The data.** Year-on-year growth, calculated on the figures published in the 10-K filings:
+
+| Fiscal year | Payments volume | Net revenue |
+| ----------- | --------------- | ----------- |
+| FY2022      | 15.00%          | 21.59%      |
+| FY2023      | 5.40%           | 11.41%      |
+| FY2024      | 7.45%           | 10.02%      |
+| FY2025      | 6.98%           | 11.34%      |
+
+Revenue grows faster than volume **every single year**. If `revenue = volume × take rate`, that can only
+mean one thing: the take rate is rising. And it rises without exception, from 24.17 basis points in
+FY2021 to 28.79 in FY2025.
+
+**The arithmetic.** If `A = B × C`, then `(1 + growth of A) = (1 + growth of B) × (1 + growth of C)`.
+Two versions are worth having at hand:
+
+- **The quick one**, the one you say out loud: for small rates, growth rates add up, so
+  `11.34% − 6.98% ≈ 4.36%`.
+- **The exact one**: `1.1134 / 1.0698 = 1.0408`, that is **4.08%**.
+
+Checking it by a second route, which is the most valuable habit of the craft: `28.79 / 27.66 = 1.0408`.
+The same number from different data.
+
+<Callout type="warning" title="Common mistake: mixing units in the same sentence">
+
+The take rate went from 27.66 to 28.79. That is **1.13 basis points**, an absolute change, not 1.13%. In
+relative terms it grew 4.08%, four times more. Saying "it rose 1.13%" describes something that did not
+happen.
+
+</Callout>
+
+<Callout type="warning" title="Common mistake: dividing growth rates by each other">
+
+`11.34 / 6.98 = 1.62` is an operation with no meaning. Growth rates are not divided: levels are, or the
+rates are subtracted when the approximation is good enough. It is the same trap as dividing "it rose 5
+degrees" by "it rose 2 degrees".
+
+</Callout>
+
+So FY2025 growth splits up: **6.98 points of volume and 4.08 of take rate**, which give the 11.34 of
+revenue. Two thirds and one third.
+
+## Step 4: the take rate rises, but nobody raised a price
+
+Here is the part that makes the case interesting. Nobody at Visa sets the take rate: it is a calculated
+number, revenue divided by volume. Its rising **does not prove** that Visa raised the price for anyone.
+
+The corner-shop analogy: if it sells the same $100 coffees and also more $500 cakes, its average ticket
+rises without a single price being touched. The **mix** changed.
+
+**The data.** Revenue by category, in millions of dollars, published in the 10-K FY2025:
+
+| Line                          | FY2024     | FY2025     | Growth     | What moves it, according to Visa    |
+| ----------------------------- | ---------- | ---------- | ---------- | ----------------------------------- |
+| Service                       | 16,114     | 17,539     | 8.84%      | Payments volume                     |
+| Data processing               | 17,714     | 19,993     | 12.87%     | The number of transactions          |
+| International transactions    | 12,665     | 14,166     | 11.85%     | Cross-border volume                 |
+| Other                         | 3,197      | 4,053      | 26.78%     | Advisory and services sold to banks |
+| Client incentives (subtracts) | (13,764)   | (15,751)   | 14.44%     | What Visa gives back to the banks   |
+| **Net revenue**               | **35,926** | **40,000** | **11.34%** |                                     |
+
+<TableCaption>
+  "Components of our net revenue" table, Item 7 of the 10-K FY2025. The fourth column is an own
+  calculation. Client incentives are contra-revenue: they are published as negatives and subtracted.
+</TableCaption>
+
+Every line grows faster than volume (6.98%), and that is why the take rate rises: none of them is
+holding it back. What is missing is knowing which one rules.
+
+<Callout type="warning" title="Common mistake: ranking by rate instead of by money">
+
+"Other" grew 26.78%, the highest rate in the table, on a base of $3,197 million. Growing a lot on a
+little brings in less money than growing a little on a lot. The rate tells you what moves fast; the
+dollars tell you what moves the result. Deciding by the rate is how investments in businesses that move
+no needle get justified.
+
+</Callout>
+
+Out of the $4,074 million that net revenue grew, each line contributes:
+
+| Line                       | Contributed | Of the growth |
+| -------------------------- | ----------- | ------------- |
+| Data processing            | +2,279      | **55.9%**     |
+| International transactions | +1,501      | 36.8%         |
+| Service                    | +1,425      | 35.0%         |
+| Other                      | +856        | 21.0%         |
+| Client incentives          | −1,987      | **−48.8%**    |
+
+They add to 100% once the negative sign is counted. If it does not close at 100, there is an error
+somewhere.
+
+## Step 5: why the take rate rises
+
+The line that rules, with 55.9% of the growth, is **data processing**. And that line is **charged per
+transaction, not per amount**. With that, two numbers from the 10-K are enough to close the case:
+
+<MetricGrid>
+  <Metric label="Payments volume FY2025" value="+6.98%" />
+  <Metric label="Processed transactions FY2025" value="+10.18%" />
+  <Metric label="Average ticket" value="−2.90%" trend="down" sentiment="good" />
+</MetricGrid>
+
+If purchases grow faster than money, every purchase is smaller: the average ticket falls 2.90%
+(`1.0698 / 1.1018 = 0.9710`).
+
+There is the mechanism. A $100 coffee pays **one** processing fee. Five $20 purchases pay **five**. Same
+volume, five times the revenue on that line. The take rate is revenue over volume: the denominator did
+not move and the numerator multiplied. **Nobody raised any price.**
+
+That is why cash displacement, which sounds like a marketing story, is literally the engine: every tip,
+every bus fare and every coffee that leaves cash and enters the card pushes the take rate up.
+
+Two caveats so as not to oversell it, because the ticket explains part of it and not all:
+
+- **International** (36.8% of the growth) lifts the take rate through **mix**: it yields more per dollar.
+- **Value-added services** went from $8.8 billion to $10.9 billion (+23.9%) and lift the take rate **by
+  construction of the metric**: they add to the numerator without adding volume to the denominator. They
+  are not more profit per transaction.
+
+## The close, in 30 seconds
+
+This is how a case ends: the interviewer asks for the answer as if you were in a lift with the CEO
+inside. Answer first, then the evidence, then the risk.
+
+<Steps>
+
+### The answer
+
+Visa grows mainly by volume, but the take rate also rises, without any price increase.
+
+### The evidence
+
+Volume grew 6.98% and revenue 11.34%. The line contributing most is data processing, with 55.9% of the
+growth, and it is charged per transaction, not per amount. The average ticket fell 2.90% while
+transactions grew 10.18%.
+
+### The risk
+
+Client incentives grow 14.44%, faster than revenue, and eat 48.8% of what the other lines generate: that
+is the money Visa gives back to the banks so they issue its cards and not the competition's. And part of
+the take-rate improvement comes from value-added services, which inflate the metric without being more
+profit per transaction.
+
+</Steps>
+
+## The concepts this case uses
+
+<Annex title="Glossary" hint="In the order they appear">
+
+- **Four-party model:** cardholder, merchant, issuing bank and acquiring bank. The network is none of
+  the four.
+- **Interchange:** what the issuer keeps out of each purchase. It changes with card type, merchant
+  category and country, so it is read off a table and never as a single number: on $100, $1.53 on an
+  ordinary credit card and $0.26 on regulated debit.
+- **Merchant discount rate:** the total the merchant pays: interchange, plus what the acquirer pays the
+  network, plus the acquirer's own margin.
+- **Incidence:** who gets the invoice against who ends up bearing the cost, once each step passes it on
+  to the next.
+- **Take rate:** the fraction of each dollar transacted that the company keeps. At Visa, 28.79 basis
+  points in FY2025.
+- **Basis point:** 0.01%. An absolute unit, not a relative one.
+- **Lever and driver tree:** writing the result as a formula and walking through each term asking which
+  one can be moved.
+- **Volume by price decomposition:** `(1 + a) = (1 + b) × (1 + c)`, with the shortcut of adding rates
+  when they are small.
+- **Contribution in dollars:** what decides is how much money each line brings in, not the rate at which
+  it grows.
+- **Mix effect:** the average moves because the composition changed, without any price changing.
+- **Average ticket:** volume divided by transactions. When it falls and the fee is per transaction, the
+  take rate rises on its own.
+
+</Annex>
+
+## To practise it
+
+The same exercise with Mastercard's 10-K on [EDGAR](https://www.sec.gov/edgar/search/): it is the same
+business with a different mix, and the fiscal year is different, so the first job is noticing that one
+company's twelve months are not the other's.
+
+Three questions to take away, which are the ones this case trains: what formula explains the result? how
+much does each term contribute in money rather than in percentage? and did somebody decide the number
+that moved, or did it move on its own?

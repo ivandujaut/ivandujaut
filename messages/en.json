@@ -9,7 +9,8 @@
       "openMenu": "Open menu",
       "closeMenu": "Close menu",
       "skipToContent": "Skip to content",
-      "method": "Method"
+      "method": "Method",
+      "casebook": "Casebook"
     },
     "a11y": {
       "opensInNewTab": "opens in a new tab"
@@ -296,5 +297,30 @@
     },
     "repoCta": "See the site's repository",
     "projectsCta": "See the cases"
+  },
+  "casebook": {
+    "title": "Casebook",
+    "description": "Consulting interview cases solved step by step, with the data in view and a source for every number. Ordered by difficulty, to read or to practise.",
+    "level": "Level {level}",
+    "help": {
+      "label": "Help",
+      "guided": "Solved with guidance",
+      "hints": "Solved with hints",
+      "solo": "Solved unaided"
+    },
+    "kind": {
+      "rentabilidad": "Profitability",
+      "market-sizing": "Market sizing",
+      "crecimiento": "Growth",
+      "entrada-a-mercado": "Market entry",
+      "otro": "Other"
+    },
+    "origin": {
+      "propio": "Own prompt",
+      "adaptado": "Adapted from a published case"
+    },
+    "concepts": "Concepts it trains",
+    "empty": "No cases published yet.",
+    "sourcesLabel": "The filings this case uses"
   }
 }

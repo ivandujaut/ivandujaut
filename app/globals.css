@@ -28,6 +28,14 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
 
+  /* Casebook: el único acento de color del sitio, y vive sólo en esa sección.
+     El resto del portfolio es deliberadamente neutro; el casebook es material
+     de estudio y el color hace de guía (el paso, el actor, el flujo de plata).
+     `--casebook-soft` es el mismo tono para rellenos y fondos. */
+  --casebook: oklch(0.52 0.176 277);
+  --casebook-foreground: oklch(0.985 0 0);
+  --casebook-soft: oklch(0.52 0.176 277 / 10%);
+
   /* States */
   --destructive: oklch(0.577 0.245 27.325);
 
@@ -59,6 +67,10 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  /* En oscuro el violeta sube de luminosidad para mantener el contraste. */
+  --casebook: oklch(0.76 0.14 277);
+  --casebook-foreground: oklch(0.205 0 0);
+  --casebook-soft: oklch(0.76 0.14 277 / 16%);
   --border: oklch(1 0 0 / 10%);
   /* En oscuro la sombra negra no se ve contra el fondo: se invierte a luz. */
   --table-scroll-shadow: oklch(1 0 0 / 16%);
@@ -90,6 +102,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-casebook: var(--casebook);
+  --color-casebook-foreground: var(--casebook-foreground);
+  --color-casebook-soft: var(--casebook-soft);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
