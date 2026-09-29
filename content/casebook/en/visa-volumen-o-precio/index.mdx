@@ -45,18 +45,21 @@ translationKey: "visa-volumen-o-precio"
 draft: false
 ---
 
+{/* facts: data/visa-volumen-o-precio/facts.md */}
+{/* facts: data/visa-volumen-o-precio/interchange.md */}
+
 <Abstract label="How to use this case">
 
 A consulting interview case solved step by step. Each step carries the question the interviewer asks,
 the data with its source, and the arithmetic. To practise it, read the prompt, cover the rest and move
 one step at a time.
 
-The **common mistake** boxes mark the traps people fall into most: mixed units, tables read the wrong
-way, and sources that do not add up. They are the ones an interviewer corrects on the spot.
+The **common mistake** boxes mark the traps people fall into most: mixed units, arithmetic told with
+the wrong method, tables read the wrong way, and sources that do not add up. They are the ones an interviewer corrects on the spot.
 
 It is a profitability case, the most frequent type, and the simplest in the series: level 1. The numbers
 come from the Form 10-K filings Visa submits every year to the SEC, the market regulator in the United
-States.
+States. This is independent analysis, not affiliated with the companies mentioned.
 
 </Abstract>
 
@@ -118,7 +121,7 @@ bank** (the one that gives the merchant its card-acceptance service). Visa is no
 the network that connects them and sets the rules. The terminal, the gateway and the processor are
 plumbing; they charge, but they do not decide the model.
 
-<Diagram framePadding="px-4 py-8" caption="Two circuits, not one. Dashed is the message asking for permission: it leaves the merchant, goes through its bank and the network, and the issuer approves it, all in seconds and without moving a cent. Solid is the money, which moves afterwards and around the outside: the issuer pays the acquirer, the acquirer credits the merchant, and the cardholder pays the issuer only on the statement. The example is a $100 purchase with a consumer credit card at a retail merchant, card present: there the interchange Visa publishes is 1.43% + $0.10.">
+<Diagram framePadding="px-4 py-8" caption="The diagram has two circuits. Dashed is the message asking for permission: it leaves the merchant, goes through its bank and the network, and the issuer approves it, all in seconds and without moving a cent. Solid is the money, which moves afterwards and around the outside: the issuer pays the acquirer, the acquirer credits the merchant, and the cardholder pays the issuer only on the statement. The example is a $100 purchase with a consumer credit card at a retail merchant, card present: there the interchange Visa publishes is 1.43% + $0.10.">
   <div className="overflow-x-auto" tabIndex={0}>
     {/*
       On a phone the diagram fits in under 300px of width and its type becomes
@@ -261,15 +264,14 @@ plumbing; they charge, but they do not decide the model.
   </div>
 </Diagram>
 
-Two things the diagram deliberately keeps apart, because this is where the model gets confused most:
+In the diagram, the two things that get confused most:
 
 - **The issuer authorises, not the acquirer.** The acquirer and the network carry the request; the one
   that checks the limit, the balance and the fraud risk, and says yes, is the bank that will put up the
   money.
 - **The cardholder does not pay the merchant.** The merchant is paid by its acquirer, a day or two after
   the purchase. The cardholder pays the issuer only on the statement. That is why the issuer is the one
-  taking the risk: it fronts money it may never collect, and that is what makes its slice the largest of
-  the three.
+  taking the risk: it fronts money it may never collect, and its slice is what pays for that risk.
 
 <Callout type="insight" title="The concept: incidence, who pays against who bears the cost">
 
@@ -277,23 +279,22 @@ Who gets the invoice and who ends up putting up the money are two different ques
 them is the most common way to get a payments regulation wrong.
 
 **Who gets the invoice.** Interchange is paid by the merchant, inside the discount rate. The network's
-fees are paid by the banks: Visa bills the issuer and the acquirer, never the merchant or the
-cardholder.
+fees are paid by the banks: the 10-K says Visa earns its revenue "primarily" from issuers and acquirers,
+not from the merchant or the cardholder.
 
 **Who bears the cost.** Almost all of it moves down one step. The acquirer passes what it pays the
 network on to the merchant, inside that same discount rate; Visa's own 10-K states that it sets its fees
 to acquirers independently of whatever the acquirer then charges the merchant, which is to say it
 recognises two separate prices and does not set the second one. The issuer absorbs nothing: it covers
-its cost out of interchange, which is several times larger, and funds the rewards with what is left. And
-the merchant prices it in, except where the law lets it surcharge cards separately.
+its cost out of interchange and funds the rewards with what is left, which is how the model works even
+though neither Visa nor the banks publish that arithmetic. And the merchant prices it in, except where
+the law lets it surcharge cards separately.
 
 That is called **incidence**, and it is the question that decides whether a regulation delivers what it
 promises: if interchange is capped by law and merchants do not lower prices, the saving stays with the
 merchant and the consumer loses the rewards the issuer was funding.
 
-That is the elegant part of the network's business: **it bills the banks, which are the ones keeping the
-largest slice of the chain.** Its customer is the one making the most money, not the one complaining
-most about the cost.
+The network bills the banks, and of the three slices of the discount rate its own is the smallest.
 
 </Callout>
 
@@ -327,7 +328,7 @@ the plastic:
 <TableCaption>
   Credit: "Visa U.S.A. Consumer Credit Interchange Reimbursement Fees" table, card-present fee
   program, effective 18 April 2026. Regulated debit: the Regulation II cap (12 CFR 235.3(b)) that
-  the Federal Reserve sets for issuers with more than $10 billion in assets, plus one extra cent if
+  the Federal Reserve sets for issuers with $10 billion or more in assets, plus one extra cent if
   the issuer certifies its fraud-prevention standards. The same $100 purchase leaves the issuer nine
   times more when it is paid with a premium card than with regulated debit: that is why the issuer
   would rather you use credit, and why it gives you rewards.
@@ -337,8 +338,8 @@ The rule that explains the split: **in payments, whoever takes the risk takes th
 issuer pays the merchant now and bills the cardholder at the end of the month; if the cardholder does
 not pay, the issuer loses. The total the merchant pays is called the **merchant discount rate**.
 
-That fraction each party keeps has a name: **take rate**. Visa's is tiny, 28.79 basis points, and Visa
-is still one of the most profitable companies in the world. That is where the case starts.
+That fraction each party keeps is called the **take rate**. Visa's is 28.79 basis points, and on that
+its operating income was 60% of net revenue in FY2025.
 
 <Callout type="warning" title="Common mistake: giving the network the biggest slice">
 
@@ -350,8 +351,8 @@ and that is what it gets paid for.
 
 <Callout type="warning" title="Common mistake: taking a diagram that does not add up as data">
 
-Payment diagrams that contradict themselves are everywhere. A widely shared one shows the cardholder
-paying $100, the issuer keeping $0.20 and wiring $99.80, the acquirer keeping $0.50 and the merchant
+Payment diagrams that contradict themselves are everywhere. The one below has no citable source, so it
+goes as an example and not as data. It shows the cardholder paying $100, the issuer keeping $0.20 and wiring $99.80, the acquirer keeping $0.50 and the merchant
 receiving $99.30. By those arrows the merchant lost $0.70, yet the same drawing says, top right, that it
 paid a $2.20 discount fee. There is $1.50 with no owner, and the network does not appear on a single
 arrow.
@@ -360,8 +361,8 @@ With the tables in front of you the mix-up is clear: that $0.20 of interchange l
 debit cap ($0.21 plus 5 basis points), while a $2.20 discount rate belongs to another world, the credit
 one. The drawing merged two different products into one transaction.
 
-Two rules come out of that. **If a number has no source and the arithmetic does not add up, it is not
-data.** And when a gap has to be filled with an assumption, say it out loud ("I am assuming that
+**If a number has no source and the arithmetic does not add up, it is not data.** And when a gap has to
+be filled with an assumption, say it out loud ("I am assuming that
 remainder goes to the infrastructure; if that does not hold, my conclusion changes"): an interviewer
 rewards a stated assumption and punishes a hidden one.
 
@@ -371,8 +372,8 @@ rewards a stated assumption and punishes a hidden one.
 
 **The question:** for revenue to grow next year, what levers are there?
 
-A **lever** is a variable you can move that changes the result. The craft here is writing the result as
-a formula and walking through it term by term:
+A **lever** is a variable you can move that changes the result. Here the result gets written as a
+formula and walked through term by term:
 
 ```
 revenue = volume × take rate
@@ -398,7 +399,7 @@ latter is a **two-sided network**: each side pushes the other.
 | FY2024      | 7.45%           | 10.02%      |
 | FY2025      | 6.98%           | 11.34%      |
 
-Revenue grows faster than volume **every single year**. If `revenue = volume × take rate`, that can only
+Revenue grows faster than volume in the four years of the table. If `revenue = volume × take rate`, that can only
 mean one thing: the take rate is rising. And it rises without exception, from 24.17 basis points in
 FY2021 to 28.79 in FY2025.
 
@@ -409,14 +410,14 @@ Two versions are worth having at hand:
   `11.34% − 6.98% ≈ 4.36%`.
 - **The exact one**: `1.1134 / 1.0698 = 1.0408`, that is **4.08%**.
 
-Checking it by a second route, which is the most valuable habit of the craft: `28.79 / 27.66 = 1.0408`.
-The same number from different data.
+It is worth checking by a second route: `28.79 / 27.66 = 1.0408`, the same number from different
+data.
 
 <Callout type="warning" title="Common mistake: mixing units in the same sentence">
 
 The take rate went from 27.66 to 28.79. That is **1.13 basis points**, an absolute change, not 1.13%. In
-relative terms it grew 4.08%, four times more. Saying "it rose 1.13%" describes something that did not
-happen.
+relative terms it grew 4.08%. The two numbers describe the same move in different units, so they do not
+compare against each other, and saying "it rose 1.13%" describes something that did not happen.
 
 </Callout>
 
@@ -428,13 +429,30 @@ degrees" by "it rose 2 degrees".
 
 </Callout>
 
-So FY2025 growth splits up: **6.98 points of volume and 4.08 of take rate**, which give the 11.34 of
-revenue. Two thirds and one third.
+FY2025 growth comes from multiplying the two parts: 6.98% of volume by 4.08% of take rate gives 11.34%
+of revenue. By the quick route, the one that adds, it is 6.98 plus 4.36.
+
+<Callout type="warning" title="Common mistake: doing the exact arithmetic and telling it as the quick one">
+
+The two routes give different numbers and both are right: 4.36 comes from subtracting and 4.08 from
+dividing. The problem shows up when they are put in one sentence, because "6.98 of volume and 4.08 of
+take rate give 11.34" does not add: it gives 11.06.
+
+What separates the two routes is the cross term, the product of the two rates: 6.98% × 4.08% = 0.28
+percentage points, exactly the gap between 4.36 and 4.08. Hence the rule of thumb: **the error of adding
+is roughly the product of the rates.** With single-digit rates it stays under half a point and nobody
+minds; above 10% each, dividing is worth it.
+
+This slip is invisible while you do the arithmetic, because at that moment you know which method you
+used. It shows up when someone reads the sentence without having been there, which is what an
+interviewer does.
+
+</Callout>
 
 ## Step 4: the take rate rises, and prices do not have to
 
-Here is the part that makes the case interesting. Nobody at Visa sets the take rate: it is a calculated
-number, revenue divided by volume. Its rising **does not prove** that Visa raised the price for anyone.
+Nobody at Visa sets the take rate: it comes from dividing revenue by volume. Its rising does not prove
+that Visa raised the price for anyone.
 
 The corner-shop analogy: if it sells the same $100 coffees and also more $500 cakes, its average ticket
 rises without a single price being touched. The **mix** changed.
@@ -455,8 +473,9 @@ rises without a single price being touched. The **mix** changed.
   calculation. Client incentives are contra-revenue: they are published as negatives and subtracted.
 </TableCaption>
 
-Every line grows faster than volume (6.98%), and that is why the take rate rises: none of them is
-holding it back. What is missing is knowing which one rules.
+Every revenue line grows faster than volume (6.98%), and that is why the take rate rises. The only one
+pushing the other way is client incentives, which also grow and are subtracted. What is missing is
+knowing which one rules.
 
 <Callout type="warning" title="Common mistake: ranking by rate instead of by money">
 
@@ -492,18 +511,24 @@ transaction, not per amount**. With that, two numbers from the 10-K are enough t
 </MetricGrid>
 
 If purchases grow faster than money, every purchase is smaller: the average ticket falls 2.90%
-(`1.0698 / 1.1018 = 0.9710`).
+(`1.0698 / 1.1018 = 0.9710`). The ratio is mine and has to be read as declared: the volume covers twelve
+months to June and excludes cash, while the transactions are the fiscal year to September and include
+cash and the PLUS brand (Visa's ATM network). Visa publishes no purchase ticket, so this is as close as the published data
+gets.
 
-There is the mechanism. A $100 coffee pays **one** processing fee. Five $20 purchases pay **five**. Same
-volume, five times the revenue on that line. The take rate is revenue over volume: the denominator did
-not move and the numerator multiplied. **The take rate rises without anyone touching a fee.**
+A $100 coffee pays one processing charge. Five $20 purchases pay five charges. How much each charge is
+Visa does not publish, so the exact multiple is an assumption of mine; what is not an assumption is the
+direction, because the 10-K itself calls processed transactions the driver of that line. The take rate is revenue over volume: the denominator did
+not move and the numerator multiplied, so the take rate rises without anyone touching a fee.
 
-That is why cash displacement, which sounds like a marketing story, is literally the engine: every tip,
-every bus fare and every coffee that leaves cash and enters the card pushes the take rate up.
+That is why cash displacement is the engine of the business: every tip and every coffee that leaves
+cash and enters the card pushes the take rate up.
 
-Two caveats so as not to oversell it, because the ticket explains part of it and not all:
+The ticket explains part of it and not all:
 
-- **International** (36.8% of the growth) lifts the take rate through **mix**: it yields more per dollar.
+- **International** (36.8% of the growth) grows faster than total volume, so it pushes the take rate up.
+  That it yields more per dollar is my hypothesis: Visa does not publish international volume in
+  dollars, so the yield per dollar cannot be calculated.
 - **Value-added services** went from $8.8 billion to $10.9 billion (+23.9%) and lift the take rate **by
   construction of the metric**: they add to the numerator without adding volume to the denominator. They
   are not more profit per transaction.
@@ -527,8 +552,8 @@ transaction, not necessarily through higher prices.
 ### The evidence
 
 Volume grew 6.98% and revenue 11.34%. The line contributing most is data processing, with 55.9% of the
-growth, and it is charged per transaction, not per amount. The average ticket fell 2.90% while
-transactions grew 10.18%.
+growth, and it is charged per transaction, not per amount. The average ticket, built from two series covering different
+periods, fell 2.90% while transactions grew 10.18%.
 
 ### The risk
 
@@ -563,7 +588,8 @@ profit per transaction.
   it grows.
 - **Mix effect:** the average moves because the composition changed, without any price changing.
 - **Average ticket:** volume divided by transactions. When it falls and the fee is per transaction, the
-  take rate rises on its own.
+  take rate rises on its own. Visa does not publish it: the ratio is built from two series covering
+  different periods, so it is used as declared.
 
 </Annex>
 
