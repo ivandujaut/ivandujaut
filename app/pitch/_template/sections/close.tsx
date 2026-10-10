@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpRight01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon, ArrowUpRight01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import type { Pitch } from "@/pitches/types";
 import { Section } from "../lib/section";
@@ -52,9 +52,17 @@ export function Close({ data, author, sources }: CloseProps) {
 
       <footer className="mt-24 border-t border-border pt-8 text-sm text-(--pitch-ink-dim)">
         <p>{data.sourcesLine}</p>
-        <details className="mt-3">
-          <summary className="cursor-pointer underline-offset-4 hover:underline">
-            {data.sourcesToggle.replace("{n}", String(sources.length))}
+        <details className="group mt-3">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-2 underline-offset-4 hover:underline [&::-webkit-details-marker]:hidden">
+            {/* El mismo ícono que los anexos de los casos (`components/mdx/annex.tsx`), no el glifo "▶" del navegador. */}
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
+              size={16}
+              strokeWidth={1.5}
+              aria-hidden
+              className="shrink-0 transition-transform group-open:rotate-90"
+            />
+            <span>{data.sourcesToggle.replace("{n}", String(sources.length))}</span>
           </summary>
           <ol className="mt-4 space-y-1.5 font-mono text-xs break-all">
             {sources.map((url) => (
