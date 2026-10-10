@@ -1,0 +1,173 @@
+/* Lenis: sin esto el scroll nativo y el suave pelean por el alto del documento. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Paleta propia: papel de planilla, tinta azulada y un solo acento cálido que
+   marca la caja atrapada. Nada de los colores de Brinta ni de Vertex. Va en el
+   `<html>` para que `body` también pinte papel debajo del alto extra de Lenis. */
+.brinta {
+  --paper: oklch(0.972 0.01 85);
+  --paper-deep: oklch(0.948 0.014 85);
+  --ink: oklch(0.25 0.025 255);
+  --ink-dim: oklch(0.25 0.025 255 / 66%);
+  --ink-faint: oklch(0.25 0.025 255 / 34%);
+  --rule: oklch(0.25 0.025 255 / 12%);
+  --ruled-line: oklch(0.55 0.05 240 / 9%);
+  --flow: oklch(0.3 0.04 255);
+  --fisco: oklch(0.6 0.075 240);
+  --fisco-soft: oklch(0.6 0.075 240 / 14%);
+  --trapped: oklch(0.68 0.16 50);
+  --trapped-ink: oklch(0.52 0.15 45);
+  --trapped-soft: oklch(0.68 0.16 50 / 15%);
+  --risk: oklch(0.5 0.19 27);
+  --ok: oklch(0.52 0.1 155);
+
+  /* Nombres que espera `ScrollProgress` de la plantilla. */
+  --pitch-accent: var(--trapped);
+  --pitch-line: var(--rule);
+
+  /* Ancho de la cinta principal (columna izquierda de cada tramo). */
+  --spine-width: 10px;
+
+  background: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+@media (min-width: 768px) {
+  .brinta {
+    --spine-width: 16px;
+  }
+}
+
+.brinta body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Renglones de planilla: textura casi invisible, fija detrás de todo. */
+.brinta body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    var(--ruled-line) 31px,
+    var(--ruled-line) 32px
+  );
+}
+
+.brinta ::selection {
+  background: var(--trapped-soft);
+}
+
+.brinta .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Doble raya de los totales en contabilidad: subraya cada título de tramo. */
+.brinta .double-rule {
+  border-bottom: 3px double var(--ink-faint);
+}
+
+.brinta .nav-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--ink-faint);
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+}
+
+.brinta .nav-dot.is-active {
+  background: var(--trapped);
+  transform: scale(1.6);
+}
+
+/* Texto dentro de las escenas SVG. */
+.brinta .scene text {
+  font-family: var(--font-sans);
+  fill: var(--ink);
+}
+
+.brinta .scene .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.brinta .scene .sans {
+  font-family: var(--font-sans);
+}
+
+.brinta .scene .t-dim {
+  fill: var(--ink-dim);
+}
+
+.brinta .scene .t-trapped {
+  fill: var(--trapped-ink);
+}
+
+.brinta .scene .t-fisco {
+  fill: oklch(0.45 0.08 240);
+}
+
+.brinta .scene .t-risk {
+  fill: var(--risk);
+}
+
+/* Pasos de las escenas fijas: el activo a tinta plena, el resto apagado. */
+.brinta .story-step {
+  transition: opacity 300ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .brinta .story-step:not(.is-active) {
+    opacity: 0.32;
+  }
+}
+
+/* Sello del libro mayor. */
+@keyframes brinta-stamp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-14deg) scale(1.6);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-8deg) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+  }
+}
+
+.brinta .stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  animation: brinta-stamp 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brinta .stamp {
+    animation: none;
+  }
+}

@@ -120,6 +120,9 @@ const nextConfig: NextConfig = {
       // de next-intl en `proxy.ts`.
       { source: "/lebane", destination: "/pitch/lebane" },
       { source: "/cromodata", destination: "/pitch/cromodata" },
+      // Brinta no sale de `pitches/`: es una página hecha a medida en
+      // `app/pitch/brinta`, pero se comparte igual por la URL corta.
+      { source: "/brinta", destination: "/pitch/brinta" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",
