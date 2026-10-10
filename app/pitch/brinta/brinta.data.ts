@@ -139,7 +139,7 @@ export const followMoney = {
     },
     {
       id: "split",
-      text: "Pero el impuesto real de ese mes era menor. La diferencia no vuelve sola: queda en el fisco como saldo a favor.",
+      text: "Pero el impuesto real de ese mes era menor. La diferencia no vuelve sola: queda en el fisco como saldo a favor. Es caja atrapada.",
     },
     {
       id: "pool",
@@ -168,18 +168,6 @@ export const followMoney = {
       sourceLabel: "UIA",
     },
   ],
-  kinds: {
-    title: "Tres clases de caja",
-    items: [
-      { id: "sale", name: "La que sale", text: "El impuesto que corresponde." },
-      { id: "atrapada", name: "La atrapada", text: "Lo que se pagó de más y no vuelve." },
-      {
-        id: "riesgo",
-        name: "La que está en riesgo",
-        text: "Lo que calcula el fisco y nadie revisa.",
-      },
-    ],
-  },
 };
 
 export const rules = {
@@ -238,7 +226,7 @@ export const brazil = {
     },
     {
       id: "split",
-      text: "La ley obliga a los procesadores de pago a separar el impuesto en el momento de liquidar: el split payment. Las pruebas con la Receita empiezan el 15 de octubre y la obligación entre empresas se proyecta para 2028.",
+      text: "La ley obliga a los procesadores de pago a separar el impuesto al liquidar: el split payment. Las pruebas empiezan el 15 de octubre y la obligación entre empresas se proyecta para 2028.",
       sources: ["lc214", "splitTests", "split2028"] as SourceId[],
     },
     {
@@ -249,7 +237,7 @@ export const brazil = {
     },
     {
       id: "silencio",
-      text: "Y la cuenta del período la arma el fisco. La empresa sólo puede ajustarla: si no responde a tiempo, queda aceptada.",
+      text: "Y la cuenta del período la arma el fisco. La empresa sólo puede ajustarla: si no responde a tiempo, queda aceptada. Es caja en riesgo.",
       source: "lc214" as SourceId,
       note: "Art. 46 de la LC 214.",
     },
@@ -261,6 +249,27 @@ export const brazil = {
     credito: "crédito del comprador",
     apuracion: "Cuenta del período",
     stamp: "Aceptado por silencio",
+  },
+  recap: {
+    title: "Tres clases de caja",
+    lead: "Las tres aparecieron en los dibujos. Cada una pide un producto distinto.",
+    items: [
+      {
+        id: "sale",
+        name: "La que sale",
+        text: "El impuesto que corresponde: los $1.800 del cobro, la CBS que va al fisco.",
+      },
+      {
+        id: "atrapada",
+        name: "La atrapada",
+        text: "Lo que se pagó de más y no vuelve: los $1.200 que quedaron en el fisco.",
+      },
+      {
+        id: "riesgo",
+        name: "La que está en riesgo",
+        text: "La cuenta que arma el fisco y nadie revisa: la que queda aceptada por silencio.",
+      },
+    ],
   },
   footnote:
     "La Receita, además, publicó una calculadora oficial gratuita y con API, así que calcular deja de ser un diferencial.",
