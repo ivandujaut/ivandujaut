@@ -18,7 +18,7 @@ export function FirstStep() {
         opacity: 0,
         y: 18,
         ease: "none",
-        scrollTrigger: { trigger: block, start: "top 88%", end: "top 62%", scrub: 0.4 },
+        scrollTrigger: { trigger: block, start: "top 95%", end: "top 75%", scrub: 0.4 },
       });
     });
   });

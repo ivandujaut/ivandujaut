@@ -16,7 +16,7 @@ export function Proofs() {
       y: 22,
       stagger: 0.15,
       ease: "none",
-      scrollTrigger: { trigger: q(".pr-list")[0], start: "top 85%", end: "top 45%", scrub: 0.4 },
+      scrollTrigger: { trigger: q(".pr-list")[0], start: "top 92%", end: "top 65%", scrub: 0.4 },
     });
   });
 
