@@ -40,7 +40,7 @@ export function Rules() {
     const threads = q(".rules-thread");
     gsap.fromTo(
       threads,
-      { strokeDasharray: 1, strokeDashoffset: 1 },
+      { strokeDasharray: "1 2", strokeDashoffset: 1 },
       {
         strokeDashoffset: 0,
         ease: "none",
@@ -58,8 +58,8 @@ export function Rules() {
       stagger: 0.04,
       scrollTrigger: {
         trigger: q(".rules-scene")[0],
-        start: "top 65%",
-        end: "center 45%",
+        start: "top 80%",
+        end: "center 55%",
         scrub: 0.5,
       },
     });
@@ -68,8 +68,8 @@ export function Rules() {
       opacity: 0,
       scrollTrigger: {
         trigger: q(".rules-anecdote")[0],
-        start: "top 80%",
-        end: "top 55%",
+        start: "top 92%",
+        end: "top 70%",
         scrub: 0.4,
       },
     });

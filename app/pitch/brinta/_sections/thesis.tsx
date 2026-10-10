@@ -11,75 +11,57 @@ import { Cite, Tramo, TramoHeading } from "../_components/tramo";
  * cuando la cinta llega. Abajo, las dos pruebas de que no es una fantasía.
  */
 export function Thesis() {
-  const ref = useGsapSection<HTMLDivElement>(({ q }) => {
-    gsap.from(q(".th-sentence > span"), {
-      opacity: 0.12,
-      y: 18,
-      stagger: 0.25,
-      ease: "none",
-      scrollTrigger: {
-        trigger: q(".th-sentence")[0],
-        start: "top 85%",
-        end: "top 45%",
-        scrub: 0.4,
-      },
-    });
-
+  const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
     const tl = gsap.timeline({
       defaults: { ease: "none" },
-      scrollTrigger: {
-        trigger: q(".th-ladder")[0],
-        start: "top 70%",
-        end: "bottom 60%",
-        scrub: 0.5,
-      },
+      scrollTrigger: isDesktop
+        ? {
+            trigger: root,
+            pin: true,
+            scrub: 0.6,
+            start: "top top",
+            end: () => `+=${window.innerHeight * 1.8}`,
+            invalidateOnRefresh: true,
+            refreshPriority: 0,
+          }
+        : { trigger: q(".th-ladder")[0], start: "top 75%", end: "bottom 70%", scrub: 0.5 },
     });
+    const rungs = q(".th-rung");
+    // El primer escalón ya está (es lo que Brinta tiene hoy); los otros esperan.
+    tl.set(rungs.slice(1), { opacity: 0.25 }, 0);
     tl.fromTo(
       q(".th-ribbon"),
-      { strokeDasharray: 1, strokeDashoffset: 1 },
+      { strokeDasharray: "1 2", strokeDashoffset: 1 },
       { strokeDashoffset: 0, duration: 3 },
       0,
     );
-    q(".th-rung").forEach((rung, i) => {
-      tl.from(rung, { opacity: 0.22, duration: 0.6 }, i * 1 + 0.3);
-    });
     q(".th-step").forEach((step, i) => {
-      tl.from(step, { fillOpacity: 0, duration: 0.5 }, i * 1 + 0.3);
+      tl.from(step, { fillOpacity: 0, duration: 0.5 }, i + 0.2);
+      if (i > 0) tl.to(rungs[i], { opacity: 1, duration: 0.4 }, i + 0.2);
     });
     tl.from(
       q(".th-coin"),
       { scale: 0, svgOrigin: "330 52", duration: 0.4, ease: "back.out(2)" },
       2.8,
     );
-
-    gsap.from(q(".th-evidence"), {
-      opacity: 0,
-      y: 16,
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: q(".th-evidence-list")[0],
-        start: "top 85%",
-        end: "top 55%",
-        scrub: 0.4,
-      },
-    });
+    tl.to({}, { duration: 0.6 });
   });
 
   return (
-    <Tramo id="tesis">
-      <div ref={ref}>
-        <TramoHeading index={data.index} eyebrow={data.eyebrow}>
+    <>
+      <Tramo id="tesis" ref={ref} pinned>
+        <TramoHeading index={data.index} eyebrow={data.eyebrow} compact>
           <span className="th-sentence block">
             <span className="block">{data.sentence}</span>
             <span className="block text-(--trapped-ink) italic">{data.sentenceAccent}</span>
           </span>
         </TramoHeading>
 
-        <div className="th-ladder mt-12 grid gap-10 md:mt-16 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:items-center">
+        <div className="th-ladder mt-10 grid gap-10 md:mt-10 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:items-center">
           <figure className="scene">
             <svg
               viewBox="0 0 360 280"
-              className="h-auto w-full max-w-md"
+              className="h-auto max-h-[46svh] w-full max-w-md"
               role="img"
               aria-label="Una cinta que sube tres escalones: el dato, la plata y la caja."
             >
@@ -155,8 +137,33 @@ export function Thesis() {
             ))}
           </ol>
         </div>
+      </Tramo>
+      <Evidence />
+    </>
+  );
+}
 
-        <ul className="th-evidence-list mt-16 grid gap-6 md:mt-20 md:grid-cols-2">
+/** Las dos pruebas de que la tesis no es una fantasía, fuera del tramo fijo. */
+function Evidence() {
+  const ref = useGsapSection<HTMLDivElement>(({ q }) => {
+    gsap.from(q(".th-evidence"), {
+      opacity: 0,
+      y: 16,
+      stagger: 0.15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: q(".th-evidence")[0],
+        start: "top 95%",
+        end: "top 75%",
+        scrub: 0.4,
+      },
+    });
+  });
+
+  return (
+    <Tramo continues>
+      <div ref={ref}>
+        <ul className="grid gap-6 md:grid-cols-2">
           {data.evidence.map((item) => (
             <li
               key={item.id}

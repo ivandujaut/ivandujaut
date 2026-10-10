@@ -16,7 +16,7 @@ export function Sees() {
       const scope = (selector: string) => node.querySelectorAll(selector);
       gsap
         .timeline({
-          scrollTrigger: { trigger: node, start: "top 72%", end: "top 48%", scrub: 0.4 },
+          scrollTrigger: { trigger: node, start: "top 88%", end: "top 66%", scrub: 0.4 },
         })
         .from(scope(".sees-dot"), { scale: 0, ease: "none" }, 0)
         .from(scope(".sees-body"), { opacity: 0.15, x: -10, ease: "none" }, 0);
@@ -24,7 +24,7 @@ export function Sees() {
     gsap.from(q(".sees-asset"), {
       opacity: 0,
       y: 14,
-      scrollTrigger: { trigger: q(".sees-asset")[0], start: "top 85%", end: "top 60%", scrub: 0.4 },
+      scrollTrigger: { trigger: q(".sees-asset")[0], start: "top 95%", end: "top 75%", scrub: 0.4 },
     });
   });
 

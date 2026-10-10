@@ -5,6 +5,16 @@ import { useGsapSection } from "../../_template/lib/use-gsap-section";
 
 export type SpineVariant = "run" | "end";
 
+interface SpineProps {
+  variant?: SpineVariant;
+  /**
+   * `always`: la cinta se dibuja con el scroll en todas las pantallas.
+   * `mobile`: sólo en celular. Es para los tramos que se fijan en escritorio:
+   * ahí la sección entera queda quieta y la cinta ya está dibujada.
+   */
+  animateOn?: "always" | "mobile";
+}
+
 /**
  * La cinta de plata que baja por el margen de cada tramo. Los tramos van
  * pegados uno al otro, así que los segmentos se leen como una sola cinta.
@@ -13,8 +23,9 @@ export type SpineVariant = "run" | "end";
  * por debajo del centro de la pantalla, como si la plata bajara con el lector.
  * Sin animación queda dibujada entera; una guía punteada marca el recorrido.
  */
-export function Spine({ variant = "run" }: { variant?: SpineVariant }) {
-  const ref = useGsapSection<HTMLDivElement>(({ q }) => {
+export function Spine({ variant = "run", animateOn = "always" }: SpineProps) {
+  const ref = useGsapSection<HTMLDivElement>(({ q, isMobile }) => {
+    if (animateOn === "mobile" && !isMobile) return;
     gsap.from(q(".spine-ink"), {
       scaleY: 0,
       ease: "none",
