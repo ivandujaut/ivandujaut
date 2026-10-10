@@ -131,14 +131,22 @@ html.lenis body {
   fill: var(--risk);
 }
 
-/* Pasos de las escenas fijas: el activo a tinta plena, el resto apagado. */
+/* Pasos de las escenas en celular: el activo a tinta plena, el resto apagado.
+   En escritorio los enciende la timeline del tramo fijo. */
 .brinta .story-step {
   transition: opacity 300ms ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
   .brinta .story-step:not(.is-active) {
     opacity: 0.32;
+  }
+}
+
+/* La escena de un tramo fijo no puede pasarse de la pantalla. */
+@media (min-width: 768px) {
+  .brinta .story svg {
+    max-height: 56svh;
   }
 }
 

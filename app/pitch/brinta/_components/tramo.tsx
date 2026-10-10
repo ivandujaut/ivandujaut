@@ -1,14 +1,22 @@
-import type { ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import { cn } from "@/lib/utils";
 import type { SourceId } from "../brinta.data";
 import { sources } from "../brinta.data";
 import { Spine, type SpineVariant } from "./spine";
 
 interface TramoProps {
-  id: string;
+  id?: string;
+  ref?: Ref<HTMLElement>;
   children: ReactNode;
-  /** `none` para la portada, que dibuja el arranque de la cinta por su cuenta. */
-  spine?: SpineVariant | "none";
+  spine?: SpineVariant;
+  /**
+   * Tramo que se fija en escritorio (pin de GSAP, como en Lebane): ocupa
+   * exactamente una pantalla, con el contenido centrado y menos aire, para que
+   * los pasos y la escena se vean juntos mientras el scroll los recorre.
+   */
+  pinned?: boolean;
+  /** Tramo que continúa al anterior: sin aire arriba, para que se lea como uno. */
+  continues?: boolean;
   className?: string;
 }
 
@@ -18,12 +26,30 @@ interface TramoProps {
  * Van pegados (sin margen entre tramos) para que la cinta no se corte; el
  * aire va adentro, como padding.
  */
-export function Tramo({ id, children, spine = "run", className }: TramoProps) {
+export function Tramo({
+  id,
+  ref,
+  children,
+  spine = "run",
+  pinned,
+  continues,
+  className,
+}: TramoProps) {
   return (
-    <section id={id} className={cn("relative", className)}>
-      <div className="relative mx-auto w-full max-w-6xl">
-        {spine === "none" ? null : <Spine variant={spine} />}
-        <div className="relative py-20 pr-5 pl-16 md:py-28 md:pr-10 md:pl-28">{children}</div>
+    <section id={id} ref={ref} className={cn("relative", pinned && "md:h-svh", className)}>
+      <div className={cn("relative mx-auto w-full max-w-6xl", pinned && "md:h-full")}>
+        <Spine variant={spine} animateOn={pinned ? "mobile" : "always"} />
+        <div
+          className={cn(
+            "relative pr-5 pl-16 md:pr-10 md:pl-28",
+            pinned
+              ? "py-20 md:flex md:h-full md:flex-col md:justify-center md:py-10"
+              : "py-20 md:py-28",
+            continues && "pt-0 md:pt-0",
+          )}
+        >
+          {children}
+        </div>
       </div>
     </section>
   );
@@ -33,17 +59,24 @@ interface HeadingProps {
   index: string;
   eyebrow: string;
   children: ReactNode;
+  /** Título más chico para los tramos fijos, que tienen que entrar en una pantalla. */
+  compact?: boolean;
   className?: string;
 }
 
 /** Título de tramo: número de asiento, rótulo y la doble raya de los totales. */
-export function TramoHeading({ index, eyebrow, children, className }: HeadingProps) {
+export function TramoHeading({ index, eyebrow, children, compact, className }: HeadingProps) {
   return (
     <header className={cn("max-w-3xl", className)}>
       <p className="num text-xs tracking-widest text-(--trapped-ink) uppercase">
         {index} <span aria-hidden>·</span> {eyebrow}
       </p>
-      <h2 className="double-rule mt-4 pb-5 font-serif text-3xl leading-tight font-semibold tracking-tight text-balance md:text-[2.75rem]">
+      <h2
+        className={cn(
+          "double-rule mt-4 pb-5 font-serif text-3xl leading-tight font-semibold tracking-tight text-balance",
+          compact ? "md:pb-4 md:text-[2.25rem]" : "md:text-[2.75rem]",
+        )}
+      >
         {children}
       </h2>
     </header>

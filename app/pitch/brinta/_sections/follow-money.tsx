@@ -18,8 +18,8 @@ import { Cite, ExampleBadge, Tramo, TramoHeading } from "../_components/tramo";
  * (3.000 : 1.800 : 1.200 = 34 : 20 : 14).
  */
 export function FollowMoney() {
-  const ref = useGsapSection<HTMLDivElement>(({ root, q }) => {
-    const tl = storyTimeline(root);
+  const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
+    const { tl, activate } = storyTimeline(root, isDesktop);
 
     tl.addLabel("cobro");
     drawFrom(tl, q(".fm-main"), "cobro");
@@ -27,6 +27,7 @@ export function FollowMoney() {
     tl.from(q(".fm-label-comercio"), { opacity: 0, duration: 0.3 }, "cobro+=0.7");
 
     tl.addLabel("retencion", "+=0.3");
+    activate(1, "retencion");
     tl.from(q(".fm-notch"), { scale: 0, transformOrigin: "50% 50%", duration: 0.25 }, "retencion");
     tl.from(q(".fm-connector"), { opacity: 0, duration: 0.3 }, "retencion+=0.1");
     tl.from(
@@ -42,28 +43,17 @@ export function FollowMoney() {
     );
 
     tl.addLabel("split", "+=0.3");
+    activate(2, "split");
     drawFrom(tl, q(".fm-tax"), "split", 0.6);
     drawFrom(tl, q(".fm-trapped"), "split+=0.1", 0.7);
     tl.from(q(".fm-label-tax"), { opacity: 0, duration: 0.3 }, "split+=0.5");
     tl.from(q(".fm-label-trapped"), { opacity: 0, duration: 0.3 }, "split+=0.7");
 
     tl.addLabel("pool", "+=0.3");
+    activate(3, "pool");
     tl.from(q(".fm-pool-fill"), { scaleY: 0, transformOrigin: "50% 100%", duration: 0.8 }, "pool");
     tl.from(q(".fm-label-pool"), { opacity: 0, duration: 0.3 }, "pool+=0.4");
-    tl.to({}, { duration: 0.3 });
-
-    gsap.from(q(".fm-stat"), {
-      opacity: 0,
-      y: 16,
-      stagger: 0.12,
-      scrollTrigger: { trigger: q(".fm-stats")[0], start: "top 85%", end: "top 55%", scrub: 0.4 },
-    });
-    gsap.from(q(".fm-kind"), {
-      opacity: 0,
-      x: -12,
-      stagger: 0.12,
-      scrollTrigger: { trigger: q(".fm-kinds")[0], start: "top 85%", end: "top 55%", scrub: 0.4 },
-    });
+    tl.to({}, { duration: 0.5 });
   });
 
   const scene = (
@@ -216,9 +206,9 @@ export function FollowMoney() {
   );
 
   return (
-    <Tramo id="plata">
-      <div ref={ref}>
-        <TramoHeading index={data.index} eyebrow={data.eyebrow}>
+    <>
+      <Tramo id="plata" ref={ref} pinned>
+        <TramoHeading index={data.index} eyebrow={data.eyebrow} compact>
           {data.heading}
         </TramoHeading>
 
@@ -234,47 +224,37 @@ export function FollowMoney() {
             ),
           }))}
         />
+      </Tramo>
+      <MoneyStats />
+    </>
+  );
+}
 
-        <dl className="fm-stats mt-16 grid gap-8 md:mt-24 md:grid-cols-3">
-          {data.stats.map((stat) => (
-            <div key={stat.value} className="fm-stat border-t border-(--rule) pt-5">
-              <dt className="num text-3xl text-(--ink) md:text-4xl">{stat.value}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-(--ink-dim)">
-                {stat.label}
-                <Cite id={stat.source} label={stat.sourceLabel} />
-              </dd>
-            </div>
-          ))}
-        </dl>
+/** Los tres datos reales debajo del cobro de ejemplo. Aparecen antes de llegar al centro. */
+function MoneyStats() {
+  const ref = useGsapSection<HTMLDListElement>(({ q }) => {
+    gsap.from(q(".fm-stat"), {
+      opacity: 0,
+      y: 16,
+      stagger: 0.12,
+      ease: "none",
+      scrollTrigger: { trigger: q(".fm-stat")[0], start: "top 95%", end: "top 75%", scrub: 0.4 },
+    });
+  });
 
-        <div className="fm-kinds mt-16 md:mt-20">
-          <p className="num text-xs tracking-widest text-(--ink-dim) uppercase">
-            {data.kinds.title}
-          </p>
-          <ul className="mt-5 grid gap-4 md:grid-cols-3">
-            {data.kinds.items.map((kind) => (
-              <li key={kind.id} className="fm-kind flex gap-3">
-                <span
-                  aria-hidden
-                  className="mt-1.5 h-3 w-8 shrink-0 rounded-full"
-                  style={{
-                    background:
-                      kind.id === "sale"
-                        ? "var(--fisco)"
-                        : kind.id === "atrapada"
-                          ? "var(--trapped)"
-                          : "var(--risk)",
-                  }}
-                />
-                <p className="text-base leading-snug">
-                  <span className="font-semibold">{kind.name}.</span>{" "}
-                  <span className="text-(--ink-dim)">{kind.text}</span>
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+  return (
+    <Tramo continues>
+      <dl ref={ref} className="grid gap-8 md:grid-cols-3">
+        {data.stats.map((stat) => (
+          <div key={stat.value} className="fm-stat border-t border-(--rule) pt-5">
+            <dt className="num text-3xl text-(--ink) md:text-4xl">{stat.value}</dt>
+            <dd className="mt-2 text-sm leading-relaxed text-(--ink-dim)">
+              {stat.label}
+              <Cite id={stat.source} label={stat.sourceLabel} />
+            </dd>
+          </div>
+        ))}
+      </dl>
     </Tramo>
   );
 }

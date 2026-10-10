@@ -1,6 +1,7 @@
 "use client";
 
 import { brazil as data } from "../brinta.data";
+import { gsap } from "../../_template/lib/gsap";
 import { useGsapSection } from "../../_template/lib/use-gsap-section";
 import { StoryLayout } from "../_components/story-layout";
 import { drawFrom, storyTimeline } from "../_components/story";
@@ -14,8 +15,8 @@ import { Cite, Tramo, TramoHeading } from "../_components/tramo";
  * Sin montos: la alícuota de la CBS 2027 todavía no está fijada.
  */
 export function Brazil() {
-  const ref = useGsapSection<HTMLDivElement>(({ root, q }) => {
-    const tl = storyTimeline(root);
+  const ref = useGsapSection<HTMLElement>(({ root, q, isDesktop }) => {
+    const { tl, activate } = storyTimeline(root, isDesktop);
 
     tl.addLabel("cbs");
     drawFrom(tl, q(".br-in"), "cbs", 0.6);
@@ -26,16 +27,19 @@ export function Brazil() {
     );
 
     tl.addLabel("split", "+=0.3");
+    activate(1, "split");
     drawFrom(tl, q(".br-out"), "split", 0.5);
     drawFrom(tl, q(".br-tax"), "split+=0.1", 0.7);
     tl.from(q(".br-label-proveedor, .br-label-fisco"), { opacity: 0, duration: 0.3 }, "split+=0.6");
 
     tl.addLabel("credito", "+=0.3");
+    activate(2, "credito");
     tl.from(q(".br-link"), { opacity: 0, duration: 0.4 }, "credito");
     tl.from(q(".br-credit"), { opacity: 0, y: 10, duration: 0.3 }, "credito");
     tl.from(q(".br-credit-lit"), { opacity: 0, duration: 0.3 }, "credito+=0.5");
 
     tl.addLabel("silencio", "+=0.3");
+    activate(3, "silencio");
     tl.from(q(".br-card"), { opacity: 0, y: 14, duration: 0.4 }, "silencio");
     tl.from(
       q(".br-stamp"),
@@ -49,7 +53,7 @@ export function Brazil() {
       },
       "silencio+=0.5",
     );
-    tl.to({}, { duration: 0.3 });
+    tl.to({}, { duration: 0.5 });
   });
 
   const scene = (
@@ -200,9 +204,9 @@ export function Brazil() {
   );
 
   return (
-    <Tramo id="brasil">
-      <div ref={ref}>
-        <TramoHeading index={data.index} eyebrow={data.eyebrow}>
+    <>
+      <Tramo id="brasil" ref={ref} pinned>
+        <TramoHeading index={data.index} eyebrow={data.eyebrow} compact>
           {data.heading}
         </TramoHeading>
 
@@ -222,18 +226,80 @@ export function Brazil() {
                   {"source" in step && step.source ? <Cite id={step.source} /> : null}
                 </p>
                 {"note" in step && step.note ? (
-                  <p className="mt-3 text-sm text-(--ink-dim)">{step.note}</p>
+                  <p className="mt-1 text-sm text-(--ink-dim)">{step.note}</p>
                 ) : null}
               </>
             ),
           }))}
+          footer={
+            <p className="border-t border-(--rule) pt-4 text-sm leading-relaxed text-(--ink-dim)">
+              {data.footnote}
+              <Cite id={data.footnoteSource} />
+            </p>
+          }
         />
+      </Tramo>
+      <CashKinds />
+    </>
+  );
+}
 
-        <p className="mt-12 max-w-2xl border-t border-(--rule) pt-6 text-lg leading-relaxed text-(--ink-dim)">
-          {data.footnote}
-          <Cite id={data.footnoteSource} />
-        </p>
+/**
+ * Las tres clases de caja, recién cuando las tres ya aparecieron en los
+ * dibujos. Cada muestra copia la forma de su dibujo: cinta azul, cinta
+ * naranja y el sello rojo.
+ */
+function CashKinds() {
+  const ref = useGsapSection<HTMLDivElement>(({ q }) => {
+    gsap.from(q(".kind"), {
+      opacity: 0,
+      y: 14,
+      stagger: 0.12,
+      ease: "none",
+      scrollTrigger: { trigger: q(".kind")[0], start: "top 95%", end: "top 75%", scrub: 0.4 },
+    });
+  });
+
+  return (
+    <Tramo>
+      <div ref={ref}>
+        <p className="num text-xs tracking-widest text-(--ink-dim) uppercase">{data.recap.title}</p>
+        <p className="mt-3 max-w-2xl text-lg leading-relaxed">{data.recap.lead}</p>
+        <ul className="mt-8 grid gap-6 md:grid-cols-3">
+          {data.recap.items.map((kind) => (
+            <li
+              key={kind.id}
+              className="kind rounded-md border border-(--rule) bg-(--paper-deep) p-5"
+            >
+              <KindSwatch id={kind.id} />
+              <p className="mt-4 text-base leading-snug">
+                <span className="font-semibold">{kind.name}.</span>{" "}
+                <span className="text-(--ink-dim)">{kind.text}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </Tramo>
+  );
+}
+
+function KindSwatch({ id }: { id: string }) {
+  if (id === "riesgo") {
+    return (
+      <span
+        aria-hidden
+        className="inline-block -rotate-6 rounded-sm border-2 border-(--risk) px-2 py-0.5 text-xs font-bold text-(--risk)"
+      >
+        {data.labels.stamp}
+      </span>
+    );
+  }
+  return (
+    <span
+      aria-hidden
+      className="block h-3.5 w-16 rounded-full"
+      style={{ background: id === "sale" ? "var(--fisco)" : "var(--trapped)" }}
+    />
   );
 }
