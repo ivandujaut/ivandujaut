@@ -118,9 +118,17 @@ export function FirstStep() {
             </div>
             <div>
               <h3 className="text-xl font-semibold md:text-2xl">{data.next.title}</h3>
-              <p className="mt-4 text-base leading-relaxed text-(--ink-dim) md:text-lg">
-                {data.next.text}
-              </p>
+              {data.next.paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph.text}
+                  className="mt-4 text-base leading-relaxed text-(--ink-dim) md:text-lg"
+                >
+                  {paragraph.text}
+                  {"sources" in paragraph && paragraph.sources
+                    ? paragraph.sources.map((id) => <Cite key={id} id={id} />)
+                    : null}
+                </p>
+              ))}
             </div>
           </div>
         </div>

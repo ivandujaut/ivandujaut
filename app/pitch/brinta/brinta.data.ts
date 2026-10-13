@@ -31,7 +31,8 @@ export type SourceId =
   | "nfsePlataformas"
   | "calculadora"
   | "avalaraNews"
-  | "avalaraPage";
+  | "avalaraPage"
+  | "saldosVias";
 
 export const sources: Record<SourceId, string> = {
   brintaAbout: "https://brinta.com/about",
@@ -74,6 +75,8 @@ export const sources: Record<SourceId, string> = {
   avalaraNews:
     "https://www.cpapracticeadvisor.com/2026/03/31/avalara-launches-embedded-working-capital-solution-for-businesses/180582/",
   avalaraPage: "https://www.avalara.com/us/en/products/avalaracapital.html",
+  saldosVias:
+    "https://eleconomista.com.ar/economia/saldos-favor-cuales-son-opciones-recuperarlos-ganancias-iva-e-ingresos-brutos-n97603",
 };
 
 export const author = {
@@ -516,7 +519,15 @@ export const firstStep = {
   },
   next: {
     title: "Después",
-    text: "Cuando el split esté en marcha, el crédito del comprador va a depender de cómo le pagó a cada proveedor. Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle cómo pagar para asegurarlo. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata.",
+    paragraphs: [
+      {
+        text: "Cuando el split esté en marcha, el crédito del comprador va a depender de cómo le pagó a cada proveedor. Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle cómo pagar para asegurarlo. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata.",
+      },
+      {
+        text: "En Argentina, el paso equivalente es prevenir: sumar la declaración del comercio a través del procesador y avisarle cuando lo retenido le gana al impuesto, para que pida a tiempo la exclusión o la reducción de la retención. Frenar el saldo es más rápido que recuperarlo.",
+        sources: ["saldosVias"] as SourceId[],
+      },
+    ],
   },
 };
 
