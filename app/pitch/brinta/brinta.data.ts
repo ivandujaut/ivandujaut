@@ -545,7 +545,7 @@ export const proofs = {
       id: "pix",
       title: "Pix Brasil",
       number: "Datos del BCB",
-      line: "Leí con datos abiertos del Banco Central el rail de pagos donde arranca el split payment.",
+      line: "Leí con datos abiertos del Banco Central a Pix, uno de los medios de pago con los que arranca el split payment.",
       proves: "Entiendo los pagos de Brasil desde el dato.",
       href: "/projects/pix-brasil",
       hrefLabel: "Leer el caso",
