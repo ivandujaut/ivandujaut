@@ -500,7 +500,7 @@ export const firstStep = {
         leading: "Clientes con su declaración conciliada contra la cuenta del fisco",
         lagging: "Diferencias confirmadas por cliente",
         guardrail: "Horas de configuración manual por cliente",
-        cut: "Si cada cliente necesita configuración a mano, se frena hasta automatizar el mapeo.",
+        cut: "Si configurar un cliente lleva más de 8 horas de trabajo manual, se frena hasta automatizar el mapeo.",
       },
     ],
   },
