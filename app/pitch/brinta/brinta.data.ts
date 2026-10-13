@@ -521,7 +521,8 @@ export const firstStep = {
     title: "Después",
     paragraphs: [
       {
-        text: "Cuando el split esté en marcha, el crédito del comprador va a depender de cómo le pagó a cada proveedor. Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle cómo pagar para asegurarlo. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata.",
+        text: "Cuando el split esté en marcha, el crédito del comprador va a depender de cómo le pagó a cada proveedor. Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle cómo pagar para asegurarlo. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata. Como adelanto y no como compra: la ley no deja transferir ese saldo a terceros.",
+        sources: ["lc214"] as SourceId[],
       },
       {
         text: "En Argentina, el paso equivalente es prevenir: sumar la declaración del comercio a través del procesador y avisarle cuando lo retenido le gana al impuesto, para que pida a tiempo la exclusión o la reducción de la retención. Frenar el saldo es más rápido que recuperarlo.",
