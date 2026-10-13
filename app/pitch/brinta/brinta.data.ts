@@ -152,10 +152,10 @@ export const followMoney = {
   ],
   stats: [
     {
-      value: "$1,5 billones",
-      label: "retenidos sobre cobros con tarjeta y billetera entre enero y agosto de 2026",
-      source: "comarb" as SourceId,
-      sourceLabel: "Comisión Arbitral",
+      value: "$719 millones",
+      label: "de saldo a favor promedio por empresa, a marzo de 2025",
+      source: "uia2025" as SourceId,
+      sourceLabel: "UIA",
     },
     {
       value: "84%",
@@ -165,10 +165,10 @@ export const followMoney = {
       sourceLabel: "KPMG",
     },
     {
-      value: "$719 millones",
-      label: "de saldo a favor promedio por empresa, a marzo de 2025",
-      source: "uia2025" as SourceId,
-      sourceLabel: "UIA",
+      value: "$1,5 billones",
+      label: "retenidos sobre cobros con tarjeta y billetera entre enero y agosto de 2026",
+      source: "comarb" as SourceId,
+      sourceLabel: "Comisión Arbitral",
     },
   ],
 };
