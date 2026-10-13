@@ -8,6 +8,7 @@ import { Brazil } from "./_sections/brazil";
 import { Sees } from "./_sections/sees";
 import { Thesis } from "./_sections/thesis";
 import { FirstStep } from "./_sections/first-step";
+import { Platform } from "./_sections/platform";
 import { Proofs } from "./_sections/proofs";
 import { Close } from "./_sections/close";
 
@@ -33,6 +34,7 @@ export default function BrintaPage() {
       <Sees />
       <Thesis />
       <FirstStep />
+      <Platform />
       <Proofs />
       <Close />
       <ScrollProgress sections={nav.map((s) => ({ id: s.id, label: s.label }))} />

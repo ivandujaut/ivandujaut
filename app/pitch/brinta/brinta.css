@@ -196,3 +196,83 @@ html.lenis body {
     animation: none;
   }
 }
+
+/*
+ * 07 · El día a día: la fila de estados de una declaración. Las medidas usan
+ * unidades del contenedor (`cqw` = 1% del ancho de la ventana de la fila), así
+ * la geometría que lee la timeline (ver `_sections/platform.tsx`) no cambia
+ * con el tamaño de pantalla: media pantalla de aire a cada lado y una columna
+ * por estado.
+ */
+.brinta #plataforma {
+  --ring-size: 2.25rem;
+  --ring-area: 3.25rem;
+  --ribbon-y: calc(var(--ring-size) / 2);
+}
+
+.brinta .hz-viewport {
+  container-type: inline-size;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 88%, transparent);
+}
+
+.brinta .hz-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* Con la animación activa, la mueve el scroll vertical y no el dedo. */
+.brinta .hz-viewport.is-driven {
+  overflow: hidden;
+  scroll-snap-type: none;
+}
+
+.brinta .hz-track {
+  --col: 80cqw;
+  position: relative;
+  box-sizing: border-box;
+  width: calc(var(--col) * 5 + 100cqw);
+  padding-inline: calc((100cqw - var(--col)) / 2);
+}
+
+@media (min-width: 768px) {
+  .brinta .hz-track {
+    --col: 34cqw;
+  }
+}
+
+/* Del borde de la fila al centro del último anillo. Sin `transform` propio:
+   la timeline le escala el ancho. */
+.brinta .hz-ribbon {
+  position: absolute;
+  left: 0;
+  top: var(--ribbon-y);
+  width: calc((100cqw - var(--col)) / 2 + var(--col) * 5 + var(--ring-size) / 2);
+  height: var(--spine-width);
+  margin-top: calc(var(--spine-width) / -2);
+  transform-origin: left center;
+  background: var(--flow);
+  border-radius: 0 9999px 9999px 0;
+}
+
+.brinta .hz-station {
+  flex: 0 0 var(--col);
+  scroll-snap-align: center;
+}
+
+.brinta .hz-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  border: 3px solid var(--flow);
+  border-radius: 9999px;
+  background: var(--paper);
+}

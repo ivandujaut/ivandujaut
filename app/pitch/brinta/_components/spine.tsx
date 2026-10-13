@@ -11,8 +11,9 @@ interface SpineProps {
    * `always`: la cinta se dibuja con el scroll en todas las pantallas.
    * `mobile`: sólo en celular. Es para los tramos que se fijan en escritorio:
    * ahí la sección entera queda quieta y la cinta ya está dibujada.
+   * `never`: nunca. Para los tramos que se fijan en todas las pantallas.
    */
-  animateOn?: "always" | "mobile";
+  animateOn?: "always" | "mobile" | "never";
 }
 
 /**
@@ -25,7 +26,7 @@ interface SpineProps {
  */
 export function Spine({ variant = "run", animateOn = "always" }: SpineProps) {
   const ref = useGsapSection<HTMLDivElement>(({ q, isMobile }) => {
-    if (animateOn === "mobile" && !isMobile) return;
+    if (animateOn === "never" || (animateOn === "mobile" && !isMobile)) return;
     gsap.from(q(".spine-ink"), {
       scaleY: 0,
       ease: "none",
