@@ -335,7 +335,7 @@ export const sees = {
 export const thesis = {
   index: "05",
   eyebrow: "La tesis",
-  sentence: "Calcular va a ser gratis.",
+  sentence: "Calcular deja de ser el diferencial.",
   sentenceAccent: "El negocio es la caja.",
   rungs: [
     {
