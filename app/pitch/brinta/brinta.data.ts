@@ -363,8 +363,8 @@ export const thesis = {
   evidence: [
     {
       id: "avalara",
-      lead: "Avalara ya lo hace.",
-      text: "En marzo lanzó Avalara Capital, un crédito para pagar impuestos que otorga un prestamista socio. Avalara aclara que no es prestamista y que aporta los datos.",
+      lead: "El modelo ya existe.",
+      text: "En marzo, Avalara lanzó Avalara Capital, un crédito para pagar impuestos que otorga un prestamista socio. Avalara aclara que no es prestamista y que aporta los datos. No es la misma caja, pero es el mismo modelo: el dato es propio y la plata, de otro.",
       sources: ["avalaraNews", "avalaraPage"] as SourceId[],
     },
     {
