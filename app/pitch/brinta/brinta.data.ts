@@ -120,7 +120,7 @@ export const hero = {
   titleAccent: "Son caja.",
   lede: "Leí a Brinta como si me tocara decidir hacia dónde va. Esto es lo que vi, la tesis que saqué, un primer paso para probarla y cómo llevaría la plataforma que la sostiene.",
   byline: "Octubre de 2026",
-  cue: "Ocho minutos de lectura. La cinta de la izquierda es la plata y baja a medida que leés.",
+  cue: "Nueve minutos de lectura. La cinta de la izquierda es la plata y baja a medida que leés.",
   ribbonLabel: "Un cobro de $100.000",
 };
 
