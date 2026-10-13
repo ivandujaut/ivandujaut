@@ -7,8 +7,8 @@ import { Ledger } from "../_components/ledger";
 import { Cite, Tramo, TramoHeading } from "../_components/tramo";
 
 /**
- * 06 · Un primer paso. El libro mayor interactivo y, abajo, la decisión
- * completa: por qué este primero, cómo se mide por segmento (con el corte
+ * 06 · Un primer paso. El objetivo, el libro mayor interactivo y, abajo, la
+ * decisión completa: por qué este primero, cómo se mide por segmento (con el corte
  * fijado antes), qué no construir, qué lo mata y qué sigue.
  */
 export function FirstStep() {
@@ -30,7 +30,10 @@ export function FirstStep() {
           {data.heading}
         </TramoHeading>
 
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">{data.who}</p>
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed md:text-xl">
+          <span className="font-semibold">{data.goal.lead}</span> {data.goal.text}
+        </p>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">{data.who}</p>
 
         <div className="mt-10 max-w-3xl">
           <Ledger />
@@ -46,6 +49,10 @@ export function FirstStep() {
               </li>
             ))}
           </ol>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
+            <span className="font-semibold">{data.why.argentina.lead}</span>{" "}
+            {data.why.argentina.text}
+          </p>
           <p className="mt-5 text-sm text-(--ink-dim)">
             {data.why.pilot}
             {data.why.sources.map((id, i) => (
@@ -114,9 +121,17 @@ export function FirstStep() {
             </div>
             <div>
               <h3 className="text-xl font-semibold md:text-2xl">{data.next.title}</h3>
-              <p className="mt-4 text-base leading-relaxed text-(--ink-dim) md:text-lg">
-                {data.next.text}
-              </p>
+              {data.next.paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph.text}
+                  className="mt-4 text-base leading-relaxed text-(--ink-dim) md:text-lg"
+                >
+                  {paragraph.text}
+                  {"sources" in paragraph && paragraph.sources
+                    ? paragraph.sources.map((id) => <Cite key={id} id={id} />)
+                    : null}
+                </p>
+              ))}
             </div>
           </div>
         </div>

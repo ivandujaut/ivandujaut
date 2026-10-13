@@ -31,7 +31,8 @@ export type SourceId =
   | "nfsePlataformas"
   | "calculadora"
   | "avalaraNews"
-  | "avalaraPage";
+  | "avalaraPage"
+  | "saldosVias";
 
 export const sources: Record<SourceId, string> = {
   brintaAbout: "https://brinta.com/about",
@@ -74,6 +75,8 @@ export const sources: Record<SourceId, string> = {
   avalaraNews:
     "https://www.cpapracticeadvisor.com/2026/03/31/avalara-launches-embedded-working-capital-solution-for-businesses/180582/",
   avalaraPage: "https://www.avalara.com/us/en/products/avalaracapital.html",
+  saldosVias:
+    "https://eleconomista.com.ar/economia/saldos-favor-cuales-son-opciones-recuperarlos-ganancias-iva-e-ingresos-brutos-n97603",
 };
 
 export const author = {
@@ -107,7 +110,7 @@ export const hero = {
   titleAccent: "Son caja.",
   lede: "Leí a Brinta como si me tocara decidir hacia dónde va. Esto es lo que vi, la tesis que saqué y un primer paso para probarla.",
   byline: "Octubre de 2026",
-  cue: "Cinco minutos de lectura. La cinta de la izquierda es la plata y baja a medida que leés.",
+  cue: "Ocho minutos de lectura. La cinta de la izquierda es la plata y baja a medida que leés.",
   ribbonLabel: "Un cobro de $100.000",
 };
 
@@ -149,10 +152,10 @@ export const followMoney = {
   ],
   stats: [
     {
-      value: "$1,5 billones",
-      label: "retenidos sobre cobros con tarjeta y billetera entre enero y agosto de 2026",
-      source: "comarb" as SourceId,
-      sourceLabel: "Comisión Arbitral",
+      value: "$719 millones",
+      label: "de saldo a favor promedio por empresa, a marzo de 2025",
+      source: "uia2025" as SourceId,
+      sourceLabel: "UIA",
     },
     {
       value: "84%",
@@ -162,10 +165,10 @@ export const followMoney = {
       sourceLabel: "KPMG",
     },
     {
-      value: "$719 millones",
-      label: "de saldo a favor promedio por empresa, a marzo de 2025",
-      source: "uia2025" as SourceId,
-      sourceLabel: "UIA",
+      value: "$1,5 billones",
+      label: "retenidos sobre cobros con tarjeta y billetera entre enero y agosto de 2026",
+      source: "comarb" as SourceId,
+      sourceLabel: "Comisión Arbitral",
     },
   ],
 };
@@ -217,7 +220,7 @@ export const rules = {
 export const brazil = {
   index: "03",
   eyebrow: "Lo que viene",
-  heading: "En 2027, en Brasil, el impuesto se cobra en el momento del pago",
+  heading: "Brasil está llevando el impuesto al momento del pago",
   steps: [
     {
       id: "cbs",
@@ -335,7 +338,7 @@ export const sees = {
 export const thesis = {
   index: "05",
   eyebrow: "La tesis",
-  sentence: "Calcular va a ser gratis.",
+  sentence: "Calcular deja de ser el diferencial.",
   sentenceAccent: "El negocio es la caja.",
   rungs: [
     {
@@ -360,8 +363,8 @@ export const thesis = {
   evidence: [
     {
       id: "avalara",
-      lead: "Avalara ya lo hace.",
-      text: "En marzo lanzó Avalara Capital, un crédito para pagar impuestos que otorga un prestamista socio. Avalara aclara que no es prestamista y que aporta los datos.",
+      lead: "El modelo ya existe.",
+      text: "En marzo, Avalara lanzó Avalara Capital, un crédito para pagar impuestos que otorga un prestamista socio. Avalara aclara que no es prestamista y que aporta los datos. No es la misma caja, pero es el mismo modelo: el dato es propio y la plata, de otro.",
       sources: ["avalaraNews", "avalaraPage"] as SourceId[],
     },
     {
@@ -381,7 +384,11 @@ export interface LedgerRow {
   fisco: number;
   /** Explicación de la diferencia; sin `reason` la fila coincide. */
   reason?: string;
-  /** "favor": el fisco cobra de más. "pendiente": crédito que depende de un pago. */
+  /**
+   * "favor": el fisco cobra de más. "pendiente": crédito que depende del
+   * proveedor. En enero de 2027 no hay split, así que rige la excepción del
+   * art. 48: el crédito pide la factura bien hecha, no el pago del proveedor.
+   */
   status?: "favor" | "pendiente";
 }
 
@@ -389,6 +396,10 @@ export const firstStep = {
   index: "06",
   eyebrow: "Un primer paso",
   heading: "Diferencias CBS: revisar la cuenta del fisco antes de que quede aceptada",
+  goal: {
+    lead: "El objetivo.",
+    text: "Que en 2027 ningún cliente de Brinta en Brasil acepte por silencio una cuenta de CBS que no le corresponde. Lo vendería como un módulo de la plataforma de declaraciones, por empresa y por período, con un precio muy por debajo de lo que recupera.",
+  },
   who: "Para plataformas que facturan con Brinta en Brasil. Ahí Brinta emite las facturas de venta y captura las de compra, así que tiene la cuenta completa para compararla con la del fisco.",
   ledger: {
     exampleBadge: "datos de ejemplo",
@@ -427,7 +438,8 @@ export const firstStep = {
         kind: "crédito",
         ours: -310,
         fisco: 0,
-        reason: "El proveedor todavía no pagó: el crédito queda pendiente",
+        reason:
+          "La factura del proveedor trae mal el impuesto: el crédito no entra hasta que la corrija",
         status: "pendiente",
       },
       { id: "r6", doc: "Compra 81", kind: "crédito", ours: -150, fisco: -150 },
@@ -442,7 +454,7 @@ export const firstStep = {
     },
     summary: {
       favor: "a favor del cliente, por errores de la cuenta del fisco",
-      pendiente: "que dependen de un pago pendiente al proveedor",
+      pendiente: "que dependen de que un proveedor corrija su factura",
       adjusted: "Ajuste propuesto. El cliente no paga de más.",
       stamp: "Aceptado por silencio",
       silenced: "Nadie respondió: la cuenta del fisco quedó como deuda confesada.",
@@ -451,13 +463,17 @@ export const firstStep = {
   why: {
     title: "Por qué este primero",
     items: [
-      "El plazo es real: la CBS se cobra desde enero de 2027 y las facturas de plataformas llevan IBS y CBS desde el 1 de diciembre.",
+      "El plazo es real: la CBS se cobra desde enero de 2027, y desde el 1 de diciembre las facturas de plataformas tienen que llevar IBS y CBS.",
       "Los datos ya están en Brinta: emite las ventas y captura las compras.",
       "Un país, un impuesto, un segmento. Se aprende rápido y se mide limpio.",
       "No hacer nada cuesta caro: el cliente acepta una deuda que no corresponde.",
     ],
     sources: ["receitaCbs", "nfsePlataformas", "brintaPilot"] as SourceId[],
     pilot: "Brinta dice, además, que participa del piloto oficial de la CBS.",
+    argentina: {
+      lead: "¿Y Argentina, que abre esta página?",
+      text: "Va después. Ahí Brinta calcula la retención de cada comercio, pero la declaración del comercio no pasa por Brinta, así que no sabe cuánto impuesto le correspondía. En Brasil tiene las dos puntas de la cuenta y un plazo legal.",
+    },
   },
   metrics: {
     title: "Cómo lo mediría",
@@ -488,7 +504,7 @@ export const firstStep = {
         leading: "Clientes con su declaración conciliada contra la cuenta del fisco",
         lagging: "Diferencias confirmadas por cliente",
         guardrail: "Horas de configuración manual por cliente",
-        cut: "Si cada cliente necesita configuración a mano, se frena hasta automatizar el mapeo.",
+        cut: "Si configurar un cliente lleva más de 8 horas de trabajo manual, se frena hasta automatizar el mapeo.",
       },
     ],
   },
@@ -507,7 +523,16 @@ export const firstStep = {
   },
   next: {
     title: "Después",
-    text: "Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle al comprador cómo pagarle a cada proveedor para asegurar su crédito. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata.",
+    paragraphs: [
+      {
+        text: "Cuando el split esté en marcha, el crédito del comprador va a depender de cómo le pagó a cada proveedor. Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle cómo pagar para asegurarlo. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata. Como adelanto y no como compra: la ley no deja transferir ese saldo a terceros.",
+        sources: ["lc214"] as SourceId[],
+      },
+      {
+        text: "En Argentina, el paso equivalente es prevenir: sumar la declaración del comercio a través del procesador y avisarle cuando lo retenido le gana al impuesto, para que pida a tiempo la exclusión o la reducción de la retención. Frenar el saldo es más rápido que recuperarlo.",
+        sources: ["saldosVias"] as SourceId[],
+      },
+    ],
   },
 };
 
@@ -520,7 +545,7 @@ export const proofs = {
       id: "pix",
       title: "Pix Brasil",
       number: "Datos del BCB",
-      line: "Leí con datos abiertos del Banco Central el rail de pagos donde arranca el split payment.",
+      line: "Leí con datos abiertos del Banco Central a Pix, uno de los medios de pago con los que arranca el split payment.",
       proves: "Entiendo los pagos de Brasil desde el dato.",
       href: "/projects/pix-brasil",
       hrefLabel: "Leer el caso",
