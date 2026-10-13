@@ -674,7 +674,7 @@ export const proofs = {
       title: "Bot asesor de seguros",
       number: "64%",
       line: "De las consultas repetidas resueltas sin tocar el modelo, con un umbral elegido por curva ROC.",
-      proves: "Sé llevar un agente a producción y medirlo.",
+      proves: "Sé convertir lo que se repite en una respuesta automática y medir cuánto cubre.",
       href: "/projects/insurance-advisor-bot",
       hrefLabel: "Ver el caso",
     },
