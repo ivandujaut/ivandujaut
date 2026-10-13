@@ -463,6 +463,10 @@ export const firstStep = {
     ],
     sources: ["receitaCbs", "nfsePlataformas", "brintaPilot"] as SourceId[],
     pilot: "Brinta dice, además, que participa del piloto oficial de la CBS.",
+    argentina: {
+      lead: "¿Y Argentina, que abre esta página?",
+      text: "Va después. Ahí Brinta calcula la retención de cada comercio, pero la declaración del comercio no pasa por Brinta, así que no sabe cuánto impuesto le correspondía. En Brasil tiene las dos puntas de la cuenta y un plazo legal.",
+    },
   },
   metrics: {
     title: "Cómo lo mediría",

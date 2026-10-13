@@ -46,6 +46,10 @@ export function FirstStep() {
               </li>
             ))}
           </ol>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
+            <span className="font-semibold">{data.why.argentina.lead}</span>{" "}
+            {data.why.argentina.text}
+          </p>
           <p className="mt-5 text-sm text-(--ink-dim)">
             {data.why.pilot}
             {data.why.sources.map((id, i) => (
