@@ -7,8 +7,8 @@ import { Ledger } from "../_components/ledger";
 import { Cite, Tramo, TramoHeading } from "../_components/tramo";
 
 /**
- * 06 · Un primer paso. El libro mayor interactivo y, abajo, la decisión
- * completa: por qué este primero, cómo se mide por segmento (con el corte
+ * 06 · Un primer paso. El objetivo, el libro mayor interactivo y, abajo, la
+ * decisión completa: por qué este primero, cómo se mide por segmento (con el corte
  * fijado antes), qué no construir, qué lo mata y qué sigue.
  */
 export function FirstStep() {
@@ -30,7 +30,10 @@ export function FirstStep() {
           {data.heading}
         </TramoHeading>
 
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">{data.who}</p>
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed md:text-xl">
+          <span className="font-semibold">{data.goal.lead}</span> {data.goal.text}
+        </p>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">{data.who}</p>
 
         <div className="mt-10 max-w-3xl">
           <Ledger />

@@ -396,6 +396,10 @@ export const firstStep = {
   index: "06",
   eyebrow: "Un primer paso",
   heading: "Diferencias CBS: revisar la cuenta del fisco antes de que quede aceptada",
+  goal: {
+    lead: "El objetivo.",
+    text: "Que en 2027 ningún cliente de Brinta en Brasil acepte por silencio una cuenta de CBS que no le corresponde. Lo vendería como un módulo de la plataforma de declaraciones, por empresa y por período, con un precio muy por debajo de lo que recupera.",
+  },
   who: "Para plataformas que facturan con Brinta en Brasil. Ahí Brinta emite las facturas de venta y captura las de compra, así que tiene la cuenta completa para compararla con la del fisco.",
   ledger: {
     exampleBadge: "datos de ejemplo",
