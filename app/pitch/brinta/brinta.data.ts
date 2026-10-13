@@ -459,7 +459,7 @@ export const firstStep = {
   why: {
     title: "Por qué este primero",
     items: [
-      "El plazo es real: la CBS se cobra desde enero de 2027 y las facturas de plataformas llevan IBS y CBS desde el 1 de diciembre.",
+      "El plazo es real: la CBS se cobra desde enero de 2027, y desde el 1 de diciembre las facturas de plataformas tienen que llevar IBS y CBS.",
       "Los datos ya están en Brinta: emite las ventas y captura las compras.",
       "Un país, un impuesto, un segmento. Se aprende rápido y se mide limpio.",
       "No hacer nada cuesta caro: el cliente acepta una deuda que no corresponde.",
