@@ -410,7 +410,7 @@ export const firstStep = {
     lead: "El objetivo.",
     text: "Que en 2027 ningún cliente de Brinta en Brasil acepte por silencio una cuenta de CBS que no le corresponde. Lo vendería como un módulo de la plataforma de declaraciones, por empresa y por período, con un precio muy por debajo de lo que recupera.",
   },
-  who: "Para plataformas que facturan con Brinta en Brasil. Ahí Brinta emite las facturas de venta y captura las de compra, así que tiene la cuenta completa para compararla con la del fisco.",
+  who: "Para plataformas que facturan con Brinta en Brasil. Ahí Brinta emite las facturas de venta y captura las de compra, así que tiene la cuenta completa para compararla con la del fisco. Vive en la plataforma de declaraciones, como un cruce más en la etapa de revisión.",
   ledger: {
     exampleBadge: "datos de ejemplo",
     period: "Enero de 2027",
