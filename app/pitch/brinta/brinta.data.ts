@@ -32,7 +32,11 @@ export type SourceId =
   | "calculadora"
   | "avalaraNews"
   | "avalaraPage"
-  | "saldosVias";
+  | "saldosVias"
+  | "kaszekPosting"
+  | "brintaFilingManagement"
+  | "brintaBlogFilings"
+  | "brintaRoles";
 
 export const sources: Record<SourceId, string> = {
   brintaAbout: "https://brinta.com/about",
@@ -77,6 +81,11 @@ export const sources: Record<SourceId, string> = {
   avalaraPage: "https://www.avalara.com/us/en/products/avalaracapital.html",
   saldosVias:
     "https://eleconomista.com.ar/economia/saldos-favor-cuales-son-opciones-recuperarlos-ganancias-iva-e-ingresos-brutos-n97603",
+  kaszekPosting: "https://jobs.kaszek.com/jobs/brinta/569fa539-f2a2-4ec6-a532-4ed4b0f6f788",
+  brintaFilingManagement: "https://docs.brinta.com/docs/filing-management",
+  brintaBlogFilings:
+    "https://brinta.com/blog/how-to-process-tax-returns-on-brinta-s-tax-automation-platform-without-erp-integration",
+  brintaRoles: "https://docs.brinta.com/docs/en-roles-permissions-details",
 };
 
 export const author = {
@@ -100,6 +109,7 @@ export const nav = [
   { id: "brinta", label: "Por qué Brinta puede" },
   { id: "tesis", label: "La tesis" },
   { id: "caso", label: "Un primer paso" },
+  { id: "plataforma", label: "El día a día" },
   { id: "pruebas", label: "Por qué yo" },
   { id: "cierre", label: "Cierre" },
 ] as const;
@@ -536,8 +546,117 @@ export const firstStep = {
   },
 };
 
-export const proofs = {
+/**
+ * Escena 07. Los estados de una declaración salen de los docs y del blog de
+ * Brinta; "hand" marca los pasos donde esas fuentes muestran a una persona.
+ */
+export const platform = {
   index: "07",
+  eyebrow: "El día a día",
+  heading: "Una plataforma que no dependa de manos",
+  lead: "El aviso pide llevar el día a día de la plataforma de declaraciones. Así se ve una declaración por dentro, según los docs de Brinta.",
+  leadSources: ["kaszekPosting", "brintaFilingsOverview"] as SourceId[],
+  legend: { hand: "Paso con una persona", auto: "Paso automático" },
+  stations: [
+    {
+      id: "setup",
+      name: "Configuración",
+      status: "Setup",
+      hand: true,
+      text: "El cliente sube sus archivos y Brinta los lee. Los parámetros de cada formulario los define el equipo de Vertex.",
+      source: "brintaFilingManagement" as SourceId,
+    },
+    {
+      id: "processing",
+      name: "Proceso",
+      status: "Processing",
+      hand: false,
+      text: "Brinta ordena los datos y arma el borrador con su papel de trabajo.",
+      source: "brintaBlogFilings" as SourceId,
+    },
+    {
+      id: "review",
+      name: "Revisión",
+      status: "Review",
+      hand: true,
+      text: "Validaciones y cruces. Un aprobador la aprueba, o “Asignar a Brinta” abre un ticket de soporte.",
+      source: "brintaBlogFilings" as SourceId,
+      branch: "Acá entraría Diferencias CBS: un cruce más, contra la cuenta del fisco.",
+    },
+    {
+      id: "ready",
+      name: "Lista para presentar",
+      status: "Ready to File",
+      hand: true,
+      text: "Alguien elige si la presenta el cliente a mano o Brinta por integración.",
+      source: "brintaBlogFilings" as SourceId,
+    },
+    {
+      id: "preparing",
+      name: "Presentando",
+      status: "Preparing Filing",
+      hand: false,
+      text: "Si la presenta Brinta, sale sola y pasa a presentada.",
+      source: "brintaBlogFilings" as SourceId,
+    },
+    {
+      id: "filed",
+      name: "Presentada",
+      status: "Filed",
+      hand: true,
+      text: "Si la presentó el cliente, alguien la marca como transmitida.",
+      source: "brintaRoles" as SourceId,
+    },
+  ],
+  why: "Diferencias CBS suma una revisión por cliente y por mes. Si cada una pasa por una persona, el producto no escala: la tesis depende de este trabajo.",
+  design: {
+    lead: "Las manos están a propósito.",
+    text: "En impuestos el control importa, y que un experto defina cada formulario es parte del producto. La pregunta no es sacarlas todas, sino cuáles se repiten.",
+  },
+  ladder: {
+    title: "Cómo sale una mano del camino",
+    steps: [
+      "Una guía para operaciones",
+      "Una automatización interna",
+      "Autoservicio para el cliente",
+      "Producto",
+    ],
+    note: "Se sube un escalón a la tercera repetición, no antes: con un solo caso, generalizar es adivinar.",
+  },
+  metrics: {
+    title: "Qué miraría",
+    items: [
+      {
+        name: "Tickets de “Asignar a Brinta” cada 100 declaraciones",
+        why: "Dice dónde se traba la plataforma.",
+      },
+      {
+        name: "Declaraciones presentadas sin intervención manual",
+        why: "Dice si escala sin sumar gente.",
+      },
+      {
+        name: "Rectificativas y rechazos del fisco",
+        why: "Es el límite: sacar manos no puede costar calidad.",
+      },
+    ],
+    baseline: "No hay números públicos: la línea de base la fijo el primer mes, con operaciones.",
+  },
+  notDo: {
+    title: "Qué no haría",
+    items: [
+      "Sacar al experto tributario del circuito.",
+      "Automatizar un formulario antes de verlo repetirse.",
+    ],
+  },
+  caseLink: {
+    text: "Diferencias CBS nace con esa vara: entra en la revisión como un cruce más, y si configurar un cliente lleva más de 8 horas a mano, se frena.",
+    label: "Volver al caso",
+    href: "#caso",
+  },
+};
+
+export const proofs = {
+  index: "08",
   eyebrow: "Por qué yo",
   heading: "Tres cosas que ya hice y que este camino necesita",
   items: [
