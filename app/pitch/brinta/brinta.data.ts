@@ -381,7 +381,11 @@ export interface LedgerRow {
   fisco: number;
   /** Explicación de la diferencia; sin `reason` la fila coincide. */
   reason?: string;
-  /** "favor": el fisco cobra de más. "pendiente": crédito que depende de un pago. */
+  /**
+   * "favor": el fisco cobra de más. "pendiente": crédito que depende del
+   * proveedor. En enero de 2027 no hay split, así que rige la excepción del
+   * art. 48: el crédito pide la factura bien hecha, no el pago del proveedor.
+   */
   status?: "favor" | "pendiente";
 }
 
@@ -427,7 +431,8 @@ export const firstStep = {
         kind: "crédito",
         ours: -310,
         fisco: 0,
-        reason: "El proveedor todavía no pagó: el crédito queda pendiente",
+        reason:
+          "La factura del proveedor trae mal el impuesto: el crédito no entra hasta que la corrija",
         status: "pendiente",
       },
       { id: "r6", doc: "Compra 81", kind: "crédito", ours: -150, fisco: -150 },
@@ -442,7 +447,7 @@ export const firstStep = {
     },
     summary: {
       favor: "a favor del cliente, por errores de la cuenta del fisco",
-      pendiente: "que dependen de un pago pendiente al proveedor",
+      pendiente: "que dependen de que un proveedor corrija su factura",
       adjusted: "Ajuste propuesto. El cliente no paga de más.",
       stamp: "Aceptado por silencio",
       silenced: "Nadie respondió: la cuenta del fisco quedó como deuda confesada.",
@@ -507,7 +512,7 @@ export const firstStep = {
   },
   next: {
     title: "Después",
-    text: "Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle al comprador cómo pagarle a cada proveedor para asegurar su crédito. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata.",
+    text: "Cuando el split esté en marcha, el crédito del comprador va a depender de cómo le pagó a cada proveedor. Con el registro de qué crédito está firme y cuál pendiente, el paso siguiente es mostrarle cómo pagar para asegurarlo. Más adelante, adelantar el saldo que el fisco debe devolver, con un socio que ponga la plata.",
   },
 };
 
