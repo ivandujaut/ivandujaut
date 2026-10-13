@@ -217,7 +217,7 @@ export const rules = {
 export const brazil = {
   index: "03",
   eyebrow: "Lo que viene",
-  heading: "En 2027, en Brasil, el impuesto se cobra en el momento del pago",
+  heading: "Brasil está llevando el impuesto al momento del pago",
   steps: [
     {
       id: "cbs",
