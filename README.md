@@ -1,9 +1,9 @@
 ## Ivan Dujaut
 
-**I write cases about health and insurance: I rebuild the problem, the players and
-the public data, and end in a decision.** Bioengineer from ITBA.
+**I launched two generative AI products that are now in production, and I write
+cases on health and insurance that end in a decision.** Bioengineer from ITBA.
 
-Sixteen of them live at **[ivandujaut.com/en](https://ivandujaut.com/en)**. Every
+Sixteen of those cases live at **[ivandujaut.com/en](https://ivandujaut.com/en)**. Every
 figure traces back to its source, every assumption is declared as one, and anything
 labelled as my own calculation has a committed script in this repository with the
 raw dataset's download URL inside. The rules are
@@ -38,8 +38,8 @@ grade and the teacher confirms it. I use it with my own students.
 
 ---
 
-Bioengineer (ITBA), Techstars W24 in New York with Tumo. Product Engineer at
-Prizmstack, remote from Argentina.
+Bioengineer (ITBA), Techstars W24 in New York with Tumo. AI Product Manager,
+remote from Argentina. Product Engineer at Prizmstack until October 2026.
 
 **If your team has a decision that keeps getting made by eye because nobody worked
 out the number, that is what I solve.**

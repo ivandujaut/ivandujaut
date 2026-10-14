@@ -28,16 +28,16 @@ export async function generateMetadata({ params }: Props) {
 
   // Mismo rol que el hero, el `<title>` de la home y el titular de LinkedIn.
   const title = isEs
-    ? "Acerca de mí · Iván Dujaut, Product Manager"
-    : "About · Iván Dujaut, Product Manager";
+    ? "Acerca de mí · Iván Dujaut, AI Product Manager"
+    : "About · Iván Dujaut, AI Product Manager";
   // La descripción vende el trabajo publicado, no el cargo: es lo que
   // diferencia el perfil y lo que sostiene el resto de la página. Es la misma
   // frase, palabra por palabra, que el `description` del `Person` en
   // `lib/jsonld.ts` y que el encabezado de `llms.txt`: repetirla igual es lo que
   // hace que un buscador o un modelo la tome en vez de fabricar una propia.
   const description = isEs
-    ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
-    : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.";
+    ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
+    : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
@@ -286,7 +286,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <ExperienceItem
               logoSrc="/logos/prizmstack.jpeg"
               logoAlt="Prizmstack"
-              dateRange={locale === "es" ? "Feb 2026 – Presente" : "Feb 2026 – Present"}
+              dateRange={locale === "es" ? "Feb 2026 – Oct 2026" : "Feb 2026 – Oct 2026"}
               title="Product Engineer"
               company="Prizmstack"
               location={locale === "es" ? "Remoto · California" : "Remote · California"}
@@ -294,8 +294,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Construyo <strong>FIJI</strong>, una plataforma de valuación para negocios
-                    inmobiliarios. Lidero la migración desde no-code (Bubble) a Next.js y armo el
+                    Construí <strong>FIJI</strong>, una plataforma de valuación para negocios
+                    inmobiliarios. Lideré la migración desde no-code (Bubble) a Next.js y armé el
                     motor de simulaciones, que traduce métricas de operación a valuaciones
                     financieras.
                   </p>
@@ -303,8 +303,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ) : (
                 <>
                   <p>
-                    I build <strong>FIJI</strong>, a valuation platform for real estate businesses.
-                    I lead the migration from no-code (Bubble) to Next.js and build the simulation
+                    I built <strong>FIJI</strong>, a valuation platform for real estate businesses.
+                    I led the migration from no-code (Bubble) to Next.js and built the simulation
                     engine that turns operating metrics into financial valuations.
                   </p>
                 </>
@@ -421,7 +421,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                   <ul className="ml-4 list-disc space-y-1">
                     <li>~100 primeros usuarios durante la fase de validación</li>
                     <li>
-                      Mejoras de onboarding que <strong>incrementaron el engagement ~40%</strong>
+                      Mejoras de onboarding que <strong>subieron la conversión ~40%</strong>
                     </li>
                     <li>Decisiones de roadmap discutidas de primera mano con los fundadores</li>
                   </ul>
@@ -436,7 +436,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                   <ul className="ml-4 list-disc space-y-1">
                     <li>~100 first users during the validation phase</li>
                     <li>
-                      Onboarding improvements that <strong>increased engagement ~40%</strong>
+                      Onboarding improvements that <strong>raised conversion ~40%</strong>
                     </li>
                     <li>Roadmap decisions discussed first-hand with the founders</li>
                   </ul>

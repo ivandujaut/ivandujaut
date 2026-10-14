@@ -10,7 +10,11 @@ export function personSchema(locale: Locale) {
     name: "Iván Dujaut",
     url: SITE_URL,
     image: `${SITE_URL}/api/og?title=Iv%C3%A1n+Dujaut&subtitle=Portfolio&locale=${locale}`,
-    jobTitle: locale === "es" ? "Product Engineer" : "Product Engineer",
+    // Hasta el 14/10/2026 era "Product Engineer", el cargo en Prizmstack. Ese
+    // contrato termina en octubre de 2026 y el CV pasó a encabezar con "AI
+    // Product Manager", así que el campo sigue al CV: es como Iván se presenta,
+    // no un empleo. Los cargos reales siguen en /about, uno por experiencia.
+    jobTitle: "AI Product Manager",
     // La descripción anterior ("construyo producto con Next.js, TypeScript...")
     // era la única frase que un buscador tenía para resumir el perfil, y la
     // resumía como desarrollo web: el AI Overview de Google la parafraseaba
@@ -21,29 +25,31 @@ export function personSchema(locale: Locale) {
     // La anterior decía "analizo mercados", encuadre que Iván rechazó el
     // 2026-09-19: no analiza mercados, agarra un problema, reconstruye contexto
     // y actores, y termina en una decisión.
+    // El 14/10/2026 pasó a abrir con los dos productos con IA generativa en
+    // producción (Parcialito y el bot de seguros), que es lo que sostiene el
+    // titular "AI Product Manager" del CV. Los casos siguen en la misma frase.
     description:
       locale === "es"
-        ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
-        : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.",
+        ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
+        : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.",
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",
       url: "https://www.itba.edu.ar",
     },
-    worksFor: {
-      "@type": "Organization",
-      name: "Prizmstack",
-    },
-    // `jobTitle` es el cargo (Product Engineer en Prizmstack, que es el real) y
-    // `hasOccupation` es la práctica. Son campos distintos y hacían falta los
-    // dos: con sólo el cargo, el perfil se resume como ingeniería y el trabajo
-    // que lo diferencia no queda declarado en ningún lado legible por máquina.
+    // `jobTitle` es el titular y `hasOccupation` es la práctica. Son campos
+    // distintos y hacen falta los dos: con sólo el titular, el trabajo que lo
+    // diferencia no queda declarado en ningún lado legible por máquina.
+    // La práctica sale de la línea del CV que dice qué rol busca ("un rol de
+    // producto o de análisis"). Hasta el 14/10/2026 decía "Estrategia de
+    // producto y decision analytics", que es la etiqueta que el 19/09 se
+    // descartó del hero porque ningún aviso la usa.
     hasOccupation: {
       "@type": "Occupation",
       name:
         locale === "es"
-          ? "Estrategia de producto y decision analytics"
-          : "Product strategy and decision analytics",
+          ? "Gestión de producto y análisis de datos"
+          : "Product management and data analysis",
     },
     // `knowsAbout` es el campo con el que schema.org declara sobre qué temas
     // hay expertise. Sin él, el buscador infiere los temas del texto suelto de
@@ -62,6 +68,7 @@ export function personSchema(locale: Locale) {
             "Análisis de datos",
             "Estrategia de producto",
             "Análisis de producto",
+            "IA generativa",
             "Bioingeniería",
             "Aprendizaje automático",
           ]
@@ -76,6 +83,7 @@ export function personSchema(locale: Locale) {
             "Data analysis",
             "Product strategy",
             "Product analytics",
+            "Generative AI",
             "Bioengineering",
             "Machine learning",
           ],

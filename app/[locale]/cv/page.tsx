@@ -6,6 +6,8 @@ import { Download } from "@/components/animate-ui/icons/download";
 import { CvPreview } from "@/components/cv/cv-preview";
 import type { Locale } from "@/i18n/routing";
 import { CV_PDF } from "@/lib/cv";
+import { buildDefaultOgUrl } from "@/lib/og";
+import { localePath, SITE_URL } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -22,12 +24,28 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const typedLocale = locale as Locale;
+  const title = "CV · Iván Dujaut";
+  const description = isEs
+    ? "CV de Iván Dujaut, AI Product Manager, para ver y descargar en PDF."
+    : "Iván Dujaut's CV, AI Product Manager, to view and download as a PDF.";
+  const ogImageUrl = buildDefaultOgUrl({ title, description, locale: typedLocale });
 
+  // El `openGraph` va explícito porque el link se comparte por mensaje. Sin él
+  // se hereda el del layout, que está en castellano, y `/en/cv` mostraba la
+  // vista previa en el idioma equivocado.
   return {
-    title: { absolute: "CV · Iván Dujaut" },
-    description: isEs
-      ? "CV de Iván Dujaut, Product Manager, para ver y descargar en PDF."
-      : "Iván Dujaut's CV, Product Manager, to view and download as a PDF.",
+    title: { absolute: title },
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `${SITE_URL}${localePath(typedLocale, "/cv")}`,
+      siteName: "Iván Dujaut",
+      locale: isEs ? "es_AR" : "en_US",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+    },
     robots: { index: false, follow: true },
   };
 }

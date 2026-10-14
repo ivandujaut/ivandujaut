@@ -90,8 +90,8 @@ function build(): string {
   const lines: string[] = [
     "# Iván Dujaut · texto completo de los casos",
     "",
-    "> Escribo casos sobre salud y seguros: reconstruyo el problema, los actores" +
-      " y los datos públicos, y termino en una decisión. Bioingeniero del ITBA.",
+    "> Lancé dos productos con IA generativa que hoy están en producción y escribo" +
+      " casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA.",
     "",
     `Este archivo trae el texto completo de los ${casos.length} casos publicados,` +
       " en castellano, que es la versión canónica. Son uno más que los que lista" +

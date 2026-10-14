@@ -93,7 +93,7 @@
   "home": {
     "hero": {
       "name": "Iván Dujaut",
-      "role": "Product Manager",
+      "role": "AI Product Manager",
       "location": "Argentina",
       "available": "Disponible",
       "tagline": "Decido con datos y construyo lo que decido.",
@@ -105,10 +105,10 @@
     },
     "currently": {
       "title": "Actualmente",
-      "paragraph1": "Soy Product Engineer en Prizmstack, donde armo FIJI, que le pone precio a un negocio inmobiliario a partir de cómo viene operando.",
+      "paragraph1": "Enseño Técnicas Digitales a estudiantes de Electrónica en el IPSAJ (Instituto Politécnico San Arnoldo Janssen), la escuela técnica donde me recibí. Para esas clases construí Parcialito, que corrige ejercicios con IA y hoy usan 35 alumnos y otra docente.",
       "stack": "Stack actual: TypeScript, Next.js, PostgreSQL, Supabase.",
-      "paragraph2": "En paralelo enseño Técnicas Digitales a estudiantes de Electrónica en el IPSAJ (Instituto Politécnico San Arnoldo Janssen), la escuela técnica donde me recibí.",
-      "paragraph3": "Busco un rol de decision analytics en consultoría, o de producto en pagos, seguros o salud. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Escribime o agendá una call."
+      "paragraph2": "De febrero a octubre de 2026 fui Product Engineer en Prizmstack, donde lideré FIJI, que le pone precio a un negocio inmobiliario a partir de cómo viene operando.",
+      "paragraph3": "Busco un rol de producto o de análisis: Product Manager, analista de producto o analista de negocio. Trabajo remoto desde Argentina y me mudo a Buenos Aires por un puesto híbrido. Escribime o agendá una call."
     },
     "work": {
       "title": "Trabajo publicado",
@@ -207,7 +207,7 @@
     "title": "Acerca de mí",
     "intro": {
       "greeting": "Hola, soy Iván",
-      "paragraph1": "Antes de construir nada me pregunto qué valor real le da al usuario lo que estamos por hacer, y si eso sale de una hipótesis nuestra o de algo que el usuario necesita. Hoy construyo FIJI en Prizmstack, una plataforma que le pone precio a un negocio inmobiliario a partir de cómo viene operando.",
+      "paragraph1": "Antes de construir nada me pregunto qué valor real le da al usuario lo que estamos por hacer, y si eso sale de una hipótesis nuestra o de algo que el usuario necesita. Hasta octubre de 2026 lideré FIJI en Prizmstack, una plataforma que le pone precio a un negocio inmobiliario a partir de cómo viene operando.",
       "paragraph2": "A producto llegué en Banana Software: cuatro años, de trainee a product engineer, proyectos de punta a punta y plataformas B2C y B2B con medios de pago integrados. Ahí me di cuenta de que esa pregunta la venía haciendo por defecto y de que todo mi trabajo giraba alrededor de ella. El cliente llegaba con listas de funcionalidades que no seguían esa línea, y ahí negociaba con datos. Casi siempre la respuesta era hacer menos, porque lo planificado no devolvía lo que costaba, y hacer menos es lo que deja iterar rápido. La predictibilidad de los sprints pasó del 60% al 90% cuando dejé de estimar a ojo y modelé el esfuerzo real.",
       "paragraph3": "Desde 2026 las preguntas las elijo yo. Escribo sobre salud, que viene de mi formación en bioingeniería y de una tesis de aprendizaje automático sobre datos clínicos reales, y sobre seguros, un mercado que publica todo y se explica poco. Los dos son negocios donde la empresa decide por vos qué te cubre, cuánto te cobra y qué te muestra antes de venderte, y esa decisión deja rastro público: <pagos>cada pago que la industria farmacéutica le declara a un médico</pagos>, <balances>los balances que las aseguradoras presentan ante el regulador</balances>, <srt>las estadísticas de riesgos del trabajo</srt>, <canales>lo que muestran (o no) en sus propios canales digitales</canales>.",
       "paragraph4": "En cada caso reconstruyo el problema y los actores que juegan, y lo llevo hasta una decisión: cuánta plata hay en juego, cuál es el primer paso, qué métricas la miden por segmento y qué no conviene construir.",
