@@ -322,5 +322,13 @@
     "concepts": "Conceptos que entrena",
     "empty": "Todavía no hay casos publicados.",
     "sourcesLabel": "Los archivos que usa este caso"
+  },
+  "cv": {
+    "title": "CV",
+    "download": "Descargar PDF",
+    "alt": "CV de Iván Dujaut",
+    "loading": "Cargando el CV…",
+    "error": "No se pudo mostrar la vista previa.",
+    "openPdf": "Abrir el PDF"
   }
 }

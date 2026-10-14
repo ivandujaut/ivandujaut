@@ -322,5 +322,13 @@
     "concepts": "Concepts it trains",
     "empty": "No cases published yet.",
     "sourcesLabel": "The filings this case uses"
+  },
+  "cv": {
+    "title": "CV",
+    "download": "Download PDF",
+    "alt": "Iván Dujaut's CV",
+    "loading": "Loading the CV…",
+    "error": "The preview couldn't load.",
+    "openPdf": "Open the PDF"
   }
 }

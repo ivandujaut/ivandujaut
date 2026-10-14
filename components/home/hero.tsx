@@ -1,4 +1,4 @@
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
@@ -6,8 +6,7 @@ import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { Download } from "@/components/animate-ui/icons/download";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { Link } from "@/i18n/navigation";
-import type { Locale } from "@/i18n/routing";
-import { CV_PDF } from "@/lib/cv";
+import { CV_PAGE } from "@/lib/cv";
 
 const socialLinks = [
   {
@@ -33,7 +32,6 @@ const socialLinks = [
  */
 export function Hero() {
   const t = useTranslations("home.hero");
-  const locale = useLocale() as Locale;
 
   return (
     <section>
@@ -60,7 +58,8 @@ export function Hero() {
 
       {/* Arriba del pliegue tiene que haber algo para hacer, no solo algo para
           leer. El destino primario es el trabajo; el CV es la salida rápida
-          para quien vino a evaluar un perfil, y baja en el idioma de la página.
+          para quien vino a evaluar un perfil: abre `/cv` en una pestaña nueva,
+          en el idioma de la página, y desde ahí se baja.
 
           Entre el 20 y el 21/09/2026 el botón del CV no estuvo: el PDF viejo
           era de mayo y desmentía a esta misma página. Volvió con el CV nuevo. */}
@@ -82,9 +81,9 @@ export function Hero() {
           </Link>
         </AnimateIcon>
         <AnimateIcon animateOnHover className="inline-flex">
-          <a
-            href={CV_PDF[locale]}
-            download
+          <Link
+            href={CV_PAGE}
+            target="_blank"
             data-ph="contact_click"
             data-ph-kind="cv"
             data-ph-surface="hero"
@@ -92,7 +91,7 @@ export function Hero() {
           >
             <Download size={16} strokeWidth={1.5} aria-hidden />
             <span>{t("ctas.cv")}</span>
-          </a>
+          </Link>
         </AnimateIcon>
       </div>
 
