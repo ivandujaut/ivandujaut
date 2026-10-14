@@ -286,7 +286,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <ExperienceItem
               logoSrc="/logos/prizmstack.jpeg"
               logoAlt="Prizmstack"
-              dateRange={locale === "es" ? "Feb 2026 – Presente" : "Feb 2026 – Present"}
+              dateRange={locale === "es" ? "Feb 2026 – Oct 2026" : "Feb 2026 – Oct 2026"}
               title="Product Engineer"
               company="Prizmstack"
               location={locale === "es" ? "Remoto · California" : "Remote · California"}
@@ -294,8 +294,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Construyo <strong>FIJI</strong>, una plataforma de valuación para negocios
-                    inmobiliarios. Lidero la migración desde no-code (Bubble) a Next.js y armo el
+                    Construí <strong>FIJI</strong>, una plataforma de valuación para negocios
+                    inmobiliarios. Lideré la migración desde no-code (Bubble) a Next.js y armé el
                     motor de simulaciones, que traduce métricas de operación a valuaciones
                     financieras.
                   </p>
@@ -303,8 +303,8 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ) : (
                 <>
                   <p>
-                    I build <strong>FIJI</strong>, a valuation platform for real estate businesses.
-                    I lead the migration from no-code (Bubble) to Next.js and build the simulation
+                    I built <strong>FIJI</strong>, a valuation platform for real estate businesses.
+                    I led the migration from no-code (Bubble) to Next.js and built the simulation
                     engine that turns operating metrics into financial valuations.
                   </p>
                 </>

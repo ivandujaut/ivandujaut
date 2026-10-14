@@ -34,10 +34,6 @@ export function personSchema(locale: Locale) {
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",
       url: "https://www.itba.edu.ar",
     },
-    worksFor: {
-      "@type": "Organization",
-      name: "Prizmstack",
-    },
     // `jobTitle` es el titular y `hasOccupation` es la práctica. Son campos
     // distintos y hacen falta los dos: con sólo el titular, el trabajo que lo
     // diferencia no queda declarado en ningún lado legible por máquina.
