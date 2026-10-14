@@ -10,7 +10,11 @@ export function personSchema(locale: Locale) {
     name: "Iván Dujaut",
     url: SITE_URL,
     image: `${SITE_URL}/api/og?title=Iv%C3%A1n+Dujaut&subtitle=Portfolio&locale=${locale}`,
-    jobTitle: locale === "es" ? "Product Engineer" : "Product Engineer",
+    // Hasta el 14/10/2026 era "Product Engineer", el cargo en Prizmstack. Ese
+    // contrato termina en octubre de 2026 y el CV pasó a encabezar con "AI
+    // Product Manager", así que el campo sigue al CV: es como Iván se presenta,
+    // no un empleo. Los cargos reales siguen en /about, uno por experiencia.
+    jobTitle: "AI Product Manager",
     // La descripción anterior ("construyo producto con Next.js, TypeScript...")
     // era la única frase que un buscador tenía para resumir el perfil, y la
     // resumía como desarrollo web: el AI Overview de Google la parafraseaba
@@ -34,16 +38,19 @@ export function personSchema(locale: Locale) {
       "@type": "Organization",
       name: "Prizmstack",
     },
-    // `jobTitle` es el cargo (Product Engineer en Prizmstack, que es el real) y
-    // `hasOccupation` es la práctica. Son campos distintos y hacían falta los
-    // dos: con sólo el cargo, el perfil se resume como ingeniería y el trabajo
-    // que lo diferencia no queda declarado en ningún lado legible por máquina.
+    // `jobTitle` es el titular y `hasOccupation` es la práctica. Son campos
+    // distintos y hacen falta los dos: con sólo el titular, el trabajo que lo
+    // diferencia no queda declarado en ningún lado legible por máquina.
+    // La práctica sale de la línea del CV que dice qué rol busca ("un rol de
+    // producto o de análisis"). Hasta el 14/10/2026 decía "Estrategia de
+    // producto y decision analytics", que es la etiqueta que el 19/09 se
+    // descartó del hero porque ningún aviso la usa.
     hasOccupation: {
       "@type": "Occupation",
       name:
         locale === "es"
-          ? "Estrategia de producto y decision analytics"
-          : "Product strategy and decision analytics",
+          ? "Gestión de producto y análisis de datos"
+          : "Product management and data analysis",
     },
     // `knowsAbout` es el campo con el que schema.org declara sobre qué temas
     // hay expertise. Sin él, el buscador infiere los temas del texto suelto de
@@ -62,6 +69,7 @@ export function personSchema(locale: Locale) {
             "Análisis de datos",
             "Estrategia de producto",
             "Análisis de producto",
+            "IA generativa",
             "Bioingeniería",
             "Aprendizaje automático",
           ]
@@ -76,6 +84,7 @@ export function personSchema(locale: Locale) {
             "Data analysis",
             "Product strategy",
             "Product analytics",
+            "Generative AI",
             "Bioengineering",
             "Machine learning",
           ],

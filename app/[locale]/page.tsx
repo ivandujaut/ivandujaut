@@ -34,7 +34,11 @@ export async function generateMetadata({ params }: Props) {
   // en el país. El hero y el titular de LinkedIn pasaron a "Product Manager" ese
   // día y este título había quedado atrás, que es lo que muestra Google cuando
   // alguien busca el nombre.
-  const seoTitle = "Iván Dujaut · Product Manager";
+  //
+  // El 14/10/2026 pasó a "AI Product Manager", el encabezado del CV nuevo. Lo
+  // sostienen dos productos con IA generativa en producción, Parcialito y el bot
+  // de seguros, los dos con caso publicado. Los cargos de /about no cambian.
+  const seoTitle = "Iván Dujaut · AI Product Manager";
   // El remate anterior era "y escribo el código", y era la última frase del
   // resultado de búsqueda para quien busca el nombre. El código es la palanca,
   // no el oficio: lo que distingue el perfil son los análisis publicados.

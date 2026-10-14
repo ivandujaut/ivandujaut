@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: "CV · Iván Dujaut" },
     description: isEs
-      ? "CV de Iván Dujaut, Product Manager, para ver y descargar en PDF."
-      : "Iván Dujaut's CV, Product Manager, to view and download as a PDF.",
+      ? "CV de Iván Dujaut, AI Product Manager, para ver y descargar en PDF."
+      : "Iván Dujaut's CV, AI Product Manager, to view and download as a PDF.",
     robots: { index: false, follow: true },
   };
 }

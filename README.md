@@ -38,8 +38,8 @@ grade and the teacher confirms it. I use it with my own students.
 
 ---
 
-Bioengineer (ITBA), Techstars W24 in New York with Tumo. Product Engineer at
-Prizmstack, remote from Argentina.
+Bioengineer (ITBA), Techstars W24 in New York with Tumo. AI Product Manager,
+remote from Argentina. Product Engineer at Prizmstack until October 2026.
 
 **If your team has a decision that keeps getting made by eye because nobody worked
 out the number, that is what I solve.**
