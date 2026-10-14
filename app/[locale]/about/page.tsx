@@ -9,7 +9,7 @@ import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
 import { getPublishingCadence } from "@/lib/content";
-import { CV_PDF } from "@/lib/cv";
+import { CV_PAGE } from "@/lib/cv";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -217,13 +217,14 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             <CalendlyIcon size={14} aria-hidden />
             <span>{t("intro.ctas.calendly")}</span>
           </a>
-          {/* El CV baja en el idioma de la página, igual que en el hero.
+          {/* El CV abre su vista previa en una pestaña nueva, igual que en el
+              hero, y desde ahí se baja en el idioma de la página.
               Sin `asChild`: esta página es Server Component y `AnimateIcon` es
               cliente; ver el comentario en `components/home/hero.tsx`. */}
           <AnimateIcon animateOnHover className="inline-flex">
-            <a
-              href={CV_PDF[locale]}
-              download
+            <Link
+              href={CV_PAGE}
+              target="_blank"
               data-ph="contact_click"
               data-ph-kind="cv"
               data-ph-surface="about-intro"
@@ -231,7 +232,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             >
               <Download size={14} strokeWidth={1.5} aria-hidden />
               <span>{t("intro.ctas.cv")}</span>
-            </a>
+            </Link>
           </AnimateIcon>
         </div>
       </section>

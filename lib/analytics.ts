@@ -45,9 +45,10 @@ export type AnalyticsEvent =
   /** Clic a una prueba: la demo desplegada, el repo, el Figma. */
   | "proof_click"
   /**
-   * Clic a una vía de contacto: mail revelado, Calendly, LinkedIn. También la
-   * descarga del CV (`kind: "cv"`), que es el paso previo a escribir; el `href`
-   * dice en qué idioma lo bajó.
+   * Clic a una vía de contacto: mail revelado, Calendly, LinkedIn. También el
+   * CV, que es el paso previo a escribir, en dos tiempos: `kind: "cv"` es el
+   * botón que abre la vista previa en `/cv`, y `kind: "cv-download"` es la
+   * descarga desde ahí. El `href` dice en qué idioma.
    */
   | "contact_click"
   /** Compartió una pieza. */
