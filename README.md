@@ -1,9 +1,9 @@
 ## Ivan Dujaut
 
-**I write cases about health and insurance: I rebuild the problem, the players and
-the public data, and end in a decision.** Bioengineer from ITBA.
+**I launched two generative AI products that are now in production, and I write
+cases on health and insurance that end in a decision.** Bioengineer from ITBA.
 
-Sixteen of them live at **[ivandujaut.com/en](https://ivandujaut.com/en)**. Every
+Sixteen of those cases live at **[ivandujaut.com/en](https://ivandujaut.com/en)**. Every
 figure traces back to its source, every assumption is declared as one, and anything
 labelled as my own calculation has a committed script in this repository with the
 raw dataset's download URL inside. The rules are

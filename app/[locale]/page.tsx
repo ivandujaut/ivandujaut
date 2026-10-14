@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props) {
   // resultado de búsqueda para quien busca el nombre. El código es la palanca,
   // no el oficio: lo que distingue el perfil son los análisis publicados.
   const description = isEs
-    ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
-    : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.";
+    ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
+    : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.";
 
   const ogImageUrl = buildDefaultOgUrl({
     title: ogTitle,

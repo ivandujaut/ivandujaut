@@ -25,10 +25,13 @@ export function personSchema(locale: Locale) {
     // La anterior decía "analizo mercados", encuadre que Iván rechazó el
     // 2026-09-19: no analiza mercados, agarra un problema, reconstruye contexto
     // y actores, y termina en una decisión.
+    // El 14/10/2026 pasó a abrir con los dos productos con IA generativa en
+    // producción (Parcialito y el bot de seguros), que es lo que sostiene el
+    // titular "AI Product Manager" del CV. Los casos siguen en la misma frase.
     description:
       locale === "es"
-        ? "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA."
-        : "I write cases about health and insurance: I rebuild the problem, the players and the public data, and end in a decision. Bioengineer from ITBA.",
+        ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
+        : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.",
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",

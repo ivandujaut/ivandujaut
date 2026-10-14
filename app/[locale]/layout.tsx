@@ -77,13 +77,13 @@ export async function generateMetadata({
       template: "%s · Iván Dujaut",
     },
     description:
-      "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión. Bioingeniero del ITBA.",
+      "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA.",
     authors: [{ name: "Iván Dujaut", url: baseUrl }],
     creator: "Iván Dujaut",
     openGraph: {
       title: "Iván Dujaut",
       description:
-        "Escribo casos sobre salud y seguros: reconstruyo el problema, los actores y los datos públicos, y termino en una decisión.",
+        "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión.",
       url: baseUrl,
       siteName: "Iván Dujaut",
       images: [
