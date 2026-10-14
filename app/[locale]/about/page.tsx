@@ -421,7 +421,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                   <ul className="ml-4 list-disc space-y-1">
                     <li>~100 primeros usuarios durante la fase de validación</li>
                     <li>
-                      Mejoras de onboarding que <strong>incrementaron el engagement ~40%</strong>
+                      Mejoras de onboarding que <strong>subieron la conversión ~40%</strong>
                     </li>
                     <li>Decisiones de roadmap discutidas de primera mano con los fundadores</li>
                   </ul>
@@ -436,7 +436,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                   <ul className="ml-4 list-disc space-y-1">
                     <li>~100 first users during the validation phase</li>
                     <li>
-                      Onboarding improvements that <strong>increased engagement ~40%</strong>
+                      Onboarding improvements that <strong>raised conversion ~40%</strong>
                     </li>
                     <li>Roadmap decisions discussed first-hand with the founders</li>
                   </ul>
