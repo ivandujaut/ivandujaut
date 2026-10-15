@@ -7,7 +7,7 @@ import { Cites, ReaderLabel, Tramo, TramoHeading } from "../_components/ui";
 
 /**
  * 07 · Lo que viene. Los pasos pasan a la izquierda; a la derecha, pegada, la
- * escena de las dos lecturas: la góndola que ve el Zubalero (coral) y el
+ * escena de las dos lecturas: la góndola que ve el Zubalero (magenta) y el
  * catálogo que lee el agente del comprador (azul). En "stock" la góndola se
  * vacía y el catálogo sigue diciendo que hay: ahí se separan las dos lecturas.
  * En "zubalero" aparece quien sí lo vio, y queda la pregunta de si eso le

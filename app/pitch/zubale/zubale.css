@@ -12,28 +12,33 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-/* Paleta propia. Dos acentos, uno por lector: coral para lo que ve una
-   persona (el cartel de precio de la góndola) y azul para lo que lee un
-   agente. Nada de los colores de Zubale. Va en el `<html>` para que `body`
+/* Paleta tomada de zubale.com (CSS y estilos renderizados, octubre 2026):
+   fondo claro #FAFBFD, azul marino #000859 para la tinta y las secciones
+   oscuras, azul de marca #0043FC y magenta #FF0096. Los dos acentos siguen
+   siendo uno por lector: azul para lo que lee una máquina y magenta para lo
+   que ve una persona. El magenta va oscurecido en texto y botones porque el
+   original no llega a 4.5:1 sobre blanco. Va en el `<html>` para que `body`
    también pinte el fondo debajo del alto extra de Lenis. */
 .zubale {
-  --bg: oklch(0.975 0.004 250);
-  --surface: oklch(0.995 0.002 250);
-  --surface-deep: oklch(0.955 0.006 250);
-  --ink: oklch(0.22 0.02 262);
-  --ink-dim: oklch(0.22 0.02 262 / 66%);
-  --ink-faint: oklch(0.22 0.02 262 / 32%);
-  --rule: oklch(0.22 0.02 262 / 11%);
-  --person: oklch(0.6 0.17 36);
-  --person-ink: oklch(0.5 0.16 36);
-  --person-soft: oklch(0.6 0.17 36 / 12%);
-  --agent: oklch(0.52 0.17 266);
-  --agent-ink: oklch(0.45 0.16 266);
-  --agent-soft: oklch(0.52 0.17 266 / 10%);
-  --ok: oklch(0.53 0.12 155);
-  --ok-soft: oklch(0.53 0.12 155 / 12%);
-  --risk: oklch(0.55 0.19 25);
-  --risk-soft: oklch(0.55 0.19 25 / 10%);
+  --bg: #fafbfd;
+  --surface: #ffffff;
+  --surface-deep: #f2f5ff;
+  --navy: #000859;
+  --ink: #000859;
+  --ink-dim: rgb(0 8 89 / 70%);
+  --ink-faint: rgb(0 8 89 / 40%);
+  --rule: rgb(0 8 89 / 10%);
+  --person: #d6007e;
+  --person-ink: #b0006a;
+  --person-soft: rgb(255 0 150 / 12%);
+  --agent: #0043fc;
+  --agent-ink: #0043fc;
+  --agent-soft: rgb(0 67 252 / 10%);
+  --mint: #67ffa7;
+  --ok: #00733a;
+  --ok-soft: rgb(0 115 58 / 12%);
+  --risk: #c2410c;
+  --risk-soft: rgb(194 65 12 / 10%);
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* Nombres que espera `ScrollProgress` de la plantilla. La barra va en
@@ -71,9 +76,9 @@ html.lenis body {
   text-wrap: pretty;
 }
 
-/* Título de portada: degradé sólo en el texto, de negro a gris. */
+/* Título de portada: degradé sólo en el texto, del azul marino a un gris azulado. */
 .zubale .hero-heading {
-  background-image: linear-gradient(to right, #000000, #666666);
+  background-image: linear-gradient(to right, var(--navy), #555b91);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;

@@ -7,7 +7,7 @@ import { ExampleBadge, ReaderLabel } from "../_components/ui";
 
 /**
  * Portada. Dice quién escribe y para qué, y enseña la gramática de toda la
- * página: el mismo pedido leído por una persona (coral) y por una máquina
+ * página: el mismo pedido leído por una persona (magenta) y por una máquina
  * (azul). Las dos lecturas coinciden en todo menos en la última fila, la de
  * la góndola, que aparece al final de la entrada: de esa fila trata la página.
  * La entrada corre al cargar porque es lo primero que se ve.
