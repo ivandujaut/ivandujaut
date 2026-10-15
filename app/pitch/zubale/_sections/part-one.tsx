@@ -1,5 +1,5 @@
 import { challenges, marketplace, problem, products, systems } from "../zubale.data";
-import { Cite, Tramo, TramoHeading } from "../_components/ui";
+import { Cite, Cites, Tramo, TramoHeading } from "../_components/ui";
 
 /** 01 · Qué resuelve: el costo de armar y entregar, y la respuesta de Zubale. */
 export function Problem() {
@@ -94,6 +94,10 @@ export function Products() {
       <p className="reveal mt-8 max-w-2xl text-sm text-(--ink-dim)">
         {products.clients}
         <Cite id={products.clientsSource} />
+      </p>
+      <p className="reveal mt-4 max-w-2xl rounded-2xl bg-(--agent-soft) p-6 text-base">
+        <strong className="font-semibold">{products.beyond.lead}</strong> {products.beyond.text}
+        <Cites ids={products.beyond.sources} />
       </p>
     </Tramo>
   );
