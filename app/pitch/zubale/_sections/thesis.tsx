@@ -26,7 +26,7 @@ export function Thesis() {
 
   return (
     <Tramo id="tesis">
-      <p className="reveal mono text-xs tracking-widest text-(--agent-ink) uppercase">
+      <p className="reveal mono text-xs tracking-widest text-(--ink-dim) uppercase">
         {thesis.index} <span aria-hidden>·</span> {thesis.eyebrow}
       </p>
       <div ref={ref}>
@@ -38,6 +38,13 @@ export function Thesis() {
                   {word}{" "}
                 </span>
               ))}
+            </span>
+          ))}
+        </p>
+        <p className="mt-6 max-w-3xl text-2xl font-semibold tracking-tight md:text-3xl">
+          {thesis.coda.split(" ").map((word, wi) => (
+            <span key={`coda-${wi}`} className="thesis-word">
+              {word}{" "}
             </span>
           ))}
         </p>

@@ -33,7 +33,7 @@ export function Problem() {
         </figcaption>
       </figure>
 
-      <p className="reveal mt-12 max-w-2xl rounded-2xl bg-(--person-soft) p-6 text-lg">
+      <p className="reveal mt-12 max-w-2xl rounded-2xl bg-(--surface-deep) p-6 text-lg">
         <strong className="font-semibold">{problem.answer.lead}</strong> {problem.answer.text}
         <Cite id={problem.answer.source} />
       </p>
@@ -68,7 +68,7 @@ export function Products() {
       <div className="reveal mt-12">
         <h3 className="text-sm font-semibold">
           {products.timeline.title}
-          <Cite id={products.timeline.source} />
+          <Cites ids={products.timeline.sources} />
         </h3>
         <ol className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {products.timeline.steps.map((s) => (
@@ -93,9 +93,9 @@ export function Products() {
       </div>
       <p className="reveal mt-8 max-w-2xl text-sm text-(--ink-dim)">
         {products.clients}
-        <Cite id={products.clientsSource} />
+        <Cites ids={products.clientsSources} />
       </p>
-      <p className="reveal mt-4 max-w-2xl rounded-2xl bg-(--agent-soft) p-6 text-base">
+      <p className="reveal mt-4 max-w-2xl rounded-2xl border border-(--rule) bg-(--surface) p-6 text-base">
         <strong className="font-semibold">{products.beyond.lead}</strong> {products.beyond.text}
         <Cites ids={products.beyond.sources} />
       </p>
@@ -124,7 +124,7 @@ export function Marketplace() {
                   <p className="font-semibold">{item.lead}</p>
                   <p className="mt-1 text-sm text-(--ink-dim)">
                     {item.text}
-                    <Cite id={item.source} />
+                    <Cites ids={item.sources} />
                   </p>
                 </li>
               ))}
@@ -155,9 +155,9 @@ export function Systems() {
             <p className="mono text-xs text-(--ink-dim)">
               {String(i + 1).padStart(2, "0")} <span aria-hidden>·</span> {lane.name}
             </p>
-            <ul className="mono mt-3 space-y-2 text-xs text-(--agent-ink)">
+            <ul className="mono mt-3 space-y-2 text-xs text-(--ink-dim)">
               {lane.items.map((item) => (
-                <li key={item} className="rounded-md bg-(--agent-soft) px-2 py-1">
+                <li key={item} className="rounded-md bg-(--surface-deep) px-2 py-1">
                   {item}
                 </li>
               ))}
@@ -172,7 +172,7 @@ export function Systems() {
             <dt className="text-sm font-semibold">{b.label}</dt>
             <dd className="mt-1 text-sm text-(--ink-dim)">
               {b.text}
-              <Cite id={b.source} />
+              <Cites ids={b.sources} />
             </dd>
           </div>
         ))}
@@ -203,12 +203,17 @@ export function Challenges() {
             <p className="mono text-sm text-(--ink-faint)">{String(i + 1).padStart(2, "0")}</p>
             <p className="text-base">
               {c.seen}
-              <Cite id={c.source} />
+              <Cites ids={c.sources} />
               {"note" in c && c.note ? (
                 <span className="ml-1 text-xs text-(--ink-faint)">({c.note})</span>
               ) : null}
             </p>
-            <p className="text-base font-medium text-(--agent-ink)">{c.ask}</p>
+            <p className="text-base font-medium">
+              <span className="mb-1 block text-xs font-semibold tracking-wide text-(--ink-dim) uppercase">
+                Lo que preguntaría
+              </span>
+              {c.ask}
+            </p>
           </li>
         ))}
       </ol>

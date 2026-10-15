@@ -14,9 +14,11 @@ import { CaseStudy, Close, OpenQuestions, Plan } from "./_sections/part-two";
  * link. Sale con `noindex, nofollow`, no está en el sitemap ni en la
  * navegación. La URL corta es `/zubale` (rewrite en `next.config.ts`).
  *
- * Dos partes: cómo funciona Zubale hoy (tramos 01 a 07) y una idea para
- * contrastar (08 a 11). La gramática visual es la misma en toda la página:
- * el pedido leído por una persona (coral) y por un agente (azul).
+ * Dos partes: cómo funciona Zubale hoy (tramos 01 a 06) y una idea para
+ * contrastar (07 a 11, desde lo que viene). La gramática visual es la misma
+ * en toda la página: el pedido como lo ve una persona (coral) y como queda
+ * escrito para una máquina (azul): hoy el sistema del súper, mañana el
+ * agente del comprador.
  */
 export const metadata: Metadata = {
   title: meta.title,
@@ -36,8 +38,8 @@ export default function ZubalePage() {
       <Marketplace />
       <Systems />
       <Challenges />
-      <WhatsNext />
       <PartDivider {...partTwo} />
+      <WhatsNext />
       <Thesis />
       <CaseStudy />
       <OpenQuestions />

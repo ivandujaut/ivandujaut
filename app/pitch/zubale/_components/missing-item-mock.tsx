@@ -139,9 +139,7 @@ export function MissingItemMock() {
         >
           <ReaderLabel who={mode} />
           {phase === "idle" ? (
-            <p className="mt-6 text-sm text-(--ink-dim)">
-              Todavía no pasó nada. Marcá el faltante en la app del Zubalero.
-            </p>
+            <p className="mt-6 text-sm text-(--ink-dim)">{mock.idle}</p>
           ) : mode === "person" ? (
             <div key="person" className="case-enter mt-4 space-y-3">
               <div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-(--person-soft) p-3 text-sm">
@@ -187,7 +185,7 @@ export function MissingItemMock() {
           ) : (
             <div key="agent" className="case-enter mono mt-4 space-y-3 text-xs">
               <div className="rounded-lg bg-(--agent-soft) p-3 text-(--agent-ink)">
-                <p className="text-(--ink-dim)">Zubale → agente del cliente</p>
+                <p className="text-(--ink-dim)">súper, vía Zubale → agente del cliente</p>
                 {mock.agentRequest.map((line) => (
                   <p key={line} className="break-words">
                     {line}
@@ -212,6 +210,56 @@ export function MissingItemMock() {
         </div>
       </div>
 
+      {/* Lo que queda escrito: hoy, una llamada; con la idea, la pregunta y
+          la decisión, y el catálogo corregido. Es donde las dos lecturas que
+          se separaron en el tramo 07 vuelven a coincidir. */}
+      <div className="mt-6 rounded-xl border border-(--agent-soft) p-4">
+        <ReaderLabel who="agent" label={mock.written.title} />
+        <div className="mono mt-3 grid gap-3 text-xs md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-6">
+          <div>
+            <p className="font-sans text-(--ink-dim)">{mock.written.today.label}</p>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {mock.written.today.states.map((s) => (
+                <li key={s} className="rounded-md bg-(--surface-deep) px-2 py-1 text-(--ink-dim)">
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="font-sans text-(--ink-dim)">{mock.written.proposed.label}</p>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {[...mock.written.proposed.asking, mock.written.proposed.done].map((s, i) => {
+                const lit = i < mock.written.proposed.asking.length ? phase !== "idle" : done;
+                return (
+                  <li
+                    key={s}
+                    className={cn(
+                      "rounded-md px-2 py-1 transition-colors duration-500",
+                      lit
+                        ? "bg-(--agent-soft) text-(--agent-ink)"
+                        : "border border-dashed border-(--ink-faint) text-(--ink-faint)",
+                    )}
+                  >
+                    {s}
+                  </li>
+                );
+              })}
+              <li
+                className={cn(
+                  "rounded-md px-2 py-1 transition-colors duration-500",
+                  phase === "idle"
+                    ? "bg-(--risk-soft) text-(--risk)"
+                    : "bg-(--agent-soft) text-(--agent-ink)",
+                )}
+              >
+                {phase === "idle" ? mock.written.catalog.before : mock.written.catalog.after}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Resultado */}
       <div aria-live="polite" className="mt-6 border-t border-(--rule) pt-4">
         {done ? (
@@ -230,6 +278,7 @@ export function MissingItemMock() {
             {mock.results.today} En este pedido falta: {missing?.name}.
           </p>
         )}
+        <p className="mt-3 text-xs text-(--ink-dim)">{mock.summary}</p>
       </div>
     </div>
   );
