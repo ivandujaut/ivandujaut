@@ -36,7 +36,7 @@ interface HeadingProps {
 export function TramoHeading({ index, eyebrow, children, compact, className }: HeadingProps) {
   return (
     <header className={cn("reveal max-w-3xl", className)}>
-      <p className="mono text-xs tracking-widest text-(--agent-ink) uppercase">
+      <p className="mono text-xs tracking-widest text-(--ink-dim) uppercase">
         {index} <span aria-hidden>·</span> {eyebrow}
       </p>
       <h2
@@ -84,8 +84,20 @@ export function ExampleBadge({ children }: { children: ReactNode }) {
   );
 }
 
-/** Rótulo de cada lector: un punto del color de su acento y el nombre. */
-export function ReaderLabel({ who, className }: { who: "person" | "agent"; className?: string }) {
+/**
+ * Rótulo de cada lector: un punto del color de su acento y el nombre. `label`
+ * nombra al lector concreto de un tramo (el sistema del súper, el agente del
+ * comprador) sin cambiar el color, que es lo que sostiene la gramática.
+ */
+export function ReaderLabel({
+  who,
+  label,
+  className,
+}: {
+  who: "person" | "agent";
+  label?: string;
+  className?: string;
+}) {
   return (
     <p
       className={cn(
@@ -101,7 +113,7 @@ export function ReaderLabel({ who, className }: { who: "person" | "agent"; class
           who === "person" ? "bg-(--person)" : "bg-(--agent)",
         )}
       />
-      {readers[who]}
+      {label ?? readers[who]}
     </p>
   );
 }

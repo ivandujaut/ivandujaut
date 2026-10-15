@@ -11,7 +11,13 @@ export function CaseStudy() {
       <TramoHeading index={caseStudy.index} eyebrow={caseStudy.eyebrow}>
         {caseStudy.heading}
       </TramoHeading>
-      <p className="reveal mt-6 max-w-2xl text-lg text-(--ink-dim)">{caseStudy.intro}</p>
+      <p className="reveal mt-6 max-w-2xl rounded-2xl border border-(--rule) bg-(--surface) p-6 text-lg">
+        <strong className="font-semibold">Objetivo.</strong> {caseStudy.objective}
+      </p>
+      <p className="reveal mt-6 max-w-2xl text-lg text-(--ink-dim)">
+        {caseStudy.intro}
+        <Cites ids={caseStudy.introSources} />
+      </p>
 
       <div className="reveal mt-10">
         <MissingItemMock />
@@ -22,9 +28,12 @@ export function CaseStudy() {
           <h3 className="text-lg font-semibold">{caseStudy.why.title}</h3>
           <ol className="mt-4 space-y-3 text-sm text-(--ink-dim)">
             {caseStudy.why.items.map((item, i) => (
-              <li key={item} className="flex gap-3">
+              <li key={item.text} className="flex gap-3">
                 <span className="mono text-(--ink-faint)">{i + 1}</span>
-                <span>{item}</span>
+                <span>
+                  {item.text}
+                  {"source" in item && item.source ? <Cite id={item.source} /> : null}
+                </span>
               </li>
             ))}
           </ol>
@@ -34,6 +43,7 @@ export function CaseStudy() {
           <p className="mt-4 text-sm">
             <strong className="font-semibold">Mirar primero:</strong> {caseStudy.metrics.north}
           </p>
+          <p className="mt-3 text-sm text-(--ink-dim)">{caseStudy.metrics.segments}</p>
           <p className="mt-3 text-sm text-(--ink-dim)">{caseStudy.metrics.guards}</p>
           <p className="mt-3 rounded-lg bg-(--risk-soft) p-3 text-sm">{caseStudy.metrics.cut}</p>
         </div>
@@ -74,7 +84,7 @@ export function OpenQuestions() {
             key={q.id}
             className="reveal rounded-2xl border-2 border-dashed border-(--ink-faint) bg-(--surface) p-6 md:p-10"
           >
-            <p className="mono text-sm text-(--agent-ink)">Pregunta {i + 1}</p>
+            <p className="mono text-sm text-(--ink-dim)">Pregunta {i + 1}</p>
             <h3 className="mt-3 max-w-3xl text-2xl font-semibold tracking-tight md:text-3xl">
               {q.question}
             </h3>
@@ -91,14 +101,14 @@ export function OpenQuestions() {
                     <li key={item} className="flex gap-3">
                       <span
                         aria-hidden
-                        className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-(--agent)"
+                        className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-(--ink-faint)"
                       />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="rounded-xl bg-(--person-soft) p-4">
+              <div className="rounded-xl bg-(--surface-deep) p-4">
                 <p className="text-sm font-semibold">Lo que necesito saber de adentro</p>
                 <p className="mt-2 text-sm">{q.inside}</p>
               </div>
@@ -117,9 +127,10 @@ export function Plan() {
       <TramoHeading index={plan.index} eyebrow={plan.eyebrow}>
         {plan.heading}
       </TramoHeading>
+      <p className="reveal mt-6 max-w-2xl text-lg text-(--ink-dim)">{plan.intro}</p>
 
-      <div className="reveal mt-10 max-w-3xl rounded-2xl bg-(--agent-soft) p-6">
-        <p className="text-xs font-medium tracking-wide text-(--agent-ink) uppercase">
+      <div className="reveal mt-10 max-w-3xl rounded-2xl border border-(--rule) bg-(--surface) p-6">
+        <p className="text-xs font-medium tracking-wide text-(--ink-dim) uppercase">
           {plan.north.label}
         </p>
         <p className="mt-2 text-2xl font-semibold">{plan.north.value}</p>
@@ -156,7 +167,7 @@ export function Plan() {
               href={p.href}
               data-ph="proof_click"
               data-ph-surface="zubale-proofs"
-              className="mt-4 text-sm font-semibold text-(--agent-ink) underline decoration-(--agent-soft) underline-offset-4 transition-colors hover:decoration-(--agent)"
+              className="mt-4 text-sm font-semibold underline decoration-(--ink-faint) underline-offset-4 transition-colors hover:decoration-(--ink)"
             >
               {p.hrefLabel}
             </Link>

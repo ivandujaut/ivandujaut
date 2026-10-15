@@ -36,8 +36,9 @@ html.lenis body {
   --risk-soft: oklch(0.55 0.19 25 / 10%);
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
 
-  /* Nombres que espera `ScrollProgress` de la plantilla. */
-  --pitch-accent: var(--agent);
+  /* Nombres que espera `ScrollProgress` de la plantilla. La barra va en
+     tinta: el azul queda reservado para lo que lee una máquina. */
+  --pitch-accent: var(--ink);
   --pitch-line: var(--rule);
 
   background: var(--bg);
@@ -89,7 +90,7 @@ html.lenis body {
 }
 
 .zubale .nav-dot.is-active {
-  background: var(--agent);
+  background: var(--ink);
   transform: scale(1.6);
 }
 
@@ -147,28 +148,50 @@ html.lenis body {
 }
 
 /* Escena del tramo 07: la góndola se vacía mientras el catálogo sigue
-   diciendo que hay. El estado lo pone el scroll en `data-stage`. */
+   diciendo que hay ("stock"), y después aparece quien sí lo vio y la
+   pregunta de si le llega al agente ("zubalero"). El estado lo pone el
+   scroll en `data-stage`. */
 .zubale .shelf-item,
 .zubale .shelf-empty,
-.zubale .mismatch {
+.zubale .shelf-marked,
+.zubale .mismatch,
+.zubale .agent-question {
   transition:
     opacity 700ms var(--ease),
     transform 700ms var(--ease);
 }
 
 .zubale .next-scene .shelf-empty,
-.zubale .next-scene .mismatch {
+.zubale .next-scene .shelf-marked,
+.zubale .next-scene .mismatch,
+.zubale .next-scene .agent-question {
   opacity: 0;
 }
 
-.zubale .next-scene[data-stage="stock"] .shelf-item {
+.zubale .next-scene .shelf-marked,
+.zubale .next-scene .agent-question {
+  transform: translateY(0.375rem);
+}
+
+.zubale .next-scene:is([data-stage="stock"], [data-stage="zubalero"]) .shelf-item {
   opacity: 0;
   transform: translateY(-0.5rem);
 }
 
-.zubale .next-scene[data-stage="stock"] .shelf-empty,
-.zubale .next-scene[data-stage="stock"] .mismatch {
+.zubale .next-scene:is([data-stage="stock"], [data-stage="zubalero"]) .shelf-empty,
+.zubale .next-scene:is([data-stage="stock"], [data-stage="zubalero"]) .mismatch {
   opacity: 1;
+}
+
+.zubale .next-scene[data-stage="zubalero"] .shelf-marked,
+.zubale .next-scene[data-stage="zubalero"] .agent-question {
+  opacity: 1;
+  transform: none;
+}
+
+/* En "zubalero" la pregunta toma el lugar del aviso. */
+.zubale .next-scene[data-stage="zubalero"] .mismatch {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -177,8 +200,28 @@ html.lenis body {
   }
 
   .zubale .next-scene .shelf-empty,
-  .zubale .next-scene .mismatch {
+  .zubale .next-scene .shelf-marked,
+  .zubale .next-scene .mismatch,
+  .zubale .next-scene .agent-question {
     opacity: 1;
+    transform: none;
+  }
+
+  /* Con todo a la vista, el aviso y la pregunta van uno debajo del otro. */
+  .zubale .next-scene .scene-slot {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  .zubale .next-scene .mismatch {
+    position: static;
+  }
+
+  /* Sin el tramo fijo, la barra que acompaña al paso activo no se mueve:
+     mejor no mostrarla clavada en el primero. */
+  .zubale .order-marker {
+    display: none !important;
   }
 }
 
