@@ -152,7 +152,7 @@ export const nav = [
 ] as const;
 
 /**
- * Rótulos de las dos lecturas que recorren la página. Coral: lo que pasa en
+ * Rótulos de las dos lecturas que recorren la página. Magenta: lo que pasa en
  * la tienda. Azul: lo que queda escrito para una máquina. Hoy esa máquina es
  * el sistema del súper; en la segunda parte, el agente del comprador. Los
  * dos colores se usan sólo para esto.
@@ -185,7 +185,7 @@ export const hero = {
       href: "#puesto",
     },
   ],
-  cue: "Un agente de IA compra por una persona: no recorre la góndola, lee lo que el súper publica. Por eso el mismo pedido aparece dos veces en toda la página: en coral, lo que pasa en la tienda; en azul, lo que queda escrito para una máquina. Hoy esa máquina es el sistema del súper; mañana, el agente del comprador. La idea de la segunda parte sale de la última fila, la del queso que no está.",
+  cue: "Un agente de IA compra por una persona: no recorre la góndola, lee lo que el súper publica. Por eso el mismo pedido aparece dos veces en toda la página: en magenta, lo que pasa en la tienda; en azul, lo que queda escrito para una máquina. Hoy esa máquina es el sistema del súper; mañana, el agente del comprador. La idea de la segunda parte sale de la última fila, la del queso que no está.",
   preview: {
     person: ["Pedido de 6 productos", "Lo arma Lucía en la sucursal"],
     agent: ['"items": 6', '"status": "PICKING_STARTED"'],
@@ -847,7 +847,7 @@ export const close = {
   sourcesLine: "Cada dato de esta página tiene su fuente.",
   sourcesToggle: "Ver las {n} fuentes públicas",
   footnote:
-    "Las cifras del pedido y del caso son datos de ejemplo. Página sin marca ni material de Zubale.",
+    "Las cifras del pedido y del caso son datos de ejemplo. La paleta se toma de la de Zubale; la página no usa su logo ni material propio.",
 };
 
 /** Fuentes únicas, para el pie. */

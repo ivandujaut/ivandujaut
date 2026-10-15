@@ -129,11 +129,11 @@ export function PartDivider({
   note: string;
 }) {
   return (
-    <section className="relative border-y border-(--rule) bg-(--surface)">
+    <section className="relative bg-(--navy) text-white">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-16 md:px-10 md:py-20">
-        <p className="reveal mono text-xs tracking-widest text-(--ink-dim) uppercase">{label}</p>
+        <p className="reveal mono text-xs tracking-widest text-(--mint) uppercase">{label}</p>
         <h2 className="reveal mt-3 text-4xl font-semibold tracking-tight md:text-6xl">{title}</h2>
-        <p className="reveal mt-6 max-w-2xl text-lg text-(--ink-dim)">{note}</p>
+        <p className="reveal mt-6 max-w-2xl text-lg text-white/75">{note}</p>
       </Reveal>
     </section>
   );

@@ -16,7 +16,7 @@ import { CaseStudy, Close, OpenQuestions, Plan } from "./_sections/part-two";
  *
  * Dos partes: cómo funciona Zubale hoy (tramos 01 a 06) y una idea para
  * contrastar (07 a 11, desde lo que viene). La gramática visual es la misma
- * en toda la página: el pedido como lo ve una persona (coral) y como queda
+ * en toda la página: el pedido como lo ve una persona (magenta) y como queda
  * escrito para una máquina (azul): hoy el sistema del súper, mañana el
  * agente del comprador.
  */
