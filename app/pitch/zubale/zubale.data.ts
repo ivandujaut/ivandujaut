@@ -47,7 +47,8 @@ export type SourceId =
   | "ucp"
   | "forter"
   | "modo"
-  | "oos";
+  | "oos"
+  | "referidos";
 
 export const sources: Record<SourceId, string> = {
   zubaleHome: "https://www.zubale.com/",
@@ -99,6 +100,7 @@ export const sources: Record<SourceId, string> = {
     "https://www.prnewswire.com/news-releases/forter-turns-the-ai-shopping-agent-surge-into-a-secure-revenue-channel-for-merchants-302906333.html",
   modo: "https://www.diegoceredi.com/blog/pagos-agenticos-argentina-mercado-libre-tiendanube",
   oos: "https://www.supermarketnews.com/grocery-operations/online-shoppers-go-elsewhere-when-items-out-of-stock",
+  referidos: "https://www.zubalero.com/mx/referidos/",
 };
 
 export const author = {
@@ -262,6 +264,11 @@ export const products = {
   clients:
     "Clientes que nombra: Walmart, Cencosud, Chedraui, Colsubsidio y Unidrogas, entre otros. Supermercados grandes, sobre todo.",
   clientsSource: "zubaleHome" as SourceId,
+  beyond: {
+    lead: "No es sólo súper.",
+    text: "También trabaja con farmacias (Unidrogas, en Colombia), tiendas departamentales y de moda (Coppel y Converse aparecen en sus búsquedas de Zubaleros), y opera en dark stores y centros de distribución. A veces sólo entrega, sin armar. El volumen, igual, está en el supermercado.",
+    sources: ["bamboo60", "referidos", "unidrogas"] as SourceId[],
+  },
 };
 
 /** 03 · El pedido de punta a punta (el corazón de la primera parte) */
@@ -509,7 +516,7 @@ export const thesis = {
     {
       id: "persona",
       title: "Zubale tiene a la persona que lo ve",
-      text: "Gente en la tienda, una app que reporta cada paso y el WhatsApp del cliente, en la marca del súper. Ningún competidor junta las tres.",
+      text: "Gente en la tienda, una app que reporta cada paso y el WhatsApp del cliente, en la marca del comercio. Ningún competidor junta las tres.",
     },
     {
       id: "momento",
@@ -517,6 +524,11 @@ export const thesis = {
       text: "Es el único punto del pedido donde todavía hace falta una decisión del comprador. Hoy se resuelve con una llamada.",
     },
   ],
+  scope: {
+    lead: "Por qué el súper primero.",
+    text: "Zubale no es sólo súper, pero el súper es el caso más difícil para un agente: canasta grande, perecederos y faltantes en cada pedido. Si funciona ahí, funciona en el resto. En farmacia el faltante también existe y reemplazar es más delicado: ahí la regla tiene que ser más conservadora.",
+    sources: ["oos", "unidrogas"] as SourceId[],
+  },
 };
 
 /** 09 · El caso: falta en góndola (mock interactivo) */

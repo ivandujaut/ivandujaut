@@ -3,7 +3,7 @@
 import { thesis } from "../zubale.data";
 import { gsap } from "../../_template/lib/gsap";
 import { useGsapSection } from "../../_template/lib/use-gsap-section";
-import { Tramo } from "../_components/ui";
+import { Cites, Tramo } from "../_components/ui";
 
 /**
  * 08 · La idea. La frase grande de la página: arranca apagada y cada palabra
@@ -55,6 +55,12 @@ export function Thesis() {
           </article>
         ))}
       </div>
+
+      <p className="reveal mt-8 max-w-3xl text-base text-(--ink-dim)">
+        <strong className="font-semibold text-(--ink)">{thesis.scope.lead}</strong>{" "}
+        {thesis.scope.text}
+        <Cites ids={thesis.scope.sources} />
+      </p>
     </Tramo>
   );
 }
