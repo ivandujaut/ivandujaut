@@ -123,6 +123,8 @@ const nextConfig: NextConfig = {
       // Brinta no sale de `pitches/`: es una página hecha a medida en
       // `app/pitch/brinta`, pero se comparte igual por la URL corta.
       { source: "/brinta", destination: "/pitch/brinta" },
+      // Zubale, igual que Brinta: página a medida en `app/pitch/zubale`.
+      { source: "/zubale", destination: "/pitch/zubale" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",

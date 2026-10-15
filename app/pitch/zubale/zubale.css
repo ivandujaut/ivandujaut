@@ -1,0 +1,205 @@
+/* Lenis: sin esto el scroll nativo y el suave pelean por el alto del documento. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Paleta propia. Dos acentos, uno por lector: coral para lo que ve una
+   persona (el cartel de precio de la góndola) y azul para lo que lee un
+   agente. Nada de los colores de Zubale. Va en el `<html>` para que `body`
+   también pinte el fondo debajo del alto extra de Lenis. */
+.zubale {
+  --bg: oklch(0.975 0.004 250);
+  --surface: oklch(0.995 0.002 250);
+  --surface-deep: oklch(0.955 0.006 250);
+  --ink: oklch(0.22 0.02 262);
+  --ink-dim: oklch(0.22 0.02 262 / 66%);
+  --ink-faint: oklch(0.22 0.02 262 / 32%);
+  --rule: oklch(0.22 0.02 262 / 11%);
+  --person: oklch(0.6 0.17 36);
+  --person-ink: oklch(0.5 0.16 36);
+  --person-soft: oklch(0.6 0.17 36 / 12%);
+  --agent: oklch(0.52 0.17 266);
+  --agent-ink: oklch(0.45 0.16 266);
+  --agent-soft: oklch(0.52 0.17 266 / 10%);
+  --ok: oklch(0.53 0.12 155);
+  --ok-soft: oklch(0.53 0.12 155 / 12%);
+  --risk: oklch(0.55 0.19 25);
+  --risk-soft: oklch(0.55 0.19 25 / 10%);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Nombres que espera `ScrollProgress` de la plantilla. */
+  --pitch-accent: var(--agent);
+  --pitch-line: var(--rule);
+
+  background: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+.zubale body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.zubale ::selection {
+  background: var(--agent-soft);
+}
+
+.zubale .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.zubale h1,
+.zubale h2,
+.zubale h3 {
+  text-wrap: balance;
+}
+
+.zubale p,
+.zubale li {
+  text-wrap: pretty;
+}
+
+/* Título de portada: degradé sólo en el texto, de negro a gris. */
+.zubale .hero-heading {
+  background-image: linear-gradient(to right, #000000, #666666);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.zubale .nav-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--ink-faint);
+  transition:
+    background-color 400ms var(--ease),
+    transform 400ms var(--ease);
+}
+
+.zubale .nav-dot.is-active {
+  background: var(--agent);
+  transform: scale(1.6);
+}
+
+/* Botones: estados completos (hover, active, focus). */
+.zubale .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  transition:
+    transform 500ms var(--ease),
+    background-color 500ms var(--ease),
+    opacity 500ms var(--ease);
+}
+
+.zubale .btn.btn-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.zubale .btn:hover {
+  transform: translateY(-1px);
+}
+
+.zubale .btn:active {
+  transform: scale(0.98);
+}
+
+.zubale .btn:focus-visible,
+.zubale a:focus-visible,
+.zubale summary:focus-visible {
+  outline: 2px solid var(--agent);
+  outline-offset: 2px;
+}
+
+.zubale .btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Filas del pedido (tramo 03). En escritorio las enciende la timeline del
+   tramo fijo; en celular, cada una al cruzar el centro de la pantalla. */
+.zubale .order-row {
+  transition: opacity 500ms var(--ease);
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .zubale .order-row:not(.is-active) {
+    opacity: 0.35;
+  }
+}
+
+/* Escena del tramo 07: la góndola se vacía mientras el catálogo sigue
+   diciendo que hay. El estado lo pone el scroll en `data-stage`. */
+.zubale .shelf-item,
+.zubale .shelf-empty,
+.zubale .mismatch {
+  transition:
+    opacity 700ms var(--ease),
+    transform 700ms var(--ease);
+}
+
+.zubale .next-scene .shelf-empty,
+.zubale .next-scene .mismatch {
+  opacity: 0;
+}
+
+.zubale .next-scene[data-stage="stock"] .shelf-item {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+}
+
+.zubale .next-scene[data-stage="stock"] .shelf-empty,
+.zubale .next-scene[data-stage="stock"] .mismatch {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zubale .next-scene .shelf-item {
+    opacity: 0;
+  }
+
+  .zubale .next-scene .shelf-empty,
+  .zubale .next-scene .mismatch {
+    opacity: 1;
+  }
+}
+
+/* Mock del caso: transiciones de cada paso. */
+.zubale .case-enter {
+  animation: case-enter 600ms var(--ease) both;
+}
+
+@keyframes case-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zubale .case-enter {
+    animation: none;
+  }
+}
