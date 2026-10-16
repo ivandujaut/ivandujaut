@@ -166,7 +166,7 @@ export const hero = {
   kicker: "Zubale, leída desde afuera",
   title: "Si los agentes de IA hacen el súper,",
   titleAccent: "van a elegir al que no les mienta sobre la góndola.",
-  lede: "Soy Iván Dujaut. Quiero trabajar en Zubale resolviendo problemas del negocio con la herramienta que haga falta: datos, producto, procesos o código. Armé esta página para entender cómo funciona Zubale hoy y traer una idea para discutir.",
+  lede: "Soy Iván Dujaut. Quiero trabajar en Zubale resolviendo problemas del negocio: entender qué pasa, decidir qué vale la pena cambiar y lograr que funcione, con datos, producto y procesos. Armé esta página para entender cómo funciona Zubale hoy y traer una idea para discutir.",
   byline: "Octubre de 2026",
   summary: [
     {
@@ -784,7 +784,7 @@ export const plan = {
       subtitle: "Entender y medir",
       items: [
         "Hacer el alta de Zubalero de punta a punta, armar pedidos en un turno y estar con operaciones en Vicente López en el pico de fin de año.",
-        "Recorrer el pedido en el código, de la integración al pago.",
+        "Recorrer el pedido de punta a punta con ingeniería y operaciones, de la integración del súper al pago del Zubalero.",
         "Línea de base: faltantes, tiempo para decidir, llamadas sin respuesta, costo de mensajes.",
         "Una mejora chica y visible para Argentina, como el alta y el cobro con datos locales (DNI, CUIT, CBU) en vez de RFC y CLABE, armada como configuración por país.",
       ],
@@ -823,7 +823,7 @@ export const plan = {
       {
         id: "fiji",
         title: "FIJI, en Prizmstack",
-        text: "Un modelo que valuaba inmobiliarias de EE.UU. en planillas de expertos, convertido en un motor con tests: de dos días a menos de diez minutos, 120 dueños usándolo.",
+        text: "Un modelo que valuaba inmobiliarias de EE.UU. en planillas de expertos, convertido en una herramienta que da siempre el mismo número: de dos días a menos de diez minutos, 120 dueños usándolo.",
         href: "/about",
         hrefLabel: "Ver recorrido",
       },
