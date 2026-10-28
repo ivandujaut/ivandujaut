@@ -125,6 +125,8 @@ const nextConfig: NextConfig = {
       { source: "/brinta", destination: "/pitch/brinta" },
       // Zubale, igual que Brinta: página a medida en `app/pitch/zubale`.
       { source: "/zubale", destination: "/pitch/zubale" },
+      // La Caja, igual: página a medida en `app/pitch/lacaja`.
+      { source: "/lacaja", destination: "/pitch/lacaja" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",
