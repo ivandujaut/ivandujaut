@@ -1,5 +1,5 @@
 /**
- * Pieza para Zubale (Product Engineer, octubre 2026). Todo el texto y todos
+ * Pieza para Zubale (proceso de octubre 2026). Todo el texto y todos
  * los números de la página viven acá; cada cifra real tiene su fuente en
  * `sources` y en la hoja de hechos (`data/zubale/facts.md`, fuera del repo).
  * Las cifras del pedido y del caso son inventadas y la página las rotula como
@@ -132,7 +132,7 @@ export const author = {
 export const meta = {
   title: "Zubale, leída desde afuera",
   description:
-    "Una lectura de Zubale para la entrevista de Product Engineer: cómo funciona hoy y una idea para el momento en que falta un producto en la góndola.",
+    "Una lectura de Zubale: cómo funciona hoy y una idea para el momento en que falta un producto en la góndola.",
 };
 
 export const nav = [
@@ -147,7 +147,7 @@ export const nav = [
   { id: "tesis", label: "La idea" },
   { id: "caso", label: "Un primer paso" },
   { id: "preguntas", label: "Preguntas abiertas" },
-  { id: "puesto", label: "Desde el puesto" },
+  { id: "arranque", label: "Cómo arrancaría" },
   { id: "cierre", label: "Cierre" },
 ] as const;
 
@@ -166,7 +166,7 @@ export const hero = {
   kicker: "Zubale, leída desde afuera",
   title: "Si los agentes de IA hacen el súper,",
   titleAccent: "van a elegir al que no les mienta sobre la góndola.",
-  lede: "Soy Iván Dujaut y me postulo como Product Engineer en Zubale, en Argentina. Armé esta página para llegar a la entrevista entendiendo el negocio y con una idea para discutir.",
+  lede: "Soy Iván Dujaut. Quiero trabajar en Zubale resolviendo problemas del negocio con la herramienta que haga falta: datos, producto, procesos o código. Armé esta página para entender cómo funciona Zubale hoy y traer una idea para discutir.",
   byline: "Octubre de 2026",
   summary: [
     {
@@ -180,9 +180,9 @@ export const hero = {
       href: "#caso",
     },
     {
-      label: "Qué haría en el puesto",
+      label: "Cómo arrancaría",
       text: "Medir el pedido perfecto, probar la idea en una tienda y, a los 90 días, escalarla o apagarla.",
-      href: "#puesto",
+      href: "#arranque",
     },
   ],
   cue: "Un agente de IA compra por una persona: no recorre la góndola, lee lo que el súper publica. Por eso el mismo pedido aparece dos veces en toda la página: en magenta, lo que pasa en la tienda; en azul, lo que queda escrito para una máquina. Hoy esa máquina es el sistema del súper; mañana, el agente del comprador. La idea de la segunda parte sale de la última fila, la del queso que no está.",
@@ -306,7 +306,7 @@ export const products = {
     },
     {
       value: "+100 M",
-      label: "de pedidos completados, según el aviso de este puesto",
+      label: "de pedidos completados, según sus avisos de empleo",
       source: "jobPost" as SourceId,
     },
   ],
@@ -432,7 +432,7 @@ export const systems = {
   eyebrow: "Con qué lo hacen",
   heading: "Un núcleo de eventos con años encima y una capa nueva con IA.",
   intro:
-    "En simple: un núcleo con años encima y una capa nueva en TypeScript y Python, que es donde trabajaría este puesto. Abajo, los nombres que aparecen en su página de estado, su API, su GitHub y sus avisos, en el orden del pedido.",
+    "En simple: un núcleo con años encima y una capa nueva en TypeScript y Python. Abajo, los nombres que aparecen en su página de estado, su API, su GitHub y sus avisos, en el orden del pedido.",
   lanes: [
     { name: "Entrada", items: ["Orc (integraciones)", "Quest", "API v3"] },
     { name: "Asignación", items: ["Allocator", "Order Handler", "Zoe (manual)", "Marketplace"] },
@@ -765,13 +765,13 @@ export const questions = {
   ],
 };
 
-/** 11 · Cómo lo haría desde el puesto */
+/** 11 · Cómo arrancaría: la métrica, el plan de 90 días y las pruebas */
 export const plan = {
   index: "11",
-  eyebrow: "Desde el puesto",
-  heading: "Cómo lo haría como Product Engineer.",
+  eyebrow: "Cómo arrancaría",
+  heading: "Entender, probar y decidir en 90 días.",
   intro:
-    "El aviso pide decidir qué vale la pena construir, construirlo y lograr que se use, de la dirección a operaciones. Así lo haría en los primeros 90 días.",
+    "Lo que me interesa es el problema, no la herramienta: decidir qué vale la pena resolver, resolverlo con lo que haga falta y lograr que se use, de la dirección a operaciones. Así encararía los primeros 90 días.",
   north: {
     label: "La métrica que propondría mirar primero",
     value: "Tasa de pedido perfecto",
@@ -840,7 +840,7 @@ export const plan = {
 
 export const close = {
   heading: "Es una lectura de afuera.",
-  body: "Me postulo como Product Engineer en Zubale, en Argentina, y la quiero contrastar con lo que ven adentro: qué parte de la idea tiene sentido con lo que Zubale realmente resuelve, qué está mal y qué no se puede ver desde acá. Lo seguimos en la entrevista; si antes quieren marcarme algo, escribime.",
+  body: "La quiero contrastar con lo que ven adentro: qué parte de la idea tiene sentido con lo que Zubale realmente resuelve, qué está mal y qué no se puede ver desde acá. Me gustaría seguirla en una conversación; si antes quieren marcarme algo, escribime.",
   emailLabel: "Escribime",
   siteLabel: "Ver mi trabajo publicado",
   siteHref: "/",

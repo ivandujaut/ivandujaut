@@ -120,10 +120,10 @@ export function OpenQuestions() {
   );
 }
 
-/** 11 · Desde el puesto: la métrica, el plan y las pruebas. */
+/** 11 · Cómo arrancaría: la métrica, el plan y las pruebas. */
 export function Plan() {
   return (
-    <Tramo id="puesto" deep>
+    <Tramo id="arranque" deep>
       <TramoHeading index={plan.index} eyebrow={plan.eyebrow}>
         {plan.heading}
       </TramoHeading>
