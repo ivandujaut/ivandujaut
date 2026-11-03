@@ -8,25 +8,30 @@
    ============================================================ */
 
 :root {
+  /* Papel y tinta: neutros tibios en vez del gris de fábrica de shadcn.
+     El tono (h 55-85) es bajo en croma a propósito: se lee como papel, no como
+     color, y deja al violeta del casebook como el único acento del sitio. */
+
   /* Surfaces */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --background: oklch(0.982 0.007 85);
+  --foreground: oklch(0.21 0.014 60);
+  --card: oklch(0.995 0.004 85);
+  --card-foreground: oklch(0.21 0.014 60);
+  --popover: oklch(0.995 0.004 85);
+  --popover-foreground: oklch(0.21 0.014 60);
 
   /* Brand / actions */
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.25 0.018 55);
+  --primary-foreground: oklch(0.982 0.007 85);
+  --secondary: oklch(0.948 0.01 80);
+  --secondary-foreground: oklch(0.25 0.018 55);
 
-  /* Subtle */
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Subtle. `--muted-foreground` queda en 5,7:1 sobre el fondo (el de fábrica
+     rozaba el 4,5:1), porque es el color de casi todo el texto secundario. */
+  --muted: oklch(0.948 0.01 80);
+  --muted-foreground: oklch(0.5 0.018 65);
+  --accent: oklch(0.935 0.012 80);
+  --accent-foreground: oklch(0.25 0.018 55);
 
   /* Casebook: el único acento de color del sitio, y vive sólo en esa sección.
      El resto del portfolio es deliberadamente neutro; el casebook es material
@@ -37,21 +42,86 @@
   --casebook-soft: oklch(0.52 0.176 277 / 10%);
 
   /* States */
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(0.54 0.19 33);
 
   /* Borders, inputs, focus */
-  --border: oklch(0.922 0 0);
+  --border: oklch(0.9 0.012 80);
   /* Sombra de los bordes de una tabla desplazable. Más marcada que `--border`
      a propósito: es una señal de que hay contenido cortado, no una línea. */
   --table-scroll-shadow: oklch(0 0 0 / 12%);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --input: oklch(0.88 0.014 80);
+  --ring: oklch(0.6 0.03 65);
 
-  /* Geometry */
-  --radius: 0.625rem;
+  /* Geometry. Esquinas blandas: con 0.75rem la escala queda en sm 8px,
+     md 10px (botones), lg 12px (cards e imágenes) y xl 16px. */
+  --radius: 0.75rem;
 }
 
 .dark {
+  /* Tinta de noche: el mismo papel invertido, con el negro tibio en vez de gris. */
+  --background: oklch(0.18 0.012 90);
+  --foreground: oklch(0.94 0.012 85);
+  --card: oklch(0.22 0.012 85);
+  --card-foreground: oklch(0.94 0.012 85);
+  --popover: oklch(0.22 0.012 85);
+  --popover-foreground: oklch(0.94 0.012 85);
+  --primary: oklch(0.92 0.014 85);
+  --primary-foreground: oklch(0.2 0.012 85);
+  --secondary: oklch(0.27 0.012 80);
+  --secondary-foreground: oklch(0.94 0.012 85);
+  --muted: oklch(0.27 0.012 80);
+  --muted-foreground: oklch(0.72 0.018 75);
+  --accent: oklch(0.27 0.012 80);
+  --accent-foreground: oklch(0.94 0.012 85);
+  --destructive: oklch(0.7 0.17 30);
+  /* En oscuro el violeta sube de luminosidad para mantener el contraste. */
+  --casebook: oklch(0.76 0.14 277);
+  --casebook-foreground: oklch(0.205 0 0);
+  --casebook-soft: oklch(0.76 0.14 277 / 16%);
+  --border: oklch(0.94 0.02 85 / 11%);
+  /* En oscuro la sombra negra no se ve contra el fondo: se invierte a luz. */
+  --table-scroll-shadow: oklch(1 0 0 / 16%);
+  --input: oklch(0.94 0.02 85 / 16%);
+  --ring: oklch(0.58 0.025 70);
+}
+
+/* ============================================================
+   Páginas de pitch: conservan los tokens anteriores
+   ============================================================ */
+
+/* Cada pitch está diseñado a mano para su empresa y cuelga de este mismo
+   archivo, así que la paleta y el radio del portfolio no tienen que llegarle.
+   Brinta, La Caja y Zubale marcan su `<html>` con su nombre; la plantilla de
+   `/pitch/[company]` envuelve todo en `.pitch.dark` (y pone `dark` también en
+   el `<html>`, de ahí el `:has`). Estos son los valores que
+   tenían antes del cambio del 03/11/2026. */
+:root:is(.brinta, .lacaja, .zubale),
+:root:has(.pitch),
+.pitch {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+}
+
+:root:is(.brinta, .lacaja, .zubale).dark,
+:root:has(.pitch).dark,
+.pitch.dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -67,13 +137,7 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  /* En oscuro el violeta sube de luminosidad para mantener el contraste. */
-  --casebook: oklch(0.76 0.14 277);
-  --casebook-foreground: oklch(0.205 0 0);
-  --casebook-soft: oklch(0.76 0.14 277 / 16%);
   --border: oklch(1 0 0 / 10%);
-  /* En oscuro la sombra negra no se ve contra el fondo: se invierte a luz. */
-  --table-scroll-shadow: oklch(1 0 0 / 16%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 }
@@ -135,6 +199,15 @@
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
+  }
+
+  /* Títulos en la serif, texto corrido en la sans. Alegreya ya era la voz de
+     los casos, el casebook y research; esto la extiende a todos los títulos
+     del portfolio. Va en la capa base, así que un `font-mono` o `font-sans`
+     puesto en el título le gana. Los pitches traen su propia tipografía y
+     quedan afuera; donde no hay serif cargada (`/stats`) cae en la sans. */
+  :where(h1, h2, h3, h4):not(:where(.brinta, .lacaja, .zubale, .pitch) *) {
+    font-family: var(--font-serif, var(--font-sans)), Georgia, serif;
   }
 
   ::selection {

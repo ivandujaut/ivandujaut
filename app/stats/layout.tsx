@@ -1,5 +1,5 @@
 import "../globals.css";
-import { Geist_Mono, Figtree } from "next/font/google";
+import { Archivo, Chivo_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 
 /**
@@ -16,13 +16,13 @@ import type { ReactNode } from "react";
  * una sola persona.
  */
 
-const figTree = Figtree({
+const archivo = Archivo({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const chivoMono = Chivo_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
@@ -31,7 +31,7 @@ const geistMono = Geist_Mono({
 export default function StatsLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
-      <body className={`${figTree.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${archivo.variable} ${chivoMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

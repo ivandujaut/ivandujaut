@@ -7,11 +7,14 @@ import { Share08Icon, LinkedinIcon, Mail01Icon, NewTwitterIcon } from "@hugeicon
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Check } from "@/components/animate-ui/icons/check";
 import { Copy } from "@/components/animate-ui/icons/copy";
+import { cn } from "@/lib/utils";
 
 interface ShareLinkButtonProps {
   url?: string;
   title?: string;
   className?: string;
+  /** Clases extra para el botón, no para el contenedor (p. ej. otro padding). */
+  triggerClassName?: string;
   /**
    * Si es `true`, el label se muestra en todos los breakpoints.
    * Por defecto el label se oculta en mobile (`< sm:`) y aparece desde `sm:`.
@@ -33,6 +36,7 @@ export function ShareLinkButton({
   url,
   title,
   className,
+  triggerClassName,
   alwaysShowLabel = false,
 }: ShareLinkButtonProps) {
   const [copied, setCopied] = useState(false);
@@ -117,7 +121,10 @@ export function ShareLinkButton({
         aria-label={triggerLabel}
         aria-haspopup="menu"
         aria-expanded={menuOpen}
-        className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted"
+        className={cn(
+          "inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted",
+          triggerClassName,
+        )}
       >
         {copied ? (
           <Check

@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Figtree } from "next/font/google";
+import { Alegreya, Archivo } from "next/font/google";
 import type { Metadata } from "next";
 import esMessages from "@/messages/es.json";
 
@@ -22,8 +22,14 @@ import esMessages from "@/messages/es.json";
  * `not-found.tsx` del segmento, que siguen traduciéndose.
  */
 
-const figTree = Figtree({
+const archivo = Archivo({
   variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const alegreya = Alegreya({
+  variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
 });
@@ -45,7 +51,9 @@ const enlaces = [
 export default function GlobalNotFound() {
   return (
     <html lang="es">
-      <body className={`${figTree.variable} bg-background text-foreground antialiased`}>
+      <body
+        className={`${archivo.variable} ${alegreya.variable} bg-background text-foreground antialiased`}
+      >
         <main className="mx-auto flex min-h-svh max-w-2xl flex-col justify-center px-6 py-24">
           <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             404
