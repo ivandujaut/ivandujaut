@@ -74,7 +74,7 @@ export function Hero() {
         <AnimateIcon animateOnHover className="inline-flex">
           <Link
             href="/projects"
-            className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-1.5 rounded-md border border-transparent bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
           >
             <span>{t("ctas.work")}</span>
             <ArrowRight size={16} strokeWidth={1.5} aria-hidden />
