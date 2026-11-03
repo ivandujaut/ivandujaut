@@ -1,5 +1,5 @@
 import "../globals.css";
-import { Geist_Mono, Figtree, Source_Serif_4 } from "next/font/google";
+import { Alegreya, Archivo, Chivo_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -35,19 +35,25 @@ import type { Metadata, Viewport } from "next";
  * `app/layout.tsx` arriba de todo.
  */
 
-const figTree = Figtree({
+/*
+ * Las tres familias son de fundiciones argentinas: Archivo y Chivo Mono de
+ * Omnibus-Type, Alegreya de Huerta Tipográfica (pensada para texto largo, que
+ * es lo que son los casos). Las tres son variables: `font-semibold` (600) sale
+ * del archivo, no de un bold sintetizado.
+ */
+const archivo = Archivo({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const chivoMono = Chivo_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
+const alegreya = Alegreya({
   variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
@@ -153,7 +159,7 @@ export default async function LocaleLayout({
     <html lang={idioma} suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${figTree.variable} ${geistMono.variable} ${sourceSerif.variable} antialiased`}
+        className={`${archivo.variable} ${chivoMono.variable} ${alegreya.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
