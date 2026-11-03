@@ -87,7 +87,9 @@ export function Hero() {
             data-ph="contact_click"
             data-ph-kind="cv"
             data-ph-surface="hero"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
+            // Relleno suave y no sólo borde: al lado del botón oscuro, uno
+            // con borde fino se percibía más bajo aunque mida lo mismo.
+            className="inline-flex items-center gap-1.5 rounded-md border border-foreground/15 bg-foreground/7 px-4 py-2 text-sm transition-colors hover:bg-foreground/12"
           >
             <Download size={16} strokeWidth={1.5} aria-hidden />
             <span>{t("ctas.cv")}</span>
