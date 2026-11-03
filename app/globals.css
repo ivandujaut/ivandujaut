@@ -79,6 +79,63 @@
 }
 
 /* ============================================================
+   Páginas de pitch: conservan los tokens anteriores
+   ============================================================ */
+
+/* Cada pitch está diseñado a mano para su empresa y cuelga de este mismo
+   archivo, así que la paleta y el radio del portfolio no tienen que llegarle.
+   Brinta, La Caja y Zubale marcan su `<html>` con su nombre; la plantilla de
+   `/pitch/[company]` envuelve todo en `.pitch.dark` (y pone `dark` también en
+   el `<html>`, de ahí el `:has`). Estos son los valores que
+   tenían antes del cambio del 03/11/2026. */
+:root:is(.brinta, .lacaja, .zubale),
+:root:has(.pitch),
+.pitch {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+}
+
+:root:is(.brinta, .lacaja, .zubale).dark,
+:root:has(.pitch).dark,
+.pitch.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+}
+
+/* ============================================================
    Tailwind theme mapping
    ============================================================ */
 
