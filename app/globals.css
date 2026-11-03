@@ -201,6 +201,15 @@
       "calt" 1;
   }
 
+  /* Títulos en la serif, texto corrido en la sans. Alegreya ya era la voz de
+     los casos, el casebook y research; esto la extiende a todos los títulos
+     del portfolio. Va en la capa base, así que un `font-mono` o `font-sans`
+     puesto en el título le gana. Los pitches traen su propia tipografía y
+     quedan afuera; donde no hay serif cargada (`/stats`) cae en la sans. */
+  :where(h1, h2, h3, h4):not(:where(.brinta, .lacaja, .zubale, .pitch) *) {
+    font-family: var(--font-serif, var(--font-sans)), Georgia, serif;
+  }
+
   ::selection {
     @apply bg-foreground/15;
   }
