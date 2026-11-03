@@ -75,7 +75,7 @@ export async function CaseStudyClose({
           userReversed="navituajud"
           domainReversed="moc.liamg"
           label={t("ctas.email")}
-          className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
+          className="inline-flex items-center gap-1.5 rounded-md border border-foreground/15 bg-foreground/7 px-4 py-2 text-sm transition-colors hover:bg-foreground/12"
         >
           <HugeiconsIcon icon={Mail01Icon} size={16} strokeWidth={1.5} aria-hidden />
           <span>{t("ctas.email")}</span>
@@ -87,18 +87,20 @@ export async function CaseStudyClose({
           data-ph-surface="case-close"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
+          className="inline-flex items-center gap-1.5 rounded-md border border-foreground/15 bg-foreground/7 px-4 py-2 text-sm transition-colors hover:bg-foreground/12"
         >
           <CalendlyIcon size={16} aria-hidden />
           <span>{t("ctas.call")}</span>
         </a>
         {/* `px-4 py-2` iguala el alto con los otros tres: el botón de compartir
-            trae `py-1.5` porque en la cabecera del caso va más chico. */}
+            trae `py-1.5` porque en la cabecera del caso va más chico. El
+            relleno suave es el mismo de los secundarios de la portada: al lado
+            del botón oscuro, uno con borde fino se percibía más bajo. */}
         <ShareLinkButton
           url={shareUrl}
           title={shareTitle}
           alwaysShowLabel
-          triggerClassName="px-4 py-2"
+          triggerClassName="border-foreground/15 bg-foreground/7 px-4 py-2 hover:bg-foreground/12"
         />
       </div>
 
