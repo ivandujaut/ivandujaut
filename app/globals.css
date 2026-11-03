@@ -52,8 +52,9 @@
   --input: oklch(0.88 0.014 80);
   --ring: oklch(0.6 0.03 65);
 
-  /* Geometry */
-  --radius: 0.625rem;
+  /* Geometry. Esquinas blandas: con 0.75rem la escala queda en sm 8px,
+     md 10px (botones), lg 12px (cards e imágenes) y xl 16px. */
+  --radius: 0.75rem;
 }
 
 .dark {
