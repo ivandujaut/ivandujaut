@@ -221,8 +221,13 @@ interface SegmentedProps<T extends string> {
   onChange: (v: T) => void;
 }
 
-/** Selector de dos opciones con semántica de radio. */
-function Segmented<T extends string>({ label, value, options, onChange }: SegmentedProps<T>) {
+/** Selector de pocas opciones con semántica de radio. Lo reusa la corrida de `prueba/`. */
+export function Segmented<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+}: SegmentedProps<T>) {
   return (
     <div
       role="radiogroup"
