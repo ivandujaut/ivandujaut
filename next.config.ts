@@ -127,6 +127,8 @@ const nextConfig: NextConfig = {
       { source: "/zubale", destination: "/pitch/zubale" },
       // La Caja, igual: página a medida en `app/pitch/lacaja`.
       { source: "/lacaja", destination: "/pitch/lacaja" },
+      // Respaldo de la pieza de La Caja: la maqueta del alta, corrida.
+      { source: "/lacaja/prueba", destination: "/pitch/lacaja/prueba" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",
