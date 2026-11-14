@@ -146,7 +146,7 @@ export default function LaCajaRunPage() {
           {blindCopy.intro}
         </p>
 
-        <ol className="mt-10 grid gap-4 lg:grid-cols-3">
+        <ol className="mt-10 grid gap-4 md:grid-cols-2">
           {blindCopy.stages.map((stage, i) => (
             <li
               key={stage.id}
@@ -156,6 +156,7 @@ export default function LaCajaRunPage() {
                 Pasada {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-2 font-serif text-xl leading-snug">{stage.title}</h3>
+              <p className="mono mt-1 text-xs text-(--ink-muted)">{stage.set}</p>
               <div className="mt-4 space-y-3">
                 {stage.models.map((model) => (
                   <BlindRow key={model.id} model={model} />
@@ -167,7 +168,6 @@ export default function LaCajaRunPage() {
             </li>
           ))}
         </ol>
-        <p className="reveal mono mt-4 text-xs text-(--ink-muted)">{blindCopy.expected}</p>
 
         <ul className="reveal mt-8 max-w-3xl space-y-3 text-(--ink-dim)">
           {blindCopy.notes.map((note) => (
