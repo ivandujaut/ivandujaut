@@ -5,6 +5,7 @@
  * sólo el texto. Nada de esto usa datos ni sistemas de La Caja.
  */
 import results from "./results.json";
+import { errorCeiling, type WorthInputs } from "./worth";
 
 export type Decision = "issue" | "refer";
 export type CheckStatus = "pass" | "fail" | "skipped";
@@ -198,8 +199,140 @@ export const outcome = {
   },
 };
 
-export const limits = {
+/** C · ¿Conviene hacerlo? Los nueve números son de adentro; los de ejemplo sólo prueban la cuenta. */
+export interface WorthField {
+  id: keyof WorthInputs;
+  label: string;
+  hint?: string;
+  /** `money`: pesos sin decimales. `count`: entero. `rate`: admite decimales. */
+  kind: "money" | "count" | "rate";
+  suffix?: string;
+  example: string;
+}
+
+export const worthCopy = {
   index: "C",
+  eyebrow: "¿Conviene hacerlo?",
+  heading: "Cuánto puede equivocarse antes de costar más de lo que ahorra.",
+  intro:
+    "Cerrar sola un alta ahorra una gestión y suma un riesgo: emitir algo que una persona habría frenado. La cuenta pone las dos cosas en pesos, junto con lo que cuesta construirlo y operarlo. Los nueve números están adentro: cargá los de ustedes, o probá con los de ejemplo.",
+  groups: [
+    {
+      title: "Hoy",
+      fields: [
+        { id: "requests", label: "Altas de vehículo por mes", kind: "count", example: "1500" },
+        {
+          id: "alreadyAuto",
+          label: "Parte que hoy ya se cierra sola",
+          kind: "rate",
+          suffix: "%",
+          example: "20",
+        },
+        {
+          id: "assistedCost",
+          label: "Costo de una gestión asistida",
+          kind: "money",
+          example: "9000",
+        },
+      ],
+    },
+    {
+      title: "Con el primer paso",
+      fields: [
+        {
+          id: "autoShare",
+          label: "Parte de las manuales que pasaría a cerrarse sola",
+          hint: `En la corrida fue ${Math.round((s.issued / s.total) * 100)}%, con un conjunto armado para forzar excepciones.`,
+          kind: "rate",
+          suffix: "%",
+          example: "50",
+        },
+        {
+          id: "buildCost",
+          label: "Costo de construirlo, una vez",
+          kind: "money",
+          example: "60000000",
+        },
+        {
+          id: "monthlyRunCost",
+          label: "Costo de operarlo por mes",
+          hint:
+            s.costPerCaseUsd === null
+              ? "Lectura, soporte y mantenimiento."
+              : `Lectura, soporte y mantenimiento. La lectura sola costó US$ ${number(s.costPerCaseUsd, 3)} por solicitud en la corrida.`,
+          kind: "money",
+          example: "1200000",
+        },
+      ],
+    },
+    {
+      title: "El error",
+      fields: [
+        {
+          id: "errorPerThousand",
+          label: "Emisiones equivocadas cada 1.000 cerradas solas",
+          hint: "Es lo que hay que medir antes de abrirlo.",
+          kind: "rate",
+          example: "2",
+        },
+        {
+          id: "errorTodayPerThousand",
+          label: "Emisiones equivocadas hoy, cada 1.000 revisadas a mano",
+          hint: "Las personas también se equivocan. Cuenta la diferencia.",
+          kind: "rate",
+          example: "1",
+        },
+        {
+          id: "errorCost",
+          label: "Costo de una emisión equivocada",
+          hint: "Corregirla y, en el peor caso, un siniestro que no correspondía pagar, pesado por su probabilidad. Lo define Técnica.",
+          kind: "money",
+          example: "900000",
+        },
+      ],
+    },
+  ] as Array<{ title: string; fields: WorthField[] }>,
+  loadExample: "Cargar valores de ejemplo",
+  clear: "Vaciar",
+  exampleNote:
+    "Valores de ejemplo para probar la cuenta. No son de La Caja ni una estimación de sus costos.",
+  empty: "La cuenta aparece cuando están los nueve números.",
+  account: {
+    title: "La cuenta, por mes",
+    saving: "Gestiones que se ahorran",
+    control: `Control posterior, una de cada ${number(s.auditEvery)}`,
+    error: "Emisiones equivocadas de más",
+    run: "Operación",
+    net: "Resultado",
+    auto: "altas por mes pasarían a cerrarse solas",
+  },
+  payback: {
+    title: "Repago de la construcción",
+    months: "meses",
+    never: "No se paga: cada mes cuesta más de lo que ahorra.",
+  },
+  threshold: {
+    title: "El criterio para adoptarlo",
+    text: "Con estos números empieza a perder plata a partir de {x} emisiones equivocadas cada 1.000 cerradas solas.",
+    none: "Ni con el mismo error que hoy cubre el control y la operación. Antes de mirar el error hay que revisar el volumen o el costo de operarlo.",
+    proof:
+      "Para mostrar que está por debajo hacen falta {n} altas cerradas solas sin ningún error: {m} corriendo en paralelo.",
+    shadow:
+      "Ese tiempo corre sin riesgo: el lector decide sin emitir y se compara con lo que resolvió la persona.",
+  },
+  levers: {
+    title: "Tres formas de pasar el criterio",
+    items: [
+      "Bajar el error: mejores lecturas y reglas más estrictas, aunque deriven más.",
+      "Bajar lo que cuesta cada error: cerrar solas sólo las altas de menor riesgo y detectar antes con el muestreo.",
+      "No abrirlo donde no pasa: el corte por segmento ya está en la propuesta.",
+    ],
+  },
+  footnote: `La cantidad de altas sale de la regla de tres: con cero errores en n casos, el error real queda por debajo de 3 dividido n, con 95% de confianza. Con los ${s.total} de la corrida, ese techo es ${number(errorCeiling(s.total) * 100)}%. La revisión posterior se cuenta al costo de una gestión asistida.`,
+};
+
+export const limits = {
+  index: "D",
   eyebrow: "El control y los límites",
   heading: "Dónde queda el control, y qué no prueba esta corrida.",
   control: {
@@ -218,7 +351,7 @@ export const limits = {
       "Una tasa de cierre. Las veinte solicitudes las escribí yo, con más excepciones de las que tiene una cartera.",
       "La lectura de un escaneo o de una foto. Las facturas entran como texto ya extraído del PDF.",
       "Que las reglas sean las correctas. Son las tres de la maqueta y dos compuertas; las de verdad las escribe Técnica.",
-      "Nada con valor estadístico. Veinte casos sirven para ver el mecanismo, no para medirlo.",
+      `Nada con valor estadístico. Con cero errores en ${s.total} casos, lo más que se puede afirmar es que el error real está por debajo del ${number(errorCeiling(s.total) * 100)}%.`,
     ],
   },
 };
