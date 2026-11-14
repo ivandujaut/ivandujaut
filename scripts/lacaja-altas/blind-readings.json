@@ -1,0 +1,2063 @@
+{
+  "claude-opus-5-5": {
+    "SOL-0301": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Kangoo II Furgón 1.6",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": true,
+          "vin": "93YRFP2R5TJ456781"
+        },
+        "requested_coverage": "igual_a_la_flota",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "93YRFP2R5TJ456781",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 4.360288915999999,
+      "usage": {
+        "input": 3365,
+        "output": 242
+      }
+    },
+    "SOL-0304": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": null,
+          "model": "Ranger",
+          "year": null,
+          "condition": "desconocido",
+          "plate": "AF330LT",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AFAR22N8LJ209874",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 4.3526825,
+      "usage": {
+        "input": 3174,
+        "output": 218
+      }
+    },
+    "SOL-0303": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Ñandubay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Fiat",
+          "model": "Cronos",
+          "year": null,
+          "condition": "desconocido",
+          "plate": "AD118RW",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BD19715TL3048221",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 4.754298209,
+      "usage": {
+        "input": 3197,
+        "output": 219
+      }
+    },
+    "SOL-0302": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Toyota",
+          "model": "Hilux 4x4 DC SRV 2.8 TDI 6AT",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AJBA3CD7T1234569"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AJBA3CD7T1234569",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 5.031292832999999,
+      "usage": {
+        "input": 3167,
+        "output": 258
+      }
+    },
+    "SOL-0306": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": null,
+          "model": "Partner",
+          "year": null,
+          "condition": "usado",
+          "plate": "AB123CD",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "8AE5FRHXCKG551302",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.2604482499999996,
+      "usage": {
+        "input": 3057,
+        "output": 200
+      }
+    },
+    "SOL-0308": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Fiat",
+          "model": "Fiorino Endurance 1.4",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BD255049T8812345"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "9BD255049T8812354",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.9421016250000003,
+      "usage": {
+        "input": 3087,
+        "output": 228
+      }
+    },
+    "SOL-0307": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Volkswagen",
+          "model": "Amarok V6 Highline",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AWDB22H8TA017745"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "proforma_o_presupuesto",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AWDB22H8TA017745",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.3196504159999995,
+      "usage": {
+        "input": 3177,
+        "output": 244
+      }
+    },
+    "SOL-0305": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Master Furgón L2H2 2.3 dCi",
+          "year": 2021,
+          "condition": "usado",
+          "plate": "AE456PQ",
+          "plate_pending": false,
+          "vin": "93YMAF4CEMJ871203"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "93YMAF4CEMJ871203",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.7803855000000004,
+      "usage": {
+        "input": 3048,
+        "output": 249
+      }
+    },
+    "SOL-0309": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000303-1",
+          "name": "Ñandubay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Toyota",
+          "model": "Corolla 2.0 XEI CVT",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BRBD3HE7T0123987"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BRBD3HE7T0123987",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.9239922080000005,
+      "usage": {
+        "input": 3083,
+        "output": 249
+      }
+    },
+    "SOL-0312": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Ñandubay Servicios",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Fiat",
+          "model": "Cronos Precision",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AP359A4TTU224561"
+        },
+        "requested_coverage": "igual_a_la_flota",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "20-28456123-5",
+          "vin": "8AP359A4TTU224561",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.7970353340000003,
+      "usage": {
+        "input": 3113,
+        "output": 229
+      }
+    },
+    "SOL-0311": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": null,
+          "model": "Amarok",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AWDB22H5TA020118"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AWDB22H5TA020118",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.8823014590000002,
+      "usage": {
+        "input": 3336,
+        "output": 222
+      }
+    },
+    "SOL-0310": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71999888-2",
+          "name": "Quebracho Fletes SRL",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Iveco",
+          "model": "Daily 35-150 furgón",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "ZCFC35A00T5778123"
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71999888-2",
+          "vin": "ZCFC35A00T5778123",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.0425082910000003,
+      "usage": {
+        "input": 3144,
+        "output": 233
+      }
+    },
+    "SOL-0315": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Master",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "93YMAF4CETJ990012"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "sin_documento",
+          "buyer_cuit": null,
+          "vin": null,
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.2334899999999998,
+      "usage": {
+        "input": 2868,
+        "output": 194
+      }
+    },
+    "SOL-0313": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 2,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Kangoo II Furgón 1.6",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "93YRFP2R5TJ601122"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "93YRFP2R5TJ601122",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.6567651669999996,
+      "usage": {
+        "input": 3379,
+        "output": 236
+      }
+    },
+    "SOL-0314": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Toyota",
+          "model": "Hilux DC SRX",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AJBA3CD4T1238877"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AJBA3CD4T1238877",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.6017190830000017,
+      "usage": {
+        "input": 3180,
+        "output": 218
+      }
+    },
+    "SOL-0316": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Fiat",
+          "model": "Fiorino Endurance 1.4",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BD255049T8830071"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "9BD255049T8830071",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.523037875,
+      "usage": {
+        "input": 3034,
+        "output": 238
+      }
+    },
+    "SOL-0317": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Ñandubay",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": null,
+          "model": "208",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-710003?3-1",
+          "vin": "8AD2P?NP0T?01????",
+          "legible": false,
+          "unreadable_fields": [
+            "número de factura",
+            "fecha",
+            "razón social del cliente",
+            "CUIT del cliente",
+            "modelo/motorización",
+            "chasis",
+            "número de motor",
+            "total"
+          ]
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.2145395419999985,
+      "usage": {
+        "input": 3015,
+        "output": 240
+      }
+    },
+    "SOL-0320": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Peugeot",
+          "model": "208 Allure 1.6",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AD2PHNP0TG012345"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "8AD2PHNP0TG012345",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.8805797920000002,
+      "usage": {
+        "input": 3089,
+        "output": 224
+      }
+    },
+    "SOL-0318": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "moto",
+          "make": "Honda",
+          "model": "Wave 110 S",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8CHPCK0T8TL004512"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "8CHPCK0T8TL004512",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 5.258610583000001,
+      "usage": {
+        "input": 3079,
+        "output": 409
+      }
+    },
+    "SOL-0321": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Ford",
+          "model": "Ranger DC 4x4 XLS 2.0 BiTurbo",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AFAR23L9TJ334410"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AFAR23L9TJ334410",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.989923208999997,
+      "usage": {
+        "input": 3047,
+        "output": 256
+      }
+    },
+    "SOL-0322": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": null,
+          "model": null,
+          "year": null,
+          "condition": "desconocido",
+          "plate": null,
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "sin_documento",
+          "buyer_cuit": null,
+          "vin": null,
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.1176467919999995,
+      "usage": {
+        "input": 2810,
+        "output": 177
+      }
+    },
+    "SOL-0319": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "desconocido",
+          "make": null,
+          "model": "Master",
+          "year": null,
+          "condition": "usado",
+          "plate": "AE456PQ",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "93YMAF4CEMJ871203",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": "Ellos me dijeron que ya tiene la inspección por fotos aprobada con ustedes, así que entiendo que la podemos sumar directo a nuestra póliza 5120-0051233, todo riesgo con franquicia."
+      },
+      "seconds": 7.807066833,
+      "usage": {
+        "input": 3093,
+        "output": 763
+      }
+    },
+    "SOL-0325": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": null,
+          "model": "Hilux",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AJBA3CD1T1241156"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AJBA3CD1T1241156",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.7070165840000007,
+      "usage": {
+        "input": 3073,
+        "output": 217
+      }
+    },
+    "SOL-0324": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Chevrolet",
+          "model": "Onix LT 1.0 Turbo",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BGEB48A0TB10234"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BGEB48A0TB10234",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 4.733376917000001,
+      "usage": {
+        "input": 3074,
+        "output": 228
+      }
+    },
+    "SOL-0326": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Kangoo II Furgón 1.6",
+          "year": 2021,
+          "condition": "0km",
+          "plate": "AC901JT",
+          "plate_pending": false,
+          "vin": "93YRFP2R5MJ223401"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "93YRFP2R5MJ223401",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.987774874999999,
+      "usage": {
+        "input": 3036,
+        "output": 244
+      }
+    },
+    "SOL-0323": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Fiat",
+          "model": "Ducato Furgón",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "ZFA25000002T81234"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "ZFA25000002T81234",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": "¿Podrían ponerle la cobertura desde el 01/11? Porque ya está circulando desde esa fecha y el martes tuvo un rayón en un estacionamiento."
+      },
+      "seconds": 6.609896667000001,
+      "usage": {
+        "input": 3149,
+        "output": 543
+      }
+    },
+    "SOL-0327": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Peugeot",
+          "model": "Partner Confort 1.6 HDi",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AE5FRHXCTG600871"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "8AE5FRHXCTG600871",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.855625082999999,
+      "usage": {
+        "input": 3101,
+        "output": 238
+      }
+    },
+    "SOL-0328": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "VW",
+          "model": "Amarok Comfortline",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AWDB22H1TA023390"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AWDB22H1TA023390",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.8318336659999988,
+      "usage": {
+        "input": 3138,
+        "output": 230
+      }
+    },
+    "SOL-0329": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000303-1",
+          "name": "Ñandubay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Toyota",
+          "model": "Yaris XLS 1.5 CVT 5P",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BRK49BT5T0221478"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BRK49BT5T0221478",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.1671127080000008,
+      "usage": {
+        "input": 3049,
+        "output": 249
+      }
+    },
+    "SOL-0330": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "otro",
+          "make": "Montenegro",
+          "model": "3 ejes",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8C9SR3E28TB000731"
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8C9SR3E28TB000731",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.3985707079999994,
+      "usage": {
+        "input": 3123,
+        "output": 216
+      }
+    }
+  },
+  "claude-haiku-5-5": {
+    "SOL-0302": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Toyota",
+          "model": "Hilux 4x4 DC SRV 2.8 TDI 6AT",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AJBA3CD7T1234569"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AJBA3CD7T1234569",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.2441401669999976,
+      "usage": {
+        "input": 3167,
+        "output": 258
+      }
+    },
+    "SOL-0303": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000303-1",
+          "name": "Ñandubay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Fiat",
+          "model": "Cronos Drive 1.3 GSE",
+          "year": 2020,
+          "condition": "desconocido",
+          "plate": "AD118RW",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BD19715TL3048221",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": "Ya nos aprobaron hoy la inspección por fotos del Cronos dominio AD118RW, así que les pido que lo sumen a la póliza de flota de Ñandubay Servicios SAS, con terceros completo como los demás."
+      },
+      "seconds": 2.4650346250000004,
+      "usage": {
+        "input": 3197,
+        "output": 317
+      }
+    },
+    "SOL-0301": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "TRANSPORTES TIMBO SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Kangoo II Furgón 1.6",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": true,
+          "vin": "93YRFP2R5TJ456781"
+        },
+        "requested_coverage": "igual_a_la_flota",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "93YRFP2R5TJ456781",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.573334416999998,
+      "usage": {
+        "input": 3365,
+        "output": 254
+      }
+    },
+    "SOL-0305": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Master Furgón L2H2 2.3 dCi",
+          "year": 2021,
+          "condition": "usado",
+          "plate": "AE456PQ",
+          "plate_pending": false,
+          "vin": "93YMAF4CEMJ871203"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "93YMAF4CEMJ871203",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": "Inspección fotos aprobada 09/11"
+      },
+      "seconds": 1.5043155829999997,
+      "usage": {
+        "input": 3048,
+        "output": 265
+      }
+    },
+    "SOL-0306": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Peugeot",
+          "model": "Partner Confort 1.6 HDI",
+          "year": 2019,
+          "condition": "usado",
+          "plate": "AB123CD",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "8AE5FRHXCKG551302",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": "La inspección por fotos ya la hicimos la semana pasada con el productor así que debería estar."
+      },
+      "seconds": 1.8756111250000032,
+      "usage": {
+        "input": 3057,
+        "output": 248
+      }
+    },
+    "SOL-0307": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Volkswagen",
+          "model": "Amarok V6 Highline",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AWDB22H8TA017745"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "proforma_o_presupuesto",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AWDB22H8TA017745",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.2686522919999987,
+      "usage": {
+        "input": 3177,
+        "output": 243
+      }
+    },
+    "SOL-0304": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": null,
+          "model": "Ranger",
+          "year": null,
+          "condition": "desconocido",
+          "plate": "AF330LT",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AFAR22N8LJ209874",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 5.938981333,
+      "usage": {
+        "input": 3174,
+        "output": 989
+      }
+    },
+    "SOL-0309": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000303-1",
+          "name": "Ñandubay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Toyota",
+          "model": "Corolla 2.0 XEI CVT",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BRBD3HE7T0123987"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BRBD3HE7T0123987",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.623675959,
+      "usage": {
+        "input": 3083,
+        "output": 249
+      }
+    },
+    "SOL-0310": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71999888-2",
+          "name": "Quebracho Fletes SRL",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Iveco",
+          "model": "Daily 35-150 furgón",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "ZCFC35A00T5778123"
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71999888-2",
+          "vin": "ZCFC35A00T5778123",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.508239207999999,
+      "usage": {
+        "input": 3144,
+        "output": 234
+      }
+    },
+    "SOL-0312": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Ñandubay Servicios",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Fiat",
+          "model": "Cronos Precision",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AP359A4TTU224561"
+        },
+        "requested_coverage": "igual_a_la_flota",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "20-28456123-5",
+          "vin": "8AP359A4TTU224561",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.733581207999996,
+      "usage": {
+        "input": 3113,
+        "output": 230
+      }
+    },
+    "SOL-0311": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "Lapacho Logistica SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Volkswagen",
+          "model": "Amarok V6 Comfortline 4x4 AT",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AWDB22H5TA020118"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AWDB22H5TA020118",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.0936088339999985,
+      "usage": {
+        "input": 3336,
+        "output": 252
+      }
+    },
+    "SOL-0308": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Timbó",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Fiat",
+          "model": "Fiorino Endurance 1.4",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BD255049T8812345"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "9BD255049T8812354",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 4.946393042000003,
+      "usage": {
+        "input": 3087,
+        "output": 835
+      }
+    },
+    "SOL-0314": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "LAPACHO LOGISTICA SA",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Toyota",
+          "model": "Hilux DC SRX",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AJBA3CD4T1238877"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AJBA3CD4T1238877",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.3363005419999971,
+      "usage": {
+        "input": 3180,
+        "output": 239
+      }
+    },
+    "SOL-0315": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Master",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": true,
+          "vin": "93YMAF4CETJ990012"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "sin_documento",
+          "buyer_cuit": null,
+          "vin": null,
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.584179541999998,
+      "usage": {
+        "input": 2868,
+        "output": 201
+      }
+    },
+    "SOL-0316": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Fiat",
+          "model": "Fiorino Endurance 1.4",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BD255049T8830071"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "9BD255049T8830071",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.55015625,
+      "usage": {
+        "input": 3034,
+        "output": 238
+      }
+    },
+    "SOL-0317": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Ñandubay Servicios S.A.S.",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Peugeot",
+          "model": "208 Allure 1.?",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-710003?3-1",
+          "vin": "8AD2P?NP0T?01????",
+          "legible": false,
+          "unreadable_fields": [
+            "número de factura",
+            "fecha (día)",
+            "CUIT del cliente",
+            "motor",
+            "cilindrada del modelo (1.?)",
+            "chasis",
+            "total"
+          ]
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.703768415999999,
+      "usage": {
+        "input": 3015,
+        "output": 262
+      }
+    },
+    "SOL-0318": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Ñanduybay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "moto",
+          "make": "Honda",
+          "model": "Wave 110 S",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8CHPCK0T8TL004512"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "8CHPCK0T8TL004512",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.3711418330000016,
+      "usage": {
+        "input": 3079,
+        "output": 234
+      }
+    },
+    "SOL-0320": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000303-1",
+          "name": "ÑANDUBAY SERVICIOS SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Peugeot",
+          "model": "208 Allure 1.6",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AD2PHNP0TG012345"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "8AD2PHNP0TG012345",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.8155178749999978,
+      "usage": {
+        "input": 3089,
+        "output": 249
+      }
+    },
+    "SOL-0321": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Ford",
+          "model": "Ranger DC 4x4 XLS 2.0 BiTurbo",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AFAR23L9TJ334410"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AFAR23L9TJ334410",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.639167542000003,
+      "usage": {
+        "input": 3047,
+        "output": 255
+      }
+    },
+    "SOL-0313": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 2,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Kangoo II Furgón 1.6",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "93YRFP2R5TJ601122"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "93YRFP2R5TJ601122",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 6.617173709000002,
+      "usage": {
+        "input": 3379,
+        "output": 1032
+      }
+    },
+    "SOL-0324": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "ÑANDUBAY SERVICIOS SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Chevrolet",
+          "model": "Onix LT 1.0 Turbo",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BGEB48A0TB10234"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BGEB48A0TB10234",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.4895653330000058,
+      "usage": {
+        "input": 3074,
+        "output": 247
+      }
+    },
+    "SOL-0322": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": null,
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": null,
+          "model": null,
+          "year": null,
+          "condition": "desconocido",
+          "plate": null,
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "igual_a_la_flota",
+        "invoice": {
+          "document_kind": "sin_documento",
+          "buyer_cuit": null,
+          "vin": null,
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.0634919590000065,
+      "usage": {
+        "input": 2810,
+        "output": 182
+      }
+    },
+    "SOL-0323": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "TRANSPORTES TIMBO SRL",
+          "policy_number": null
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Fiat",
+          "model": "Ducato Furgón",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "ZFA25000002T81234"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "ZFA25000002T81234",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.032920459000001,
+      "usage": {
+        "input": 3149,
+        "output": 233
+      }
+    },
+    "SOL-0319": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": null,
+          "model": "Master",
+          "year": null,
+          "condition": "desconocido",
+          "plate": "AE456PQ",
+          "plate_pending": false,
+          "vin": null
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "93YMAF4CEMJ871203",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": "Ellos me dijeron que ya tiene la inspección por fotos aprobada con ustedes, así que entiendo que la podemos sumar directo a nuestra póliza 5120-0051233"
+      },
+      "seconds": 5.241265249999997,
+      "usage": {
+        "input": 3093,
+        "output": 1049
+      }
+    },
+    "SOL-0327": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Peugeot",
+          "model": "Partner Confort 1.6 HDi",
+          "year": null,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AE5FRHXCTG600871"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000101-4",
+          "vin": "8AE5FRHXCTG600871",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.616562582999999,
+      "usage": {
+        "input": 3101,
+        "output": 241
+      }
+    },
+    "SOL-0325": {
+      "extraction": {
+        "policyholder": {
+          "cuit": null,
+          "name": "Lapacho Logistica SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Toyota",
+          "model": "Hilux",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AJBA3CD1T1241156"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AJBA3CD1T1241156",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.605172542,
+      "usage": {
+        "input": 3073,
+        "output": 231
+      }
+    },
+    "SOL-0328": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "Lapacho Logística SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "pickup",
+          "make": "Volkswagen",
+          "model": "Amarok Comfortline",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8AWDB22H1TA023390"
+        },
+        "requested_coverage": "todo_riesgo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8AWDB22H1TA023390",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.682068416000002,
+      "usage": {
+        "input": 3138,
+        "output": 241
+      }
+    },
+    "SOL-0329": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000303-1",
+          "name": "Ñandubay Servicios SAS",
+          "policy_number": "5120-0060518"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "auto",
+          "make": "Toyota",
+          "model": "Yaris XLS 1.5 CVT 5P",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "9BRK49BT5T0221478"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000303-1",
+          "vin": "9BRK49BT5T0221478",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 1.497051916000004,
+      "usage": {
+        "input": 3049,
+        "output": 249
+      }
+    },
+    "SOL-0326": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000101-4",
+          "name": "Transportes Timbó SRL",
+          "policy_number": "5120-0044871"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "utilitario",
+          "make": "Renault",
+          "model": "Kangoo II Furgón 1.6",
+          "year": 2021,
+          "condition": "0km",
+          "plate": "AC901JT",
+          "plate_pending": false,
+          "vin": "93YRFP2R5MJ223401"
+        },
+        "requested_coverage": "terceros_completo",
+        "invoice": {
+          "document_kind": "otro",
+          "buyer_cuit": null,
+          "vin": "93YRFP2R5MJ223401",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 3.671621874999997,
+      "usage": {
+        "input": 3036,
+        "output": 618
+      }
+    },
+    "SOL-0330": {
+      "extraction": {
+        "policyholder": {
+          "cuit": "30-71000202-7",
+          "name": "LAPACHO LOGISTICA SA",
+          "policy_number": "5120-0051233"
+        },
+        "vehicle_count": 1,
+        "vehicle": {
+          "kind": "otro",
+          "make": "Montenegro",
+          "model": "Semirremolque 3 ejes",
+          "year": 2026,
+          "condition": "0km",
+          "plate": null,
+          "plate_pending": false,
+          "vin": "8C9SR3E28TB000731"
+        },
+        "requested_coverage": "no_indica",
+        "invoice": {
+          "document_kind": "factura",
+          "buyer_cuit": "30-71000202-7",
+          "vin": "8C9SR3E28TB000731",
+          "legible": true,
+          "unreadable_fields": []
+        },
+        "out_of_process_request": null
+      },
+      "seconds": 2.6480345000000014,
+      "usage": {
+        "input": 3123,
+        "output": 244
+      }
+    }
+  }
+}

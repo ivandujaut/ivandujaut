@@ -40,6 +40,8 @@ const clean = () => ({
       unreadable_fields: [],
     },
     out_of_process_request: null,
+    other_requests: null,
+    unusual_terms: null,
   },
   request: { attachments: [{ kind: "document" }] },
 });
@@ -68,10 +70,12 @@ test("nombrar la cobertura de la flota es pedir la misma", () => {
   assert.equal(run((e) => (e.requested_coverage = "terceros_completo")).decision, "issue");
 });
 
-test("un CUIT que no es de ninguna flota se deriva y no evalúa el resto", () => {
+test("una empresa que no es de ninguna flota se deriva y no evalúa el resto", () => {
   const result = run((e) => {
     e.policyholder.cuit = "30-71999888-5";
+    e.policyholder.name = "Maderas del Alto Uruguay SA";
     e.policyholder.policy_number = null;
+    e.invoice.buyer_cuit = "30-71999888-5";
   });
   assert.equal(result.reason, "account");
   assert.deepEqual(
@@ -163,4 +167,70 @@ test("pedir que se saltee la revisión no cambia la decisión", () => {
   });
   assert.equal(withRequest.decision, "refer");
   assert.equal(withRequest.reason, "documents");
+});
+
+const anonymous = (e) => {
+  e.policyholder.cuit = null;
+  e.policyholder.policy_number = null;
+};
+
+test("sin CUIT ni póliza, el nombre de la empresa identifica la flota", () => {
+  const result = run((e) => {
+    anonymous(e);
+    e.policyholder.name = "Timbó";
+  });
+  assert.equal(result.decision, "issue");
+});
+
+test("un nombre que no es de ninguna flota no alcanza, aunque la factura sí", () => {
+  const result = run((e) => {
+    anonymous(e);
+    e.policyholder.name = null;
+    e.invoice.buyer_cuit = null;
+  });
+  assert.equal(result.reason, "account");
+});
+
+test("sin CUIT, póliza ni nombre, el comprador de la factura identifica la flota", () => {
+  const result = run((e) => {
+    anonymous(e);
+    e.policyholder.name = null;
+  });
+  assert.equal(result.decision, "issue");
+});
+
+test("un 0 km sin patente y sin decir que está en trámite se cierra igual", () => {
+  assert.equal(run((e) => (e.vehicle.plate_pending = false)).decision, "issue");
+});
+
+test("un 0 km con una patente mal escrita se deriva", () => {
+  const result = run((e) => {
+    e.vehicle.plate = "A1";
+    e.vehicle.plate_pending = false;
+  });
+  assert.equal(result.reason, "data");
+});
+
+test("un vehículo patentado que no se declara 0 km se trata como usado", () => {
+  const used = (plate) =>
+    run((e, r) => {
+      e.vehicle.condition = "desconocido";
+      e.vehicle.plate = plate;
+      e.vehicle.plate_pending = false;
+      e.vehicle.vin = null;
+      e.invoice.document_kind = "otro";
+      r.attachments = [];
+    });
+  assert.equal(used("AE456PQ").decision, "issue");
+  assert.equal(used("AF218KD").reason, "documents");
+});
+
+test("un mensaje que además avisa un siniestro no se cierra solo", () => {
+  const result = run((e) => (e.other_requests = "además les aviso que chocaron la Saveiro"));
+  assert.equal(result.reason, "scope");
+});
+
+test("pedir la cobertura desde una fecha pasada se deriva", () => {
+  const result = run((e) => (e.unusual_terms = "¿podrían ponerle la cobertura desde el 01/11?"));
+  assert.equal(result.reason, "coverage");
 });

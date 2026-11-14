@@ -32,6 +32,43 @@ export const isPlate = (value) => /^([A-Z]{2}\d{3}[A-Z]{2}|[A-Z]{3}\d{3})$/.test
 /** Chasis: 17 caracteres, sin I, O ni Q. */
 export const isVin = (value) => /^[A-HJ-NPR-Z0-9]{17}$/.test(value);
 
+/** Razón social sin acentos, sin tipo de sociedad y en palabras: "Ñandubay Servicios SAS" da ["NANDUBAY", "SERVICIOS"]. */
+const nameTokens = (value) =>
+  (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toUpperCase()
+    .replace(/\./g, "")
+    .split(/[^A-Z0-9]+/)
+    .filter((token) => token && !["SA", "SRL", "SAS"].includes(token));
+
+/**
+ * A qué flota corresponde la solicitud. Muchos correos no traen CUIT ni
+ * póliza, así que se acepta, en este orden: el CUIT o la póliza del pedido, el
+ * nombre de la empresa si coincide con una sola flota, o el CUIT del comprador
+ * en la factura. Si nada de eso alcanza, no hay cuenta.
+ */
+function findFleet(extraction, fleets) {
+  const cuit = onlyDigits(extraction.policyholder.cuit);
+  const policy = onlyDigits(extraction.policyholder.policy_number);
+  const byNumber = fleets.find(
+    (f) => (cuit && onlyDigits(f.cuit) === cuit) || (policy && onlyDigits(f.policy) === policy),
+  );
+  if (byNumber) return byNumber;
+
+  const tokens = nameTokens(extraction.policyholder.name);
+  if (tokens.length) {
+    const byName = fleets.filter((f) => {
+      const own = nameTokens(f.name);
+      return tokens.every((token) => own.includes(token));
+    });
+    if (byName.length === 1) return byName[0];
+  }
+
+  const buyer = onlyDigits(extraction.invoice.buyer_cuit);
+  return fleets.find((f) => buyer && onlyDigits(f.cuit) === buyer) ?? null;
+}
+
 const pass = (id) => ({ id, status: "pass", detail: null });
 const fail = (id, detail) => ({ id, status: "fail", detail });
 const skipped = (id) => ({ id, status: "skipped", detail: null });
@@ -45,16 +82,13 @@ const skipped = (id) => ({ id, status: "skipped", detail: null });
 export function decide(extraction, request, registry) {
   const cuit = onlyDigits(extraction.policyholder.cuit);
   const policy = onlyDigits(extraction.policyholder.policy_number);
-  const fleet =
-    registry.fleets.find(
-      (f) => (cuit && onlyDigits(f.cuit) === cuit) || (policy && onlyDigits(f.policy) === policy),
-    ) ?? null;
+  const fleet = findFleet(extraction, registry.fleets);
 
   const checks = [];
 
   // 1 · Cuenta. Sin flota no hay contra qué comparar: el resto no se evalúa.
   if (!fleet) {
-    checks.push(fail("account", "El CUIT y la póliza no corresponden a ninguna flota asegurada."));
+    checks.push(fail("account", "La solicitud no permite identificar una flota asegurada."));
     for (const rule of RULES.slice(1)) checks.push(skipped(rule.id));
     return finish(checks, fleet);
   }
@@ -67,7 +101,12 @@ export function decide(extraction, request, registry) {
 
   // 2 · Alcance del primer paso.
   const vehicle = extraction.vehicle;
-  if (extraction.vehicle_count !== 1) {
+  if (extraction.other_requests) {
+    // Cerrar sola el alta dejaría sin atender el resto del mensaje.
+    checks.push(
+      fail("scope", `El mensaje trae otro pedido además del alta: «${extraction.other_requests}»`),
+    );
+  } else if (extraction.vehicle_count !== 1) {
     checks.push(
       fail("scope", `La solicitud trae ${extraction.vehicle_count} unidades: va una por alta.`),
     );
@@ -86,7 +125,14 @@ export function decide(extraction, request, registry) {
 
   // 3 · Cobertura. Si no la nombra, el alta entra con la de la flota.
   const requested = extraction.requested_coverage;
-  if (
+  if (extraction.unusual_terms) {
+    checks.push(
+      fail(
+        "coverage",
+        `Pide condiciones que no son las de un alta común: «${extraction.unusual_terms}»`,
+      ),
+    );
+  } else if (
     requested === "igual_a_la_flota" ||
     requested === "no_indica" ||
     requested === fleet.coverage
@@ -103,9 +149,13 @@ export function decide(extraction, request, registry) {
 
   // 4 · Documentación.
   const plate = normalizePlate(vehicle.plate);
+  // Un vehículo ya patentado que nadie declara 0 km se trata como usado: es el
+  // camino más exigente, porque pide la inspección aprobada.
+  const condition =
+    vehicle.condition === "desconocido" && isPlate(plate) ? "usado" : vehicle.condition;
   const hasDocument = request.attachments.some((a) => a.kind === "document");
   const inspection = registry.inspections.find((i) => i.plate === plate && i.fleet === fleet.id);
-  if (vehicle.condition === "0km") {
+  if (condition === "0km") {
     if (!hasDocument || extraction.invoice.document_kind === "sin_documento") {
       checks.push(fail("documents", "Es 0 km y no vino la factura de compra."));
     } else if (extraction.invoice.document_kind === "proforma_o_presupuesto") {
@@ -115,7 +165,7 @@ export function decide(extraction, request, registry) {
     } else {
       checks.push(pass("documents"));
     }
-  } else if (vehicle.condition === "usado") {
+  } else if (condition === "usado") {
     checks.push(
       inspection
         ? pass("documents")
@@ -129,7 +179,7 @@ export function decide(extraction, request, registry) {
   const problems = [];
   const requestVin = normalizeVin(vehicle.vin);
   const invoiceVin = normalizeVin(extraction.invoice.vin);
-  if (vehicle.condition === "0km" && extraction.invoice.document_kind === "factura") {
+  if (condition === "0km" && extraction.invoice.document_kind === "factura") {
     const legible = extraction.invoice.legible;
     if (!legible) {
       const fields = extraction.invoice.unreadable_fields;
@@ -150,17 +200,21 @@ export function decide(extraction, request, registry) {
           : "No se pudo leer el CUIT del comprador en la factura.",
       );
     }
-    if (!vehicle.plate_pending && !isPlate(plate)) {
-      problems.push("La patente no tiene un formato válido y no figura como en trámite.");
+    // Un 0 km puede no tener patente todavía. Si trae una, tiene que ser válida.
+    if (plate && !isPlate(plate)) {
+      problems.push("La patente informada no tiene un formato válido.");
     }
-  } else if (vehicle.condition === "usado") {
+  } else if (condition === "usado") {
     if (!isPlate(plate)) problems.push("Un usado necesita una patente válida.");
-    if (!isVin(requestVin)) problems.push("Falta un chasis válido en el pedido.");
+    if (requestVin && !isVin(requestVin)) problems.push("El chasis del pedido no es válido.");
+    if (isVin(requestVin) && isVin(invoiceVin) && requestVin !== invoiceVin) {
+      problems.push(`El chasis del pedido (${requestVin}) no es el del adjunto (${invoiceVin}).`);
+    }
   }
   // Sin factura legible o sin condición no hay con qué comparar: no se evalúa.
   const comparable =
-    vehicle.condition === "usado" ||
-    (vehicle.condition === "0km" && extraction.invoice.document_kind === "factura");
+    condition === "usado" ||
+    (condition === "0km" && extraction.invoice.document_kind === "factura");
   if (!comparable) checks.push(skipped("data"));
   else checks.push(problems.length ? fail("data", problems.join(" ")) : pass("data"));
 

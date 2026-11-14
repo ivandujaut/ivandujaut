@@ -1190,13 +1190,13 @@
       "vehicle": "Peugeot Partner 0 km",
       "decision": "refer",
       "reason": "account",
-      "detail": "El CUIT y la póliza no corresponden a ninguna flota asegurada.",
+      "detail": "La solicitud no permite identificar una flota asegurada.",
       "nextStep": "Confirmar con el cliente a qué póliza corresponde antes de seguir.",
       "checks": [
         {
           "id": "account",
           "status": "fail",
-          "detail": "El CUIT y la póliza no corresponden a ninguna flota asegurada."
+          "detail": "La solicitud no permite identificar una flota asegurada."
         },
         {
           "id": "scope",
