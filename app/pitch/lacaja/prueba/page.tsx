@@ -5,7 +5,8 @@ import { ArrowLeft01Icon, Cancel01Icon, Tick02Icon, UserIcon } from "@hugeicons/
 import { ExampleBadge, Tramo, TramoHeading } from "../_components/ui";
 import { RunList } from "./_components/run-list";
 import { TouchGrid } from "./_components/touch-grid";
-import { closing, flow, intro, limits, meta, outcome, run } from "./prueba.data";
+import { WorthCalculator } from "./_components/worth-calculator";
+import { closing, flow, intro, limits, meta, outcome, run, worthCopy } from "./prueba.data";
 
 /**
  * Respaldo de la pieza de La Caja: la maqueta del tramo 04, corrida con veinte
@@ -125,8 +126,36 @@ export default function LaCajaRunPage() {
         </div>
       </Tramo>
 
-      {/* C · El control y los límites. */}
-      <Tramo id="limites" deep>
+      {/* C · ¿Conviene hacerlo? La cuenta con el costo del error. */}
+      <Tramo id="cuenta" deep>
+        <TramoHeading index={worthCopy.index} eyebrow={worthCopy.eyebrow}>
+          {worthCopy.heading}
+        </TramoHeading>
+        <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">
+          {worthCopy.intro}
+        </p>
+
+        <div className="mt-10">
+          <WorthCalculator auditEvery={run.summary.auditEvery} />
+        </div>
+
+        <div className="reveal mt-12">
+          <p className="label text-(--blue)">{worthCopy.levers.title}</p>
+          <ul className="mt-4 grid gap-4 md:grid-cols-3">
+            {worthCopy.levers.items.map((item) => (
+              <li key={item} className="border-t border-(--rule) pt-4 leading-relaxed">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="reveal mt-8 max-w-3xl text-xs leading-relaxed text-(--ink-muted)">
+          {worthCopy.footnote}
+        </p>
+      </Tramo>
+
+      {/* D · El control y los límites. */}
+      <Tramo id="limites">
         <TramoHeading index={limits.index} eyebrow={limits.eyebrow}>
           {limits.heading}
         </TramoHeading>
