@@ -129,6 +129,8 @@ const nextConfig: NextConfig = {
       { source: "/lacaja", destination: "/pitch/lacaja" },
       // Respaldo de la pieza de La Caja: la maqueta del alta, corrida.
       { source: "/lacaja/prueba", destination: "/pitch/lacaja/prueba" },
+      // Otro respaldo: qué deja cada línea según el balance en la SSN.
+      { source: "/lacaja/lineas", destination: "/pitch/lacaja/lineas" },
       {
         source: "/rl/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",
