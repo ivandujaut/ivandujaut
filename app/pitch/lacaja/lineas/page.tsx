@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowLeft01Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
+import { ArrowLeft01Icon, ArrowRight01Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 import { Cite, Tramo, TramoHeading } from "../_components/ui";
+import { MoneyChart, StructureChart, VersusChart } from "./_components/charts";
 import {
   amount,
   closing,
@@ -11,10 +12,12 @@ import {
   limits,
   lines,
   meta,
+  money,
   percent,
-  readings,
   signed,
+  structure,
   table,
+  versus,
   type Line,
 } from "./lineas.data";
 
@@ -24,6 +27,9 @@ import {
  * charla llega a qué productos conviene sostener. Misma privacidad que la
  * pieza: `noindex, nofollow`, fuera del sitemap. URL corta: `/lacaja/lineas`
  * (rewrite en `next.config.ts`).
+ *
+ * Cada tramo es una lectura con su gráfico: se entiende mirando, sin recorrer
+ * números. La tabla completa queda plegada al final, como respaldo.
  */
 export const metadata: Metadata = {
   title: meta.title,
@@ -52,114 +58,63 @@ export default function LaCajaLinesPage() {
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">{intro.lede}</p>
       </header>
 
-      {/* A · La tabla. */}
-      <Tramo id="tabla" deep>
-        <TramoHeading index={table.index} eyebrow={table.eyebrow}>
-          {table.heading}
+      {/* A · Dónde está la plata. */}
+      <Tramo id="plata" deep>
+        <TramoHeading index={money.index} eyebrow={money.eyebrow}>
+          {money.heading}
         </TramoHeading>
+        <div className="reveal mt-10">
+          <MoneyChart title={money.chartTitle} note={money.chartNote} rows={money.rows} />
+        </div>
         <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">
-          {table.intro}
-        </p>
-
-        <div
-          data-lenis-prevent
-          className="mt-10 overflow-x-auto rounded-xl border border-(--rule) bg-(--surface)"
-        >
-          <table className="w-full min-w-[46rem] border-collapse text-sm">
-            <thead>
-              <tr className="text-left align-bottom text-(--ink-muted)">
-                <Th rowSpan={2}>{cols.line}</Th>
-                <Th rowSpan={2} right>
-                  {cols.premiums}
-                  <span className="block font-normal normal-case">{cols.premiumsUnit}</span>
-                </Th>
-                <Th rowSpan={2} right>
-                  {cols.share}
-                </Th>
-                <Th colSpan={2} group>
-                  {cols.operating}
-                </Th>
-                <Th colSpan={4} group>
-                  {cols.technical}
-                </Th>
-              </tr>
-              <tr className="text-(--ink-muted)">
-                <Th right sub>
-                  {cols.lacaja}
-                </Th>
-                <Th right sub>
-                  {cols.market}
-                </Th>
-                <Th right sub>
-                  {cols.lacaja}
-                </Th>
-                <Th right sub>
-                  {cols.market}
-                </Th>
-                <Th right sub>
-                  {cols.previous}
-                </Th>
-                <Th right sub>
-                  {cols.amount}
-                </Th>
-              </tr>
-            </thead>
-            <tbody>
-              {lines.map((line) => (
-                <Row key={line.id} line={line} />
-              ))}
-            </tbody>
-            <tfoot>
-              <tr className="border-t-[1.5px] border-(--ink-faint) font-semibold">
-                <td className="px-3 py-3">{table.total.label}</td>
-                <Num>{amount(table.total.premiums)}</Num>
-                <Num>100%</Num>
-                <Num>{percent(table.total.operating)}</Num>
-                <td />
-                <Num tone={table.total.technical}>{signed(table.total.technical)}</Num>
-                <td />
-                <td />
-                <Num tone={table.total.technicalAmount}>
-                  {table.total.technicalAmount < 0 ? "−" : "+"}
-                  {amount(table.total.technicalAmount)}
-                </Num>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <p className="reveal mt-4 max-w-3xl text-xs leading-relaxed text-(--ink-muted)">
-          {table.footnote}
-          <Cite id={table.source} />
+          {money.text}
         </p>
       </Tramo>
 
-      {/* B · Tres lecturas y la pregunta que queda. */}
-      <Tramo id="lecturas">
-        <TramoHeading index={readings.index} eyebrow={readings.eyebrow}>
-          {readings.heading}
+      {/* B · Dónde está la pregunta. */}
+      <Tramo id="pregunta">
+        <TramoHeading index={versus.index} eyebrow={versus.eyebrow}>
+          {versus.heading}
         </TramoHeading>
-        <ol className="mt-10 grid gap-4 md:grid-cols-3">
-          {readings.items.map((item, i) => (
-            <li
-              key={item.title}
-              className="reveal rounded-xl border border-(--rule) bg-(--surface) p-5"
-            >
-              <p className="mono text-xs text-(--ink-muted)">{String(i + 1).padStart(2, "0")}</p>
-              <h3 className="mt-2 font-serif text-xl leading-snug">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-(--ink-dim)">{item.text}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="reveal mt-10">
+          <VersusChart
+            title={versus.chartTitle}
+            legend={versus.legend}
+            axis={versus.axis}
+            previous={versus.previous}
+            rows={versus.rows}
+          />
+        </div>
+        <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">
+          {versus.text}
+        </p>
+      </Tramo>
 
-        <div className="reveal mt-10 max-w-xl rounded-md border-[1.5px] border-dashed border-(--red) bg-(--surface) p-5">
-          <p className="label text-(--red)">{readings.question.label}</p>
-          <p className="mt-3 font-serif text-2xl leading-snug">{readings.question.text}</p>
-          <p className="mt-3 text-sm leading-relaxed text-(--ink-dim)">{readings.question.why}</p>
+      {/* C · Por qué puede ser, y la pregunta que queda para adentro. */}
+      <Tramo id="estructura" deep>
+        <TramoHeading index={structure.index} eyebrow={structure.eyebrow}>
+          {structure.heading}
+        </TramoHeading>
+        <div className="reveal mt-10">
+          <StructureChart
+            title={structure.chartTitle}
+            note={structure.chartNote}
+            legend={structure.legend}
+            rows={structure.rows}
+          />
+        </div>
+        <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">
+          {structure.text}
+        </p>
+        <div className="reveal mt-8 max-w-xl rounded-md border-[1.5px] border-dashed border-(--red) bg-(--surface) p-5">
+          <p className="label text-(--red)">{structure.question.label}</p>
+          <p className="mt-3 font-serif text-2xl leading-snug">{structure.question.text}</p>
+          <p className="mt-3 text-sm leading-relaxed text-(--ink-dim)">{structure.question.why}</p>
         </div>
       </Tramo>
 
-      {/* C · Los límites de la lectura. */}
-      <Tramo id="limites" deep>
+      {/* D · Los límites de la lectura y la tabla completa, plegada. */}
+      <Tramo id="limites">
         <TramoHeading index={limits.index} eyebrow={limits.eyebrow}>
           {limits.heading}
         </TramoHeading>
@@ -177,6 +132,89 @@ export default function LaCajaLinesPage() {
             </li>
           ))}
         </ul>
+
+        <details className="group mt-12">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-semibold underline-offset-4 hover:underline [&::-webkit-details-marker]:hidden">
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
+              size={16}
+              strokeWidth={1.75}
+              aria-hidden
+              className="shrink-0 transition-transform duration-300 group-open:rotate-90"
+            />
+            {table.toggle}
+          </summary>
+          <div
+            data-lenis-prevent
+            className="mt-5 overflow-x-auto rounded-xl border border-(--rule) bg-(--surface)"
+          >
+            <table className="w-full min-w-[46rem] border-collapse text-sm">
+              <thead>
+                <tr className="text-left align-bottom text-(--ink-muted)">
+                  <Th rowSpan={2}>{cols.line}</Th>
+                  <Th rowSpan={2} right>
+                    {cols.premiums}
+                    <span className="block font-normal normal-case">{cols.premiumsUnit}</span>
+                  </Th>
+                  <Th rowSpan={2} right>
+                    {cols.share}
+                  </Th>
+                  <Th colSpan={2} group>
+                    {cols.operating}
+                  </Th>
+                  <Th colSpan={4} group>
+                    {cols.technical}
+                  </Th>
+                </tr>
+                <tr className="text-(--ink-muted)">
+                  <Th right sub>
+                    {cols.lacaja}
+                  </Th>
+                  <Th right sub>
+                    {cols.market}
+                  </Th>
+                  <Th right sub>
+                    {cols.lacaja}
+                  </Th>
+                  <Th right sub>
+                    {cols.market}
+                  </Th>
+                  <Th right sub>
+                    {cols.previous}
+                  </Th>
+                  <Th right sub>
+                    {cols.amount}
+                  </Th>
+                </tr>
+              </thead>
+              <tbody>
+                {lines.map((line) => (
+                  <TableRow key={line.id} line={line} />
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="border-t-[1.5px] border-(--ink-faint) font-semibold">
+                  <td className="px-3 py-3">{table.total.label}</td>
+                  <Num>{amount(table.total.premiums)}</Num>
+                  <Num>100%</Num>
+                  <Num>{percent(table.total.operating)}</Num>
+                  <td />
+                  <Num tone={table.total.technical}>{signed(table.total.technical)}</Num>
+                  <td />
+                  <td />
+                  <Num tone={table.total.technicalAmount}>
+                    {table.total.technicalAmount < 0 ? "−" : "+"}
+                    {amount(table.total.technicalAmount)}
+                  </Num>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <p className="mt-4 max-w-3xl text-xs leading-relaxed text-(--ink-muted)">
+            {table.footnote}
+            <Cite id={table.source} />
+          </p>
+        </details>
       </Tramo>
 
       <footer className="bg-(--coal) text-sm text-(--coal-text)">
@@ -196,7 +234,7 @@ export default function LaCajaLinesPage() {
   );
 }
 
-function Row({ line }: { line: Line }) {
+function TableRow({ line }: { line: Line }) {
   return (
     <tr className={cn("border-t border-(--rule)", line.portal && "bg-(--blue-soft)")}>
       <th scope="row" className="px-3 py-2.5 text-left font-semibold">
