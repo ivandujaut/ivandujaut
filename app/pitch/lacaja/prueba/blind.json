@@ -4,7 +4,7 @@
     "writer": "claude-opus-5-5",
     "total": 30,
     "expectedIssues": 12,
-    "latestStage": "v3"
+    "latestStage": "v4"
   },
   "rules": [
     {
@@ -135,6 +135,53 @@
           },
           "wrongIssueIds": [],
           "extraReferralIds": ["SOL-0302"]
+        }
+      ]
+    },
+    "v4": {
+      "set": {
+        "id": "2",
+        "total": 30,
+        "expectedIssues": 16
+      },
+      "models": [
+        {
+          "id": "claude-haiku-5-5",
+          "name": "Claude Haiku 5.5",
+          "summary": {
+            "issued": 13,
+            "wrongIssues": 0,
+            "extraReferrals": 3,
+            "wrongReasons": 7,
+            "errors": 0,
+            "medianSeconds": 2,
+            "costPerCaseUsd": 0.0005
+          },
+          "wrongIssueIds": [],
+          "extraReferralIds": ["SOL-0404", "SOL-0407", "SOL-0422"],
+          "mismatches": [
+            {
+              "id": "SOL-0404",
+              "label": "Alta Virtus usado AD118RW Ñandubay",
+              "expected": "issue",
+              "got": "refer",
+              "detail": "Pide condiciones que no son las de un alta común: «\"compramos un Volkswagen Virtus usado para el área comercial\" (el correo); la cédula adjunta indica \"Uso: PRIVADO\"»"
+            },
+            {
+              "id": "SOL-0407",
+              "label": "Alta Argo 0km Ñandubay, correo formal",
+              "expected": "issue",
+              "got": "refer",
+              "detail": "No se pudo determinar el tipo de unidad."
+            },
+            {
+              "id": "SOL-0422",
+              "label": "City 0km Ñandubay pide vigencia desde diciembre",
+              "expected": "issue",
+              "got": "refer",
+              "detail": "Pide condiciones que no son las de un alta común: «Vigencia desde el 01/12/2026: \"que la cobertura empiece el 01/12/2026, no antes, para no pagar días sin usarlo\"»"
+            }
+          ]
         }
       ]
     }

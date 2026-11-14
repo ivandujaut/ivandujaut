@@ -1,0 +1,919 @@
+{
+  "meta": {
+    "generatedOn": "2026-11-14",
+    "model": "claude-opus-5-5"
+  },
+  "inspections": [
+    {
+      "plate": "AE456PQ",
+      "fleet": "FL-1041",
+      "approvedOn": "2026-11-09"
+    },
+    {
+      "plate": "AF330LT",
+      "fleet": "FL-2210",
+      "approvedOn": "2026-11-10"
+    },
+    {
+      "plate": "AD118RW",
+      "fleet": "FL-3377",
+      "approvedOn": "2026-11-11"
+    }
+  ],
+  "cases": [
+    {
+      "id": "SOL-0401",
+      "channel": "mail",
+      "label": "Alta Trafic 0km Timbó con factura",
+      "body": "De: Mariela Ocampo <administracion@transportestimbo.example>\nPara: altas.flotas@aseguradora.example\nFecha: 12/11/2026 09:14\nAsunto: Alta unidad nueva - Póliza 5120-0044871\n\nBuen día,\n\nSolicito el alta en la póliza de flota 5120-0044871 (Transportes Timbó SRL, CUIT 30-71000101-4) del siguiente vehículo:\n\nRenault Trafic Furgón 2.0 dCi 0km, modelo 2026\nChasis: 93YF62R95RJ482716\nMotor: M9RJ704Q021873\nColor: blanco\nUso: comercial, reparto\n\nCobertura igual al resto de la flota (terceros completo). Adjunto factura de compra.\nPor favor confirmar cuando esté dada de alta así la sacamos a la calle.\n\nGracias,\nMariela Ocampo\nAdministración - Transportes Timbó SRL\nTel. 0343-4221187",
+      "attachments": [
+        {
+          "name": "Factura_A_0007-00031542.pdf",
+          "text": "AUTOMOTORES PARANÁ S.A.\nCUIT 30-69874512-3 - IVA Responsable Inscripto\nFACTURA A N° 0007-00031542\nFecha de emisión: 06/11/2026\nCliente: TRANSPORTES TIMBO SRL\nCUIT: 30-71000101-4\nCondición IVA: Responsable Inscripto\nDescripción: Unidad 0 KM RENAULT TRAFIC FURGON 2.0 DCI L1H1 - Año modelo 2026\nChasis N°: 93YF62R95RJ482716\nMotor N°: M9RJ704Q021873\nColor: Blanco Glaciar\nImporte neto gravado: $ 41.322.314,05\nIVA 21%: $ 8.677.685,95\nTOTAL: $ 50.000.000,00\nCAE N°: 76452198034517 Vto. CAE: 16/11/2026",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Transportes Timbó SRL, con chasis y motor coincidentes con el correo.",
+        "problems": [],
+        "summary": "Transportes Timbó pide sumar una Renault Trafic 0km con factura a su nombre y datos coincidentes, con la misma cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: flota identificada, un utilitario en alta, misma cobertura y factura del 0km coincidente a nombre de la empresa.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0402",
+      "channel": "excel",
+      "label": "Alta S10 0km Lapacho por planilla",
+      "body": "Fecha solicitud;Razón social;CUIT;Póliza;Marca;Modelo;Año;Estado;Patente;Chasis;Motor;Cobertura;Observaciones\n11/11/2026;Lapacho Logística SA;30-71000202-7;5120-0051233;Chevrolet;S10 2.8 TD 4x4 LT Cabina Doble;2026;0km;;9BG148FK0TC205839;LWN261180443;Todo riesgo con franquicia;Factura subida a la carpeta compartida",
+      "attachments": [
+        {
+          "name": "FC_A_0003-00008811.pdf",
+          "text": "CEIBO MOTORS S.A. - Concesionario Oficial Chevrolet\nCUIT 30-70845123-8\nFACTURA A N° 0003-00008811\nFecha: 05/11/2026\nSeñor/es: LAPACHO LOGISTICA SA\nCUIT: 30-71000202-7\nIVA: Responsable Inscripto\nArtículo: CHEVROLET S10 2.8 TD 4X4 LT C/D 0KM - Modelo 2026\nChasis: 9BG148FK0TC205839\nMotor: LWN261180443\nColor: Gris Satin\nSubtotal: $ 46.280.991,74\nIVA 21%: $ 9.719.008,26\nTotal: $ 56.000.000,00\nCAE: 76451123998802",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, con chasis y motor coincidentes con la fila.",
+        "problems": [],
+        "summary": "Lapacho Logística carga por planilla el alta de una Chevrolet S10 0km con factura coincidente y la cobertura habitual de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: una pick-up 0km con factura coincidente a nombre de la empresa y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0403",
+      "channel": "mail",
+      "label": "Alta Polo 0km Ñandubay, correo breve",
+      "body": "De: Julián Benítez <jbenitez@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 13/11/2026 08:02\nAsunto: alta polo\n\nHola, buen día. Necesitamos sumar a la póliza 5120-0060518 un VW Polo Track 0km que retiramos ayer. Va la factura adjunta, chasis 9BWAH5BZ8TP031726. Misma cobertura que los otros autos.\n\nSaludos\nJulián\nÑandubay Servicios SAS",
+      "attachments": [
+        {
+          "name": "factura polo.pdf",
+          "text": "LITORAL AUTOS S.A.\nCUIT 30-71233456-0\nFACTURA A Nro. 0002-00019774\nFecha emisión 10/11/2026\nRazón Social: ÑANDUBAY SERVICIOS SAS\nCUIT 30-71000303-1\nResp. Inscripto\nDetalle: VOLKSWAGEN POLO TRACK 1.6 MSI 0KM AÑO 2026\nNro. Chasis 9BWAH5BZ8TP031726\nNro. Motor CWS408217\nColor Blanco Cristal\nNeto: $ 21.900.826,45\nIVA 21%: $ 4.599.173,55\nTOTAL $ 26.500.000,00\nCAE 76459870012345",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota (lo pide como 'misma cobertura que los otros autos').",
+        "attachment_kind": "Factura de compra del 0km a nombre de Ñandubay Servicios SAS, chasis coincidente.",
+        "problems": [],
+        "summary": "Ñandubay Servicios pide en un correo corto sumar un VW Polo 0km con factura a su nombre y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un auto 0km con factura a nombre de la empresa, chasis coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0404",
+      "channel": "mail",
+      "label": "Alta Virtus usado AD118RW Ñandubay",
+      "body": "De: Carolina Fleitas <cfleitas@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nCC: jbenitez@nandubayservicios.example\nFecha: 12/11/2026 16:47\nAsunto: Incorporación Virtus usado - inspección ya aprobada\n\nEstimados:\n\nComo les comentamos, compramos un Volkswagen Virtus usado para el área comercial. Ya hicimos la inspección por fotos con la app y nos llegó la aprobación el miércoles.\n\nDatos:\n- Patente AD118RW\n- VW Virtus Highline 1.0 TSI, año 2023\n- Chasis 9BWDL5BZ2PP114073\n- Motor DHS215734\n\nPóliza 5120-0060518, Ñandubay Servicios SAS. Cobertura terceros completo como el resto.\nAdjunto cédula del vehículo ya a nombre de la empresa.\n\nMuchas gracias.\nCarolina Fleitas\nCompras y Servicios Generales",
+      "attachments": [
+        {
+          "name": "cedula_AD118RW.pdf",
+          "text": "REPÚBLICA ARGENTINA - DNRPA\nCÉDULA DE IDENTIFICACIÓN DEL AUTOMOTOR\nDominio: AD118RW\nTitular: ÑANDUBAY SERVICIOS SAS\nCUIT: 30-71000303-1\nMarca: VOLKSWAGEN\nModelo: VIRTUS HIGHLINE 1.0 TSI\nTipo: SEDAN 4 PUERTAS\nAño modelo: 2023\nMarca motor: VOLKSWAGEN N° motor: DHS215734\nMarca chasis: VOLKSWAGEN N° chasis: 9BWDL5BZ2PP114073\nUso: PRIVADO\nFecha de emisión: 28/10/2026",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "usado",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Cédula de identificación del automotor a nombre de Ñandubay Servicios SAS, patente y chasis coincidentes.",
+        "problems": [],
+        "summary": "Ñandubay pide sumar un VW Virtus usado patente AD118RW, que tiene inspección por fotos aprobada para esa flota el 11/11/2026, con cédula a su nombre."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Es un auto usado con inspección por fotos aprobada para esa flota, la cédula coincide y pide la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0405",
+      "channel": "mail",
+      "label": "Productor pide alta Frontier 0km Lapacho",
+      "body": "De: Hernán Sosa - Sosa & Asoc. Seguros <hsosa@sosaseguros.example>\nPara: altas.flotas@aseguradora.example\nFecha: 11/11/2026 12:30\nAsunto: LAPACHO LOGISTICA - POL 5120-0051233 - ALTA NISSAN FRONTIER 0KM\n\nHola chicos, ¿cómo andan?\n\nLes paso alta para mi cliente Lapacho Logística SA (CUIT 30-71000202-7), póliza 5120-0051233.\n\nUnidad: Nissan Frontier PRO-4X 2.3 BT 4x4 AT 0km 2026\nChasis 94DTCAD23TJ508612\nMotor YS23A091587\nCobertura: la de la flota, todo riesgo con franquicia.\n\nVa factura adjunta. Cualquier cosa me escriben a mí.\n\nAbrazo,\nHernán Sosa\nProductor Asesor de Seguros - Mat. 71.402",
+      "attachments": [
+        {
+          "name": "FRONTIER_LAPACHO_FC.pdf",
+          "text": "MESOPOTAMIA NISSAN S.A.\nCUIT 30-71566102-5\nFACTURA A 0005-00004129\nFecha: 09/11/2026\nCliente: LAPACHO LOGISTICA S.A.\nCUIT: 30-71000202-7\nDomicilio: Ruta 12 km 7, Posadas, Misiones\nDescripción: NISSAN FRONTIER PRO-4X 2.3 BT 4X4 AT 0KM MOD. 2026\nCHASIS: 94DTCAD23TJ508612\nMOTOR: YS23A091587\nColor: Gris Oscuro\nNeto gravado $ 52.066.115,70\nIVA 21% $ 10.933.884,30\nTotal $ 63.000.000,00\nCAE 76450033218876",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, chasis y motor coincidentes.",
+        "problems": [],
+        "summary": "El productor de Lapacho Logística pide directamente el alta de una Nissan Frontier 0km con factura coincidente y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: una pick-up 0km con factura coincidente a nombre de la empresa y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0406",
+      "channel": "excel",
+      "label": "Alta Expert 0km Timbó por planilla",
+      "body": "FECHA;EMPRESA;CUIT;N° POLIZA;VEHICULO;AÑO;0KM/USADO;DOMINIO;CHASIS;MOTOR;COBERTURA;CONTACTO\n12/11/2026;Transportes Timbó SRL;30-71000101-4;5120-0044871;Peugeot Expert Furgón 1.6 HDi Premium;2026;0KM;-;VF3VEAHXKTZ019274;10JBEU2158403;Terceros completo;mocampo / 0343-4221187",
+      "attachments": [
+        {
+          "name": "Factura Expert.pdf",
+          "text": "AUTOMOTORES PARANÁ S.A.\nCUIT 30-69874512-3\nFACTURA A N° 0007-00031566\nFecha de emisión: 10/11/2026\nCliente: TRANSPORTES TIMBO SRL - CUIT 30-71000101-4\nDescripción: Unidad 0 KM PEUGEOT EXPERT FURGON 1.6 HDI PREMIUM - Modelo 2026\nChasis N°: VF3VEAHXKTZ019274\nMotor N°: 10JBEU2158403\nColor: Blanco Banquise\nNeto: $ 33.884.297,52\nIVA 21%: $ 7.115.702,48\nTOTAL: $ 41.000.000,00\nCAE 76452198099120",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Transportes Timbó SRL, datos coincidentes.",
+        "problems": [],
+        "summary": "Transportes Timbó carga por planilla una Peugeot Expert 0km con factura coincidente y la cobertura habitual."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un utilitario 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0407",
+      "channel": "mail",
+      "label": "Alta Argo 0km Ñandubay, correo formal",
+      "body": "De: Romina Achával <rachaval@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 10/11/2026 11:25\nAsunto: Solicitud de incorporación de unidad - Póliza N° 5120-0060518\n\nDe nuestra consideración:\n\nPor medio de la presente, Ñandubay Servicios SAS (CUIT 30-71000303-1) solicita la incorporación a la póliza de flota N° 5120-0060518 de la siguiente unidad:\n\nMarca/Modelo: Fiat Argo Drive 1.3 MT\nAño: 2026 - 0 km\nN° de chasis: 9BD358A4NTY627105\nN° de motor: 55282817A91204\nUso: particular de la empresa (visitas a clientes)\n\nSe solicita mantener la cobertura de terceros completo vigente para el resto de la flota.\n\nSe adjunta factura de compra.\n\nSin otro particular, saludamos atentamente.\n\nRomina Achával\nJefa de Administración",
+      "attachments": [
+        {
+          "name": "FAC-A-0001-00052210.pdf",
+          "text": "RÍO URUGUAY AUTOMOTORES S.R.L.\nCUIT 30-70011987-4\nFACTURA A Nº 0001-00052210\nFecha: 07/11/2026\nCliente: ÑANDUBAY SERVICIOS S.A.S.\nCUIT: 30-71000303-1\nDetalle: FIAT ARGO DRIVE 1.3 MT 0KM - AÑO 2026\nChasis: 9BD358A4NTY627105\nMotor: 55282817A91204\nColor: Rojo Montecarlo\nImporte Neto: $ 19.421.487,60\nIVA 21%: $ 4.078.512,40\nImporte Total: $ 23.500.000,00\nCAE: 76458812004431",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Ñandubay Servicios SAS, datos coincidentes.",
+        "problems": [],
+        "summary": "Ñandubay solicita formalmente sumar un Fiat Argo 0km con factura coincidente y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un auto 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0408",
+      "channel": "mail",
+      "label": "Encargado de flota pide alta Transit Lapacho",
+      "body": "De: Walter Ríos <flota@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nFecha: 12/11/2026 07:41\nAsunto: Alta Transit nueva\n\nBuenas, soy Walter, encargado de flota de Lapacho Logística. Necesito dar de alta una Ford Transit furgón mediano 0km que entra el lunes al servicio.\n\nPóliza 5120-0051233\nFord Transit 2.0 TDCi Furgón Mediano 2026\nCHASIS WF0EXXTTGERT48253\nMOTOR YLFS4R18572\n\nCobertura todo riesgo como las demás. Adjunto la factura que me pasó compras.\n\nGracias\nWalter Ríos\nLapacho Logística SA",
+      "attachments": [
+        {
+          "name": "scan_factura_transit.pdf",
+          "text": "FORD MISIONES S.A.\nCUIT 30-70988124-6\nFACTURA A 0004-00011873\nFecha: 06/11/2026\nRazón social: LAPACHO LOGISTICA SA\nCUIT: 30-71000202-7\nDescripción: FORD TRANSIT 2.0 TDCI FURGON MEDIANO 0KM MOD 2026\nVIN: WF0EXXTTGERT48253\nMotor: YLFS4R18572\nColor: Blanco\nNeto $ 45.454.545,45\nIVA 21% $ 9.545.454,55\nTOTAL $ 55.000.000,00\nCAE 76455501238714",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, datos coincidentes.",
+        "problems": [],
+        "summary": "El encargado de flota de Lapacho pide el alta de una Ford Transit 0km con factura coincidente y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un utilitario 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0409",
+      "channel": "mail",
+      "label": "Alta Strada 0km Timbó, dueño escribe",
+      "body": "De: Ricardo Timbó <ricardo@transportestimbo.example>\nPara: altas.flotas@aseguradora.example\nFecha: 13/11/2026 10:58\nAsunto: otra Strada\n\nQue tal, les escribe Ricardo de Transportes Timbó. Compramos una Fiat Strada Freedom cabina doble 0km para los repartos chicos. Les mando la factura. Chasis 9BD281A2MTY703418, motor 55282817B37760.\nPóliza la de siempre, 5120-0044871, misma cobertura que tienen las otras.\nSi falta algo me avisan al 0343-155021944.\n\nRicardo",
+      "attachments": [
+        {
+          "name": "IMG_factura_strada.pdf",
+          "text": "RÍO URUGUAY AUTOMOTORES S.R.L.\nCUIT 30-70011987-4\nFACTURA A Nº 0001-00052301\nFecha: 11/11/2026\nCliente: TRANSPORTES TIMBO S.R.L.\nCUIT: 30-71000101-4\nDetalle: FIAT STRADA FREEDOM 1.3 CD 0KM - AÑO 2026\nChasis: 9BD281A2MTY703418\nMotor: 55282817B37760\nColor: Blanco Banchisa\nImporte Neto: $ 24.380.165,29\nIVA 21%: $ 5.119.834,71\nImporte Total: $ 29.500.000,00\nCAE: 76458812009988",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Transportes Timbó SRL, datos coincidentes.",
+        "problems": [],
+        "summary": "El dueño de Transportes Timbó pide sumar una Fiat Strada 0km con factura coincidente y la cobertura de siempre."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: una pick-up 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0410",
+      "channel": "excel",
+      "label": "Alta Doblò usada AE456PQ Timbó por planilla",
+      "body": "FECHA;EMPRESA;CUIT;N° POLIZA;VEHICULO;AÑO;0KM/USADO;DOMINIO;CHASIS;MOTOR;COBERTURA;CONTACTO\n10/11/2026;Transportes Timbó SRL;30-71000101-4;5120-0044871;Fiat Doblò Cargo 1.4 Active;2021;USADO;AE456PQ;9BD263512L9154870;310A20112847;Terceros completo;mocampo - inspección por fotos ya hecha",
+      "attachments": [],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "usado",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "No adjuntó ningún documento.",
+        "problems": [],
+        "summary": "Transportes Timbó carga por planilla una Fiat Doblò usada patente AE456PQ, que tiene inspección por fotos aprobada para esa flota el 09/11/2026."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Es un utilitario usado con inspección por fotos aprobada para esa flota y pide la misma cobertura; para usados la política no exige otro documento.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0411",
+      "channel": "mail",
+      "label": "Alta Sprinter 0km Lapacho con dos adjuntos",
+      "body": "De: Natalia Gómez <ngomez@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nFecha: 09/11/2026 15:20\nAsunto: RV: Alta Sprinter - Pol. 5120-0051233\n\nBuenas tardes,\n\nAdjunto factura y certificado de fabricación de la Mercedes-Benz Sprinter 0km que incorporamos a la flota. Solicitamos el alta con la cobertura vigente de la póliza (todo riesgo con franquicia).\n\nChasis: 8AC907643TE215087\nMotor: 65195532018774\n\nSaludos cordiales,\nNatalia Gómez\nAdministración y Finanzas\nLapacho Logística SA - CUIT 30-71000202-7",
+      "attachments": [
+        {
+          "name": "Factura_Sprinter.pdf",
+          "text": "ESTRELLA DEL NORDESTE S.A. - Concesionario Mercedes-Benz\nCUIT 30-70456123-9\nFACTURA A N° 0006-00002987\nFecha: 04/11/2026\nCliente: LAPACHO LOGISTICA SA - CUIT 30-71000202-7\nDescripción: MERCEDES-BENZ SPRINTER 416 CDI FURGON 3665 TN 0KM MODELO 2026\nChasis: 8AC907643TE215087\nMotor: 65195532018774\nNeto: $ 66.115.702,48\nIVA 21%: $ 13.884.297,52\nTotal: $ 80.000.000,00\nCAE 76453340987112",
+          "kind": "document"
+        },
+        {
+          "name": "Certificado_fabricacion.pdf",
+          "text": "MERCEDES-BENZ ARGENTINA S.A.\nCERTIFICADO DE FABRICACIÓN\nMarca: MERCEDES-BENZ Modelo: SPRINTER 416 CDI FURGON 3665 TN\nTipo: FURGON\nAño de fabricación: 2026 Año modelo: 2026\nN° Chasis: 8AC907643TE215087\nN° Motor: 65195532018774\nLugar de fabricación: Virrey del Pino, Buenos Aires",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra a nombre de Lapacho Logística SA y certificado de fabricación, ambos con chasis y motor coincidentes.",
+        "problems": [],
+        "summary": "Lapacho Logística pide el alta de una Mercedes-Benz Sprinter 0km adjuntando factura y certificado de fabricación coincidentes, con la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Trae la factura de compra coincidente a nombre de la empresa; el certificado de fabricación adicional no impide el alta.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0412",
+      "channel": "excel",
+      "label": "Alta Tracker 0km Ñandubay por planilla",
+      "body": "Fecha;Asegurado;CUIT;Póliza;Marca;Modelo;Año;Condición;Patente;N° Chasis;N° Motor;Cobertura solicitada;Notas\n13/11/2026;Ñandubay Servicios SAS;30-71000303-1;5120-0060518;Chevrolet;Tracker 1.2T LTZ AT;2026;0km;;9BGEN76H0TB341562;L3T261204871;Terceros completo;Factura en adjunto del mail de Carolina",
+      "attachments": [
+        {
+          "name": "factura_tracker.pdf",
+          "text": "CEIBO MOTORS S.A. - Concesionario Oficial Chevrolet\nCUIT 30-70845123-8\nFACTURA A N° 0003-00008874\nFecha: 11/11/2026\nSeñor/es: ÑANDUBAY SERVICIOS SAS\nCUIT: 30-71000303-1\nArtículo: CHEVROLET TRACKER 1.2T LTZ AT 0KM - Modelo 2026\nChasis: 9BGEN76H0TB341562\nMotor: L3T261204871\nColor: Azul Eléctrico\nSubtotal: $ 28.925.619,83\nIVA 21%: $ 6.074.380,17\nTotal: $ 35.000.000,00\nCAE: 76451123999145",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Ñandubay Servicios SAS, datos coincidentes.",
+        "problems": [],
+        "summary": "Ñandubay carga por planilla un Chevrolet Tracker 0km con factura coincidente y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un auto 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0413",
+      "channel": "excel",
+      "label": "Alta Jumpy 0km Timbó por planilla",
+      "body": "FECHA;EMPRESA;CUIT;N° POLIZA;VEHICULO;AÑO;0KM/USADO;DOMINIO;CHASIS;MOTOR;COBERTURA;CONTACTO\n09/11/2026;Transportes Timbó SRL;30-71000101-4;5120-0044871;Citroën Jumpy Furgón 1.6 HDi Business;2026;0KM;-;VF7VFAHXKTZ552018;10JBEU2160117;Terceros completo;mocampo / 0343-4221187",
+      "attachments": [
+        {
+          "name": "FC Jumpy.pdf",
+          "text": "AUTOMOTORES PARANÁ S.A.\nCUIT 30-69874512-3\nFACTURA A N° 0007-00031520\nFecha de emisión: 03/11/2026\nCliente: TRANSPORTES TIMBO SRL - CUIT 30-71000101-4\nDescripción: Unidad 0 KM CITROEN JUMPY FURGON 1.6 HDI BUSINESS - Modelo 2026\nChasis N°: VF7VFAHXKTZ552018\nMotor N°: 10JBEU2160117\nColor: Blanco Banquise\nNeto: $ 32.231.404,96\nIVA 21%: $ 6.768.595,04\nTOTAL: $ 39.000.000,00\nCAE 76452198011873",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Transportes Timbó SRL, datos coincidentes.",
+        "problems": [],
+        "summary": "Transportes Timbó carga por planilla una Citroën Jumpy 0km con factura coincidente y la cobertura habitual."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un utilitario 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0414",
+      "channel": "mail",
+      "label": "Alta Toro 0km Lapacho en cadena interna",
+      "body": "De: Natalia Gómez <ngomez@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nFecha: 12/11/2026 13:05\nAsunto: RV: RV: Toro nueva - seguro\n\nHola, les reenvío lo de abajo. Es para dar de alta la Toro en la póliza 5120-0051233 con todo riesgo con franquicia como el resto. La factura está adjunta.\nGracias!\nNatalia\n\n---------- Mensaje reenviado ----------\nDe: Pablo Duarte <compras@lapacholog.example>\nFecha: 12/11/2026 11:40\nPara: Natalia Gómez\nAsunto: RV: Toro nueva - seguro\n\nNati, te paso la factura de la Toro que retiró Walter hoy. Hay que asegurarla antes de que salga a ruta mañana.\nChasis 988226MKXTKD80317 / motor 46350921780512\n\n---------- Mensaje reenviado ----------\nDe: Walter Ríos <flota@lapacholog.example>\nFecha: 12/11/2026 10:12\nAsunto: Toro nueva - seguro\n\nYa está la Toro en el galpón. Avisen cuando esté con seguro.",
+      "attachments": [
+        {
+          "name": "factura_toro.pdf",
+          "text": "RÍO URUGUAY AUTOMOTORES S.R.L.\nCUIT 30-70011987-4\nFACTURA A Nº 0001-00052288\nFecha: 10/11/2026\nCliente: LAPACHO LOGISTICA S.A.\nCUIT: 30-71000202-7\nDetalle: FIAT TORO VOLCANO 2.0 TD AT9 4X4 0KM - AÑO 2026\nChasis: 988226MKXTKD80317\nMotor: 46350921780512\nColor: Gris Silverstone\nImporte Neto: $ 38.016.528,93\nIVA 21%: $ 7.983.471,07\nImporte Total: $ 46.000.000,00\nCAE: 76458812008765",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, datos coincidentes.",
+        "problems": [],
+        "summary": "Lapacho reenvía una cadena interna de correos para dar de alta una Fiat Toro 0km con factura coincidente y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: una pick-up 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0415",
+      "channel": "mail",
+      "label": "Alta Versa 0km Ñandubay con factura",
+      "body": "De: Julián Benítez <jbenitez@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 09/11/2026 18:33\nAsunto: Alta Nissan Versa - Ñandubay\n\nBuenas tardes, adjunto factura de un Nissan Versa Sense 0km para sumar a nuestra póliza 5120-0060518. Chasis 3N1CN8AE5TL870264. Terceros completo como los otros autos.\n\nGracias\nJulián Benítez\nÑandubay Servicios SAS",
+      "attachments": [
+        {
+          "name": "versa_factura.pdf",
+          "text": "MESOPOTAMIA NISSAN S.A.\nCUIT 30-71566102-5\nFACTURA A 0005-00004101\nFecha: 06/11/2026\nCliente: ÑANDUBAY SERVICIOS SAS\nCUIT: 30-71000303-1\nDescripción: NISSAN VERSA SENSE 1.6 MT 0KM MOD. 2026\nCHASIS: 3N1CN8AE5TL870264\nMOTOR: HR16884512T\nColor: Plata\nNeto gravado $ 22.314.049,59\nIVA 21% $ 4.685.950,41\nTotal $ 27.000.000,00\nCAE 76450033210021",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Ñandubay Servicios SAS, datos coincidentes.",
+        "problems": [],
+        "summary": "Ñandubay pide sumar un Nissan Versa 0km con factura coincidente y la cobertura de la flota."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Cumple las cinco condiciones: un auto 0km con factura coincidente y la cobertura de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0416",
+      "channel": "mail",
+      "label": "Boxer 0km Timbó comprada por leasing",
+      "body": "De: Mariela Ocampo <administracion@transportestimbo.example>\nPara: altas.flotas@aseguradora.example\nFecha: 11/11/2026 10:20\nAsunto: Alta Peugeot Boxer - leasing\n\nHola, buen día.\n\nNecesitamos dar de alta en la póliza 5120-0044871 una Peugeot Boxer 0km que tomamos por leasing con el Banco Ceibo. La factura sale a nombre del banco porque es el dueño hasta que terminemos de pagar, nosotros somos los tomadores. El banco nos pidió que figure como beneficiario en la póliza, no sé si eso se puede hacer en la flota.\n\nChasis VF3YDBMFC12T84590\nCobertura terceros completo como el resto.\n\nAdjunto factura.\n\nMariela Ocampo\nTransportes Timbó SRL",
+      "attachments": [
+        {
+          "name": "Factura_Boxer_BancoCeibo.pdf",
+          "text": "AUTOMOTORES PARANÁ S.A.\nCUIT 30-69874512-3\nFACTURA A N° 0007-00031558\nFecha de emisión: 09/11/2026\nCliente: BANCO CEIBO S.A.\nCUIT: 30-50001234-6\nObservaciones: Operación de leasing - Tomador: TRANSPORTES TIMBO SRL CUIT 30-71000101-4\nDescripción: Unidad 0 KM PEUGEOT BOXER FURGON 2.2 HDI L3H2 - Modelo 2026\nChasis N°: VF3YDBMFC12T84590\nMotor N°: 4HV2611802\nNeto: $ 47.107.438,02\nIVA 21%: $ 9.892.561,98\nTOTAL: $ 57.000.000,00\nCAE 76452198087310",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota; además piden que el Banco Ceibo figure como beneficiario.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Banco Ceibo SA (operación de leasing), con Transportes Timbó como tomador en observaciones.",
+        "problems": [
+          "La factura está a nombre de Banco Ceibo SA (CUIT 30-50001234-6), no de la empresa asegurada; el vehículo es de leasing.",
+          "Piden incluir al banco como beneficiario de la póliza, algo distinto del alta habitual."
+        ],
+        "summary": "Transportes Timbó pide sumar una Peugeot Boxer 0km adquirida por leasing, con factura a nombre del banco y pedido de que el banco figure como beneficiario."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "labelWhy": "Además del alta piden incluir al banco como beneficiario, un trámite distinto del alta; también la factura no está a nombre de la asegurada.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0417",
+      "channel": "mail",
+      "label": "Montana 0km Lapacho con número de póliza ajeno",
+      "body": "De: Natalia Gómez <ngomez@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nFecha: 10/11/2026 09:48\nAsunto: Alta Chevrolet Montana - Póliza 5120-0044871\n\nBuen día,\n\nSolicitamos el alta de la siguiente unidad en nuestra póliza de flota N° 5120-0044871:\n\nChevrolet Montana 1.2T Premier AT 0km 2026\nChasis 9BGEA48A0TG118274\nMotor L3T261207733\n\nCobertura todo riesgo con franquicia, igual que el resto de nuestras unidades.\nSe adjunta factura.\n\nSaludos,\nNatalia Gómez\nAdministración y Finanzas\nLapacho Logística SA - CUIT 30-71000202-7",
+      "attachments": [
+        {
+          "name": "FC_Montana.pdf",
+          "text": "CEIBO MOTORS S.A. - Concesionario Oficial Chevrolet\nCUIT 30-70845123-8\nFACTURA A N° 0003-00008850\nFecha: 08/11/2026\nSeñor/es: LAPACHO LOGISTICA SA\nCUIT: 30-71000202-7\nArtículo: CHEVROLET MONTANA 1.2T PREMIER AT 0KM - Modelo 2026\nChasis: 9BGEA48A0TG118274\nMotor: L3T261207733\nColor: Blanco Summit\nSubtotal: $ 25.619.834,71\nIVA 21%: $ 5.380.165,29\nTotal: $ 31.000.000,00\nCAE: 76451123998977",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota de Lapacho.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, datos coincidentes con el correo.",
+        "problems": [
+          "El número de póliza indicado (5120-0044871) corresponde a Transportes Timbó SRL, no a Lapacho Logística (5120-0051233); nombre, CUIT, dominio del correo, factura y cobertura corresponden a Lapacho."
+        ],
+        "summary": "Lapacho Logística pide el alta de una Chevrolet Montana 0km con factura a su nombre, pero cita el número de póliza de la flota de Transportes Timbó."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "account"
+      },
+      "labelWhy": "El número de póliza citado es de Transportes Timbó y no coincide con la cuenta de Lapacho Logística.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0418",
+      "channel": "mail",
+      "label": "Oroch 0km Lapacho pide cobertura menor",
+      "body": "De: Walter Ríos <flota@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nCC: ngomez@lapacholog.example\nFecha: 13/11/2026 09:30\nAsunto: Alta Oroch - póliza 5120-0051233\n\nBuen día. Les mando para dar de alta una Renault Oroch 0km que vamos a usar sólo dentro del predio y para ir al depósito de Garupá, muy pocos km. Por eso la gerencia pidió que esta unidad quede con terceros completo y no con todo riesgo como las otras, para bajar el costo.\n\nChasis 93YDJ1B25TJ660931\nMotor H4M8A71052\nFactura adjunta.\n\nWalter Ríos\nEncargado de Flota - Lapacho Logística SA",
+      "attachments": [
+        {
+          "name": "oroch factura.pdf",
+          "text": "LITORAL AUTOS S.A.\nCUIT 30-71233456-0\nFACTURA A Nro. 0002-00019801\nFecha emisión 11/11/2026\nRazón Social: LAPACHO LOGISTICA SA\nCUIT 30-71000202-7\nDetalle: RENAULT OROCH 1.6 EMOTION 4X2 0KM AÑO 2026\nNro. Chasis 93YDJ1B25TJ660931\nNro. Motor H4M8A71052\nColor Gris Cassiopée\nNeto: $ 23.553.719,01\nIVA 21%: $ 4.946.280,99\nTOTAL $ 28.500.000,00\nCAE 76459870013370",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Pide terceros completo, distinta de la cobertura de la flota (todo riesgo con franquicia).",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, datos coincidentes.",
+        "problems": [
+          "Pide para esta unidad una cobertura inferior (terceros completo) a la que tiene la flota (todo riesgo con franquicia)."
+        ],
+        "summary": "Lapacho Logística pide sumar una Renault Oroch 0km con factura correcta, pero con terceros completo en lugar del todo riesgo que tiene la flota."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "coverage"
+      },
+      "labelWhy": "Pide terceros completo, distinta del todo riesgo con franquicia que tiene la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0419",
+      "channel": "mail",
+      "label": "Berlingo 0km Timbó con factura de 2025",
+      "body": "De: Mariela Ocampo <administracion@transportestimbo.example>\nPara: altas.flotas@aseguradora.example\nFecha: 12/11/2026 14:15\nAsunto: Alta Berlingo 0km\n\nHola, ¿qué tal?\n\nPedimos el alta de una Citroën Berlingo 0km en la póliza 5120-0044871. La compramos el año pasado y quedó guardada en el depósito de Colón porque al final no la necesitamos, nunca salió. Ahora la vamos a empezar a usar.\n\nChasis 8BCGBBHXPSG047123\nCobertura terceros completo.\nAdjunto factura.\n\nMariela",
+      "attachments": [
+        {
+          "name": "Factura Berlingo.pdf",
+          "text": "AUTOMOTORES PARANÁ S.A.\nCUIT 30-69874512-3\nFACTURA A N° 0007-00027415\nFecha de emisión: 15/07/2025\nCliente: TRANSPORTES TIMBO SRL - CUIT 30-71000101-4\nDescripción: Unidad 0 KM CITROEN BERLINGO FURGON 1.6 HDI BUSINESS - Modelo 2025\nChasis N°: 8BCGBBHXPSG047123\nMotor N°: 10JBEU1987640\nColor: Blanco Banquise\nNeto: $ 21.487.603,31\nIVA 21%: $ 4.512.396,69\nTOTAL: $ 26.000.000,00\nCAE 75291007731205",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "no_se_sabe",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra a nombre de Transportes Timbó SRL, con fecha 15/07/2025 y modelo 2025, chasis coincidente.",
+        "problems": [
+          "La factura es del 15/07/2025, casi 16 meses antes de hoy; el vehículo se presenta como 0km pero no está claro si ya fue patentado o usado.",
+          "El correo no menciona patente aunque la unidad se compró hace más de un año."
+        ],
+        "summary": "Transportes Timbó pide dar de alta como 0km una Citroën Berlingo modelo 2025 facturada en julio de 2025 que, según dicen, estuvo guardada sin uso."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "labelWhy": "No se puede determinar si es 0km o usado, así que no se sabe si alcanza la factura o hace falta inspección por fotos.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0420",
+      "channel": "mail",
+      "label": "Hiace usada Lapacho, patente con letras invertidas",
+      "body": "De: Natalia Gómez <ngomez@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nFecha: 11/11/2026 16:02\nAsunto: Alta Hiace usada AF330TL\n\nBuenas tardes,\n\nSolicitamos el alta de una Toyota Hiace usada que compramos a un particular, patente AF330TL. La inspección por fotos ya la aprobaron ayer.\n\nToyota Hiace Furgón 2.8 TDI, año 2022\nChasis JTFSS22P7L0128463\n\nPóliza 5120-0051233, todo riesgo con franquicia.\nAdjunto cédula.\n\nSaludos,\nNatalia Gómez\nLapacho Logística SA",
+      "attachments": [
+        {
+          "name": "cedula hiace.pdf",
+          "text": "REPÚBLICA ARGENTINA - DNRPA\nCÉDULA DE IDENTIFICACIÓN DEL AUTOMOTOR\nDominio: AF330LT\nTitular: LAPACHO LOGISTICA SA\nCUIT: 30-71000202-7\nMarca: TOYOTA\nModelo: HIACE FURGON 2.8 TDI\nTipo: FURGON\nAño modelo: 2022\nN° motor: 1GD4410382\nN° chasis: JTFSS22P7L0128463\nFecha de emisión: 03/11/2026",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "usado",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Cédula de identificación del automotor a nombre de Lapacho Logística SA, con dominio AF330LT y chasis coincidente con el correo.",
+        "problems": [
+          "La patente del correo y del asunto (AF330TL) no coincide con la de la cédula (AF330LT); la de la cédula es la que tiene inspección por fotos aprobada para Lapacho el 10/11/2026."
+        ],
+        "summary": "Lapacho pide sumar una Toyota Hiace usada escribiendo la patente AF330TL, mientras la cédula adjunta y la inspección aprobada corresponden a AF330LT."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "data"
+      },
+      "labelWhy": "La patente del pedido (AF330TL) no coincide con la de la cédula y la inspección (AF330LT).",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0421",
+      "channel": "excel",
+      "label": "Sandero 0km: nombre de una flota, CUIT de otra",
+      "body": "Fecha;Asegurado;CUIT;Póliza;Marca;Modelo;Año;Condición;Patente;N° Chasis;N° Motor;Cobertura solicitada;Notas\n12/11/2026;Transportes Timbó SRL;30-71000303-1;5120-0060518;Renault;Sandero 1.6 Intens;2026;0km;;93YB5SRH6TJ407582;K7MA812C44871;Terceros completo;",
+      "attachments": [],
+      "truth": {
+        "fleet_id": null,
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, que es la cobertura de ambas flotas involucradas.",
+        "attachment_kind": "No adjuntó ningún documento.",
+        "problems": [
+          "La razón social es Transportes Timbó SRL (FL-1041) pero el CUIT y el número de póliza son de Ñandubay Servicios SAS (FL-3377); no se puede determinar a qué flota corresponde.",
+          "No hay factura ni otro documento que respalde la unidad."
+        ],
+        "summary": "Llega por planilla un Renault Sandero 0km sin adjunto, con el nombre de Transportes Timbó pero el CUIT y la póliza de Ñandubay Servicios."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "account"
+      },
+      "labelWhy": "La razón social es de una flota y el CUIT y la póliza de otra, por lo que no se puede identificar la cuenta.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0422",
+      "channel": "mail",
+      "label": "City 0km Ñandubay pide vigencia desde diciembre",
+      "body": "De: Romina Achával <rachaval@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 13/11/2026 12:10\nAsunto: Alta Honda City - a partir del 01/12\n\nHola, buen día.\n\nYa tenemos facturado un Honda City 0km pero la concesionaria nos lo entrega recién el 1 de diciembre, cuando termine el patentamiento. Queremos dejar hecho el trámite ahora pero que la cobertura empiece el 01/12/2026, no antes, para no pagar días sin usarlo.\n\nPóliza 5120-0060518 - Ñandubay Servicios SAS\nChasis 93HGN6740TZ210538\nTerceros completo.\n\nAdjunto la factura.\n\nGracias,\nRomina Achával",
+      "attachments": [
+        {
+          "name": "Factura_City.pdf",
+          "text": "NORESTE HONDA S.A.\nCUIT 30-71102938-2\nFACTURA A N° 0002-00006652\nFecha: 12/11/2026\nCliente: ÑANDUBAY SERVICIOS SAS\nCUIT: 30-71000303-1\nDescripción: HONDA CITY 1.5 EXL CVT 0KM - MODELO 2026\nChasis: 93HGN6740TZ210538\nMotor: L15Z15102874\nColor: Gris Lunar\nNeto: $ 27.272.727,27\nIVA 21%: $ 5.727.272,73\nTotal: $ 33.000.000,00\nCAE: 76457712340981\nFecha estimada de entrega: 01/12/2026",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota, con inicio de vigencia pedido para el 01/12/2026.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Ñandubay Servicios SAS, chasis coincidente, con entrega estimada 01/12/2026.",
+        "problems": [
+          "Piden que la cobertura empiece en una fecha futura (01/12/2026) y no al momento del alta."
+        ],
+        "summary": "Ñandubay pide sumar un Honda City 0km ya facturado pero solicita que la cobertura arranque recién el 01/12/2026, cuando se lo entreguen."
+      },
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "labelWhy": "Es un alta de un auto 0km con factura coincidente y la misma cobertura; la fecha de inicio pedida no incumple ninguna de las cinco condiciones.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0423",
+      "channel": "mail",
+      "label": "Corolla Cross 0km Lapacho para uso del gerente",
+      "body": "De: Natalia Gómez <ngomez@lapacholog.example>\nPara: altas.flotas@aseguradora.example\nFecha: 10/11/2026 17:22\nAsunto: Alta Toyota Corolla Cross\n\nBuenas tardes,\n\nNecesitamos sumar a la póliza 5120-0051233 un Toyota Corolla Cross 0km que la empresa compró para el gerente general, Sr. Martín Lezcano. Lo va a usar para todo, incluidos fines de semana y vacaciones con la familia, así que si hay que aclarar algo del uso particular avísennos. Todo riesgo como las camionetas.\n\nChasis 9BRKZAAG0T0384126\nFactura adjunta.\n\nSaludos\nNatalia Gómez",
+      "attachments": [
+        {
+          "name": "FC_CorollaCross.pdf",
+          "text": "TOYOTA CUENCA DEL PLATA S.A.\nCUIT 30-70712894-1\nFACTURA A N° 0004-00015530\nFecha: 07/11/2026\nCliente: LAPACHO LOGISTICA SA - CUIT 30-71000202-7\nDescripción: TOYOTA COROLLA CROSS 2.0 XEI CVT 0KM MOD 2026\nChasis: 9BRKZAAG0T0384126\nMotor: M20A1198273\nColor: Negro Mica\nNeto: $ 38.842.975,21\nIVA 21%: $ 8.157.024,79\nTotal: $ 47.000.000,00\nCAE 76456620019284",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-2210",
+        "vehicle_count": 1,
+        "vehicle_kind": "SUV",
+        "condition": "0km",
+        "coverage_request": "Todo riesgo con franquicia, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Lapacho Logística SA, chasis coincidente.",
+        "problems": [
+          "Es un SUV para uso personal y familiar del gerente, incluidos fines de semana y vacaciones, mientras la flota está compuesta por pick-ups y utilitarios de uso comercial."
+        ],
+        "summary": "Lapacho pide sumar a su flota de pick-ups y utilitarios un Toyota Corolla Cross 0km destinado al uso particular y familiar del gerente general."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "labelWhy": "Es un SUV de uso particular del gerente, y no puede determinarse que sea una unidad de flota liviana (auto, utilitario o pick-up) de la flota.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0424",
+      "channel": "mail",
+      "label": "Saveiro usada Timbó adjunta póliza de otra compañía",
+      "body": "De: Ricardo Timbó <ricardo@transportestimbo.example>\nPara: altas.flotas@aseguradora.example\nFecha: 12/11/2026 19:40\nAsunto: pasar la saveiro a la flota\n\nHola, tengo una VW Saveiro 2019 patente AC871MD que estaba asegurada aparte con La Ribereña y ahora la quiero pasar a la flota de Timbó (póliza 5120-0044871), así queda todo junto. Les mando la póliza que tengo para que vean los datos. Terceros completo como las otras.\n\nRicardo Timbó",
+      "attachments": [
+        {
+          "name": "poliza_ribereña.pdf",
+          "text": "LA RIBEREÑA SEGUROS S.A.\nPÓLIZA AUTOMOTORES N° 88-0349127\nAsegurado: TRANSPORTES TIMBO SRL CUIT 30-71000101-4\nVigencia: 01/06/2026 al 01/12/2026\nVehículo: VOLKSWAGEN SAVEIRO 1.6 CS - Año 2019\nDominio: AC871MD\nChasis: 9BWKB45U7KP032617\nMotor: CFZ528714\nCobertura: C - Terceros completo\nSuma asegurada: $ 14.500.000",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "usado",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Póliza vigente de otra aseguradora (La Ribereña Seguros) a nombre de Transportes Timbó, con los datos de la Saveiro; no adjuntó cédula.",
+        "problems": [
+          "Vehículo usado sin inspección por fotos aprobada: la patente AC871MD no figura en el registro de inspecciones.",
+          "El adjunto es una póliza de otra compañía, vigente hasta el 01/12/2026, en lugar de cédula o factura."
+        ],
+        "summary": "Transportes Timbó quiere pasar a su flota una VW Saveiro usada patente AC871MD que hoy está asegurada en otra compañía, adjuntando esa póliza y sin inspección aprobada."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "labelWhy": "Es un usado sin inspección por fotos aprobada en el registro.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0425",
+      "channel": "mail",
+      "label": "Ñandubay pide dos autos 0km, uno sin datos",
+      "body": "De: Carolina Fleitas <cfleitas@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 11/11/2026 10:55\nAsunto: Altas 2008 y Kwid\n\nBuen día,\n\nNecesitamos dar de alta dos autos 0km en la póliza 5120-0060518:\n\n1) Peugeot 2008 Allure 1.0T, chasis 8AD2UHNP6TG003518. Va la factura adjunta.\n2) Renault Kwid Iconic, también 0km. La factura todavía no nos la mandó la concesionaria, apenas la tenga se las paso, pero si lo pueden ir dando de alta mejor porque ya lo están usando.\n\nAmbos con terceros completo.\n\nGracias,\nCarolina Fleitas\nÑandubay Servicios SAS",
+      "attachments": [
+        {
+          "name": "factura 2008.pdf",
+          "text": "RÍO URUGUAY AUTOMOTORES S.R.L.\nCUIT 30-70011987-4\nFACTURA A Nº 0001-00052265\nFecha: 09/11/2026\nCliente: ÑANDUBAY SERVICIOS S.A.S.\nCUIT: 30-71000303-1\nDetalle: PEUGEOT 2008 ALLURE 1.0 T200 CVT 0KM - AÑO 2026\nChasis: 8AD2UHNP6TG003518\nMotor: 10XN0B4417820\nColor: Gris Artense\nImporte Neto: $ 28.099.173,55\nIVA 21%: $ 5.900.826,45\nImporte Total: $ 34.000.000,00\nCAE: 76458812007732",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 2,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo para ambos, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del Peugeot 2008 a nombre de Ñandubay Servicios SAS; no hay documento del Renault Kwid.",
+        "problems": [
+          "El Renault Kwid no tiene factura ni ningún documento adjunto.",
+          "Del Renault Kwid no informan chasis ni motor.",
+          "Dicen que el Kwid ya se está usando antes de estar dado de alta."
+        ],
+        "summary": "Ñandubay pide sumar dos autos 0km: un Peugeot 2008 completo con factura y un Renault Kwid sin factura ni chasis que ya está en uso."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "labelWhy": "Piden dar de alta dos unidades y la política solo permite cerrar sola el alta de una.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0426",
+      "channel": "mail",
+      "label": "Vito 0km Timbó, cliente y productor discrepan cobertura",
+      "body": "De: Hernán Sosa - Sosa & Asoc. Seguros <hsosa@sosaseguros.example>\nPara: altas.flotas@aseguradora.example\nFecha: 13/11/2026 11:15\nAsunto: RV: Vito nueva - Timbó\n\nChicos, va el alta de la Vito para Transportes Timbó, pol. 5120-0044871. Les pido que la carguen igual que el resto de la flota. Factura adjunta.\nHernán\n\n---------- Mensaje reenviado ----------\nDe: Ricardo Timbó <ricardo@transportestimbo.example>\nFecha: 12/11/2026 20:03\nPara: Hernán Sosa\nAsunto: Vito nueva - Timbó\n\nHernán, te paso la factura de la Mercedes Vito que compramos. Esta la quiero con todo riesgo, que salió una fortuna y la va a manejar mi hijo. Chasis WDF44770313T82596.\nRicardo",
+      "attachments": [
+        {
+          "name": "vito_factura.pdf",
+          "text": "ESTRELLA DEL NORDESTE S.A. - Concesionario Mercedes-Benz\nCUIT 30-70456123-9\nFACTURA A N° 0006-00003011\nFecha: 11/11/2026\nCliente: TRANSPORTES TIMBO SRL - CUIT 30-71000101-4\nDescripción: MERCEDES-BENZ VITO 111 CDI FURGON 0KM MODELO 2026\nChasis: WDF44770313T82596\nMotor: 62293430155871\nNeto: $ 49.586.776,86\nIVA 21%: $ 10.413.223,14\nTotal: $ 60.000.000,00\nCAE 76453340990045",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Contradictoria: el dueño de la empresa pide todo riesgo, distinta de la flota; el productor pide la misma que el resto (terceros completo).",
+        "attachment_kind": "Factura de compra del 0km a nombre de Transportes Timbó SRL, chasis coincidente.",
+        "problems": [
+          "En la cadena reenviada el cliente pide todo riesgo y el productor pide la cobertura del resto de la flota (terceros completo); las instrucciones se contradicen."
+        ],
+        "summary": "El productor reenvía el alta de una Mercedes-Benz Vito 0km de Transportes Timbó pidiendo la cobertura de la flota, mientras el cliente en el mismo hilo pide todo riesgo."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "coverage"
+      },
+      "labelWhy": "El cliente pide todo riesgo, distinta de la cobertura de la flota, y contradice al productor, así que no se puede determinar la cobertura.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0427",
+      "channel": "mail",
+      "label": "Ñandubay dice Cronos pero factura es de un Pulse",
+      "body": "De: Julián Benítez <jbenitez@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 12/11/2026 09:37\nAsunto: Alta Fiat Cronos 0km\n\nBuen día, por favor dar de alta en la póliza 5120-0060518 un Fiat Cronos Drive 1.3 0km. Chasis 9BD363A1NTY215470. Terceros completo.\nFactura adjunta.\n\nGracias\nJulián Benítez\nÑandubay Servicios SAS",
+      "attachments": [
+        {
+          "name": "FC_A_0001-00052279.pdf",
+          "text": "RÍO URUGUAY AUTOMOTORES S.R.L.\nCUIT 30-70011987-4\nFACTURA A Nº 0001-00052279\nFecha: 10/11/2026\nCliente: ÑANDUBAY SERVICIOS S.A.S.\nCUIT: 30-71000303-1\nDetalle: FIAT PULSE DRIVE 1.3 MT 0KM - AÑO 2026\nChasis: 9BD363A1NTY215470\nMotor: 55282817C10442\nColor: Gris Strato\nImporte Neto: $ 22.727.272,73\nIVA 21%: $ 4.772.727,27\nImporte Total: $ 27.500.000,00\nCAE: 76458812008110",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra de un Fiat Pulse Drive 0km a nombre de Ñandubay Servicios SAS, con el mismo chasis que indica el correo.",
+        "problems": [
+          "El correo dice Fiat Cronos Drive pero la factura con ese chasis es de un Fiat Pulse Drive; el modelo no coincide."
+        ],
+        "summary": "Ñandubay pide el alta de un Fiat Cronos 0km, pero la factura adjunta con el mismo chasis corresponde a un Fiat Pulse."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "data"
+      },
+      "labelWhy": "El modelo del pedido (Cronos) no coincide con el de la factura con ese chasis (Pulse).",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0428",
+      "channel": "excel",
+      "label": "Hiace 0km Timbó con motor en columna de chasis",
+      "body": "FECHA;EMPRESA;CUIT;N° POLIZA;VEHICULO;AÑO;0KM/USADO;DOMINIO;CHASIS;MOTOR;COBERTURA;CONTACTO\n13/11/2026;Transportes Timbó SRL;30-71000101-4;5120-0044871;Toyota Hiace Furgón L2H2 2.8 TDI;2026;0KM;-;1GD-8274513;1GD-8274513;Terceros completo;mocampo / 0343-4221187",
+      "attachments": [],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "utilitario",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "No adjuntó ningún documento.",
+        "problems": [
+          "En la columna de chasis cargaron el número de motor (1GD-8274513), que no tiene formato de chasis; falta el chasis.",
+          "No hay factura ni otro documento adjunto."
+        ],
+        "summary": "Transportes Timbó carga por planilla una Toyota Hiace 0km sin adjunto y con el número de motor repetido en el lugar del chasis."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "labelWhy": "Es un 0km y no viene la factura de compra.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0429",
+      "channel": "mail",
+      "label": "Saveiro 0km Timbó con CUIT mal tipeado",
+      "body": "De: Mariela Ocampo <administracion@transportestimbo.example>\nPara: altas.flotas@aseguradora.example\nFecha: 10/11/2026 08:50\nAsunto: Alta VW Saveiro 0km - Transportes Timbó\n\nBuen día,\n\nSolicito alta en póliza 5120-0044871:\nAsegurado: Transportes Timbó SRL\nCUIT: 30-71000101-9\nVehículo: VW Saveiro Cross 1.6 cabina doble 0km 2026\nChasis: 9BWKB45U8TP104382\nMotor: CFZ612047\nCobertura: terceros completo.\n\nAdjunto factura.\n\nMariela Ocampo",
+      "attachments": [
+        {
+          "name": "factura saveiro 0km.pdf",
+          "text": "LITORAL AUTOS S.A.\nCUIT 30-71233456-0\nFACTURA A Nro. 0002-00019760\nFecha emisión 07/11/2026\nRazón Social: TRANSPORTES TIMBO SRL\nCUIT 30-71000101-4\nDetalle: VOLKSWAGEN SAVEIRO CROSS 1.6 CD 0KM AÑO 2026\nNro. Chasis 9BWKB45U8TP104382\nNro. Motor CFZ612047\nColor Rojo Tornado\nNeto: $ 24.793.388,43\nIVA 21%: $ 5.206.611,57\nTOTAL $ 30.000.000,00\nCAE 76459870011987",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-1041",
+        "vehicle_count": 1,
+        "vehicle_kind": "pick-up",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota.",
+        "attachment_kind": "Factura de compra del 0km a nombre de Transportes Timbó SRL con CUIT 30-71000101-4, chasis y motor coincidentes.",
+        "problems": [
+          "El CUIT escrito en el correo (30-71000101-9) difiere en el dígito verificador del registrado y del que figura en la factura (30-71000101-4)."
+        ],
+        "summary": "Transportes Timbó pide el alta de una VW Saveiro 0km con factura correcta, pero en el correo escribió mal el dígito verificador del CUIT."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "account"
+      },
+      "labelWhy": "El CUIT escrito en el correo no corresponde a la cuenta de la póliza, por lo que CUIT y póliza no son de la misma cuenta.",
+      "labelNote": null
+    },
+    {
+      "id": "SOL-0430",
+      "channel": "mail",
+      "label": "Logan 0km Ñandubay con equipo de GNC",
+      "body": "De: Romina Achával <rachaval@nandubayservicios.example>\nPara: altas.flotas@aseguradora.example\nFecha: 11/11/2026 14:40\nAsunto: Alta Renault Logan con GNC\n\nHola, ¿cómo están?\n\nPedimos el alta de un Renault Logan 0km en la póliza 5120-0060518. La concesionaria le instaló de fábrica un equipo de GNC de 5ta generación (está en la factura aparte). Queremos que el equipo también quede cubierto, así que díganme si hay que declararlo o sumarle algo a la suma asegurada.\n\nChasis 93Y4SRDE5TJ719264\nCobertura terceros completo, como el resto.\n\nAdjunto factura.\n\nRomina Achával\nÑandubay Servicios SAS",
+      "attachments": [
+        {
+          "name": "Factura_Logan_GNC.pdf",
+          "text": "LITORAL AUTOS S.A.\nCUIT 30-71233456-0\nFACTURA A Nro. 0002-00019788\nFecha emisión 10/11/2026\nRazón Social: ÑANDUBAY SERVICIOS SAS\nCUIT 30-71000303-1\nÍtem 1: RENAULT LOGAN 1.6 INTENS 0KM AÑO 2026\nNro. Chasis 93Y4SRDE5TJ719264\nNro. Motor H4MD738E19022\nImporte: $ 18.595.041,32\nÍtem 2: EQUIPO GNC 5TA GENERACIÓN - 1 CILINDRO 40 L - INSTALACIÓN INCLUIDA\nImporte: $ 1.652.892,56\nNeto: $ 20.247.933,88\nIVA 21%: $ 4.252.066,12\nTOTAL $ 24.500.000,00\nCAE 76459870012760",
+          "kind": "document"
+        }
+      ],
+      "truth": {
+        "fleet_id": "FL-3377",
+        "vehicle_count": 1,
+        "vehicle_kind": "auto",
+        "condition": "0km",
+        "coverage_request": "Terceros completo, la misma que tiene la flota, y piden además cubrir el equipo de GNC instalado.",
+        "attachment_kind": "Factura a nombre de Ñandubay Servicios SAS con el Logan 0km y un equipo de GNC facturado como ítem aparte.",
+        "problems": [
+          "El vehículo tiene un equipo de GNC instalado y piden que quede cubierto como accesorio declarado."
+        ],
+        "summary": "Ñandubay pide sumar un Renault Logan 0km con equipo de GNC instalado por la concesionaria y quiere que el equipo también quede cubierto."
+      },
+      "expected": {
+        "decision": "refer",
+        "reason": "coverage"
+      },
+      "labelWhy": "Piden además cubrir el equipo de GNC como accesorio, lo que excede la cobertura que ya tiene la flota.",
+      "labelNote": null
+    }
+  ]
+}

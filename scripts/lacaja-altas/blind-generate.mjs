@@ -15,7 +15,7 @@
  *
  *   ANTHROPIC_API_KEY=... node scripts/lacaja-altas/blind-generate.mjs
  */
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
@@ -23,7 +23,20 @@ import { fleets, inspections as baseInspections } from "./cases.mjs";
 
 const MODEL = "claude-opus-5-5";
 const COUNT = 30;
-const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "blind-cases.json");
+const here = path.dirname(fileURLToPath(import.meta.url));
+/**
+ * `ALTAS_SET=2` arma un conjunto más, en otro archivo. Al modelo que escribe se
+ * le pasan los títulos de los conjuntos anteriores para que no los repita; las
+ * reglas siguen sin verse.
+ */
+const SET = Number(process.env.ALTAS_SET ?? "1");
+const fileOf = (set) => path.join(here, set === 1 ? "blind-cases.json" : `blind-cases-${set}.json`);
+const OUT = fileOf(SET);
+
+const earlier = [];
+for (let set = 1; set < SET; set++) {
+  earlier.push(...JSON.parse(await readFile(fileOf(set), "utf8")).cases.map((c) => c.label));
+}
 
 /** El registro del segundo conjunto suma dos inspecciones aprobadas, para que haya usados que cierren. */
 const inspections = [
@@ -161,7 +174,7 @@ const registryText = JSON.stringify(
 console.log("Escribiendo las solicitudes…");
 const written = await ask({
   system: WRITER_SYSTEM,
-  user: `Este es el registro de la aseguradora: las flotas aseguradas y las inspecciones por fotos de vehículos usados que ya están aprobadas.\n\n${registryText}\n\nEscribí ${COUNT} solicitudes de alta de vehículo. La mayoría son de estas flotas; alguna puede ser de una empresa que no está en el registro. La fecha de hoy es 13 de noviembre de 2026.`,
+  user: `Este es el registro de la aseguradora: las flotas aseguradas y las inspecciones por fotos de vehículos usados que ya están aprobadas.\n\n${registryText}\n\nEscribí ${COUNT} solicitudes de alta de vehículo. La mayoría son de estas flotas; alguna puede ser de una empresa que no está en el registro. La fecha de hoy es 13 de noviembre de 2026.${earlier.length ? `\n\nYa existen solicitudes de prueba con estos títulos. Escribí otras: distintos vehículos, distintas personas y, sobre todo, situaciones que no estén en esta lista.\n\n${earlier.map((label) => `- ${label}`).join("\n")}` : ""}`,
   schema: WRITER_SCHEMA,
   maxTokens: 60000,
 });
@@ -223,7 +236,7 @@ const cases = written.data.cases.map((c, index) => {
   const label = labelled.data.labels.find((l) => l.index === index);
   if (!label) throw new Error(`Falta la respuesta esperada de la solicitud ${index}.`);
   return {
-    id: `SOL-03${String(index + 1).padStart(2, "0")}`,
+    id: `SOL-0${2 + SET}${String(index + 1).padStart(2, "0")}`,
     channel: c.channel,
     label: c.label,
     body: c.body,
