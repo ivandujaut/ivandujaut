@@ -81,17 +81,14 @@ export const meta = {
 export const intro = {
   kicker: "Respaldo del tramo 03 · no todo se cierra igual",
   title: "Qué deja cada línea, según el balance que La Caja presenta a la SSN.",
-  lede: "La página propone cruzar, por producto, lo que deja cada cuenta con lo que cuesta atenderla. Ese cruce se hace adentro. Pero hay una versión pública: el balance trimestral abre por línea las primas, los siniestros y los gastos de estructura. Esto es lo que dice el de marzo de 2026.",
+  lede: "El balance trimestral abre por línea las primas, los siniestros y los gastos de estructura. En el de marzo de 2026 se ven tres cosas: la pérdida técnica está en autos, dos líneas chicas del portal pierden mientras el mercado gana, y la estructura no está repartida pareja.",
   back: "Volver a la lectura",
   backHref: "/lacaja#segmentos",
 };
 
+/** La tabla completa queda como anexo plegado: es el respaldo de los tres gráficos. */
 export const table = {
-  index: "A",
-  eyebrow: "La tabla",
-  heading: `${lines.length} líneas, de ${data.meta.period}.`,
-  intro:
-    "Gastos de explotación es la estructura que La Caja le asigna a cada línea (sueldos, sistemas, alquileres), medida sobre sus primas. Resultado técnico es lo que queda de la prima después de siniestros y gastos, antes de lo que rinden las inversiones.",
+  toggle: `Ver las ${lines.length} líneas en una tabla`,
   columns: {
     line: "Línea",
     premiums: "Primas",
@@ -118,35 +115,62 @@ export const table = {
   source: "ssnBalances" as const,
 };
 
-export const readings = {
-  index: "B",
-  eyebrow: "Tres lecturas",
-  heading: "Dónde está la plata, y dónde está la pregunta.",
-  items: [
-    {
-      title: "La pérdida técnica es de autos.",
-      text: `Automotores es el ${percent(autos.share)} de la prima y dio ${billions(autos.technicalAmount)} de resultado técnico. Las demás líneas, sumadas, dieron ${billions(rest, true)}. En autos la estructura asignada es ${percent(autos.operating)} de la prima, contra ${percent(autos.market.operating)} del mercado en el mismo ramo. Ahí adentro están las flotas, que la SSN no separa.`,
-    },
-    {
-      title: "Dos líneas chicas pierden dos años seguidos.",
-      text: `Accidentes personales colectivo (${signed(apGroup.technical)}) y sepelio colectivo (${signed(burial.technical)}) también fueron negativas un año antes (${signed(apGroup.previous.technical)} y ${signed(burial.previous.technical)}), y el mercado gana en las dos (${signed(apGroup.market.technical)} y ${signed(burial.market.technical)}). Juntas son el ${percent(smallShare)} de la prima y ${billions(smallLoss)} en nueve meses.`,
-    },
-    {
-      title: "La estructura no está repartida pareja.",
-      text: `La Caja le asigna a accidentes personales colectivo una estructura de ${percent(apGroup.operating)} de su prima, y a integral de comercio, ${percent(commerce.operating)}. No sé con qué criterio. Si es gente atendiendo nóminas, automatizar ataca justo ese gasto. Si es una clave de reparto, cerrar la línea no ahorra nada.`,
-    },
+/** Las líneas que pasan por el Portal Empresas: son las que muestran los gráficos B y C. */
+const portalLines = lines.filter((line) => line.portal);
+
+/**
+ * A · Dónde está la plata. Tres barras sobre un mismo cero: automotores, todo
+ * lo demás junto y el total. Es el gráfico que se lee primero.
+ */
+export const money = {
+  index: "A",
+  eyebrow: "Dónde está la plata",
+  heading: "La pérdida técnica es de autos.",
+  chartTitle: `Resultado técnico, de ${data.meta.period}`,
+  chartNote:
+    "Lo que queda de la prima después de pagar siniestros y gastos, antes de lo que rinden las inversiones.",
+  rows: [
+    { label: "Automotores", value: autos.technicalAmount, total: false },
+    { label: `Las otras ${lines.length - 1} líneas, sumadas`, value: rest, total: false },
+    { label: "Toda La Caja", value: data.meta.technicalAmount, total: true },
   ],
+  text: `Automotores es el ${percent(autos.share)} de la prima. La estructura que tiene asignada es ${percent(autos.operating)} de esa prima, contra ${percent(autos.market.operating)} del mercado en el mismo ramo. Ahí adentro están las flotas, que la SSN no separa.`,
+};
+
+/** B · Dónde está la pregunta. La Caja contra el mercado, línea por línea del portal. */
+export const versus = {
+  index: "B",
+  eyebrow: "Dónde está la pregunta",
+  heading: "Dos líneas del portal pierden, y el mercado gana en las dos.",
+  chartTitle: "Resultado técnico sobre la prima: La Caja contra el mercado",
+  legend: { lacaja: "La Caja", market: "Mercado" },
+  axis: { loss: "pierde", gain: "gana" },
+  previous: "un año antes",
+  rows: [...portalLines].sort((a, b) => a.technical - b.technical),
+  text: `Accidentes personales colectivo y sepelio colectivo también fueron negativas un año antes. Son chicas: juntas, el ${percent(smallShare)} de la prima y ${billions(smallLoss)} en nueve meses.`,
+};
+
+/** C · Por qué puede ser. Cuánta estructura carga cada línea, sobre su prima. */
+export const structure = {
+  index: "C",
+  eyebrow: "Por qué puede ser",
+  heading: "La estructura no está repartida pareja.",
+  chartTitle: "Gastos de estructura que La Caja le asigna a cada línea, de cada $100 de prima",
+  chartNote: "Sueldos, sistemas, alquileres. La marca vertical es el mercado en el mismo ramo.",
+  legend: { lacaja: "La Caja", market: "Mercado" },
+  rows: [...portalLines].sort((a, b) => b.operating - a.operating),
+  text: `A accidentes personales colectivo le asigna ${percent(apGroup.operating)} de su prima, y a integral de comercio, ${percent(commerce.operating)}. No sé con qué criterio. Si es gente atendiendo nóminas, automatizar ataca justo ese gasto. Si es una clave de reparto, cerrar la línea no ahorra nada.`,
   question: {
     label: "Dato de adentro",
     text: "¿Con qué criterio se reparten los gastos de estructura entre líneas?",
-    why: "De eso depende que la tabla muestre un costo de servir o una convención contable.",
+    why: "De eso depende que el gráfico muestre un costo de servir o una convención contable.",
   },
 };
 
 export const limits = {
-  index: "C",
+  index: "D",
   eyebrow: "Cómo leerlo",
-  heading: "Lo que la tabla no alcanza a decir.",
+  heading: "Lo que estos gráficos no alcanzan a decir.",
   items: [
     `El resultado técnico no incluye lo que rinden las inversiones. Con inflación alta, automotores da técnico negativo en casi todo el mercado, y La Caja está en línea: ${signed(autos.technical)} contra ${signed(autos.market.technical)}.`,
     "El reparto de gastos entre líneas lo decide la compañía y el balance no lo explica. Un gasto asignado no desaparece por cerrar la línea.",
