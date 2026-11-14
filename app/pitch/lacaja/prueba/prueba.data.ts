@@ -201,9 +201,10 @@ export const outcome = {
 };
 
 /**
- * C · La segunda prueba. Treinta solicitudes que no escribió quien escribió las
- * reglas (`scripts/lacaja-altas/blind-generate.mjs`), corridas en tres pasadas.
- * Los números salen de `blind.json`; acá va lo que enseñó cada pasada.
+ * C · La segunda prueba. Dos conjuntos de treinta solicitudes que no escribió
+ * quien escribió las reglas (`scripts/lacaja-altas/blind-generate.mjs`). El
+ * primero se corrió en tres pasadas, corrigiendo entre una y otra; el segundo,
+ * una sola vez y sin tocar nada. Los números salen de `blind.json`.
  */
 export interface BlindModel {
   id: string;
@@ -219,21 +220,24 @@ export interface BlindModel {
 
 const blind = blindResults as unknown as {
   meta: { total: number; expectedIssues: number };
-  stages: Record<string, { models: BlindModel[] }>;
+  stages: Record<
+    string,
+    { set?: { id: string; total: number; expectedIssues: number }; models: BlindModel[] }
+  >;
 };
 
 const blindModel = (stage: string, model: string) =>
   blind.stages[stage]?.models.find((m) => m.id === model)?.summary;
 const opusFirst = blindModel("v1", "claude-opus-5-5");
 const haikuFirst = blindModel("v1", "claude-haiku-5-5");
-const haikuLast = blindModel("v3", "claude-haiku-5-5");
+const haikuFresh = blindModel("v4", "claude-haiku-5-5");
+const freshSet = blind.stages.v4?.set;
 
 export const blindCopy = {
   index: "C",
   eyebrow: "La segunda prueba",
   heading: `Con solicitudes que no escribí yo, derivó ${opusFirst?.extraReferrals ?? 0} que podía cerrar sola.`,
   intro: `Las veinte primeras las escribí conociendo las reglas, así que acertarlas decía poco. Para esta prueba, un modelo escribió ${blind.meta.total} solicitudes sin ver las reglas, el lector ni el primer conjunto. Otra llamada recibió los hechos de cada una y la política en castellano, y decidió qué correspondía: ${blind.meta.expectedIssues} podían cerrarse solas. Revisé las ${blind.meta.total} respuestas y no cambié ninguna.`,
-  expected: `${blind.meta.expectedIssues} de ${blind.meta.total} podían cerrarse solas`,
   columns: {
     issued: "cerradas solas",
     wrong: "emitidas por error",
@@ -258,15 +262,30 @@ export const blindCopy = {
       lesson:
         "El lector ahora copia cualquier otro pedido que venga en el mismo mensaje y cualquier condición que no sea la de un alta común, y con eso la regla deriva. Volvió a cero emisiones equivocadas. La que derivó de más fue una cobertura mal leída.",
     },
-  ].map((stage) => ({ ...stage, models: blind.stages[stage.id]?.models ?? [] })),
+    {
+      id: "v4",
+      title: "Con un conjunto nuevo, sin tocar nada",
+      lesson: `Otras ${freshSet?.total ?? 30} solicitudes, escritas después y con situaciones distintas: una compra por leasing, una factura de hace más de un año, una patente con dos letras invertidas, un equipo de GNC. Las reglas y el lector quedaron como estaban. De las tres que derivó de más, una pedía que la cobertura empezara el mes siguiente, y es discutible que deba cerrarse sola.`,
+    },
+  ].map((stage) => {
+    const recorded = blind.stages[stage.id];
+    // Las tres primeras pasadas son sobre el primer conjunto; la cuarta trae el suyo.
+    const set = recorded?.set ?? { id: "1", ...blind.meta };
+    return {
+      ...stage,
+      models: recorded?.models ?? [],
+      set: `Conjunto ${set.id} · ${set.expectedIssues} de ${set.total} podían cerrarse solas`,
+    };
+  }),
   notes: [
     opusFirst && haikuFirst
-      ? `En las dos primeras pasadas el modelo más barato decidió casi igual que el más caro: US$ ${number(haikuFirst.costPerCaseUsd, 4)} por solicitud contra US$ ${number(opusFirst.costPerCaseUsd, 3)}, y ${number(haikuFirst.medianSeconds, 1)} segundos contra ${number(opusFirst.medianSeconds, 1)}. Por eso la tercera la corrí sólo con el barato.`
+      ? `En las dos primeras pasadas el modelo más barato decidió casi igual que el más caro: US$ ${number(haikuFirst.costPerCaseUsd, 4)} por solicitud contra US$ ${number(opusFirst.costPerCaseUsd, 3)}, y ${number(haikuFirst.medianSeconds, 1)} segundos contra ${number(opusFirst.medianSeconds, 1)}. Por eso las dos últimas las corrí sólo con el barato.`
       : null,
-    "La tercera pasada ya no es a ciegas: corregí mirando estas mismas solicitudes. El número que vale sale de un conjunto nuevo, que todavía no corrí.",
-    haikuLast && haikuLast.wrongIssues === 0
-      ? `Con cero errores en las ${haikuLast.issued} que cerró sola, lo más que se puede afirmar es que el error real está por debajo del ${number(errorCeiling(haikuLast.issued) * 100)}%.`
+    "La tercera pasada no es a ciegas: corregí mirando esas mismas solicitudes. La cuarta sí lo es, y es el número que vale.",
+    haikuFresh && haikuFresh.wrongIssues === 0
+      ? `Con cero errores en las ${haikuFresh.issued} que cerró sola en la cuarta pasada, lo más que se puede afirmar es que el error real está por debajo del ${number(errorCeiling(haikuFresh.issued) * 100)}%.`
       : null,
+    "Una de las que derivó bien en la cuarta fue por suerte. El correo nombraba un modelo y la factura otro, y no hay regla que compare eso: se derivó porque el lector no reconoció el tipo de unidad. Es la próxima regla a escribir.",
   ].filter((note): note is string => note !== null),
 };
 

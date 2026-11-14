@@ -24,7 +24,14 @@ const OUT = path.join(here, "../../app/pitch/lacaja/prueba/blind.json");
 // El lector cambió entre pasadas (desde la v3 marca otros pedidos y condiciones
 // raras), así que cada versión guarda sus lecturas en su propio archivo.
 const READER = process.env.ALTAS_READER ?? "1";
-const READINGS = path.join(here, `blind-readings${READER === "1" ? "" : `-${READER}`}.json`);
+// `ALTAS_SET=2` corre el conjunto nuevo, que tiene su archivo de casos y de lecturas.
+const SET = process.env.ALTAS_SET ?? "1";
+const READINGS = path.join(
+  here,
+  SET === "1"
+    ? `blind-readings${READER === "1" ? "" : `-${READER}`}.json`
+    : `blind-readings-s${SET}.json`,
+);
 
 /** Dólares por millón de tokens (entrada, salida), precios de lista de noviembre de 2026. */
 const MODELS = [
@@ -35,7 +42,12 @@ const ONLY = process.env.ALTAS_MODELS?.split(",");
 const CONCURRENCY = 4;
 const STAGE = process.env.ALTAS_STAGE ?? "v1";
 
-const set = JSON.parse(await readFile(path.join(here, "blind-cases.json"), "utf8"));
+const set = JSON.parse(
+  await readFile(
+    path.join(here, SET === "1" ? "blind-cases.json" : `blind-cases-${SET}.json`),
+    "utf8",
+  ),
+);
 const registry = { fleets, inspections: set.inspections };
 
 /** Lecturas guardadas: { [modelo]: { [solicitud]: { extraction, seconds, usage } } }. */
@@ -130,6 +142,11 @@ if (!process.env.ALTAS_REUSE) {
 
 const ids = (list, pick) => list.filter(pick).map((x) => x.request.id);
 const stage = {
+  set: {
+    id: SET,
+    total: set.cases.length,
+    expectedIssues: set.cases.filter((c) => c.expected.decision === "issue").length,
+  },
   models: models.map(({ id, name, summary, results }) => {
     const list = set.cases.map((request) => ({ request, r: results[request.id] }));
     return {
@@ -144,36 +161,52 @@ const stage = {
         list,
         (x) => x.r.decision === "refer" && x.request.expected.decision === "issue",
       ),
+      // Las que no salieron como se esperaba, con lo que dijo la regla.
+      mismatches: list
+        .filter((x) => !x.r.correct)
+        .map((x) => ({
+          id: x.request.id,
+          label: x.request.label,
+          expected: x.request.expected.decision,
+          got: x.r.decision,
+          detail: x.r.detail,
+        })),
     };
   }),
 };
 
-let previous = {};
+let existing = null;
 try {
-  previous = JSON.parse(await readFile(OUT, "utf8")).stages ?? {};
+  existing = JSON.parse(await readFile(OUT, "utf8"));
 } catch {
   // Primera corrida: todavía no hay pasadas guardadas.
 }
+const stages = { ...(existing?.stages ?? {}), [STAGE]: stage };
 
-const output = {
-  meta: {
-    generatedOn: set.meta.generatedOn,
-    writer: set.meta.model,
-    total: set.cases.length,
-    expectedIssues: set.cases.filter((c) => c.expected.decision === "issue").length,
-    latestStage: STAGE,
-  },
-  rules: RULES,
-  stages: { ...previous, [STAGE]: stage },
-  cases: set.cases.map((request) => ({
-    id: request.id,
-    channel: request.channel,
-    label: request.label,
-    summary: request.truth.summary,
-    expected: request.expected,
-    expectedWhy: request.labelWhy,
-    byModel: Object.fromEntries(models.map((m) => [m.id, m.results[request.id]])),
-  })),
-};
+// El detalle caso por caso y los datos generales son los del primer conjunto.
+// Una pasada sobre otro conjunto sólo suma su resumen.
+const output =
+  SET !== "1" && existing
+    ? { ...existing, meta: { ...existing.meta, latestStage: STAGE }, stages }
+    : {
+        meta: {
+          generatedOn: set.meta.generatedOn,
+          writer: set.meta.model,
+          total: stage.set.total,
+          expectedIssues: stage.set.expectedIssues,
+          latestStage: STAGE,
+        },
+        rules: RULES,
+        stages,
+        cases: set.cases.map((request) => ({
+          id: request.id,
+          channel: request.channel,
+          label: request.label,
+          summary: request.truth.summary,
+          expected: request.expected,
+          expectedWhy: request.labelWhy,
+          byModel: Object.fromEntries(models.map((m) => [m.id, m.results[request.id]])),
+        })),
+      };
 await writeFile(OUT, `${JSON.stringify(output, null, 2)}\n`);
 console.log(`\nPasada ${STAGE} guardada en ${path.relative(process.cwd(), OUT)}`);
