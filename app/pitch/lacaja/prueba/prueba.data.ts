@@ -4,6 +4,7 @@
  * (veinte altas inventadas, un lector de documentos y cinco reglas). Acá vive
  * sólo el texto. Nada de esto usa datos ni sistemas de La Caja.
  */
+import blindResults from "./blind.json";
 import results from "./results.json";
 import { errorCeiling, type WorthInputs } from "./worth";
 
@@ -199,7 +200,77 @@ export const outcome = {
   },
 };
 
-/** C · ¿Conviene hacerlo? Los nueve números son de adentro; los de ejemplo sólo prueban la cuenta. */
+/**
+ * C · La segunda prueba. Treinta solicitudes que no escribió quien escribió las
+ * reglas (`scripts/lacaja-altas/blind-generate.mjs`), corridas en tres pasadas.
+ * Los números salen de `blind.json`; acá va lo que enseñó cada pasada.
+ */
+export interface BlindModel {
+  id: string;
+  name: string;
+  summary: {
+    issued: number;
+    wrongIssues: number;
+    extraReferrals: number;
+    medianSeconds: number;
+    costPerCaseUsd: number;
+  };
+}
+
+const blind = blindResults as unknown as {
+  meta: { total: number; expectedIssues: number };
+  stages: Record<string, { models: BlindModel[] }>;
+};
+
+const blindModel = (stage: string, model: string) =>
+  blind.stages[stage]?.models.find((m) => m.id === model)?.summary;
+const opusFirst = blindModel("v1", "claude-opus-5-5");
+const haikuFirst = blindModel("v1", "claude-haiku-5-5");
+const haikuLast = blindModel("v3", "claude-haiku-5-5");
+
+export const blindCopy = {
+  index: "C",
+  eyebrow: "La segunda prueba",
+  heading: `Con solicitudes que no escribí yo, derivó ${opusFirst?.extraReferrals ?? 0} que podía cerrar sola.`,
+  intro: `Las veinte primeras las escribí conociendo las reglas, así que acertarlas decía poco. Para esta prueba, un modelo escribió ${blind.meta.total} solicitudes sin ver las reglas, el lector ni el primer conjunto. Otra llamada recibió los hechos de cada una y la política en castellano, y decidió qué correspondía: ${blind.meta.expectedIssues} podían cerrarse solas. Revisé las ${blind.meta.total} respuestas y no cambié ninguna.`,
+  expected: `${blind.meta.expectedIssues} de ${blind.meta.total} podían cerrarse solas`,
+  columns: {
+    issued: "cerradas solas",
+    wrong: "emitidas por error",
+    extra: "derivadas de más",
+  },
+  stages: [
+    {
+      id: "v1",
+      title: "Tal como estaba",
+      lesson:
+        "Las reglas estaban hechas a la medida de mis correos. Pedían que el pedido dijera «patente en trámite» y que trajera el CUIT o la póliza. Un correo real por un 0 km no nombra la patente, y muchos identifican a la empresa sólo por el nombre o por la factura.",
+    },
+    {
+      id: "v2",
+      title: "Con las reglas más flexibles",
+      lesson:
+        "Cerró las que podía y además emitió tres que no: un alta mezclada con el aviso de un siniestro, otra con la baja de una unidad, y una que pedía la cobertura desde una fecha pasada, con un daño ya ocurrido. Abrir las reglas para cerrar más subió el error.",
+    },
+    {
+      id: "v3",
+      title: "Con el lector marcando lo que no entra",
+      lesson:
+        "El lector ahora copia cualquier otro pedido que venga en el mismo mensaje y cualquier condición que no sea la de un alta común, y con eso la regla deriva. Volvió a cero emisiones equivocadas. La que derivó de más fue una cobertura mal leída.",
+    },
+  ].map((stage) => ({ ...stage, models: blind.stages[stage.id]?.models ?? [] })),
+  notes: [
+    opusFirst && haikuFirst
+      ? `En las dos primeras pasadas el modelo más barato decidió casi igual que el más caro: US$ ${number(haikuFirst.costPerCaseUsd, 4)} por solicitud contra US$ ${number(opusFirst.costPerCaseUsd, 3)}, y ${number(haikuFirst.medianSeconds, 1)} segundos contra ${number(opusFirst.medianSeconds, 1)}. Por eso la tercera la corrí sólo con el barato.`
+      : null,
+    "La tercera pasada ya no es a ciegas: corregí mirando estas mismas solicitudes. El número que vale sale de un conjunto nuevo, que todavía no corrí.",
+    haikuLast && haikuLast.wrongIssues === 0
+      ? `Con cero errores en las ${haikuLast.issued} que cerró sola, lo más que se puede afirmar es que el error real está por debajo del ${number(errorCeiling(haikuLast.issued) * 100)}%.`
+      : null,
+  ].filter((note): note is string => note !== null),
+};
+
+/** D · ¿Conviene hacerlo? Los nueve números son de adentro; los de ejemplo sólo prueban la cuenta. */
 export interface WorthField {
   id: keyof WorthInputs;
   label: string;
@@ -211,7 +282,7 @@ export interface WorthField {
 }
 
 export const worthCopy = {
-  index: "C",
+  index: "D",
   eyebrow: "¿Conviene hacerlo?",
   heading: "Cuánto puede equivocarse antes de costar más de lo que ahorra.",
   intro:
@@ -328,11 +399,11 @@ export const worthCopy = {
       "No abrirlo donde no pasa: el corte por segmento ya está en la propuesta.",
     ],
   },
-  footnote: `La cantidad de altas sale de la regla de tres: con cero errores en n casos, el error real queda por debajo de 3 dividido n, con 95% de confianza. Con los ${s.total} de la corrida, ese techo es ${number(errorCeiling(s.total) * 100)}%. La revisión posterior se cuenta al costo de una gestión asistida.`,
+  footnote: `La cantidad de altas sale de la regla de tres: con cero errores en n casos, el error real queda por debajo de 3 dividido n, con 95% de confianza. Con las ${s.issued} que cerró sola la primera corrida, ese techo es ${number(errorCeiling(s.issued) * 100)}%. La revisión posterior se cuenta al costo de una gestión asistida.`,
 };
 
 export const limits = {
-  index: "D",
+  index: "E",
   eyebrow: "El control y los límites",
   heading: "Dónde queda el control, y qué no prueba esta corrida.",
   control: {
@@ -351,7 +422,7 @@ export const limits = {
       "Una tasa de cierre. Las veinte solicitudes las escribí yo, con más excepciones de las que tiene una cartera.",
       "La lectura de un escaneo o de una foto. Las facturas entran como texto ya extraído del PDF.",
       "Que las reglas sean las correctas. Son las tres de la maqueta y dos compuertas; las de verdad las escribe Técnica.",
-      `Nada con valor estadístico. Con cero errores en ${s.total} casos, lo más que se puede afirmar es que el error real está por debajo del ${number(errorCeiling(s.total) * 100)}%.`,
+      `Nada con valor estadístico. Con cero errores en las ${s.issued} que cerró sola, lo más que se puede afirmar es que el error real está por debajo del ${number(errorCeiling(s.issued) * 100)}%.`,
     ],
   },
 };

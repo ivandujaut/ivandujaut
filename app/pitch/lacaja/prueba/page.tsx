@@ -6,7 +6,18 @@ import { ExampleBadge, Tramo, TramoHeading } from "../_components/ui";
 import { RunList } from "./_components/run-list";
 import { TouchGrid } from "./_components/touch-grid";
 import { WorthCalculator } from "./_components/worth-calculator";
-import { closing, flow, intro, limits, meta, outcome, run, worthCopy } from "./prueba.data";
+import {
+  blindCopy,
+  closing,
+  flow,
+  intro,
+  limits,
+  meta,
+  outcome,
+  run,
+  worthCopy,
+  type BlindModel,
+} from "./prueba.data";
 
 /**
  * Respaldo de la pieza de La Caja: la maqueta del tramo 04, corrida con veinte
@@ -126,8 +137,49 @@ export default function LaCajaRunPage() {
         </div>
       </Tramo>
 
-      {/* C · ¿Conviene hacerlo? La cuenta con el costo del error. */}
-      <Tramo id="cuenta" deep>
+      {/* C · La segunda prueba: solicitudes que no escribió quien escribió las reglas. */}
+      <Tramo id="segunda" deep>
+        <TramoHeading index={blindCopy.index} eyebrow={blindCopy.eyebrow}>
+          {blindCopy.heading}
+        </TramoHeading>
+        <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">
+          {blindCopy.intro}
+        </p>
+
+        <ol className="mt-10 grid gap-4 lg:grid-cols-3">
+          {blindCopy.stages.map((stage, i) => (
+            <li
+              key={stage.id}
+              className="reveal flex flex-col rounded-xl border border-(--rule) bg-(--surface) p-5"
+            >
+              <p className="mono text-xs text-(--ink-muted)">
+                Pasada {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-2 font-serif text-xl leading-snug">{stage.title}</h3>
+              <div className="mt-4 space-y-3">
+                {stage.models.map((model) => (
+                  <BlindRow key={model.id} model={model} />
+                ))}
+              </div>
+              <p className="mt-4 border-t border-(--rule) pt-4 text-sm leading-relaxed text-(--ink-dim)">
+                {stage.lesson}
+              </p>
+            </li>
+          ))}
+        </ol>
+        <p className="reveal mono mt-4 text-xs text-(--ink-muted)">{blindCopy.expected}</p>
+
+        <ul className="reveal mt-8 max-w-3xl space-y-3 text-(--ink-dim)">
+          {blindCopy.notes.map((note) => (
+            <li key={note} className="border-t border-(--rule) pt-3 leading-relaxed">
+              {note}
+            </li>
+          ))}
+        </ul>
+      </Tramo>
+
+      {/* D · ¿Conviene hacerlo? La cuenta con el costo del error. */}
+      <Tramo id="cuenta">
         <TramoHeading index={worthCopy.index} eyebrow={worthCopy.eyebrow}>
           {worthCopy.heading}
         </TramoHeading>
@@ -154,8 +206,8 @@ export default function LaCajaRunPage() {
         </p>
       </Tramo>
 
-      {/* D · El control y los límites. */}
-      <Tramo id="limites">
+      {/* E · El control y los límites. */}
+      <Tramo id="limites" deep>
         <TramoHeading index={limits.index} eyebrow={limits.eyebrow}>
           {limits.heading}
         </TramoHeading>
@@ -268,5 +320,36 @@ function Legend({
       </span>
       {children}
     </li>
+  );
+}
+
+/** Lo que hizo un modelo en una pasada: cerradas solas, emitidas por error y derivadas de más. */
+function BlindRow({ model }: { model: BlindModel }) {
+  const { issued, wrongIssues, extraReferrals } = model.summary;
+  const cells = [
+    { value: issued, label: blindCopy.columns.issued, alert: false },
+    { value: wrongIssues, label: blindCopy.columns.wrong, alert: wrongIssues > 0 },
+    { value: extraReferrals, label: blindCopy.columns.extra, alert: false },
+  ];
+  return (
+    <div>
+      <p className="label text-(--ink-muted)">{model.name}</p>
+      <dl className="mt-2 grid grid-cols-3 gap-2">
+        {cells.map((cell) => (
+          <div key={cell.label} className="flex flex-col-reverse justify-end">
+            <dt className="mt-1 text-xs leading-snug text-(--ink-dim)">{cell.label}</dt>
+            <dd
+              className={
+                cell.alert
+                  ? "font-serif text-3xl leading-none text-(--red)"
+                  : "font-serif text-3xl leading-none text-(--blue)"
+              }
+            >
+              {cell.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }

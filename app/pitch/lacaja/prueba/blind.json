@@ -1,0 +1,744 @@
+{
+  "meta": {
+    "generatedOn": "2026-11-14",
+    "writer": "claude-opus-5-5",
+    "total": 30,
+    "expectedIssues": 12,
+    "latestStage": "v3"
+  },
+  "rules": [
+    {
+      "id": "account",
+      "text": "La solicitud identifica una flota asegurada"
+    },
+    {
+      "id": "scope",
+      "text": "Es una sola unidad, de flota liviana"
+    },
+    {
+      "id": "coverage",
+      "text": "La cobertura pedida es la que ya tiene la flota"
+    },
+    {
+      "id": "documents",
+      "text": "Es 0 km con factura, o usado con fotos aprobadas"
+    },
+    {
+      "id": "data",
+      "text": "Los datos de la unidad coinciden con la documentación"
+    }
+  ],
+  "stages": {
+    "v1": {
+      "models": [
+        {
+          "id": "claude-opus-5-5",
+          "name": "Claude Opus 5.5",
+          "summary": {
+            "issued": 2,
+            "wrongIssues": 0,
+            "extraReferrals": 10,
+            "wrongReasons": 8,
+            "errors": 0,
+            "medianSeconds": 3.2,
+            "costPerCaseUsd": 0.0177
+          },
+          "wrongIssueIds": [],
+          "extraReferralIds": [
+            "SOL-0302",
+            "SOL-0303",
+            "SOL-0304",
+            "SOL-0311",
+            "SOL-0316",
+            "SOL-0320",
+            "SOL-0321",
+            "SOL-0325",
+            "SOL-0327",
+            "SOL-0329"
+          ]
+        },
+        {
+          "id": "claude-haiku-5-5",
+          "name": "Claude Haiku 5.5",
+          "summary": {
+            "issued": 2,
+            "wrongIssues": 0,
+            "extraReferrals": 10,
+            "wrongReasons": 7,
+            "errors": 0,
+            "medianSeconds": 1.8,
+            "costPerCaseUsd": 0.0005
+          },
+          "wrongIssueIds": [],
+          "extraReferralIds": [
+            "SOL-0302",
+            "SOL-0303",
+            "SOL-0304",
+            "SOL-0311",
+            "SOL-0316",
+            "SOL-0320",
+            "SOL-0321",
+            "SOL-0325",
+            "SOL-0327",
+            "SOL-0329"
+          ]
+        }
+      ]
+    },
+    "v2": {
+      "models": [
+        {
+          "id": "claude-opus-5-5",
+          "name": "Claude Opus 5.5",
+          "summary": {
+            "issued": 15,
+            "wrongIssues": 3,
+            "extraReferrals": 0,
+            "wrongReasons": 3,
+            "errors": 0,
+            "medianSeconds": 3.2,
+            "costPerCaseUsd": 0.0177
+          },
+          "wrongIssueIds": ["SOL-0314", "SOL-0323", "SOL-0328"],
+          "extraReferralIds": []
+        },
+        {
+          "id": "claude-haiku-5-5",
+          "name": "Claude Haiku 5.5",
+          "summary": {
+            "issued": 14,
+            "wrongIssues": 3,
+            "extraReferrals": 1,
+            "wrongReasons": 1,
+            "errors": 0,
+            "medianSeconds": 1.8,
+            "costPerCaseUsd": 0.0005
+          },
+          "wrongIssueIds": ["SOL-0314", "SOL-0323", "SOL-0328"],
+          "extraReferralIds": ["SOL-0321"]
+        }
+      ]
+    },
+    "v3": {
+      "models": [
+        {
+          "id": "claude-haiku-5-5",
+          "name": "Claude Haiku 5.5",
+          "summary": {
+            "issued": 11,
+            "wrongIssues": 0,
+            "extraReferrals": 1,
+            "wrongReasons": 4,
+            "errors": 0,
+            "medianSeconds": 2,
+            "costPerCaseUsd": 0.0005
+          },
+          "wrongIssueIds": [],
+          "extraReferralIds": ["SOL-0302"]
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "SOL-0301",
+      "channel": "mail",
+      "label": "Alta Kangoo 0km Timbó con factura",
+      "summary": "Transportes Timbó pide el alta de una Renault Kangoo furgón 0km con su factura, datos completos y coincidentes.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Cumple las cinco condiciones: flota registrada, un utilitario 0km, misma cobertura y factura a nombre de la empresa con datos coincidentes.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0302",
+      "channel": "excel",
+      "label": "Alta Hilux 0km Lapacho por planilla",
+      "summary": "Lapacho Logística carga en la planilla una Toyota Hilux 0km con factura, todo coincidente y con la cobertura de la flota.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Una pick-up 0km de una flota registrada, con la cobertura de la flota y factura coincidente a nombre de la empresa.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "coverage",
+          "detail": "Pide \"terceros completo\" y la flota tiene todo riesgo con franquicia: eso es suscripción.",
+          "correct": false,
+          "reasonCorrect": false
+        }
+      }
+    },
+    {
+      "id": "SOL-0303",
+      "channel": "mail",
+      "label": "Alta Cronos usado Ñandubay con inspección",
+      "summary": "Ñandubay pide el alta de un Fiat Cronos usado AD118RW, que tiene inspección por fotos aprobada para su flota, con la cédula a nombre de la empresa.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Auto usado con inspección por fotos aprobada para su flota, misma cobertura y documentación coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0304",
+      "channel": "mail",
+      "label": "Alta Ranger usada AF330LT Lapacho",
+      "summary": "Lapacho Logística pide sumar una Ford Ranger usada AF330LT con inspección por fotos aprobada para su flota y título a su nombre.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Pick-up usada con inspección por fotos aprobada para su flota, misma cobertura y título a nombre de la empresa.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0305",
+      "channel": "excel",
+      "label": "Alta Master usada AE456PQ Timbó",
+      "summary": "Timbó carga en planilla una Renault Master usada AE456PQ con inspección por fotos aprobada para su flota y cédula coincidente.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Utilitario usado con inspección por fotos aprobada para su flota, misma cobertura y cédula coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0306",
+      "channel": "mail",
+      "label": "Alta Partner usada sin inspección registrada",
+      "summary": "Timbó pide sumar una Peugeot Partner usada AB123CD diciendo que ya hizo la inspección por fotos, pero no figura ninguna aprobada para esa patente.",
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "expectedWhy": "Es usado y no hay inspección por fotos aprobada en el registro para el dominio AB123CD.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "documents",
+          "detail": "Es usado y no tiene la inspección por fotos aprobada.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0307",
+      "channel": "mail",
+      "label": "Amarok 0km Lapacho, adjunta presupuesto",
+      "summary": "Lapacho pide el alta de una Amarok 0km pero adjunta solo un presupuesto con seña y entrega prevista para el 20/11, no la factura.",
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "expectedWhy": "Es 0km y adjunta un presupuesto en lugar de la factura de compra.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "documents",
+          "detail": "El adjunto es un presupuesto o proforma, no la factura.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0308",
+      "channel": "mail",
+      "label": "Fiorino 0km Timbó, chasis no coincide",
+      "summary": "Timbó pide el alta de una Fiorino 0km con factura, pero el número de chasis del correo y el de la factura no coinciden.",
+      "expected": {
+        "decision": "refer",
+        "reason": "data"
+      },
+      "expectedWhy": "El chasis del pedido no coincide con el de la factura.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "data",
+          "detail": "El chasis del pedido (9BD255049T8812345) no es el de la factura (9BD255049T8812354).",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0309",
+      "channel": "excel",
+      "label": "Corolla 0km Ñandubay pide todo riesgo",
+      "summary": "Ñandubay carga un Corolla 0km con factura correcta pero pide para esa unidad todo riesgo, distinto de la cobertura terceros completo de su flota.",
+      "expected": {
+        "decision": "refer",
+        "reason": "coverage"
+      },
+      "expectedWhy": "Pide todo riesgo cuando la flota tiene terceros completo.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "coverage",
+          "detail": "Pide \"todo riesgo\" y la flota tiene terceros completo: eso es suscripción.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0310",
+      "channel": "mail",
+      "label": "Empresa no registrada pide alta de Daily",
+      "summary": "Una empresa que no está en el registro, Quebracho Fletes SRL, pide sumar un Iveco Daily 0km a una póliza de flota que no identifica.",
+      "expected": {
+        "decision": "refer",
+        "reason": "account"
+      },
+      "expectedWhy": "Quebracho Fletes SRL no figura como flota asegurada en el registro.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "account",
+          "detail": "La solicitud no permite identificar una flota asegurada.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0311",
+      "channel": "mail",
+      "label": "Productor reenvía alta Amarok 0km Lapacho",
+      "summary": "El productor reenvía el pedido de Lapacho para sumar una Amarok 0km con factura coincidente y la cobertura de la flota.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Una pick-up 0km de una flota registrada, con la cobertura de la flota y factura coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0312",
+      "channel": "mail",
+      "label": "Cronos 0km Ñandubay facturado al socio",
+      "summary": "Ñandubay pide sumar un Cronos 0km cuya factura está a nombre del socio gerente como persona física y no de la empresa.",
+      "expected": {
+        "decision": "refer",
+        "reason": "data"
+      },
+      "expectedWhy": "La factura está a nombre de una persona física y no de la empresa asegurada.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "data",
+          "detail": "La factura está a nombre de otro CUIT (20-28456123-5).",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0313",
+      "channel": "mail",
+      "label": "Dos Kangoo 0km Timbó con facturas",
+      "summary": "Timbó pide el alta de dos Renault Kangoo 0km en un mismo correo, cada una con su factura y datos coincidentes.",
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "expectedWhy": "La solicitud es por dos unidades y no por una sola.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "scope",
+          "detail": "La solicitud trae 2 unidades: va una por alta.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0314",
+      "channel": "mail",
+      "label": "Alta Hilux 0km Lapacho mezclada con siniestro",
+      "summary": "Lapacho pide el alta de una Hilux 0km con factura correcta y en el mismo correo avisa un choque de otra unidad de la flota.",
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "expectedWhy": "El pedido mezcla el alta con un aviso de siniestro de otra unidad, que es otro trámite.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "scope",
+          "detail": "El mensaje trae otro pedido además del alta: «Ayer a la tarde la Saveiro AC772KD tuvo un choque en Circunvalación y Av. Pellegrini, le pegaron de atrás. El chofer está bien. ¿Me dicen cómo hago la denuncia? Tengo fotos y los datos del otro.»",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0315",
+      "channel": "mail",
+      "label": "Master 0km Timbó sin adjunto",
+      "summary": "Timbó pide con urgencia el alta de una Renault Master 0km dando solo el chasis, sin adjuntar la factura.",
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "expectedWhy": "Es 0km y no adjunta la factura de compra.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "coverage",
+          "detail": "Pide condiciones que no son las de un alta común: «alta urgente master; necesito dar de alta HOY una Renault Master 0km que sale el lunes a hacer reparto»",
+          "correct": true,
+          "reasonCorrect": false
+        }
+      }
+    },
+    {
+      "id": "SOL-0316",
+      "channel": "excel",
+      "label": "Alta Fiorino 0km Timbó por planilla",
+      "summary": "Timbó carga en planilla una Fiorino 0km con factura y datos coincidentes y la cobertura de su flota.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Utilitario 0km de flota registrada, con la cobertura de la flota y factura coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0317",
+      "channel": "mail",
+      "label": "Peugeot 208 0km Ñandubay, factura ilegible",
+      "summary": "Ñandubay pide sumar un Peugeot 208 0km mandando solo una foto de la factura en la que no se pueden leer chasis ni motor.",
+      "expected": {
+        "decision": "refer",
+        "reason": "data"
+      },
+      "expectedWhy": "La factura no se lee y no se pueden verificar chasis ni motor.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "data",
+          "detail": "La factura no se lee bien (CUIT del cliente, número de factura, chasis y otros). No se pudo leer un chasis válido en la factura. No se pudo leer el CUIT del comprador en la factura.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0318",
+      "channel": "mail",
+      "label": "Moto 0km para flota de autos Ñandubay",
+      "summary": "Ñandubay pide sumar una moto Honda Wave 0km con factura correcta a una póliza de flota que hasta ahora es solo de autos.",
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "expectedWhy": "Una motocicleta no es una unidad de flota liviana (auto, utilitario o pick-up).",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "scope",
+          "detail": "Es una moto: el primer paso cubre autos, utilitarios y pick-ups.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0319",
+      "channel": "mail",
+      "label": "Lapacho pide AE456PQ, inspección de otra flota",
+      "summary": "Lapacho pide sumar la Master usada AE456PQ que le compró a Timbó, usando la inspección aprobada para la flota de Timbó y con la cédula todavía a nombre del vendedor.",
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "expectedWhy": "La inspección por fotos aprobada de AE456PQ corresponde a otra flota, no a la solicitante.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "coverage",
+          "detail": "Pide condiciones que no son las de un alta común: «La transferencia está en trámite, adjunto la cédula que me dieron.»",
+          "correct": true,
+          "reasonCorrect": false
+        }
+      }
+    },
+    {
+      "id": "SOL-0320",
+      "channel": "mail",
+      "label": "Alta 208 0km Ñandubay con factura",
+      "summary": "Ñandubay reenvía el pedido de alta del Peugeot 208 0km, ahora con la factura legible y datos coincidentes.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Auto 0km de flota registrada, con la cobertura de la flota y factura legible y coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0321",
+      "channel": "excel",
+      "label": "Alta Ranger 0km Lapacho por planilla",
+      "summary": "Lapacho carga en planilla una Ford Ranger 0km con factura y datos coincidentes.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Pick-up 0km de flota registrada, con la cobertura de la flota y factura coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0322",
+      "channel": "mail",
+      "label": "Pedido vago: sumar la camioneta gris",
+      "summary": "El dueño de Timbó pide sumar una camioneta gris que compró un tal Ramiro, sin ningún dato del vehículo ni documentación.",
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "expectedWhy": "No identifica el vehículo, por lo que no se puede determinar si es una unidad de flota liviana.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "documents",
+          "detail": "No se pudo determinar si la unidad es 0 km o usada.",
+          "correct": true,
+          "reasonCorrect": false
+        }
+      }
+    },
+    {
+      "id": "SOL-0323",
+      "channel": "mail",
+      "label": "Ducato 0km Timbó pide cobertura retroactiva",
+      "summary": "Timbó pide el alta de un Ducato 0km comprado a fin de octubre con cobertura retroactiva al 1/11, mencionando que ya tuvo un rayón.",
+      "expected": {
+        "decision": "refer",
+        "reason": "coverage"
+      },
+      "expectedWhy": "Pide cobertura con vigencia retroactiva, distinta de la que tiene la flota.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "scope",
+          "detail": "El mensaje trae otro pedido además del alta: «Se nos pasó mandarlo antes 🙈. ¿Podrían ponerle la cobertura desde el 01/11? Porque ya está circulando desde esa fecha y el martes tuvo un rayón en un estacionamiento.»",
+          "correct": true,
+          "reasonCorrect": false
+        }
+      }
+    },
+    {
+      "id": "SOL-0324",
+      "channel": "mail",
+      "label": "Onix 0km Ñandubay con chasis de 16 caracteres",
+      "summary": "Ñandubay pide el alta de un Onix 0km con factura, pero el chasis que figura en ambos documentos tiene un carácter de menos.",
+      "expected": {
+        "decision": "refer",
+        "reason": "data"
+      },
+      "expectedWhy": "El chasis informado tiene 16 caracteres y no es válido.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "data",
+          "detail": "No se pudo leer un chasis válido en la factura.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0325",
+      "channel": "mail",
+      "label": "Alta Hilux 0km Lapacho desde el celular",
+      "summary": "Lapacho pide en un correo breve el alta de una Hilux 0km con factura y datos coincidentes.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Pick-up 0km de flota registrada, con la cobertura de la flota y factura coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0326",
+      "channel": "excel",
+      "label": "Kangoo cargada como 0km pero es usada",
+      "summary": "Timbó carga como 0km una Kangoo año 2021 ya patentada AC901JT, que en realidad es usada y no tiene inspección aprobada.",
+      "expected": {
+        "decision": "refer",
+        "reason": "documents"
+      },
+      "expectedWhy": "El vehículo es usado y no tiene inspección por fotos aprobada en el registro.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "documents",
+          "detail": "El adjunto no se reconoce como una factura de compra.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0327",
+      "channel": "mail",
+      "label": "Alta Partner 0km Timbó con factura",
+      "summary": "Timbó pide el alta de una Peugeot Partner 0km con factura coincidente y pide confirmación cuando quede hecha.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Utilitario 0km de flota registrada, con la cobertura de la flota y factura coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0328",
+      "channel": "mail",
+      "label": "Alta Amarok 0km y baja de otra unidad",
+      "summary": "Lapacho pide el alta de una Amarok 0km con factura correcta y, en el mismo correo, la baja de la Saveiro AB559TR que reemplaza.",
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "expectedWhy": "El pedido incluye además la baja de otra unidad, que es otro trámite.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "scope",
+          "detail": "El mensaje trae otro pedido además del alta: «BAJA: VW Saveiro dominio AB559TR, que vendimos y se entrega el lunes 16/11. La Amarok reemplaza a la Saveiro.»",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0329",
+      "channel": "excel",
+      "label": "Alta Yaris 0km Ñandubay por planilla",
+      "summary": "Ñandubay carga en planilla un Toyota Yaris 0km con factura y datos coincidentes.",
+      "expected": {
+        "decision": "issue",
+        "reason": null
+      },
+      "expectedWhy": "Auto 0km de flota registrada, con la cobertura de la flota y factura coincidente.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "issue",
+          "reason": null,
+          "detail": null,
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    },
+    {
+      "id": "SOL-0330",
+      "channel": "mail",
+      "label": "Lapacho pide sumar semirremolque 0km",
+      "summary": "Lapacho pide sumar un semirremolque 0km con factura a una flota de pick-ups y utilitarios, sin definir la cobertura.",
+      "expected": {
+        "decision": "refer",
+        "reason": "scope"
+      },
+      "expectedWhy": "Un semirremolque no es una unidad de flota liviana.",
+      "byModel": {
+        "claude-haiku-5-5": {
+          "decision": "refer",
+          "reason": "scope",
+          "detail": "Es otro tipo de unidad: el primer paso cubre autos, utilitarios y pick-ups.",
+          "correct": true,
+          "reasonCorrect": true
+        }
+      }
+    }
+  ]
+}
