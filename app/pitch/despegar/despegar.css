@@ -1,0 +1,203 @@
+/* Lenis: sin esto el scroll nativo y el suave pelean por el alto del documento. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Paleta tomada del sistema de diseño de Despegar (eva-core.css, servido en
+   noviembre 2026): violeta de marca #4300D2, violeta noche #270570, lavanda
+   #EBE5F5 y el rojo secundario #E61A06. Dos acentos, uno por lectura del
+   mismo vuelo: violeta para "lo que ves" (el listado) y rojo para "lo que
+   pagás" (el último paso). El rojo de marca da 4,4:1 sobre blanco, así que en
+   texto va oscurecido (--paid-ink). Va en el `<html>` para que `body` también
+   pinte el fondo debajo del alto extra de Lenis. */
+.despegar {
+  --bg: #fbfaff;
+  --surface: #ffffff;
+  --surface-deep: #f3effc;
+  --lavender: #ebe5f5;
+  --night: #270570;
+  --ink: #1d1340;
+  --ink-dim: rgb(29 19 64 / 74%);
+  --ink-faint: rgb(29 19 64 / 42%);
+  --rule: rgb(29 19 64 / 12%);
+  --seen: #4300d2;
+  --seen-ink: #4300d2;
+  --seen-soft: rgb(67 0 210 / 9%);
+  --paid: #e61a06;
+  --paid-ink: #b81404;
+  --paid-soft: rgb(230 26 6 / 9%);
+  --board: #120a2b;
+  --flap: #231a4a;
+  --flap-line: rgb(0 0 0 / 55%);
+  --ok: #077a7a;
+  --ok-soft: rgb(7 122 122 / 12%);
+  --watch: #a34a00;
+  --watch-soft: rgb(163 74 0 / 12%);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Nombres que espera `ScrollProgress` de la plantilla. */
+  --pitch-accent: var(--seen);
+  --pitch-line: var(--rule);
+
+  background: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+.despegar body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.despegar ::selection {
+  background: var(--seen-soft);
+}
+
+.despegar .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.despegar .tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.despegar h1,
+.despegar h2,
+.despegar h3 {
+  text-wrap: balance;
+}
+
+.despegar p,
+.despegar li {
+  text-wrap: pretty;
+}
+
+.despegar a:focus-visible,
+.despegar summary:focus-visible,
+.despegar button:focus-visible {
+  outline: 2px solid var(--seen);
+  outline-offset: 3px;
+  border-radius: 0.25rem;
+}
+
+.despegar .nav-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  /* Gris violáceo que se ve sobre el fondo claro y sobre el violeta noche. */
+  background: #9a90c4;
+  transition:
+    background-color 400ms var(--ease),
+    transform 400ms var(--ease);
+}
+
+.despegar .nav-dot.is-active {
+  background: var(--seen);
+  transform: scale(1.6);
+}
+
+/* ------------------------------------------------------------------------
+   Tablero de partidas (split-flap). Cada carácter es una paleta con dos
+   caras apiladas: la del listado y la del último paso. Sin JavaScript (o con
+   movimiento reducido) se ve la del último paso, que es el estado final.
+   ------------------------------------------------------------------------ */
+.despegar .flap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 1.05em;
+  height: 1.45em;
+  border-radius: 0.14em;
+  background: var(--flap);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  perspective: 400px;
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 6%);
+}
+
+.despegar .flap::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: var(--flap-line);
+}
+
+.despegar .flap-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+.despegar .flap-face.is-seen {
+  opacity: 0;
+  transform: rotateX(90deg);
+}
+
+.despegar .flap.is-space {
+  background: transparent;
+  box-shadow: none;
+}
+
+.despegar .flap.is-space::after {
+  display: none;
+}
+
+/* Tarjeta con datos de ejemplo: borde punteado, nunca se confunde con un dato. */
+.despegar .is-example {
+  border: 1px dashed var(--ink-faint);
+}
+
+/* Bloque de SQL: oscuro, con desplazamiento horizontal propio en mobile. */
+.despegar .code-block {
+  background: var(--board);
+  color: #e9e4ff;
+}
+
+.despegar .code-block .kw {
+  color: #b9a1ff;
+}
+
+.despegar .code-block .cm {
+  color: #8b84a8;
+}
+
+.despegar details > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.despegar details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Botones: estados completos (hover, active, focus). */
+.despegar .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  transition:
+    background-color 300ms var(--ease),
+    opacity 300ms var(--ease),
+    transform 300ms var(--ease);
+}
+
+.despegar .btn:active {
+  transform: scale(0.98);
+}
