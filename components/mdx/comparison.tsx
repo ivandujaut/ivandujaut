@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { eyebrowClass } from "@/components/ui/eyebrow";
+import { cn } from "@/lib/utils";
 
 interface ComparisonProps {
   before: ReactNode;
@@ -59,7 +61,7 @@ export function Comparison({
       ? "grid-cols-1 md:grid-cols-2"
       : "grid-cols-1";
 
-  const labelClass = "mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground";
+  const labelClass = cn("mb-2", eyebrowClass);
   const panelClass = "[&>figure]:my-0";
 
   return (

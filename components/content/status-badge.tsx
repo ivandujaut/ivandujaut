@@ -19,7 +19,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider ring-1 ring-inset ${styles[status]} ${className ?? ""}`.trim()}
+      className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-micro uppercase tracking-wider ring-1 ring-inset ${styles[status]} ${className ?? ""}`.trim()}
     >
       {t(status)}
     </span>

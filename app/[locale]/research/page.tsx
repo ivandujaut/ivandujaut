@@ -6,6 +6,7 @@ import { ResearchListItem } from "@/components/content/research-list-item";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 
 import { RESEARCH_ENABLED } from "@/lib/features";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -45,7 +46,7 @@ export default async function ResearchPage({ params }: Props) {
   const papers = getResearch(locale as "es" | "en");
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <ResearchHeader />
 
       <div className="mt-16">
@@ -68,7 +69,7 @@ export default async function ResearchPage({ params }: Props) {
           <p className="text-muted-foreground">No papers yet.</p>
         )}
       </div>
-    </main>
+    </PageShell>
   );
 }
 

@@ -5,6 +5,8 @@ import { Link } from "@/i18n/navigation";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import { KindBadge } from "@/components/content/kind-badge";
 import { getProjects, getPublishingCadence } from "@/lib/content";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { ListRow } from "@/components/ui/list-row";
 
 interface PublishedWorkProps {
   locale: "es" | "en";
@@ -57,9 +59,7 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
   return (
     <section>
       <div className="mb-4 flex items-baseline justify-between">
-        <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          {t("title")}
-        </h2>
+        <Eyebrow as="h2">{t("title")}</Eyebrow>
         <Link
           href="/projects"
           className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
@@ -68,12 +68,11 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
         </Link>
       </div>
 
-      <Link
+      <ListRow
         href={`/projects/${lead.slug}`}
         data-ph="card_click"
         data-ph-slug={lead.slug}
         data-ph-surface="home-lead"
-        className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
       >
         <article>
           {imagen && (
@@ -118,7 +117,7 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
             )}
           </p>
         </article>
-      </Link>
+      </ListRow>
 
       <div className="mt-2 space-y-1">
         {rest.map((project) => (

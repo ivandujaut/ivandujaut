@@ -9,6 +9,7 @@ import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -93,7 +94,7 @@ export default async function Home({ params }: Props) {
     // El padding extra de arriba (`pt-28 lg:pt-40`) existía para que el
     // abanico del badge no se metiera abajo del navbar sticky. Sin badge, ese
     // aire es un hueco.
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <JsonLd data={personSchema(locale as "es" | "en")} />
       <Hero />
 
@@ -111,6 +112,6 @@ export default async function Home({ params }: Props) {
 
         <Currently />
       </div>
-    </main>
+    </PageShell>
   );
 }

@@ -2,6 +2,7 @@ import { ViewTransition } from "react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { localePath, type Locale } from "@/lib/seo";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 type RelatedPost = {
   slug: string;
@@ -22,9 +23,9 @@ export async function RelatedPosts({ posts, locale }: RelatedPostsProps) {
 
   return (
     <aside className="mt-16 border-t border-border pt-8">
-      <h2 className="mb-6 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+      <Eyebrow as="h2" className="mb-6">
         {t("title")}
-      </h2>
+      </Eyebrow>
       <ul className="space-y-4">
         {posts.map((post) => (
           <li key={post.slug}>

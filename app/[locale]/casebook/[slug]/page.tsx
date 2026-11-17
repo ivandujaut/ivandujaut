@@ -19,6 +19,8 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { useMDXComponents } from "@/mdx-components";
 import { PaperToc } from "@/components/mdx/paper-toc";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -138,7 +140,7 @@ export default async function CasebookDetailPage({ params }: Props) {
   return (
     <main id="main">
       <PaperToc containerSelector="#casebook-article" label={tocLabel} />
-      <article id="casebook-article" className="paper relative mx-auto max-w-2xl px-6 py-24">
+      <PageShell as="article" id="casebook-article" className="paper relative">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
@@ -187,9 +189,7 @@ export default async function CasebookDetailPage({ params }: Props) {
           </p>
 
           <div className="mt-8">
-            <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {tCasebook("concepts")}
-            </h2>
+            <Eyebrow as="h2">{tCasebook("concepts")}</Eyebrow>
             <ul className="mt-2 flex flex-wrap gap-2">
               {item.concepts.map((concept) => (
                 <li
@@ -210,9 +210,7 @@ export default async function CasebookDetailPage({ params }: Props) {
         </div>
 
         <footer className="mt-16 border-t border-border pt-8">
-          <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {tCasebook("sourcesLabel")}
-          </h2>
+          <Eyebrow as="h2">{tCasebook("sourcesLabel")}</Eyebrow>
           <ul className="mt-3 space-y-1 text-sm">
             {item.sources.map((source) => (
               <li key={source.url}>
@@ -232,7 +230,7 @@ export default async function CasebookDetailPage({ params }: Props) {
             <ShareLinkButton url={`${SITE_URL}${casePath}`} title={item.title} alwaysShowLabel />
           </div>
         </footer>
-      </article>
+      </PageShell>
     </main>
   );
 }

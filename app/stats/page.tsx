@@ -4,6 +4,8 @@ import { getAllProjects, getPosts } from "@/lib/content";
 import { getCachedViews } from "@/lib/views";
 import { getCachedContinued, getCachedReads } from "@/lib/reads";
 import { CONTENT_LOCALES, type ContentLocale, type ViewKind } from "@/lib/views";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageShell } from "@/components/ui/page-shell";
 
 /**
  * Tablero privado de lectura. No está en el nav, no está en el sitemap y sale
@@ -81,7 +83,7 @@ export default async function StatsPage({ searchParams }: Props) {
   const totalContinued = rows.reduce((acc, r) => acc + r.continued, 0);
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
+    <PageShell width="wide" className="py-16">
       <h1 className="text-2xl font-semibold tracking-tight">Lectura</h1>
       <p className="mt-2 text-sm text-muted-foreground">
         Una vista cuenta a quien abrió. Una lectura cuenta a quien recorrió el 75% y se quedó al
@@ -98,9 +100,7 @@ export default async function StatsPage({ searchParams }: Props) {
           ["Siguieron", String(totalContinued)],
         ].map(([label, value]) => (
           <div key={label} className="rounded-lg border border-border p-4">
-            <dt className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {label}
-            </dt>
+            <Eyebrow as="dt">{label}</Eyebrow>
             <dd className="mt-1 text-2xl font-semibold">{value}</dd>
           </div>
         ))}
@@ -115,7 +115,7 @@ export default async function StatsPage({ searchParams }: Props) {
       <div className="mt-10 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border text-left font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            <Eyebrow as="tr" className="border-b border-border text-left">
               <th className="py-2 pr-4 font-normal">Pieza</th>
               <th className="py-2 pr-4 font-normal">Idioma</th>
               <th className="py-2 pr-4 text-right font-normal">Min</th>
@@ -123,7 +123,7 @@ export default async function StatsPage({ searchParams }: Props) {
               <th className="py-2 pr-4 text-right font-normal">Lecturas</th>
               <th className="py-2 pr-4 text-right font-normal">Read-through</th>
               <th className="py-2 text-right font-normal">Siguieron</th>
-            </tr>
+            </Eyebrow>
           </thead>
           <tbody>
             {rows.map((r) => (
@@ -163,6 +163,6 @@ export default async function StatsPage({ searchParams }: Props) {
         60 segundos. Vercel Analytics, aparte, tiene el origen del tráfico: sirve para cruzar de
         dónde viene la gente que sí llega al final.
       </p>
-    </main>
+    </PageShell>
   );
 }

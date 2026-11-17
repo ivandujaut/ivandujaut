@@ -8,6 +8,7 @@ import type { Locale } from "@/i18n/routing";
 import { CV_PDF } from "@/lib/cv";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { localePath, SITE_URL } from "@/lib/seo";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -62,7 +63,7 @@ function CvContent({ locale }: { locale: Locale }) {
   const pdf = CV_PDF[locale];
 
   return (
-    <main id="main" className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+    <PageShell id="main" width="wide" className="py-16 sm:py-24">
       <div className="mb-8 flex items-center justify-between gap-4">
         <h1 className="text-4xl font-semibold tracking-tight">{t("title")}</h1>
         {/* `kind: "cv-download"` y no `"cv"`: el `"cv"` ya lo manda el botón que
@@ -92,6 +93,6 @@ function CvContent({ locale }: { locale: Locale }) {
         errorLabel={t("error")}
         openPdfLabel={t("openPdf")}
       />
-    </main>
+    </PageShell>
   );
 }

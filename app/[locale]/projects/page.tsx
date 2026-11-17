@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getEntryProject, getProjects, getProjectsBySubject } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -80,7 +82,7 @@ export default async function ProjectsPage({ params }: Props) {
   }
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <ProjectsHeader />
 
       <div className="mt-16 space-y-14">
@@ -102,9 +104,9 @@ export default async function ProjectsPage({ params }: Props) {
             <div className="space-y-10">
               {[...byTopic.entries()].map(([topic, projectsInTopic]) => (
                 <div key={topic}>
-                  <h3 className="mb-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  <Eyebrow as="h3" className="mb-3">
                     {tTopics(topic)}
-                  </h3>
+                  </Eyebrow>
                   <div className="divide-y divide-border/60">
                     {projectsInTopic.map((project) => (
                       <ProjectCard
@@ -139,7 +141,7 @@ export default async function ProjectsPage({ params }: Props) {
 
         {allProjects.length === 0 && <p className="text-muted-foreground">No projects yet.</p>}
       </div>
-    </main>
+    </PageShell>
   );
 }
 

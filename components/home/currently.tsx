@@ -1,13 +1,14 @@
 import { useTranslations } from "next-intl";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function Currently() {
   const t = useTranslations("home.currently");
 
   return (
     <section>
-      <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+      <Eyebrow as="h2" className="mb-4">
         {t("title")}
-      </h2>
+      </Eyebrow>
       <div className="space-y-4 text-foreground leading-relaxed">
         <p>{t("paragraph1")}</p>
         <p className="font-mono text-sm text-muted-foreground">{t("stack")}</p>

@@ -1,5 +1,5 @@
 import { ViewTransition } from "react";
-import { Link } from "@/i18n/navigation";
+import { ListRow } from "@/components/ui/list-row";
 
 interface PostListItemProps {
   slug: string;
@@ -11,10 +11,7 @@ interface PostListItemProps {
 
 export function PostListItem({ slug, title, description, date, locale }: PostListItemProps) {
   return (
-    <Link
-      href={`/blog/${slug}`}
-      className="group -mx-3 block rounded-lg px-3 py-3 transition-colors hover:bg-muted/40"
-    >
+    <ListRow href={`/blog/${slug}`} className="py-3">
       <article className="flex items-baseline justify-between gap-4">
         <div className="min-w-0 flex-1">
           <ViewTransition name={`post-title-${slug}`} share="morph">
@@ -33,6 +30,6 @@ export function PostListItem({ slug, title, description, date, locale }: PostLis
           </time>
         </ViewTransition>
       </article>
-    </Link>
+    </ListRow>
   );
 }

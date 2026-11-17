@@ -58,7 +58,7 @@ export function FigmaEmbed({
     ? "my-12 mx-[calc(50%-50vw)] flex w-screen justify-center"
     : "my-8";
   const frameClass = fullBleed
-    ? "w-full max-w-[1280px] overflow-hidden border-y border-border bg-background"
+    ? "w-full max-w-media overflow-hidden border-y border-border bg-background"
     : "overflow-hidden rounded-lg border border-border bg-background";
 
   return (

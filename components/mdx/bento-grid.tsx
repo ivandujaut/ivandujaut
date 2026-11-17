@@ -80,7 +80,7 @@ export function BentoGrid({
   return (
     <div className={wrapperClass}>
       <ul
-        className={`mx-auto grid w-full max-w-[1280px] list-none grid-cols-1 auto-rows-[minmax(0,auto)] pl-0! md:grid-cols-12 ${rowSizing} [&>li]:mb-0! [&>li]:list-none [&>li]:before:hidden`}
+        className={`mx-auto grid w-full max-w-media list-none grid-cols-1 auto-rows-[minmax(0,auto)] pl-0! md:grid-cols-12 ${rowSizing} [&>li]:mb-0! [&>li]:list-none [&>li]:before:hidden`}
         style={{ gap }}
       >
         {items.map((item, i) => {

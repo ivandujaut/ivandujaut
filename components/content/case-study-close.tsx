@@ -8,6 +8,7 @@ import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-tri
 import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface RelatedProject {
   slug: string;
@@ -147,10 +148,10 @@ function RelatedCard({ project, label }: { project: RelatedProject; label: strin
       >
         {/* La flecha apunta siempre a la derecha: significa "abrí este caso",
             no una dirección en el tiempo. Rotarla contradecía el label. */}
-        <span className="flex items-center gap-1.5 font-mono text-[0.7rem] uppercase tracking-wider text-muted-foreground">
+        <Eyebrow as="span" className="flex items-center gap-1.5">
           {label}
           <ArrowRight size={12} strokeWidth={1.5} aria-hidden animation="pointing" />
-        </span>
+        </Eyebrow>
         <span className="mt-2 flex flex-wrap gap-1.5">
           <KindBadge kind={project.kind} />
         </span>
