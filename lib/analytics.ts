@@ -72,7 +72,22 @@ export type AnalyticsEvent =
    * hablaba a una minoría con vocabulario que el resto no tiene por qué
    * conocer ("pegá la dirección en tu lector"). Quien usa RSS busca el ícono.
    */
-  | "feed_click";
+  | "feed_click"
+  /**
+   * Lectura de las páginas de pitch (`/pitch/*` y sus alias cortos), medida por
+   * `PitchTracker`. Llevan `company` y `page` en vez de `slug` y `locale`: no son
+   * piezas del sitio sino páginas privadas por empresa, y mezclarlas con los
+   * eventos `content_*` ensuciaría el embudo de los casos.
+   *
+   * - `pitch_viewed`: abrió la página.
+   * - `pitch_progress`: cruzó 25/50/75/100% del alto (`depth`).
+   * - `pitch_section`: llegó a una sección (`section`, `position`).
+   * - `pitch_exit`: se fue (`depth_max`, `seconds_visible`, `last_section`).
+   */
+  | "pitch_viewed"
+  | "pitch_progress"
+  | "pitch_section"
+  | "pitch_exit";
 
 /**
  * Agentes que no son lectores.
