@@ -35,7 +35,7 @@ import { CaseSourceCode } from "@/components/content/case-source-code";
 import { ReadingProgress } from "@/components/content/reading-progress";
 import { PaperToc } from "@/components/mdx/paper-toc";
 import { useMDXComponents } from "@/mdx-components";
-import { buildCoverUrl, buildProjectOgUrl } from "@/lib/og";
+import { buildCoverUrl, buildProjectOgUrl, projectCardTags } from "@/lib/og";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -57,10 +57,19 @@ export async function generateMetadata({ params }: Props) {
 
   if (!project) return {};
 
+  const tTopics = await getTranslations({
+    locale: locale as "es" | "en",
+    namespace: "projects.topics",
+  });
   const ogImageUrl = buildProjectOgUrl({
     title: project.title,
     description: project.description,
-    stack: project.stack,
+    tags: projectCardTags({
+      kind: project.kind,
+      stack: project.stack,
+      entityLabels: project.entityLabels,
+      topicLabel: tTopics(project.topic),
+    }),
     status: project.status,
     kind: project.kind,
     coverUrl: buildCoverUrl(project.cover?.src.src),
@@ -143,6 +152,7 @@ export default async function ProjectPage({ params }: Props) {
   const t = await getTranslations({ locale: typedLocale, namespace: "common.navigation" });
   const tA11y = await getTranslations({ locale: typedLocale, namespace: "common.a11y" });
   const tProjects = await getTranslations({ locale: typedLocale, namespace: "projects" });
+  const tTopics = await getTranslations({ locale: typedLocale, namespace: "projects.topics" });
   const tReading = await getTranslations({ locale: typedLocale, namespace: "common.reading" });
   const newTabLabel = tA11y("opensInNewTab");
   const demoLabel = tProjects("links.demo");
@@ -165,7 +175,12 @@ export default async function ProjectPage({ params }: Props) {
   const articleImage = buildProjectOgUrl({
     title: project.title,
     description: project.description,
-    stack: project.stack,
+    tags: projectCardTags({
+      kind: project.kind,
+      stack: project.stack,
+      entityLabels: project.entityLabels,
+      topicLabel: tTopics(project.topic),
+    }),
     status: project.status,
     kind: project.kind,
     coverUrl: buildCoverUrl(project.cover?.src.src),

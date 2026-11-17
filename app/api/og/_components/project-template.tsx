@@ -52,11 +52,11 @@ const DESC_MAX_LINES = 4; // más que esto tapa la tarjeta
 const STACK_MIN_ROWS = 1; // el primer tag no se pierde nunca
 
 /** Píldoras que entran en `maxRows` filas del ancho de la columna. */
-function fitStack(stack: string[], maxRows: number) {
+function fitStack(tags: string[], maxRows: number) {
   const items: string[] = [];
   let rows = 1;
   let used = 0;
-  for (const tech of stack) {
+  for (const tech of tags) {
     const width = tech.length * PILL_CHAR_W + PILL_EXTRA;
     if (used + width > COL_W) {
       if (rows >= maxRows) break;
@@ -67,7 +67,7 @@ function fitStack(stack: string[], maxRows: number) {
     items.push(tech);
   }
   // Nunca dejar el bloque vacío: una píldora sola es mejor que ninguna.
-  return { items: items.length > 0 ? items : stack.slice(0, 1), rows };
+  return { items: items.length > 0 ? items : tags.slice(0, 1), rows };
 }
 
 /** Recorta en el último espacio, para no cortar una palabra por la mitad. */
@@ -79,7 +79,7 @@ function clampText(text: string, limit: number) {
 interface ProjectTemplateProps {
   title: string;
   description?: string;
-  stack?: string[];
+  tags?: string[];
   status?: "shipped" | "in-progress" | "archived" | "concept";
   kind?: "build" | "case-study" | "design";
   coverUrl?: string;
@@ -91,7 +91,7 @@ interface ProjectTemplateProps {
  * Template OG para proyectos.
  *
  * Layout split (horizontal):
- *   - Left side (55%): logo + status + título + descripción + stack + CTA + footer
+ *   - Left side (55%): logo + status + título + descripción + tags + CTA + footer
  *   - Right side (45%): cover image (si existe) o gradient sutil
  *
  * Si no hay coverUrl, el texto ocupa el ancho completo.
@@ -99,7 +99,7 @@ interface ProjectTemplateProps {
 export function ProjectTemplate({
   title,
   description,
-  stack = [],
+  tags = [],
   status,
   kind = "build",
   coverUrl,
@@ -142,14 +142,14 @@ export function ProjectTemplate({
   const titleHeight = Math.ceil(title.length / (COL_W / (titleSize * 0.52))) * titleSize * 1.05;
 
   // Quién cobra primero cuando no entra todo. La descripción dice de qué trata
-  // el caso y el stack dice con qué herramienta se hizo, así que en una tarjeta
-  // que compite en un feed gana la descripción. Antes era al revés: el stack
-  // tomaba sus dos filas y la descripción se quedaba con lo que sobrara, que en
-  // los casos de título largo era nada.
+  // la pieza, así que en una tarjeta que compite en un feed gana ella. Antes
+  // era al revés: las píldoras tomaban sus dos filas y la descripción se
+  // quedaba con lo que sobrara, que en los títulos largos era nada.
   //
-  // El stack igual conserva un renglón de piso. Viene ordenado por interés
-  // desde el frontmatter (primero la fuente de datos, después las librerías),
-  // así que el renglón que sobrevive es justo el que dice algo.
+  // Las píldoras conservan un renglón de piso. Vienen ordenadas por interés
+  // desde `projectCardTags`: en un caso, el nicho primero y después lo que el
+  // caso analiza; en lo construido, el stack como lo declara el frontmatter.
+  // Así el renglón que sobrevive es siempre el que dice algo.
   const fixedHeight =
     HEADER_H + SPACER_H + titleHeight + TITLE_GAP + BLOCK_GAP + CTA_GAP + CTA_H + FOOTER_H;
   const freeHeight = Math.max(0, COL_H - fixedHeight);
@@ -168,7 +168,7 @@ export function ProjectTemplate({
     2,
     Math.max(STACK_MIN_ROWS, Math.floor((freeHeight - descLines * DESC_LINE_H) / PILL_ROW_H)),
   );
-  const { items: visibleStack } = fitStack(stack, stackRows);
+  const { items: visibleStack } = fitStack(tags, stackRows);
 
   // Con `descLines` en 0 no hay lugar para una sola línea, y entonces no va
   // nada: `clampText(texto, 0)` devuelve los puntos suspensivos solos, que es

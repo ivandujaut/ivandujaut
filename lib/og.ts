@@ -62,10 +62,36 @@ export function buildPostOgUrl(params: {
 /**
  * Construye URL OG para un project.
  */
+/**
+ * Qué píldoras lleva la tarjeta que se comparte de un caso.
+ *
+ * En un caso de estudio el stack no aporta: nadie abre un análisis de Medicare
+ * porque esté hecho con matplotlib. Lo que dice algo es el nicho y las cosas
+ * que el caso analiza, que es lo que un lector que contrata producto o
+ * estrategia está buscando. Es la misma regla que el listado del sitio aplica
+ * desde el 19/09/2026 (ver `project-list-item.tsx`), que hasta ahora la
+ * tarjeta no seguía: el listado sacó el stack de los casos y la tarjeta lo
+ * siguió mostrando.
+ *
+ * En lo que se construyó el stack sí es parte de lo que se muestra, así que
+ * ahí queda.
+ */
+export function projectCardTags(params: {
+  kind?: "build" | "case-study" | "design";
+  stack?: string[];
+  entityLabels?: string[];
+  topicLabel?: string;
+}): string[] {
+  if (params.kind !== "case-study") return params.stack ?? [];
+  return [params.topicLabel, ...(params.entityLabels ?? [])].filter((tag): tag is string =>
+    Boolean(tag),
+  );
+}
+
 export function buildProjectOgUrl(params: {
   title: string;
   description?: string;
-  stack?: string[];
+  tags?: string[];
   status?: "shipped" | "in-progress" | "archived" | "concept";
   kind?: "build" | "case-study" | "design";
   coverUrl?: string;
@@ -86,8 +112,8 @@ export function buildProjectOgUrl(params: {
   if (params.description) {
     searchParams.set("description", params.description);
   }
-  if (params.stack && params.stack.length > 0) {
-    searchParams.set("stack", params.stack.join(","));
+  if (params.tags && params.tags.length > 0) {
+    searchParams.set("tags", params.tags.join(","));
   }
   if (params.status) {
     searchParams.set("status", params.status);

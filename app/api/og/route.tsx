@@ -92,7 +92,7 @@ function renderTemplate(template: string, params: URLSearchParams) {
         <ProjectTemplate
           title={params.get("title") ?? "Untitled"}
           description={params.get("description") ?? undefined}
-          stack={parseList(params.get("stack"))}
+          tags={parseList(params.get("tags"))}
           status={parseStatus(params.get("status"))}
           kind={parseKind(params.get("kind"))}
           coverUrl={params.get("coverUrl") ?? undefined}
