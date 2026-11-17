@@ -49,7 +49,7 @@ export function DefaultTemplate({
             fontSize: 28,
             fontWeight: 500,
             color: tokens.fg,
-            fontFamily: "JetBrainsMono",
+            fontFamily: "ChivoMono",
             letterSpacing: "-0.02em",
           }}
         >
@@ -87,7 +87,7 @@ export function DefaultTemplate({
               lineHeight: 1,
               letterSpacing: "-0.05em",
               margin: 0,
-              fontFamily: "Inter",
+              fontFamily: "Archivo",
             }}
           >
             {title}
@@ -101,7 +101,7 @@ export function DefaultTemplate({
               color: tokens.fgMuted,
               lineHeight: 1.4,
               margin: 0,
-              fontFamily: "Inter",
+              fontFamily: "Archivo",
               maxWidth: 800,
             }}
           >
@@ -124,7 +124,7 @@ export function DefaultTemplate({
             style={{
               fontSize: 20,
               color: tokens.fgMuted,
-              fontFamily: "JetBrainsMono",
+              fontFamily: "ChivoMono",
               fontWeight: 500,
             }}
           >
@@ -134,7 +134,7 @@ export function DefaultTemplate({
             style={{
               fontSize: 20,
               color: tokens.fgSubtle,
-              fontFamily: "JetBrainsMono",
+              fontFamily: "ChivoMono",
               fontWeight: 400,
             }}
           >

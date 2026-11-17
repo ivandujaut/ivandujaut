@@ -62,7 +62,7 @@ export function ScoreCard({ card, open, onToggle }: ScoreCardProps) {
               strokeDashoffset={GAUGE_LENGTH * (1 - card.totalScore / 100)}
             />
           </svg>
-          <p className="absolute inset-0 flex items-center justify-center font-serif text-4xl leading-none font-semibold tabular-nums">
+          <p className="absolute inset-0 flex items-center justify-center font-serif text-4xl leading-none font-semibold tabular-nums lining-nums">
             <span className="score-total">{card.totalScore}</span>
           </p>
         </div>

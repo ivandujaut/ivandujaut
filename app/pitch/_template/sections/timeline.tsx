@@ -158,7 +158,7 @@ export function Timeline({ index, data }: TimelineProps) {
                 <p className="font-mono text-xs tracking-widest text-(--pitch-ink-dim) uppercase">
                   {m.date}
                 </p>
-                <p className="count mt-2 font-serif text-4xl font-semibold tabular-nums md:text-6xl">
+                <p className="count mt-2 font-serif text-4xl font-semibold tabular-nums lining-nums md:text-6xl">
                   {m.metric ?? "—"}
                 </p>
                 <p className="mt-3 max-w-xs text-base text-(--pitch-ink-dim)">{m.label}</p>

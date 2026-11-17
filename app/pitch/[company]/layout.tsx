@@ -1,6 +1,6 @@
 import "../../globals.css";
 import "../_template/pitch.css";
-import { Geist_Mono, Figtree, Source_Serif_4 } from "next/font/google";
+import { Alegreya, Archivo, Chivo_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ClickTracker } from "@/components/analytics/click-tracker";
@@ -24,19 +24,25 @@ import { LenisProvider } from "../_template/lib/lenis-provider";
  * es justo lo que estas piezas existen para contar.
  */
 
-const figTree = Figtree({
+/*
+ * Las tres familias del sitio, no las de la IA. Cada pitch publicado elige
+ * después la tipografía de su empresa; lo que no puede pasar es que la
+ * plantilla traiga un default prohibido y el próximo pitch lo herede sin que
+ * nadie lo haya elegido. Ver `.claude/docs/brand-rules.md`.
+ */
+const archivo = Archivo({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const chivoMono = Chivo_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
+const alegreya = Alegreya({
   variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
@@ -54,7 +60,7 @@ export default function PitchLayout({ children }: { children: ReactNode }) {
     <html lang="es" className="dark" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${figTree.variable} ${geistMono.variable} ${sourceSerif.variable} antialiased`}
+        className={`${archivo.variable} ${chivoMono.variable} ${alegreya.variable} antialiased`}
       >
         <div className="pitch dark min-h-svh bg-background text-foreground">
           <LenisProvider>{children}</LenisProvider>

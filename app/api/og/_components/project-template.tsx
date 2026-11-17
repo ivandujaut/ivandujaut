@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Logo, Footer, Background, Tag, getTokens, type OgTheme } from "./shared";
+import { Logo, Footer, Background, Tag, getTokens, statusColors, type OgTheme } from "./shared";
 import esMessages from "@/messages/es.json";
 import enMessages from "@/messages/en.json";
 
@@ -48,13 +48,15 @@ const PILL_ROW_H = 46;
 const DESC_CHARS_PER_LINE = 48;
 const PILL_CHAR_W = 10.8; // avance medio del mono a 18px
 const PILL_EXTRA = 36; // padding horizontal más el gap
+const DESC_MAX_LINES = 4; // más que esto tapa la tarjeta
+const STACK_MIN_ROWS = 1; // el primer tag no se pierde nunca
 
 /** Píldoras que entran en `maxRows` filas del ancho de la columna. */
-function fitStack(stack: string[], maxRows: number) {
+function fitStack(tags: string[], maxRows: number) {
   const items: string[] = [];
   let rows = 1;
   let used = 0;
-  for (const tech of stack) {
+  for (const tech of tags) {
     const width = tech.length * PILL_CHAR_W + PILL_EXTRA;
     if (used + width > COL_W) {
       if (rows >= maxRows) break;
@@ -65,7 +67,7 @@ function fitStack(stack: string[], maxRows: number) {
     items.push(tech);
   }
   // Nunca dejar el bloque vacío: una píldora sola es mejor que ninguna.
-  return { items: items.length > 0 ? items : stack.slice(0, 1), rows };
+  return { items: items.length > 0 ? items : tags.slice(0, 1), rows };
 }
 
 /** Recorta en el último espacio, para no cortar una palabra por la mitad. */
@@ -77,7 +79,7 @@ function clampText(text: string, limit: number) {
 interface ProjectTemplateProps {
   title: string;
   description?: string;
-  stack?: string[];
+  tags?: string[];
   status?: "shipped" | "in-progress" | "archived" | "concept";
   kind?: "build" | "case-study" | "design";
   coverUrl?: string;
@@ -89,7 +91,7 @@ interface ProjectTemplateProps {
  * Template OG para proyectos.
  *
  * Layout split (horizontal):
- *   - Left side (55%): logo + status + título + descripción + stack + CTA + footer
+ *   - Left side (55%): logo + status + título + descripción + tags + CTA + footer
  *   - Right side (45%): cover image (si existe) o gradient sutil
  *
  * Si no hay coverUrl, el texto ocupa el ancho completo.
@@ -97,7 +99,7 @@ interface ProjectTemplateProps {
 export function ProjectTemplate({
   title,
   description,
-  stack = [],
+  tags = [],
   status,
   kind = "build",
   coverUrl,
@@ -139,39 +141,46 @@ export function ProjectTemplate({
   const titleSize = titleLines >= 4 ? 42 : titleLines === 3 ? 52 : 64;
   const titleHeight = Math.ceil(title.length / (COL_W / (titleSize * 0.52))) * titleSize * 1.05;
 
-  // El stack se mide por ancho y no por cantidad: dos etiquetas largas
-  // ("Investigación de mercado") ya desbordan la fila, y la segunda fila son
-  // 46px que salen justo del pie.
-  const { items: visibleStack, rows: stackRows } = fitStack(stack, titleLines >= 3 ? 1 : 2);
+  // Quién cobra primero cuando no entra todo. La descripción dice de qué trata
+  // la pieza, así que en una tarjeta que compite en un feed gana ella. Antes
+  // era al revés: las píldoras tomaban sus dos filas y la descripción se
+  // quedaba con lo que sobrara, que en los títulos largos era nada.
+  //
+  // Las píldoras conservan un renglón de piso. Vienen ordenadas por interés
+  // desde `projectCardTags`: en un caso, el nicho primero y después lo que el
+  // caso analiza; en lo construido, el stack como lo declara el frontmatter.
+  // Así el renglón que sobrevive es siempre el que dice algo.
+  const fixedHeight =
+    HEADER_H + SPACER_H + titleHeight + TITLE_GAP + BLOCK_GAP + CTA_GAP + CTA_H + FOOTER_H;
+  const freeHeight = Math.max(0, COL_H - fixedHeight);
 
-  // Con el resto de la columna ya reservado, lo que sobra es lo que puede ocupar
-  // la descripción. Clave: esto depende del título Y de la descripción, no solo
-  // del título. La tarjeta de cobranza tiene título corto y perdía el pie igual,
-  // porque su descripción sola ocupaba seis líneas.
-  const reserved =
-    HEADER_H +
-    SPACER_H +
-    titleHeight +
-    TITLE_GAP +
-    BLOCK_GAP +
-    stackRows * PILL_ROW_H +
-    CTA_GAP +
-    CTA_H +
-    FOOTER_H;
-  const descLines = Math.max(0, Math.floor((COL_H - reserved) / DESC_LINE_H));
-  const visibleDescription = description
-    ? clampText(description, descLines * DESC_CHARS_PER_LINE)
-    : description;
+  // No se reservan cuatro líneas para una descripción de treinta caracteres:
+  // el techo real es lo que el texto necesita.
+  const neededLines = description ? Math.ceil(description.length / DESC_CHARS_PER_LINE) : 0;
+  const descLines = Math.min(
+    DESC_MAX_LINES,
+    neededLines,
+    Math.max(0, Math.floor((freeHeight - STACK_MIN_ROWS * PILL_ROW_H) / DESC_LINE_H)),
+  );
 
-  // Color del dot según status
-  const statusColor =
-    status === "shipped"
-      ? tokens.accent
-      : status === "in-progress"
-        ? "#f59e0b"
-        : status === "concept"
-          ? "#3b82f6"
-          : tokens.fgSubtle;
+  // Lo que queda después de la descripción decide si entra una segunda fila.
+  const stackRows = Math.min(
+    2,
+    Math.max(STACK_MIN_ROWS, Math.floor((freeHeight - descLines * DESC_LINE_H) / PILL_ROW_H)),
+  );
+  const { items: visibleStack } = fitStack(tags, stackRows);
+
+  // Con `descLines` en 0 no hay lugar para una sola línea, y entonces no va
+  // nada: `clampText(texto, 0)` devuelve los puntos suspensivos solos, que es
+  // lo que salía en las tarjetas de título de dos líneas con dos filas de
+  // stack (por ejemplo "La prima que no llega", que se comparte así).
+  const visibleDescription =
+    description && descLines > 0
+      ? clampText(description, descLines * DESC_CHARS_PER_LINE)
+      : undefined;
+
+  // Color del dot según status, el mismo que la etiqueta en el sitio
+  const statusColor = status ? statusColors[status] : tokens.fgSubtle;
 
   return (
     <Background theme={theme}>
@@ -207,7 +216,7 @@ export function ProjectTemplate({
                 gap: 12,
                 fontSize: 18,
                 color: tokens.fgMuted,
-                fontFamily: "JetBrainsMono",
+                fontFamily: "ChivoMono",
                 fontWeight: 500,
                 letterSpacing: "0.04em",
               }}
@@ -259,7 +268,7 @@ export function ProjectTemplate({
                 lineHeight: 1.05,
                 letterSpacing: "-0.04em",
                 margin: 0,
-                fontFamily: "Inter",
+                fontFamily: "Archivo",
               }}
             >
               {title}
@@ -274,7 +283,7 @@ export function ProjectTemplate({
                   color: tokens.fgMuted,
                   lineHeight: 1.4,
                   margin: 0,
-                  fontFamily: "Inter",
+                  fontFamily: "Archivo",
                 }}
               >
                 {visibleDescription}
@@ -318,7 +327,7 @@ export function ProjectTemplate({
                 color: tokens.bg,
                 fontSize: 18,
                 fontWeight: 600,
-                fontFamily: "Inter",
+                fontFamily: "Archivo",
                 alignSelf: "flex-start",
               }}
             >
