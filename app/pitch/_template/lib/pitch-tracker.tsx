@@ -53,7 +53,15 @@ export function PitchTracker({ company, page = "main" }: PitchTrackerProps) {
       return true;
     };
 
-    if (unaVez("viewed")) track("pitch_viewed", base);
+    // Un tick después y no en el cuerpo del efecto. En los layouts de pitch
+    // `PostHogProvider` va después de `{children}`, así que su efecto (el que
+    // llama a `posthog.init`) corre después de éste, y un `capture` anterior al
+    // init se descarta sin aviso. Pasó en producción el 17/11/2026: llegaban las
+    // secciones y los hitos, que se disparan más tarde, y ninguna vista. El
+    // timeout corre cuando ya se vaciaron todos los efectos del mismo commit.
+    const timeoutVista = window.setTimeout(() => {
+      if (unaVez("viewed")) track("pitch_viewed", base);
+    }, 0);
 
     const secciones = Array.from(document.querySelectorAll<HTMLElement>("main section[id]"));
     let ultimaSeccion: string | null = null;
@@ -136,6 +144,7 @@ export function PitchTracker({ company, page = "main" }: PitchTrackerProps) {
     window.addEventListener("pagehide", alOcultar);
 
     return () => {
+      window.clearTimeout(timeoutVista);
       clearInterval(interval);
       observer.disconnect();
       window.removeEventListener("pagehide", alOcultar);
