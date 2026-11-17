@@ -180,6 +180,29 @@
 }
 
 /* ============================================================
+   Tokens propios
+   ============================================================
+
+   Van en un `@theme` aparte del `inline` de arriba porque son valores
+   literales y no referencias a otras variables.
+
+   La regla: si un valor aparece en más de un archivo, vive acá. Lo que
+   queda escrito a mano en un componente es lo que existe una sola vez.
+   Ver `.claude/docs/brand-rules.md`. */
+@theme {
+  /* El único tamaño por debajo de la escala de Tailwind que el sitio usa:
+     las píldoras de tipo y estado, y los números de las anotaciones. Antes
+     estaba escrito como `text-[10px]` en cuatro archivos. */
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 1.25;
+
+  /* Los bloques de media del MDX desbordan la columna de lectura a
+     propósito. Estaba como `max-w-[1280px]` en ocho componentes, así que
+     cambiar el ancho del contenido eran ocho ediciones. */
+  --container-media: 1280px;
+}
+
+/* ============================================================
    Base layer
    ============================================================ */
 
