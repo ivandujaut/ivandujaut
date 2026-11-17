@@ -26,7 +26,7 @@ function Frame({
 }) {
   return (
     <figure
-      className={cn("chart reveal rounded-xl bg-(--surface) p-5 md:p-7", className)}
+      className={cn("chart reveal rounded-lg bg-(--surface) p-5 md:p-7", className)}
       aria-label={label}
     >
       <figcaption className="text-sm font-medium text-(--ink)">{title}</figcaption>

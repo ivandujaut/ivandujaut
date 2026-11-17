@@ -20,7 +20,7 @@ export function Business() {
 
       <dl className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
         {business.kpis.map((k) => (
-          <div key={k.label} className="reveal rounded-xl bg-(--surface) p-5">
+          <div key={k.label} className="reveal rounded-lg bg-(--surface) p-5">
             <dt className="text-sm text-(--ink-dim)">{k.label}</dt>
             <dd className="mt-2 text-xl font-semibold tracking-tight tabular md:text-3xl">
               <span className="whitespace-nowrap">{k.value}</span>
@@ -61,7 +61,7 @@ export function Business() {
                 aria-hidden
                 className="absolute top-1.5 -left-[1.82rem] size-2.5 rounded-full bg-(--seen)"
               />
-              <p className="mono text-xs tracking-wide text-(--seen-ink) uppercase">{m.date}</p>
+              <p className="text-sm font-medium text-(--seen-ink)">{m.date}</p>
               <p className="mt-1 leading-relaxed">
                 {m.label}
                 <Cite id={m.source} />
@@ -69,7 +69,7 @@ export function Business() {
             </li>
           ))}
         </ol>
-        <blockquote className="reveal self-start rounded-xl bg-(--night) p-6 text-white md:p-8">
+        <blockquote className="reveal self-start rounded-lg bg-(--night) p-6 text-white md:p-8">
           <p className="text-xl leading-snug font-medium md:text-2xl">{business.plan.quote}</p>
           <footer className="mt-4 text-sm text-white/70">
             {business.plan.attribution}
@@ -105,7 +105,7 @@ export function AppToday() {
         />
         <dl className="grid grid-cols-2 gap-3">
           {app.facts.map((f) => (
-            <div key={f.label} className="reveal rounded-xl bg-(--surface) p-4">
+            <div key={f.label} className="reveal rounded-lg bg-(--surface) p-4">
               <dd className="text-xl font-semibold tracking-tight whitespace-nowrap tabular md:text-2xl">
                 {f.value}
               </dd>
@@ -122,41 +122,22 @@ export function AppToday() {
       </div>
 
       <h3 className="reveal mt-16 text-xl font-semibold md:text-2xl">{app.funnel.title}</h3>
-      <ol className="mt-6 grid gap-3 md:grid-cols-4">
+      <ol className="mt-6 grid gap-8 md:grid-cols-4">
         {stages.map((s, i) => {
           const last = i === stages.length - 1;
           return (
             <li
               key={s.id}
               className={cn(
-                "reveal flex flex-col rounded-xl p-5",
-                last ? "bg-(--night) text-white" : "bg-(--surface)",
+                "reveal flex flex-col border-t-2 pt-4",
+                last ? "border-(--paid)" : "border-(--ink)/30",
               )}
             >
-              <p
-                className={cn(
-                  "mono text-xs tracking-wide uppercase",
-                  last ? "text-white/70" : "text-(--seen-ink)",
-                )}
-              >
-                {String(i + 1).padStart(2, "0")} <span aria-hidden>·</span> {s.label}
+              <p className={cn("font-semibold", last && "text-(--paid-ink)")}>
+                <span className="tabular">{i + 1}.</span> {s.label}
               </p>
-              <p
-                className={cn(
-                  "mt-3 text-sm leading-relaxed",
-                  last ? "text-white/80" : "text-(--ink-dim)",
-                )}
-              >
-                {s.known}
-              </p>
-              <p
-                className={cn(
-                  "mt-4 border-t pt-3 font-medium",
-                  last ? "border-white/20" : "border-(--rule)",
-                )}
-              >
-                {s.reading}
-              </p>
+              <p className="mt-2 text-sm leading-relaxed text-(--ink-dim)">{s.known}</p>
+              <p className="mt-3 leading-relaxed font-medium">{s.reading}</p>
             </li>
           );
         })}
@@ -187,14 +168,14 @@ export function Bucket() {
         />
       </div>
 
-      <ol className="mt-6 grid gap-4 md:grid-cols-3">
+      <ol className="mt-12 grid gap-8 md:grid-cols-3">
         {bucket.accounts.map((a) => (
-          <li key={a.id} className="reveal flex flex-col rounded-xl bg-(--surface) p-6">
+          <li key={a.id} className="reveal flex flex-col border-t border-(--ink) pt-4">
             <InferenceBadge />
-            <h3 className="mt-4 text-lg leading-snug font-semibold">{a.title}</h3>
+            <h3 className="mt-2 text-lg leading-snug font-semibold">{a.title}</h3>
             <p className="mt-2 leading-relaxed text-(--ink-dim)">{a.text}</p>
             <details className="group mt-auto pt-4">
-              <summary className="mono inline-flex items-center gap-2 text-xs text-(--seen-ink)">
+              <summary className="inline-flex items-center gap-2 text-sm text-(--seen-ink)">
                 <span
                   aria-hidden
                   className="transition-transform duration-500 group-open:rotate-90"
