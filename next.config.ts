@@ -127,6 +127,8 @@ const nextConfig: NextConfig = {
       { source: "/zubale", destination: "/pitch/zubale" },
       // La Caja, igual: página a medida en `app/pitch/lacaja`.
       { source: "/lacaja", destination: "/pitch/lacaja" },
+      // Despegar, igual: página a medida en `app/pitch/despegar`.
+      { source: "/despegar", destination: "/pitch/despegar" },
       // Respaldo de la pieza de La Caja: la maqueta del alta, corrida.
       { source: "/lacaja/prueba", destination: "/pitch/lacaja/prueba" },
       // Otro respaldo: qué deja cada línea según el balance en la SSN.
