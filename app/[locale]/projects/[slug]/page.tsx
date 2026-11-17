@@ -73,8 +73,11 @@ export async function generateMetadata({ params }: Props) {
   const pageUrl = `${SITE_URL}${localePath(typedLocale, `/projects/${project.slug}`)}`;
 
   return {
-    title: project.title,
-    description: project.description,
+    // Para el buscador, el título con palabras que se buscan; la tarjeta de
+    // abajo (openGraph y twitter) conserva el editorial, que es el que funciona
+    // como gancho en un posteo.
+    title: project.seoTitle ?? project.title,
+    description: project.seoDescription ?? project.description,
     // Un borrador queda fuera de listados, sitemap, RSS y home, pero la URL
     // directa igual responde: `getProjectBySlug` no filtra por `draft` a
     // propósito, para poder compartir una preview con alguien. Sin `noindex`
@@ -172,6 +175,7 @@ export default async function ProjectPage({ params }: Props) {
   const jsonLd = [
     projectArticleSchema({
       title: project.title,
+      seoTitle: project.seoTitle,
       description: project.description,
       slug: project.slug,
       locale: typedLocale,
