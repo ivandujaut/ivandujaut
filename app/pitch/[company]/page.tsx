@@ -13,6 +13,7 @@ import { Why } from "../_template/sections/why";
 import { Case } from "../_template/sections/case";
 import { Proofs } from "../_template/sections/proofs";
 import { Close } from "../_template/sections/close";
+import { PitchTracker } from "../_template/lib/pitch-tracker";
 
 type Props = { params: Promise<{ company: string }> };
 
@@ -75,6 +76,7 @@ export default async function PitchPage({ params }: Props) {
       <Proofs index="06" data={pitch.proofs} />
       <Close data={pitch.close} author={pitch.author} sources={collectSources(pitch)} />
       <ScrollProgress sections={sections} />
+      <PitchTracker company={company} />
     </main>
   );
 }

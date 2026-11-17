@@ -10,6 +10,7 @@ import { Measure } from "./_sections/measure";
 import { Ask } from "./_sections/ask";
 import { Proofs } from "./_sections/proofs";
 import { Close } from "./_sections/close";
+import { PitchTracker } from "../_template/lib/pitch-tracker";
 
 /**
  * Página privada para La Caja: se muestra en la entrevista y se comparte por
@@ -41,6 +42,7 @@ export default function LaCajaPage() {
       <Proofs />
       <Close />
       <ScrollProgress sections={nav.map((s) => ({ id: s.id, label: s.label }))} />
+      <PitchTracker company="lacaja" />
     </main>
   );
 }

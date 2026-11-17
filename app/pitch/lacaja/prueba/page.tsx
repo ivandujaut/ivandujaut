@@ -18,6 +18,7 @@ import {
   worthCopy,
   type BlindModel,
 } from "./prueba.data";
+import { PitchTracker } from "../../_template/lib/pitch-tracker";
 
 /**
  * Respaldo de la pieza de La Caja: la maqueta del tramo 04, corrida con veinte
@@ -257,6 +258,7 @@ export default function LaCajaRunPage() {
           </Link>
         </div>
       </footer>
+      <PitchTracker company="lacaja" page="prueba" />
     </main>
   );
 }

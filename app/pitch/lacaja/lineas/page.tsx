@@ -20,6 +20,7 @@ import {
   versus,
   type Line,
 } from "./lineas.data";
+import { PitchTracker } from "../../_template/lib/pitch-tracker";
 
 /**
  * Respaldo de la pieza de La Caja: el resultado técnico de cada línea según su
@@ -230,6 +231,7 @@ export default function LaCajaLinesPage() {
           </Link>
         </div>
       </footer>
+      <PitchTracker company="lacaja" page="lineas" />
     </main>
   );
 }

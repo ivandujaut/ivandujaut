@@ -8,6 +8,7 @@ import { OrderFlow } from "./_sections/order-flow";
 import { WhatsNext } from "./_sections/whats-next";
 import { Thesis } from "./_sections/thesis";
 import { CaseStudy, Close, OpenQuestions, Plan } from "./_sections/part-two";
+import { PitchTracker } from "../_template/lib/pitch-tracker";
 
 /**
  * Página privada para Zubale: se muestra en la entrevista y se comparte por
@@ -46,6 +47,7 @@ export default function ZubalePage() {
       <Plan />
       <Close />
       <ScrollProgress sections={nav.map((s) => ({ id: s.id, label: s.label }))} />
+      <PitchTracker company="zubale" />
     </main>
   );
 }
