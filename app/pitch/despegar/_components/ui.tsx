@@ -43,10 +43,7 @@ export function TramoHeading({ index, eyebrow, children, night, className }: Hea
   return (
     <header className={cn("reveal max-w-3xl", className)}>
       <p
-        className={cn(
-          "mono text-xs tracking-widest uppercase",
-          night ? "text-white/70" : "text-(--seen-ink)",
-        )}
+        className={cn("text-sm font-medium tabular", night ? "text-white/70" : "text-(--seen-ink)")}
       >
         {index} <span aria-hidden>·</span> {eyebrow}
       </p>
@@ -93,7 +90,7 @@ export function Cites({ ids, night }: { ids: SourceId[]; night?: boolean }) {
 /** Rótulo de lo inventado para la maqueta. Siempre visible, siempre punteado. */
 export function ExampleBadge({ children }: { children: ReactNode }) {
   return (
-    <span className="mono inline-block rounded-sm border border-dashed border-(--ink-faint) px-2 py-0.5 text-[0.7rem] tracking-wide text-(--ink-dim) uppercase">
+    <span className="inline-block rounded-sm border border-dashed border-(--ink-faint) px-2 py-0.5 text-xs text-(--ink-dim)">
       {children}
     </span>
   );
@@ -102,9 +99,7 @@ export function ExampleBadge({ children }: { children: ReactNode }) {
 /** Rótulo de cuenta propia: el número sale de datos públicos, la cuenta es mía. */
 export function InferenceBadge() {
   return (
-    <span className="mono inline-block rounded-sm bg-(--seen-soft) px-2 py-0.5 text-[0.7rem] tracking-wide text-(--seen-ink) uppercase">
-      {labels.inference}
-    </span>
+    <span className="inline-block text-xs font-medium text-(--seen-ink)">{labels.inference}</span>
   );
 }
 

@@ -62,12 +62,12 @@ export function Dashboard() {
 
       <ul className="mt-6 grid gap-4 md:grid-cols-3">
         {d.guardrails.map((g) => (
-          <li key={g.id} className="reveal is-example flex flex-col rounded-xl bg-(--surface) p-6">
+          <li key={g.id} className="reveal is-example flex flex-col rounded-lg bg-(--surface) p-6">
             <div className="flex items-center justify-between gap-3">
               <p className="font-semibold">{g.name}</p>
               <span
                 className={cn(
-                  "mono rounded-sm px-2 py-0.5 text-[0.7rem] uppercase",
+                  "rounded-sm px-2 py-0.5 text-xs font-medium",
                   g.status === "ok"
                     ? "bg-(--ok-soft) text-(--ok)"
                     : "bg-(--watch-soft) text-(--watch)",
@@ -86,7 +86,7 @@ export function Dashboard() {
       <div className="reveal mt-10">
         <h3 className="text-lg font-semibold">{d.sql.title}</h3>
         <p className="mt-1 text-sm text-(--ink-dim)">{d.sql.note}</p>
-        <pre className="code-block mono mt-4 overflow-x-auto rounded-xl p-5 text-[0.8rem] leading-relaxed md:text-sm">
+        <pre className="code-block mono mt-4 overflow-x-auto rounded-lg p-5 text-[0.8rem] leading-relaxed md:text-sm">
           <code>
             {d.sql.code.split("\n").map((line, i) => (
               <span key={i} className="block">
@@ -113,7 +113,7 @@ export function FirstSteps() {
 
       <ol className="chart reveal mt-8 grid gap-4">
         {f.quickWins.map((q) => (
-          <li key={q.id} className="rounded-xl bg-(--surface) p-5">
+          <li key={q.id} className="rounded-lg bg-(--surface) p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
               <p className="font-semibold">{q.title}</p>
               <p className="mono text-xs text-(--ink-dim)">
@@ -136,11 +136,8 @@ export function FirstSteps() {
 
       <ol className="mt-12 grid gap-4 md:grid-cols-3">
         {f.plan.map((p) => (
-          <li
-            key={p.window}
-            className="reveal rounded-xl border-t-4 border-(--seen) bg-(--surface) p-6"
-          >
-            <p className="mono text-xs tracking-wide text-(--seen-ink) uppercase">{p.window}</p>
+          <li key={p.window} className="reveal border-t border-(--ink) pt-4">
+            <p className="font-semibold text-(--seen-ink)">{p.window}</p>
             <p className="mt-3 leading-relaxed">{p.text}</p>
           </li>
         ))}

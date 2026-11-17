@@ -10,11 +10,11 @@ export function Voice() {
         {voice.heading}
       </TramoHeading>
 
-      <ol className="mt-10 grid gap-3 md:grid-cols-4">
+      <ol className="mt-10 grid max-w-3xl gap-3">
         {voice.method.map((step, i) => (
-          <li key={i} className="reveal rounded-xl bg-(--surface) p-5">
-            <p className="mono text-xs text-(--seen-ink)">{String(i + 1).padStart(2, "0")}</p>
-            <p className="mt-2 text-sm leading-relaxed">{step}</p>
+          <li key={i} className="reveal flex gap-4 leading-relaxed">
+            <span className="font-semibold text-(--seen-ink) tabular">{i + 1}.</span>
+            <span>{step}</span>
           </li>
         ))}
       </ol>
@@ -30,7 +30,7 @@ export function Voice() {
           unit={voice.stages.unit}
           tone="ink"
         />
-        <div className="reveal rounded-xl bg-(--night) p-6 text-white md:p-8">
+        <div className="reveal rounded-lg bg-(--night) p-6 text-white md:p-8">
           <p className="text-6xl font-semibold tracking-tight text-[#ff8a7a] tabular md:text-7xl">
             {voice.promise.value}
           </p>
@@ -49,7 +49,7 @@ export function Voice() {
           {voice.quotes.map((q) => (
             <li
               key={q.text}
-              className="reveal rounded-xl border-l-4 border-(--paid) bg-(--surface) p-5"
+              className="reveal rounded-lg border-l-4 border-(--paid) bg-(--surface) p-5"
             >
               <blockquote className="text-lg leading-snug">“{q.text}”</blockquote>
               <p className="mono mt-2 text-xs text-(--ink-dim)">{q.meta}</p>
@@ -72,11 +72,11 @@ export function Competition() {
         {competition.lede}
       </p>
 
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <ul className="mt-10 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
         {competition.items.map((item) => (
-          <li key={item.line} className="reveal flex flex-col rounded-xl bg-(--surface) p-6">
-            <p className="mono text-xs tracking-wide text-(--ink-dim) uppercase">{item.company}</p>
-            <p className="mt-3 text-4xl font-semibold tracking-tight text-(--seen-ink) tabular">
+          <li key={item.line} className="reveal flex flex-col border-t border-(--ink) pt-4">
+            <p className="text-sm font-medium text-(--ink-dim)">{item.company}</p>
+            <p className="mt-2 text-4xl font-semibold tracking-tight text-(--seen-ink) tabular">
               {item.number}
             </p>
             <p className="mt-3 leading-relaxed">
@@ -87,7 +87,7 @@ export function Competition() {
         ))}
       </ul>
 
-      <div className="reveal mt-10 rounded-xl border border-(--rule) bg-(--surface) p-6 md:p-8">
+      <div className="reveal mt-12 max-w-3xl">
         <h3 className="text-xl font-semibold md:text-2xl">{competition.threat.title}</h3>
         <p className="mt-3 max-w-3xl leading-relaxed text-(--ink-dim)">
           {competition.threat.text}

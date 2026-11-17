@@ -116,9 +116,9 @@ export const readings = {
 // ---------------------------------------------------------------------------
 
 export const hero = {
-  kicker: "Despegar, leída desde afuera",
+  kicker: "Una lectura de la app de Despegar",
   title: "La app de Despegar ya trae a la gente.",
-  titleAccent: "Lo que se pierde es el último paso.",
+  titleAccent: "La venta se pierde en el último paso.",
   lede: "Soy Iván Dujaut. Quiero ayudar a que más gente compre su viaje en la app de Despegar y vuelva a comprar el siguiente. Armé esta página para entender dónde se pierde hoy esa venta y traer una idea para discutir.",
   byline: "Noviembre de 2026",
   summary: [
@@ -153,7 +153,7 @@ export const hero = {
     reason: "El precio cambió por alta demanda",
     timer: "Te quedan 6:12 para comprar",
   },
-  cue: "Toda la página lee el mismo vuelo dos veces: en un color lo que ves en el listado, en el otro lo que pagás en el último paso. La idea sale de la distancia entre los dos.",
+  cue: "En toda la página, el violeta es el precio que ves en el listado y el rojo, el que pagás en el último paso.",
 };
 
 // ---------------------------------------------------------------------------
@@ -163,7 +163,7 @@ export const hero = {
 export const business = {
   eyebrow: "Cómo gana plata",
   heading: "Una comisión por viaje, en una región que paga en cuotas y en dólares",
-  body: "Despegar cobra una comisión o un margen sobre lo que vende (vuelos, hoteles, paquetes, autos, actividades, asistencia) y además financia. De cada dólar que pasa por la plataforma se queda unos 14 centavos.",
+  body: "Despegar cobra una comisión o un margen sobre lo que vende (vuelos, hoteles, paquetes, autos, actividades, asistencia) y además financia. De cada dólar que pasa por la plataforma se queda con unos 14 centavos.",
   kpis: [
     {
       label: "Transacciones 2024",
@@ -231,7 +231,7 @@ export const business = {
     source: "prosusFy26" as SourceId,
   },
   market: {
-    title: "El mercado argentino ya no empuja",
+    title: "Desde febrero de 2026 salen cada mes menos argentinos en avión",
     note: "Turistas residentes que salen del país por avión, tendencia-ciclo, miles por mes. Desde mayo de 2026 la variación interanual es negativa.",
     source: "indecSerie" as SourceId,
     /** INDEC, serie tendencia-ciclo (miles). */
@@ -306,7 +306,8 @@ export const app = {
         label: "Adquisición",
         known:
           '80% de las visitas ya es mobile; la web invita a pasar a la app ("los vuelos están más baratos en la app").',
-        reading: "Sobra tráfico. Traer más cuesta: marketing y ventas fue 32% del revenue en 2024.",
+        reading:
+          "Tráfico hay de sobra, y traer más sale caro: marketing y ventas fue el 32% del revenue en 2024.",
       },
       {
         id: "activacion",
@@ -314,20 +315,21 @@ export const app = {
         known:
           "~2,3 M clientes nuevos en 2024. En Argentina el precio cambia con la moneda, la percepción, el medio de pago y el login.",
         reading:
-          "Entra gente. No se sabe cuánta se pierde en el último paso: es lo primero que pediría.",
+          "Cuánta gente se pierde en el último paso no es público, y es lo primero que pediría.",
       },
       {
         id: "engagement",
         label: "Entre viajes",
         known:
           "Pasaporte, Club Despegar (sólo AR, todavía MVP), alertas, push, SOFIA por WhatsApp.",
-        reading: "Mucho programa. La pregunta es si mueve la vuelta.",
+        reading:
+          "Hay muchos programas, y no hay datos públicos de si alguno hace volver a la gente.",
       },
       {
         id: "recompra",
         label: "Segunda compra",
         known: "51,4% de los clientes de 2024 ya había comprado antes (49,6% en 2022).",
-        reading: "Plana tres años. Ahí está el cuello.",
+        reading: "Lleva tres años plana, y por eso pongo acá el cuello de botella.",
       },
     ],
   },
@@ -378,7 +380,7 @@ export const bucket = {
     },
   ],
   takeaway:
-    "Si la ganancia está en la segunda compra y el incentivo no la mueve, lo que falta no es un premio por volver. Es una razón para confiar.",
+    "Si la ganancia está en la segunda compra y más puntos no la mueven, hay que buscar qué hace que alguien no vuelva. Las reseñas apuntan al último paso de la compra.",
 };
 
 // ---------------------------------------------------------------------------
@@ -490,19 +492,16 @@ export const thesis = {
     {
       key: "puerta",
       text: "El vuelo barato es la puerta.",
-      keyword: "puerta",
       floor: "Prosus lo dice con otras palabras: ganar con aéreo, convertir a no-aéreo.",
     },
     {
       key: "confianza",
       text: "El precio que se cumple es la confianza.",
-      keyword: "confianza",
       floor: "En Argentina el precio tiene cinco perillas, y encima se mueve en el último paso.",
     },
     {
       key: "negocio",
       text: "La segunda compra es el negocio.",
-      keyword: "negocio",
       floor: "La primera apenas paga lo que costó traer al cliente.",
     },
   ],
@@ -522,25 +521,22 @@ export const caseStudy = {
   pieces: [
     {
       id: "antes",
-      eyebrow: "Pieza 1",
-      title: "Confirmar el precio antes, no después",
+      title: "Confirmar el precio al elegir el vuelo",
       text: "Revalidar la tarifa con la aerolínea al elegir el vuelo, antes de pedir los datos. Si cambió, avisarlo ahí, cuando el usuario todavía no invirtió diez minutos.",
     },
     {
       id: "contador",
-      eyebrow: "Pieza 2",
-      title: "Que el contador sea una promesa",
+      title: "Sostener el precio mientras corre el contador",
       text: 'Si la app dice "tenés 9 minutos", el precio se sostiene esos 9 minutos, también si el pago se rechaza y prueba otra tarjeta. Si la aerolínea sube la tarifa, Despegar absorbe la diferencia hasta un tope o la compensa en puntos.',
     },
     {
       id: "cuotas",
-      eyebrow: "Pieza 3, aparte",
-      title: "Sólo las cuotas que aplican",
+      title: "Mostrar sólo las cuotas que aplican",
       text: "Con la tarjeta guardada, el listado muestra las cuotas y promos que el usuario de verdad va a poder usar. Va como mejora aparte, para no mezclar efectos en el experimento.",
     },
   ],
   ai: {
-    title: "Dónde entra la IA, sin forzarla",
+    title: "Dónde usaría IA",
     items: [
       "Un modelo de riesgo por itinerario (ruta, anticipación, aerolínea, historial de diferencias entre búsqueda y emisión) decide dónde revalidar antes y dónde garantizar sin riesgo. Controla el costo.",
       'El mismo clasificador de reseñas, corriendo cada semana sobre reseñas y conversaciones con SOFIA y atención, avisa si "la promesa rota al pagar" sube después de un release.',
@@ -609,7 +605,7 @@ export const caseStudy = {
   notToBuild: {
     title: "Qué no construiría",
     items: [
-      "Otro descuento exclusivo de la app: el problema no es el precio de lista, es que no se cumple.",
+      "Otro descuento exclusivo de la app: no arregla que el precio cambie al pagar.",
       "Una pantalla nueva de alertas de precio: Google y Turismocity ya la dan gratis.",
       "Más puntos para volver: Pasaporte ya casi se triplicó y la vuelta no se movió.",
     ],
@@ -760,7 +756,7 @@ export const firstSteps = {
 
 export const close = {
   heading: "Esto es lo que vi desde afuera. Adentro hay datos que pueden darlo vuelta.",
-  body: "Todo lo de esta página sale de fuentes públicas y de reseñas que cualquiera puede leer. Lo que no sé es lo que más importa: cuánto se mueve de verdad el precio en el checkout y qué le pasa a quien lo vive. Me gustaría averiguarlo con ustedes.",
+  body: "Todo lo de esta página sale de fuentes públicas y de reseñas que cualquiera puede leer. No sé cuánto se mueve de verdad el precio en el checkout ni qué hace después quien lo vive, y eso es lo que más importa. Me gustaría averiguarlo con ustedes.",
   questions: [
     "¿Cómo miden hoy a los compradores que vuelven, y en cuánto tiempo?",
     "¿Dónde termina la app y empieza SOFIA cuando un usuario compra por WhatsApp?",
