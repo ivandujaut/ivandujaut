@@ -6,28 +6,55 @@ export type OgTheme = "light" | "dark";
 /**
  * Tokens de diseño para las OG images, separados por theme.
  *
- * Hardcodeamos los valores porque @vercel/og no soporta CSS variables.
- * Estos colores matchean los del sitio (light/dark mode).
+ * Hardcodeamos los valores porque @vercel/og no soporta CSS variables: son la
+ * conversión a hex de los tokens oklch de `globals.css`, no una paleta aparte.
+ * Si cambia la del sitio, se vuelven a convertir estos.
+ *
+ * `fgSubtle` es el único que no sale de un token: el sitio no tiene un tercer
+ * nivel de texto. Está fijado en el oklch más claro que todavía da AA sobre
+ * `bg` a 20px (4.82:1).
+ *
+ * `accent` es `--casebook`, el único acento de la marca. Antes había un verde
+ * y un azul de Tailwind que no existen en ninguna parte del sitio.
  */
 export const themes = {
   light: {
-    bg: "#fafaf9",
-    bgElevated: "#f5f5f4",
-    fg: "#0a0a0a",
-    fgMuted: "#525252",
-    fgSubtle: "#737373",
-    border: "#e5e5e5",
-    accent: "#22c55e",
+    bg: "#fbf9f4",
+    bgElevated: "#f1ede6",
+    fg: "#1d1712",
+    fgMuted: "#6b6159",
+    fgSubtle: "#756d65",
+    border: "#e2ddd5",
+    accent: "#5457cb",
   },
   dark: {
-    bg: "#0a0a0a",
-    bgElevated: "#171717",
-    fg: "#fafafa",
-    fgMuted: "#a3a3a3",
-    fgSubtle: "#737373",
-    border: "#262626",
-    accent: "#22c55e",
+    bg: "#14110c",
+    bgElevated: "#1d1a14",
+    fg: "#efebe2",
+    fgMuted: "#aba398",
+    fgSubtle: "#867f76",
+    border: "#312d27",
+    accent: "#9ba7ff",
   },
+} as const;
+
+/**
+ * Colores de estado del proyecto.
+ *
+ * No son tokens de marca: son los mismos que usa `StatusBadge` en el sitio
+ * (`components/content/status-badge.tsx`), para que el punto de la tarjeta y la
+ * etiqueta de la página digan lo mismo con el mismo color. Son los `500` de
+ * Tailwind porque acá se usan como punto, no como texto.
+ *
+ * El acento de marca (`accent`, el violeta) es otra cosa y no se mezcla: antes
+ * "shipped" lo usaba y por eso el verde del punto no coincidía con el verde de
+ * la etiqueta.
+ */
+export const statusColors = {
+  shipped: "#10b981",
+  "in-progress": "#f59e0b",
+  archived: "#71717a",
+  concept: "#3b82f6",
 } as const;
 
 /**
@@ -52,7 +79,7 @@ export function Logo({ theme = "light" }: { theme?: OgTheme }) {
         fontSize: 24,
         fontWeight: 500,
         color: tokens.fg,
-        fontFamily: "JetBrainsMono",
+        fontFamily: "ChivoMono",
         letterSpacing: "-0.02em",
       }}
     >
@@ -80,7 +107,7 @@ export function Footer({ theme = "light" }: { theme?: OgTheme }) {
         style={{
           fontSize: 22,
           color: tokens.fg,
-          fontFamily: "Inter",
+          fontFamily: "Archivo",
           fontWeight: 600,
         }}
       >
@@ -90,7 +117,7 @@ export function Footer({ theme = "light" }: { theme?: OgTheme }) {
         style={{
           fontSize: 18,
           color: tokens.fgMuted,
-          fontFamily: "Inter",
+          fontFamily: "Archivo",
           fontWeight: 400,
         }}
       >
@@ -145,7 +172,7 @@ export function Tag({ label, theme = "light" }: TagProps) {
         background: tokens.bgElevated,
         color: tokens.fgMuted,
         fontSize: 18,
-        fontFamily: "JetBrainsMono",
+        fontFamily: "ChivoMono",
         fontWeight: 400,
       }}
     >

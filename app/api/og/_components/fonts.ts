@@ -5,12 +5,22 @@
  * Esto evita problemas con URLs que cambian entre versiones de Google Fonts
  * y elimina la dependencia de un servicio externo en runtime.
  *
- * Para agregar una fuente nueva:
- *   1. Descargar el .ttf con curl (ver README de skill o googlefonts CSS)
- *   2. Guardar en public/fonts/<Name>-<weight>.ttf
- *   3. Agregar entrada a FONT_CONFIGS
+ * Son Archivo y Chivo Mono, las mismas que el sitio. No se puede bajar el .ttf
+ * y listo: en `github.com/google/fonts` las dos existen sólo como fuente
+ * variable, y satori no interpola el eje de peso, así que un único archivo
+ * saldría con todo al peso default (600 en Archivo, 500 en Chivo Mono) y la
+ * jerarquía desaparece.
+ *
+ * Para agregar o regenerar un peso:
+ *   1. curl la variable: raw.githubusercontent.com/google/fonts/main/ofl/<fam>/
+ *   2. instanciarla al peso fijo con fontTools, que borra la tabla `fvar`:
+ *      `instancer.instantiateVariableFont(f, {"wght": 600, "wdth": 100},
+ *       inplace=True, updateFontNames=True)`
+ *   3. guardar en public/fonts/<Name>-<weight>.ttf y agregar la entrada acá
+ *
+ * Los OFL.txt de cada familia viajan al lado de los .ttf porque se sirven
+ * públicos y la licencia lo pide.
  */
-
 interface FontConfig {
   name: string;
   filename: string;
@@ -19,11 +29,11 @@ interface FontConfig {
 }
 
 const FONT_CONFIGS: FontConfig[] = [
-  { name: "Inter", filename: "Inter-400.ttf", weight: 400 },
-  { name: "Inter", filename: "Inter-600.ttf", weight: 600 },
-  { name: "Inter", filename: "Inter-700.ttf", weight: 700 },
-  { name: "JetBrainsMono", filename: "JetBrainsMono-400.ttf", weight: 400 },
-  { name: "JetBrainsMono", filename: "JetBrainsMono-500.ttf", weight: 500 },
+  { name: "Archivo", filename: "Archivo-400.ttf", weight: 400 },
+  { name: "Archivo", filename: "Archivo-600.ttf", weight: 600 },
+  { name: "Archivo", filename: "Archivo-700.ttf", weight: 700 },
+  { name: "ChivoMono", filename: "ChivoMono-400.ttf", weight: 400 },
+  { name: "ChivoMono", filename: "ChivoMono-500.ttf", weight: 500 },
 ];
 
 /**

@@ -85,7 +85,7 @@ export function PostTemplate({
                 style={{
                   fontSize: 18,
                   color: tokens.fgMuted,
-                  fontFamily: "JetBrainsMono",
+                  fontFamily: "ChivoMono",
                   fontWeight: 500,
                   letterSpacing: "0.02em",
                 }}
@@ -115,7 +115,7 @@ export function PostTemplate({
                 lineHeight: 1.1,
                 letterSpacing: "-0.03em",
                 margin: 0,
-                fontFamily: "Inter",
+                fontFamily: "Archivo",
               }}
             >
               {title}
@@ -130,7 +130,7 @@ export function PostTemplate({
                   color: tokens.fgMuted,
                   lineHeight: 1.4,
                   margin: 0,
-                  fontFamily: "Inter",
+                  fontFamily: "Archivo",
                 }}
               >
                 {description}
@@ -173,7 +173,7 @@ export function PostTemplate({
                 color: tokens.bg,
                 fontSize: 18,
                 fontWeight: 600,
-                fontFamily: "Inter",
+                fontFamily: "Archivo",
                 alignSelf: "flex-start",
               }}
             >

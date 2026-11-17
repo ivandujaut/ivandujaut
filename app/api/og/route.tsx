@@ -48,7 +48,7 @@ export async function GET(request: Request) {
 
     const template = searchParams.get("template") ?? "default";
 
-    // Cargar fuentes (FigTree + Geist Mono)
+    // Cargar fuentes (Archivo + Chivo Mono, las del sitio)
     const fonts = await loadFonts(new URL(request.url).origin);
 
     // Renderizar el template correspondiente
