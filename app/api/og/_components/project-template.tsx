@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Logo, Footer, Background, Tag, getTokens, type OgTheme } from "./shared";
+import { Logo, Footer, Background, Tag, getTokens, statusColors, type OgTheme } from "./shared";
 import esMessages from "@/messages/es.json";
 import enMessages from "@/messages/en.json";
 
@@ -159,19 +159,18 @@ export function ProjectTemplate({
     CTA_H +
     FOOTER_H;
   const descLines = Math.max(0, Math.floor((COL_H - reserved) / DESC_LINE_H));
-  const visibleDescription = description
-    ? clampText(description, descLines * DESC_CHARS_PER_LINE)
-    : description;
 
-  // Color del dot según status
-  const statusColor =
-    status === "shipped"
-      ? tokens.accent
-      : status === "in-progress"
-        ? "#f59e0b"
-        : status === "concept"
-          ? "#3b82f6"
-          : tokens.fgSubtle;
+  // Con `descLines` en 0 no hay lugar para una sola línea, y entonces no va
+  // nada: `clampText(texto, 0)` devuelve los puntos suspensivos solos, que es
+  // lo que salía en las tarjetas de título de dos líneas con dos filas de
+  // stack (por ejemplo "La prima que no llega", que se comparte así).
+  const visibleDescription =
+    description && descLines > 0
+      ? clampText(description, descLines * DESC_CHARS_PER_LINE)
+      : undefined;
+
+  // Color del dot según status, el mismo que la etiqueta en el sitio
+  const statusColor = status ? statusColors[status] : tokens.fgSubtle;
 
   return (
     <Background theme={theme}>
@@ -207,7 +206,7 @@ export function ProjectTemplate({
                 gap: 12,
                 fontSize: 18,
                 color: tokens.fgMuted,
-                fontFamily: "JetBrainsMono",
+                fontFamily: "ChivoMono",
                 fontWeight: 500,
                 letterSpacing: "0.04em",
               }}
@@ -259,7 +258,7 @@ export function ProjectTemplate({
                 lineHeight: 1.05,
                 letterSpacing: "-0.04em",
                 margin: 0,
-                fontFamily: "Inter",
+                fontFamily: "Archivo",
               }}
             >
               {title}
@@ -274,7 +273,7 @@ export function ProjectTemplate({
                   color: tokens.fgMuted,
                   lineHeight: 1.4,
                   margin: 0,
-                  fontFamily: "Inter",
+                  fontFamily: "Archivo",
                 }}
               >
                 {visibleDescription}
@@ -318,7 +317,7 @@ export function ProjectTemplate({
                 color: tokens.bg,
                 fontSize: 18,
                 fontWeight: 600,
-                fontFamily: "Inter",
+                fontFamily: "Archivo",
                 alignSelf: "flex-start",
               }}
             >
