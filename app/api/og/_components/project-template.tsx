@@ -48,6 +48,8 @@ const PILL_ROW_H = 46;
 const DESC_CHARS_PER_LINE = 48;
 const PILL_CHAR_W = 10.8; // avance medio del mono a 18px
 const PILL_EXTRA = 36; // padding horizontal más el gap
+const DESC_MAX_LINES = 4; // más que esto tapa la tarjeta
+const STACK_MIN_ROWS = 1; // el primer tag no se pierde nunca
 
 /** Píldoras que entran en `maxRows` filas del ancho de la columna. */
 function fitStack(stack: string[], maxRows: number) {
@@ -139,26 +141,34 @@ export function ProjectTemplate({
   const titleSize = titleLines >= 4 ? 42 : titleLines === 3 ? 52 : 64;
   const titleHeight = Math.ceil(title.length / (COL_W / (titleSize * 0.52))) * titleSize * 1.05;
 
-  // El stack se mide por ancho y no por cantidad: dos etiquetas largas
-  // ("Investigación de mercado") ya desbordan la fila, y la segunda fila son
-  // 46px que salen justo del pie.
-  const { items: visibleStack, rows: stackRows } = fitStack(stack, titleLines >= 3 ? 1 : 2);
+  // Quién cobra primero cuando no entra todo. La descripción dice de qué trata
+  // el caso y el stack dice con qué herramienta se hizo, así que en una tarjeta
+  // que compite en un feed gana la descripción. Antes era al revés: el stack
+  // tomaba sus dos filas y la descripción se quedaba con lo que sobrara, que en
+  // los casos de título largo era nada.
+  //
+  // El stack igual conserva un renglón de piso. Viene ordenado por interés
+  // desde el frontmatter (primero la fuente de datos, después las librerías),
+  // así que el renglón que sobrevive es justo el que dice algo.
+  const fixedHeight =
+    HEADER_H + SPACER_H + titleHeight + TITLE_GAP + BLOCK_GAP + CTA_GAP + CTA_H + FOOTER_H;
+  const freeHeight = Math.max(0, COL_H - fixedHeight);
 
-  // Con el resto de la columna ya reservado, lo que sobra es lo que puede ocupar
-  // la descripción. Clave: esto depende del título Y de la descripción, no solo
-  // del título. La tarjeta de cobranza tiene título corto y perdía el pie igual,
-  // porque su descripción sola ocupaba seis líneas.
-  const reserved =
-    HEADER_H +
-    SPACER_H +
-    titleHeight +
-    TITLE_GAP +
-    BLOCK_GAP +
-    stackRows * PILL_ROW_H +
-    CTA_GAP +
-    CTA_H +
-    FOOTER_H;
-  const descLines = Math.max(0, Math.floor((COL_H - reserved) / DESC_LINE_H));
+  // No se reservan cuatro líneas para una descripción de treinta caracteres:
+  // el techo real es lo que el texto necesita.
+  const neededLines = description ? Math.ceil(description.length / DESC_CHARS_PER_LINE) : 0;
+  const descLines = Math.min(
+    DESC_MAX_LINES,
+    neededLines,
+    Math.max(0, Math.floor((freeHeight - STACK_MIN_ROWS * PILL_ROW_H) / DESC_LINE_H)),
+  );
+
+  // Lo que queda después de la descripción decide si entra una segunda fila.
+  const stackRows = Math.min(
+    2,
+    Math.max(STACK_MIN_ROWS, Math.floor((freeHeight - descLines * DESC_LINE_H) / PILL_ROW_H)),
+  );
+  const { items: visibleStack } = fitStack(stack, stackRows);
 
   // Con `descLines` en 0 no hay lugar para una sola línea, y entonces no va
   // nada: `clampText(texto, 0)` devuelve los puntos suspensivos solos, que es
