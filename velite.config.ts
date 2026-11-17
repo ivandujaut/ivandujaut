@@ -170,7 +170,17 @@ const projects = defineCollection({
       // castellano y en inglés porque son nombres propios. Tres a seis por
       // caso: más que eso diluye, y una entidad que el caso apenas menciona no
       // entra, porque `about` declara de qué habla la pieza y no qué nombra.
-      entities: s.array(s.string()).default([]),
+      //
+      // Casi siempre alcanza con el nombre: `"Ozempic"`, `"Medicare Part D"`.
+      // Cuando el nombre propio es largo se puede declarar
+      // `{ name: "Superintendencia de Riesgos del Trabajo", short: "SRT" }`:
+      // `name` es el que viaja al JSON-LD, donde el nombre completo es el que
+      // una máquina resuelve, y `short` es el que se muestra en la tarjeta que
+      // se comparte, donde un renglón entero ocupado por un organismo deja
+      // afuera a todo lo demás.
+      entities: s
+        .array(s.union([s.string(), s.object({ name: s.string(), short: s.string() })]))
+        .default([]),
       // Los archivos de los que el caso calcula: el dataset abierto, el registro
       // público, la tabla del regulador. Van al `citation` del JSON-LD, que es
       // el campo con el que una página dice de dónde sacó sus números.
@@ -298,6 +308,11 @@ const projects = defineCollection({
 
       return {
         ...data,
+        // `entities` queda como la lista de nombres completos, que es lo que
+        // consume el JSON-LD y lo que ya leían las páginas. `entityLabels` es
+        // la misma lista en versión corta, para mostrar.
+        entities: data.entities.map((e) => (typeof e === "string" ? e : e.name)),
+        entityLabels: data.entities.map((e) => (typeof e === "string" ? e : e.short)),
         slug: slugFromPath(meta.path),
         locale: localeFromPath(meta.path),
         url: `/${localeFromPath(meta.path)}/projects/${slugFromPath(meta.path)}`,
@@ -402,7 +417,17 @@ const casebook = defineCollection({
       concepts: s.array(s.string()).min(1),
       // Las empresas y organismos de los que habla el caso. Mismo uso que en
       // projects: van al `about` del JSON-LD.
-      entities: s.array(s.string()).default([]),
+      //
+      // Casi siempre alcanza con el nombre: `"Ozempic"`, `"Medicare Part D"`.
+      // Cuando el nombre propio es largo se puede declarar
+      // `{ name: "Superintendencia de Riesgos del Trabajo", short: "SRT" }`:
+      // `name` es el que viaja al JSON-LD, donde el nombre completo es el que
+      // una máquina resuelve, y `short` es el que se muestra en la tarjeta que
+      // se comparte, donde un renglón entero ocupado por un organismo deja
+      // afuera a todo lo demás.
+      entities: s
+        .array(s.union([s.string(), s.object({ name: s.string(), short: s.string() })]))
+        .default([]),
       // Los archivos de los que salen los números. En un caso del casebook son
       // siempre de primer nivel (el 10-K, el balance, la tabla del regulador),
       // porque el caso enseña de dónde se sacan los datos, no sólo cuáles son.
