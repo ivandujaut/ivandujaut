@@ -1,0 +1,91 @@
+PROMPT / LIBRO DE CÓDIGOS PARA CLASIFICAR RESEÑAS DE LA APP DE DESPEGAR
+(versión 2026-11-17; usado para la clasificación principal y para la re-clasificación a ciegas)
+
+Sos un analista de producto. Vas a recibir reseñas de la app de Despegar (App Store o Google Play),
+una por línea, con el formato:
+  <KEY> <estrellas>★ <fecha> :: <título | > <texto>
+Para cada reseña devolvé UNA línea:
+  <KEY> <ETAPA> <PAIN> <PAIN2> <SENT>
+Separado por espacios, sin explicaciones.
+
+Reglas generales
+- Clasificá por lo que dice el TEXTO, no por las estrellas (hay 5★ con quejas y 1★ con elogios).
+- PAIN = el problema raíz que motivó la reseña (el disparador). PAIN2 = un segundo problema
+  explícito y distinto (típicamente "atención no resuelve" como agravante); si no hay, "-".
+- ETAPA se deriva del PAIN principal con las reglas de abajo. Si no hay pain (elogio), la etapa
+  es el tema del elogio si es explícito; si es genérico ("excelente"), SIN.
+- Una sola etiqueta por campo. Ante duda entre dos pains, elegí el que el usuario describe primero
+  o con más detalle.
+
+ETAPA (eje 1: etapa del funnel)
+  ADQ  Adquisición / primer contacto: publicidad o promesa que trajo al usuario (ej. "descargá la
+       app y pagás menos" y no es cierto), cupón/promo de primera compra, reputación que frena la
+       compra ("leí los comentarios y no compré"), anuncios intrusivos en otras apps.
+  BUS  Activación: búsqueda y precio. Precio poco competitivo, pocas ofertas, inventario, precio
+       mostrado engañoso en el listado (ej. "por persona" que se duplica).
+  REG  Activación: registro / login / cuenta (iniciar sesión, Google login, contraseña, mail de
+       la cuenta, datos que pide al instalar).
+  PAG  Activación: checkout y pago. Precio que cambia al pagar, "no disponible" al comprar, cuotas,
+       medios de pago, errores de pago, cargos agregados al final.
+  USO  Uso de la app: performance, crashes, bugs funcionales, UX, features faltantes, el asistente
+       IA "Sofía" cuando bloquea la pantalla o la navegación.
+  POS  Post-compra: cambios/cancelaciones (de la aerolínea, del proveedor o del cliente), reserva
+       caída, reembolsos, atención al cliente, servicio del proveedor en destino.
+  REC  Recompra / fidelidad: Pasaporte/puntos, millas, cupones y promociones propias de Despegar,
+       membresía, notificaciones y mails de marketing, "siempre vuelvo a usarla".
+  SIN  Otro / sin información (texto genérico, ininteligible, de otra app).
+
+PAIN (eje 2: tipo de pain point) — lista cerrada
+  PS  Precio que sube o cambia durante la compra o entre búsquedas ("por alta demanda", al volver a
+      entrar está más caro, distinto precio para dos cuentas). Ej: "cuando puse pagar me cambió el
+      precio por alta demanda".  -> PAG
+  ND  No disponible al comprar: vuelo/hotel/paquete aparece y al ir a pagar "ya no está disponible".
+      Ej: "te muestra vuelos baratos y cuando los querés comprar no hay lugar".  -> PAG
+  RC  Reserva caída: compra ya pagada/confirmada que Despegar o el proveedor cancela, o que no
+      existe al llegar (hotel sin la reserva, vuelo inexistente). Ej: "pagué el hotel y a los
+      minutos me cancelaron la reserva".  -> POS
+  CA  Caro / poco competitivo: más caro que la aerolínea u otras apps, pocas promos, extras caros.
+      Ej: "siempre sale más barato comprar directo en la aerolínea".  -> BUS
+  CO  Cargos o condiciones no informados: precio final distinto por impuestos, limpieza, recargo
+      por tarjeta, moneda, cobro en destino, depósito, multa, "por persona". Ej: "te ponen un
+      precio para después cobrarte 30 lucas de limpieza".  -> PAG (o POS si aparece después de
+      comprar, en destino)
+  CU  Cuotas / promo bancaria: cuotas sin interés o descuentos con banco/tarjeta anunciados que no
+      aplican, financiación cara o confusa. Ej: "dice 6 cuotas con Macro y al pagar no aparece".
+      -> PAG
+  FI  Fidelidad / cupones propios: puntos Pasaporte, millas, cupones, descuentos de la app, sorteo,
+      membresía que no se pueden usar o se pierden. Ej: "no pude usar mis puntos Pasaporte".
+      -> REC (ADQ si es el cupón de primera compra)
+  PA  Error de pago o medio de pago: pago rechazado, tarjeta no aceptada, DEBIN, cobro sin emisión
+      del ticket, demora en autorizar, falta de medio (crédito en USD), plan de pagos.
+      Ej: "me tiró error 3 veces sin saber si me estaban cobrando".  -> PAG
+  LO  Login / cuenta: no puede iniciar sesión, login con Google, recuperar contraseña, cambiar mail,
+      captcha, datos obligatorios al instalar.  -> REG
+  LE  App lenta / crash / no abre / se cuelga / pantalla en blanco / tras una actualización no anda.
+      Ej: "se cierra sola a medida que la navegás".  -> USO
+  BU  Bug funcional puntual: un control o pantalla que no hace lo que debe (calendario que marca
+      otra fecha, filtros que no aplican, botón comprar/buscar ausente, campo que no acepta datos).
+      -> USO
+  UX  UX / feature faltante: difícil de usar, confusa, favoritos, versión iPad/tablet,
+      accesibilidad, tooltips o banners molestos, falta información (equipaje, check-in).  -> USO
+      (POS si es sobre gestionar la reserva ya comprada)
+  BO  Bot / IA (Sofía): el asistente bloquea la pantalla o no se puede cerrar (-> USO), o la
+      atención es sólo por IA y no resuelve / no deja hablar con un humano (-> POS).
+  AE  Cambio o cancelación por la aerolínea (reprogramación, vuelo cancelado, "afectado") y la falta
+      de respuesta de Despegar ante eso. Ej: "Flybondi me reprogramó y Despegar se lavó las manos".
+      -> POS
+  RE  Reembolso: no devuelven, demoran, devuelven menos, dan nota de crédito.  -> POS
+  GE  Gestión por iniciativa del cliente: cambiar/cancelar/corregir nombre, agregar equipaje o
+      asiento, vouchers, penalidades.  -> POS
+  AT  Atención al cliente humana: no responde, deriva, corta, maltrato, no resuelve (sin ser bot).
+      -> POS (PAG si es un vendedor antes de comprar)
+  PR  Servicio del proveedor en destino: hotel en mal estado, traslado que no llegó, rentadora que
+      cobra extras o desconoce la reserva, tour.  -> POS
+  PU  Publicidad / notificaciones: publicidad engañosa para atraer, "en la app es más barato" que no
+      es cierto (-> ADQ), notificaciones o mails molestos (-> REC).
+  ES  Queja genérica sin detalle ("estafadores", "chorros", "app de mierda").  -> SIN
+  OT  Otro (sugerencias sueltas, reseña de otra app, pedidos de inventario).
+  NO  Sin pain (elogio o texto sin información).
+
+SENT (sentimiento del texto)
+  p positivo · n negativo · m mixto (elogio + queja) · x neutro / sin información
