@@ -56,8 +56,10 @@ export async function generateMetadata({ params }: Props) {
   const pageUrl = `${SITE_URL}${localePath(typedLocale, `/blog/${post.slug}`)}`;
 
   return {
-    title: post.title,
-    description: post.description,
+    // Mismo criterio que en projects: el buscador lee `seoTitle` si existe, la
+    // tarjeta que se comparte sigue con el título editorial.
+    title: post.seoTitle ?? post.title,
+    description: post.seoDescription ?? post.description,
     // Mismo criterio que en projects: un borrador es "no listado", no
     // "no publicado", hasta que lleva noindex.
     robots: post.draft ? { index: false, follow: false } : undefined,
@@ -163,6 +165,7 @@ export default async function PostPage({ params }: Props) {
   const jsonLd = [
     blogPostingSchema({
       title: post.title,
+      seoTitle: post.seoTitle,
       description: post.description,
       slug: post.slug,
       locale: typedLocale,

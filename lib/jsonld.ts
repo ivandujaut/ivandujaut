@@ -168,6 +168,7 @@ type ArticleInput = {
   type: "BlogPosting" | "Article";
   basePath: "/blog" | "/projects";
   title: string;
+  seoTitle?: string;
   description: string;
   slug: string;
   locale: Locale;
@@ -196,6 +197,9 @@ function articleSchema(input: ArticleInput) {
     "@context": "https://schema.org",
     "@type": input.type,
     headline: input.title,
+    // El título para el buscador, cuando la pieza lo declara. `headline` queda
+    // con el editorial porque tiene que coincidir con el h1 visible.
+    ...(input.seoTitle ? { alternativeHeadline: input.seoTitle } : {}),
     description: input.description,
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
@@ -242,6 +246,7 @@ function articleSchema(input: ArticleInput) {
 
 type BlogPostingInput = {
   title: string;
+  seoTitle?: string;
   description: string;
   slug: string;
   locale: Locale;
@@ -263,6 +268,7 @@ export function blogPostingSchema(post: BlogPostingInput) {
 
 type ProjectArticleInput = {
   title: string;
+  seoTitle?: string;
   description: string;
   slug: string;
   locale: Locale;

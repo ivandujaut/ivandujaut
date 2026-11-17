@@ -18,6 +18,18 @@ import { SITE_URL } from "@/lib/seo";
 const FUERA_DE_ALCANCE = ["/api/", "/r/", "/li", "/tt"];
 
 /**
+ * Lo que sí se rastrea, con `/api/og` como excepción explícita a `/api/`.
+ *
+ * Las imágenes de cada pieza se generan en `/api/og`, y son las que declaran el
+ * `og:image` y el `image` del dato estructurado Article. Con `/api/` bloqueado
+ * entero, Google no podía bajar la imagen del artículo y la informaba como
+ * "Bloqueada por robots.txt" (noviembre de 2026). Google resuelve el conflicto
+ * por la regla más larga, así que `Allow: /api/og` gana sobre `Disallow: /api/`
+ * sólo para esa ruta; el resto de `/api/` sigue afuera.
+ */
+const PERMITIDO = ["/", "/api/og"];
+
+/**
  * Los rastreadores de las empresas de IA, nombrados uno por uno.
  *
  * Hasta el 2026-09-19 pasaban por el comodín `*`, así que ya tenían permiso.
@@ -72,12 +84,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
+        allow: PERMITIDO,
         disallow: FUERA_DE_ALCANCE,
       },
       {
         userAgent: AGENTES_DE_IA,
-        allow: "/",
+        allow: PERMITIDO,
         disallow: FUERA_DE_ALCANCE,
       },
       {

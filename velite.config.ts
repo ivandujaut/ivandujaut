@@ -59,6 +59,9 @@ const posts = defineCollection({
     .object({
       title: s.string().max(120),
       description: s.string().max(220),
+      // Título y descripción para el buscador. Ver el comentario en projects.
+      seoTitle: s.string().max(70).optional(),
+      seoDescription: s.string().max(160).optional(),
       date: s.isodate(),
       updated: s.isodate().optional(),
       // Vincula traducciones del mismo post entre idiomas.
@@ -97,6 +100,18 @@ const projects = defineCollection({
       title: s.string().max(120),
       tagline: s.string().max(140),
       description: s.string().max(300),
+      // Título y descripción para el buscador, separados de los editoriales.
+      // Existen desde el 2026-11-17: en noviembre Google sacó del índice cinco
+      // casos de seguros y pagos cuyos `<title>` ("La prima que no llega", "El
+      // alta no es la venta") no tenían ninguna palabra que alguien busque. El
+      // título editorial sigue en el h1, el listado y la tarjeta que se comparte
+      // en LinkedIn, donde el gancho sirve; éstos van sólo al `<title>`, a la
+      // meta description y al `alternativeHeadline` del dato estructurado.
+      // Opcionales: sin ellos la página usa `title` y `description`. Los topes
+      // son los que Google muestra antes de cortar con puntos suspensivos (el
+      // sufijo " · Iván Dujaut" suma 14 caracteres al título).
+      seoTitle: s.string().max(70).optional(),
+      seoDescription: s.string().max(160).optional(),
       year: s.number().int().min(2000).max(2100),
       // Fecha real de publicación del caso (para ordenar el listado); year queda solo para mostrar.
       date: s.isodate(),
