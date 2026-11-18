@@ -228,10 +228,6 @@ html.lenis body {
   margin-top: 2rem;
 }
 
-.despegar .journey-static .ticket-svg {
-  filter: drop-shadow(0 4px 10px rgb(29 19 64 / 8%));
-}
-
 .despegar .journey-static .ticket-pending {
   display: none;
 }
@@ -508,9 +504,11 @@ html.lenis body {
   overflow: visible;
 }
 
+/* Sin sombra: en 3D, una sombra por cara queda cortada por el troquel y se
+   ve como una mancha. El borde fino alcanza para separar el papel del fondo. */
 .despegar .t-paper {
   fill: #fffdf8;
-  stroke: rgb(29 19 64 / 8%);
+  stroke: rgb(29 19 64 / 12%);
   stroke-width: 1.5;
 }
 
@@ -595,10 +593,6 @@ html.lenis body {
       position: absolute;
       inset: 0;
       backface-visibility: hidden;
-    }
-
-    .despegar .ticket-face .ticket-svg {
-      filter: drop-shadow(0 4px 10px rgb(29 19 64 / 10%));
     }
 
     .despegar .ticket-back {
