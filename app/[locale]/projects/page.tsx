@@ -2,8 +2,13 @@ import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getEntryProject, getProjects, getProjectsBySubject } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
+import {
+  ALL_FACET,
+  ProjectsFilter,
+  type FilteredItem,
+  type ProjectsFacet,
+} from "@/components/content/projects-filter";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
@@ -40,6 +45,25 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
+/**
+ * Los mercados del filtro, y qué temas de Velite entran en cada uno.
+ *
+ * Son tres y no cinco porque pagos, proptech y educación tienen una pieza cada
+ * uno: una pill que lleva a una sola tarjeta se lee como un estante vacío, no
+ * como un mercado del que todavía hay un caso. Cuando alguno llegue a tres
+ * piezas se separa.
+ *
+ * El orden es el de la fila de pills, y el primero es el que abre la página.
+ */
+const FACETS = [
+  { id: "salud", topics: ["salud"] },
+  { id: "seguros", topics: ["seguros"] },
+  { id: "otros", topics: ["fintech", "proptech", "educacion", "web"] },
+] as const;
+
+const facetOf = (topic: string) =>
+  FACETS.find((facet) => (facet.topics as readonly string[]).includes(topic))?.id ?? "otros";
+
 export default async function ProjectsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -48,12 +72,12 @@ export default async function ProjectsPage({ params }: Props) {
   const allProjects = getProjects(typedLocale);
   const entry = getEntryProject(typedLocale);
   const t = await getTranslations({ locale, namespace: "projects.sections" });
-  const tTopics = await getTranslations({ locale, namespace: "projects.topics" });
+  const tReading = await getTranslations({ locale, namespace: "common.reading" });
   // El formateo de los minutos vive acá, que es donde están las traducciones; la
   // tarjeta sólo recibe el texto ya armado.
   const minutos = (count?: number) => (count ? tReading("minutes", { count }) : undefined);
   const tIndex = await getTranslations({ locale, namespace: "projects.index" });
-  const tReading = await getTranslations({ locale, namespace: "common.reading" });
+  const tFacets = await getTranslations({ locale, namespace: "projects.facets" });
 
   // Los análisis van arriba desde el 11/09/2026. Antes iban los productos
   // propios, con el argumento de que no tenían otra puerta de entrada. Los
@@ -64,11 +88,16 @@ export default async function ProjectsPage({ params }: Props) {
   // mostraban gente recorriendo la lista entera sin elegir nada. Se mide con
   // `card_click` por `surface=index`: la partida es 3 de 21 sesiones.
   //
-  // Desde el 18/09/2026 "Analicé" además se subdivide por tema. Catorce
-  // titulares seguidos, todos con el mismo badge y el mismo año, no son una
-  // lista que se elige: son una lista que se recorre. El orden de los
-  // subgrupos lo decide la pieza más nueva de cada uno, así que el tema en el
-  // que Iván está trabajando queda arriba sin que nadie lo acomode a mano.
+  // Desde el 18/09/2026 "Analicé" además se subdividía por tema, con un
+  // encabezado por mercado. El 18/11/2026 esos encabezados pasaron a ser la
+  // fila de pills: eran la misma división, pero sólo visible cuando ya habías
+  // scrolleado hasta ella, y con las portadas grandes la página medía 5160 px.
+  //
+  // El orden dentro de cada mercado sigue siendo por fecha. Es la decisión que
+  // más se revisó y la que menos cambió: ordenar por lo que la gente abre
+  // suena mejor de lo que es, porque salvo un caso ninguna pieza pasa de 24
+  // visitas y un ranking sobre esos números es ruido. La fecha, además, es el
+  // mejor argumento del sitio.
   const analyzed = getProjectsBySubject(typedLocale, "external").filter(
     (project) => project.slug !== entry?.slug,
   );
@@ -76,10 +105,26 @@ export default async function ProjectsPage({ params }: Props) {
     (project) => project.slug !== entry?.slug,
   );
 
-  const byTopic = new Map<string, typeof analyzed>();
-  for (const project of analyzed) {
-    byTopic.set(project.topic, [...(byTopic.get(project.topic) ?? []), project]);
-  }
+  const toItem = (project: (typeof analyzed)[number]): FilteredItem => ({
+    key: project.slug,
+    facet: facetOf(project.topic),
+    node: <ProjectCard project={project} locale={typedLocale} minutos={minutos} />,
+  });
+
+  const listed = [...analyzed, ...built];
+  const facets: ProjectsFacet[] = [
+    ...FACETS.map((facet) => ({
+      id: facet.id,
+      label: tFacets(facet.id),
+      count: listed.filter((project) => facetOf(project.topic) === facet.id).length,
+    })),
+    { id: ALL_FACET, label: tFacets("all"), count: listed.length },
+  ].filter((facet) => facet.count > 0);
+
+  const sections = [
+    { id: "external", title: t("external"), items: analyzed.map(toItem) },
+    { id: "own", title: t("own"), items: built.map(toItem) },
+  ].filter((section) => section.items.length > 0);
 
   return (
     <PageShell id="main">
@@ -89,66 +134,15 @@ export default async function ProjectsPage({ params }: Props) {
         {entry && (
           <section>
             <h2 className="mb-6 text-lg font-semibold tracking-tight">{tIndex("entryTitle")}</h2>
-            {/* A lo ancho y no en la grilla: es una sola pieza, y media
-                columna la haría ver como una tarjeta más en vez de como la
-                puerta de entrada que el encabezado promete. */}
+            {/* Fuera del filtro y a lo ancho: es la pieza por la que conviene
+                empezar a leer el sitio, no la más nueva de un mercado, así que
+                sigue estando cuando el visitante cambia de mercado. */}
             <ProjectCard project={entry} locale={typedLocale} minutos={minutos} />
           </section>
         )}
 
-        {analyzed.length > 0 && (
-          <section>
-            {/* El encabezado tiene que ganarle al primer vistazo: antes era
-                mono/xs/muted y se leía como una etiqueta de sistema, no
-                como la división que organiza la página. */}
-            <h2 className="mb-6 text-lg font-semibold tracking-tight">{t("external")}</h2>
-            <div className="space-y-10">
-              {[...byTopic.entries()].map(([topic, projectsInTopic]) => (
-                <div key={topic}>
-                  <Eyebrow as="h3" className="mb-3">
-                    {tTopics(topic)}
-                  </Eyebrow>
-                  {/* Un tema con una sola pieza va a lo ancho. En la grilla de
-                      dos quedaba media tarjeta suelta con el hueco al lado, y
-                      se leía como una grilla a la que le falta algo en vez de
-                      como un mercado del que todavía hay un caso. Pasa con
-                      pagos y con proptech. */}
-                  <div
-                    className={
-                      projectsInTopic.length === 1
-                        ? "grid gap-x-5 gap-y-9"
-                        : "grid gap-x-5 gap-y-9 sm:grid-cols-2"
-                    }
-                  >
-                    {projectsInTopic.map((project) => (
-                      <ProjectCard
-                        key={project.slug}
-                        project={project}
-                        locale={typedLocale}
-                        minutos={minutos}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {built.length > 0 && (
-          <section>
-            <h2 className="mb-6 text-lg font-semibold tracking-tight">{t("own")}</h2>
-            <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2">
-              {built.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                  locale={typedLocale}
-                  minutos={minutos}
-                />
-              ))}
-            </div>
-          </section>
+        {sections.length > 0 && (
+          <ProjectsFilter facets={facets} initialFacet={FACETS[0].id} sections={sections} />
         )}
 
         {allProjects.length === 0 && <p className="text-muted-foreground">No projects yet.</p>}

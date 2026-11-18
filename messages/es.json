@@ -173,7 +173,15 @@
       "parentNote": "Este es el análisis completo de <link>{title}</link>. Si llegaste directo acá, esa versión de {minutes, plural, one {# minuto} other {# minutos}} tiene la respuesta y la recomendación."
     },
     "index": {
-      "entryTitle": "Empezá por acá"
+      "entryTitle": "Empezá por acá",
+      "filterLabel": "Filtrar por mercado",
+      "showAll": "Ver todo ({count})"
+    },
+    "facets": {
+      "salud": "Salud · EE.UU.",
+      "seguros": "Seguros · Argentina",
+      "otros": "Otros mercados",
+      "all": "Todos"
     },
     "topics": {
       "salud": "Salud · Estados Unidos",
