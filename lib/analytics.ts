@@ -54,8 +54,10 @@ export type AnalyticsEvent =
   /** Compartió una pieza. */
   | "share_click"
   /**
-   * Clic en la tarjeta de un caso (`slug`) desde una superficie (`surface`:
-   * `home`, `index` o `next`, las vecinas al pie de un caso). Existe porque el
+   * Clic en la tarjeta de una pieza (`slug`) desde una superficie (`surface`):
+   * `home`, `index` o `next` (las vecinas al pie de un caso) para los casos,
+   * `blog-index` para los posts. El `href` que agrega el `ClickTracker` dice de
+   * qué sección es, así que el slug no necesita prefijo. Existe porque el
    * índice era la fuga principal del sitio (10/09/2026: 3 de 21 sesiones que
    * aterrizaban ahí abrían un caso, y los replays mostraban gente recorriendo
    * la lista entera sin clickear) y un pageview no dice qué tarjeta se eligió

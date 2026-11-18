@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPosts } from "@/lib/content";
 import { PostListItem } from "@/components/content/post-list-item";
 import { buildDefaultOgUrl } from "@/lib/og";
@@ -54,7 +54,12 @@ export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const posts = getPosts(locale as "es" | "en");
+  const typedLocale = locale as "es" | "en";
+  const posts = getPosts(typedLocale);
+  const tReading = await getTranslations({ locale, namespace: "common.reading" });
+  // El formateo de los minutos vive acá, que es donde están las traducciones;
+  // la tarjeta sólo recibe el texto ya armado. Mismo criterio que en /projects.
+  const minutos = (count?: number) => (count ? tReading("minutes", { count }) : undefined);
 
   // Agrupar posts por año
   const postsByYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
@@ -79,7 +84,14 @@ export default async function BlogPage({ params }: Props) {
               <Eyebrow as="h2" className="mb-4">
                 {year}
               </Eyebrow>
-              <div className="space-y-1">
+              {/* Una pieza sola va a lo ancho, igual que en el índice de
+                  casos: media tarjeta con el hueco al lado se lee como una
+                  grilla a la que le falta algo. */}
+              <div
+                className={`grid gap-x-5 gap-y-9 ${
+                  postsByYear[year].length > 1 ? "sm:grid-cols-2" : ""
+                }`}
+              >
                 {postsByYear[year].map((post) => (
                   <PostListItem
                     key={post.slug}
@@ -88,6 +100,18 @@ export default async function BlogPage({ params }: Props) {
                     description={post.description}
                     date={post.date}
                     locale={locale}
+                    readingTime={minutos(post.metadata?.readingTime)}
+                    surface="blog-index"
+                    cover={
+                      post.cover
+                        ? {
+                            src: post.cover.src.src,
+                            width: post.cover.src.width,
+                            height: post.cover.src.height,
+                            blurDataURL: post.cover.src.blurDataURL,
+                          }
+                        : undefined
+                    }
                   />
                 ))}
               </div>
