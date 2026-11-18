@@ -89,9 +89,10 @@ export default async function ProjectsPage({ params }: Props) {
         {entry && (
           <section>
             <h2 className="mb-6 text-lg font-semibold tracking-tight">{tIndex("entryTitle")}</h2>
-            <div className="divide-y divide-border/60">
-              <ProjectCard project={entry} locale={typedLocale} minutos={minutos} />
-            </div>
+            {/* A lo ancho y no en la grilla: es una sola pieza, y media
+                columna la haría ver como una tarjeta más en vez de como la
+                puerta de entrada que el encabezado promete. */}
+            <ProjectCard project={entry} locale={typedLocale} minutos={minutos} />
           </section>
         )}
 
@@ -107,7 +108,18 @@ export default async function ProjectsPage({ params }: Props) {
                   <Eyebrow as="h3" className="mb-3">
                     {tTopics(topic)}
                   </Eyebrow>
-                  <div className="divide-y divide-border/60">
+                  {/* Un tema con una sola pieza va a lo ancho. En la grilla de
+                      dos quedaba media tarjeta suelta con el hueco al lado, y
+                      se leía como una grilla a la que le falta algo en vez de
+                      como un mercado del que todavía hay un caso. Pasa con
+                      pagos y con proptech. */}
+                  <div
+                    className={
+                      projectsInTopic.length === 1
+                        ? "grid gap-x-5 gap-y-9"
+                        : "grid gap-x-5 gap-y-9 sm:grid-cols-2"
+                    }
+                  >
                     {projectsInTopic.map((project) => (
                       <ProjectCard
                         key={project.slug}
@@ -126,7 +138,7 @@ export default async function ProjectsPage({ params }: Props) {
         {built.length > 0 && (
           <section>
             <h2 className="mb-6 text-lg font-semibold tracking-tight">{t("own")}</h2>
-            <div className="divide-y divide-border/60">
+            <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2">
               {built.map((project) => (
                 <ProjectCard
                   key={project.slug}

@@ -6,9 +6,11 @@ interface ListRowProps extends Omit<ComponentProps<typeof Link>, "className" | "
   children: ReactNode;
   /**
    * `block` deja que el contenido se acomode solo; `row` alinea en una fila
-   * con separación, para las filas que llevan una miniatura al costado.
+   * con separación, para las filas que llevan una miniatura al costado;
+   * `card` es la tarjeta de una grilla, que no lleva el fondo del hover
+   * porque el que responde ahí es la portada.
    */
-  layout?: "block" | "row";
+  layout?: "block" | "row" | "card";
   className?: string;
 }
 
@@ -29,8 +31,12 @@ export function ListRow({ children, layout = "block", className, ...props }: Lis
     <Link
       {...props}
       className={cn(
-        "group -mx-3 rounded-lg px-3 py-4 transition-colors hover:bg-muted/40",
-        layout === "row" ? "flex items-center gap-4" : "block",
+        "group",
+        layout === "card"
+          ? "block"
+          : "-mx-3 rounded-lg px-3 py-4 transition-colors hover:bg-muted/40",
+        layout === "row" && "flex items-center gap-4",
+        layout === "block" && "block",
         className,
       )}
     >
