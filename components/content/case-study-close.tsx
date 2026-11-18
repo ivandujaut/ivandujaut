@@ -40,10 +40,16 @@ const SECUNDARIO =
  * El feed va sólo en inglés por lo mismo: es la única forma de volver al sitio
  * que funciona sin saber castellano. En castellano queda donde estaba, en el
  * pie, porque ahí LinkedIn ya cumple esa función (ver `components/layout/footer.tsx`).
+ *
+ * Y en inglés no se ofrece la call. Una llamada en vivo en inglés es el canal
+ * de más fricción de los cuatro para quien atiende, y ofrecerlo primero a un
+ * lector de Estados Unidos promete una facilidad que no es cierta. El mail
+ * hace el mismo trabajo sin esa promesa, y si de ahí sale una llamada, se
+ * acuerda por mail.
  */
 const ORDEN = {
   es: ["linkedin", "email", "call"],
-  en: ["email", "linkedin", "feed", "call"],
+  en: ["email", "linkedin", "feed"],
 } as const;
 
 /**
