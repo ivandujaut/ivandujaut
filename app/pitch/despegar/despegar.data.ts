@@ -311,27 +311,20 @@ export const app = {
  * `timeline-scope` en el contenedor); sin soporte o con movimiento reducido,
  * cada parada muestra su cuadro al lado del texto.
  *
- * Los cuadros (`/despegar/vuelo/cuadro-N.webp`) son ilustraciones generadas
- * con Gemini a partir de `scripts/covers/prompts/despegar-vuelo-N.txt`, el
- * mismo jet sin marcas en las cuatro, recortadas a 16:9 sin la marca de agua.
+ * Ilustraciones generadas con Gemini (`scripts/covers/prompts/despegar-vuelo-N.txt`),
+ * recortadas a 16:9 sin la marca de agua. En el escenario animado se usan las
+ * escenas vacías (`fondo-N`) y el avión recortado (`avion`), que el CSS mueve
+ * de forma continua entre paradas. Los cuadros completos (`cuadro-N`) quedan
+ * para el respaldo sin movimiento.
  */
-/** Secuencia de cuadros sacada de los clips (`scripts/despegar/13_extraer_cuadros.py`). */
-export interface JourneySequence {
-  count: number;
-  /** `{n}` se reemplaza por el número con tres dígitos (001, 002...). */
-  pattern: string;
-  width: number;
-  height: number;
-}
-
 export const journey = {
   eyebrow: "El viaje de una compra",
   heading: "Un mismo vuelo, de la búsqueda a la vuelta",
   intro:
     "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
   placeholder: false,
-  /** `null` hasta que estén los clips: quedan las cuatro imágenes con fundido. */
-  sequence: null as JourneySequence | null,
+  /** El avión recortado: una sola imagen que el CSS mueve sobre los fondos. */
+  plane: { src: "/despegar/vuelo/avion.webp", width: 837, height: 273 },
   stops: [
     {
       id: "busqueda",
@@ -340,6 +333,7 @@ export const journey = {
         src: "/despegar/vuelo/cuadro-1.webp",
         alt: "El avión en la puerta de embarque, todavía en tierra",
       },
+      background: "/despegar/vuelo/fondo-1.webp",
       title: "El 80% de las visitas ya llega desde el celular",
       text: "En 2024 el celular (app y web) trajo el 80% de las visitas y el 61% de las transacciones. Tráfico hay de sobra.",
       source: "f20" as SourceId,
@@ -348,6 +342,7 @@ export const journey = {
       id: "resultados",
       step: "Resultados",
       frame: { src: "/despegar/vuelo/cuadro-2.webp", alt: "El avión despegando sobre la pista" },
+      background: "/despegar/vuelo/fondo-2.webp",
       title: "La app ya hace más de la mitad de las ventas",
       text: "53,6% de las transacciones en el cuarto trimestre de 2024, contra 36,1% en el primero de 2023.",
       source: "q4_24" as SourceId,
@@ -359,6 +354,7 @@ export const journey = {
         src: "/despegar/vuelo/cuadro-3.webp",
         alt: "El avión en crucero, con nubes que se oscurecen adelante",
       },
+      background: "/despegar/vuelo/fondo-3.webp",
       title: "En el último paso, el precio cambia",
       text: "Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de Despegar y en 2 de 191 de la app de Aerolíneas Argentinas.",
       flip: { seen: "USD 412", paid: "USD 486", label: "Datos de ejemplo" },
@@ -371,6 +367,7 @@ export const journey = {
         src: "/despegar/vuelo/cuadro-4.webp",
         alt: "El avión en aproximación hacia una pista lejana y a medio iluminar",
       },
+      background: "/despegar/vuelo/fondo-4.webp",
       title: "Y la vuelta casi no se mueve",
       text: "51,4% de los clientes de 2024 ya había comprado antes (49,6% en 2022), mientras Pasaporte pasó de 12 a 32,5 millones de socios.",
       source: "f20" as SourceId,

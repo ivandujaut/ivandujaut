@@ -326,6 +326,7 @@ html.lenis body {
 
     /* Los cuadros: apilados, uno visible por parada, con un paneo lento. */
     .despegar .journey-frames {
+      container-type: size;
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -558,18 +559,87 @@ html.lenis body {
   }
 }
 
-/* La secuencia de cuadros (canvas) va encima de las imágenes fijas y aparece
-   recién cuando bajaron todos los cuadros. */
-.despegar .journey-sequence {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 400ms var(--ease);
+/* ------------------------------------------------------------------------
+   El avión: una sola imagen recortada que se mueve de forma continua sobre
+   los fondos. Cada tramo usa el timeline de la parada siguiente, de "cover 0%"
+   (la parada anterior está centrada) a "cover 50%" (esta lo está), así llega
+   a su pose justo cuando su parada queda en el centro. El primer tramo llena
+   hacia atrás (pose de la puerta antes de empezar); los otros sólo hacia
+   adelante, para que cada uno tome el control recién cuando arranca.
+   Posiciones en unidades del contenedor (cqw/cqh): mismo encuadre en
+   escritorio y en el celular.
+   ------------------------------------------------------------------------ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .despegar .journey-plane {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 66cqw;
+      height: auto;
+      transform: translate(55cqw, 51cqh) translate(-50%, -50%) rotate(0deg) scale(1);
+      animation:
+        journey-plane-1 linear both,
+        journey-plane-2 linear forwards,
+        journey-plane-3 linear forwards;
+      animation-timeline: --stop-2, --stop-3, --stop-4;
+      animation-range:
+        cover 0% cover 50%,
+        cover 0% cover 50%,
+        cover 0% cover 50%;
+      will-change: transform;
+    }
+  }
 }
 
-.despegar .journey-sequence.is-ready {
-  opacity: 1;
+.despegar .journey-plane {
+  display: none;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .despegar .journey-plane {
+      display: block;
+    }
+  }
+}
+
+/* Puerta -> despegue: carretea, levanta la nariz y despega. */
+@keyframes journey-plane-1 {
+  0% {
+    transform: translate(55cqw, 51cqh) translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  55% {
+    transform: translate(59cqw, 53cqh) translate(-50%, -50%) rotate(-3deg) scale(0.95);
+  }
+  100% {
+    transform: translate(61cqw, 55cqh) translate(-50%, -50%) rotate(-12deg) scale(0.9);
+  }
+}
+
+/* Despegue -> crucero: sube, se aleja y se nivela arriba a la izquierda. */
+@keyframes journey-plane-2 {
+  0% {
+    transform: translate(61cqw, 55cqh) translate(-50%, -50%) rotate(-12deg) scale(0.9);
+  }
+  50% {
+    transform: translate(53cqw, 38cqh) translate(-50%, -50%) rotate(-8deg) scale(0.78);
+  }
+  100% {
+    transform: translate(43cqw, 27cqh) translate(-50%, -50%) rotate(0deg) scale(0.67);
+  }
+}
+
+/* Crucero -> aproximación: pasa la tormenta y baja apenas la nariz. */
+@keyframes journey-plane-3 {
+  0% {
+    transform: translate(43cqw, 27cqh) translate(-50%, -50%) rotate(0deg) scale(0.67);
+  }
+  50% {
+    transform: translate(40cqw, 31cqh) translate(-50%, -50%) rotate(2deg) scale(0.71);
+  }
+  100% {
+    transform: translate(38cqw, 36cqh) translate(-50%, -50%) rotate(3deg) scale(0.76);
+  }
 }
