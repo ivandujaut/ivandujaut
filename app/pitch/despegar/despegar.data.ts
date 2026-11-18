@@ -311,22 +311,22 @@ export const app = {
  * `timeline-scope` en el contenedor); sin soporte o con movimiento reducido,
  * cada parada muestra su cuadro al lado del texto.
  *
- * Los cuadros de `/despegar/vuelo/cuadro-N.svg` son provisorios. Las imágenes
- * finales salen de `scripts/covers/prompts/despegar-vuelo-N.txt`; cuando estén,
- * se cambia `src` a `cuadro-N.jpg` y se saca `placeholder`.
+ * Los cuadros (`/despegar/vuelo/cuadro-N.webp`) son ilustraciones generadas
+ * con Gemini a partir de `scripts/covers/prompts/despegar-vuelo-N.txt`, el
+ * mismo jet sin marcas en las cuatro, recortadas a 16:9 sin la marca de agua.
  */
 export const journey = {
   eyebrow: "El viaje de una compra",
   heading: "Un mismo vuelo, de la búsqueda a la vuelta",
   intro:
     "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
-  placeholder: true,
+  placeholder: false,
   stops: [
     {
       id: "busqueda",
       step: "Búsqueda",
       frame: {
-        src: "/despegar/vuelo/cuadro-1.svg",
+        src: "/despegar/vuelo/cuadro-1.webp",
         alt: "El avión en la puerta de embarque, todavía en tierra",
       },
       title: "El 80% de las visitas ya llega desde el celular",
@@ -336,7 +336,7 @@ export const journey = {
     {
       id: "resultados",
       step: "Resultados",
-      frame: { src: "/despegar/vuelo/cuadro-2.svg", alt: "El avión despegando sobre la pista" },
+      frame: { src: "/despegar/vuelo/cuadro-2.webp", alt: "El avión despegando sobre la pista" },
       title: "La app ya hace más de la mitad de las ventas",
       text: "53,6% de las transacciones en el cuarto trimestre de 2024, contra 36,1% en el primero de 2023.",
       source: "q4_24" as SourceId,
@@ -345,7 +345,7 @@ export const journey = {
       id: "ultimo-paso",
       step: "Último paso",
       frame: {
-        src: "/despegar/vuelo/cuadro-3.svg",
+        src: "/despegar/vuelo/cuadro-3.webp",
         alt: "El avión en crucero, con nubes que se oscurecen adelante",
       },
       title: "En el último paso, el precio cambia",
@@ -357,7 +357,7 @@ export const journey = {
       id: "vuelta",
       step: "La vuelta",
       frame: {
-        src: "/despegar/vuelo/cuadro-4.svg",
+        src: "/despegar/vuelo/cuadro-4.webp",
         alt: "El avión en aproximación hacia una pista lejana y a medio iluminar",
       },
       title: "Y la vuelta casi no se mueve",
