@@ -18,12 +18,14 @@ export function Business() {
       </TramoHeading>
       <Lede>{business.body}</Lede>
 
-      <dl className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+      <dl className="mt-10 grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-4">
         {business.kpis.map((k) => (
-          <div key={k.label} className="reveal rounded-lg bg-(--surface) p-5">
+          <div key={k.label} className="reveal flex flex-col rounded-lg bg-(--surface) p-5">
             <dt className="text-sm text-(--ink-dim)">{k.label}</dt>
-            <dd className="mt-2 flex flex-wrap items-baseline gap-x-1 text-xl [&>a]:ml-0 font-semibold tracking-tight tabular md:text-3xl">
-              <span className="whitespace-nowrap">{k.value}</span>
+            <dd className="mt-2 text-xl font-semibold tracking-tight whitespace-nowrap tabular md:text-3xl">
+              {k.value}
+            </dd>
+            <dd className="mt-auto pt-3 leading-none [&>a]:ml-0">
               <Cite id={k.source} />
             </dd>
           </div>
@@ -109,17 +111,17 @@ export function AppToday() {
         />
         <dl className="grid grid-cols-2 gap-3">
           {app.facts.map((f) => (
-            <div key={f.label} className="reveal rounded-lg bg-(--surface) p-4">
+            <div key={f.label} className="reveal flex flex-col rounded-lg bg-(--surface) p-4">
               <dd className="text-xl font-semibold tracking-tight whitespace-nowrap tabular md:text-2xl">
                 {f.value}
               </dd>
-              <dt className="mt-1 text-sm leading-snug text-(--ink-dim)">
-                {f.label}
-                <Cite id={f.source} />
-              </dt>
+              <dt className="mt-1 text-sm leading-snug text-(--ink-dim)">{f.label}</dt>
               {"note" in f && f.note ? (
-                <p className="mono mt-2 text-xs text-(--ink-dim)">{f.note}</p>
+                <dd className="mono mt-2 text-xs text-(--ink-dim)">{f.note}</dd>
               ) : null}
+              <dd className="mt-auto pt-3 leading-none [&>a]:ml-0">
+                <Cite id={f.source} />
+              </dd>
             </div>
           ))}
         </dl>
