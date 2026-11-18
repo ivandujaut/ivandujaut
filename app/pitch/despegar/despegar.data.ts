@@ -313,8 +313,8 @@ export const app = {
  *
  * Ilustraciones generadas con Gemini (`scripts/covers/prompts/despegar-vuelo-N.txt`),
  * recortadas a 16:9 sin la marca de agua. En el escenario animado se usan las
- * escenas vacías (`fondo-N`) y el avión recortado (`avion`), que el CSS mueve
- * de forma continua entre paradas. Los cuadros completos (`cuadro-N`) quedan
+ * escenas vacías (`fondo-N`) y el avión recortado (`avion-pose-N`), que el CSS
+ * mueve de forma continua entre paradas. Los cuadros completos (`cuadro-N`) quedan
  * para el respaldo sin movimiento.
  */
 export const journey = {
@@ -323,8 +323,21 @@ export const journey = {
   intro:
     "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
   placeholder: false,
-  /** El avión recortado: una sola imagen que el CSS mueve sobre los fondos. */
-  plane: { src: "/despegar/vuelo/avion.webp", width: 837, height: 273 },
+  /**
+   * El avión recortado, en tres poses del tren de aterrizaje: abajo, a medio
+   * subir y guardado. Las tres comparten lienzo y están niveladas
+   * (`scripts/despegar/13_poses_avion.py`); el CSS las inclina y elige cuál se
+   * ve según el tramo del viaje.
+   */
+  plane: {
+    width: 850,
+    height: 292,
+    poses: [
+      "/despegar/vuelo/avion-pose-1.webp",
+      "/despegar/vuelo/avion-pose-2.webp",
+      "/despegar/vuelo/avion-pose-3.webp",
+    ],
+  },
   stops: [
     {
       id: "busqueda",

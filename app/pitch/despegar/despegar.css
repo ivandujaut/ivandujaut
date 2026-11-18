@@ -560,8 +560,11 @@ html.lenis body {
 }
 
 /* ------------------------------------------------------------------------
-   El avión: una sola imagen recortada que se mueve de forma continua sobre
-   los fondos. Cada tramo usa el timeline de la parada siguiente, de "cover 0%"
+   El avión: un recorte que se mueve de forma continua sobre los fondos. Son
+   tres poses del tren apiladas en el mismo lugar (abajo, a medio subir,
+   guardado), como los cuadros de un sprite: el conjunto se traslada, se
+   inclina y se achica, y `--pose` (0 a 2, animada junto con el movimiento)
+   elige cuál se ve. Cada tramo usa el timeline de la parada siguiente, de "cover 0%"
    (la parada anterior está centrada) a "cover 50%" (esta lo está), así llega
    a su pose justo cuando su parada queda en el centro. El primer tramo llena
    hacia atrás (pose de la puerta antes de empezar); los otros sólo hacia
@@ -576,8 +579,7 @@ html.lenis body {
       top: 0;
       left: 0;
       z-index: 2;
-      width: 66cqw;
-      height: auto;
+      width: 67cqw;
       transform: translate(55cqw, 51cqh) translate(-50%, -50%) rotate(0deg) scale(1);
       animation:
         journey-plane-1 linear both,
@@ -590,7 +592,28 @@ html.lenis body {
         cover 0% cover 50%;
       will-change: transform;
     }
+
+    /* Cada pose aparece en una ventana corta alrededor de su turno (pose -
+       0,5) y recién se apaga cuando la siguiente ya está entera encima: así
+       nunca hay dos poses a media opacidad y el avión no se transparenta. */
+    .despegar .journey-pose {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: min(
+        clamp(0, (var(--pose) - var(--i) + 0.5) * 4 + 0.5, 1),
+        clamp(0, (var(--i) + 0.625 - var(--pose)) * 1000, 1)
+      );
+    }
   }
+}
+
+/* Registrada para que se pueda animar como número (sin esto saltaría de golpe). */
+@property --pose {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
 }
 
 .despegar .journey-plane {
@@ -605,41 +628,61 @@ html.lenis body {
   }
 }
 
-/* Puerta -> despegue: carretea, levanta la nariz y despega. */
+/* Puerta -> despegue: carretea, levanta la nariz y despega, con el tren abajo. */
 @keyframes journey-plane-1 {
   0% {
     transform: translate(55cqw, 51cqh) translate(-50%, -50%) rotate(0deg) scale(1);
+    --pose: 0;
   }
   55% {
     transform: translate(59cqw, 53cqh) translate(-50%, -50%) rotate(-3deg) scale(0.95);
   }
   100% {
     transform: translate(61cqw, 55cqh) translate(-50%, -50%) rotate(-12deg) scale(0.9);
+    --pose: 0;
   }
 }
 
-/* Despegue -> crucero: sube, se aleja y se nivela arriba a la izquierda. */
+/* Despegue -> crucero: guarda el tren apenas sube, se aleja y se nivela
+   arriba a la izquierda. */
 @keyframes journey-plane-2 {
   0% {
     transform: translate(61cqw, 55cqh) translate(-50%, -50%) rotate(-12deg) scale(0.9);
+    --pose: 0;
+  }
+  25% {
+    --pose: 1;
+  }
+  45% {
+    --pose: 2;
   }
   50% {
     transform: translate(53cqw, 38cqh) translate(-50%, -50%) rotate(-8deg) scale(0.78);
   }
   100% {
     transform: translate(43cqw, 27cqh) translate(-50%, -50%) rotate(0deg) scale(0.67);
+    --pose: 2;
   }
 }
 
-/* Crucero -> aproximación: pasa la tormenta y baja apenas la nariz. */
+/* Crucero -> aproximación: pasa la tormenta, baja apenas la nariz y saca el
+   tren para aterrizar. */
 @keyframes journey-plane-3 {
   0% {
     transform: translate(43cqw, 27cqh) translate(-50%, -50%) rotate(0deg) scale(0.67);
+    --pose: 2;
+  }
+  55% {
+    --pose: 2;
+  }
+  80% {
+    --pose: 1;
   }
   50% {
     transform: translate(40cqw, 31cqh) translate(-50%, -50%) rotate(2deg) scale(0.71);
   }
   100% {
     transform: translate(38cqw, 36cqh) translate(-50%, -50%) rotate(3deg) scale(0.76);
+    --pose: 0;
   }
 }

@@ -9,6 +9,8 @@ import { Cite, ExampleBadge } from "./ui";
  * contenedor las sube con `timeline-scope`, así el escenario fijo de la
  * izquierda puede leerlas: el cuadro N aparece mientras la parada N cruza la
  * pantalla, y la ruta de abajo se llena con el avance de todo el recorrido.
+ * El avión son varias poses apiladas en el mismo lugar (el tren abajo, a medio
+ * subir, guardado); el CSS mueve el conjunto y decide cuál se ve.
  *
  * Sin soporte de `animation-timeline` o con movimiento reducido, el escenario
  * no se muestra y cada parada lleva su cuadro al lado del texto: la misma
@@ -47,14 +49,23 @@ export function FlightJourney() {
                 sizes="(min-width: 768px) 55vw, 100vw"
               />
             ))}
-            <Image
+            <div
               className="journey-plane"
-              src={journey.plane.src}
-              alt=""
-              width={journey.plane.width}
-              height={journey.plane.height}
-              sizes="(min-width: 768px) 40vw, 70vw"
-            />
+              style={{ aspectRatio: `${journey.plane.width} / ${journey.plane.height}` }}
+            >
+              {journey.plane.poses.map((src, i) => (
+                <Image
+                  key={src}
+                  className="journey-pose"
+                  style={{ "--i": i } as CSSProperties}
+                  src={src}
+                  alt=""
+                  width={journey.plane.width}
+                  height={journey.plane.height}
+                  sizes="(min-width: 768px) 40vw, 70vw"
+                />
+              ))}
+            </div>
           </div>
           <ol className="journey-route" style={routeStyle}>
             <span className="journey-route-line">
