@@ -404,3 +404,67 @@ export function StackedColumns({
     </Frame>
   );
 }
+
+/**
+ * Barras pareadas: el mismo motivo en dos apps, cada una sobre su propio total.
+ * El conteo absoluto va al lado del porcentaje para que se vea el tamaño real.
+ */
+export function PairedBars({
+  title,
+  groups,
+  rows,
+  footer,
+}: {
+  title: string;
+  groups: { a: string; b: string };
+  rows: readonly { label: string; a: number; aCount: number; b: number; bCount: number }[];
+  footer?: ReactNode;
+}) {
+  const top = Math.max(...rows.flatMap((r) => [r.a, r.b]));
+  const label = `${title}: ${rows
+    .map(
+      (r) =>
+        `${r.label}, ${groups.a} ${fmt(r.a)}% (${r.aCount}), ${groups.b} ${fmt(r.b)}% (${r.bCount})`,
+    )
+    .join("; ")}`;
+  const Bar = ({ value, count, tone }: { value: number; count: number; tone: "a" | "b" }) => (
+    <div className="flex items-center gap-3">
+      <div className="h-2.5 flex-1 rounded-full bg-(--surface-deep)">
+        <div
+          className={cn(
+            "bar-fill h-full rounded-full",
+            tone === "a" ? "bg-(--paid)" : "bg-(--ink)/45",
+          )}
+          style={{ width: `${Math.max(1.5, (value / top) * 100)}%` }}
+        />
+      </div>
+      <span className="mono w-24 shrink-0 text-right text-xs text-(--ink-dim)">
+        {value.toLocaleString("es-AR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}% (
+        {count})
+      </span>
+    </div>
+  );
+  return (
+    <Frame title={title} label={label} footer={footer}>
+      <div className="mb-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-(--ink-dim)">
+        <span className="flex items-center gap-2">
+          <span aria-hidden className="inline-block size-2.5 rounded-sm bg-(--paid)" />
+          {groups.a}
+        </span>
+        <span className="flex items-center gap-2">
+          <span aria-hidden className="inline-block size-2.5 rounded-sm bg-(--ink)/45" />
+          {groups.b}
+        </span>
+      </div>
+      <ul className="grid gap-5">
+        {rows.map((r) => (
+          <li key={r.label} className="grid gap-1.5">
+            <p className="text-sm text-(--ink)">{r.label}</p>
+            <Bar value={r.a} count={r.aCount} tone="a" />
+            <Bar value={r.b} count={r.bCount} tone="b" />
+          </li>
+        ))}
+      </ul>
+    </Frame>
+  );
+}

@@ -1,5 +1,5 @@
 import { competition, sources, voice } from "../despegar.data";
-import { HBars } from "../_components/charts";
+import { HBars, PairedBars } from "../_components/charts";
 import { Cite, Cites, Tramo, TramoHeading } from "../_components/ui";
 
 /** 05 · Lo que dicen: método primero, después dónde se rompe y contra quién. */
@@ -39,11 +39,11 @@ export function Voice() {
       </div>
 
       <div className="mt-6 grid gap-6 md:grid-cols-[1fr_1.2fr] md:items-start">
-        <HBars
-          title={voice.peers.title}
-          rows={voice.peers.rows}
-          unit={voice.peers.unit}
-          footer={voice.peers.note}
+        <PairedBars
+          title={voice.vsAirline.title}
+          groups={voice.vsAirline.groups}
+          rows={voice.vsAirline.rows}
+          footer={voice.vsAirline.note}
         />
         <ul className="grid gap-8 md:pt-4">
           {voice.quotes.map((q) => (

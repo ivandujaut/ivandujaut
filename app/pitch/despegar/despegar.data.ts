@@ -122,8 +122,8 @@ export const readings = {
 export const hero = {
   kicker: "Una lectura de la app de Despegar",
   title: "La app de Despegar ya trae a la gente.",
-  titleAccent: "La venta se pierde en el último paso.",
-  lede: "Soy Iván Dujaut. Quiero ayudar a que más gente compre su viaje en la app de Despegar y vuelva a comprar el siguiente. Armé esta página para entender dónde se pierde hoy esa venta y traer una idea para discutir.",
+  titleAccent: "Quiero entender por qué no vuelve.",
+  lede: "Soy Iván Dujaut. Quiero ayudar a que más gente compre su viaje en la app de Despegar y vuelva a comprar el siguiente. Armé esta página con datos públicos para llegar con una hipótesis y con las preguntas que todavía no puedo contestar desde afuera.",
   byline: "Noviembre de 2026",
   summary: [
     {
@@ -132,13 +132,13 @@ export const hero = {
       href: "#balde",
     },
     {
-      label: "Dónde se rompe",
-      text: "En el último paso: el precio que se mueve con la tarjeta ya cargada, y las cuotas del listado que no aparecen al pagar.",
+      label: "Dónde miraría primero",
+      text: "En el último paso de la compra. Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de la app de Despegar y en 2 de 191 de la app de Aerolíneas Argentinas.",
       href: "#voz",
     },
     {
-      label: "Qué propongo",
-      text: "Que el precio que ves sea el que pagás, con un experimento de cuatro semanas y el corte escrito antes.",
+      label: "Qué probaría",
+      text: "Si los datos de adentro lo confirman, un experimento de cuatro semanas con el corte escrito antes de empezar.",
       href: "#caso",
     },
   ],
@@ -393,7 +393,7 @@ export const bucket = {
 
 export const voice = {
   eyebrow: "Lo que dicen",
-  heading: "800 reseñas, clasificadas con IA y comparadas con Booking",
+  heading: "Qué dicen 800 reseñas de la app, clasificadas con IA",
   method: [
     "Bajé las reseñas públicas de App Store (500 de Argentina, todas, oct-2023 a nov-2026) y de Google Play (300 desde mayo 2025, al azar por estrellas).",
     "Armé un libro de códigos cerrado: 8 etapas del funnel y 21 tipos de problema, cada uno con definición y ejemplo.",
@@ -416,17 +416,26 @@ export const voice = {
   },
   promise: {
     value: "28%",
-    text: "de las reseñas de 1 y 2 estrellas argentinas (48 de 170) son una promesa que no se cumple al pagar: el precio sube con la tarjeta cargada, el pago falla y al reintentar el precio es otro, o las cuotas del listado no aparecen.",
+    text: "de las reseñas de 1 y 2 estrellas argentinas (48 de 170) cuentan una promesa que no se cumple al pagar: el precio que sube, el pago que falla, las cuotas que no aparecen o un cargo que no estaba avisado. En la app de Aerolíneas Argentinas, con el mismo método, son 20 de 191.",
   },
-  peers: {
-    title: '"El precio sube al ir a pagar", % de las reseñas de 1 y 2 estrellas',
-    unit: "%",
+  /**
+   * Comparación contra la venta directa de la aerolínea, mismo libro de códigos.
+   * Despegar: 170 reseñas 1-2★ del App Store AR. Aerolíneas: 191 reseñas 1-2★
+   * desde 2024 (37 del App Store AR y 154 de Google Play en español).
+   */
+  vsAirline: {
+    title: "Motivo de la queja, % de las reseñas de 1 y 2 estrellas",
+    groups: {
+      a: "Despegar (170 reseñas)",
+      b: "Aerolíneas Argentinas (191 reseñas)",
+    },
     rows: [
-      { label: "Despegar", value: 10, highlight: true },
-      { label: "Booking", value: 2.5 },
-      { label: "Turismocity", value: 2.3 },
+      { label: "El precio sube durante la compra", a: 12.9, aCount: 22, b: 1.0, bCount: 2 },
+      { label: "Cuotas o promos que no aplican", a: 6.5, aCount: 11, b: 0.5, bCount: 1 },
+      { label: "Cargos que no estaban avisados", a: 3.5, aCount: 6, b: 1.6, bCount: 3 },
+      { label: "El pago falla", a: 7.6, aCount: 13, b: 7.3, bCount: 14 },
     ],
-    note: "Mismo libro de códigos para las tres. Las quejas por cuotas o promos bancarias que no aplican aparecen sólo en Despegar.",
+    note: "Comprando directo, casi nadie se queja de que el precio suba al pagar; los pagos que fallan, en cambio, aparecen igual en las dos apps. En el precio que sube, los intervalos de confianza no se tocan (Despegar 8,7% a 18,8%; Aerolíneas 0,3% a 3,7%). Parte de las quejas de Despegar son de paquetes y hoteles: contando sólo las que nombran un vuelo quedan 8 de 170, una diferencia en la misma dirección pero menos clara.",
   },
   /** Las citas llevan a la lista de reseñas: Apple no publica un link por reseña. */
   quotesSource: "appStoreReviews" as SourceId,
@@ -524,7 +533,7 @@ export const caseStudy = {
   objective:
     "Que más gente que llega al checkout de la app termine comprando, sin comprar esa conversión con margen. Y que quien compra no tenga motivo para irse a la aerolínea la próxima vez.",
   problem:
-    "El precio de un vuelo o paquete puede subir después de que el usuario cargó pasajeros y tarjeta, incluso dentro del tiempo que la app le dio para comprar. Un pago rechazado obliga a empezar de nuevo, a otro precio. Y las cuotas del listado a veces no existen para su tarjeta.",
+    "Si mi lectura de las reseñas es correcta, en el último paso pasan tres cosas: la tarifa se mueve con la tarjeta ya cargada, un pago rechazado obliga a rearmar la compra a otro precio, y las cuotas del listado no existen para la tarjeta del usuario. Comprando directo en la aerolínea, lo primero casi no aparece en las quejas; por eso creo que tiene más que ver con cómo se muestra el precio en Despegar que con la tarifa en sí.",
   pieces: [
     {
       id: "antes",
