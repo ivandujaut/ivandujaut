@@ -201,3 +201,359 @@ html.lenis body {
 .despegar .btn:active {
   transform: scale(0.98);
 }
+
+/* ------------------------------------------------------------------------
+   El viaje de una compra. Sólo CSS: scroll-driven animations, como en la
+   charla de Carmen Ansio ("Animaciones CSS con Scroll", MiduConf / CSS Day
+   2024). Cada parada tiene su view-timeline (--stop-N); el contenedor las
+   expone con timeline-scope para que el escenario fijo las lea. El avión no
+   se dibuja ni se anima: son imágenes fijas, una por parada, que se cruzan.
+
+   Estado base (sin soporte o con movimiento reducido): no hay escenario y
+   cada parada lleva su cuadro arriba del texto. Es la misma información.
+   ------------------------------------------------------------------------ */
+.despegar .journey-stage {
+  display: none;
+}
+
+.despegar .journey-stops {
+  display: grid;
+  gap: 3.5rem;
+  margin-top: 2.5rem;
+}
+
+.despegar .journey-stop-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.despegar .journey-flip .flip-seen {
+  color: var(--ink-dim);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.despegar .journey-flip .flip-paid {
+  color: var(--paid-ink);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .despegar .journey {
+      timeline-scope: --stop-1, --stop-2, --stop-3, --stop-4, --stop-5, --stop-6, --journey;
+    }
+
+    .despegar .journey-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 2rem;
+      view-timeline-name: --journey;
+    }
+
+    /* Mobile: el escenario queda arriba y las paradas pasan por debajo. */
+    .despegar .journey-stage {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      height: 50svh;
+      padding-block: 0.75rem;
+      background: var(--surface-deep);
+    }
+
+    .despegar .journey-stops {
+      gap: 0;
+      margin-top: 0;
+    }
+
+    /* El texto va en la mitad de abajo: la de arriba la tapa el escenario fijo. */
+    .despegar .journey-stop {
+      display: flex;
+      align-items: flex-end;
+      min-height: 100svh;
+      padding-bottom: 6svh;
+    }
+
+    .despegar .journey-stop-frame {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .despegar .journey-grid {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 4rem;
+      }
+
+      .despegar .journey-stage {
+        height: 100svh;
+        padding-block: 0;
+        background: none;
+      }
+
+      .despegar .journey-stop {
+        align-items: center;
+        min-height: 100svh;
+        padding-bottom: 0;
+      }
+    }
+
+    .despegar .journey-stop[data-stop="1"] {
+      view-timeline-name: --stop-1;
+    }
+    .despegar .journey-stop[data-stop="2"] {
+      view-timeline-name: --stop-2;
+    }
+    .despegar .journey-stop[data-stop="3"] {
+      view-timeline-name: --stop-3;
+    }
+    .despegar .journey-stop[data-stop="4"] {
+      view-timeline-name: --stop-4;
+    }
+    .despegar .journey-stop[data-stop="5"] {
+      view-timeline-name: --stop-5;
+    }
+    .despegar .journey-stop[data-stop="6"] {
+      view-timeline-name: --stop-6;
+    }
+
+    /* Los cuadros: apilados, uno visible por parada, con un paneo lento. */
+    .despegar .journey-frames {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      background: var(--board);
+    }
+
+    .despegar .journey-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: journey-frame linear both;
+      animation-range: cover 15% cover 85%;
+    }
+
+    .despegar .journey-frame[data-edge="first"] {
+      animation-name: journey-frame-first;
+      animation-range: cover 0% cover 85%;
+    }
+
+    .despegar .journey-frame[data-edge="last"] {
+      animation-name: journey-frame-last;
+      animation-range: cover 15% cover 100%;
+    }
+
+    .despegar .journey-frame[data-stop="1"] {
+      animation-timeline: --stop-1;
+    }
+    .despegar .journey-frame[data-stop="2"] {
+      animation-timeline: --stop-2;
+    }
+    .despegar .journey-frame[data-stop="3"] {
+      animation-timeline: --stop-3;
+    }
+    .despegar .journey-frame[data-stop="4"] {
+      animation-timeline: --stop-4;
+    }
+    .despegar .journey-frame[data-stop="5"] {
+      animation-timeline: --stop-5;
+    }
+    .despegar .journey-frame[data-stop="6"] {
+      animation-timeline: --stop-6;
+    }
+
+    /* La ruta: una línea que se llena con todo el recorrido y un punto por parada. */
+    .despegar .journey-route {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(var(--n), 1fr);
+      font-size: 0.75rem;
+      color: var(--ink-dim);
+    }
+
+    .despegar .journey-route-line {
+      position: absolute;
+      top: 6px;
+      left: calc(50% / var(--n));
+      right: calc(50% / var(--n));
+      height: 2px;
+      background: var(--rule);
+    }
+
+    .despegar .journey-route-fill {
+      display: block;
+      height: 100%;
+      background: var(--seen);
+      transform-origin: left center;
+      animation: journey-route linear both;
+      animation-timeline: --journey;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .despegar .journey-dot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .despegar .journey-dot > span {
+      position: relative;
+      z-index: 1;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--rule);
+      border-radius: 9999px;
+      background: var(--surface);
+      animation: journey-dot linear both;
+      animation-range: cover 20% cover 35%;
+    }
+
+    .despegar .journey-dot[data-tone="paid"] > span {
+      animation-name: journey-dot-paid;
+    }
+
+    .despegar .journey-dot[data-stop="1"] > span {
+      animation-timeline: --stop-1;
+    }
+    .despegar .journey-dot[data-stop="2"] > span {
+      animation-timeline: --stop-2;
+    }
+    .despegar .journey-dot[data-stop="3"] > span {
+      animation-timeline: --stop-3;
+    }
+    .despegar .journey-dot[data-stop="4"] > span {
+      animation-timeline: --stop-4;
+    }
+    .despegar .journey-dot[data-stop="5"] > span {
+      animation-timeline: --stop-5;
+    }
+    .despegar .journey-dot[data-stop="6"] > span {
+      animation-timeline: --stop-6;
+    }
+
+    /* El precio del último paso: el del listado se tacha y aparece el que se cobra. */
+    .despegar .journey-flip .flip-seen {
+      animation: journey-strike linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 55%;
+    }
+
+    .despegar .journey-flip .flip-paid {
+      animation: journey-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 55%;
+    }
+  }
+}
+
+@keyframes journey-frame {
+  0% {
+    opacity: 0;
+    transform: scale(1.06) translateX(3%);
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.06) translateX(-3%);
+  }
+}
+
+@keyframes journey-frame-first {
+  0% {
+    opacity: 1;
+    transform: scale(1.06) translateX(0);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.06) translateX(-3%);
+  }
+}
+
+@keyframes journey-frame-last {
+  0% {
+    opacity: 0;
+    transform: scale(1.06) translateX(3%);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.06) translateX(0);
+  }
+}
+
+@keyframes journey-route {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes journey-dot {
+  from {
+    background: var(--surface);
+    border-color: var(--rule);
+  }
+  to {
+    background: var(--seen);
+    border-color: var(--seen);
+  }
+}
+
+@keyframes journey-dot-paid {
+  from {
+    background: var(--surface);
+    border-color: var(--rule);
+  }
+  to {
+    background: var(--paid);
+    border-color: var(--paid);
+  }
+}
+
+@keyframes journey-strike {
+  from {
+    color: var(--ink);
+    text-decoration-color: transparent;
+  }
+  to {
+    color: var(--ink-dim);
+    text-decoration-color: currentColor;
+  }
+}
+
+@keyframes journey-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.3em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

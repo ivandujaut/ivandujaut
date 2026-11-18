@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
 import { app, bucket, business, labels } from "../despegar.data";
 import { BarsAndLine, Columns, HBars, Line } from "../_components/charts";
+import { FlightJourney } from "../_components/flight-journey";
 import { Cite, InferenceBadge, Lede, Tramo, TramoHeading } from "../_components/ui";
 
 /** "2026-09" → "sep 26". */
@@ -86,9 +86,8 @@ export function Business() {
   );
 }
 
-/** 03 · La app hoy: la curva del share y el funnel con lo que se sabe desde afuera. */
+/** 03 · La app hoy: la curva del share y el viaje de una compra por el embudo. */
 export function AppToday() {
-  const stages = app.funnel.stages;
   return (
     <Tramo id="app" deep>
       <TramoHeading index="03" eyebrow={app.eyebrow}>
@@ -126,27 +125,7 @@ export function AppToday() {
         </dl>
       </div>
 
-      <h3 className="reveal mt-16 text-xl font-semibold md:text-2xl">{app.funnel.title}</h3>
-      <ol className="mt-6 grid gap-8 md:grid-cols-4">
-        {stages.map((s, i) => {
-          const last = i === stages.length - 1;
-          return (
-            <li
-              key={s.id}
-              className={cn(
-                "reveal flex flex-col border-t-2 pt-4",
-                last ? "border-(--paid)" : "border-(--ink)/30",
-              )}
-            >
-              <p className={cn("font-semibold", last && "text-(--paid-ink)")}>
-                <span className="tabular">{i + 1}.</span> {s.label}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-(--ink-dim)">{s.known}</p>
-              <p className="mt-3 leading-relaxed font-medium">{s.reading}</p>
-            </li>
-          );
-        })}
-      </ol>
+      <FlightJourney />
     </Tramo>
   );
 }

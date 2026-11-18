@@ -302,41 +302,69 @@ export const app = {
       source: "playStore" as SourceId,
     },
   ],
-  funnel: {
-    title: "El funnel, con lo que se puede saber desde afuera",
-    stages: [
-      {
-        id: "adquisicion",
-        label: "Adquisición",
-        known:
-          '80% de las visitas ya es mobile; la web invita a pasar a la app ("los vuelos están más baratos en la app").',
-        reading:
-          "Tráfico hay de sobra, y traer más sale caro: marketing y ventas fue el 32% del revenue en 2024.",
+};
+
+/**
+ * El viaje de una compra: el mismo vuelo de la portada recorre el embudo. Cada
+ * parada tiene su cuadro (una imagen fija del avión) y su dato. Los cuadros
+ * cambian con el scroll sólo con CSS (`view-timeline` por parada y
+ * `timeline-scope` en el contenedor); sin soporte o con movimiento reducido,
+ * cada parada muestra su cuadro al lado del texto.
+ *
+ * Los cuadros de `/despegar/vuelo/cuadro-N.svg` son provisorios. Las imágenes
+ * finales salen de `scripts/covers/prompts/despegar-vuelo-N.txt`; cuando estén,
+ * se cambia `src` a `cuadro-N.jpg` y se saca `placeholder`.
+ */
+export const journey = {
+  eyebrow: "El viaje de una compra",
+  heading: "Un mismo vuelo, de la búsqueda a la vuelta",
+  intro:
+    "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
+  placeholder: true,
+  stops: [
+    {
+      id: "busqueda",
+      step: "Búsqueda",
+      frame: {
+        src: "/despegar/vuelo/cuadro-1.svg",
+        alt: "El avión en la puerta de embarque, todavía en tierra",
       },
-      {
-        id: "activacion",
-        label: "Primera compra",
-        known:
-          "~2,3 M clientes nuevos en 2024. En Argentina el precio cambia con la moneda, la percepción, el medio de pago y el login.",
-        reading:
-          "Cuánta gente se pierde en el último paso no es público, y es lo primero que pediría.",
+      title: "El 80% de las visitas ya llega desde el celular",
+      text: "En 2024 el celular (app y web) trajo el 80% de las visitas y el 61% de las transacciones. Tráfico hay de sobra.",
+      source: "f20" as SourceId,
+    },
+    {
+      id: "resultados",
+      step: "Resultados",
+      frame: { src: "/despegar/vuelo/cuadro-2.svg", alt: "El avión despegando sobre la pista" },
+      title: "La app ya hace más de la mitad de las ventas",
+      text: "53,6% de las transacciones en el cuarto trimestre de 2024, contra 36,1% en el primero de 2023.",
+      source: "q4_24" as SourceId,
+    },
+    {
+      id: "ultimo-paso",
+      step: "Último paso",
+      frame: {
+        src: "/despegar/vuelo/cuadro-3.svg",
+        alt: "El avión en crucero, con nubes que se oscurecen adelante",
       },
-      {
-        id: "engagement",
-        label: "Entre viajes",
-        known:
-          "Pasaporte, Club Despegar (sólo AR, todavía MVP), alertas, push, SOFIA por WhatsApp.",
-        reading:
-          "Hay muchos programas, y no hay datos públicos de si alguno hace volver a la gente.",
+      title: "En el último paso, el precio cambia",
+      text: "Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de Despegar y en 2 de 191 de la app de Aerolíneas Argentinas.",
+      flip: { seen: "USD 412", paid: "USD 486", label: "Datos de ejemplo" },
+      source: "reviewsMethod" as SourceId,
+    },
+    {
+      id: "vuelta",
+      step: "La vuelta",
+      frame: {
+        src: "/despegar/vuelo/cuadro-4.svg",
+        alt: "El avión en aproximación hacia una pista lejana y a medio iluminar",
       },
-      {
-        id: "recompra",
-        label: "Segunda compra",
-        known: "51,4% de los clientes de 2024 ya había comprado antes (49,6% en 2022).",
-        reading: "Lleva tres años plana, y por eso pongo acá el cuello de botella.",
-      },
-    ],
-  },
+      title: "Y la vuelta casi no se mueve",
+      text: "51,4% de los clientes de 2024 ya había comprado antes (49,6% en 2022), mientras Pasaporte pasó de 12 a 32,5 millones de socios.",
+      source: "f20" as SourceId,
+    },
+  ],
 };
 
 // ---------------------------------------------------------------------------
@@ -799,6 +827,7 @@ export const labels = {
   score: "Puntaje",
   effort: "Esfuerzo",
   linkedin: "LinkedIn",
+  placeholderFrames: "Cuadros provisorios: acá van las imágenes del avión",
   monthsShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
 };
 
