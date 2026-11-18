@@ -35,15 +35,30 @@ export function Hero() {
 
   return (
     <section>
-      <h1 className="text-4xl font-semibold tracking-tight">{t("name")}</h1>
+      {/* El titular es la tesis y no el nombre.
+          Hasta el 18/11/2026 el `h1` decía "Iván Dujaut" a 36px y la tesis
+          vivía a 18px, debajo de dos renglones en monoespaciada. Quien llega
+          desde LinkedIn ya sabe de quién es el sitio (lo dice el navbar, el
+          `title` y el link que clickeó); lo que no sabe es qué hace. El nombre
+          sigue acá abajo, y en el JSON-LD, el `title` y el pie.
 
-      {/* El rol va en su propio renglón. Cuando los tres datos compartían una
-          fila con separadores, el rol nuevo ("Product Strategy y Decision
-          Analytics", más largo que "Product Engineer") partía en un teléfono y
-          el renglón siguiente empezaba con un "·" suelto. */}
-      <p className="mt-2 font-mono text-sm text-muted-foreground">{t("role")}</p>
+          El cuerpo sube a 48px en pantallas grandes: el elemento más grande de
+          la página era 2,5 veces el cuerpo y nada atraía la mirada. */}
+      <h1 className="text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl">
+        {t("tagline")}
+      </h1>
 
-      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-muted-foreground">
+      {/* Estos tres datos estaban en monoespaciada, igual que las fechas, el
+          stack y el tiempo de lectura. A tamaño chico cansa y le da aire de
+          terminal a una página que vende criterio de producto. La mono queda
+          para los rótulos de tres palabras, que es para lo que sirve. */}
+      <p className="mt-6 text-lg text-foreground">
+        {t("name")} <span className="text-muted-foreground">· {t("role")}</span>
+      </p>
+
+      <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+        <span>{t("credentials")}</span>
+        <span aria-hidden>·</span>
         <span>{t("location")}</span>
         <span aria-hidden>·</span>
         <span className="inline-flex items-center gap-1.5">
@@ -51,10 +66,6 @@ export function Hero() {
           {t("available")}
         </span>
       </div>
-
-      <p className="mt-6 text-lg leading-relaxed text-foreground">{t("tagline")}</p>
-
-      <p className="mt-2 font-mono text-sm text-muted-foreground">{t("credentials")}</p>
 
       {/* Arriba del pliegue tiene que haber algo para hacer, no solo algo para
           leer. El destino primario es el trabajo; el CV es la salida rápida
