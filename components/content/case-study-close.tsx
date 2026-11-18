@@ -81,6 +81,7 @@ export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudy
         <ShareLinkButton
           url={shareUrl}
           title={shareTitle}
+          surface="case-close"
           alwaysShowLabel
           triggerClassName="border-foreground/15 bg-foreground/7 px-4 py-2 hover:bg-foreground/12"
         />

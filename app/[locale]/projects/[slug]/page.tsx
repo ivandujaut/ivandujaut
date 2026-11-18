@@ -293,6 +293,7 @@ export default async function ProjectPage({ params }: Props) {
               </span>
             )}
             <ShareLinkButton
+              surface="case-header"
               url={`${SITE_URL}${projectPath}`}
               title={project.title}
               className="ml-auto"

@@ -217,6 +217,7 @@ export default async function PostPage({ params }: Props) {
               </>
             )}
             <ShareLinkButton
+              surface="post-header"
               url={`${SITE_URL}${postPath}`}
               title={post.title}
               className="ml-auto"
@@ -245,7 +246,12 @@ export default async function PostPage({ params }: Props) {
         </div>
 
         <footer className="mt-16 border-t border-border pt-8">
-          <ShareLinkButton url={`${SITE_URL}${postPath}`} title={post.title} alwaysShowLabel />
+          <ShareLinkButton
+            url={`${SITE_URL}${postPath}`}
+            title={post.title}
+            alwaysShowLabel
+            surface="post-close"
+          />
         </footer>
 
         <RelatedPosts

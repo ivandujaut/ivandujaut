@@ -107,6 +107,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         <div className="flex flex-row items-start justify-between gap-4">
           <h1 className="text-4xl font-semibold tracking-tight">{t("intro.greeting")}</h1>
           <ShareLinkButton
+            surface="about"
             url={`${SITE_URL}${localePath(locale, "/about")}`}
             title={t("intro.greeting")}
             className="mt-2"
