@@ -134,8 +134,11 @@ export default async function StatsPage({ searchParams }: Props) {
             </Eyebrow>
           </thead>
           <tbody>
+            {/* El idioma entra en la clave: hay una fila por pieza Y por
+                idioma, así que sin él las dos versiones de un mismo caso
+                comparten clave en cuanto las dos tienen lecturas. */}
             {rows.map((r) => (
-              <tr key={`${r.kind}:${r.slug}`} className="border-b border-border/50">
+              <tr key={`${r.kind}:${r.locale}:${r.slug}`} className="border-b border-border/50">
                 <td className="py-2 pr-4">
                   <span className="font-mono text-xs text-muted-foreground">
                     {ETIQUETA[r.kind]}
