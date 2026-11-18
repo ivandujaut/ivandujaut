@@ -47,7 +47,14 @@ interface ProjectListItemProps {
    * `card_click`, para saber qué tarjeta se elige y desde qué página. Es
    * obligatorio para que ninguna tarjeta quede sin medir.
    */
-  surface: "home" | "index";
+  surface: "home" | "index" | "next";
+  /**
+   * Sólo en `surface: "next"`: si la pieza se eligió por compartir tema con la
+   * que se está leyendo (`topic`) o por ser su vecina en el tiempo (`date`).
+   * Va a PostHog como `relation`, que es la comparación que justifica elegir
+   * por tema.
+   */
+  relation?: "topic" | "date";
 }
 
 /** Cuántas tecnologías entran antes de pasar a contador. */
@@ -67,6 +74,7 @@ export function ProjectListItem({
   showStack = true,
   cover,
   surface,
+  relation,
 }: ProjectListItemProps) {
   // Para casos de mejora y diseños, "Concepto" es redundante con el tipo de
   // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
@@ -104,6 +112,7 @@ export function ProjectListItem({
         data-ph="card_click"
         data-ph-slug={slug}
         data-ph-surface={surface}
+        data-ph-relation={relation}
         layout="card"
       >
         <article>

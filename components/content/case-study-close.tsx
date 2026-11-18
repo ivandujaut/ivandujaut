@@ -1,27 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
-import { AnimateIcon } from "@/components/animate-ui/icons/icon";
-import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
-import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
-import { Eyebrow } from "@/components/ui/eyebrow";
-
-interface RelatedProject {
-  slug: string;
-  title: string;
-  tagline: string;
-  kind: ProjectKind;
-  /** `true` si comparte `topic` con el caso actual; `false` si es un vecino por fecha. */
-  sameTopic: boolean;
-}
 
 interface CaseStudyCloseProps {
   locale: "es" | "en";
-  related: RelatedProject[];
   shareUrl: string;
   shareTitle: string;
 }
@@ -45,12 +31,7 @@ interface CaseStudyCloseProps {
  * quien quiera seguir la conversación en privado. Se mide con `contact_click`
  * por `surface`: si el mail vuelve a ganar, se invierte.
  */
-export async function CaseStudyClose({
-  locale,
-  related,
-  shareUrl,
-  shareTitle,
-}: CaseStudyCloseProps) {
+export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
 
   return (
@@ -105,23 +86,6 @@ export async function CaseStudyClose({
         />
       </div>
 
-      {related.length > 0 && (
-        // Dos columnas solo si hay dos casos: con uno solo, a media columna
-        // queda huérfano.
-        <nav
-          aria-label={t("moreLabel")}
-          className={`mt-10 grid gap-3 ${related.length > 1 ? "sm:grid-cols-2" : "grid-cols-1"}`}
-        >
-          {related.map((project) => (
-            <RelatedCard
-              key={project.slug}
-              project={project}
-              label={project.sameTopic ? t("sameTopic") : t("otherCase")}
-            />
-          ))}
-        </nav>
-      )}
-
       <Link
         href="/projects"
         className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
@@ -129,37 +93,5 @@ export async function CaseStudyClose({
         {t("allProjects")}
       </Link>
     </section>
-  );
-}
-
-function RelatedCard({ project, label }: { project: RelatedProject; label: string }) {
-  return (
-    // Sin `asChild`: rompe con el `Link` de next-intl (ver stats-grid.tsx).
-    <AnimateIcon animateOnHover className="block h-full">
-      <Link
-        href={`/projects/${project.slug}`}
-        data-ph="card_click"
-        data-ph-slug={project.slug}
-        data-ph-surface="next"
-        // `topic` o `date`: dice si se eligió un caso del mismo tema o un
-        // vecino de relleno. Es la comparación que justifica este cambio.
-        data-ph-relation={project.sameTopic ? "topic" : "date"}
-        className="group flex h-full flex-col rounded-lg border border-border p-4 transition-colors hover:bg-muted/40"
-      >
-        {/* La flecha apunta siempre a la derecha: significa "abrí este caso",
-            no una dirección en el tiempo. Rotarla contradecía el label. */}
-        <Eyebrow as="span" className="flex items-center gap-1.5">
-          {label}
-          <ArrowRight size={12} strokeWidth={1.5} aria-hidden animation="pointing" />
-        </Eyebrow>
-        <span className="mt-2 flex flex-wrap gap-1.5">
-          <KindBadge kind={project.kind} />
-        </span>
-        <span className="mt-2 text-sm font-medium">{project.title}</span>
-        <span className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-          {project.tagline}
-        </span>
-      </Link>
-    </AnimateIcon>
   );
 }

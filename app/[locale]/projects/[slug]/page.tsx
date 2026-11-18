@@ -29,6 +29,7 @@ import { StatusBadge } from "@/components/content/status-badge";
 import { KindBadge } from "@/components/content/kind-badge";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { CaseStudyClose } from "@/components/content/case-study-close";
+import { CaseStudyNext, type NextProject } from "@/components/content/case-study-next";
 import { AnalysisCta, ParentNote } from "@/components/content/analysis-layer";
 import { StackList } from "@/components/content/stack-list";
 import { CaseSourceCode } from "@/components/content/case-source-code";
@@ -214,6 +215,26 @@ export default async function ProjectPage({ params }: Props) {
   // Un análisis no está en los listados, así que sus siguientes casos son los
   // de su pitch; sin esto `getRelatedProjects` no lo encuentra y devuelve nada.
   const related = getRelatedProjects(typedLocale, project.parent ?? slug);
+  const nextProjects: NextProject[] = related.map(({ project: p, sameTopic }) => ({
+    slug: p.slug,
+    title: p.title,
+    tagline: p.tagline,
+    date: p.date,
+    kind: p.kind,
+    status: p.status,
+    stack: p.stack,
+    readingMinutes: p.metadata?.readingTime,
+    sameTopic,
+    cover: p.cover
+      ? {
+          src: p.cover.src.src,
+          alt: p.cover.alt,
+          width: p.cover.src.width,
+          height: p.cover.src.height,
+          blurDataURL: p.cover.src.blurDataURL,
+        }
+      : undefined,
+  }));
   const parent = project.parent ? getProjectBySlug(typedLocale, project.parent) : undefined;
   const analysis = project.parent ? undefined : getProjectAnalysis(typedLocale, project.slug);
 
@@ -355,6 +376,15 @@ export default async function ProjectPage({ params }: Props) {
           <MDXContent code={project.content} />
         </div>
 
+        {/* Qué leer después va acá, apenas termina el cuerpo, y no al pie:
+            entre el hito de lectura y el final de la página se iba la mitad de
+            los lectores (94 contra 45 en `acceso-parte-d`, 120 días).
+
+            La excepción es un caso con análisis completo: ahí la continuación
+            que importa es el análisis, así que estas tarjetas bajan al cierre
+            para no competir con él. */}
+        {!analysis && <CaseStudyNext locale={typedLocale} projects={nextProjects} />}
+
         {analysis && (
           <AnalysisCta
             locale={typedLocale}
@@ -430,17 +460,12 @@ export default async function ProjectPage({ params }: Props) {
         {/* Compartir vive adentro del cierre y no en una fila propia: sin el
             me gusta al lado quedaba un botón solo entre dos bloques con borde.
             Ahí abajo las tres acciones se leen juntas y en orden de valor. */}
+        {analysis && <CaseStudyNext locale={typedLocale} projects={nextProjects} />}
+
         <CaseStudyClose
           locale={typedLocale}
           shareUrl={`${SITE_URL}${projectPath}`}
           shareTitle={project.title}
-          related={related.map(({ project: p, sameTopic }) => ({
-            slug: p.slug,
-            title: p.title,
-            tagline: p.tagline,
-            kind: p.kind,
-            sameTopic,
-          }))}
         />
       </PageShell>
     </main>
