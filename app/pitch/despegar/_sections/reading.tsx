@@ -22,7 +22,7 @@ export function Business() {
         {business.kpis.map((k) => (
           <div key={k.label} className="reveal rounded-lg bg-(--surface) p-5">
             <dt className="text-sm text-(--ink-dim)">{k.label}</dt>
-            <dd className="mt-2 text-xl font-semibold tracking-tight tabular md:text-3xl">
+            <dd className="mt-2 flex flex-wrap items-baseline gap-x-1 text-xl [&>a]:ml-0 font-semibold tracking-tight tabular md:text-3xl">
               <span className="whitespace-nowrap">{k.value}</span>
               <Cite id={k.source} />
             </dd>
