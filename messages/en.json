@@ -149,12 +149,13 @@
       "design": "Design"
     },
     "close": {
-      "title": "Want to talk about this case?",
-      "body": "If you read this far, something about the problem caught your interest. I post every new case on LinkedIn and discuss these decisions there with people who live them. To take it private, write me what you would do differently or pick a time to talk.",
+      "title": "What would you do differently?",
+      "body": "I write these cases from public data, from outside the industry, so anyone who works inside it sees things I cannot. If something here is wrong, or obvious to you and not to me, write me. The feed has every new case. I post them on LinkedIn too, in Spanish.",
       "ctas": {
         "linkedin": "Follow me on LinkedIn",
         "email": "Write me",
-        "call": "Book a call"
+        "call": "Book a call",
+        "feed": "Get the feed"
       },
       "moreLabel": "More cases",
       "allProjects": "See all projects",
