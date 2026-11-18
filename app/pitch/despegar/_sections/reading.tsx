@@ -69,11 +69,16 @@ export function Business() {
             </li>
           ))}
         </ol>
-        <blockquote className="reveal self-start rounded-lg bg-(--night) p-6 text-white md:p-8">
-          <p className="text-xl leading-snug font-medium md:text-2xl">{business.plan.quote}</p>
-          <footer className="mt-4 text-sm text-white/70">
+        <blockquote className="reveal self-start">
+          <p className="relative pl-5 text-2xl leading-snug font-medium md:text-3xl">
+            <span aria-hidden className="absolute left-0 text-(--seen-ink)">
+              “
+            </span>
+            {business.plan.quote}”
+          </p>
+          <footer className="mt-4 pl-5 text-sm text-(--ink-dim)">
             {business.plan.attribution}
-            <Cite id={business.plan.source} night />
+            <Cite id={business.plan.source} />
           </footer>
         </blockquote>
       </div>
