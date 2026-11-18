@@ -38,7 +38,8 @@ export type SourceId =
   | "indecEti"
   | "indecSerie"
   | "bcraCuotas"
-  | "reviewsMethod";
+  | "reviewsMethod"
+  | "appStoreReviews";
 
 export const sources: Record<SourceId, string> = {
   f20: "https://www.sec.gov/Archives/edgar/data/1703141/000162828025020808/desp-20241231.htm",
@@ -76,6 +77,9 @@ export const sources: Record<SourceId, string> = {
   bcraCuotas: "https://www.bcra.gob.ar/Pdfs/Texord/t-polcre.pdf",
   /** Reseñas públicas de App Store AR y Google Play; método en el pie de la sección. */
   reviewsMethod: "https://apps.apple.com/ar/app/despegar-vuelos-y-hoteles/id511479725",
+  /** Lista de reseñas de la app en App Store Argentina. Apple no da un link por reseña. */
+  appStoreReviews:
+    "https://apps.apple.com/ar/app/despegar-vuelos-y-hoteles/id511479725?see-all=reviews",
 };
 
 export const author = {
@@ -424,6 +428,9 @@ export const voice = {
     ],
     note: "Mismo libro de códigos para las tres. Las quejas por cuotas o promos bancarias que no aplican aparecen sólo en Despegar.",
   },
+  /** Las citas llevan a la lista de reseñas: Apple no publica un link por reseña. */
+  quotesSource: "appStoreReviews" as SourceId,
+  quotesLinkTitle: "Ver las reseñas de la app en App Store Argentina",
   quotes: [
     {
       text: "Nunca me pasó una cosa así comprando en las aerolíneas directamente.",

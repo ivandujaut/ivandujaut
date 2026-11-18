@@ -1,4 +1,4 @@
-import { competition, voice } from "../despegar.data";
+import { competition, sources, voice } from "../despegar.data";
 import { HBars } from "../_components/charts";
 import { Cite, Cites, Tramo, TramoHeading } from "../_components/ui";
 
@@ -54,7 +54,17 @@ export function Voice() {
                 </span>
                 {q.text}”
               </blockquote>
-              <p className="mt-2 pl-5 text-sm text-(--ink-dim)">{q.meta}</p>
+              <p className="mt-2 pl-5 text-sm">
+                <a
+                  href={sources[voice.quotesSource]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={voice.quotesLinkTitle}
+                  className="text-(--ink-dim) underline decoration-dotted underline-offset-2 transition-colors hover:text-(--ink)"
+                >
+                  {q.meta}
+                </a>
+              </p>
             </li>
           ))}
         </ul>
