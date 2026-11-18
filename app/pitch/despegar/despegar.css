@@ -159,6 +159,115 @@ html.lenis body {
   border: 1px dashed var(--ink-faint);
 }
 
+/* ------------------------------------------------------------------------
+   El simulador del corte. La fila de la decisión que sale queda entera; las
+   otras dos se apagan. El punto toma el color de la decisión: lanzar en el
+   verde de "en rango", iterar en el naranja de "mirar" (los dos del tablero)
+   y apagar en tinta, para no usar el rojo, que en la página es el precio que
+   se paga.
+   ------------------------------------------------------------------------ */
+.despegar .cut-sim {
+  --verdict: var(--ink);
+}
+
+.despegar .cut-sim[data-verdict="ship"] {
+  --verdict: var(--ok);
+}
+
+.despegar .cut-sim[data-verdict="iterate"] {
+  --verdict: var(--watch);
+}
+
+.despegar .cut-row {
+  transition: opacity 0.4s var(--ease);
+}
+
+.despegar .cut-row[data-active="false"] {
+  opacity: 0.4;
+}
+
+.despegar .cut-dot {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--verdict);
+  transition: background-color 0.4s var(--ease);
+}
+
+.despegar .cut-row[data-active="false"] .cut-dot {
+  background: var(--rule);
+}
+
+.despegar .cut-verdict {
+  color: var(--verdict);
+  transition: color 0.4s var(--ease);
+}
+
+.despegar .cut-verdict .cut-dot {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.despegar .cut-range {
+  accent-color: var(--seen);
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.despegar .cut-toggle {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background: var(--surface-deep);
+}
+
+.despegar .cut-toggle label {
+  position: relative;
+}
+
+.despegar .cut-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.despegar .cut-toggle span {
+  display: block;
+  min-width: 4.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  font-weight: 500;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.despegar .cut-toggle input:checked + span {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgb(29 19 64 / 12%);
+}
+
+.despegar .cut-toggle input:focus-visible + span {
+  outline: 2px solid var(--seen);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .despegar .cut-row,
+  .despegar .cut-dot,
+  .despegar .cut-verdict,
+  .despegar .cut-toggle span {
+    transition: none;
+  }
+}
+
 /* Bloque de SQL: oscuro, con desplazamiento horizontal propio en mobile. */
 .despegar .code-block {
   background: var(--board);

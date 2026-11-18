@@ -638,6 +638,54 @@ export const caseStudy = {
       "Se itera si es neutro: se mira sólo internacional y paquetes. Si ahí tampoco hay efecto, se apaga.",
     kill: "Se apaga si la conversión cae 1% o más, si el revenue neto por orden cae más de 2% o si las consultas a la aerolínea por orden se duplican.",
   },
+  /**
+   * El criterio de corte, para probarlo: los controles son resultados
+   * inventados del experimento y la decisión sale de las mismas reglas de
+   * `cut`. Las reglas viven en `_components/cut-simulator.tsx`; si cambia un
+   * umbral acá arriba, cambia también allá.
+   */
+  simulator: {
+    intro:
+      "Probá el criterio con un resultado inventado: la decisión sale de las reglas de arriba.",
+    example: "Resultado de ejemplo",
+    conversion: { label: "Conversión, cambio relativo", min: -4, max: 6, step: 0.5, initial: 2.5 },
+    interval: {
+      label: "¿El intervalo de confianza deja afuera el cero?",
+      yes: "Sí",
+      no: "No",
+    },
+    revenue: {
+      label: "Revenue neto por orden, con lo absorbido",
+      min: -4,
+      max: 2,
+      step: 0.5,
+      initial: -0.5,
+    },
+    airline: {
+      label: "Consultas a la aerolínea por orden",
+      min: 1,
+      max: 2.5,
+      step: 0.1,
+      initial: 1.2,
+    },
+    total: "Revenue neto total",
+    totalNote: "conversión × revenue por orden",
+    why: "Por qué",
+    reasons: {
+      killConversion: "La conversión cae {ca}: con una caída de 1% o más, se apaga.",
+      killRevenue: "El revenue neto por orden cae {ra}: con más de 2%, se apaga.",
+      killAirline:
+        "Las consultas a la aerolínea por orden pasan a {q}, y el freno está en el doble.",
+      ship: "La conversión sube {ca} con el intervalo fuera de cero, el revenue por orden se mueve {r} (no puede caer más de 1%) y el revenue total sube {ta}.",
+      iterateInterval:
+        "La conversión sube {ca}, pero el intervalo incluye el cero: el resultado es neutro.",
+      iterateSmall: "La conversión se mueve {c}: no llega al +2% que hace falta para lanzar.",
+      iterateRevenue:
+        "La conversión sube {ca}, pero el revenue por orden cae {ra}: para lanzar no puede caer más de 1%.",
+      iterateTotal:
+        "La conversión sube {ca}, pero lo absorbido se come lo ganado: el revenue total se mueve {t}.",
+    },
+  },
   impact: {
     illustrative: true as const,
     label: "Escenario de ejemplo, no dato",

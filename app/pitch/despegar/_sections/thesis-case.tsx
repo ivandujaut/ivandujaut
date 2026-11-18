@@ -1,4 +1,5 @@
 import { caseStudy, labels, thesis } from "../despegar.data";
+import { CutSimulator } from "../_components/cut-simulator";
 import { ExampleBadge, Tramo, TramoHeading } from "../_components/ui";
 
 /** 07 · La tesis: tres frases, una por paso, cada una con su piso. */
@@ -25,11 +26,6 @@ export function Thesis() {
 /** 08 · El caso: objetivo, piezas, experimento, segmentos, corte, y qué no construir. */
 export function Case() {
   const c = caseStudy;
-  const cuts = [
-    { key: "ship", label: labels.cut.ship, text: c.cut.ship },
-    { key: "iterate", label: labels.cut.iterate, text: c.cut.iterate },
-    { key: "kill", label: labels.cut.kill, text: c.cut.kill },
-  ];
   return (
     <Tramo id="caso">
       <TramoHeading index="08" eyebrow={c.eyebrow}>
@@ -91,17 +87,7 @@ export function Case() {
       </ul>
 
       <h3 className="reveal mt-16 text-2xl font-semibold md:text-3xl">{c.cut.title}</h3>
-      <dl className="mt-6 max-w-4xl border-t border-(--ink)">
-        {cuts.map((cut) => (
-          <div
-            key={cut.key}
-            className="reveal grid gap-1 border-b border-(--rule) py-4 md:grid-cols-[10rem_1fr] md:gap-6"
-          >
-            <dt className="font-semibold">{cut.label}</dt>
-            <dd className="leading-relaxed">{cut.text}</dd>
-          </div>
-        ))}
-      </dl>
+      <CutSimulator />
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         <div className="reveal is-example rounded-lg bg-(--surface) p-6">
