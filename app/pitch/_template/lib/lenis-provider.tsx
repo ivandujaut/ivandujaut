@@ -11,11 +11,19 @@ import { REDUCED_MOTION_QUERY, ScrollTrigger, gsap } from "./gsap";
  * Con `prefers-reduced-motion: reduce` no se instancia: el scroll queda nativo
  * y las secciones tampoco animan (ver `useGsapSection`).
  */
+let current: Lenis | null = null;
+
+/** La instancia activa, para quien necesite mover el scroll por código (atajos de teclado). */
+export function getLenis() {
+  return current;
+}
+
 export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.matchMedia(REDUCED_MOTION_QUERY).matches) return;
 
     const lenis = new Lenis({ autoRaf: false, anchors: true });
+    current = lenis;
     const onScroll = () => ScrollTrigger.update();
     lenis.on("scroll", onScroll);
 
@@ -35,6 +43,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       gsap.ticker.remove(tick);
       lenis.off("scroll", onScroll);
       lenis.destroy();
+      if (current === lenis) current = null;
     };
   }, []);
 
