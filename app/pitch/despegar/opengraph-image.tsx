@@ -165,18 +165,23 @@ export default async function Image() {
             <div
               style={{
                 display: "flex",
-                alignItems: "baseline",
+                // El generador no alinea bien por línea de base: se alinean los
+                // pies con interlineado 1 y el chico sube lo que le falta (la
+                // diferencia de descendente entre 42 y 24 de cuerpo en Rubik).
+                alignItems: "flex-end",
                 justifyContent: "space-between",
                 gap: 18,
                 marginTop: 4,
               }}
             >
-              <span style={{ fontSize: 42, color: C.paid, whiteSpace: "nowrap" }}>
+              <span style={{ fontSize: 42, lineHeight: 1, color: C.paid, whiteSpace: "nowrap" }}>
                 {t.paid.price}
               </span>
               <span
                 style={{
                   fontSize: 24,
+                  lineHeight: 1,
+                  marginBottom: 3,
                   color: C.dim,
                   textDecoration: "line-through",
                   whiteSpace: "nowrap",
