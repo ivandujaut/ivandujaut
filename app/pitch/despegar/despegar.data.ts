@@ -308,7 +308,7 @@ export const app = {
  * El viaje de una compra: el pasaje de la portada recorre el embudo. En el
  * escenario fijo el pasaje se mueve en 3D: aparece en la búsqueda, se para con
  * el precio del listado, se da vuelta en el último paso con el que se paga y en
- * la vuelta se asoma el segundo pasaje, que casi no sube. Todo con CSS
+ * la vuelta pierde el talón. Todo con CSS
  * (`view-timeline` por parada y `timeline-scope` en el contenedor); sin soporte
  * o con movimiento reducido se muestran las dos caras del pasaje, quietas.
  */
@@ -321,7 +321,6 @@ export const journey = {
   ticket: {
     label: "Pasaje",
     outbound: "Ida",
-    inbound: "Vuelta",
     from: "BUE",
     to: "RIO",
     date: hero.board.date,
@@ -330,8 +329,6 @@ export const journey = {
     reason: hero.board.reason,
     searchStep: "Búsqueda",
     searching: "Buscando…",
-    noDate: "Sin fecha",
-    noPrice: "—",
     example: hero.board.label,
   },
   stops: [

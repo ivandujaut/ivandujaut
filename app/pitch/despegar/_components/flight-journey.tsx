@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { journey } from "../despegar.data";
-import { TicketBack, TicketFront, TicketReturn } from "./ticket";
+import { TicketBack, TicketFront } from "./ticket";
 import { Cite, ExampleBadge } from "./ui";
 
 /**
@@ -54,9 +54,6 @@ export function FlightJourney() {
                   <TicketBack />
                 </div>
               </div>
-            </div>
-            <div className="ticket-return">
-              <TicketReturn />
             </div>
           </div>
           <ol className="journey-route" style={routeStyle}>

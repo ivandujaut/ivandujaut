@@ -1,10 +1,9 @@
 import { journey } from "../despegar.data";
 
 /**
- * El pasaje del viaje, dibujado en SVG. Tres caras con el mismo lienzo
- * (600 × 280): el frente con el precio del listado, el dorso con el que se
- * paga (el talón queda del otro lado, como al dar vuelta un papel) y el pasaje
- * de vuelta, sin fecha ni precio. El texto sale de `journey.ticket`.
+ * El pasaje del viaje, dibujado en SVG. Dos caras con el mismo lienzo
+ * (600 × 280): el frente con el precio del listado y el dorso con el que se
+ * paga (el talón queda del otro lado, como al dar vuelta un papel). El texto sale de `journey.ticket`.
  */
 
 const W = 600;
@@ -59,7 +58,6 @@ function Paper({
   date,
   from,
   to,
-  dashed,
   children,
 }: {
   notch: number;
@@ -69,12 +67,11 @@ function Paper({
   date: string;
   from: string;
   to: string;
-  dashed?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="ticket-svg" aria-hidden>
-      <path d={outline(notch)} className={dashed ? "t-paper t-paper-dashed" : "t-paper"} />
+      <path d={outline(notch)} className="t-paper" />
       <line x1={notch} y1={24} x2={notch} y2={H - 24} className="t-perforation" />
       <text x={bodyX} y={46} className="t-mono t-dim" fontSize={15}>
         {label}
@@ -160,26 +157,6 @@ export function TicketBack() {
         {t.reason}
       </text>
       <Barcode x={30} y={40} width={100} height={200} />
-    </Paper>
-  );
-}
-
-/** El pasaje de vuelta: la segunda compra, que todavía no tiene fecha ni precio. */
-export function TicketReturn() {
-  return (
-    <Paper
-      notch={440}
-      bodyX={32}
-      bodyEnd={408}
-      label={`${t.label} · ${t.inbound}`}
-      date={t.noDate}
-      from={t.to}
-      to={t.from}
-      dashed
-    >
-      <text x={32} y={242} className="t-sans t-dim" fontSize={46}>
-        {t.noPrice}
-      </text>
     </Paper>
   );
 }
