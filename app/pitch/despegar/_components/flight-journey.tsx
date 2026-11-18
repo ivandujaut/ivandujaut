@@ -1,20 +1,19 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
-import { journey, labels } from "../despegar.data";
+import { journey } from "../despegar.data";
+import { TicketBack, TicketFront, TicketReturn } from "./ticket";
 import { Cite, ExampleBadge } from "./ui";
 
 /**
  * El viaje de una compra, sólo con CSS (ver "El viaje de una compra" en
  * `despegar.css`). Cada parada declara su `view-timeline` (`--stop-N`) y el
- * contenedor las sube con `timeline-scope`, así el escenario fijo de la
- * izquierda puede leerlas: el cuadro N aparece mientras la parada N cruza la
- * pantalla, y la ruta de abajo se llena con el avance de todo el recorrido.
- * El avión son varias poses apiladas en el mismo lugar (el tren abajo, a medio
- * subir, guardado); el CSS mueve el conjunto y decide cuál se ve.
+ * contenedor las sube con `timeline-scope`, así el escenario fijo puede
+ * leerlas: la escena N aparece mientras la parada N cruza la pantalla, el
+ * pasaje cambia de pose entre paradas (en 3D, con perspectiva) y la ruta de
+ * abajo se llena con el avance de todo el recorrido.
  *
  * Sin soporte de `animation-timeline` o con movimiento reducido, el escenario
- * no se muestra y cada parada lleva su cuadro al lado del texto: la misma
- * información, sin movimiento.
+ * no se muestra: arriba de las paradas quedan las dos caras del pasaje, el
+ * precio que se ve y el que se paga.
  */
 export function FlightJourney() {
   const stops = journey.stops;
@@ -26,45 +25,32 @@ export function FlightJourney() {
         <p className="text-sm font-medium text-(--seen-ink)">{journey.eyebrow}</p>
         <h3 className="mt-2 text-2xl font-semibold md:text-3xl">{journey.heading}</h3>
         <p className="mt-3 leading-relaxed text-(--ink-dim)">{journey.intro}</p>
-        {journey.placeholder ? (
-          <div className="mt-4">
-            <ExampleBadge>{labels.placeholderFrames}</ExampleBadge>
-          </div>
-        ) : null}
       </header>
+
+      <figure
+        className="journey-static"
+        aria-label={`${journey.ticket.seen.price} → ${journey.ticket.paid.price}`}
+      >
+        <TicketFront />
+        <TicketBack />
+        <figcaption>
+          <ExampleBadge>{journey.ticket.example}</ExampleBadge>
+        </figcaption>
+      </figure>
 
       <div className="journey-grid">
         <div className="journey-stage" aria-hidden>
           <div className="journey-frames">
-            {stops.map((s, i) => (
-              <Image
-                key={s.id}
-                className="journey-frame"
-                data-stop={i + 1}
-                data-edge={i === 0 ? "first" : i === stops.length - 1 ? "last" : undefined}
-                src={s.background}
-                alt=""
-                width={1600}
-                height={900}
-                sizes="(min-width: 768px) 55vw, 100vw"
-              />
-            ))}
-            <div
-              className="journey-plane"
-              style={{ aspectRatio: `${journey.plane.width} / ${journey.plane.height}` }}
-            >
-              {journey.plane.poses.map((src, i) => (
-                <Image
-                  key={src}
-                  className="journey-pose"
-                  style={{ "--i": i } as CSSProperties}
-                  src={src}
-                  alt=""
-                  width={journey.plane.width}
-                  height={journey.plane.height}
-                  sizes="(min-width: 768px) 40vw, 70vw"
-                />
-              ))}
+            <div className="ticket3d">
+              <div className="ticket-face ticket-front">
+                <TicketFront />
+              </div>
+              <div className="ticket-face ticket-back">
+                <TicketBack />
+              </div>
+            </div>
+            <div className="ticket-return">
+              <TicketReturn />
             </div>
           </div>
           <ol className="journey-route" style={routeStyle}>
@@ -88,15 +74,6 @@ export function FlightJourney() {
         <ol className="journey-stops">
           {stops.map((s, i) => (
             <li key={s.id} id={`viaje-${s.id}`} className="journey-stop" data-stop={i + 1}>
-              <Image
-                className="journey-stop-frame"
-                src={s.frame.src}
-                alt={s.frame.alt}
-                width={1600}
-                height={900}
-                sizes="100vw"
-                unoptimized={s.frame.src.endsWith(".svg")}
-              />
               <div className="journey-card">
                 <p className="text-sm font-medium text-(--seen-ink)">
                   <span className="tabular">{i + 1}.</span> {s.step}

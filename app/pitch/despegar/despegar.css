@@ -206,11 +206,11 @@ html.lenis body {
    El viaje de una compra. Sólo CSS: scroll-driven animations, como en la
    charla de Carmen Ansio ("Animaciones CSS con Scroll", MiduConf / CSS Day
    2024). Cada parada tiene su view-timeline (--stop-N); el contenedor las
-   expone con timeline-scope para que el escenario fijo las lea. El avión no
-   se dibuja ni se anima: son imágenes fijas, una por parada, que se cruzan.
+   expone con timeline-scope para que el escenario fijo las lea: el pasaje
+   (SVG) cambia de pose en 3D entre paradas.
 
    Estado base (sin soporte o con movimiento reducido): no hay escenario y
-   cada parada lleva su cuadro arriba del texto. Es la misma información.
+   arriba de las paradas quedan las dos caras del pasaje, quietas.
    ------------------------------------------------------------------------ */
 .despegar .journey-stage {
   display: none;
@@ -222,14 +222,29 @@ html.lenis body {
   margin-top: 2.5rem;
 }
 
-.despegar .journey-stop-frame {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 0.5rem;
-  margin-bottom: 1.25rem;
+.despegar .journey-static {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.despegar .journey-static .ticket-svg {
+  filter: drop-shadow(0 10px 18px rgb(29 19 64 / 14%));
+}
+
+.despegar .journey-static .ticket-pending {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .despegar .journey-static {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .despegar .journey-static figcaption {
+    grid-column: 1 / -1;
+  }
 }
 
 .despegar .journey-flip .flip-seen {
@@ -282,7 +297,7 @@ html.lenis body {
       padding-bottom: 6svh;
     }
 
-    .despegar .journey-stop-frame {
+    .despegar .journey-static {
       display: none;
     }
 
@@ -324,7 +339,8 @@ html.lenis body {
       view-timeline-name: --stop-6;
     }
 
-    /* Los cuadros: apilados, uno visible por parada, con un paneo lento. */
+    /* El escenario: el mismo fondo oscuro del tablero de la portada. Lo único
+       que se mueve es el pasaje. */
     .despegar .journey-frames {
       container-type: size;
       position: relative;
@@ -333,46 +349,6 @@ html.lenis body {
       overflow: hidden;
       border-radius: 0.75rem;
       background: var(--board);
-    }
-
-    .despegar .journey-frame {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      animation: journey-frame linear both;
-      animation-range: cover 15% cover 85%;
-    }
-
-    .despegar .journey-frame[data-edge="first"] {
-      animation-name: journey-frame-first;
-      animation-range: cover 0% cover 85%;
-    }
-
-    .despegar .journey-frame[data-edge="last"] {
-      animation-name: journey-frame-last;
-      animation-range: cover 15% cover 100%;
-    }
-
-    .despegar .journey-frame[data-stop="1"] {
-      animation-timeline: --stop-1;
-    }
-    .despegar .journey-frame[data-stop="2"] {
-      animation-timeline: --stop-2;
-    }
-    .despegar .journey-frame[data-stop="3"] {
-      animation-timeline: --stop-3;
-    }
-    .despegar .journey-frame[data-stop="4"] {
-      animation-timeline: --stop-4;
-    }
-    .despegar .journey-frame[data-stop="5"] {
-      animation-timeline: --stop-5;
-    }
-    .despegar .journey-frame[data-stop="6"] {
-      animation-timeline: --stop-6;
     }
 
     /* La ruta: una línea que se llena con todo el recorrido y un punto por parada. */
@@ -461,51 +437,6 @@ html.lenis body {
   }
 }
 
-@keyframes journey-frame {
-  0% {
-    opacity: 0;
-    transform: scale(1.06) translateX(3%);
-  }
-  25% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.06) translateX(-3%);
-  }
-}
-
-@keyframes journey-frame-first {
-  0% {
-    opacity: 1;
-    transform: scale(1.06) translateX(0);
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.06) translateX(-3%);
-  }
-}
-
-@keyframes journey-frame-last {
-  0% {
-    opacity: 0;
-    transform: scale(1.06) translateX(3%);
-  }
-  25% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.06) translateX(0);
-  }
-}
-
 @keyframes journey-route {
   from {
     transform: scaleX(0);
@@ -560,31 +491,106 @@ html.lenis body {
 }
 
 /* ------------------------------------------------------------------------
-   El avión: un recorte que se mueve de forma continua sobre los fondos. Son
-   tres poses del tren apiladas en el mismo lugar (abajo, a medio subir,
-   guardado), como los cuadros de un sprite: el conjunto se traslada, se
-   inclina y se achica, y `--pose` (0 a 2, animada junto con el movimiento)
-   elige cuál se ve. Cada tramo usa el timeline de la parada siguiente, de "cover 0%"
-   (la parada anterior está centrada) a "cover 50%" (esta lo está), así llega
-   a su pose justo cuando su parada queda en el centro. El primer tramo llena
-   hacia atrás (pose de la puerta antes de empezar); los otros sólo hacia
-   adelante, para que cada uno tome el control recién cuando arranca.
-   Posiciones en unidades del contenedor (cqw/cqh): mismo encuadre en
-   escritorio y en el celular.
+   El pasaje. Las caras son SVG (ver `_components/ticket.tsx`); acá van el
+   papel, la tinta y el movimiento. El movimiento es la "matriz" de la nota de
+   CSS 3D de Carmen Ansio: el escenario pone la perspectiva, el pasaje guarda
+   el 3D de sus hijos (preserve-3d) y cada pose es una combinación de
+   traslación, giros en X, Y y Z y escala, que el navegador resuelve como una
+   sola matrix3d. Las dos caras están espalda con espalda: al girar 180° en Y
+   se ve el dorso, con el precio que se paga.
+   Cada tramo usa el timeline de la parada siguiente, de "cover 0%" (la
+   anterior centrada) a "cover 50%" (esta centrada). Todas las poses repiten
+   la misma lista de funciones, así el navegador interpola cada giro por
+   separado y la vuelta en Y pasa de verdad por el canto.
    ------------------------------------------------------------------------ */
+.despegar .ticket-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.despegar .t-paper {
+  fill: #fffdf8;
+}
+
+.despegar .t-paper-dashed {
+  fill: rgb(255 253 248 / 14%);
+  stroke: rgb(255 255 255 / 75%);
+  stroke-width: 2;
+  stroke-dasharray: 9 7;
+}
+
+.despegar .t-perforation {
+  stroke: var(--ink-faint);
+  stroke-width: 2.5;
+  stroke-dasharray: 0.5 9;
+  stroke-linecap: round;
+}
+
+.despegar .t-route {
+  stroke: var(--ink-faint);
+  stroke-width: 2;
+  stroke-dasharray: 5 6;
+}
+
+.despegar .t-mono {
+  font-family: var(--font-mono);
+}
+
+.despegar .t-sans {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.despegar .t-ink {
+  fill: var(--ink);
+}
+
+.despegar .t-dim {
+  fill: var(--ink-dim);
+}
+
+.despegar .t-seen {
+  fill: var(--seen);
+}
+
+.despegar .t-paid {
+  fill: var(--paid-ink);
+}
+
+.despegar .t-strike {
+  text-decoration: line-through;
+}
+
+.despegar .ticket3d,
+.despegar .ticket-return {
+  display: none;
+}
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .despegar .journey-plane {
+    .despegar .journey-frames {
+      perspective: 140cqw;
+      perspective-origin: 50% 30%;
+    }
+
+    .despegar .ticket3d {
       position: absolute;
       top: 0;
       left: 0;
       z-index: 2;
-      width: 67cqw;
-      transform: translate(55cqw, 51cqh) translate(-50%, -50%) rotate(0deg) scale(1);
+      display: block;
+      width: 56cqw;
+      aspect-ratio: 600 / 280;
+      transform-style: preserve-3d;
+      transform: translate(50cqw, 64cqh) translate(-50%, -50%) rotateX(58deg) rotateY(0deg)
+        rotateZ(-16deg) scale(0.78);
       animation:
-        journey-plane-1 linear both,
-        journey-plane-2 linear forwards,
-        journey-plane-3 linear forwards;
+        ticket-1 linear both,
+        ticket-2 linear forwards,
+        ticket-3 linear forwards;
       animation-timeline: --stop-2, --stop-3, --stop-4;
       animation-range:
         cover 0% cover 50%,
@@ -593,96 +599,122 @@ html.lenis body {
       will-change: transform;
     }
 
-    /* Cada pose aparece en una ventana corta alrededor de su turno (pose -
-       0,5) y recién se apaga cuando la siguiente ya está entera encima: así
-       nunca hay dos poses a media opacidad y el avión no se transparenta. */
-    .despegar .journey-pose {
+    .despegar .ticket-face {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: min(
-        clamp(0, (var(--pose) - var(--i) + 0.5) * 4 + 0.5, 1),
-        clamp(0, (var(--i) + 0.625 - var(--pose)) * 1000, 1)
-      );
+      backface-visibility: hidden;
     }
-  }
-}
 
-/* Registrada para que se pueda animar como número (sin esto saltaría de golpe). */
-@property --pose {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
+    .despegar .ticket-face .ticket-svg {
+      filter: drop-shadow(0 16px 22px rgb(0 0 0 / 40%));
+    }
 
-.despegar .journey-plane {
-  display: none;
-}
+    .despegar .ticket-back {
+      transform: rotateY(180deg);
+    }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .despegar .journey-plane {
+    /* En la búsqueda todavía no hay precio: aparece al llegar a resultados. */
+    .despegar .ticket3d .ticket-pending {
+      animation: ticket-out linear both;
+      animation-timeline: --stop-2;
+      animation-range: cover 10% cover 30%;
+    }
+
+    .despegar .ticket3d .ticket-price {
+      animation: ticket-in linear both;
+      animation-timeline: --stop-2;
+      animation-range: cover 20% cover 40%;
+    }
+
+    /* La vuelta: el segundo pasaje se asoma desde abajo y casi no sube. */
+    .despegar .ticket-return {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
       display: block;
+      width: 44cqw;
+      transform: translate(64cqw, 120cqh) translate(-50%, -50%) rotate(-4deg);
+      opacity: 0;
+      animation: ticket-return linear both;
+      animation-timeline: --stop-4;
+      animation-range: cover 10% cover 50%;
+    }
+
+    .despegar .ticket-return .t-ink,
+    .despegar .ticket-return .t-dim {
+      fill: rgb(255 255 255 / 80%);
+    }
+
+    .despegar .ticket-return .t-route,
+    .despegar .ticket-return .t-perforation {
+      stroke: rgb(255 255 255 / 50%);
     }
   }
 }
 
-/* Puerta -> despegue: carretea, levanta la nariz y despega, con el tren abajo. */
-@keyframes journey-plane-1 {
+/* Búsqueda -> resultados: se levanta de la mesa y queda de frente. */
+@keyframes ticket-1 {
   0% {
-    transform: translate(55cqw, 51cqh) translate(-50%, -50%) rotate(0deg) scale(1);
-    --pose: 0;
+    transform: translate(50cqw, 64cqh) translate(-50%, -50%) rotateX(58deg) rotateY(0deg)
+      rotateZ(-16deg) scale(0.78);
   }
-  55% {
-    transform: translate(59cqw, 53cqh) translate(-50%, -50%) rotate(-3deg) scale(0.95);
+  50% {
+    transform: translate(51cqw, 54cqh) translate(-50%, -50%) rotateX(28deg) rotateY(-8deg)
+      rotateZ(-8deg) scale(0.9);
   }
   100% {
-    transform: translate(61cqw, 55cqh) translate(-50%, -50%) rotate(-12deg) scale(0.9);
-    --pose: 0;
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(-14deg)
+      rotateZ(-3deg) scale(1);
   }
 }
 
-/* Despegue -> crucero: guarda el tren apenas sube, se aleja y se nivela
-   arriba a la izquierda. */
-@keyframes journey-plane-2 {
+/* Resultados -> último paso: se da vuelta y muestra el precio que se paga. */
+@keyframes ticket-2 {
   0% {
-    transform: translate(61cqw, 55cqh) translate(-50%, -50%) rotate(-12deg) scale(0.9);
-    --pose: 0;
-  }
-  25% {
-    --pose: 1;
-  }
-  45% {
-    --pose: 2;
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(-14deg)
+      rotateZ(-3deg) scale(1);
   }
   50% {
-    transform: translate(53cqw, 38cqh) translate(-50%, -50%) rotate(-8deg) scale(0.78);
+    transform: translate(50cqw, 40cqh) translate(-50%, -50%) rotateX(10deg) rotateY(90deg)
+      rotateZ(0deg) scale(1.06);
   }
   100% {
-    transform: translate(43cqw, 27cqh) translate(-50%, -50%) rotate(0deg) scale(0.67);
-    --pose: 2;
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(194deg)
+      rotateZ(3deg) scale(1);
   }
 }
 
-/* Crucero -> aproximación: pasa la tormenta, baja apenas la nariz y saca el
-   tren para aterrizar. */
-@keyframes journey-plane-3 {
+/* Último paso -> la vuelta: el pasaje usado se corre y se achica. */
+@keyframes ticket-3 {
   0% {
-    transform: translate(43cqw, 27cqh) translate(-50%, -50%) rotate(0deg) scale(0.67);
-    --pose: 2;
-  }
-  55% {
-    --pose: 2;
-  }
-  80% {
-    --pose: 1;
-  }
-  50% {
-    transform: translate(40cqw, 31cqh) translate(-50%, -50%) rotate(2deg) scale(0.71);
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(194deg)
+      rotateZ(3deg) scale(1);
   }
   100% {
-    transform: translate(38cqw, 36cqh) translate(-50%, -50%) rotate(3deg) scale(0.76);
-    --pose: 0;
+    transform: translate(34cqw, 38cqh) translate(-50%, -50%) rotateX(12deg) rotateY(200deg)
+      rotateZ(6deg) scale(0.74);
+  }
+}
+
+@keyframes ticket-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ticket-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ticket-return {
+  to {
+    transform: translate(64cqw, 84cqh) translate(-50%, -50%) rotate(-4deg);
+    opacity: 1;
   }
 }
