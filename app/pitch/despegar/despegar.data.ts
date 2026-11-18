@@ -95,6 +95,16 @@ export const meta = {
     "Dónde se pierde hoy la venta en la app de Despegar, una tesis sobre la segunda compra y un experimento para empezar.",
 };
 
+/**
+ * La imagen que acompaña al link cuando se comparte (LinkedIn, WhatsApp, mail).
+ * Es lo primero que se ve, antes de abrir la página: el titular de la portada
+ * y el pasaje dado vuelta, con el mismo vuelo de ejemplo.
+ */
+export const og = {
+  alt: "La app de Despegar ya trae a la gente. Quiero entender por qué no vuelve. Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
+  footer: "Iván Dujaut · ivandujaut.com/despegar",
+};
+
 export const nav = [
   { id: "inicio", label: "Inicio" },
   { id: "negocio", label: "Cómo gana plata" },
