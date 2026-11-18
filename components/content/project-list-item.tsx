@@ -1,7 +1,5 @@
 import { ViewTransition } from "react";
 import Image from "next/image";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { StatusBadge, type ProjectStatus } from "@/components/content/status-badge";
 import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
 import { ListRow } from "@/components/ui/list-row";
@@ -49,7 +47,14 @@ interface ProjectListItemProps {
    * `card_click`, para saber qué tarjeta se elige y desde qué página. Es
    * obligatorio para que ninguna tarjeta quede sin medir.
    */
-  surface: "home" | "index";
+  surface: "home" | "index" | "next";
+  /**
+   * Sólo en `surface: "next"`: si la pieza se eligió por compartir tema con la
+   * que se está leyendo (`topic`) o por ser su vecina en el tiempo (`date`).
+   * Va a PostHog como `relation`, que es la comparación que justifica elegir
+   * por tema.
+   */
+  relation?: "topic" | "date";
 }
 
 /** Cuántas tecnologías entran antes de pasar a contador. */
@@ -69,6 +74,7 @@ export function ProjectListItem({
   showStack = true,
   cover,
   surface,
+  relation,
 }: ProjectListItemProps) {
   // Para casos de mejora y diseños, "Concepto" es redundante con el tipo de
   // pieza (la propuesta siempre es conceptual); el ciclo de vida solo aporta
@@ -106,24 +112,58 @@ export function ProjectListItem({
         data-ph="card_click"
         data-ph-slug={slug}
         data-ph-surface={surface}
-        layout="row"
+        data-ph-relation={relation}
+        layout="card"
       >
-        <article className="min-w-0 flex-1">
-          <span className="mb-1.5 inline-flex flex-wrap gap-1.5">
-            <KindBadge kind={kind} />
-            {showStatus && <StatusBadge status={status} />}
-          </span>
+        <article>
+          {/* La portada deja de ser una miniatura de 112px al costado y pasa a
+              ser lo primero de la tarjeta.
+
+              Hasta el 18/11/2026 se renderizaba a `h-20 w-28` y estaba oculta
+              en mobile. El argumento de entonces era que en una lista densa el
+              título es lo que decide, y era cierto para una miniatura; deja de
+              serlo cuando la portada es el elemento principal y cada una está
+              dibujada a mano siguiendo `cover-style.md`. Era el activo visual
+              más distintivo del sitio y el que menos espacio tenía. */}
+          {cover && (
+            <div className="relative overflow-hidden rounded-lg bg-muted">
+              <Image
+                src={cover.src}
+                alt=""
+                width={cover.width}
+                height={cover.height}
+                aria-hidden
+                loading="lazy"
+                sizes="(min-width: 640px) 320px, 100vw"
+                className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                {...(cover.blurDataURL
+                  ? { placeholder: "blur" as const, blurDataURL: cover.blurDataURL }
+                  : {})}
+              />
+              {/* El estado va sobre la portada y el tipo de pieza no va: el
+                  encabezado del grupo ya dice si es algo que analizó o algo que
+                  construyó, así que repetirlo en cada tarjeta era la misma
+                  etiqueta trece veces. El estado sí aporta, y sólo en lo
+                  construido. */}
+              {showStatus && (
+                <span className="absolute top-2.5 left-2.5">
+                  <StatusBadge status={status} className="bg-background/90 backdrop-blur-sm" />
+                </span>
+              )}
+            </div>
+          )}
+
           <ViewTransition name={`project-title-${slug}`} share="morph">
-            <h3 className="text-lg font-medium leading-snug">{title}</h3>
+            <h3 className="mt-3 text-lg leading-snug font-medium">{title}</h3>
           </ViewTransition>
+
           {/* La tagline es la tesis del caso en una oración, y es lo que decide
               el clic. Con dos líneas, en un teléfono 8 de 12 quedaban cortadas
               justo en la tensión ("...y ninguna me mostró el precio sin..."),
-              medido el 11/09/2026. Tres líneas en móvil las muestran enteras;
-              desde `sm` la portada ocupa el ancho que sobra y dos alcanzan. */}
-          <p className="mt-1 line-clamp-3 text-sm text-muted-foreground sm:line-clamp-2">
-            {tagline}
-          </p>
+              medido el 11/09/2026. Con la tarjeta en una columna por fila en
+              mobile entra entera. */}
+          <p className="mt-1 line-clamp-3 text-sm text-muted-foreground">{tagline}</p>
+
           <p className="mt-2 font-mono text-xs text-muted-foreground">
             <ViewTransition name={`project-year-${slug}`} share="morph">
               <time dateTime={date}>{publishedAt}</time>
@@ -136,36 +176,6 @@ export function ProjectListItem({
             )}
           </p>
         </article>
-
-        {/* La miniatura no aparece en mobile: estas portadas son ilustraciones
-            abstractas, no explican el caso, y en una lista que se escanea el
-            título es lo que decide. Oculta y con carga diferida, el navegador
-            tampoco la descarga en pantallas chicas. Desde `sm` entra como ancla
-            visual, donde el espacio no compite con nada. */}
-        {cover && (
-          <Image
-            src={cover.src}
-            alt=""
-            width={cover.width}
-            height={cover.height}
-            aria-hidden
-            loading="lazy"
-            sizes="112px"
-            className="hidden h-20 w-28 shrink-0 rounded-md object-cover sm:block"
-            {...(cover.blurDataURL
-              ? { placeholder: "blur" as const, blurDataURL: cover.blurDataURL }
-              : {})}
-          />
-        )}
-
-        {/* En un teléfono no hay hover que revele que la fila es clickeable. */}
-        <HugeiconsIcon
-          icon={ArrowRight01Icon}
-          size={18}
-          strokeWidth={1.5}
-          aria-hidden
-          className="shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
-        />
       </ListRow>
     );
   }

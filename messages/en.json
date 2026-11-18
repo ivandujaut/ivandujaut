@@ -173,7 +173,15 @@
       "parentNote": "This is the full analysis behind <link>{title}</link>. If you landed here directly, that {minutes}-minute version has the answer and the recommendation."
     },
     "index": {
-      "entryTitle": "Start here"
+      "entryTitle": "Start here",
+      "filterLabel": "Filter by market",
+      "showAll": "Show all ({count})"
+    },
+    "facets": {
+      "salud": "Health · US",
+      "seguros": "Insurance · Argentina",
+      "otros": "Other markets",
+      "all": "All"
     },
     "topics": {
       "salud": "Healthcare · United States",

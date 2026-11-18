@@ -160,6 +160,7 @@ export default async function CasebookDetailPage({ params }: Props) {
             <span aria-hidden>·</span>
             <span>{tCasebook(`help.${item.help}`)}</span>
             <ShareLinkButton
+              surface="casebook-header"
               url={`${SITE_URL}${casePath}`}
               title={item.title}
               className="ml-auto"
@@ -227,7 +228,12 @@ export default async function CasebookDetailPage({ params }: Props) {
             ))}
           </ul>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <ShareLinkButton url={`${SITE_URL}${casePath}`} title={item.title} alwaysShowLabel />
+            <ShareLinkButton
+              url={`${SITE_URL}${casePath}`}
+              title={item.title}
+              alwaysShowLabel
+              surface="casebook-close"
+            />
           </div>
         </footer>
       </PageShell>

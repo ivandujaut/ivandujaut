@@ -7,6 +7,7 @@ import { Share08Icon, LinkedinIcon, Mail01Icon, NewTwitterIcon } from "@hugeicon
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Check } from "@/components/animate-ui/icons/check";
 import { Copy } from "@/components/animate-ui/icons/copy";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 interface ShareLinkButtonProps {
@@ -20,6 +21,12 @@ interface ShareLinkButtonProps {
    * Por defecto el label se oculta en mobile (`< sm:`) y aparece desde `sm:`.
    */
   alwaysShowLabel?: boolean;
+  /**
+   * Desde dónde se comparte, para el evento `share_click`: cada pieza tiene
+   * este botón dos veces (en el encabezado y en el cierre) y sin esto no se
+   * puede saber cuál de los dos usa la gente.
+   */
+  surface?: string;
 }
 
 /**
@@ -38,6 +45,7 @@ export function ShareLinkButton({
   className,
   triggerClassName,
   alwaysShowLabel = false,
+  surface,
 }: ShareLinkButtonProps) {
   const [copied, setCopied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,13 +85,33 @@ export function ShareLinkButton({
     [url],
   );
 
+  /**
+   * Hasta el 18/11/2026 este botón no emitía nada: `share_click` estaba
+   * declarado en `lib/analytics.ts` y habilitado en el `ClickTracker`, pero
+   * acá no había ni `data-ph` ni llamada a `track`, así que el cero de
+   * compartidos de PostHog no era un cero sino un "no se sabe".
+   *
+   * Se mide con `track` y no con `data-ph` porque el botón principal abre un
+   * menú: un atributo en él contaría como compartida cada vez que alguien
+   * mira las opciones y se arrepiente. Lo que cuenta es la acción que termina
+   * en un link afuera, en el portapapeles o en el share sheet del sistema.
+   */
+  const medirCompartido = useCallback(
+    (kind: "native" | "x" | "linkedin" | "email" | "copy") => {
+      track("share_click", { kind, surface, url: resolveUrl() });
+    },
+    [surface, resolveUrl],
+  );
+
   const copyToClipboard = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(resolveUrl());
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
+      return true;
     } catch (error) {
       console.error("Failed to copy share link:", error);
+      return false;
     }
   }, [resolveUrl]);
 
@@ -91,6 +119,7 @@ export function ShareLinkButton({
     if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
       try {
         await navigator.share({ url: resolveUrl(), title, text: title });
+        medirCompartido("native");
         return;
       } catch (error) {
         if ((error as DOMException)?.name === "AbortError") return;
@@ -152,7 +181,10 @@ export function ShareLinkButton({
             href={xHref}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              medirCompartido("x");
+              setMenuOpen(false);
+            }}
             className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted focus:bg-muted focus:outline-none"
           >
             <HugeiconsIcon icon={NewTwitterIcon} size={14} strokeWidth={1.5} aria-hidden />
@@ -163,7 +195,10 @@ export function ShareLinkButton({
             href={linkedinHref}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              medirCompartido("linkedin");
+              setMenuOpen(false);
+            }}
             className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted focus:bg-muted focus:outline-none"
           >
             <HugeiconsIcon icon={LinkedinIcon} size={14} strokeWidth={1.5} aria-hidden />
@@ -172,7 +207,10 @@ export function ShareLinkButton({
           <a
             role="menuitem"
             href={mailtoHref}
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              medirCompartido("email");
+              setMenuOpen(false);
+            }}
             className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted focus:bg-muted focus:outline-none"
           >
             <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={1.5} aria-hidden />
@@ -183,7 +221,9 @@ export function ShareLinkButton({
               type="button"
               role="menuitem"
               onClick={async () => {
-                await copyToClipboard();
+                // Sólo cuenta si el portapapeles aceptó: si el navegador lo
+                // bloquea, el lector no se llevó ningún link.
+                if (await copyToClipboard()) medirCompartido("copy");
                 setMenuOpen(false);
               }}
               className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus:bg-muted focus:outline-none"

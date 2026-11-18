@@ -164,6 +164,7 @@ export default async function ResearchDetailPage({ params }: Props) {
               </>
             )}
             <ShareLinkButton
+              surface="paper-header"
               url={`${SITE_URL}${paperPath}`}
               title={paper.title}
               className="ml-auto"
@@ -227,7 +228,12 @@ export default async function ResearchDetailPage({ params }: Props) {
         </div>
 
         <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
-          <ShareLinkButton url={`${SITE_URL}${paperPath}`} title={paper.title} alwaysShowLabel />
+          <ShareLinkButton
+            url={`${SITE_URL}${paperPath}`}
+            title={paper.title}
+            alwaysShowLabel
+            surface="paper-close"
+          />
         </footer>
       </PageShell>
     </main>

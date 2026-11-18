@@ -74,6 +74,17 @@ export type AnalyticsEvent =
    */
   | "feed_click"
   /**
+   * Uso del filtro por mercado del índice (`action: "market"`, con el mercado
+   * elegido en `facet`) y del "ver todo" que despliega el resto
+   * (`action: "expand"`).
+   *
+   * Existe desde el 18/11/2026, con el filtro. La pregunta que contesta es si
+   * alguien lo toca: si el visitante se queda siempre en el mercado con el que
+   * abre la página, el filtro no está eligiendo nada y lo que importa es sólo
+   * cuál es el primero.
+   */
+  | "filter_click"
+  /**
    * Lectura de las páginas de pitch (`/pitch/*` y sus alias cortos), medida por
    * `PitchTracker`. Llevan `company` y `page` en vez de `slug` y `locale`: no son
    * piezas del sitio sino páginas privadas por empresa, y mezclarlas con los
