@@ -5,6 +5,7 @@ import { ArrowUpRight01Icon, GithubIcon } from "@hugeicons/core-free-icons";
 import { Link } from "@/i18n/navigation";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -67,7 +68,7 @@ function MethodContent() {
   const tA11y = useTranslations("common.a11y");
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <h1 className="text-4xl font-semibold tracking-tight">{t("title")}</h1>
       <p className="mt-6 text-lg leading-relaxed text-foreground">{t("intro")}</p>
 
@@ -103,6 +104,6 @@ function MethodContent() {
           <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} strokeWidth={1.5} aria-hidden />
         </a>
       </div>
-    </main>
+    </PageShell>
   );
 }

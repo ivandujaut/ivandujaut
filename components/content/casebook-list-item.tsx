@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { ListRow } from "@/components/ui/list-row";
 
 type Kind = "rentabilidad" | "market-sizing" | "crecimiento" | "entrada-a-mercado" | "otro";
 
@@ -37,10 +38,7 @@ export function CasebookListItem({
   const t = useTranslations("casebook");
 
   return (
-    <Link
-      href={`/casebook/${slug}`}
-      className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
-    >
+    <ListRow href={`/casebook/${slug}`}>
       <article className="flex items-start gap-4">
         {/* La miniatura repite el patrón del índice de casos: oculta en mobile,
             diferida y decorativa. El texto alternativo va vacío porque la
@@ -70,11 +68,11 @@ export function CasebookListItem({
             </span>
           </div>
           <p className="mt-1 font-serif text-sm italic text-muted-foreground">{tagline}</p>
-          <div className="mt-3 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="div" className="mt-3">
             {t(`kind.${kind}`)}
-          </div>
+          </Eyebrow>
         </div>
       </article>
-    </Link>
+    </ListRow>
   );
 }

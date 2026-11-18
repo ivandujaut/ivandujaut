@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface AbstractProps {
   children: ReactNode;
@@ -22,9 +23,7 @@ export async function Abstract({ children, label }: AbstractProps) {
       aria-label={resolvedLabel}
       className="paper-abstract mx-auto mt-0 mb-12 max-w-xl border-b border-border pb-6"
     >
-      <p className="mb-2 text-center font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground">
-        {resolvedLabel}
-      </p>
+      <Eyebrow className="mb-2 text-center">{resolvedLabel}</Eyebrow>
       <div className="text-[1.0625rem] leading-7 text-foreground/90 [&_p]:italic [&_p+p]:mt-3 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
         {children}
       </div>

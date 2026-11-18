@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { ArrowRight } from "@/components/animate-ui/icons/arrow-right";
 import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface LayerLink {
   slug: string;
@@ -37,12 +38,12 @@ export async function AnalysisCta({
 
   return (
     <aside className="mt-16 rounded-lg border border-border p-6">
-      <p className="font-mono text-[0.7rem] uppercase tracking-wider text-muted-foreground">
+      <Eyebrow>
         {t("analysisLabel")}
         {analysis.readingMinutes !== undefined && (
           <> · {tReading("minutes", { count: analysis.readingMinutes })}</>
         )}
-      </p>
+      </Eyebrow>
       <h2 className="mt-2 text-xl font-semibold tracking-tight">{t("analysisTitle")}</h2>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("analysisBody")}</p>
       {/* Sin `asChild`: rompe con el `Link` de next-intl (ver stats-grid.tsx). */}

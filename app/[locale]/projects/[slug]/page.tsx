@@ -36,6 +36,8 @@ import { ReadingProgress } from "@/components/content/reading-progress";
 import { PaperToc } from "@/components/mdx/paper-toc";
 import { useMDXComponents } from "@/mdx-components";
 import { buildCoverUrl, buildProjectOgUrl, projectCardTags } from "@/lib/og";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -235,7 +237,7 @@ export default async function ProjectPage({ params }: Props) {
         label={tReading("contents")}
         numbered={false}
       />
-      <article id="case-study-article" className="case-study relative mx-auto max-w-2xl px-6 py-24">
+      <PageShell as="article" id="case-study-article" className="case-study relative">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
@@ -372,9 +374,9 @@ export default async function ProjectPage({ params }: Props) {
             producto del resto del sitio. */}
         <section className="mt-16 space-y-8 border-t border-border pt-8">
           <div className="mt-8">
-            <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            <Eyebrow as="h2" className="mb-2">
               {stackLabel}
-            </h2>
+            </Eyebrow>
             <StackList items={project.stack} />
           </div>
 
@@ -382,9 +384,9 @@ export default async function ProjectPage({ params }: Props) {
 
           {project.metrics.length > 0 && (
             <div className="mt-8">
-              <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              <Eyebrow as="h2" className="mb-2">
                 {metricsLabel}
-              </h2>
+              </Eyebrow>
               <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {project.metrics.map((metric) => (
                   <div key={metric.label} className="rounded-lg border border-border p-3">
@@ -440,7 +442,7 @@ export default async function ProjectPage({ params }: Props) {
             sameTopic,
           }))}
         />
-      </article>
+      </PageShell>
     </main>
   );
 }

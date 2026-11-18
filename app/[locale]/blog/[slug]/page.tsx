@@ -21,6 +21,7 @@ import { PostHero } from "@/components/blog/post-hero";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { RelatedPosts } from "@/components/blog/related-posts";
 import { buildCoverUrl, buildPostOgUrl, formatOgDate } from "@/lib/og";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -192,7 +193,7 @@ export default async function PostPage({ params }: Props) {
         targetSelector="#post-article"
         readingMinutes={post.metadata?.readingTime}
       />
-      <article id="post-article" className="mx-auto max-w-2xl px-6 py-24">
+      <PageShell as="article" id="post-article">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-8">
@@ -256,7 +257,7 @@ export default async function PostPage({ params }: Props) {
           }))}
           locale={typedLocale}
         />
-      </article>
+      </PageShell>
     </main>
   );
 }

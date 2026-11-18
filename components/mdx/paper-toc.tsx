@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Heading {
   id: string;
@@ -98,9 +99,7 @@ export function PaperToc({
       aria-label={label}
       className="paper-toc pointer-events-auto fixed top-[calc(3.5rem+2rem+0.5rem)] left-[calc(50%-37rem)] z-20 hidden w-56 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-lg border border-border/40 bg-background/85 p-4 backdrop-blur-md supports-backdrop-filter:bg-background/70 xl:block"
     >
-      <p className="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground">
-        {label}
-      </p>
+      <Eyebrow className="mb-3">{label}</Eyebrow>
       <ol className="space-y-1.5 text-sm">
         {headings.map((heading) => {
           const isActive = heading.id === activeId;

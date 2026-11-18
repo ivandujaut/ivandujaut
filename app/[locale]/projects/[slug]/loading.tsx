@@ -1,7 +1,9 @@
+import { PageShell } from "@/components/ui/page-shell";
+
 export default function ProjectLoading() {
   return (
     <main id="main" aria-busy="true">
-      <article className="mx-auto max-w-2xl px-6 py-24">
+      <PageShell as="article">
         <div className="mb-6 h-3 w-1/3 animate-pulse rounded bg-muted" />
 
         <header className="mb-12">
@@ -41,7 +43,7 @@ export default function ProjectLoading() {
           <div className="h-4 w-11/12 animate-pulse rounded bg-muted" />
           <div className="h-4 w-3/4 animate-pulse rounded bg-muted" />
         </div>
-      </article>
+      </PageShell>
     </main>
   );
 }

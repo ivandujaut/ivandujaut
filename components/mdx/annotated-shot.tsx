@@ -58,7 +58,7 @@ export async function AnnotatedShot({
     ? "my-12 mx-[calc(50%-50vw)] flex w-screen flex-col items-center"
     : "my-8";
   const frameClass = fullBleed
-    ? "relative w-full max-w-[1280px] overflow-hidden border-y border-border bg-muted/30"
+    ? "relative w-full max-w-media overflow-hidden border-y border-border bg-muted/30"
     : "relative overflow-hidden rounded-lg border border-border bg-muted/30";
 
   return (
@@ -109,7 +109,7 @@ export async function AnnotatedShot({
             <li key={`legend-${i}`} className="flex gap-2">
               <span
                 aria-hidden
-                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-foreground font-mono text-[10px] font-semibold text-background"
+                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-foreground font-mono text-micro font-semibold text-background"
               >
                 {i + 1}
               </span>

@@ -37,7 +37,7 @@ export function Video({
     ? "my-12 mx-[calc(50%-50vw)] flex w-screen justify-center"
     : "my-8";
   const playerWrapperClass = fullBleed
-    ? "w-full max-w-[1280px] overflow-hidden border-y border-border bg-muted/30"
+    ? "w-full max-w-media overflow-hidden border-y border-border bg-muted/30"
     : "overflow-hidden rounded-lg border border-border bg-muted/30";
 
   const videoEl = (

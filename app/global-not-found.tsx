@@ -2,6 +2,7 @@ import "./globals.css";
 import { Alegreya, Archivo } from "next/font/google";
 import type { Metadata } from "next";
 import esMessages from "@/messages/es.json";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 /**
  * 404 de las URLs que no matchean ninguna ruta del sitio.
@@ -55,9 +56,7 @@ export default function GlobalNotFound() {
         className={`${archivo.variable} ${alegreya.variable} bg-background text-foreground antialiased`}
       >
         <main className="mx-auto flex min-h-svh max-w-2xl flex-col justify-center px-6 py-24">
-          <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            404
-          </p>
+          <Eyebrow className="mb-2">404</Eyebrow>
           <h1 className="text-4xl font-semibold tracking-tight">{t.generic.title}</h1>
           <p className="mt-3 text-lg text-muted-foreground">{t.generic.description}</p>
           <div className="mt-8 flex flex-wrap gap-3">

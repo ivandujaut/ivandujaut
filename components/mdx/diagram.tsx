@@ -46,7 +46,7 @@ export async function Diagram({
     : "my-8";
   const frameClass = `${framePadding} ${
     fullBleed
-      ? "w-full max-w-[1280px] border-y border-border bg-muted/30"
+      ? "w-full max-w-media border-y border-border bg-muted/30"
       : "rounded-lg border border-border bg-muted/30"
   }`;
 

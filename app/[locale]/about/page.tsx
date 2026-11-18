@@ -17,6 +17,8 @@ import { personSchema } from "@/lib/jsonld";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -83,9 +85,9 @@ export default async function AboutPage({ params }: Props) {
 function ToolCategory({ label, items }: { label: string; items: string }) {
   return (
     <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
-      <dt className="shrink-0 font-mono text-xs uppercase tracking-wider text-muted-foreground sm:w-40">
+      <Eyebrow as="dt" className="shrink-0 sm:w-40">
         {label}
-      </dt>
+      </Eyebrow>
       <dd className="text-sm leading-relaxed">{items}</dd>
     </div>
   );
@@ -98,7 +100,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
   const cadencia = getPublishingCadence(locale);
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <JsonLd data={personSchema(locale)} />
       {/* Intro */}
       <section>
@@ -252,9 +254,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             home, el sitemap, el RSS y los "siguientes casos" al pie de cada
             pieza, así que no pierden autoridad interna. */}
         <section>
-          <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="h2" className="mb-8">
             {t("sections.work")}
-          </h2>
+          </Eyebrow>
           {cadencia && (
             <p className="text-sm leading-relaxed text-muted-foreground">
               {tWork("cadence", {
@@ -278,9 +280,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
 
         {/* Experiencia */}
         <section>
-          <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="h2" className="mb-8">
             {t("sections.experience")}
-          </h2>
+          </Eyebrow>
 
           <div className="space-y-10">
             <ExperienceItem
@@ -478,9 +480,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
 
         {/* Educación */}
         <section>
-          <h2 className="mb-8 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="h2" className="mb-8">
             {t("sections.education")}
-          </h2>
+          </Eyebrow>
 
           <div className="space-y-8">
             <EducationItem
@@ -582,9 +584,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             escribirme. Estuvo unas horas dentro de Contacto el 19/09/2026 por
             un recorte de la página, y no tenía sentido. */}
         <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="h2" className="mb-4">
             {t("sections.languages")}
-          </h2>
+          </Eyebrow>
           <div className="space-y-3 text-sm leading-relaxed">
             <p>
               <strong>{t("languages.spanish")}</strong> ·{" "}
@@ -625,9 +627,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </section>
 
         <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="h2" className="mb-4">
             {t("sections.tools")}
-          </h2>
+          </Eyebrow>
 
           {/* Tres filas y no seis, con las mismas herramientas adentro. La lista
               se queda porque dice de dónde venís y qué hiciste, que es
@@ -655,9 +657,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
 
         {/* Contacto */}
         <section>
-          <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <Eyebrow as="h2" className="mb-4">
             {t("sections.contact")}
-          </h2>
+          </Eyebrow>
           <p className="text-sm leading-relaxed">
             {t.rich("contact.intro", {
               email: (chunks) => (
@@ -697,7 +699,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           </p>
         </section>
       </div>
-    </main>
+    </PageShell>
   );
 }
 

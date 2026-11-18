@@ -2,9 +2,9 @@ import { ViewTransition } from "react";
 import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
-import { Link } from "@/i18n/navigation";
 import { StatusBadge, type ProjectStatus } from "@/components/content/status-badge";
 import { KindBadge, type ProjectKind } from "@/components/content/kind-badge";
+import { ListRow } from "@/components/ui/list-row";
 
 interface ProjectCover {
   src: string;
@@ -101,12 +101,12 @@ export function ProjectListItem({
 
   if (variant === "list") {
     return (
-      <Link
+      <ListRow
         href={`/projects/${slug}`}
         data-ph="card_click"
         data-ph-slug={slug}
         data-ph-surface={surface}
-        className="group -mx-3 flex items-center gap-4 rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
+        layout="row"
       >
         <article className="min-w-0 flex-1">
           <span className="mb-1.5 inline-flex flex-wrap gap-1.5">
@@ -166,17 +166,16 @@ export function ProjectListItem({
           aria-hidden
           className="shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
         />
-      </Link>
+      </ListRow>
     );
   }
 
   return (
-    <Link
+    <ListRow
       href={`/projects/${slug}`}
       data-ph="card_click"
       data-ph-slug={slug}
       data-ph-surface={surface}
-      className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-muted/40"
     >
       <article>
         <span className="mb-2 inline-flex flex-wrap gap-1.5">
@@ -204,6 +203,6 @@ export function ProjectListItem({
           </div>
         )}
       </article>
-    </Link>
+    </ListRow>
   );
 }

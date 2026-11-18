@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { CasebookListItem } from "@/components/content/casebook-list-item";
 import { getCasebookByLevel } from "@/lib/content";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -41,7 +42,7 @@ export default async function CasebookPage({ params }: Props) {
   const cases = getCasebookByLevel(locale as "es" | "en");
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <CasebookHeader />
 
       <div className="mt-16">
@@ -72,7 +73,7 @@ export default async function CasebookPage({ params }: Props) {
           <CasebookEmpty />
         )}
       </div>
-    </main>
+    </PageShell>
   );
 }
 

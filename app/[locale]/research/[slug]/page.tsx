@@ -21,6 +21,7 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { useMDXComponents } from "@/mdx-components";
 import { PaperToc } from "@/components/mdx/paper-toc";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -141,7 +142,7 @@ export default async function ResearchDetailPage({ params }: Props) {
   return (
     <main id="main">
       <PaperToc containerSelector="#paper-article" label={tocLabel} />
-      <article id="paper-article" className="paper relative mx-auto max-w-2xl px-6 py-24">
+      <PageShell as="article" id="paper-article" className="paper relative">
         <JsonLd data={jsonLd} />
         <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <header className="mb-12">
@@ -228,7 +229,7 @@ export default async function ResearchDetailPage({ params }: Props) {
         <footer className="mt-16 flex flex-wrap items-center gap-4 border-t border-border pt-8">
           <ShareLinkButton url={`${SITE_URL}${paperPath}`} title={paper.title} alwaysShowLabel />
         </footer>
-      </article>
+      </PageShell>
     </main>
   );
 }

@@ -4,6 +4,8 @@ import { getPosts } from "@/lib/content";
 import { PostListItem } from "@/components/content/post-list-item";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageShell } from "@/components/ui/page-shell";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -65,7 +67,7 @@ export default async function BlogPage({ params }: Props) {
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
 
   return (
-    <main id="main" className="mx-auto max-w-2xl px-6 py-24">
+    <PageShell id="main">
       <BlogHeader />
 
       <div className="mt-16 space-y-12">
@@ -74,9 +76,9 @@ export default async function BlogPage({ params }: Props) {
         ) : (
           years.map((year) => (
             <section key={year}>
-              <h2 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              <Eyebrow as="h2" className="mb-4">
                 {year}
-              </h2>
+              </Eyebrow>
               <div className="space-y-1">
                 {postsByYear[year].map((post) => (
                   <PostListItem
@@ -93,7 +95,7 @@ export default async function BlogPage({ params }: Props) {
           ))
         )}
       </div>
-    </main>
+    </PageShell>
   );
 }
 

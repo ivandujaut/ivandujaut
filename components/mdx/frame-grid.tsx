@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Frame {
   src: string;
@@ -46,13 +47,13 @@ export function FrameGrid({ frames, columns = 3, fullBleed = false }: FrameGridP
   return (
     <div className={wrapperClass}>
       <ul
-        className={`mx-auto grid w-full max-w-[1280px] list-none grid-cols-1 gap-x-5 gap-y-8 pl-0! [&>li]:mb-0! [&>li]:list-none ${colClass}`}
+        className={`mx-auto grid w-full max-w-media list-none grid-cols-1 gap-x-5 gap-y-8 pl-0! [&>li]:mb-0! [&>li]:list-none ${colClass}`}
       >
         {frames.map((frame) => {
           const inner = (
             <>
               {frame.label && (
-                <p className="mb-2 flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                <Eyebrow className="mb-2 flex items-center gap-1">
                   <span>{frame.label}</span>
                   {frame.href && (
                     <HugeiconsIcon
@@ -63,7 +64,7 @@ export function FrameGrid({ frames, columns = 3, fullBleed = false }: FrameGridP
                       aria-hidden
                     />
                   )}
-                </p>
+                </Eyebrow>
               )}
               <div className="overflow-hidden rounded-lg border border-border bg-muted/30">
                 <Image

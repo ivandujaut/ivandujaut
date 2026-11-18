@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 /** Base de los links a un archivo del repositorio del sitio, que es público. */
 const REPO_BLOB = "https://github.com/ivandujaut/ivandujaut/blob/main";
@@ -33,9 +34,9 @@ export async function CaseSourceCode({ locale, slug, code }: CaseSourceCodeProps
 
   return (
     <div className="mt-8">
-      <h2 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+      <Eyebrow as="h2" className="mb-2">
         {t("title")}
-      </h2>
+      </Eyebrow>
       <p className="text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
       <ul className="mt-3 space-y-1.5">
         {code.map((path) => (

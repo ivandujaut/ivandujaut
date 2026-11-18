@@ -23,7 +23,7 @@ export function KindBadge({ kind, className }: KindBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider ring-1 ring-inset ${styles[kind]} ${className ?? ""}`.trim()}
+      className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-micro uppercase tracking-wider ring-1 ring-inset ${styles[kind]} ${className ?? ""}`.trim()}
     >
       {t(kind)}
     </span>
