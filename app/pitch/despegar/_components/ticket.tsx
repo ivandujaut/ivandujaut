@@ -22,6 +22,17 @@ function outline(x: number) {
   ].join(" ");
 }
 
+/**
+ * Ancho aproximado de un código de aeropuerto a 68 de cuerpo, en unidades del
+ * lienzo, para que la línea de la ruta deje el mismo aire a cada lado. Avances
+ * de Rubik semibold medidos en el navegador (BUE 137, RIO 113); otra letra usa
+ * un promedio.
+ */
+const ADVANCE: Record<string, number> = { B: 0.68, U: 0.7, E: 0.63, R: 0.64, I: 0.3, O: 0.73 };
+function codeWidth(code: string) {
+  return [...code].reduce((sum, ch) => sum + (ADVANCE[ch] ?? 0.66), 0) * 68;
+}
+
 /** Código de barras decorativo: anchos fijos, para que no cambie entre renders. */
 const BARS = [3, 1, 2, 1, 4, 1, 1, 3, 2, 1, 1, 2, 3, 1, 2, 4, 1, 2, 1, 3, 1, 1, 2, 3, 1, 2];
 /** Dónde arranca cada barra, en unidades: cada una deja un hueco de su mismo ancho. */
@@ -77,11 +88,15 @@ function Paper({
       <text x={bodyEnd} y={132} className="t-sans t-ink" fontSize={68} textAnchor="end">
         {to}
       </text>
-      {/* Los códigos de tres letras miden distinto (BUE es más ancho que RIO): la
-          línea deja el mismo aire a cada lado. */}
-      <line x1={bodyX + 158} y1={108} x2={bodyEnd - 134} y2={108} className="t-route" />
-      <circle cx={bodyX + 158} cy={108} r={5} className="t-ink" />
-      <circle cx={bodyEnd - 134} cy={108} r={5} className="t-ink" />
+      <line
+        x1={bodyX + codeWidth(from) + 20}
+        y1={108}
+        x2={bodyEnd - codeWidth(to) - 20}
+        y2={108}
+        className="t-route"
+      />
+      <circle cx={bodyX + codeWidth(from) + 20} cy={108} r={5} className="t-ink" />
+      <circle cx={bodyEnd - codeWidth(to) - 20} cy={108} r={5} className="t-ink" />
       {children}
     </svg>
   );

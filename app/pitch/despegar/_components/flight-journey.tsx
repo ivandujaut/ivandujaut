@@ -45,8 +45,14 @@ export function FlightJourney() {
               <div className="ticket-face ticket-front">
                 <TicketFront />
               </div>
-              <div className="ticket-face ticket-back">
+              {/* El dorso va en dos partes para poder cortar el talón en la vuelta. */}
+              <div className="ticket-face ticket-back ticket-back-body">
                 <TicketBack />
+              </div>
+              <div className="ticket-face ticket-back">
+                <div className="ticket-stub">
+                  <TicketBack />
+                </div>
               </div>
             </div>
             <div className="ticket-return">
