@@ -192,9 +192,13 @@
 @theme {
   /* El único tamaño por debajo de la escala de Tailwind que el sitio usa:
      las píldoras de tipo y estado, y los números de las anotaciones. Antes
-     estaba escrito como `text-[10px]` en cuatro archivos. */
+     estaba escrito como `text-[10px]` en cuatro archivos.
+
+     Sin interlínea propia a propósito: `text-[10px]` heredaba la del
+     contenedor, y declarársela acá achicaba las píldoras dos píxeles y medio.
+     Eso movía el alto de media docena de páginas, que es justo lo que un
+     refactor no tiene que hacer. */
   --text-micro: 0.625rem;
-  --text-micro--line-height: 1.25;
 
   /* Los bloques de media del MDX desbordan la columna de lectura a
      propósito. Estaba como `max-w-[1280px]` en ocho componentes, así que
