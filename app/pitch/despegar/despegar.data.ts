@@ -95,6 +95,16 @@ export const meta = {
     "Dónde se pierde hoy la venta en la app de Despegar, una tesis sobre la segunda compra y un experimento para empezar.",
 };
 
+/**
+ * La imagen que acompaña al link cuando se comparte (LinkedIn, WhatsApp, mail).
+ * Es lo primero que se ve, antes de abrir la página: el titular de la portada
+ * y el pasaje dado vuelta, con el mismo vuelo de ejemplo.
+ */
+export const og = {
+  alt: "La app de Despegar ya trae a la gente. Quiero entender por qué no vuelve. Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
+  footer: "Iván Dujaut · ivandujaut.com/despegar",
+};
+
 export const nav = [
   { id: "inicio", label: "Inicio" },
   { id: "negocio", label: "Cómo gana plata" },
@@ -302,41 +312,66 @@ export const app = {
       source: "playStore" as SourceId,
     },
   ],
-  funnel: {
-    title: "El funnel, con lo que se puede saber desde afuera",
-    stages: [
-      {
-        id: "adquisicion",
-        label: "Adquisición",
-        known:
-          '80% de las visitas ya es mobile; la web invita a pasar a la app ("los vuelos están más baratos en la app").',
-        reading:
-          "Tráfico hay de sobra, y traer más sale caro: marketing y ventas fue el 32% del revenue en 2024.",
-      },
-      {
-        id: "activacion",
-        label: "Primera compra",
-        known:
-          "~2,3 M clientes nuevos en 2024. En Argentina el precio cambia con la moneda, la percepción, el medio de pago y el login.",
-        reading:
-          "Cuánta gente se pierde en el último paso no es público, y es lo primero que pediría.",
-      },
-      {
-        id: "engagement",
-        label: "Entre viajes",
-        known:
-          "Pasaporte, Club Despegar (sólo AR, todavía MVP), alertas, push, SOFIA por WhatsApp.",
-        reading:
-          "Hay muchos programas, y no hay datos públicos de si alguno hace volver a la gente.",
-      },
-      {
-        id: "recompra",
-        label: "Segunda compra",
-        known: "51,4% de los clientes de 2024 ya había comprado antes (49,6% en 2022).",
-        reading: "Lleva tres años plana, y por eso pongo acá el cuello de botella.",
-      },
-    ],
+};
+
+/**
+ * El viaje de una compra: el pasaje de la portada recorre el embudo. En el
+ * escenario fijo el pasaje se mueve en 3D: aparece en la búsqueda, se para con
+ * el precio del listado, se da vuelta en el último paso con el que se paga y en
+ * la vuelta pierde el talón. Todo con CSS
+ * (`view-timeline` por parada y `timeline-scope` en el contenedor); sin soporte
+ * o con movimiento reducido se muestran las dos caras del pasaje, quietas.
+ */
+export const journey = {
+  eyebrow: "El viaje de una compra",
+  heading: "Un mismo vuelo, de la búsqueda a la vuelta",
+  intro:
+    "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
+  /** El pasaje: el mismo vuelo de ejemplo que el tablero de la portada. */
+  ticket: {
+    label: "Pasaje",
+    outbound: "Ida",
+    from: "BUE",
+    to: "RIO",
+    date: hero.board.date,
+    seen: hero.board.seen,
+    paid: hero.board.paid,
+    reason: hero.board.reason,
+    searchStep: "Búsqueda",
+    searching: "Buscando…",
+    example: hero.board.label,
   },
+  stops: [
+    {
+      id: "busqueda",
+      step: "Búsqueda",
+      title: "El 80% de las visitas ya llega desde el celular",
+      text: "En 2024 el celular (app y web) trajo el 80% de las visitas y el 61% de las transacciones. Tráfico hay de sobra.",
+      source: "f20" as SourceId,
+    },
+    {
+      id: "resultados",
+      step: "Resultados",
+      title: "La app ya hace más de la mitad de las ventas",
+      text: "53,6% de las transacciones en el cuarto trimestre de 2024, contra 36,1% en el primero de 2023.",
+      source: "q4_24" as SourceId,
+    },
+    {
+      id: "ultimo-paso",
+      step: "Último paso",
+      title: "En el último paso, el precio cambia",
+      text: "Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de Despegar y en 2 de 191 de la app de Aerolíneas Argentinas.",
+      flip: { seen: "USD 412", paid: "USD 486", label: "Datos de ejemplo" },
+      source: "reviewsMethod" as SourceId,
+    },
+    {
+      id: "vuelta",
+      step: "La vuelta",
+      title: "Y la vuelta casi no se mueve",
+      text: "51,4% de los clientes de 2024 ya había comprado antes (49,6% en 2022), mientras Pasaporte pasó de 12 a 32,5 millones de socios.",
+      source: "f20" as SourceId,
+    },
+  ],
 };
 
 // ---------------------------------------------------------------------------
@@ -613,6 +648,54 @@ export const caseStudy = {
       "Se itera si es neutro: se mira sólo internacional y paquetes. Si ahí tampoco hay efecto, se apaga.",
     kill: "Se apaga si la conversión cae 1% o más, si el revenue neto por orden cae más de 2% o si las consultas a la aerolínea por orden se duplican.",
   },
+  /**
+   * El criterio de corte, para probarlo: los controles son resultados
+   * inventados del experimento y la decisión sale de las mismas reglas de
+   * `cut`. Las reglas viven en `_components/cut-simulator.tsx`; si cambia un
+   * umbral acá arriba, cambia también allá.
+   */
+  simulator: {
+    intro:
+      "Probá el criterio con un resultado inventado: la decisión sale de las reglas de arriba.",
+    example: "Resultado de ejemplo",
+    conversion: { label: "Conversión, cambio relativo", min: -4, max: 6, step: 0.5, initial: 2.5 },
+    interval: {
+      label: "¿El intervalo de confianza deja afuera el cero?",
+      yes: "Sí",
+      no: "No",
+    },
+    revenue: {
+      label: "Revenue neto por orden, con lo absorbido",
+      min: -4,
+      max: 2,
+      step: 0.5,
+      initial: -0.5,
+    },
+    airline: {
+      label: "Consultas a la aerolínea por orden",
+      min: 1,
+      max: 2.5,
+      step: 0.1,
+      initial: 1.2,
+    },
+    total: "Revenue neto total",
+    totalNote: "conversión × revenue por orden",
+    why: "Por qué",
+    reasons: {
+      killConversion: "La conversión cae {ca}: con una caída de 1% o más, se apaga.",
+      killRevenue: "El revenue neto por orden cae {ra}: con más de 2%, se apaga.",
+      killAirline:
+        "Las consultas a la aerolínea por orden pasan a {q}, y el freno está en el doble.",
+      ship: "La conversión sube {ca} con el intervalo fuera de cero, el revenue por orden se mueve {r} (no puede caer más de 1%) y el revenue total sube {ta}.",
+      iterateInterval:
+        "La conversión sube {ca}, pero el intervalo incluye el cero: el resultado es neutro.",
+      iterateSmall: "La conversión se mueve {c}: no llega al +2% que hace falta para lanzar.",
+      iterateRevenue:
+        "La conversión sube {ca}, pero el revenue por orden cae {ra}: para lanzar no puede caer más de 1%.",
+      iterateTotal:
+        "La conversión sube {ca}, pero lo absorbido se come lo ganado: el revenue total se mueve {t}.",
+    },
+  },
   impact: {
     illustrative: true as const,
     label: "Escenario de ejemplo, no dato",
@@ -800,6 +883,18 @@ export const labels = {
   effort: "Esfuerzo",
   linkedin: "LinkedIn",
   monthsShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+  /** Atajos para mostrar la página en una videollamada. La ayuda se abre con "?". */
+  presenter: {
+    title: "Atajos de teclado",
+    keys: [
+      { key: "→", text: "Sección siguiente" },
+      { key: "←", text: "Sección anterior" },
+      { key: "1 a 9, 0", text: "Ir a una sección (0 es la 10)" },
+      { key: "?", text: "Mostrar u ocultar esta ayuda" },
+    ],
+    sections: "Secciones",
+    close: "Cerrar",
+  },
 };
 
 export function sourceList(): string[] {

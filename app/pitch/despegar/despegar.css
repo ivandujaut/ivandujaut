@@ -159,6 +159,115 @@ html.lenis body {
   border: 1px dashed var(--ink-faint);
 }
 
+/* ------------------------------------------------------------------------
+   El simulador del corte. La fila de la decisión que sale queda entera; las
+   otras dos se apagan. El punto toma el color de la decisión: lanzar en el
+   verde de "en rango", iterar en el naranja de "mirar" (los dos del tablero)
+   y apagar en tinta, para no usar el rojo, que en la página es el precio que
+   se paga.
+   ------------------------------------------------------------------------ */
+.despegar .cut-sim {
+  --verdict: var(--ink);
+}
+
+.despegar .cut-sim[data-verdict="ship"] {
+  --verdict: var(--ok);
+}
+
+.despegar .cut-sim[data-verdict="iterate"] {
+  --verdict: var(--watch);
+}
+
+.despegar .cut-row {
+  transition: opacity 0.4s var(--ease);
+}
+
+.despegar .cut-row[data-active="false"] {
+  opacity: 0.4;
+}
+
+.despegar .cut-dot {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--verdict);
+  transition: background-color 0.4s var(--ease);
+}
+
+.despegar .cut-row[data-active="false"] .cut-dot {
+  background: var(--rule);
+}
+
+.despegar .cut-verdict {
+  color: var(--verdict);
+  transition: color 0.4s var(--ease);
+}
+
+.despegar .cut-verdict .cut-dot {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.despegar .cut-range {
+  accent-color: var(--seen);
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.despegar .cut-toggle {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background: var(--surface-deep);
+}
+
+.despegar .cut-toggle label {
+  position: relative;
+}
+
+.despegar .cut-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.despegar .cut-toggle span {
+  display: block;
+  min-width: 4.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  font-weight: 500;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.despegar .cut-toggle input:checked + span {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgb(29 19 64 / 12%);
+}
+
+.despegar .cut-toggle input:focus-visible + span {
+  outline: 2px solid var(--seen);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .despegar .cut-row,
+  .despegar .cut-dot,
+  .despegar .cut-verdict,
+  .despegar .cut-toggle span {
+    transition: none;
+  }
+}
+
 /* Bloque de SQL: oscuro, con desplazamiento horizontal propio en mobile. */
 .despegar .code-block {
   background: var(--board);
@@ -200,4 +309,547 @@ html.lenis body {
 
 .despegar .btn:active {
   transform: scale(0.98);
+}
+
+/* ------------------------------------------------------------------------
+   El viaje de una compra. Sólo CSS: scroll-driven animations, como en la
+   charla de Carmen Ansio ("Animaciones CSS con Scroll", MiduConf / CSS Day
+   2024). Cada parada tiene su view-timeline (--stop-N); el contenedor las
+   expone con timeline-scope para que el escenario fijo las lea: el pasaje
+   (SVG) cambia de pose en 3D entre paradas.
+
+   Estado base (sin soporte o con movimiento reducido): no hay escenario y
+   arriba de las paradas quedan las dos caras del pasaje, quietas.
+   ------------------------------------------------------------------------ */
+.despegar .journey-stage {
+  display: none;
+}
+
+.despegar .journey-stops {
+  display: grid;
+  gap: 3.5rem;
+  margin-top: 2.5rem;
+}
+
+.despegar .journey-static {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.despegar .journey-static .ticket-pending {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .despegar .journey-static {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .despegar .journey-static figcaption {
+    grid-column: 1 / -1;
+  }
+}
+
+.despegar .journey-flip .flip-seen {
+  color: var(--ink-dim);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.despegar .journey-flip .flip-paid {
+  color: var(--paid-ink);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .despegar .journey {
+      timeline-scope: --stop-1, --stop-2, --stop-3, --stop-4, --stop-5, --stop-6, --journey;
+    }
+
+    .despegar .journey-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 2rem;
+      view-timeline-name: --journey;
+    }
+
+    /* Mobile: el escenario queda arriba y las paradas pasan por debajo. */
+    .despegar .journey-stage {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      height: 50svh;
+      padding-block: 0.75rem;
+      background: var(--surface-deep);
+    }
+
+    .despegar .journey-stops {
+      gap: 0;
+      margin-top: 0;
+    }
+
+    /* El texto va en la mitad de abajo: la de arriba la tapa el escenario fijo. */
+    .despegar .journey-stop {
+      display: flex;
+      align-items: flex-end;
+      min-height: 100svh;
+      padding-bottom: 6svh;
+    }
+
+    .despegar .journey-static {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .despegar .journey-grid {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 4rem;
+      }
+
+      .despegar .journey-stage {
+        height: 100svh;
+        padding-block: 0;
+        background: none;
+      }
+
+      .despegar .journey-stop {
+        align-items: center;
+        min-height: 100svh;
+        padding-bottom: 0;
+      }
+    }
+
+    .despegar .journey-stop[data-stop="1"] {
+      view-timeline-name: --stop-1;
+    }
+    .despegar .journey-stop[data-stop="2"] {
+      view-timeline-name: --stop-2;
+    }
+    .despegar .journey-stop[data-stop="3"] {
+      view-timeline-name: --stop-3;
+    }
+    .despegar .journey-stop[data-stop="4"] {
+      view-timeline-name: --stop-4;
+    }
+    .despegar .journey-stop[data-stop="5"] {
+      view-timeline-name: --stop-5;
+    }
+    .despegar .journey-stop[data-stop="6"] {
+      view-timeline-name: --stop-6;
+    }
+
+    /* El escenario no tiene fondo propio: el pasaje se mueve sobre el de la
+       sección. Tampoco recorta, así que nada entra ni sale por un borde que
+       no se ve: lo que aparece o se va, lo hace con opacidad. */
+    .despegar .journey-frames {
+      container-type: size;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+
+    /* La ruta: una línea que se llena con todo el recorrido y un punto por parada. */
+    .despegar .journey-route {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(var(--n), 1fr);
+      font-size: 0.75rem;
+      color: var(--ink-dim);
+    }
+
+    .despegar .journey-route-line {
+      position: absolute;
+      top: 6px;
+      left: calc(50% / var(--n));
+      right: calc(50% / var(--n));
+      height: 2px;
+      background: var(--rule);
+    }
+
+    .despegar .journey-route-fill {
+      display: block;
+      height: 100%;
+      background: var(--seen);
+      transform-origin: left center;
+      animation: journey-route linear both;
+      animation-timeline: --journey;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .despegar .journey-dot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .despegar .journey-dot > span {
+      position: relative;
+      z-index: 1;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--rule);
+      border-radius: 9999px;
+      background: var(--surface);
+      animation: journey-dot linear both;
+      animation-range: cover 20% cover 35%;
+    }
+
+    .despegar .journey-dot[data-tone="paid"] > span {
+      animation-name: journey-dot-paid;
+    }
+
+    .despegar .journey-dot[data-stop="1"] > span {
+      animation-timeline: --stop-1;
+    }
+    .despegar .journey-dot[data-stop="2"] > span {
+      animation-timeline: --stop-2;
+    }
+    .despegar .journey-dot[data-stop="3"] > span {
+      animation-timeline: --stop-3;
+    }
+    .despegar .journey-dot[data-stop="4"] > span {
+      animation-timeline: --stop-4;
+    }
+    .despegar .journey-dot[data-stop="5"] > span {
+      animation-timeline: --stop-5;
+    }
+    .despegar .journey-dot[data-stop="6"] > span {
+      animation-timeline: --stop-6;
+    }
+
+    /* El precio del último paso: el del listado se tacha y aparece el que se cobra. */
+    .despegar .journey-flip .flip-seen {
+      animation: journey-strike linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 55%;
+    }
+
+    .despegar .journey-flip .flip-paid {
+      animation: journey-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 55%;
+    }
+  }
+}
+
+@keyframes journey-route {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes journey-dot {
+  from {
+    background: var(--surface);
+    border-color: var(--rule);
+  }
+  to {
+    background: var(--seen);
+    border-color: var(--seen);
+  }
+}
+
+@keyframes journey-dot-paid {
+  from {
+    background: var(--surface);
+    border-color: var(--rule);
+  }
+  to {
+    background: var(--paid);
+    border-color: var(--paid);
+  }
+}
+
+@keyframes journey-strike {
+  from {
+    color: var(--ink);
+    text-decoration-color: transparent;
+  }
+  to {
+    color: var(--ink-dim);
+    text-decoration-color: currentColor;
+  }
+}
+
+@keyframes journey-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.3em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------------
+   El pasaje. Las caras son SVG (ver `_components/ticket.tsx`); acá van el
+   papel, la tinta y el movimiento. El movimiento es la "matriz" de la nota de
+   CSS 3D de Carmen Ansio: el escenario pone la perspectiva, el pasaje guarda
+   el 3D de sus hijos (preserve-3d) y cada pose es una combinación de
+   traslación, giros en X, Y y Z y escala, que el navegador resuelve como una
+   sola matrix3d. Las dos caras están espalda con espalda: al girar 180° en Y
+   se ve el dorso, con el precio que se paga.
+   Cada tramo usa el timeline de la parada siguiente, de "cover 0%" (la
+   anterior centrada) a "cover 50%" (esta centrada). Todas las poses repiten
+   la misma lista de funciones, así el navegador interpola cada giro por
+   separado y la vuelta en Y pasa de verdad por el canto.
+   ------------------------------------------------------------------------ */
+.despegar .ticket-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Sin sombra: en 3D, una sombra por cara queda cortada por el troquel y se
+   ve como una mancha. El borde fino alcanza para separar el papel del fondo. */
+.despegar .t-paper {
+  fill: #fffdf8;
+  stroke: rgb(29 19 64 / 12%);
+  stroke-width: 1.5;
+}
+
+.despegar .t-perforation {
+  stroke: var(--ink-faint);
+  stroke-width: 2.5;
+  stroke-dasharray: 0.5 9;
+  stroke-linecap: round;
+}
+
+.despegar .t-route {
+  stroke: var(--ink-faint);
+  stroke-width: 2;
+  stroke-dasharray: 5 6;
+}
+
+.despegar .t-mono {
+  font-family: var(--font-mono);
+}
+
+.despegar .t-sans {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.despegar .t-ink {
+  fill: var(--ink);
+}
+
+.despegar .t-dim {
+  fill: var(--ink-dim);
+}
+
+.despegar .t-seen {
+  fill: var(--seen);
+}
+
+.despegar .t-paid {
+  fill: var(--paid-ink);
+}
+
+.despegar .t-strike {
+  text-decoration: line-through;
+}
+
+.despegar .ticket3d {
+  display: none;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .despegar .journey-frames {
+      perspective: 140cqw;
+      perspective-origin: 50% 30%;
+    }
+
+    .despegar .ticket3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      display: block;
+      width: 56cqw;
+      aspect-ratio: 600 / 280;
+      transform-style: preserve-3d;
+      transform: translate(50cqw, 64cqh) translate(-50%, -50%) rotateX(58deg) rotateY(0deg)
+        rotateZ(-16deg) scale(0.78);
+      animation:
+        ticket-1 linear both,
+        ticket-2 linear forwards,
+        ticket-3 linear forwards;
+      animation-timeline: --stop-2, --stop-3, --stop-4;
+      animation-range:
+        cover 0% cover 50%,
+        cover 0% cover 50%,
+        cover 0% cover 50%;
+      will-change: transform;
+    }
+
+    .despegar .ticket-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+    }
+
+    .despegar .ticket-back {
+      transform: rotateY(180deg);
+    }
+
+    /* En la búsqueda todavía no hay precio: aparece al llegar a resultados. */
+    .despegar .ticket3d .ticket-pending {
+      animation: ticket-out linear both;
+      animation-timeline: --stop-2;
+      animation-range: cover 10% cover 30%;
+    }
+
+    .despegar .ticket3d .ticket-price {
+      animation: ticket-in linear both;
+      animation-timeline: --stop-2;
+      animation-range: cover 20% cover 40%;
+    }
+
+    /* El dorso cortado por el troquel (x = 160 de 600, 26,67%): el cuerpo
+       queda en el pasaje y el talón cuelga de su esquina de arriba. Los
+       recortes se pasan del borde para no comerse la sombra. */
+    .despegar .ticket-back-body {
+      clip-path: polygon(26.67% -30%, 130% -30%, 130% 130%, 26.67% 130%);
+    }
+
+    .despegar .ticket-stub {
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(-30% -30%, 26.67% -30%, 26.67% 130%, -30% 130%);
+      transform-origin: 26.67% 0%;
+    }
+
+    /* La vuelta: el pasaje usado pierde el talón. Se despega por el troquel,
+       queda colgando un instante y se cae. */
+    .despegar .ticket3d .ticket-stub {
+      animation: ticket-tear linear both;
+      animation-timeline: --stop-4;
+      animation-range: cover 5% cover 45%;
+    }
+  }
+}
+
+/* Búsqueda -> resultados: se levanta de la mesa y queda de frente. */
+@keyframes ticket-1 {
+  0% {
+    transform: translate(50cqw, 64cqh) translate(-50%, -50%) rotateX(58deg) rotateY(0deg)
+      rotateZ(-16deg) scale(0.78);
+  }
+  50% {
+    transform: translate(51cqw, 54cqh) translate(-50%, -50%) rotateX(28deg) rotateY(-8deg)
+      rotateZ(-8deg) scale(0.9);
+  }
+  100% {
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(-14deg)
+      rotateZ(-3deg) scale(1);
+  }
+}
+
+/* Resultados -> último paso: se da vuelta y muestra el precio que se paga. */
+@keyframes ticket-2 {
+  0% {
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(-14deg)
+      rotateZ(-3deg) scale(1);
+  }
+  50% {
+    transform: translate(50cqw, 40cqh) translate(-50%, -50%) rotateX(10deg) rotateY(90deg)
+      rotateZ(0deg) scale(1.06);
+  }
+  100% {
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(194deg)
+      rotateZ(3deg) scale(1);
+  }
+}
+
+/* Último paso -> la vuelta: mientras pierde el talón, el pasaje se achica
+   apenas y se corre a la izquierda, para que lo que queda siga centrado. */
+@keyframes ticket-3 {
+  0% {
+    transform: translate(50cqw, 46cqh) translate(-50%, -50%) rotateX(6deg) rotateY(194deg)
+      rotateZ(3deg) scale(1);
+  }
+  40% {
+    transform: translate(48cqw, 45cqh) translate(-50%, -50%) rotateX(7deg) rotateY(196deg)
+      rotateZ(3deg) scale(0.96);
+  }
+  100% {
+    transform: translate(43cqw, 46cqh) translate(-50%, -50%) rotateX(8deg) rotateY(200deg)
+      rotateZ(2deg) scale(0.9);
+  }
+}
+
+/* El talón: primero cede apenas (el papel se resiste), después se suelta,
+   gira colgado de la esquina y cae, y se desvanece antes de salir del escenario. */
+@keyframes ticket-tear {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-1%, 1.5%) rotate(-4deg);
+  }
+  45% {
+    transform: translate(-2.5%, 4%) rotate(-12deg);
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-8%, 150%) rotate(-38deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ticket-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ticket-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modo presentación: el aviso de sección aparece y se va solo. */
+.despegar .presenter-toast {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.despegar .presenter-toast[data-show="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .despegar .presenter-toast {
+    transition: none;
+    transform: none;
+  }
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { getBaseUrl } from "@/lib/og";
 import { meta, nav } from "./despegar.data";
 import { ScrollProgress } from "../_template/lib/scroll-progress";
 import { PitchTracker } from "../_template/lib/pitch-tracker";
+import { Presenter } from "./_components/presenter";
 import { Hero } from "./_sections/hero";
 import { AppToday, Bucket, Business } from "./_sections/reading";
 import { Competition, Voice } from "./_sections/voice";
@@ -21,10 +23,14 @@ import { Close, Dashboard, FirstSteps } from "./_sections/closing";
  * entiende solo, porque en la entrevista se muestran de a uno.
  */
 export const metadata: Metadata = {
+  // Este segmento tiene layout raíz propio: sin la base, la imagen del link
+  // (opengraph-image.tsx) saldría con una URL relativa.
+  metadataBase: new URL(getBaseUrl()),
   title: meta.title,
   description: meta.description,
   robots: { index: false, follow: false },
-  openGraph: { title: meta.title, description: meta.description },
+  openGraph: { title: meta.title, description: meta.description, url: "/despegar" },
+  twitter: { card: "summary_large_image", title: meta.title, description: meta.description },
 };
 
 export default function DespegarPage() {
@@ -42,6 +48,7 @@ export default function DespegarPage() {
       <FirstSteps />
       <Close />
       <ScrollProgress sections={nav.map((s) => ({ id: s.id, label: s.label }))} />
+      <Presenter />
       <PitchTracker company="despegar" />
     </main>
   );
