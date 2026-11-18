@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { redis, keyFor } from "@/lib/redis";
 
-export type ViewKind = "blog" | "projects";
+export type ViewKind = "blog" | "projects" | "casebook";
 export type ContentLocale = "es" | "en";
 
 /**
@@ -20,7 +20,13 @@ export function isContentLocale(value: string): value is ContentLocale {
   return (CONTENT_LOCALES as string[]).includes(value);
 }
 
-export const VIEW_KINDS: ViewKind[] = ["blog", "projects"];
+/**
+ * El casebook se suma el 18/11/2026. Era el único formato largo sin medición:
+ * `/projects` y `/blog` montan `ReadTracker` desde que existen, y el casebook,
+ * que es la apuesta más nueva, no tenía ni vistas ni lecturas. Los contadores
+ * arrancan en cero, como corresponde.
+ */
+export const VIEW_KINDS: ViewKind[] = ["blog", "projects", "casebook"];
 
 export function isViewKind(value: string): value is ViewKind {
   return (VIEW_KINDS as string[]).includes(value);
