@@ -315,12 +315,23 @@ export const app = {
  * con Gemini a partir de `scripts/covers/prompts/despegar-vuelo-N.txt`, el
  * mismo jet sin marcas en las cuatro, recortadas a 16:9 sin la marca de agua.
  */
+/** Secuencia de cuadros sacada de los clips (`scripts/despegar/13_extraer_cuadros.py`). */
+export interface JourneySequence {
+  count: number;
+  /** `{n}` se reemplaza por el número con tres dígitos (001, 002...). */
+  pattern: string;
+  width: number;
+  height: number;
+}
+
 export const journey = {
   eyebrow: "El viaje de una compra",
   heading: "Un mismo vuelo, de la búsqueda a la vuelta",
   intro:
     "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
   placeholder: false,
+  /** `null` hasta que estén los clips: quedan las cuatro imágenes con fundido. */
+  sequence: null as JourneySequence | null,
   stops: [
     {
       id: "busqueda",

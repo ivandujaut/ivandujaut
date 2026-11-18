@@ -557,3 +557,19 @@ html.lenis body {
     transform: translateY(0);
   }
 }
+
+/* La secuencia de cuadros (canvas) va encima de las imágenes fijas y aparece
+   recién cuando bajaron todos los cuadros. */
+.despegar .journey-sequence {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 400ms var(--ease);
+}
+
+.despegar .journey-sequence.is-ready {
+  opacity: 1;
+}

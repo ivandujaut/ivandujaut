@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { journey, labels } from "../despegar.data";
+import { FlightSequence } from "./flight-sequence";
 import { Cite, ExampleBadge } from "./ui";
 
 /**
@@ -48,6 +49,7 @@ export function FlightJourney() {
                 unoptimized={s.frame.src.endsWith(".svg")}
               />
             ))}
+            <FlightSequence sequence={journey.sequence} />
           </div>
           <ol className="journey-route" style={routeStyle}>
             <span className="journey-route-line">
