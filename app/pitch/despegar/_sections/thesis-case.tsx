@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { caseStudy, labels, thesis } from "../despegar.data";
 import { ExampleBadge, Tramo, TramoHeading } from "../_components/ui";
 
@@ -27,19 +26,9 @@ export function Thesis() {
 export function Case() {
   const c = caseStudy;
   const cuts = [
-    { key: "ship", label: labels.cut.ship, text: c.cut.ship, cls: "border-(--ok) bg-(--ok-soft)" },
-    {
-      key: "iterate",
-      label: labels.cut.iterate,
-      text: c.cut.iterate,
-      cls: "border-(--watch) bg-(--watch-soft)",
-    },
-    {
-      key: "kill",
-      label: labels.cut.kill,
-      text: c.cut.kill,
-      cls: "border-(--paid) bg-(--paid-soft)",
-    },
+    { key: "ship", label: labels.cut.ship, text: c.cut.ship },
+    { key: "iterate", label: labels.cut.iterate, text: c.cut.iterate },
+    { key: "kill", label: labels.cut.kill, text: c.cut.kill },
   ];
   return (
     <Tramo id="caso">
@@ -47,7 +36,7 @@ export function Case() {
         {c.heading}
       </TramoHeading>
 
-      <p className="reveal mt-8 max-w-3xl border-l-4 border-(--seen) pl-6 text-xl leading-snug font-medium text-(--ink) md:text-2xl">
+      <p className="reveal mt-8 max-w-3xl text-xl leading-snug font-medium text-(--ink) md:text-2xl">
         {c.objective}
       </p>
       <p className="reveal mt-6 max-w-3xl text-lg leading-relaxed text-(--ink-dim)">{c.problem}</p>
@@ -63,7 +52,7 @@ export function Case() {
         ))}
       </ol>
 
-      <div className="reveal mt-10 rounded-lg bg-(--surface-deep) p-6">
+      <div className="reveal mt-14">
         <h3 className="text-lg font-semibold">{c.ai.title}</h3>
         <ul className="mt-3 grid gap-3 md:grid-cols-2">
           {c.ai.items.map((t) => (
@@ -102,36 +91,34 @@ export function Case() {
       </ul>
 
       <h3 className="reveal mt-16 text-2xl font-semibold md:text-3xl">{c.cut.title}</h3>
-      <ol className="mt-6 grid gap-4 md:grid-cols-3">
+      <dl className="mt-6 max-w-4xl border-t border-(--ink)">
         {cuts.map((cut) => (
-          <li key={cut.key} className={cn("reveal rounded-lg border-t-4 p-6", cut.cls)}>
-            <p className="font-semibold">{cut.label}</p>
-            <p className="mt-2 leading-relaxed">{cut.text}</p>
-          </li>
+          <div
+            key={cut.key}
+            className="reveal grid gap-1 border-b border-(--rule) py-4 md:grid-cols-[10rem_1fr] md:gap-6"
+          >
+            <dt className="font-semibold">{cut.label}</dt>
+            <dd className="leading-relaxed">{cut.text}</dd>
+          </div>
         ))}
-      </ol>
+      </dl>
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         <div className="reveal is-example rounded-lg bg-(--surface) p-6">
           <ExampleBadge>{c.impact.label}</ExampleBadge>
           <p className="mt-4 leading-relaxed">{c.impact.text}</p>
         </div>
-        <div className="reveal rounded-lg bg-(--surface) p-6">
+        <div className="reveal">
           <h3 className="text-lg font-semibold">{c.notToBuild.title}</h3>
-          <ul className="mt-3 grid gap-3">
+          <ul className="mt-3 grid list-disc gap-2 pl-5 leading-relaxed text-(--ink-dim)">
             {c.notToBuild.items.map((t) => (
-              <li key={t} className="flex gap-3 leading-relaxed text-(--ink-dim)">
-                <span aria-hidden className="mono text-(--paid-ink)">
-                  ×
-                </span>
-                <span>{t}</span>
-              </li>
+              <li key={t}>{t}</li>
             ))}
           </ul>
         </div>
       </div>
 
-      <p className="reveal mt-12 max-w-3xl border-l-4 border-(--seen) pl-6 text-xl leading-snug font-medium md:text-2xl">
+      <p className="reveal mt-14 max-w-3xl text-xl leading-snug font-medium md:text-2xl">
         {c.firstQuestion}
       </p>
     </Tramo>

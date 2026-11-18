@@ -30,11 +30,11 @@ export function Voice() {
           unit={voice.stages.unit}
           tone="ink"
         />
-        <div className="reveal rounded-lg bg-(--night) p-6 text-white md:p-8">
-          <p className="text-6xl font-semibold tracking-tight text-[#ff8a7a] tabular md:text-7xl">
+        <div className="reveal md:pt-4">
+          <p className="text-7xl font-semibold tracking-tight text-(--paid-ink) tabular md:text-8xl">
             {voice.promise.value}
           </p>
-          <p className="mt-4 text-lg leading-relaxed text-white/85">{voice.promise.text}</p>
+          <p className="mt-4 text-lg leading-relaxed">{voice.promise.text}</p>
         </div>
       </div>
 
@@ -45,14 +45,16 @@ export function Voice() {
           unit={voice.peers.unit}
           footer={voice.peers.note}
         />
-        <ul className="grid gap-3">
+        <ul className="grid gap-8 md:pt-4">
           {voice.quotes.map((q) => (
-            <li
-              key={q.text}
-              className="reveal rounded-lg border-l-4 border-(--paid) bg-(--surface) p-5"
-            >
-              <blockquote className="text-lg leading-snug">“{q.text}”</blockquote>
-              <p className="mono mt-2 text-xs text-(--ink-dim)">{q.meta}</p>
+            <li key={q.text} className="reveal">
+              <blockquote className="relative pl-5 text-xl leading-snug md:text-2xl">
+                <span aria-hidden className="absolute left-0 text-(--paid-ink)">
+                  “
+                </span>
+                {q.text}”
+              </blockquote>
+              <p className="mt-2 pl-5 text-sm text-(--ink-dim)">{q.meta}</p>
             </li>
           ))}
         </ul>
