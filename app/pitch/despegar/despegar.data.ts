@@ -883,6 +883,18 @@ export const labels = {
   effort: "Esfuerzo",
   linkedin: "LinkedIn",
   monthsShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+  /** Atajos para mostrar la página en una videollamada. La ayuda se abre con "?". */
+  presenter: {
+    title: "Atajos de teclado",
+    keys: [
+      { key: "→", text: "Sección siguiente" },
+      { key: "←", text: "Sección anterior" },
+      { key: "1 a 9, 0", text: "Ir a una sección (0 es la 10)" },
+      { key: "?", text: "Mostrar u ocultar esta ayuda" },
+    ],
+    sections: "Secciones",
+    close: "Cerrar",
+  },
 };
 
 export function sourceList(): string[] {

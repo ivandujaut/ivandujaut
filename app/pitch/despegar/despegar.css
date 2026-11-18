@@ -831,3 +831,25 @@ html.lenis body {
     opacity: 1;
   }
 }
+
+/* Modo presentación: el aviso de sección aparece y se va solo. */
+.despegar .presenter-toast {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.despegar .presenter-toast[data-show="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .despegar .presenter-toast {
+    transition: none;
+    transform: none;
+  }
+}

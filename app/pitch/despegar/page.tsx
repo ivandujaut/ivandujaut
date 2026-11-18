@@ -3,6 +3,7 @@ import { getBaseUrl } from "@/lib/og";
 import { meta, nav } from "./despegar.data";
 import { ScrollProgress } from "../_template/lib/scroll-progress";
 import { PitchTracker } from "../_template/lib/pitch-tracker";
+import { Presenter } from "./_components/presenter";
 import { Hero } from "./_sections/hero";
 import { AppToday, Bucket, Business } from "./_sections/reading";
 import { Competition, Voice } from "./_sections/voice";
@@ -47,6 +48,7 @@ export default function DespegarPage() {
       <FirstSteps />
       <Close />
       <ScrollProgress sections={nav.map((s) => ({ id: s.id, label: s.label }))} />
+      <Presenter />
       <PitchTracker company="despegar" />
     </main>
   );
