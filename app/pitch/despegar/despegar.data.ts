@@ -592,6 +592,8 @@ export const caseStudy = {
       'El mismo clasificador de reseñas, corriendo cada semana sobre reseñas y conversaciones con SOFIA y atención, avisa si "la promesa rota al pagar" sube después de un release.',
     ],
   },
+  /** El diseño completo del experimento va plegado: el corte y el simulador quedan a la vista. */
+  design: "El diseño del experimento: población, métricas, tamaño y segmentos",
   experiment: {
     title: "El experimento",
     rows: [
