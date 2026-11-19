@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { OwnTrafficMarker } from "@/components/analytics/own-traffic-marker";
-import { getAllProjects, getPosts } from "@/lib/content";
+import { getAllProjects, getCasebook, getPosts } from "@/lib/content";
 import { getCachedViews } from "@/lib/views";
 import { getCachedContinued, getCachedReads } from "@/lib/reads";
 import { CONTENT_LOCALES, type ContentLocale, type ViewKind } from "@/lib/views";
@@ -24,6 +24,13 @@ export const metadata = {
 };
 
 type Props = { searchParams: Promise<{ key?: string }> };
+
+/** Cómo se nombra cada formato en la primera columna. */
+const ETIQUETA: Record<ViewKind, string> = {
+  projects: "caso",
+  blog: "post",
+  casebook: "casebook",
+};
 
 interface Row {
   kind: ViewKind;
@@ -50,6 +57,7 @@ export default async function StatsPage({ searchParams }: Props) {
     // de lo que mide el test de dos capas.
     ...getAllProjects(locale).map((p) => ({ kind: "projects" as const, locale, item: p })),
     ...getPosts(locale).map((p) => ({ kind: "blog" as const, locale, item: p })),
+    ...getCasebook(locale).map((p) => ({ kind: "casebook" as const, locale, item: p })),
   ]);
 
   const todas: Row[] = await Promise.all(
@@ -126,11 +134,14 @@ export default async function StatsPage({ searchParams }: Props) {
             </Eyebrow>
           </thead>
           <tbody>
+            {/* El idioma entra en la clave: hay una fila por pieza Y por
+                idioma, así que sin él las dos versiones de un mismo caso
+                comparten clave en cuanto las dos tienen lecturas. */}
             {rows.map((r) => (
-              <tr key={`${r.kind}:${r.slug}`} className="border-b border-border/50">
+              <tr key={`${r.kind}:${r.locale}:${r.slug}`} className="border-b border-border/50">
                 <td className="py-2 pr-4">
                   <span className="font-mono text-xs text-muted-foreground">
-                    {r.kind === "projects" ? "caso" : "post"}
+                    {ETIQUETA[r.kind]}
                   </span>{" "}
                   {r.title}
                 </td>

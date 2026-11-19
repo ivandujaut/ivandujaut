@@ -8,7 +8,9 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Download } from "@/components/animate-ui/icons/download";
 import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
-import { getPublishingCadence } from "@/lib/content";
+import { getProjects, getPublishingCadence } from "@/lib/content";
+import { ProjectListItem } from "@/components/content/project-list-item";
+import { SectionTracker } from "@/components/analytics/section-tracker";
 import { CV_PAGE } from "@/lib/cv";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
@@ -19,6 +21,7 @@ import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { PageShell } from "@/components/ui/page-shell";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -32,14 +35,11 @@ export async function generateMetadata({ params }: Props) {
   const title = isEs
     ? "Acerca de mí · Iván Dujaut, AI Product Manager"
     : "About · Iván Dujaut, AI Product Manager";
-  // La descripción vende el trabajo publicado, no el cargo: es lo que
-  // diferencia el perfil y lo que sostiene el resto de la página. Es la misma
-  // frase, palabra por palabra, que el `description` del `Person` en
-  // `lib/jsonld.ts` y que el encabezado de `llms.txt`: repetirla igual es lo que
-  // hace que un buscador o un modelo la tome en vez de fabricar una propia.
-  const description = isEs
-    ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
-    : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.";
+  // La misma frase que la home, el layout, el `Person` de `lib/jsonld.ts` y
+  // llms.txt, palabra por palabra: repetirla igual es lo que hace que un
+  // buscador o un modelo la tome en vez de fabricar una propia. Vive en
+  // `lib/profile.ts`, con el historial de por qué dice lo que dice.
+  const description = PROFILE_DESCRIPTION[locale as "es" | "en"];
 
   const ogImageUrl = buildDefaultOgUrl({
     title,
@@ -81,6 +81,16 @@ export default async function AboutPage({ params }: Props) {
   return <AboutContent locale={locale as "es" | "en"} />;
 }
 
+/**
+ * Cuántas piezas publicadas se muestran acá. Cuatro y no tres como la home:
+ * en una grilla de dos columnas, tres dejan media tarjeta suelta con el hueco
+ * al lado, y acá la sección es el argumento de la página, no un anuncio.
+ */
+const ABOUT_LIMIT = 4;
+
+/** Cuántas de esas cuatro se ven en un teléfono. Las otras dos se esconden con CSS. */
+const MOBILE_LIMIT = 2;
+
 /** Una fila de la ficha de herramientas: rótulo a la izquierda, lista al lado. */
 function ToolCategory({ label, items }: { label: string; items: string }) {
   return (
@@ -96,12 +106,20 @@ function ToolCategory({ label, items }: { label: string; items: string }) {
 function AboutContent({ locale }: { locale: "es" | "en" }) {
   const t = useTranslations("about");
   const tWork = useTranslations("home.work");
+  const tReading = useTranslations("common.reading");
+  const minutos = (count?: number) => (count ? tReading("minutes", { count }) : undefined);
 
   const cadencia = getPublishingCadence(locale);
+  const piezas = getProjects(locale).slice(0, ABOUT_LIMIT);
 
   return (
     <PageShell id="main">
       <JsonLd data={personSchema(locale)} />
+      {/* Tres hitos y no más: el final de la intro, las tarjetas y el
+          contacto. Contestan las dos preguntas que la página todavía no puede
+          contestar: si el que entra pasa del primer párrafo, y si llega a ver
+          la obra. */}
+      <SectionTracker page="about" sections="about-quiero,about-trabajo,about-contacto" />
       {/* Intro */}
       <section>
         <div className="flex flex-row items-start justify-between gap-4">
@@ -121,10 +139,24 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             procedimiento, decidir qué entra y qué no al roadmap, y medir
             después si rindió.
 
-            Va contado como relato y no como ficha. Los cinco párrafos son: qué
-            construye hoy y de dónde viene, el criterio de producto contado
-            donde se aprendió (en Banana, no en la bioingeniería), por qué
-            escribe de salud y seguros, qué hace en cada caso, y qué ofrece.
+            Son tres párrafos y cada uno contesta una pregunta, en este orden:
+            lo que hizo, lo que hace y lo que quiere. El orden lo pidió Iván el
+            18/11/2026 con esas palabras, y es la estructura de la página, no
+            una forma de redactar: si un párrafo deja de contestar su pregunta,
+            se reescribe o se va.
+
+            Hasta ese día eran cinco párrafos y 383 palabras, y fallaban en las
+            tres. Lo que hizo estaba al revés en el tiempo (2026 primero,
+            Banana después) y mezclado con los números de cada etapa, que es lo
+            que lo hacía leer como un CV en prosa. Lo que hace estaba, pero
+            empezaba por el mercado y no por el oficio. Y lo que quiere no
+            estaba en ninguna parte: la página cerraba ofreciéndole resolver un
+            problema al que lee, y eso sólo vivía en "Actualmente" de la home.
+
+            Por eso los números de Banana (60% al 90%, ~20%) no están acá
+            arriba: viven en Experiencia, dos centímetros más abajo. Apilados
+            en el primer párrafo tapaban la trayectoria, que es lo único que
+            este párrafo tiene que contar.
 
             Las reglas salieron de iterar con él, y están acá para no volver a
             romperlas:
@@ -142,23 +174,39 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               reconstruirla desde afuera).
             - Los números van en primera persona del singular. Acá se vende él,
               no el equipo en el que estaba.
-            - El cierre no pide un cargo. Analista, product manager y product
-              owner comparten el trabajo, así que el título queda de lado.
+            - El cierre no nombra puestos, y los párrafos tampoco. El
+              19/11/2026 estuvieron nombrados unas horas ("product manager,
+              product owner o analista") y Iván lo revirtió: nombrar tres
+              cierra la puerta a los avisos que usan un cuarto título, y el
+              que lee ya tiene el cargo en el `<title>` y en el hero.
+              En su lugar va el vocabulario con el que esos avisos escriben
+              las responsabilidades, que es lo que comparten sin importar cómo
+              se llame el puesto: roadmap, backlog, priorizar, requerimientos,
+              actores, proceso, métricas por segmento, retención, margen,
+              sprints, integraciones, SQL, Python. Salen de contar en cuántos
+              de los 197 avisos de producto y análisis guardados el 21/09/2026
+              aparece cada uno, no de intuición.
+            - Ninguna palabra entra si no hay con qué respaldarla. Quedaron
+              afuera user stories, dashboards, investigación de usuarios,
+              discovery, A/B testing y go-to-market, que suman 122 puntos de
+              frecuencia en esos avisos y no tienen evidencia publicada.
             - Lo que ya está dicho en otro lado no se repite: la trazabilidad
               vive en /method, la logística de trabajo remoto en "Actualmente"
               de la home, y la tesis en Educación, dos secciones más abajo. */}
         <div className="mt-6 space-y-4 leading-relaxed text-foreground">
           <p>{t("intro.paragraph1")}</p>
-          <p>{t("intro.paragraph2")}</p>
           {/* Los links van adentro de la frase y no en una lista aparte: la
               afirmación ("estos dos mercados dejan rastro público") y su prueba
               quedan en el mismo lugar, y cada fuente apunta al caso donde se
               usó. Es lo que reemplazó a la lista de dieciséis casos, que era el
-              índice repetido. Las cuatro cubren los dos mercados y los dos
+              índice repetido. Eran cuatro hasta el 18/11/2026 y quedaron dos,
+              una por mercado: es el precio de acortar, y las tarjetas de abajo
+              siguen enlazando casos, así que la navegación no se pierde. Las
+              cuatro cubrían los dos mercados y los dos
               niveles de fuente del método: el archivo donde la empresa es una
               fila, y lo que la empresa dice de sí misma. */}
           <p>
-            {t.rich("intro.paragraph3", {
+            {t.rich("intro.paragraph2", {
               pagos: (chunks) => (
                 <Link
                   href="/projects/glp1-open-payments"
@@ -175,26 +223,13 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                   {chunks}
                 </Link>
               ),
-              srt: (chunks) => (
-                <Link
-                  href="/projects/cobranza-seguros"
-                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-                >
-                  {chunks}
-                </Link>
-              ),
-              canales: (chunks) => (
-                <Link
-                  href="/projects/canal-digital-seguros"
-                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-                >
-                  {chunks}
-                </Link>
-              ),
             })}
           </p>
-          <p>{t("intro.paragraph4")}</p>
-          <p>{t("intro.paragraph5")}</p>
+          {/* Los `id` son los hitos que mide `SectionTracker`. Si un párrafo
+              se parte o se junta, el `id` se queda con el que contesta la
+              misma pregunta: es lo que hace comparable la serie entre
+              versiones de la página. */}
+          <p id="about-quiero">{t("intro.paragraph3")}</p>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -249,17 +284,24 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             Hasta el 19/09/2026 listaba los dieciséis casos con su bajada, o sea
             `/projects` otra vez, en letra más chica y sin fecha ni agrupación
             por mercado: 1.176px en escritorio y 1.836 en un teléfono, dos
-            pantallas y cuarto de lista plana. Ahora van cuatro piezas con la
-            misma tarjeta del índice, la cadencia calculada y el link al resto.
-            Los casos que salen de acá siguen enlazados desde el índice, la
-            home, el sitemap, el RSS y los "siguientes casos" al pie de cada
-            pieza, así que no pierden autoridad interna. */}
-        <section>
-          <Eyebrow as="h2" className="mb-8">
+            pantallas y cuarto de lista plana. Se recortó a la cadencia y el
+            link, y ahí se pasó de largo: el 18/11/2026 la sección medía 104px
+            de los 4.001 de la página, un 3%, mientras Experiencia se llevaba
+            el 30%. La página decía que la obra es el argumento y mostraba lo
+            contrario, en la tercera página más visitada del sitio.
+
+            Van las cuatro piezas más nuevas, con la misma tarjeta del índice y
+            con portada. La curaduría es la fecha, como en la home: no hay nada
+            que mantener y la sección no queda vieja. Los otros catorce casos
+            siguen enlazados desde el índice, la home, el sitemap, el RSS y los
+            "siguientes casos" al pie de cada pieza, así que no pierden
+            autoridad interna. */}
+        <section id="about-trabajo">
+          <Eyebrow as="h2" className="mb-6">
             {t("sections.work")}
           </Eyebrow>
           {cadencia && (
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="mb-8 text-sm leading-relaxed text-muted-foreground">
               {tWork("cadence", {
                 count: cadencia.count,
                 days: cadencia.everyDays,
@@ -270,9 +312,45 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               })}
             </p>
           )}
+          <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2">
+            {piezas.map((pieza, i) => (
+              // En un teléfono se ven dos y no cuatro. Cuatro tarjetas apiladas
+              // miden 1.741px, y esta sección es una muestra con el link al
+              // índice al lado, no un catálogo. Se esconden con CSS, así que
+              // los cuatro enlaces siguen en el HTML y las portadas escondidas
+              // no se descargan, porque `next/image` las pide recién al entrar
+              // en pantalla.
+              <div key={pieza.slug} className={i >= MOBILE_LIMIT ? "hidden sm:block" : undefined}>
+                <ProjectListItem
+                  slug={pieza.slug}
+                  title={pieza.title}
+                  tagline={pieza.tagline}
+                  date={pieza.date}
+                  locale={locale}
+                  stack={pieza.stack}
+                  readingTime={minutos(pieza.metadata?.readingTime)}
+                  status={pieza.status}
+                  kind={pieza.kind}
+                  variant="list"
+                  surface="about"
+                  cover={
+                    pieza.cover
+                      ? {
+                          src: pieza.cover.src.src,
+                          alt: pieza.cover.alt,
+                          width: pieza.cover.src.width,
+                          height: pieza.cover.src.height,
+                          blurDataURL: pieza.cover.src.blurDataURL,
+                        }
+                      : undefined
+                  }
+                />
+              </div>
+            ))}
+          </div>
           <Link
             href="/projects"
-            className="mt-3 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
+            className="mt-8 inline-flex items-center gap-1 text-sm underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
           >
             {t("work.all")}
             <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} aria-hidden />
@@ -297,18 +375,17 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Construí <strong>FIJI</strong>, una plataforma de valuación para negocios
-                    inmobiliarios. Lideré la migración desde no-code (Bubble) a Next.js y armé el
-                    motor de simulaciones, que traduce métricas de operación a valuaciones
+                    Lideré la migración de <strong>FIJI</strong> desde no-code (Bubble) a Next.js y
+                    armé el motor de simulaciones, que traduce métricas de operación a valuaciones
                     financieras.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    I built <strong>FIJI</strong>, a valuation platform for real estate businesses.
-                    I led the migration from no-code (Bubble) to Next.js and built the simulation
-                    engine that turns operating metrics into financial valuations.
+                    I led the migration of <strong>FIJI</strong> from no-code (Bubble) to Next.js
+                    and built the simulation engine that turns operating metrics into financial
+                    valuations.
                   </p>
                 </>
               )}
@@ -325,15 +402,13 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             >
               {locale === "es" ? (
                 <p>
-                  Docente de <strong>Técnicas Digitales I</strong> para estudiantes de 4° año de
-                  Electrónica. Enseño álgebra de Boole, mapas de Karnaugh, lógica combinacional y
-                  secuencial, y participo en la planificación del programa académico.
+                  Docente de <strong>Técnicas Digitales I</strong> en 4° año de Electrónica, y
+                  participo en la planificación del programa académico.
                 </p>
               ) : (
                 <p>
-                  I teach <strong>Digital Techniques I</strong> to 4th-year Electronics students:
-                  Boolean algebra, Karnaugh maps, combinational and sequential logic. I also help
-                  plan the academic program.
+                  I teach <strong>Digital Techniques I</strong> to 4th-year Electronics students,
+                  and I help plan the academic program.
                 </p>
               )}
             </ExperienceItem>
@@ -353,53 +428,33 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Mi experiencia más larga, y donde aprendí a construir producto. Entré de Trainee
-                    y salí de Product Engineer, cuatro años después. Conté{" "}
+                    Conté{" "}
                     <Link
                       href="/blog/from-bioengineering-to-product-engineer"
                       className="underline underline-offset-4"
                     >
                       cómo fue ese recorrido y qué hace el rol en la práctica
                     </Link>
-                    .
-                  </p>
-                  <p>
-                    Como <strong>Product Engineer</strong> (Ago 2025 – Ene 2026), mejoré la{" "}
-                    <strong>predictibilidad de sprints del 60% al 90%</strong> modelando esfuerzo
-                    real. Eliminé ~20% de funcionalidades de bajo valor priorizando por impacto.
-                  </p>
-                  <p>
-                    Como <strong>Semi Senior</strong> (Jul 2024 – Jul 2025), lideré{" "}
-                    <strong>4 proyectos end-to-end</strong> con equipos de 3-4 personas. Plataformas
-                    B2C y B2B con hasta <strong>1.500 usuarios activos</strong>. Integré pagos con
-                    Mercado Pago, PayPal y Stripe; optimicé checkout B2C aumentando tasa de
-                    finalización de reservas.
+                    . Lideré <strong>4 proyectos de punta a punta</strong> con equipos de 3 o 4
+                    personas: plataformas B2C y B2B de hasta <strong>1.500 usuarios activos</strong>
+                    , con pagos de Mercado Pago, PayPal y Stripe, y un checkout que subió la tasa de
+                    reservas terminadas.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    My longest experience, and where I learned to build product. I came in as a
-                    Trainee and left as a Product Engineer, four years later. I wrote about{" "}
+                    I wrote about{" "}
                     <Link
                       href="/blog/from-bioengineering-to-product-engineer"
                       className="underline underline-offset-4"
                     >
                       how that path went and what the role does in practice
                     </Link>
-                    .
-                  </p>
-                  <p>
-                    As <strong>Product Engineer</strong> (Aug 2025 – Jan 2026), I improved{" "}
-                    <strong>sprint predictability from 60% to 90%</strong> by modeling real effort.
-                    Removed ~20% of low-value features by prioritizing by impact.
-                  </p>
-                  <p>
-                    As <strong>Semi Senior</strong> (Jul 2024 – Jul 2025), I led{" "}
-                    <strong>4 end-to-end projects</strong> with teams of 3-4 people. B2C and B2B
-                    platforms with up to <strong>1,500 active users</strong>. Integrated payments
-                    with Mercado Pago, PayPal and Stripe; optimized B2C checkout, increasing booking
-                    completion rates.
+                    . I led <strong>4 end-to-end projects</strong> with teams of 3 or 4 people: B2C
+                    and B2B platforms with up to <strong>1,500 active users</strong>, payments
+                    through Mercado Pago, PayPal and Stripe, and a checkout that raised the share of
+                    bookings people finished.
                   </p>
                 </>
               )}
@@ -418,31 +473,21 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 <>
                   <p>
                     Producto fintech 0→1 para simplificar la gestión impositiva de freelancers en
-                    Argentina. Participé del <strong>batch Techstars W24</strong> (Stellar &
-                    MoneyGram Accelerator) en Nueva York como parte del equipo fundador.
+                    Argentina. Entré como parte del equipo fundador y participé del{" "}
+                    <strong>batch Techstars W24</strong> (Stellar & MoneyGram Accelerator) en Nueva
+                    York. Llegamos a ~100 primeros usuarios en validación, y rehacer el onboarding{" "}
+                    <strong>subió la conversión ~40%</strong>.
                   </p>
-                  <ul className="ml-4 list-disc space-y-1">
-                    <li>~100 primeros usuarios durante la fase de validación</li>
-                    <li>
-                      Mejoras de onboarding que <strong>subieron la conversión ~40%</strong>
-                    </li>
-                    <li>Decisiones de roadmap discutidas de primera mano con los fundadores</li>
-                  </ul>
                 </>
               ) : (
                 <>
                   <p>
-                    Fintech product 0→1 to simplify tax management for freelancers in Argentina.
-                    Participated in the <strong>Techstars W24 batch</strong> (Stellar & MoneyGram
-                    Accelerator) in New York as part of the founding team.
+                    Fintech product 0→1 to simplify tax management for freelancers in Argentina. I
+                    joined as part of the founding team and took part in the{" "}
+                    <strong>Techstars W24 batch</strong> (Stellar & MoneyGram Accelerator) in New
+                    York. We reached ~100 first users in validation, and rebuilding the onboarding{" "}
+                    <strong>raised conversion ~40%</strong>.
                   </p>
-                  <ul className="ml-4 list-disc space-y-1">
-                    <li>~100 first users during the validation phase</li>
-                    <li>
-                      Onboarding improvements that <strong>raised conversion ~40%</strong>
-                    </li>
-                    <li>Roadmap decisions discussed first-hand with the founders</li>
-                  </ul>
                 </>
               )}
             </ExperienceItem>
@@ -460,18 +505,14 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                 <>
                   <p>
                     Mi primer rol full-time, antes de pasarme a software: planificaba mantenimientos
-                    preventivos a nivel nacional sobre <strong>Microsoft Dynamics NAV</strong>. Duró
-                    tres meses y me mostró cómo una empresa grande diseña sus procesos y mide su
-                    rendimiento.
+                    preventivos a nivel nacional sobre <strong>Microsoft Dynamics NAV</strong>.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
                     My first full-time role, before moving into software: I planned preventive
-                    maintenance at a national level on <strong>Microsoft Dynamics NAV</strong>. It
-                    lasted three months and showed me how a large company designs its processes and
-                    measures its performance.
+                    maintenance at a national level on <strong>Microsoft Dynamics NAV</strong>.
                   </p>
                 </>
               )}
@@ -512,18 +553,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                         className="ml-0.5 inline-block opacity-0 transition-opacity group-hover:opacity-60"
                       />
                     </a>
-                    , desarrollada en conjunto con el{" "}
-                    <strong>Hospital Italiano de Buenos Aires</strong>. La investigación partió de
-                    una necesidad del hospital: anticipar la evolución clínica de un paciente
-                    oncológico a partir de sus datos históricos.
-                  </p>
-                  <p>
-                    Lo que entregué fue un algoritmo que toma un paciente nuevo y estima su riesgo,
-                    medido en precisión y exactitud sobre datos que el modelo no había visto. Lo
-                    armé con radiómica y aprendizaje automático sobre datos clínicos reales.
-                  </p>
-                  <p>
-                    También fui ayudante de Procesamiento de Imágenes Biomédicas y de Biosensores.
+                    , con el <strong>Hospital Italiano de Buenos Aires</strong>. Entregué un
+                    algoritmo que toma un paciente oncológico nuevo y estima su riesgo, con
+                    radiómica y aprendizaje automático sobre datos clínicos reales, medido sobre
+                    datos que el modelo no había visto. También fui ayudante de Procesamiento de
+                    Imágenes Biomédicas y de Biosensores.
                   </p>
                 </>
               ) : (
@@ -545,19 +579,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
                         className="ml-0.5 inline-block opacity-0 transition-opacity group-hover:opacity-60"
                       />
                     </a>
-                    , developed in collaboration with{" "}
-                    <strong>Hospital Italiano de Buenos Aires</strong>. The research came from a
-                    need the hospital had: predicting how an oncology patient would evolve from
-                    their historical data.
-                  </p>
-                  <p>
-                    What I delivered was an algorithm that takes a new patient and estimates their
-                    risk, measured for precision and accuracy on data the model had not seen. I
-                    built it with radiomics and machine learning on real clinical data.
-                  </p>
-                  <p>
-                    I was also a teaching assistant in Biomedical Image Processing and in
-                    Biosensors.
+                    , with <strong>Hospital Italiano de Buenos Aires</strong>. I delivered an
+                    algorithm that takes a new oncology patient and estimates their risk, built with
+                    radiomics and machine learning on real clinical data and measured on data the
+                    model had not seen. I was also a teaching assistant in Biomedical Image
+                    Processing and in Biosensors.
                   </p>
                 </>
               )}
@@ -657,7 +683,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </section>
 
         {/* Contacto */}
-        <section>
+        <section id="about-contacto">
           <Eyebrow as="h2" className="mb-4">
             {t("sections.contact")}
           </Eyebrow>

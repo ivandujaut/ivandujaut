@@ -16,6 +16,7 @@ import { buildCoverUrl } from "@/lib/og";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/jsonld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { ReadTracker } from "@/components/content/read-tracker";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { useMDXComponents } from "@/mdx-components";
 import { PaperToc } from "@/components/mdx/paper-toc";
@@ -139,6 +140,19 @@ export default async function CasebookDetailPage({ params }: Props) {
 
   return (
     <main id="main">
+      {/* De los tres formatos largos, el casebook era el único sin medición:
+          los casos y los posts lo montan desde que existe. Era además el que
+          más falta hacía, porque es la apuesta más nueva y la que todavía no
+          sabe si alguien la termina: 11 visitas al índice y 3 al único caso en
+          120 días, y de esas 3 no había forma de saber cuántas pasaron del
+          planteo. */}
+      <ReadTracker
+        kind="casebook"
+        locale={typedLocale}
+        slug={slug}
+        targetSelector="#casebook-article"
+        readingMinutes={item.metadata?.readingTime}
+      />
       <PaperToc containerSelector="#casebook-article" label={tocLabel} />
       <PageShell as="article" id="casebook-article" className="paper relative">
         <JsonLd data={jsonLd} />

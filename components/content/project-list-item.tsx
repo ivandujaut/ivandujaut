@@ -47,7 +47,7 @@ interface ProjectListItemProps {
    * `card_click`, para saber qué tarjeta se elige y desde qué página. Es
    * obligatorio para que ninguna tarjeta quede sin medir.
    */
-  surface: "home" | "index" | "next";
+  surface: "home" | "index" | "next" | "about";
   /**
    * Sólo en `surface: "next"`: si la pieza se eligió por compartir tema con la
    * que se está leyendo (`topic`) o por ser su vecina en el tiempo (`date`).

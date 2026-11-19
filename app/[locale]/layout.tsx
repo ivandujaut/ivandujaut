@@ -14,6 +14,7 @@ import { routing } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
 import { SITE_URL, localePath } from "@/lib/seo";
 import type { Metadata, Viewport } from "next";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 /**
  * Layout raíz del sitio: el que renderiza `<html>` y `<body>`.
@@ -82,14 +83,12 @@ export async function generateMetadata({
       default: "Iván Dujaut",
       template: "%s · Iván Dujaut",
     },
-    description:
-      "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA.",
+    description: PROFILE_DESCRIPTION[locale as "es" | "en"],
     authors: [{ name: "Iván Dujaut", url: baseUrl }],
     creator: "Iván Dujaut",
     openGraph: {
       title: "Iván Dujaut",
-      description:
-        "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión.",
+      description: PROFILE_DESCRIPTION[locale as "es" | "en"],
       url: baseUrl,
       siteName: "Iván Dujaut",
       images: [

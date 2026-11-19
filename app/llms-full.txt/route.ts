@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAllProjects } from "@/lib/content";
 import { SITE_URL } from "@/lib/seo";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 /**
  * El texto completo de los casos, en un solo archivo.
@@ -90,8 +91,7 @@ function build(): string {
   const lines: string[] = [
     "# Iván Dujaut · texto completo de los casos",
     "",
-    "> Lancé dos productos con IA generativa que hoy están en producción y escribo" +
-      " casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA.",
+    `> ${PROFILE_DESCRIPTION.es}`,
     "",
     `Este archivo trae el texto completo de los ${casos.length} casos publicados,` +
       " en castellano, que es la versión canónica. Son uno más que los que lista" +
