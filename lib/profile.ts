@@ -53,6 +53,6 @@ import type { Locale } from "@/i18n/routing";
  * puntos de frecuencia y ninguno tiene evidencia publicada.
  */
 export const PROFILE_DESCRIPTION: Record<Locale, string> = {
-  es: "Priorizo roadmap y backlog con métricas de retención y margen, y construyo el producto con la IA de copiloto. Casos de negocio sobre salud y seguros.",
-  en: "I prioritise roadmap and backlog with retention and margin metrics, and build the product with AI as a copilot. Business cases on health and insurance.",
+  es: "Priorizo roadmap y backlog con métricas de retención y margen, y construyo el producto con herramientas de IA. Casos de negocio sobre salud y seguros.",
+  en: "I prioritise roadmap and backlog with retention and margin metrics, and build the product with AI tools. Business cases on health and insurance.",
 };
