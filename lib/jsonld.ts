@@ -1,4 +1,5 @@
 import { SITE_URL, type Locale } from "@/lib/seo";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 
@@ -15,23 +16,9 @@ export function personSchema(locale: Locale) {
     // Product Manager", así que el campo sigue al CV: es como Iván se presenta,
     // no un empleo. Los cargos reales siguen en /about, uno por experiencia.
     jobTitle: "AI Product Manager",
-    // La descripción anterior ("construyo producto con Next.js, TypeScript...")
-    // era la única frase que un buscador tenía para resumir el perfil, y la
-    // resumía como desarrollo web: el AI Overview de Google la parafraseaba
-    // literal. Acá se declara el trabajo que diferencia, no el stack.
-    // Una sola frase, la misma acá, en la meta de `/about` y en el encabezado de
-    // `llms.txt`. Repetirla palabra por palabra es lo que hace que un buscador o
-    // un modelo la tome como la descripción del perfil en vez de fabricar una.
-    // La anterior decía "analizo mercados", encuadre que Iván rechazó el
-    // 2026-09-19: no analiza mercados, agarra un problema, reconstruye contexto
-    // y actores, y termina en una decisión.
-    // El 14/10/2026 pasó a abrir con los dos productos con IA generativa en
-    // producción (Parcialito y el bot de seguros), que es lo que sostiene el
-    // titular "AI Product Manager" del CV. Los casos siguen en la misma frase.
-    description:
-      locale === "es"
-        ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
-        : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.",
+    // Una sola frase, la misma acá, en la meta de cada página y en llms.txt.
+    // Vive en `lib/profile.ts`, con el historial de por qué dice lo que dice.
+    description: PROFILE_DESCRIPTION[locale],
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Instituto Tecnológico de Buenos Aires (ITBA)",
@@ -40,17 +27,22 @@ export function personSchema(locale: Locale) {
     // `jobTitle` es el titular y `hasOccupation` es la práctica. Son campos
     // distintos y hacen falta los dos: con sólo el titular, el trabajo que lo
     // diferencia no queda declarado en ningún lado legible por máquina.
-    // La práctica sale de la línea del CV que dice qué rol busca ("un rol de
-    // producto o de análisis"). Hasta el 14/10/2026 decía "Estrategia de
-    // producto y decision analytics", que es la etiqueta que el 19/09 se
-    // descartó del hero porque ningún aviso la usa.
-    hasOccupation: {
-      "@type": "Occupation",
-      name:
-        locale === "es"
-          ? "Gestión de producto y análisis de datos"
-          : "Product management and data analysis",
-    },
+    //
+    // Son tres y no una desde el 19/11/2026, que es la versión legible por
+    // máquina de la línea que /about dice en prosa: el puesto puede llamarse
+    // product manager, product owner o analista, y el trabajo es el mismo.
+    // Hasta ese día era una sola, "Gestión de producto y análisis de datos",
+    // una etiqueta que no coincide con ningún aviso.
+    //
+    // Los tres títulos salen de contar avisos y no de intuición: en Argentina
+    // y a 30 días, Product Manager tenía 109, Business Analyst 89 y Product
+    // Owner 49. "Analista de Producto" y "Product Analyst" devolvían el
+    // fallback de LinkedIn, indistinguible de buscar un puesto inventado, así
+    // que no entran aunque describan mejor lo que hace.
+    hasOccupation: (locale === "es"
+      ? ["Product Manager", "Product Owner", "Analista de negocio"]
+      : ["Product Manager", "Product Owner", "Business Analyst"]
+    ).map((name) => ({ "@type": "Occupation", name })),
     // `knowsAbout` es el campo con el que schema.org declara sobre qué temas
     // hay expertise. Sin él, el buscador infiere los temas del texto suelto de
     // la página, que es exactamente cómo terminaba clasificado como "Next.js".

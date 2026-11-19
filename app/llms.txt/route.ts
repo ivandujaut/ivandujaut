@@ -1,6 +1,7 @@
 import { getCasebookByLevel, getPosts, getProjects, getResearch } from "@/lib/content";
 import { RESEARCH_ENABLED } from "@/lib/features";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 // `llms.txt` es una convención propuesta, no un estándar que las empresas de IA
 // se hayan comprometido a consumir. Se genera desde el mismo contenido que el
@@ -47,8 +48,7 @@ function build(): string {
     // La anterior decía "Product Engineer. Casos de estudio sobre producto y
     // seguros, fintech y cobranzas": no nombraba salud, que son 8 de los 18
     // casos y el tema principal desde hace tres meses.
-    "> Lancé dos productos con IA generativa que hoy están en producción y escribo" +
-      " casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA.",
+    `> ${PROFILE_DESCRIPTION.es}`,
     "",
     "El sitio es bilingüe. El español es la versión canónica y las traducciones" +
       " al inglés viven bajo `/en/`. Cada pieza declara `hreflang` y su canonical.",

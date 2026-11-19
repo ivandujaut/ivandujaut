@@ -21,6 +21,7 @@ import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { PageShell } from "@/components/ui/page-shell";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -34,14 +35,11 @@ export async function generateMetadata({ params }: Props) {
   const title = isEs
     ? "Acerca de mí · Iván Dujaut, AI Product Manager"
     : "About · Iván Dujaut, AI Product Manager";
-  // La descripción vende el trabajo publicado, no el cargo: es lo que
-  // diferencia el perfil y lo que sostiene el resto de la página. Es la misma
-  // frase, palabra por palabra, que el `description` del `Person` en
-  // `lib/jsonld.ts` y que el encabezado de `llms.txt`: repetirla igual es lo que
-  // hace que un buscador o un modelo la tome en vez de fabricar una propia.
-  const description = isEs
-    ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
-    : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.";
+  // La misma frase que la home, el layout, el `Person` de `lib/jsonld.ts` y
+  // llms.txt, palabra por palabra: repetirla igual es lo que hace que un
+  // buscador o un modelo la tome en vez de fabricar una propia. Vive en
+  // `lib/profile.ts`, con el historial de por qué dice lo que dice.
+  const description = PROFILE_DESCRIPTION[locale as "es" | "en"];
 
   const ogImageUrl = buildDefaultOgUrl({
     title,

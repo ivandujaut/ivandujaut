@@ -10,6 +10,7 @@ import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
 import { PageShell } from "@/components/ui/page-shell";
+import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -43,9 +44,7 @@ export async function generateMetadata({ params }: Props) {
   // El remate anterior era "y escribo el código", y era la última frase del
   // resultado de búsqueda para quien busca el nombre. El código es la palanca,
   // no el oficio: lo que distingue el perfil son los análisis publicados.
-  const description = isEs
-    ? "Lancé dos productos con IA generativa que hoy están en producción y escribo casos sobre salud y seguros que terminan en una decisión. Bioingeniero del ITBA."
-    : "I launched two generative AI products that are now in production, and I write cases on health and insurance that end in a decision. Bioengineer from ITBA.";
+  const description = PROFILE_DESCRIPTION[typedLocale];
 
   const ogImageUrl = buildDefaultOgUrl({
     title: ogTitle,
