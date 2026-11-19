@@ -176,8 +176,13 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               reconstruirla desde afuera).
             - Los números van en primera persona del singular. Acá se vende él,
               no el equipo en el que estaba.
-            - El cierre no pide un cargo. Analista, product manager y product
-              owner comparten el trabajo, así que el título queda de lado.
+            - El cierre nombra los tres puestos. La regla era la contraria
+              hasta el 18/11/2026: analista, product manager y product owner
+              comparten el trabajo, así que el título quedaba de lado. Funciona
+              para alguien a quien ya conocen; acá el que lee filtra por
+              título, y no nombrarlos le deja a él el trabajo de deducir que
+              Iván entra en su búsqueda. Lo que se sigue evitando es pedir un
+              cargo: los tres se nombran para decir que son el mismo trabajo.
             - Lo que ya está dicho en otro lado no se repite: la trazabilidad
               vive en /method, la logística de trabajo remoto en "Actualmente"
               de la home, y la tesis en Educación, dos secciones más abajo. */}
@@ -187,7 +192,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               afirmación ("estos dos mercados dejan rastro público") y su prueba
               quedan en el mismo lugar, y cada fuente apunta al caso donde se
               usó. Es lo que reemplazó a la lista de dieciséis casos, que era el
-              índice repetido. Las cuatro cubren los dos mercados y los dos
+              índice repetido. Eran cuatro hasta el 18/11/2026 y quedaron dos,
+              una por mercado: es el precio de acortar, y las tarjetas de abajo
+              siguen enlazando casos, así que la navegación no se pierde. Las
+              cuatro cubrían los dos mercados y los dos
               niveles de fuente del método: el archivo donde la empresa es una
               fila, y lo que la empresa dice de sí misma. */}
           <p>
@@ -203,22 +211,6 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               balances: (chunks) => (
                 <Link
                   href="/projects/seguro-hogar-argentina"
-                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-                >
-                  {chunks}
-                </Link>
-              ),
-              srt: (chunks) => (
-                <Link
-                  href="/projects/cobranza-seguros"
-                  className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
-                >
-                  {chunks}
-                </Link>
-              ),
-              canales: (chunks) => (
-                <Link
-                  href="/projects/canal-digital-seguros"
                   className="underline decoration-muted-foreground/50 underline-offset-4 transition-colors hover:decoration-foreground"
                 >
                   {chunks}
