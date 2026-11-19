@@ -504,10 +504,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Mi primer rol full-time, antes de pasarme a software, en el área de ciclo de
-                    vida del equipamiento médico. Planificaba el servicio técnico de{" "}
-                    <strong>64 clientes</strong> a nivel nacional sobre{" "}
-                    <strong>Microsoft Dynamics NAV</strong>, con{" "}
+                    Antes de pasarme a software, en el área de ciclo de vida del equipamiento
+                    médico, planificaba el servicio técnico de <strong>64 clientes</strong> a nivel
+                    nacional sobre <strong>Microsoft Dynamics NAV</strong>, con{" "}
                     <strong>ocho ingenieros de campo a cargo</strong>. El indicador del área, los
                     mantenimientos hechos dentro de su ventana contractual,{" "}
                     <strong>pasó del 78% al 92%</strong> en once semanas.
@@ -525,9 +524,9 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ) : (
                 <>
                   <p>
-                    My first full-time role, before moving into software, in medical equipment life
-                    cycle management. I planned service for <strong>64 clients</strong> nationwide
-                    on <strong>Microsoft Dynamics NAV</strong>, with{" "}
+                    Before moving into software, in medical equipment life cycle management, I
+                    planned service for <strong>64 clients</strong> nationwide on{" "}
+                    <strong>Microsoft Dynamics NAV</strong>, with{" "}
                     <strong>eight field engineers reporting to me</strong>. The team&apos;s metric,
                     maintenance done inside its contractual window,{" "}
                     <strong>went from 78% to 92%</strong> in eleven weeks.
