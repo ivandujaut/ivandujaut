@@ -37,11 +37,22 @@ import type { Locale } from "@/i18n/routing";
  * producto con IA, pagos integrados", que es una lista de habilidades y no una
  * oración. Dos puntos no pagan que el que lee vea un volcado de keywords.
  *
+ * - El 19/11/2026, más tarde, "construyo el producto con IA" pasó a "con la IA
+ *   de copiloto". Lo pidió Iván: la primera decía quién construye y hoy se lee
+ *   como que construye sin pensar, que es justo lo que no quiere que se
+ *   entienda. La segunda dice que la IA es la herramienta y él decide.
+ *
+ * Cuesta 12 caracteres y por eso se fue "del dato a la decisión", que era el
+ * único lugar donde aparecía "datos" (25%). La cobertura baja de 100% a 92% de
+ * los nueve términos que entran en una frase de este largo. Vale la pena igual:
+ * la versión completa medía 171 caracteres y Google corta cerca de 160, así que
+ * ese 100% se perdía justo en la cola que se trunca.
+ *
  * Qué no entró porque no hay con qué respaldarlo: user stories, dashboards,
  * investigación de usuarios, discovery, A/B testing y go-to-market. Suman 122
  * puntos de frecuencia y ninguno tiene evidencia publicada.
  */
 export const PROFILE_DESCRIPTION: Record<Locale, string> = {
-  es: "Priorizo roadmap y backlog con métricas de retención y margen, y construyo el producto con IA. Casos de negocio sobre salud y seguros, del dato a la decisión.",
-  en: "I prioritise roadmap and backlog with retention and margin metrics, and build the product with AI. Business cases on health and insurance, data to decision.",
+  es: "Priorizo roadmap y backlog con métricas de retención y margen, y construyo el producto con la IA de copiloto. Casos de negocio sobre salud y seguros.",
+  en: "I prioritise roadmap and backlog with retention and margin metrics, and build the product with AI as a copilot. Business cases on health and insurance.",
 };
