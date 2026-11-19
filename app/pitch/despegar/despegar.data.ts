@@ -429,11 +429,13 @@ export const bucket = {
 export const voice = {
   eyebrow: "Lo que dicen",
   heading: "Qué dicen 800 reseñas de la app, clasificadas con IA",
+  // El paso de validación a mano (50 reseñas codificadas por Iván contra el
+  // modelo) vuelve a la lista cuando esté el resultado; mientras tanto no se
+  // publica un marcador vacío.
   method: [
     "Bajé las reseñas públicas de App Store (500 de Argentina, todas, oct-2023 a nov-2026) y de Google Play (300 desde mayo 2025, al azar por estrellas).",
     "Armé un libro de códigos cerrado: 8 etapas del funnel y 21 tipos de problema, cada uno con definición y ejemplo.",
     "Las clasificó un modelo de lenguaje en lotes. Una segunda pasada a ciegas sobre 60 coincidió 93% en etapa y 97% en problema.",
-    "Codifiqué 50 a mano para medir cuánto coincide el modelo con una persona: [PENDIENTE, completar con el resultado de Iván].",
   ],
   caveat:
     "Las reseñas no miden el funnel: escribe el que se enojó, y mucho es posventa. Sirven para saber dónde mirar, y para comparar contra pares con el mismo método.",
