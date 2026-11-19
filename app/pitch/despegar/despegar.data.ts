@@ -656,44 +656,62 @@ export const caseStudy = {
    */
   simulator: {
     intro:
-      "Probá el criterio con un resultado inventado: la decisión sale de las reglas de arriba.",
+      "Imaginá que ya pasaron las cuatro semanas del experimento. Elegí qué salió y mirá qué se decide con las reglas de arriba.",
     example: "Resultado de ejemplo",
-    conversion: { label: "Conversión, cambio relativo", min: -4, max: 6, step: 0.5, initial: 2.5 },
+    scenariosLabel: "¿Qué salió?",
+    scenarios: [
+      { id: "funciona", label: "Funciona", c: 3, interval: true, r: -0.5, q: 20 },
+      { id: "azar", label: "Puede ser azar", c: 2.5, interval: false, r: -0.5, q: 20 },
+      { id: "caro", label: "Sale caro", c: 3, interval: true, r: -2.5, q: 20 },
+      { id: "consultas", label: "Consultas caras", c: 2.5, interval: true, r: -0.5, q: 120 },
+    ],
+    manual: "Ajustar los números a mano",
+    conversion: {
+      label: "¿Cuánto más compran?",
+      hint: "Conversión del checkout, contra el grupo de control",
+      min: -4,
+      max: 6,
+      step: 0.5,
+    },
     interval: {
-      label: "¿El intervalo de confianza deja afuera el cero?",
-      yes: "Sí",
-      no: "No",
+      label: "¿La diferencia es real o puede ser azar?",
+      hint: "Intervalo de confianza",
+      yes: "Real",
+      no: "Puede ser azar",
     },
     revenue: {
-      label: "Revenue neto por orden, con lo absorbido",
+      label: "¿Cuánto deja cada compra?",
+      hint: "Revenue neto por orden, después de lo que Despegar pone para sostener el precio",
       min: -4,
       max: 2,
       step: 0.5,
-      initial: -0.5,
     },
     airline: {
-      label: "Consultas a la aerolínea por orden",
-      min: 1,
-      max: 2.5,
-      step: 0.1,
-      initial: 1.2,
+      label: "¿Cuánto más le pregunta Despegar a la aerolínea?",
+      hint: "Revalidar la tarifa antes tiene un costo por consulta",
+      min: 0,
+      max: 150,
+      step: 10,
     },
-    total: "Revenue neto total",
-    totalNote: "conversión × revenue por orden",
+    total: "Revenue total",
+    totalNote: "compras × lo que deja cada una",
     why: "Por qué",
+    /** Cómo se lee el cambio en lo que deja cada compra, según el signo. */
+    revenueWords: { less: "{v} menos", more: "{v} más", same: "lo mismo" },
     reasons: {
-      killConversion: "La conversión cae {ca}: con una caída de 1% o más, se apaga.",
-      killRevenue: "El revenue neto por orden cae {ra}: con más de 2%, se apaga.",
+      killConversion: "Compran {ca} menos. Con una caída de 1% o más, se apaga.",
+      killRevenue:
+        "Cada compra deja {ra} menos. Con más de 2%, se apaga aunque se venda más: se estaría comprando la conversión con margen.",
       killAirline:
-        "Las consultas a la aerolínea por orden pasan a {q}, y el freno está en el doble.",
-      ship: "La conversión sube {ca} con el intervalo fuera de cero, el revenue por orden se mueve {r} (no puede caer más de 1%) y el revenue total sube {ta}.",
+        "Las consultas a la aerolínea suben {qa}. Si se duplican, se apaga: revalidar el precio cuesta más de lo que se gana.",
+      ship: "Compran {ca} más, la diferencia es real y cada compra deja {rw} (el límite era 1% menos). En total entra {ta} más.",
       iterateInterval:
-        "La conversión sube {ca}, pero el intervalo incluye el cero: el resultado es neutro.",
-      iterateSmall: "La conversión se mueve {c}: no llega al +2% que hace falta para lanzar.",
+        "Compran {ca} más, pero puede ser azar: con estos datos no se puede decir que funcionó. Se mira por segmento antes de decidir.",
+      iterateSmall: "La conversión se mueve {c}: no llega al +2% que se fijó antes de empezar.",
       iterateRevenue:
-        "La conversión sube {ca}, pero el revenue por orden cae {ra}: para lanzar no puede caer más de 1%.",
+        "Compran {ca} más, pero cada compra deja {ra} menos: para lanzar no puede caer más de 1%.",
       iterateTotal:
-        "La conversión sube {ca}, pero lo absorbido se come lo ganado: el revenue total se mueve {t}.",
+        "Compran {ca} más, pero lo que se pone para sostener el precio se come lo ganado: el total se mueve {t}.",
     },
   },
   impact: {

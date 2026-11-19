@@ -228,6 +228,16 @@ html.lenis body {
   position: relative;
 }
 
+/* Los escenarios son cuatro: en el celular bajan a otra línea. */
+.despegar .cut-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.despegar .cut-scenarios span {
+  min-width: 0;
+}
+
 .despegar .cut-toggle input {
   position: absolute;
   opacity: 0;
