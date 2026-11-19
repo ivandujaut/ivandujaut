@@ -504,15 +504,41 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               {locale === "es" ? (
                 <>
                   <p>
-                    Mi primer rol full-time, antes de pasarme a software: planificaba mantenimientos
-                    preventivos a nivel nacional sobre <strong>Microsoft Dynamics NAV</strong>.
+                    Antes de pasarme a software, en el área de ciclo de vida del equipamiento
+                    médico, planificaba el servicio técnico de <strong>64 clientes</strong> a nivel
+                    nacional sobre <strong>Microsoft Dynamics NAV</strong>, con{" "}
+                    <strong>ocho ingenieros de campo a cargo</strong>. El indicador del área, los
+                    mantenimientos hechos dentro de su ventana contractual,{" "}
+                    <strong>pasó del 78% al 92%</strong> en once semanas.
+                  </p>
+                  <p>
+                    Para llegar ahí armé una planilla de seguimiento en Excel, que mostraba las
+                    visitas en riesgo antes de que se vencieran, y rediseñé tres circuitos: el envío
+                    de repuestos, que dejó de pasar por la oficina y liberó{" "}
+                    <strong>entre 5 y 7,5 horas por semana por ingeniero</strong>; el pedido de
+                    repuestos desde el campo para los correctivos urgentes; y una base de equipos
+                    fuera de contrato, con el ahorro calculado para cada uno, que el área usó como
+                    argumento para renovarlos.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    My first full-time role, before moving into software: I planned preventive
-                    maintenance at a national level on <strong>Microsoft Dynamics NAV</strong>.
+                    Before moving into software, in medical equipment life cycle management, I
+                    planned service for <strong>64 clients</strong> nationwide on{" "}
+                    <strong>Microsoft Dynamics NAV</strong>, with{" "}
+                    <strong>eight field engineers reporting to me</strong>. The team&apos;s metric,
+                    maintenance done inside its contractual window,{" "}
+                    <strong>went from 78% to 92%</strong> in eleven weeks.
+                  </p>
+                  <p>
+                    To get there I built a tracking spreadsheet in Excel that showed the visits at
+                    risk before they ran out of time, and redesigned three circuits: parts delivery,
+                    which stopped going through the office and freed{" "}
+                    <strong>5 to 7.5 hours a week per engineer</strong>; parts requests from the
+                    field for urgent repairs; and a database of out-of-contract equipment with the
+                    saving worked out for each one, which the team used as the argument to renew
+                    them.
                   </p>
                 </>
               )}
