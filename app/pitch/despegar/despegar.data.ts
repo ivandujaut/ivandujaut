@@ -101,7 +101,7 @@ export const meta = {
  * y el pasaje dado vuelta, con el mismo vuelo de ejemplo.
  */
 export const og = {
-  alt: "La app de Despegar ya trae a la gente. Quiero entender por qué no vuelve. Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
+  alt: "La app de Despegar ya trae a la gente. ¿Por qué la vuelta no crece? Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
   footer: "Iván Dujaut · ivandujaut.com/despegar",
 };
 
@@ -132,7 +132,7 @@ export const readings = {
 export const hero = {
   kicker: "Una lectura de la app de Despegar",
   title: "La app de Despegar ya trae a la gente.",
-  titleAccent: "Quiero entender por qué no vuelve.",
+  titleAccent: "¿Por qué la vuelta no crece?",
   lede: "Soy Iván Dujaut. Quiero ayudar a que más gente compre su viaje en la app de Despegar y vuelva a comprar el siguiente. Armé esta página con datos públicos para llegar con una hipótesis y con las preguntas que todavía no puedo contestar desde afuera.",
   byline: "Noviembre de 2026",
   summary: [
