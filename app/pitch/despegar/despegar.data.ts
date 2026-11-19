@@ -107,15 +107,12 @@ export const og = {
 
 export const nav = [
   { id: "inicio", label: "Inicio" },
-  { id: "negocio", label: "Cómo gana plata" },
   { id: "app", label: "La app hoy" },
   { id: "balde", label: "El balde" },
   { id: "voz", label: "Lo que dicen" },
-  { id: "competencia", label: "Contra quién" },
   { id: "tesis", label: "La tesis" },
   { id: "caso", label: "El caso" },
-  { id: "tablero", label: "Cómo lo mediría" },
-  { id: "primeros-pasos", label: "Primeros pasos" },
+  { id: "anexo", label: "Anexo" },
   { id: "cierre", label: "Cierre" },
 ] as const;
 
@@ -873,6 +870,28 @@ export const firstSteps = {
 // 11 · Cierre
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// Anexo: el respaldo, plegado para que la página se lea en menos tiempo
+// ---------------------------------------------------------------------------
+
+/**
+ * Las cuatro secciones que sostienen la lectura pero no son el hilo: se abren
+ * de a una, debajo del caso. Cada una mantiene su id, así un link directo
+ * (o la pregunta en la entrevista) llega igual.
+ */
+export const appendix = {
+  eyebrow: "Anexo",
+  heading: "Lo que respalda la lectura",
+  intro:
+    "Cuatro secciones de contexto, cerradas para que la página se lea más rápido. Se abren de a una.",
+  items: [
+    { id: "negocio", letter: "A", title: business.eyebrow, summary: business.heading },
+    { id: "competencia", letter: "B", title: competition.eyebrow, summary: competition.heading },
+    { id: "tablero", letter: "C", title: dashboard.eyebrow, summary: dashboard.heading },
+    { id: "primeros-pasos", letter: "D", title: firstSteps.eyebrow, summary: firstSteps.heading },
+  ],
+} as const;
+
 export const close = {
   heading: "Esto es lo que vi desde afuera. Adentro hay datos que pueden darlo vuelta.",
   body: "Todo lo de esta página sale de fuentes públicas y de reseñas que cualquiera puede leer. No sé cuánto se mueve de verdad el precio en el checkout ni qué hace después quien lo vive, y eso es lo que más importa. Me gustaría averiguarlo con ustedes.",
@@ -909,7 +928,7 @@ export const labels = {
     keys: [
       { key: "→", text: "Sección siguiente" },
       { key: "←", text: "Sección anterior" },
-      { key: "1 a 9, 0", text: "Ir a una sección (0 es la 10)" },
+      { key: "1 a 8", text: "Ir a una sección" },
       { key: "?", text: "Mostrar u ocultar esta ayuda" },
     ],
     sections: "Secciones",

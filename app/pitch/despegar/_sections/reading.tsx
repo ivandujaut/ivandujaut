@@ -9,11 +9,11 @@ function shortMonth(iso: string) {
   return `${labels.monthsShort[Number(m) - 1]} ${y.slice(2)}`;
 }
 
-/** 02 · Cómo gana plata: el modelo, el cambio de dueño y el mercado que ya no empuja. */
+/** Anexo A · Cómo gana plata: el modelo, el cambio de dueño y el mercado que ya no empuja. */
 export function Business() {
   return (
     <Tramo id="negocio">
-      <TramoHeading index="02" eyebrow={business.eyebrow}>
+      <TramoHeading index="A" eyebrow={business.eyebrow}>
         {business.heading}
       </TramoHeading>
       <Lede>{business.body}</Lede>
@@ -88,11 +88,11 @@ export function Business() {
   );
 }
 
-/** 03 · La app hoy: la curva del share y el viaje de una compra por el embudo. */
+/** 02 · La app hoy: la curva del share y el viaje de una compra por el embudo. */
 export function AppToday() {
   return (
     <Tramo id="app" deep>
-      <TramoHeading index="03" eyebrow={app.eyebrow}>
+      <TramoHeading index="02" eyebrow={app.eyebrow}>
         {app.heading}
       </TramoHeading>
 
@@ -132,11 +132,11 @@ export function AppToday() {
   );
 }
 
-/** 04 · El balde: lo que crece (Pasaporte) contra lo que no (la vuelta). */
+/** 03 · El balde: lo que crece (Pasaporte) contra lo que no (la vuelta). */
 export function Bucket() {
   return (
     <Tramo id="balde">
-      <TramoHeading index="04" eyebrow={bucket.eyebrow}>
+      <TramoHeading index="03" eyebrow={bucket.eyebrow}>
         {bucket.heading}
       </TramoHeading>
 

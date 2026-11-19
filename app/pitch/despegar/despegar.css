@@ -863,3 +863,13 @@ html.lenis body {
     transform: none;
   }
 }
+
+/* Los plegables propios (anexo y diseño del experimento) usan su flecha, no
+   el triángulo del navegador. */
+.despegar details > summary {
+  list-style: none;
+}
+
+.despegar details > summary::-webkit-details-marker {
+  display: none;
+}

@@ -2,12 +2,12 @@ import { caseStudy, labels, thesis } from "../despegar.data";
 import { CutSimulator } from "../_components/cut-simulator";
 import { ExampleBadge, Tramo, TramoHeading } from "../_components/ui";
 
-/** 07 · La tesis: tres frases, una por paso, cada una con su piso. */
+/** 05 · La tesis: tres frases, una por paso, cada una con su piso. */
 export function Thesis() {
   return (
     <Tramo id="tesis" night>
       <p className="reveal text-sm font-medium text-white/70 tabular">
-        07 <span aria-hidden>·</span> {thesis.eyebrow}
+        05 <span aria-hidden>·</span> {thesis.eyebrow}
       </p>
       <ol className="mt-10 grid gap-10 md:gap-14">
         {thesis.sentences.map((s) => (
@@ -23,12 +23,12 @@ export function Thesis() {
   );
 }
 
-/** 08 · El caso: objetivo, piezas, experimento, segmentos, corte, y qué no construir. */
+/** 06 · El caso: objetivo, piezas, experimento, segmentos, corte, y qué no construir. */
 export function Case() {
   const c = caseStudy;
   return (
     <Tramo id="caso">
-      <TramoHeading index="08" eyebrow={c.eyebrow}>
+      <TramoHeading index="06" eyebrow={c.eyebrow}>
         {c.heading}
       </TramoHeading>
 
