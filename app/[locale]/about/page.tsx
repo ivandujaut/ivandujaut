@@ -10,6 +10,7 @@ import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { DuolingoIcon } from "@/components/icons/duolingo-icon";
 import { getProjects, getPublishingCadence } from "@/lib/content";
 import { ProjectListItem } from "@/components/content/project-list-item";
+import { SectionTracker } from "@/components/analytics/section-tracker";
 import { CV_PAGE } from "@/lib/cv";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
@@ -116,6 +117,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
   return (
     <PageShell id="main">
       <JsonLd data={personSchema(locale)} />
+      {/* Tres hitos y no más: el final de la intro, las tarjetas y el
+          contacto. Contestan las dos preguntas que la página todavía no puede
+          contestar: si el que entra pasa del primer párrafo, y si llega a ver
+          la obra. */}
+      <SectionTracker page="about" sections="about-quiero,about-trabajo,about-contacto" />
       {/* Intro */}
       <section>
         <div className="flex flex-row items-start justify-between gap-4">
@@ -220,7 +226,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               ),
             })}
           </p>
-          <p>{t("intro.paragraph3")}</p>
+          {/* Los `id` son los hitos que mide `SectionTracker`. Si un párrafo
+              se parte o se junta, el `id` se queda con el que contesta la
+              misma pregunta: es lo que hace comparable la serie entre
+              versiones de la página. */}
+          <p id="about-quiero">{t("intro.paragraph3")}</p>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -287,7 +297,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             siguen enlazados desde el índice, la home, el sitemap, el RSS y los
             "siguientes casos" al pie de cada pieza, así que no pierden
             autoridad interna. */}
-        <section>
+        <section id="about-trabajo">
           <Eyebrow as="h2" className="mb-6">
             {t("sections.work")}
           </Eyebrow>
@@ -674,7 +684,7 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
         </section>
 
         {/* Contacto */}
-        <section>
+        <section id="about-contacto">
           <Eyebrow as="h2" className="mb-4">
             {t("sections.contact")}
           </Eyebrow>

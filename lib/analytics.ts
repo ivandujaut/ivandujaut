@@ -87,6 +87,20 @@ export type AnalyticsEvent =
    */
   | "filter_click"
   /**
+   * Hasta dónde llegó el lector en una página que no es un artículo
+   * (`page`, `section`). Lo emite `SectionTracker` por hitos con nombre, no
+   * por porcentaje del alto, para que la serie siga siendo comparable cuando
+   * la página se reescribe.
+   *
+   * Existe desde el 18/11/2026, con la reestructuración de /about en "lo que
+   * hice, lo que hago, lo que quiero". La línea de base que quiere mover es
+   * dura: en 120 días la página tuvo 37 visitas y cero `contact_click`, con
+   * el hero de la home haciendo 6 en el mismo período. Sin esto no se puede
+   * saber si el problema es que no llegan al final o que llegan y no les
+   * interesa, que son arreglos opuestos.
+   */
+  | "section_seen"
+  /**
    * Lectura de las páginas de pitch (`/pitch/*` y sus alias cortos), medida por
    * `PitchTracker`. Llevan `company` y `page` en vez de `slug` y `locale`: no son
    * piezas del sitio sino páginas privadas por empresa, y mezclarlas con los
