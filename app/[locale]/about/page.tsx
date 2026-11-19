@@ -15,7 +15,7 @@ import { CV_PAGE } from "@/lib/cv";
 import { buildDefaultOgUrl } from "@/lib/og";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
-import { personSchema } from "@/lib/jsonld";
+import { profilePageSchema } from "@/lib/jsonld";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { ShareLinkButton } from "@/components/common/share-link-button";
 import { Link } from "@/i18n/navigation";
@@ -86,6 +86,16 @@ export default async function AboutPage({ params }: Props) {
  * en una grilla de dos columnas, tres dejan media tarjeta suelta con el hueco
  * al lado, y acá la sección es el argumento de la página, no un anuncio.
  */
+/**
+ * Cuándo se tocó por última vez el contenido de esta página.
+ *
+ * Va a mano y no desde la fecha de build a propósito: con la fecha de build,
+ * cada despliegue le dice a los motores que la página cambió, y la señal deja
+ * de significar nada. Hay que subirla cuando cambie el texto, no cuando
+ * cambie el CSS.
+ */
+const ACTUALIZADA = "2026-11-19";
+
 const ABOUT_LIMIT = 4;
 
 /** Cuántas de esas cuatro se ven en un teléfono. Las otras dos se esconden con CSS. */
@@ -114,7 +124,11 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
 
   return (
     <PageShell id="main">
-      <JsonLd data={personSchema(locale)} />
+      {/* `ProfilePage` y no un `Person` suelto: es el tipo con el que Google
+          dice "esta página trata sobre esta persona". La home sigue emitiendo
+          el `Person`, con el mismo `@id`, así que para un motor que cruza
+          páginas es la misma entidad. */}
+      <JsonLd data={profilePageSchema(locale, ACTUALIZADA)} />
       {/* Tres hitos y no más: el final de la intro, las tarjetas y el
           contacto. Contestan las dos preguntas que la página todavía no puede
           contestar: si el que entra pasa del primer párrafo, y si llega a ver

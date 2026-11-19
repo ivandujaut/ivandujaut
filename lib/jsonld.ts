@@ -60,6 +60,8 @@ export function personSchema(locale: Locale) {
             "Análisis de datos",
             "Estrategia de producto",
             "Análisis de producto",
+            "Gestión de producto",
+            "Priorización de roadmap",
             "IA generativa",
             "Bioingeniería",
             "Aprendizaje automático",
@@ -75,12 +77,43 @@ export function personSchema(locale: Locale) {
             "Data analysis",
             "Product strategy",
             "Product analytics",
+            "Product management",
+            "Roadmap prioritisation",
             "Generative AI",
             "Bioengineering",
             "Machine learning",
           ],
     knowsLanguage: ["es", "en"],
     sameAs: ["https://linkedin.com/in/ivan-dujaut", "https://github.com/ivandujaut"],
+  };
+}
+
+/**
+ * La página "sobre mí", declarada como `ProfilePage`.
+ *
+ * Es el tipo que Google define para una página cuyo tema es una persona, y el
+ * que hace explícito algo que hasta el 19/11/2026 había que deducir: que
+ * `/about` no es una página más que menciona a Iván, sino la página que habla
+ * de él. Antes emitía un `Person` suelto, igual que la home, y las dos se
+ * leían como equivalentes.
+ *
+ * `mainEntity` lleva el `Person` entero y no una referencia por `@id`, por la
+ * misma razón que `AUTHOR` más abajo: un validador que analiza la página
+ * aislada tiene que poder leer el nombre y la URL sin resolver referencias
+ * entre páginas. El `@id` se conserva adentro, así que para un motor que sí
+ * cruza páginas sigue siendo la misma entidad que declara la home.
+ *
+ * `dateModified` existe porque es la señal de frescura que un motor usa para
+ * decidir si vuelve a leer la página.
+ */
+export function profilePageSchema(locale: Locale, dateModified: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": `${SITE_URL}${locale === "es" ? "" : "/en"}/about#profile`,
+    url: `${SITE_URL}${locale === "es" ? "" : "/en"}/about`,
+    dateModified,
+    mainEntity: personSchema(locale),
   };
 }
 
