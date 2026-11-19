@@ -135,19 +135,24 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
             procedimiento, decidir qué entra y qué no al roadmap, y medir
             después si rindió.
 
-            Va contado como relato y no como ficha. Son tres párrafos: de dónde
-            viene con los números de lo que hizo, por qué escribe de salud y de
-            seguros con las fuentes enlazadas, y qué hace en cada caso junto con
-            lo que ofrece.
+            Son tres párrafos y cada uno contesta una pregunta, en este orden:
+            lo que hizo, lo que hace y lo que quiere. El orden lo pidió Iván el
+            18/11/2026 con esas palabras, y es la estructura de la página, no
+            una forma de redactar: si un párrafo deja de contestar su pregunta,
+            se reescribe o se va.
 
-            Eran cinco y 383 palabras hasta el 18/11/2026. Los dos que se
-            fueron eran los dos que se declaraban en vez de mostrarse: el que
-            abría con "antes de construir nada me pregunto" y el que listaba
-            tres problemas de equipo en cláusulas paralelas. Las dos cosas
-            estaban prohibidas en las reglas de acá abajo, escritas al armar
-            esta página. Lo que quedó son hechos y una sola oferta, y la
-            evidencia pasó a ser la sección de abajo, que ahora tiene portadas
-            en vez de un renglón.
+            Hasta ese día eran cinco párrafos y 383 palabras, y fallaban en las
+            tres. Lo que hizo estaba al revés en el tiempo (2026 primero,
+            Banana después) y mezclado con los números de cada etapa, que es lo
+            que lo hacía leer como un CV en prosa. Lo que hace estaba, pero
+            empezaba por el mercado y no por el oficio. Y lo que quiere no
+            estaba en ninguna parte: la página cerraba ofreciéndole resolver un
+            problema al que lee, y eso sólo vivía en "Actualmente" de la home.
+
+            Por eso los números de Banana (60% al 90%, ~20%) no están acá
+            arriba: viven en Experiencia, dos centímetros más abajo. Apilados
+            en el primer párrafo tapaban la trayectoria, que es lo único que
+            este párrafo tiene que contar.
 
             Las reglas salieron de iterar con él, y están acá para no volver a
             romperlas:
