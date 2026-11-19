@@ -174,13 +174,22 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
               reconstruirla desde afuera).
             - Los números van en primera persona del singular. Acá se vende él,
               no el equipo en el que estaba.
-            - El cierre nombra los tres puestos. La regla era la contraria
-              hasta el 18/11/2026: analista, product manager y product owner
-              comparten el trabajo, así que el título quedaba de lado. Funciona
-              para alguien a quien ya conocen; acá el que lee filtra por
-              título, y no nombrarlos le deja a él el trabajo de deducir que
-              Iván entra en su búsqueda. Lo que se sigue evitando es pedir un
-              cargo: los tres se nombran para decir que son el mismo trabajo.
+            - El cierre no nombra puestos, y los párrafos tampoco. El
+              19/11/2026 estuvieron nombrados unas horas ("product manager,
+              product owner o analista") y Iván lo revirtió: nombrar tres
+              cierra la puerta a los avisos que usan un cuarto título, y el
+              que lee ya tiene el cargo en el `<title>` y en el hero.
+              En su lugar va el vocabulario con el que esos avisos escriben
+              las responsabilidades, que es lo que comparten sin importar cómo
+              se llame el puesto: roadmap, backlog, priorizar, requerimientos,
+              actores, proceso, métricas por segmento, retención, margen,
+              sprints, integraciones, SQL, Python. Salen de contar en cuántos
+              de los 197 avisos de producto y análisis guardados el 21/09/2026
+              aparece cada uno, no de intuición.
+            - Ninguna palabra entra si no hay con qué respaldarla. Quedaron
+              afuera user stories, dashboards, investigación de usuarios,
+              discovery, A/B testing y go-to-market, que suman 122 puntos de
+              frecuencia en esos avisos y no tienen evidencia publicada.
             - Lo que ya está dicho en otro lado no se repite: la trazabilidad
               vive en /method, la logística de trabajo remoto en "Actualmente"
               de la home, y la tesis en Educación, dos secciones más abajo. */}

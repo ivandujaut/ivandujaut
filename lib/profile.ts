@@ -18,20 +18,30 @@ import type { Locale } from "@/i18n/routing";
  * - El 14/10/2026 pasó a abrir con los dos productos con IA generativa en
  *   producción (Parcialito y el bot de seguros), que es lo que sostiene el
  *   titular "AI Product Manager" del CV.
- * - El 19/11/2026 pasó a abrir con los tres puestos. Iván lo pidió para que un
- *   recruiter lo encuentre: la descripción es el fragmento que muestra Google y
- *   no tenía una sola palabra de rol. Van adelante y no al final porque Google
- *   corta alrededor de los 160 caracteres, y una keyword en la cola se pierde
- *   justo cuando se la trunca.
+ * - El 19/11/2026 abrió con los tres puestos nombrados ("product manager,
+ *   product owner o analista de negocio"). Duró unas horas: Iván pidió que las
+ *   keywords estén sin decir el puesto, para no cerrarse a los avisos que usan
+ *   otro título. Ahora lleva el vocabulario de las responsabilidades, que es lo
+ *   que esos avisos escriben de verdad.
  *
- * Los tres títulos salen de contar avisos, no de intuición: en
- * `data/perfil/investigacion-titulos-2026-09-19.md`, en Argentina y a 30 días,
- * Product Manager tenía 109 avisos, Business Analyst 89 y Product Owner 49.
- * "Analista de Producto", "Product Analyst" y "Product Specialist" devolvían el
- * fallback de LinkedIn (~2.100, indistinguible de buscar un puesto inventado),
- * así que no entran aunque suenen más precisos.
+ * De dónde salen las palabras: de contar en cuántos de los 197 avisos de
+ * producto y análisis que Iván guardó el 21/09/2026 aparece cada término
+ * (`data/perfil/busqueda-2026-09-21/jobs.json`). Priorización 52%, métricas
+ * 46%, roadmap 43%, IA 39%, backlog 34%, retención y adopción 49%, margen 17%,
+ * caso de negocio 14%.
+ *
+ * Las dos frases cubren nueve de esos términos, el 43% del vocabulario
+ * ponderado por frecuencia, dentro de los 160 caracteres que muestra Google.
+ * Hubo una variante que llegaba al 45% y quedó afuera: ganaba dos puntos
+ * escribiendo "Roadmap y backlog priorizados con métricas por segmento,
+ * producto con IA, pagos integrados", que es una lista de habilidades y no una
+ * oración. Dos puntos no pagan que el que lee vea un volcado de keywords.
+ *
+ * Qué no entró porque no hay con qué respaldarlo: user stories, dashboards,
+ * investigación de usuarios, discovery, A/B testing y go-to-market. Suman 122
+ * puntos de frecuencia y ninguno tiene evidencia publicada.
  */
 export const PROFILE_DESCRIPTION: Record<Locale, string> = {
-  es: "Product manager, product owner o analista de negocio. Dos productos con IA generativa en producción y casos sobre salud y seguros que terminan en una decisión.",
-  en: "Product manager, product owner or business analyst. Two generative AI products in production, and cases on health and insurance that end in a decision.",
+  es: "Priorizo roadmap y backlog con métricas de retención y margen, y construyo el producto con IA. Casos de negocio sobre salud y seguros, del dato a la decisión.",
+  en: "I prioritise roadmap and backlog with retention and margin metrics, and build the product with AI. Business cases on health and insurance, data to decision.",
 };
