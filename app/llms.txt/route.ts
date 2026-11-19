@@ -78,7 +78,7 @@ function build(): string {
     "## Páginas",
     "",
     `- [Método](${absoluteUrl("es", "/method")}): las reglas con las que se produce cada análisis, de la fuente a la recomendación.`,
-    `- [Sobre mí](${absoluteUrl("es", "/about")}): experiencia, formación y stack.`,
+    `- [Sobre mí](${absoluteUrl("es", "/about")}): trayectoria, los dos productos con IA en producción y qué tipo de problema resuelve.`,
     `- [Sitemap](${SITE_URL}/sitemap.xml): todas las URLs, con sus alternates por idioma.`,
     "",
     // La sección `Optional` de la convención marca contenido que se puede
@@ -105,7 +105,7 @@ function build(): string {
     "### Pages (English)",
     "",
     `- [Method](${absoluteUrl("en", "/method")}): the rules every analysis is produced under, from source to recommendation.`,
-    `- [About](${absoluteUrl("en", "/about")}): experience, education and stack.`,
+    `- [About](${absoluteUrl("en", "/about")}): career, the two AI products in production and the kind of problem he solves.`,
     "",
   );
 
