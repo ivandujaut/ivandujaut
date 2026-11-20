@@ -132,10 +132,10 @@ export function AppToday() {
   );
 }
 
-/** 03 · El balde: lo que crece (Pasaporte) contra lo que no (la vuelta). */
+/** 03 · Los que vuelven: lo que crece (Pasaporte) contra lo que no (la vuelta). */
 export function Bucket() {
   return (
-    <Tramo id="balde">
+    <Tramo id="recompra">
       <TramoHeading index="03" eyebrow={bucket.eyebrow}>
         {bucket.heading}
       </TramoHeading>

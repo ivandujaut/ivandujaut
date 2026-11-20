@@ -16,8 +16,8 @@ import { Close, Dashboard, FirstSteps } from "./_sections/closing";
  * link. Sale con `noindex, nofollow`, no está en el sitemap ni en la
  * navegación. La URL corta es `/despegar` (rewrite en `next.config.ts`).
  *
- * Un solo relato en seis tramos: la app (02), el balde que pierde lo que
- * entra (03), dónde se rompe según los usuarios (04), la tesis (05) y el caso
+ * Un solo relato en seis tramos: la app (02), los clientes que se van casi
+ * tanto como llegan (03), dónde se rompe según los usuarios (04), la tesis (05) y el caso
  * para empezar (06). Lo que respalda pero no es el hilo (cómo gana plata,
  * contra quién, cómo lo mediría y los primeros pasos) va plegado en el anexo,
  * antes del cierre, para que la página se lea en menos tiempo. La

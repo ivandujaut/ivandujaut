@@ -108,7 +108,7 @@ export const og = {
 export const nav = [
   { id: "inicio", label: "Inicio" },
   { id: "app", label: "La app hoy" },
-  { id: "balde", label: "El balde" },
+  { id: "recompra", label: "Los que vuelven" },
   { id: "voz", label: "Lo que dicen" },
   { id: "tesis", label: "La tesis" },
   { id: "caso", label: "El caso" },
@@ -136,7 +136,7 @@ export const hero = {
     {
       label: "Qué entendí",
       text: "El tráfico sobra y la recompra está plana hace tres años, aunque Pasaporte casi se triplicó.",
-      href: "#balde",
+      href: "#recompra",
     },
     {
       label: "Dónde miraría primero",
@@ -372,11 +372,11 @@ export const journey = {
 };
 
 // ---------------------------------------------------------------------------
-// 04 · El balde
+// 03 · Los que vuelven
 // ---------------------------------------------------------------------------
 
 export const bucket = {
-  eyebrow: "El balde",
+  eyebrow: "Los que vuelven",
   heading: "Pasaporte casi se triplicó. La recompra se movió 1,8 puntos.",
   chart: {
     title: "Socios de Pasaporte y clientes que ya habían comprado",
@@ -392,7 +392,7 @@ export const bucket = {
   accounts: [
     {
       id: "entra-sale",
-      title: "El balde pierde casi lo que entra",
+      title: "Casi tantos clientes dejan de comprar como los que llegan",
       text: "En 2024 entraron unos 2,3 M clientes nuevos y la base creció 0,2 M.",
       how: "4,8 M clientes × (1 − 51,4% con compra previa) = 2,33 M nuevos; 4,8 M − 4,6 M = 0,2 M de crecimiento. Como mucho, 54% de los clientes de 2023 volvió en 2024.",
       kind: "inferencia" as const,
@@ -743,7 +743,7 @@ export const dashboard = {
   label: "Datos de ejemplo: la estructura es la propuesta, los números son inventados",
   northStar: {
     name: "Compradores mensuales de la app",
-    why: 'Junta adquisición, activación y vuelta, y no sube regalando instalaciones que no compran. La parte "recurrentes" dice si el balde dejó de perder.',
+    why: 'Junta adquisición, activación y vuelta, y no sube regalando instalaciones que no compran. La parte "recurrentes" dice si se dejó de perder clientes.',
     breakdown: ["Nuevos", "Recurrentes", "Reactivados"],
     /** Inventado, sólo para la maqueta del gráfico apilado. */
     series: [
