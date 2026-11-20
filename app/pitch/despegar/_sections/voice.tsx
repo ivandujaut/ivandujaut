@@ -6,7 +6,7 @@ import { Cite, Cites, Tramo, TramoHeading } from "../_components/ui";
 export function Voice() {
   return (
     <Tramo id="voz" deep>
-      <TramoHeading index="05" eyebrow={voice.eyebrow}>
+      <TramoHeading index="04" eyebrow={voice.eyebrow}>
         {voice.heading}
       </TramoHeading>
 
@@ -77,7 +77,7 @@ export function Voice() {
 export function Competition() {
   return (
     <Tramo id="competencia">
-      <TramoHeading index="06" eyebrow={competition.eyebrow}>
+      <TramoHeading index="B" eyebrow={competition.eyebrow}>
         {competition.heading}
       </TramoHeading>
       <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-(--ink-dim)">

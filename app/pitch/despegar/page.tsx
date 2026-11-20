@@ -8,6 +8,7 @@ import { Hero } from "./_sections/hero";
 import { AppToday, Bucket, Business } from "./_sections/reading";
 import { Competition, Voice } from "./_sections/voice";
 import { Case, Thesis } from "./_sections/thesis-case";
+import { Appendix } from "./_sections/appendix";
 import { Close, Dashboard, FirstSteps } from "./_sections/closing";
 
 /**
@@ -15,9 +16,11 @@ import { Close, Dashboard, FirstSteps } from "./_sections/closing";
  * link. Sale con `noindex, nofollow`, no está en el sitemap ni en la
  * navegación. La URL corta es `/despegar` (rewrite en `next.config.ts`).
  *
- * Un solo relato en once tramos: cómo gana plata (02), la app (03), el balde
- * que pierde lo que entra (04), dónde se rompe según los usuarios (05) y
- * contra quién (06); la tesis (07) y el caso para empezar (08 a 10). La
+ * Un solo relato en seis tramos: la app (02), los clientes que se van casi
+ * tanto como llegan (03), dónde se rompe según los usuarios (04), la tesis (05) y el caso
+ * para empezar (06). Lo que respalda pero no es el hilo (cómo gana plata,
+ * contra quién, cómo lo mediría y los primeros pasos) va plegado en el anexo,
+ * antes del cierre, para que la página se lea en menos tiempo. La
  * gramática visual es el mismo vuelo leído dos veces: lo que ves en el
  * listado (violeta) y lo que pagás en el último paso (rojo). Cada tramo se
  * entiende solo, porque en la entrevista se muestran de a uno.
@@ -37,15 +40,19 @@ export default function DespegarPage() {
   return (
     <main id="main" className="relative overflow-x-clip">
       <Hero />
-      <Business />
       <AppToday />
       <Bucket />
       <Voice />
-      <Competition />
       <Thesis />
       <Case />
-      <Dashboard />
-      <FirstSteps />
+      <Appendix
+        sections={{
+          negocio: <Business />,
+          competencia: <Competition />,
+          tablero: <Dashboard />,
+          "primeros-pasos": <FirstSteps />,
+        }}
+      />
       <Close />
       <ScrollProgress sections={nav.map((s) => ({ id: s.id, label: s.label }))} />
       <Presenter />

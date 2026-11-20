@@ -39,7 +39,7 @@ export function Dashboard() {
   }));
   return (
     <Tramo id="tablero" deep>
-      <TramoHeading index="09" eyebrow={d.eyebrow}>
+      <TramoHeading index="C" eyebrow={d.eyebrow}>
         {d.heading}
       </TramoHeading>
       <div className="reveal mt-6">
@@ -106,7 +106,7 @@ export function FirstSteps() {
   const top = Math.max(...f.quickWins.map((q) => q.score));
   return (
     <Tramo id="primeros-pasos">
-      <TramoHeading index="10" eyebrow={f.eyebrow}>
+      <TramoHeading index="D" eyebrow={f.eyebrow}>
         {f.heading}
       </TramoHeading>
       <p className="reveal mt-4 max-w-2xl text-sm text-(--ink-dim)">{f.scoringNote}</p>
@@ -146,7 +146,7 @@ export function FirstSteps() {
   );
 }
 
-/** 11 · Cierre estático: sin animación de scroll, es donde se decide. */
+/** Cierre estático: sin animación de scroll, es donde se decide. */
 export function Close() {
   const list = sourceList();
   return (
