@@ -80,8 +80,8 @@ export default async function Image() {
             letterSpacing: -1,
           }}
         >
-          <span>{title[0]}</span>
-          <span style={{ marginTop: 14 }}>{title[1]}</span>
+          <span style={{ textWrap: "balance" }}>{title[0]}</span>
+          <span style={{ marginTop: 14, textWrap: "balance" }}>{title[1]}</span>
         </div>
         <div style={{ marginTop: 44, fontFamily: "Mono", fontSize: 20, color: C.dim }}>
           {og.footer}

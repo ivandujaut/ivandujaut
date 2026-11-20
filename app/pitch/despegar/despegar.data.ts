@@ -101,21 +101,18 @@ export const meta = {
  * y el pasaje dado vuelta, con el mismo vuelo de ejemplo.
  */
 export const og = {
-  alt: "La app de Despegar ya trae a la gente. Quiero entender por qué no vuelve. Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
+  alt: "La app de Despegar ya trae a la gente. ¿Por qué la vuelta no crece? Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
   footer: "Iván Dujaut · ivandujaut.com/despegar",
 };
 
 export const nav = [
   { id: "inicio", label: "Inicio" },
-  { id: "negocio", label: "Cómo gana plata" },
   { id: "app", label: "La app hoy" },
-  { id: "balde", label: "El balde" },
+  { id: "recompra", label: "Los que vuelven" },
   { id: "voz", label: "Lo que dicen" },
-  { id: "competencia", label: "Contra quién" },
   { id: "tesis", label: "La tesis" },
   { id: "caso", label: "El caso" },
-  { id: "tablero", label: "Cómo lo mediría" },
-  { id: "primeros-pasos", label: "Primeros pasos" },
+  { id: "anexo", label: "Anexo" },
   { id: "cierre", label: "Cierre" },
 ] as const;
 
@@ -132,14 +129,14 @@ export const readings = {
 export const hero = {
   kicker: "Una lectura de la app de Despegar",
   title: "La app de Despegar ya trae a la gente.",
-  titleAccent: "Quiero entender por qué no vuelve.",
+  titleAccent: "¿Por qué la vuelta no crece?",
   lede: "Soy Iván Dujaut. Quiero ayudar a que más gente compre su viaje en la app de Despegar y vuelva a comprar el siguiente. Armé esta página con datos públicos para llegar con una hipótesis y con las preguntas que todavía no puedo contestar desde afuera.",
   byline: "Noviembre de 2026",
   summary: [
     {
       label: "Qué entendí",
       text: "El tráfico sobra y la recompra está plana hace tres años, aunque Pasaporte casi se triplicó.",
-      href: "#balde",
+      href: "#recompra",
     },
     {
       label: "Dónde miraría primero",
@@ -375,11 +372,11 @@ export const journey = {
 };
 
 // ---------------------------------------------------------------------------
-// 04 · El balde
+// 03 · Los que vuelven
 // ---------------------------------------------------------------------------
 
 export const bucket = {
-  eyebrow: "El balde",
+  eyebrow: "Los que vuelven",
   heading: "Pasaporte casi se triplicó. La recompra se movió 1,8 puntos.",
   chart: {
     title: "Socios de Pasaporte y clientes que ya habían comprado",
@@ -395,7 +392,7 @@ export const bucket = {
   accounts: [
     {
       id: "entra-sale",
-      title: "El balde pierde casi lo que entra",
+      title: "Casi tantos clientes dejan de comprar como los que llegan",
       text: "En 2024 entraron unos 2,3 M clientes nuevos y la base creció 0,2 M.",
       how: "4,8 M clientes × (1 − 51,4% con compra previa) = 2,33 M nuevos; 4,8 M − 4,6 M = 0,2 M de crecimiento. Como mucho, 54% de los clientes de 2023 volvió en 2024.",
       kind: "inferencia" as const,
@@ -429,11 +426,13 @@ export const bucket = {
 export const voice = {
   eyebrow: "Lo que dicen",
   heading: "Qué dicen 800 reseñas de la app, clasificadas con IA",
+  // El paso de validación a mano (50 reseñas codificadas por Iván contra el
+  // modelo) vuelve a la lista cuando esté el resultado; mientras tanto no se
+  // publica un marcador vacío.
   method: [
     "Bajé las reseñas públicas de App Store (500 de Argentina, todas, oct-2023 a nov-2026) y de Google Play (300 desde mayo 2025, al azar por estrellas).",
     "Armé un libro de códigos cerrado: 8 etapas del funnel y 21 tipos de problema, cada uno con definición y ejemplo.",
     "Las clasificó un modelo de lenguaje en lotes. Una segunda pasada a ciegas sobre 60 coincidió 93% en etapa y 97% en problema.",
-    "Codifiqué 50 a mano para medir cuánto coincide el modelo con una persona: [PENDIENTE, completar con el resultado de Iván].",
   ],
   caveat:
     "Las reseñas no miden el funnel: escribe el que se enojó, y mucho es posventa. Sirven para saber dónde mirar, y para comparar contra pares con el mismo método.",
@@ -593,6 +592,8 @@ export const caseStudy = {
       'El mismo clasificador de reseñas, corriendo cada semana sobre reseñas y conversaciones con SOFIA y atención, avisa si "la promesa rota al pagar" sube después de un release.',
     ],
   },
+  /** El diseño completo del experimento va plegado: el corte y el simulador quedan a la vista. */
+  design: "El diseño del experimento: población, métricas, tamaño y segmentos",
   experiment: {
     title: "El experimento",
     rows: [
@@ -656,44 +657,62 @@ export const caseStudy = {
    */
   simulator: {
     intro:
-      "Probá el criterio con un resultado inventado: la decisión sale de las reglas de arriba.",
+      "Imaginá que ya pasaron las cuatro semanas del experimento. Elegí qué salió y mirá qué se decide con las reglas de arriba.",
     example: "Resultado de ejemplo",
-    conversion: { label: "Conversión, cambio relativo", min: -4, max: 6, step: 0.5, initial: 2.5 },
+    scenariosLabel: "¿Qué salió?",
+    scenarios: [
+      { id: "funciona", label: "Funciona", c: 3, interval: true, r: -0.5, q: 20 },
+      { id: "azar", label: "Puede ser azar", c: 2.5, interval: false, r: -0.5, q: 20 },
+      { id: "caro", label: "Sale caro", c: 3, interval: true, r: -2.5, q: 20 },
+      { id: "consultas", label: "Consultas caras", c: 2.5, interval: true, r: -0.5, q: 120 },
+    ],
+    manual: "Ajustar los números a mano",
+    conversion: {
+      label: "¿Cuánto más compran?",
+      hint: "Conversión del checkout, contra el grupo de control",
+      min: -4,
+      max: 6,
+      step: 0.5,
+    },
     interval: {
-      label: "¿El intervalo de confianza deja afuera el cero?",
-      yes: "Sí",
-      no: "No",
+      label: "¿La diferencia es real o puede ser azar?",
+      hint: "Intervalo de confianza",
+      yes: "Real",
+      no: "Puede ser azar",
     },
     revenue: {
-      label: "Revenue neto por orden, con lo absorbido",
+      label: "¿Cuánto deja cada compra?",
+      hint: "Revenue neto por orden, después de lo que Despegar pone para sostener el precio",
       min: -4,
       max: 2,
       step: 0.5,
-      initial: -0.5,
     },
     airline: {
-      label: "Consultas a la aerolínea por orden",
-      min: 1,
-      max: 2.5,
-      step: 0.1,
-      initial: 1.2,
+      label: "¿Cuánto más le pregunta Despegar a la aerolínea?",
+      hint: "Revalidar la tarifa antes tiene un costo por consulta",
+      min: 0,
+      max: 150,
+      step: 10,
     },
-    total: "Revenue neto total",
-    totalNote: "conversión × revenue por orden",
+    total: "Revenue total",
+    totalNote: "compras × lo que deja cada una",
     why: "Por qué",
+    /** Cómo se lee el cambio en lo que deja cada compra, según el signo. */
+    revenueWords: { less: "{v} menos", more: "{v} más", same: "lo mismo" },
     reasons: {
-      killConversion: "La conversión cae {ca}: con una caída de 1% o más, se apaga.",
-      killRevenue: "El revenue neto por orden cae {ra}: con más de 2%, se apaga.",
+      killConversion: "Compran {ca} menos. Con una caída de 1% o más, se apaga.",
+      killRevenue:
+        "Cada compra deja {ra} menos. Con más de 2%, se apaga aunque se venda más: se estaría comprando la conversión con margen.",
       killAirline:
-        "Las consultas a la aerolínea por orden pasan a {q}, y el freno está en el doble.",
-      ship: "La conversión sube {ca} con el intervalo fuera de cero, el revenue por orden se mueve {r} (no puede caer más de 1%) y el revenue total sube {ta}.",
+        "Las consultas a la aerolínea suben {qa}. Si se duplican, se apaga: revalidar el precio cuesta más de lo que se gana.",
+      ship: "Compran {ca} más, la diferencia es real y cada compra deja {rw} (el límite era 1% menos). En total entra {ta} más.",
       iterateInterval:
-        "La conversión sube {ca}, pero el intervalo incluye el cero: el resultado es neutro.",
-      iterateSmall: "La conversión se mueve {c}: no llega al +2% que hace falta para lanzar.",
+        "Compran {ca} más, pero puede ser azar: con estos datos no se puede decir que funcionó. Se mira por segmento antes de decidir.",
+      iterateSmall: "La conversión se mueve {c}: no llega al +2% que se fijó antes de empezar.",
       iterateRevenue:
-        "La conversión sube {ca}, pero el revenue por orden cae {ra}: para lanzar no puede caer más de 1%.",
+        "Compran {ca} más, pero cada compra deja {ra} menos: para lanzar no puede caer más de 1%.",
       iterateTotal:
-        "La conversión sube {ca}, pero lo absorbido se come lo ganado: el revenue total se mueve {t}.",
+        "Compran {ca} más, pero lo que se pone para sostener el precio se come lo ganado: el total se mueve {t}.",
     },
   },
   impact: {
@@ -724,7 +743,7 @@ export const dashboard = {
   label: "Datos de ejemplo: la estructura es la propuesta, los números son inventados",
   northStar: {
     name: "Compradores mensuales de la app",
-    why: 'Junta adquisición, activación y vuelta, y no sube regalando instalaciones que no compran. La parte "recurrentes" dice si el balde dejó de perder.',
+    why: 'Junta adquisición, activación y vuelta, y no sube regalando instalaciones que no compran. La parte "recurrentes" dice si se dejó de perder clientes.',
     breakdown: ["Nuevos", "Recurrentes", "Reactivados"],
     /** Inventado, sólo para la maqueta del gráfico apilado. */
     series: [
@@ -853,6 +872,28 @@ export const firstSteps = {
 // 11 · Cierre
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// Anexo: el respaldo, plegado para que la página se lea en menos tiempo
+// ---------------------------------------------------------------------------
+
+/**
+ * Las cuatro secciones que sostienen la lectura pero no son el hilo: se abren
+ * de a una, debajo del caso. Cada una mantiene su id, así un link directo
+ * (o la pregunta en la entrevista) llega igual.
+ */
+export const appendix = {
+  eyebrow: "Anexo",
+  heading: "Lo que respalda la lectura",
+  intro:
+    "Cuatro secciones de contexto, cerradas para que la página se lea más rápido. Se abren de a una.",
+  items: [
+    { id: "negocio", letter: "A", title: business.eyebrow, summary: business.heading },
+    { id: "competencia", letter: "B", title: competition.eyebrow, summary: competition.heading },
+    { id: "tablero", letter: "C", title: dashboard.eyebrow, summary: dashboard.heading },
+    { id: "primeros-pasos", letter: "D", title: firstSteps.eyebrow, summary: firstSteps.heading },
+  ],
+} as const;
+
 export const close = {
   heading: "Esto es lo que vi desde afuera. Adentro hay datos que pueden darlo vuelta.",
   body: "Todo lo de esta página sale de fuentes públicas y de reseñas que cualquiera puede leer. No sé cuánto se mueve de verdad el precio en el checkout ni qué hace después quien lo vive, y eso es lo que más importa. Me gustaría averiguarlo con ustedes.",
@@ -889,7 +930,7 @@ export const labels = {
     keys: [
       { key: "→", text: "Sección siguiente" },
       { key: "←", text: "Sección anterior" },
-      { key: "1 a 9, 0", text: "Ir a una sección (0 es la 10)" },
+      { key: "1 a 8", text: "Ir a una sección" },
       { key: "?", text: "Mostrar u ocultar esta ayuda" },
     ],
     sections: "Secciones",

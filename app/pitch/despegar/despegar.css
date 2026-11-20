@@ -228,6 +228,16 @@ html.lenis body {
   position: relative;
 }
 
+/* Los escenarios son cuatro: en el celular bajan a otra línea. */
+.despegar .cut-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.despegar .cut-scenarios span {
+  min-width: 0;
+}
+
 .despegar .cut-toggle input {
   position: absolute;
   opacity: 0;
@@ -852,4 +862,14 @@ html.lenis body {
     transition: none;
     transform: none;
   }
+}
+
+/* Los plegables propios (anexo y diseño del experimento) usan su flecha, no
+   el triángulo del navegador. */
+.despegar details > summary {
+  list-style: none;
+}
+
+.despegar details > summary::-webkit-details-marker {
+  display: none;
 }
