@@ -49,11 +49,11 @@ export async function generateMetadata({ params }: Props) {
  * Los mercados del filtro, y qué temas de Velite entran en cada uno.
  *
  * Son tres y no cinco porque pagos, proptech y educación tienen una pieza cada
- * uno: una pill que lleva a una sola tarjeta se lee como un estante vacío, no
+ * uno: una pestaña que lleva a una sola tarjeta se lee como un estante vacío, no
  * como un mercado del que todavía hay un caso. Cuando alguno llegue a tres
  * piezas se separa.
  *
- * El orden es el de la fila de pills, y el primero es el que abre la página.
+ * El orden es el de las pestañas, y el primero es el que abre la página.
  */
 const FACETS = [
   { id: "salud", topics: ["salud"] },
@@ -78,6 +78,11 @@ export default async function ProjectsPage({ params }: Props) {
   const minutos = (count?: number) => (count ? tReading("minutes", { count }) : undefined);
   const tIndex = await getTranslations({ locale, namespace: "projects.index" });
   const tFacets = await getTranslations({ locale, namespace: "projects.facets" });
+  const tNotes = await getTranslations({ locale, namespace: "projects.facetNotes" });
+  const nota = (id: "salud" | "seguros" | "otros" | "all") =>
+    tNotes.rich(id, {
+      place: (chunks) => <span className="font-medium text-foreground">{chunks}</span>,
+    });
 
   // Los análisis van arriba desde el 11/09/2026. Antes iban los productos
   // propios, con el argumento de que no tenían otra puerta de entrada. Los
@@ -116,9 +121,10 @@ export default async function ProjectsPage({ params }: Props) {
     ...FACETS.map((facet) => ({
       id: facet.id,
       label: tFacets(facet.id),
+      note: nota(facet.id),
       count: listed.filter((project) => facetOf(project.topic) === facet.id).length,
     })),
-    { id: ALL_FACET, label: tFacets("all"), count: listed.length },
+    { id: ALL_FACET, label: tFacets("all"), note: nota("all"), count: listed.length },
   ].filter((facet) => facet.count > 0);
 
   const sections = [

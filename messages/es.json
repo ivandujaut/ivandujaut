@@ -179,10 +179,16 @@
       "showAll": "Ver todo ({count})"
     },
     "facets": {
-      "salud": "Salud · EE.UU.",
-      "seguros": "Seguros · Argentina",
-      "otros": "Otros mercados",
+      "salud": "Salud",
+      "seguros": "Seguros",
+      "otros": "Otros",
       "all": "Todos"
+    },
+    "facetNotes": {
+      "salud": "<place>Estados Unidos.</place> Acceso y comercialización de medicamentos: Medicare, aseguradoras y laboratorios.",
+      "seguros": "<place>Argentina.</place> Canales de venta, cobranza y seguro de hogar, y el bot de venta asesorada que construí.",
+      "otros": "<place>Varios mercados.</place> Pagos en Brasil, inmobiliario y educación.",
+      "all": "Todo junto: lo que analicé y lo que construí."
     },
     "topics": {
       "salud": "Salud · Estados Unidos",

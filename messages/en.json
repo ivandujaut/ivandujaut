@@ -179,10 +179,16 @@
       "showAll": "Show all ({count})"
     },
     "facets": {
-      "salud": "Health · US",
-      "seguros": "Insurance · Argentina",
-      "otros": "Other markets",
+      "salud": "Health",
+      "seguros": "Insurance",
+      "otros": "Other",
       "all": "All"
+    },
+    "facetNotes": {
+      "salud": "<place>United States.</place> Drug access and commercial strategy: Medicare, insurers and drugmakers.",
+      "seguros": "<place>Argentina.</place> Sales channels, collections and home insurance, plus the advised-sale bot I built.",
+      "otros": "<place>Other markets.</place> Payments in Brazil, real estate and education.",
+      "all": "Everything together: what I analyzed and what I built."
     },
     "topics": {
       "salud": "Healthcare · United States",
