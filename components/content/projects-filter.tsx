@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore, type ReactNode } from "react";
+import { useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -10,11 +10,13 @@ export interface ProjectsFacet {
   id: string;
   label: string;
   count: number;
+  /** La bajada bajo las pestañas: el país y qué hay en ese mercado. */
+  note?: ReactNode;
 }
 
 export interface FilteredItem {
   key: string;
-  /** A qué pill pertenece la tarjeta. */
+  /** A qué pestaña pertenece la tarjeta. */
   facet: string;
   /** La tarjeta, ya renderizada en el servidor. */
   node: ReactNode;
@@ -26,7 +28,7 @@ export interface FilteredSection {
   items: FilteredItem[];
 }
 
-/** La pill que muestra todo junto. No es un tema, así que no sale de Velite. */
+/** La pestaña que muestra todo junto. No es un tema, así que no sale de Velite. */
 export const ALL_FACET = "todos";
 
 /**
@@ -36,6 +38,9 @@ export const ALL_FACET = "todos";
  * página corta; el botón es el que evita que "todos" la estire de nuevo.
  */
 const VISIBLE = 6;
+
+/** El alto del navbar fijo (`h-14`), que es donde se pega la barra. */
+const NAVBAR = 56;
 
 /**
  * El mercado elegido vive en la URL y no en un `useState`.
@@ -76,13 +81,13 @@ function escribirUrl(id: string, porDefecto: string) {
 
 interface ProjectsFilterProps {
   facets: ProjectsFacet[];
-  /** Con qué pill abre la página. */
+  /** Con qué pestaña abre la página. */
   initialFacet: string;
   sections: FilteredSection[];
 }
 
 /**
- * La fila de pills que filtra el listado por mercado, y el "ver más" de cada
+ * Las pestañas que filtran el listado por mercado, y el "ver más" de cada
  * sección.
  *
  * Las tarjetas llegan ya renderizadas desde el servidor (`node`), así que acá
@@ -102,55 +107,95 @@ export function ProjectsFilter({ facets, initialFacet, sections }: ProjectsFilte
   // Una URL con un mercado que no existe (un link viejo, un tema que se
   // separó) muestra el de siempre en vez de una página vacía.
   const facet = facets.some((f) => f.id === enUrl) ? enUrl : initialFacet;
+  const activo = facets.find((f) => f.id === facet);
   // Desplegado por mercado y sección, así volver a un mercado que ya habías
   // abierto no te lo cierra de nuevo.
   const [expanded, setExpanded] = useState<string[]>([]);
   const reduced = useReducedMotion();
+  // Marca dónde empieza el filtro en el flujo de la página, para saber si la
+  // barra está pegada bajo el navbar o en su lugar.
+  const ancla = useRef<HTMLDivElement>(null);
 
+  function elegir(id: string) {
+    escribirUrl(id, initialFacet);
+    // Con la barra pegada, cambiar de mercado reemplaza la lista que tenés
+    // debajo y te deja a mitad de otra. Se vuelve al principio del listado
+    // para que lo primero que veas sea la pieza más nueva del mercado elegido.
+    const top = ancla.current?.getBoundingClientRect().top;
+    if (top !== undefined && top < NAVBAR) {
+      window.scrollTo({
+        top: window.scrollY + top - NAVBAR,
+        behavior: reduced ? "auto" : "smooth",
+      });
+    }
+  }
+
+  // Un solo contenedor y no un fragmento: la página apila sus bloques con
+  // `space-y-14`, y con un fragmento ese margen caía entre las pestañas, la
+  // bajada y el listado, que tienen que leerse como una sola pieza.
   return (
-    <>
-      <div
-        className="flex flex-wrap gap-1 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-1"
-        role="group"
-        aria-label={t("filterLabel")}
-      >
-        {facets.map((f) => {
-          const active = f.id === facet;
-          return (
-            <button
-              key={f.id}
-              type="button"
-              onClick={() => escribirUrl(f.id, initialFacet)}
-              aria-pressed={active}
-              data-ph="filter_click"
-              data-ph-action="market"
-              data-ph-facet={f.id}
-              className={cn(
-                "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
-                active ? "text-background" : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {active && (
-                <motion.span
-                  layoutId="projects-facet-pill"
-                  className="absolute inset-0 rounded-lg bg-foreground"
-                  transition={
-                    reduced ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }
-                  }
-                />
-              )}
-              <span className="relative">
-                {f.label}{" "}
-                <span className={cn("tabular-nums", active ? "opacity-60" : "opacity-70")}>
+    <div>
+      <div ref={ancla} />
+      {/*
+        Pestañas sin caja: una línea de base y un subrayado que se desliza.
+        Reemplazó al control segmentado del 18/11/2026, que en desktop dejaba
+        121 px vacíos dentro de su caja y en mobile se partía en dos filas
+        desparejas. Las etiquetas son cortas para que entren en una sola fila
+        a 342 px; el país y lo que hay en cada mercado van en la bajada.
+
+        Queda pegada bajo el navbar (`top-14`, sus 56 px) mientras dura el
+        listado: con las portadas grandes, el filtro de "todos" quedaba miles
+        de píxeles arriba de la última tarjeta.
+      */}
+      <div className="sticky top-14 z-30 -mx-6 bg-background/90 px-6 backdrop-blur supports-backdrop-filter:bg-background/75">
+        <div
+          className="flex gap-7 border-b border-foreground/10 max-sm:justify-between max-sm:gap-0"
+          role="group"
+          aria-label={t("filterLabel")}
+        >
+          {facets.map((f) => {
+            const active = f.id === facet;
+            return (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => elegir(f.id)}
+                aria-pressed={active}
+                data-ph="filter_click"
+                data-ph-action="market"
+                data-ph-facet={f.id}
+                className={cn(
+                  "relative py-3 text-base font-medium whitespace-nowrap transition-colors",
+                  active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {f.label}
+                <span className="ml-1 align-[0.4em] font-mono text-[11px] font-normal tabular-nums">
                   {f.count}
                 </span>
-              </span>
-            </button>
-          );
-        })}
+                {active && (
+                  <motion.span
+                    layoutId="projects-facet-line"
+                    aria-hidden
+                    className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground"
+                    transition={
+                      reduced ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }
+                    }
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="mt-10 space-y-14">
+      {activo?.note && (
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground" aria-live="polite">
+          {activo.note}
+        </p>
+      )}
+
+      <div className="mt-8 space-y-14">
         {sections.map((section) => {
           const items =
             facet === ALL_FACET
@@ -202,6 +247,6 @@ export function ProjectsFilter({ facets, initialFacet, sections }: ProjectsFilte
           );
         })}
       </div>
-    </>
+    </div>
   );
 }
