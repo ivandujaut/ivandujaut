@@ -19,7 +19,6 @@ export default function NotFound() {
       description={t("generic.description")}
       ctas={[
         { href: "/", label: t("actions.home"), variant: "primary" },
-        { href: "/blog", label: t("actions.blog") },
         { href: "/projects", label: t("actions.projects") },
       ]}
     />

@@ -45,7 +45,6 @@ export const metadata: Metadata = {
 
 const enlaces = [
   { href: "/", label: t.actions.home, principal: true },
-  { href: "/blog", label: t.actions.blog, principal: false },
   { href: "/projects", label: t.actions.projects, principal: false },
 ];
 
