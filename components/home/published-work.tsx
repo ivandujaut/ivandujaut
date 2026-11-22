@@ -121,23 +121,24 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
 
       <div className="mt-2 space-y-1">
         {rest.map((project) => (
-          <ProjectListItem
-            key={project.slug}
-            slug={project.slug}
-            title={project.title}
-            tagline={project.tagline}
-            date={project.date}
-            stack={project.stack}
-            readingTime={
-              project.metadata
-                ? tReading("minutes", { count: project.metadata.readingTime })
-                : undefined
-            }
-            status={project.status}
-            kind={project.kind}
-            locale={locale}
-            surface="home"
-          />
+          <div key={project.slug} className="reveal">
+            <ProjectListItem
+              slug={project.slug}
+              title={project.title}
+              tagline={project.tagline}
+              date={project.date}
+              stack={project.stack}
+              readingTime={
+                project.metadata
+                  ? tReading("minutes", { count: project.metadata.readingTime })
+                  : undefined
+              }
+              status={project.status}
+              kind={project.kind}
+              locale={locale}
+              surface="home"
+            />
+          </div>
         ))}
       </div>
 
