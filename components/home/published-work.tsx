@@ -1,6 +1,7 @@
 import { ViewTransition } from "react";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { RollingNumber } from "@/components/ui/rolling-number";
 import { Link } from "@/i18n/navigation";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import { KindBadge } from "@/components/content/kind-badge";
@@ -144,7 +145,9 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
 
       {cadence && (
         <p className="mt-5 text-sm text-muted-foreground">
-          {t("cadence", {
+          {t.rich("cadence", {
+            // El total rueda al aparecer, como los contadores de moatseek.com.
+            n: (chunks) => <RollingNumber value={String(chunks)} />,
             count: cadence.count,
             days: cadence.everyDays,
             since: new Date(cadence.since).toLocaleDateString(locale, {
