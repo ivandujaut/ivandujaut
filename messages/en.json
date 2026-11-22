@@ -3,7 +3,7 @@
     "navigation": {
       "home": "Home",
       "blog": "Blog",
-      "projects": "Projects",
+      "projects": "Case studies",
       "research": "Research",
       "about": "About",
       "openMenu": "Open menu",
@@ -35,13 +35,13 @@
         "description": "That post doesn’t exist or its URL changed. Try browsing the blog."
       },
       "project": {
-        "title": "Project not found",
-        "description": "That project doesn’t exist or its URL changed. Check the full list."
+        "title": "Case study not found",
+        "description": "That case study doesn’t exist or its URL changed. Check the full list."
       },
       "actions": {
         "home": "Back to home",
         "blog": "Browse the blog",
-        "projects": "Browse projects"
+        "projects": "Browse the case studies"
       }
     },
     "translationMissing": {
@@ -124,7 +124,7 @@
     }
   },
   "projects": {
-    "title": "Projects",
+    "title": "Case studies",
     "description": "Cases on health in the United States and insurance in Argentina. Each one takes a problem a company has in front of it and carries it through to a decision: how much money is at stake, what the first step is, and what is not worth building.",
     "sections": {
       "own": "I built",
@@ -158,7 +158,7 @@
         "feed": "Get the feed"
       },
       "moreLabel": "More cases",
-      "allProjects": "See all projects",
+      "allProjects": "See all case studies",
       "sameTopic": "On the same topic",
       "otherCase": "Another case"
     },
@@ -309,7 +309,7 @@
       }
     },
     "repoCta": "See the site's repository",
-    "projectsCta": "See the cases"
+    "projectsCta": "See the case studies"
   },
   "casebook": {
     "title": "Casebook",
