@@ -62,7 +62,13 @@ export function Hero() {
         <span>{t("location")}</span>
         <span aria-hidden>·</span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+          {/* El pulso dice "ahora", que es lo que significa disponible. Un
+              anillo que crece y se apaga cada dos segundos, y no cada uno
+              como el `animate-ping` de fábrica, que a este tamaño titila. */}
+          <span className="relative flex size-1.5" aria-hidden>
+            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-70 [animation-duration:2s] motion-reduce:hidden" />
+            <span className="relative size-1.5 rounded-full bg-emerald-500" />
+          </span>
           {t("available")}
         </span>
       </div>
