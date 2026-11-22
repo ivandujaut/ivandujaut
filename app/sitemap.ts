@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllProjects, getCasebook, getPosts, getResearch } from "@/lib/content";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 
-import { RESEARCH_ENABLED } from "@/lib/features";
+import { BLOG_LISTED, CASEBOOK_LISTED, RESEARCH_ENABLED } from "@/lib/features";
 
 // Construye URLs absolutas para el sitemap manteniendo la misma forma que
 // los canonicals emitidos por Next.js: el root sin trailing slash, para que
@@ -51,12 +51,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "daily" | "weekly" | "monthly";
   }> = [
     { path: "/", priority: 1.0, changeFrequency: "weekly" },
-    { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+    ...(BLOG_LISTED
+      ? ([{ path: "/blog", priority: 0.8, changeFrequency: "weekly" }] as const)
+      : []),
     { path: "/projects", priority: 0.8, changeFrequency: "monthly" },
     ...(RESEARCH_ENABLED
       ? ([{ path: "/research", priority: 0.8, changeFrequency: "monthly" }] as const)
       : []),
-    { path: "/casebook", priority: 0.8, changeFrequency: "monthly" },
+    ...(CASEBOOK_LISTED
+      ? ([{ path: "/casebook", priority: 0.8, changeFrequency: "monthly" }] as const)
+      : []),
     { path: "/method", priority: 0.7, changeFrequency: "monthly" },
     { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   ];
@@ -78,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  const posts = [...getPosts("es"), ...getPosts("en")];
+  const posts = BLOG_LISTED ? [...getPosts("es"), ...getPosts("en")] : [];
   const postGroups = groupByTranslationKey(posts);
   const postEntries: MetadataRoute.Sitemap = postGroups.flatMap((group) => {
     const languages = buildLanguages(group, "/blog");
@@ -126,10 +130,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       })
     : [];
 
-  const casebookEntries: MetadataRoute.Sitemap = groupByTranslationKey([
-    ...getCasebook("es"),
-    ...getCasebook("en"),
-  ]).flatMap((group) => {
+  const casebookEntries: MetadataRoute.Sitemap = groupByTranslationKey(
+    CASEBOOK_LISTED ? [...getCasebook("es"), ...getCasebook("en")] : [],
+  ).flatMap((group) => {
     const languages = buildLanguages(group, "/casebook");
     return group.map((item) => ({
       url: absoluteUrl(item.locale, `/casebook/${item.slug}`),
