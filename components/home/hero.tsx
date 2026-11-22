@@ -1,3 +1,4 @@
+import { Fragment, type CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
@@ -45,7 +46,19 @@ export function Hero() {
           El cuerpo sube a 48px en pantallas grandes: el elemento más grande de
           la página era 2,5 veces el cuerpo y nada atraía la mirada. */}
       <h1 className="text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl">
-        {t("tagline")}
+        {/* Palabra por palabra, como el titular de moatseek.com. El texto
+            sigue entero en el HTML y en orden, así que el lector de pantalla
+            y el buscador leen la misma oración. */}
+        {t("tagline")
+          .split(" ")
+          .map((palabra, i, todas) => (
+            <Fragment key={i}>
+              <span className="word-rise" style={{ "--i": i } as CSSProperties}>
+                {palabra}
+              </span>
+              {i < todas.length - 1 && " "}
+            </Fragment>
+          ))}
       </h1>
 
       {/* Estos tres datos estaban en monoespaciada, igual que las fechas, el

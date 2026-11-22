@@ -708,3 +708,35 @@
     animation-delay: 0s !important;
   }
 }
+
+/*
+ * Movimiento de la home y del índice, tomado de moatseek.com (22/11/2026).
+ *
+ * Todo es CSS y nada espera a que hidrate React: el titular se anima desde el
+ * primer pintado, y las tarjetas usan una animación ligada al scroll
+ * (`animation-timeline: view()`). Donde el navegador no la soporta, la regla
+ * no aplica y el contenido se ve quieto, que es el estado correcto. Con
+ * movimiento reducido no se anima nada.
+ */
+
+/* El titular sube palabra por palabra. Sólo `transform` y una opacidad que
+   arranca casi en cero y no en cero: un elemento con opacidad 0 no cuenta
+   como pintado para el LCP. */
+@keyframes word-rise {
+  from {
+    opacity: 0.01;
+    transform: translateY(0.35em);
+  }
+}
+
+.word-rise {
+  display: inline-block;
+  animation: word-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-rise {
+    animation: none;
+  }
+}
