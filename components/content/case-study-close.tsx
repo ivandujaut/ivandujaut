@@ -77,6 +77,10 @@ const ORDEN = {
  * botones para contestar al lado. "Ver todos los casos" se fue a
  * `CaseStudyNext`, que es donde están las otras salidas a más casos.
  *
+ * Con la pregunta arriba, los botones dicen cómo contestarla ("Contestame en
+ * LinkedIn", "Reply by email") y no "Seguime": el orden por idioma no cambia,
+ * sólo la acción que nombra cada uno.
+ *
  * Se mide con `contact_click` y `feed_click` por `surface`. Si en inglés el
  * mail no gana, se invierte.
  */
