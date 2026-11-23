@@ -1,20 +1,10 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { NavLink } from "@/components/layout/nav-link";
+import { NAV_LINKS } from "@/components/layout/nav-links";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { MobileNav } from "@/components/layout/mobile-nav";
-
-const navLinks = [
-  { href: "/", labelKey: "home" },
-  { href: "/blog", labelKey: "blog" },
-  { href: "/projects", labelKey: "projects" },
-  // TODO: re-enable when /research has published content. Route still works
-  // via direct URL; only the nav entry is hidden.
-  // { href: "/research", labelKey: "research" },
-  { href: "/casebook", labelKey: "casebook" },
-  { href: "/about", labelKey: "about" },
-] as const;
 
 export function Navbar() {
   const t = useTranslations("common.navigation");
@@ -35,7 +25,7 @@ export function Navbar() {
 
         {/* Links desktop */}
         <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}

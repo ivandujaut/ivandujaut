@@ -19,7 +19,13 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
   const typedLocale = locale as "es" | "en";
-  const title = isEs ? "Proyectos" : "Projects";
+  // "Casos" y no "Proyectos" desde el 22/11/2026. "Proyectos" hacía esperar
+  // cosas construidas, y la página abre con análisis de mercado: quince
+  // análisis contra dos productos. "Caso" cubre las dos cosas, y es la palabra
+  // que el sitio ya usaba en la bajada. La URL sigue siendo `/projects`: los
+  // casos se reparten por link (273 de las sesiones de los últimos 60 días
+  // entraron directo a uno) y cambiarla obligaba a redirigirlos todos.
+  const title = isEs ? "Casos" : "Case studies";
   // La descripción anterior hablaba de proptech, fintech y herramientas internas
   // construidas con Next.js: quedó de la primera versión del sitio y describía
   // un portfolio de desarrollo. Catorce de los dieciséis casos publicados son

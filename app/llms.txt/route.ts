@@ -1,5 +1,5 @@
 import { getCasebookByLevel, getPosts, getProjects, getResearch } from "@/lib/content";
-import { RESEARCH_ENABLED } from "@/lib/features";
+import { BLOG_LISTED, CASEBOOK_LISTED, RESEARCH_ENABLED } from "@/lib/features";
 import { SITE_URL, localePath, type Locale } from "@/lib/seo";
 import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
@@ -66,8 +66,8 @@ function build(): string {
 
   lines.push(
     ...section("Casos de estudio", getProjects("es"), "es", "/projects"),
-    ...section("Casebook", getCasebookByLevel("es"), "es", "/casebook"),
-    ...section("Blog", getPosts("es"), "es", "/blog"),
+    ...(CASEBOOK_LISTED ? section("Casebook", getCasebookByLevel("es"), "es", "/casebook") : []),
+    ...(BLOG_LISTED ? section("Blog", getPosts("es"), "es", "/blog") : []),
   );
 
   if (RESEARCH_ENABLED) {
@@ -93,8 +93,10 @@ function build(): string {
 
   lines.push(
     ...section("Case studies (English)", getProjects("en"), "en", "/projects", 3),
-    ...section("Casebook (English)", getCasebookByLevel("en"), "en", "/casebook", 3),
-    ...section("Blog (English)", getPosts("en"), "en", "/blog", 3),
+    ...(CASEBOOK_LISTED
+      ? section("Casebook (English)", getCasebookByLevel("en"), "en", "/casebook", 3)
+      : []),
+    ...(BLOG_LISTED ? section("Blog (English)", getPosts("en"), "en", "/blog", 3) : []),
   );
 
   if (RESEARCH_ENABLED) {

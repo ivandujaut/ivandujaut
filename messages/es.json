@@ -3,7 +3,7 @@
     "navigation": {
       "home": "Inicio",
       "blog": "Blog",
-      "projects": "Proyectos",
+      "projects": "Casos",
       "research": "Investigación",
       "about": "Acerca de",
       "openMenu": "Abrir menú",
@@ -35,13 +35,13 @@
         "description": "Ese post no existe o cambió de URL. Probá explorar el blog."
       },
       "project": {
-        "title": "Proyecto no encontrado",
-        "description": "Ese proyecto no existe o cambió de URL. Mirá el listado completo."
+        "title": "Caso no encontrado",
+        "description": "Ese caso no existe o cambió de URL. Mirá el listado completo."
       },
       "actions": {
         "home": "Volver al inicio",
         "blog": "Ver el blog",
-        "projects": "Ver proyectos"
+        "projects": "Ver los casos"
       }
     },
     "translationMissing": {
@@ -124,7 +124,7 @@
     }
   },
   "projects": {
-    "title": "Proyectos",
+    "title": "Casos",
     "description": "Casos sobre salud en Estados Unidos y seguros en Argentina. Cada uno agarra un problema que una empresa tiene enfrente y lo lleva hasta una decisión: cuánta plata hay en juego, cuál es el primer paso y qué no conviene construir.",
     "sections": {
       "own": "Construí",
@@ -158,7 +158,7 @@
         "feed": "Seguir por RSS"
       },
       "moreLabel": "Más casos",
-      "allProjects": "Ver todos los proyectos",
+      "allProjects": "Ver todos los casos",
       "sameTopic": "Sobre el mismo tema",
       "otherCase": "Otro caso"
     },

@@ -5,21 +5,11 @@ import { useTranslations } from "next-intl";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Menu } from "@/components/animate-ui/icons/menu";
 import { NavLink } from "@/components/layout/nav-link";
+import { NAV_LINKS } from "@/components/layout/nav-links";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
-
-const navLinks = [
-  { href: "/", labelKey: "home" },
-  { href: "/blog", labelKey: "blog" },
-  { href: "/projects", labelKey: "projects" },
-  // TODO: re-enable when /research has published content. Route still works
-  // via direct URL; only the nav entry is hidden.
-  // { href: "/research", labelKey: "research" },
-  { href: "/casebook", labelKey: "casebook" },
-  { href: "/about", labelKey: "about" },
-] as const;
 
 export function MobileNav() {
   const t = useTranslations("common.navigation");
@@ -45,7 +35,7 @@ export function MobileNav() {
         </SheetHeader>
 
         <nav className="mt-6 flex flex-col gap-1 px-4">
-          {navLinks.map((link, index) => (
+          {NAV_LINKS.map((link, index) => (
             <NavLink
               key={link.href}
               href={link.href}
