@@ -24,6 +24,18 @@ const SECUNDARIO =
   "inline-flex items-center gap-1.5 rounded-md border border-foreground/15 bg-foreground/7 px-4 py-2 text-sm transition-colors hover:bg-foreground/12";
 
 /**
+ * La pregunta del caso trae, por regla, una oración que plantea la tensión y
+ * después la pregunta abierta ("Parcialito deja que la IA corrija... ¿Hasta
+ * dónde...?"). Como título entero son cuatro renglones; se muestran separadas:
+ * el contexto en gris y la pregunta como título. Si no hay oración previa, va
+ * todo como título.
+ */
+function partirPregunta(texto: string): { contexto?: string; pregunta: string } {
+  const m = texto.match(/^([\s\S]*[.!])\s+([^.!]+\?)$/);
+  return m ? { contexto: m[1], pregunta: m[2] } : { pregunta: texto };
+}
+
+/**
  * Qué se ofrece primero, y en qué orden, según el idioma de la página.
  *
  * En castellano manda LinkedIn, y eso no se toca: se decidió el 11/09/2026
@@ -91,6 +103,7 @@ export async function CaseStudyClose({
   question,
 }: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
+  const { contexto, pregunta } = partirPregunta(question ?? t("title"));
 
   function accion(id: (typeof ORDEN)[keyof typeof ORDEN][number], principal: boolean) {
     const className = principal ? PRINCIPAL : SECUNDARIO;
@@ -162,7 +175,10 @@ export async function CaseStudyClose({
   return (
     <section className="mt-16 border-t border-border pt-10">
       <Eyebrow>{t("eyebrow")}</Eyebrow>
-      <h2 className="mt-2 text-xl font-semibold tracking-tight">{question ?? t("title")}</h2>
+      {contexto && (
+        <p className="mt-3 text-base leading-relaxed text-muted-foreground">{contexto}</p>
+      )}
+      <h2 className="mt-2 text-xl font-semibold tracking-tight">{pregunta}</h2>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
 
       <div className="mt-5 flex flex-wrap gap-3">
