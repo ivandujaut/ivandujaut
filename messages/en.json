@@ -152,6 +152,7 @@
       "eyebrow": "Your turn",
       "title": "What would you do differently?",
       "body": "I write this from outside the industry, so anyone who works inside it sees things I cannot. If you would do it differently, or something here is wrong, tell me why.",
+      "bodyOwn": "I built this from what I saw up close, so from somewhere else you can see things I cannot. If you would do it differently, or something here does not add up, tell me why.",
       "ctas": {
         "linkedin": "Reply on LinkedIn",
         "email": "Reply by email",

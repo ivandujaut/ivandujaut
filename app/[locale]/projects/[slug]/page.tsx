@@ -404,6 +404,7 @@ export default async function ProjectPage({ params }: Props) {
           shareUrl={`${SITE_URL}${projectPath}`}
           shareTitle={project.title}
           question={project.question}
+          own={project.subject === "own"}
         />
 
         <CaseAuthor locale={typedLocale} slug={project.slug} />

@@ -14,6 +14,12 @@ interface CaseStudyCloseProps {
   shareTitle: string;
   /** La pregunta propia del caso (`question` en el frontmatter). */
   question?: string;
+  /**
+   * Si el caso es un producto propio (`subject: "own"`). El texto de abajo de la
+   * pregunta dice "lo armo desde afuera de la industria", que en Parcialito o el
+   * bot es falso: ahí el autor es el que estuvo adentro.
+   */
+  own?: boolean;
 }
 
 const PRINCIPAL =
@@ -101,6 +107,7 @@ export async function CaseStudyClose({
   shareUrl,
   shareTitle,
   question,
+  own = false,
 }: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
   const { contexto, pregunta } = partirPregunta(question ?? t("title"));
@@ -179,7 +186,9 @@ export async function CaseStudyClose({
         <p className="mt-3 text-base leading-relaxed text-muted-foreground">{contexto}</p>
       )}
       <h2 className="mt-2 text-xl font-semibold tracking-tight">{pregunta}</h2>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        {t(own ? "bodyOwn" : "body")}
+      </p>
 
       <div className="mt-5 flex flex-wrap gap-3">
         {ORDEN[locale].map((id, i) => accion(id, i === 0))}
