@@ -5,13 +5,15 @@ import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { RssIcon } from "@/components/icons/rss-icon";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { ShareLinkButton } from "@/components/common/share-link-button";
-import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { localePath } from "@/lib/seo";
 
 interface CaseStudyCloseProps {
   locale: "es" | "en";
   shareUrl: string;
   shareTitle: string;
+  /** La pregunta propia del caso (`question` en el frontmatter). */
+  question?: string;
 }
 
 const PRINCIPAL =
@@ -67,10 +69,23 @@ const ORDEN = {
  * párrafo, y es la única que el lector puede contestar: el bloque abría
  * hablando de lo que quiere el autor.
  *
+ * Desde el 23/11/2026 es "Tu turno" y va apenas termina el cuerpo (después
+ * del CTA al análisis completo, si lo hay), no al fondo. El encabezado es la
+ * pregunta propia del caso cuando la tiene: antes esa pregunta vivía en el
+ * MDX como `## ¿Qué harías vos?`, cinco bloques arriba de estos botones, y el
+ * cierre la repetía en versión genérica. Ahora se pregunta una vez, con los
+ * botones para contestar al lado. "Ver todos los casos" se fue a
+ * `CaseStudyNext`, que es donde están las otras salidas a más casos.
+ *
  * Se mide con `contact_click` y `feed_click` por `surface`. Si en inglés el
  * mail no gana, se invierte.
  */
-export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudyCloseProps) {
+export async function CaseStudyClose({
+  locale,
+  shareUrl,
+  shareTitle,
+  question,
+}: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
 
   function accion(id: (typeof ORDEN)[keyof typeof ORDEN][number], principal: boolean) {
@@ -142,7 +157,8 @@ export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudy
 
   return (
     <section className="mt-16 border-t border-border pt-10">
-      <h2 className="text-xl font-semibold tracking-tight">{t("title")}</h2>
+      <Eyebrow>{t("eyebrow")}</Eyebrow>
+      <h2 className="mt-2 text-xl font-semibold tracking-tight">{question ?? t("title")}</h2>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
 
       <div className="mt-5 flex flex-wrap gap-3">
@@ -157,13 +173,6 @@ export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudy
           triggerClassName="border-foreground/15 bg-foreground/7 px-4 py-2 hover:bg-foreground/12"
         />
       </div>
-
-      <Link
-        href="/projects"
-        className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
-      >
-        {t("allProjects")}
-      </Link>
     </section>
   );
 }

@@ -2,13 +2,7 @@ import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  GithubIcon,
-  FigmaIcon,
-  ArrowUpRight01Icon,
-  TradeUpIcon,
-  TradeDownIcon,
-} from "@hugeicons/core-free-icons";
+import { GithubIcon, FigmaIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { useMDXComponent } from "@/lib/mdx";
 import {
   findProjectInAnyLocale,
@@ -163,7 +157,6 @@ export default async function ProjectPage({ params }: Props) {
   const repoLabel = tProjects("links.repo");
   const figmaLabel = tProjects("links.figma");
   const stackLabel = tProjects("sections.stack");
-  const metricsLabel = tProjects("sections.metrics");
   const homePath = localePath(typedLocale, "/");
   const projectsIndexPath = localePath(typedLocale, "/projects");
   const projectPath = localePath(typedLocale, `/projects/${project.slug}`);
@@ -379,6 +372,21 @@ export default async function ProjectPage({ params }: Props) {
           <MDXContent code={project.content} />
         </div>
 
+        {/* El final del caso, en este orden (23/11/2026). Antes eran siete
+            bloques en unas dos pantallas, con la pregunta al lector dos veces,
+            dos zonas de "seguir leyendo" y la ficha técnica en el medio.
+
+            1. Tarjeta del análisis completo, si lo hay: pegada al cuerpo
+               porque es la prueba de dos capas y se mide en ese lugar.
+            2. "Tu turno": la pregunta del caso con los botones para
+               contestarla al lado (ver case-study-close.tsx).
+            3. Quién escribe (ver case-author.tsx).
+            4. Seguir leyendo: las tarjetas de otros casos y "Ver todos". Ya no
+               van pegadas al cuerpo (94 contra 45 en `acceso-parte-d` las había
+               subido): ahora quedan después de dos bloques cortos que piden
+               una acción, y se mide si eso les quita los pocos clics que
+               tenían (`data/metricas/2026-11-23-medicion-bloque-autor.md`).
+            5. Cómo está hecho: stack y código, al fondo. */}
         {analysis && (
           <AnalysisCta
             locale={typedLocale}
@@ -391,27 +399,24 @@ export default async function ProjectPage({ params }: Props) {
           />
         )}
 
-        {/* Quién escribe, antes de las tarjetas de otros casos: ver
-            components/content/case-author.tsx. En un pitch va después del CTA
-            al análisis para no competir con el test de dos capas. */}
+        <CaseStudyClose
+          locale={typedLocale}
+          shareUrl={`${SITE_URL}${projectPath}`}
+          shareTitle={project.title}
+          question={project.question}
+        />
+
         <CaseAuthor locale={typedLocale} slug={project.slug} />
 
-        {/* Qué leer después va acá, apenas termina el cuerpo y el bloque de autor, y no al pie:
-            entre el hito de lectura y el final de la página se iba la mitad de
-            los lectores (94 contra 45 en `acceso-parte-d`, 120 días).
-
-            La excepción es un caso con análisis completo: ahí la continuación
-            que importa es el análisis, así que estas tarjetas bajan al cierre
-            para no competir con él. */}
-        {!analysis && <CaseStudyNext locale={typedLocale} projects={nextProjects} />}
+        <CaseStudyNext locale={typedLocale} projects={nextProjects} />
 
         {/* Ficha técnica al pie y no en el encabezado. Arriba, el stack y las
             métricas empujaban el primer párrafo a 1,24 pantallas: son datos
-            sobre cómo está hecho el caso, no razones para leerlo, y abrir cada
-            análisis con una lista de herramientas contradice el encuadre de
-            producto del resto del sitio. */}
+            sobre cómo está hecho el caso, no razones para leerlo. Desde el
+            23/11/2026 las tarjetas de métricas no se muestran acá: repetían
+            números que el lector acababa de leer en el cuerpo. */}
         <section className="mt-16 space-y-8 border-t border-border pt-8">
-          <div className="mt-8">
+          <div>
             <Eyebrow as="h2" className="mb-2">
               {stackLabel}
             </Eyebrow>
@@ -419,62 +424,7 @@ export default async function ProjectPage({ params }: Props) {
           </div>
 
           <CaseSourceCode locale={typedLocale} slug={project.slug} code={project.code} />
-
-          {project.metrics.length > 0 && (
-            <div className="mt-8">
-              <Eyebrow as="h2" className="mb-2">
-                {metricsLabel}
-              </Eyebrow>
-              <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {project.metrics.map((metric) => (
-                  <div key={metric.label} className="rounded-lg border border-border p-3">
-                    {/* text-lg y no text-xl: con 4 columnas dentro de una
-                      columna de 672px, un valor como "$45,3 mil M" no entra
-                      en una línea y la unidad quedaba sola abajo. */}
-                    <dd className="font-mono text-lg font-semibold tracking-tight tabular-nums">
-                      {metric.value}
-                      {/* La flecha dice la dirección; el color, si esa
-                        dirección es buena. Así el lector sabe si leerlo como
-                        mejora sin abrir el caso (regla del nodo 4). */}
-                      {metric.trend && metric.trend !== "neutral" && metric.sentiment && (
-                        <span
-                          className={`ml-1.5 inline-flex items-center gap-0.5 align-middle text-sm font-medium ${
-                            metric.sentiment === "good"
-                              ? "text-emerald-600 dark:text-emerald-500"
-                              : "text-red-600 dark:text-red-500"
-                          }`}
-                        >
-                          <HugeiconsIcon
-                            icon={metric.trend === "up" ? TradeUpIcon : TradeDownIcon}
-                            size={16}
-                            strokeWidth={2}
-                            aria-hidden
-                          />
-                          {metric.change && <span className="text-xs">{metric.change}</span>}
-                          <span className="sr-only">
-                            {tProjects(metric.sentiment === "good" ? "trend.good" : "trend.bad")}
-                          </span>
-                        </span>
-                      )}
-                    </dd>
-                    <dt className="mt-1 text-xs text-muted-foreground">{metric.label}</dt>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          )}
         </section>
-
-        {/* Compartir vive adentro del cierre y no en una fila propia: sin el
-            me gusta al lado quedaba un botón solo entre dos bloques con borde.
-            Ahí abajo las tres acciones se leen juntas y en orden de valor. */}
-        {analysis && <CaseStudyNext locale={typedLocale} projects={nextProjects} />}
-
-        <CaseStudyClose
-          locale={typedLocale}
-          shareUrl={`${SITE_URL}${projectPath}`}
-          shareTitle={project.title}
-        />
       </PageShell>
     </main>
   );

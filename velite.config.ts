@@ -252,6 +252,12 @@ const projects = defineCollection({
             }),
         )
         .default([]),
+      // La pregunta al lector con la que abre "Tu turno", el bloque que sigue
+      // al cuerpo: qué haría él en el lugar de la empresa. Va acá y no como un
+      // `## ¿Qué harías vos?` en el MDX porque ahí quedaba lejos de los botones
+      // para contestarla, y el cierre repetía la pregunta en versión genérica.
+      // Sin este campo el bloque usa la genérica (`projects.close.title`).
+      question: s.string().optional(),
       // Scripts que producen los números del caso, como rutas desde la raíz
       // del repo ("scripts/analysis/pix-brasil.py"). El pie del caso los
       // linkea a GitHub.

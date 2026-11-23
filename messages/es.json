@@ -149,8 +149,9 @@
       "design": "Diseño"
     },
     "close": {
+      "eyebrow": "Tu turno",
       "title": "¿Qué harías distinto?",
-      "body": "Estos casos los armo con datos públicos, desde afuera de la industria, así que cualquiera que trabaje adentro ve cosas que yo no. Si algo acá está mal, o es obvio para vos y no para mí, escribime. En LinkedIn publico cada caso nuevo y discuto estas decisiones con gente que las vive de cerca.",
+      "body": "Lo armo desde afuera de la industria, así que quien trabaja adentro ve cosas que yo no. Si lo harías distinto, o algo acá está mal, contame por qué.",
       "ctas": {
         "linkedin": "Seguime en LinkedIn",
         "email": "Escribime",
@@ -167,7 +168,7 @@
       "label": "Quién escribe",
       "name": "Iván Dujaut",
       "role": "AI Product Manager · Bioingeniero ITBA · Techstars W24",
-      "body": "Analizo el negocio y construyo el producto. Escribo estos casos con datos públicos para mostrar cómo encaro una decisión: la pregunta, los números y qué haría yo.",
+      "body": "Analizo el negocio y construyo el producto. Escribo estos casos para mostrar cómo encaro una decisión: la pregunta, los números y qué haría yo.",
       "ctas": {
         "about": "Más sobre mí",
         "cv": "Ver mi CV"

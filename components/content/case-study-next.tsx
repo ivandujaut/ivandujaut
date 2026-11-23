@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import type { ProjectStatus } from "@/components/content/status-badge";
 import type { ProjectKind } from "@/components/content/kind-badge";
@@ -40,8 +41,11 @@ export interface NextProject {
  * relación se dice una vez, en el encabezado, en vez de dos veces adentro de
  * las tarjetas; lo que distingue a una de otra es la portada y los minutos.
  *
- * En un caso con análisis completo este bloque no va acá: ahí la continuación
- * es el análisis, y dos invitaciones seguidas compiten entre ellas.
+ * Desde el 23/11/2026 va después de "Tu turno" y del bloque de autor, y es la
+ * única zona de "seguir leyendo" del final: también lleva "Ver todos los
+ * casos", que antes estaba en el cierre. En un caso con análisis completo la
+ * tarjeta del análisis sigue arriba, pegada al cuerpo (es la prueba de dos
+ * capas); estas tarjetas no compiten con ella porque quedan tres bloques abajo.
  */
 export async function CaseStudyNext({
   locale,
@@ -87,6 +91,13 @@ export async function CaseStudyNext({
           />
         ))}
       </div>
+
+      <Link
+        href="/projects"
+        className="mt-8 inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
+      >
+        {t("allProjects")}
+      </Link>
     </section>
   );
 }
