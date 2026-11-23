@@ -87,6 +87,17 @@ export type AnalyticsEvent =
    */
   | "filter_click"
   /**
+   * Clic hacia quién escribe un caso: la firma del encabezado
+   * (`surface: "case-byline"`) o el bloque de autor al terminar el cuerpo
+   * (`surface: "case-author"`), los dos hacia /about, con el `slug` del caso.
+   *
+   * Existe desde el 23/11/2026. En los dos meses anteriores, de 224 sesiones
+   * que entraron a un caso desde un buscador, 83 lo leyeron entero y ninguna
+   * fue a /about ni al CV: el caso no decía quién lo escribió. La medición y el
+   * corte están en `data/metricas/2026-11-23-medicion-bloque-autor.md`.
+   */
+  | "author_click"
+  /**
    * Hasta dónde llegó el lector en una página que no es un artículo
    * (`page`, `section`). Lo emite `SectionTracker` por hitos con nombre, no
    * por porcentaje del alto, para que la serie siga siendo comparable cuando

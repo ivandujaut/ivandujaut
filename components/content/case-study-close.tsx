@@ -5,13 +5,21 @@ import { CalendlyIcon } from "@/components/icons/calendly-icon";
 import { RssIcon } from "@/components/icons/rss-icon";
 import { ObfuscatedEmailTrigger } from "@/components/common/obfuscated-email-trigger";
 import { ShareLinkButton } from "@/components/common/share-link-button";
-import { Link } from "@/i18n/navigation";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { localePath } from "@/lib/seo";
 
 interface CaseStudyCloseProps {
   locale: "es" | "en";
   shareUrl: string;
   shareTitle: string;
+  /** La pregunta propia del caso (`question` en el frontmatter). */
+  question?: string;
+  /**
+   * Si el caso es un producto propio (`subject: "own"`). El texto de abajo de la
+   * pregunta dice "lo armo desde afuera de la industria", que en Parcialito o el
+   * bot es falso: ahí el autor es el que estuvo adentro.
+   */
+  own?: boolean;
 }
 
 const PRINCIPAL =
@@ -20,6 +28,18 @@ const PRINCIPAL =
 // se percibía más bajo aunque mida lo mismo.
 const SECUNDARIO =
   "inline-flex items-center gap-1.5 rounded-md border border-foreground/15 bg-foreground/7 px-4 py-2 text-sm transition-colors hover:bg-foreground/12";
+
+/**
+ * La pregunta del caso trae, por regla, una oración que plantea la tensión y
+ * después la pregunta abierta ("Parcialito deja que la IA corrija... ¿Hasta
+ * dónde...?"). Como título entero son cuatro renglones; se muestran separadas:
+ * el contexto en gris y la pregunta como título. Si no hay oración previa, va
+ * todo como título.
+ */
+function partirPregunta(texto: string): { contexto?: string; pregunta: string } {
+  const m = texto.match(/^([\s\S]*[.!])\s+([^.!]+\?)$/);
+  return m ? { contexto: m[1], pregunta: m[2] } : { pregunta: texto };
+}
 
 /**
  * Qué se ofrece primero, y en qué orden, según el idioma de la página.
@@ -67,11 +87,30 @@ const ORDEN = {
  * párrafo, y es la única que el lector puede contestar: el bloque abría
  * hablando de lo que quiere el autor.
  *
+ * Desde el 23/11/2026 es "Tu turno" y va apenas termina el cuerpo (después
+ * del CTA al análisis completo, si lo hay), no al fondo. El encabezado es la
+ * pregunta propia del caso cuando la tiene: antes esa pregunta vivía en el
+ * MDX como `## ¿Qué harías vos?`, cinco bloques arriba de estos botones, y el
+ * cierre la repetía en versión genérica. Ahora se pregunta una vez, con los
+ * botones para contestar al lado. "Ver todos los casos" se fue a
+ * `CaseStudyNext`, que es donde están las otras salidas a más casos.
+ *
+ * Con la pregunta arriba, los botones dicen cómo contestarla ("Contestame en
+ * LinkedIn", "Reply by email") y no "Seguime": el orden por idioma no cambia,
+ * sólo la acción que nombra cada uno.
+ *
  * Se mide con `contact_click` y `feed_click` por `surface`. Si en inglés el
  * mail no gana, se invierte.
  */
-export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudyCloseProps) {
+export async function CaseStudyClose({
+  locale,
+  shareUrl,
+  shareTitle,
+  question,
+  own = false,
+}: CaseStudyCloseProps) {
   const t = await getTranslations({ locale, namespace: "projects.close" });
+  const { contexto, pregunta } = partirPregunta(question ?? t("title"));
 
   function accion(id: (typeof ORDEN)[keyof typeof ORDEN][number], principal: boolean) {
     const className = principal ? PRINCIPAL : SECUNDARIO;
@@ -142,8 +181,14 @@ export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudy
 
   return (
     <section className="mt-16 border-t border-border pt-10">
-      <h2 className="text-xl font-semibold tracking-tight">{t("title")}</h2>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
+      <Eyebrow>{t("eyebrow")}</Eyebrow>
+      {contexto && (
+        <p className="mt-3 text-base leading-relaxed text-muted-foreground">{contexto}</p>
+      )}
+      <h2 className="mt-2 text-xl font-semibold tracking-tight">{pregunta}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        {t(own ? "bodyOwn" : "body")}
+      </p>
 
       <div className="mt-5 flex flex-wrap gap-3">
         {ORDEN[locale].map((id, i) => accion(id, i === 0))}
@@ -157,13 +202,6 @@ export async function CaseStudyClose({ locale, shareUrl, shareTitle }: CaseStudy
           triggerClassName="border-foreground/15 bg-foreground/7 px-4 py-2 hover:bg-foreground/12"
         />
       </div>
-
-      <Link
-        href="/projects"
-        className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
-      >
-        {t("allProjects")}
-      </Link>
     </section>
   );
 }

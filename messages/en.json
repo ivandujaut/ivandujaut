@@ -149,11 +149,13 @@
       "design": "Design"
     },
     "close": {
+      "eyebrow": "Your turn",
       "title": "What would you do differently?",
-      "body": "I write these cases from public data, from outside the industry, so anyone who works inside it sees things I cannot. If something here is wrong, or obvious to you and not to me, write me. The feed has every new case. I post them on LinkedIn too, in Spanish.",
+      "body": "I write this from outside the industry, so anyone who works inside it sees things I cannot. If you would do it differently, or something here is wrong, tell me why.",
+      "bodyOwn": "I built this from what I saw up close, so from somewhere else you can see things I cannot. If you would do it differently, or something here does not add up, tell me why.",
       "ctas": {
-        "linkedin": "Follow me on LinkedIn",
-        "email": "Write me",
+        "linkedin": "Reply on LinkedIn",
+        "email": "Reply by email",
         "call": "Book a call",
         "feed": "Get the feed"
       },
@@ -161,6 +163,17 @@
       "allProjects": "See all case studies",
       "sameTopic": "On the same topic",
       "otherCase": "Another case"
+    },
+    "author": {
+      "byline": "By <link>Iván Dujaut</link>, AI Product Manager",
+      "label": "Who wrote this",
+      "name": "Iván Dujaut",
+      "role": "AI Product Manager · Biomedical Engineer (ITBA) · Techstars W24",
+      "body": "I analyze the business and build the product. I write these cases to show how I approach a decision: the question, the numbers and what I would do.",
+      "ctas": {
+        "about": "More about me",
+        "cv": "See my CV"
+      }
     },
     "trend": {
       "good": "improving",
