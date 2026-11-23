@@ -26,6 +26,7 @@ const CLICK_EVENTS = new Set<string>([
   "card_click",
   "feed_click",
   "filter_click",
+  "author_click",
 ] satisfies AnalyticsEvent[]);
 
 export function ClickTracker() {
