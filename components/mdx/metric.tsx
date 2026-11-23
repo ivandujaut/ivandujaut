@@ -1,6 +1,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { TradeUpIcon, TradeDownIcon, MinusSignIcon } from "@hugeicons/core-free-icons";
 import type { ReactNode } from "react";
+import { RollingNumber } from "@/components/ui/rolling-number";
 
 interface MetricProps {
   label: string;
@@ -58,7 +59,9 @@ export function Metric({ label, value, change, trend = "neutral" }: MetricProps)
   return (
     <div className="rounded-lg border border-border p-4">
       <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 font-mono text-2xl font-semibold tracking-tight">{value}</p>
+      <p className="mt-1 font-mono text-2xl font-semibold tracking-tight">
+        <RollingNumber value={value} />
+      </p>
       {change && (
         <p className={`mt-1 flex items-center gap-1 text-xs ${trendConfig[trend].className}`}>
           <HugeiconsIcon icon={TrendIcon} size={12} strokeWidth={1.5} />

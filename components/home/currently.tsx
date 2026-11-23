@@ -36,7 +36,7 @@ export function Currently() {
   const t = useTranslations("home.currently");
 
   return (
-    <section>
+    <section className="reveal">
       <Eyebrow as="h2" className="mb-4">
         {t("title")}
       </Eyebrow>

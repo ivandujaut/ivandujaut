@@ -1,3 +1,4 @@
+import { Fragment, type CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { GithubIcon, LinkedinIcon, Mail01Icon } from "@hugeicons/core-free-icons";
@@ -45,7 +46,19 @@ export function Hero() {
           El cuerpo sube a 48px en pantallas grandes: el elemento más grande de
           la página era 2,5 veces el cuerpo y nada atraía la mirada. */}
       <h1 className="text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl">
-        {t("tagline")}
+        {/* Palabra por palabra, como el titular de moatseek.com. El texto
+            sigue entero en el HTML y en orden, así que el lector de pantalla
+            y el buscador leen la misma oración. */}
+        {t("tagline")
+          .split(" ")
+          .map((palabra, i, todas) => (
+            <Fragment key={i}>
+              <span className="word-rise" style={{ "--i": i } as CSSProperties}>
+                {palabra}
+              </span>
+              {i < todas.length - 1 && " "}
+            </Fragment>
+          ))}
       </h1>
 
       {/* Estos tres datos estaban en monoespaciada, igual que las fechas, el
@@ -62,7 +75,13 @@ export function Hero() {
         <span>{t("location")}</span>
         <span aria-hidden>·</span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+          {/* El pulso dice "ahora", que es lo que significa disponible. Un
+              anillo que crece y se apaga cada dos segundos, y no cada uno
+              como el `animate-ping` de fábrica, que a este tamaño titila. */}
+          <span className="relative flex size-1.5" aria-hidden>
+            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-70 [animation-duration:2s] motion-reduce:hidden" />
+            <span className="relative size-1.5 rounded-full bg-emerald-500" />
+          </span>
           {t("available")}
         </span>
       </div>
