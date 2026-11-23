@@ -256,7 +256,9 @@ const projects = defineCollection({
       // al cuerpo: qué haría él en el lugar de la empresa. Va acá y no como un
       // `## ¿Qué harías vos?` en el MDX porque ahí quedaba lejos de los botones
       // para contestarla, y el cierre repetía la pregunta en versión genérica.
-      // Sin este campo el bloque usa la genérica (`projects.close.title`).
+      // Obligatorio en todo caso publicado (lo valida el transform de abajo);
+      // en un borrador puede faltar y el bloque usa la genérica
+      // (`projects.close.title`).
       question: s.string().optional(),
       // Scripts que producen los números del caso, como rutas desde la raíz
       // del repo ("scripts/analysis/pix-brasil.py"). El pie del caso los
@@ -309,6 +311,17 @@ const projects = defineCollection({
           `${meta.path}: el campo \`code\` apunta a ${rotos.join(", ")}, que no existe en disco ` +
             "o que git no trackea. El caso linkea esa ruta a GitHub, así que el archivo tiene que " +
             "estar commiteado antes de declararlo.",
+        );
+      }
+
+      // Regla desde el 23/11/2026: todo caso publicado lleva su propia
+      // pregunta para "Tu turno". Corta el build por el mismo motivo que
+      // `code`: un aviso que no frena se publica igual con la genérica.
+      if (!data.draft && !data.question?.trim().endsWith("?")) {
+        throw new Error(
+          `${meta.path}: falta \`question\`, la pregunta propia del caso para "Tu turno" ` +
+            "(qué haría el lector en el lugar de quien decide, terminada en signo de pregunta). " +
+            "Ver .claude/docs/content-workflow.md.",
         );
       }
 
