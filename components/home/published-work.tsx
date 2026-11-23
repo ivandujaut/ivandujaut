@@ -70,6 +70,9 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
       </div>
 
       <ListRow
+        // Sube al cargar, como la tarjeta grande de moatseek.com. Va con CSS y
+        // no con el observador porque tiene la imagen del LCP.
+        className="rise-in"
         href={`/projects/${lead.slug}`}
         data-ph="card_click"
         data-ph-slug={lead.slug}

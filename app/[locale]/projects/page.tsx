@@ -143,7 +143,9 @@ export default async function ProjectsPage({ params }: Props) {
             {/* Fuera del filtro y a lo ancho: es la pieza por la que conviene
                 empezar a leer el sitio, no la más nueva de un mercado, así que
                 sigue estando cuando el visitante cambia de mercado. */}
-            <ProjectCard project={entry} locale={typedLocale} minutos={minutos} />
+            <div className="rise-in">
+              <ProjectCard project={entry} locale={typedLocale} minutos={minutos} />
+            </div>
           </section>
         )}
 

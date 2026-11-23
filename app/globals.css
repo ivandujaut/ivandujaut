@@ -712,11 +712,19 @@
 /*
  * Movimiento de la home y del índice, tomado de moatseek.com (22/11/2026).
  *
- * Todo es CSS y nada espera a que hidrate React: el titular se anima desde el
- * primer pintado, y las tarjetas usan una animación ligada al scroll
- * (`animation-timeline: view()`). Donde el navegador no la soporta, la regla
- * no aplica y el contenido se ve quieto, que es el estado correcto. Con
- * movimiento reducido no se anima nada.
+ * Dos mecanismos, según si el elemento está a la vista al cargar:
+ *
+ * - Lo que se ve al refrescar (el titular, la tarjeta principal de la home y
+ *   la de "Empezá por acá") se anima con CSS desde el primer pintado, sin
+ *   esperar a que hidrate React. Ahí está la imagen del LCP, y atarla a
+ *   JavaScript la haría aparecer tarde.
+ * - Lo que entra al scrollear (`.reveal`) sube y aparece con su propia
+ *   animación, en tandas, cuando `RevealObserver` lo ve entrar. El estado
+ *   escondido sólo aplica con la clase `rv` en `<html>`, que pone un script en
+ *   el `<head>`: sin JavaScript, o si el observador no arranca en cuatro
+ *   segundos, todo se ve quieto.
+ *
+ * Con movimiento reducido no se anima nada.
  */
 
 /* El titular sube palabra por palabra. Sólo `transform` y una opacidad que
@@ -735,27 +743,41 @@
   animation-delay: calc(var(--i, 0) * 60ms);
 }
 
-/* Las tarjetas aparecen al entrar en pantalla: suben 24 px mientras cruzan el
-   primer tercio del viewport. Una tarjeta que ya está a la vista al cargar se
-   pinta completa. */
-@keyframes reveal-up {
+/* Las tarjetas de arriba del pliegue suben al cargar, un poco después del
+   titular. Es la entrada de la página, así que corre en cada refresco. */
+@keyframes rise-in {
   from {
-    opacity: 0;
-    transform: translateY(24px);
+    opacity: 0.01;
+    transform: translateY(28px);
   }
 }
 
-@supports (animation-timeline: view()) {
-  .reveal {
-    animation: reveal-up linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 35%;
+.rise-in {
+  animation: rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+}
+
+/* Las tarjetas de más abajo esperan escondidas y aparecen al entrar en
+   pantalla. `--reveal-delay` lo pone el observador para escalonar las que
+   entran juntas (una fila de la grilla, la lista de la home). */
+@media (prefers-reduced-motion: no-preference) {
+  html.rv .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.rv .reveal[data-revealed] {
+    opacity: 1;
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .word-rise,
-  .reveal {
+  .rise-in {
     animation: none;
   }
 }
