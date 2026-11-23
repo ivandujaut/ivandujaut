@@ -9,6 +9,8 @@ import { Footer } from "@/components/layout/footer";
 import { LanguageSuggestionBanner } from "@/components/i18n/language-suggestion-banner";
 import { Navbar } from "@/components/layout/navbar";
 import { SkipToContent } from "@/components/layout/skip-to-content";
+import { RevealObserver } from "@/components/motion/reveal-observer";
+import { REVEAL_BOOT } from "@/lib/reveal-boot";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
@@ -156,6 +158,11 @@ export default async function LocaleLayout({
 
   return (
     <html lang={idioma} suppressHydrationWarning>
+      <head>
+        {/* Esconde las tarjetas que aparecen al scrollear antes del primer
+            pintado. Ver `lib/reveal-boot.ts` y `RevealObserver`. */}
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_BOOT }} />
+      </head>
       <body
         suppressHydrationWarning
         className={`${archivo.variable} ${chivoMono.variable} ${alegreya.variable} antialiased`}
@@ -178,6 +185,7 @@ export default async function LocaleLayout({
         <SpeedInsights />
         <PostHogProvider />
         <ClickTracker />
+        <RevealObserver />
       </body>
     </html>
   );
