@@ -10,6 +10,7 @@ import {
 } from "@/components/content/projects-filter";
 import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { PageShell } from "@/components/ui/page-shell";
+import { SectionTracker } from "@/components/analytics/section-tracker";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -141,6 +142,9 @@ export default async function ProjectsPage({ params }: Props) {
   return (
     <PageShell id="main">
       <ProjectsHeader />
+      {/* Hasta dónde baja el que entra al índice: si llega a las pestañas y si
+          llega al final del mercado que eligió. Ver la home para el porqué. */}
+      <SectionTracker page="casos" sections="casos-filtro,casos-fin" />
 
       <div className="mt-16 space-y-14">
         {entry && (

@@ -135,7 +135,10 @@ export function ProjectsFilter({ facets, initialFacet, sections }: ProjectsFilte
   // bajada y el listado, que tienen que leerse como una sola pieza.
   return (
     <div>
-      <div ref={ancla} />
+      {/* `casos-filtro` y `casos-fin` son hitos de `SectionTracker` (ver la
+          página): llegó al filtro, y llegó al final del listado que estaba
+          mirando. */}
+      <div ref={ancla} id="casos-filtro" />
       {/*
         Pestañas sin caja: una línea de base y un subrayado que se desliza.
         Reemplazó al control segmentado del 18/11/2026, que en desktop dejaba
@@ -247,6 +250,7 @@ export function ProjectsFilter({ facets, initialFacet, sections }: ProjectsFilte
           );
         })}
       </div>
+      <div id="casos-fin" />
     </div>
   );
 }

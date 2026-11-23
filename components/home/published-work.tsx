@@ -58,7 +58,9 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
   const imagen = lead.cover ? { ...lead.cover.src, alt: lead.cover.alt } : null;
 
   return (
-    <section>
+    // Los `id` son hitos de `SectionTracker` (ver la home): renombrarlos corta
+    // la serie de `section_seen`.
+    <section id="home-trabajo">
       <div className="mb-4 flex items-baseline justify-between">
         <Eyebrow as="h2">{t("title")}</Eyebrow>
         <Link
@@ -123,7 +125,7 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
         </article>
       </ListRow>
 
-      <div className="mt-2 space-y-1">
+      <div id="home-lista" className="mt-2 space-y-1">
         {rest.map((project) => (
           <div key={project.slug} className="reveal">
             <ProjectListItem

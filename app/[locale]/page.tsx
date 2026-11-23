@@ -10,6 +10,7 @@ import { buildStaticAlternates, localePath, SITE_URL } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { personSchema } from "@/lib/jsonld";
 import { PageShell } from "@/components/ui/page-shell";
+import { SectionTracker } from "@/components/analytics/section-tracker";
 import { PROFILE_DESCRIPTION } from "@/lib/profile";
 
 type Props = {
@@ -95,6 +96,13 @@ export default async function Home({ params }: Props) {
     // aire es un hueco.
     <PageShell id="main">
       <JsonLd data={personSchema(locale as "es" | "en")} />
+      {/* Hasta dónde baja el que entra a la home. Se sumó el 23/11/2026 para
+          medir los cambios de UX de esa semana (ver
+          `data/metricas/2026-11-23-medicion-cambios-ux.md`). "home-trabajo"
+          ya está a la vista al cargar, en escritorio y en celular: cuenta
+          visitas, no scroll. Los hitos que piden bajar son la lista y
+          "Actualmente". */}
+      <SectionTracker page="home" sections="home-trabajo,home-lista,home-actualmente" />
       <Hero />
 
       {/* La obra antes que la biografía. Hasta el 18/09/2026 el orden era
