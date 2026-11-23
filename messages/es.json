@@ -162,6 +162,17 @@
       "sameTopic": "Sobre el mismo tema",
       "otherCase": "Otro caso"
     },
+    "author": {
+      "byline": "Por <link>Iván Dujaut</link>, AI Product Manager",
+      "label": "Quién escribe",
+      "name": "Iván Dujaut",
+      "role": "AI Product Manager · Bioingeniero ITBA · Techstars W24",
+      "body": "Analizo el negocio y construyo el producto. Escribo estos casos con datos públicos para mostrar cómo encaro una decisión: la pregunta, los números y qué haría yo.",
+      "ctas": {
+        "about": "Más sobre mí",
+        "cv": "Ver mi CV"
+      }
+    },
     "trend": {
       "good": "mejora",
       "bad": "empeora"

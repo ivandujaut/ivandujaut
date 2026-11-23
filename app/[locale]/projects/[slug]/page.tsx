@@ -31,6 +31,7 @@ import { ShareLinkButton } from "@/components/common/share-link-button";
 import { CaseStudyClose } from "@/components/content/case-study-close";
 import { CaseStudyNext, type NextProject } from "@/components/content/case-study-next";
 import { AnalysisCta, ParentNote } from "@/components/content/analysis-layer";
+import { CaseAuthor, CaseByline } from "@/components/content/case-author";
 import { StackList } from "@/components/content/stack-list";
 import { CaseSourceCode } from "@/components/content/case-source-code";
 import { ReadingProgress } from "@/components/content/reading-progress";
@@ -266,6 +267,7 @@ export default async function ProjectPage({ params }: Props) {
             <h1 className="text-4xl font-semibold tracking-tight">{project.title}</h1>
           </ViewTransition>
           <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
+          <CaseByline locale={typedLocale} slug={project.slug} />
 
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-muted-foreground">
             {/* Mes y año, el mismo formato que la tarjeta del listado: los dos
@@ -377,15 +379,6 @@ export default async function ProjectPage({ params }: Props) {
           <MDXContent code={project.content} />
         </div>
 
-        {/* Qué leer después va acá, apenas termina el cuerpo, y no al pie:
-            entre el hito de lectura y el final de la página se iba la mitad de
-            los lectores (94 contra 45 en `acceso-parte-d`, 120 días).
-
-            La excepción es un caso con análisis completo: ahí la continuación
-            que importa es el análisis, así que estas tarjetas bajan al cierre
-            para no competir con él. */}
-        {!analysis && <CaseStudyNext locale={typedLocale} projects={nextProjects} />}
-
         {analysis && (
           <AnalysisCta
             locale={typedLocale}
@@ -397,6 +390,20 @@ export default async function ProjectPage({ params }: Props) {
             }}
           />
         )}
+
+        {/* Quién escribe, antes de las tarjetas de otros casos: ver
+            components/content/case-author.tsx. En un pitch va después del CTA
+            al análisis para no competir con el test de dos capas. */}
+        <CaseAuthor locale={typedLocale} slug={project.slug} />
+
+        {/* Qué leer después va acá, apenas termina el cuerpo y el bloque de autor, y no al pie:
+            entre el hito de lectura y el final de la página se iba la mitad de
+            los lectores (94 contra 45 en `acceso-parte-d`, 120 días).
+
+            La excepción es un caso con análisis completo: ahí la continuación
+            que importa es el análisis, así que estas tarjetas bajan al cierre
+            para no competir con él. */}
+        {!analysis && <CaseStudyNext locale={typedLocale} projects={nextProjects} />}
 
         {/* Ficha técnica al pie y no en el encabezado. Arriba, el stack y las
             métricas empujaban el primer párrafo a 1,24 pantallas: son datos

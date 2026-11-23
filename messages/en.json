@@ -162,6 +162,17 @@
       "sameTopic": "On the same topic",
       "otherCase": "Another case"
     },
+    "author": {
+      "byline": "By <link>Iván Dujaut</link>, AI Product Manager",
+      "label": "Who wrote this",
+      "name": "Iván Dujaut",
+      "role": "AI Product Manager · Biomedical Engineer (ITBA) · Techstars W24",
+      "body": "I analyze the business and build the product. I write these cases from public data to show how I approach a decision: the question, the numbers and what I would do.",
+      "ctas": {
+        "about": "More about me",
+        "cv": "See my CV"
+      }
+    },
     "trend": {
       "good": "improving",
       "bad": "worsening"
