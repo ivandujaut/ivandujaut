@@ -113,7 +113,7 @@
     "work": {
       "title": "Published work",
       "viewAll": "View all",
-      "cadence": "{count} case studies published since {since}, one every {days, plural, one {day} other {# days}}."
+      "cadence": "<n>{count}</n> case studies published since {since}, one every {days, plural, one {day} other {# days}}."
     }
   },
   "blog": {

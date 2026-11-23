@@ -113,7 +113,7 @@
     "work": {
       "title": "Trabajo publicado",
       "viewAll": "Ver todos",
-      "cadence": "{count} casos publicados desde {since}, uno cada {days, plural, one {día} other {# días}}."
+      "cadence": "<n>{count}</n> casos publicados desde {since}, uno cada {days, plural, one {día} other {# días}}."
     }
   },
   "blog": {

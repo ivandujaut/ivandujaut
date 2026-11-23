@@ -1,6 +1,7 @@
 import { ViewTransition } from "react";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { RollingNumber } from "@/components/ui/rolling-number";
 import { Link } from "@/i18n/navigation";
 import { ProjectListItem } from "@/components/content/project-list-item";
 import { KindBadge } from "@/components/content/kind-badge";
@@ -121,29 +122,32 @@ export async function PublishedWork({ locale }: PublishedWorkProps) {
 
       <div className="mt-2 space-y-1">
         {rest.map((project) => (
-          <ProjectListItem
-            key={project.slug}
-            slug={project.slug}
-            title={project.title}
-            tagline={project.tagline}
-            date={project.date}
-            stack={project.stack}
-            readingTime={
-              project.metadata
-                ? tReading("minutes", { count: project.metadata.readingTime })
-                : undefined
-            }
-            status={project.status}
-            kind={project.kind}
-            locale={locale}
-            surface="home"
-          />
+          <div key={project.slug} className="reveal">
+            <ProjectListItem
+              slug={project.slug}
+              title={project.title}
+              tagline={project.tagline}
+              date={project.date}
+              stack={project.stack}
+              readingTime={
+                project.metadata
+                  ? tReading("minutes", { count: project.metadata.readingTime })
+                  : undefined
+              }
+              status={project.status}
+              kind={project.kind}
+              locale={locale}
+              surface="home"
+            />
+          </div>
         ))}
       </div>
 
       {cadence && (
         <p className="mt-5 text-sm text-muted-foreground">
-          {t("cadence", {
+          {t.rich("cadence", {
+            // El total rueda al aparecer, como los contadores de moatseek.com.
+            n: (chunks) => <RollingNumber value={String(chunks)} />,
             count: cadence.count,
             days: cadence.everyDays,
             since: new Date(cadence.since).toLocaleDateString(locale, {

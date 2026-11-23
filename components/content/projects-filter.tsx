@@ -226,7 +226,7 @@ export function ProjectsFilter({ facets, initialFacet, sections }: ProjectsFilte
                 )}
               >
                 {section.items.map((item) => (
-                  <div key={item.key} className={cn(!visible.has(item.key) && "hidden")}>
+                  <div key={item.key} className={cn("reveal", !visible.has(item.key) && "hidden")}>
                     {item.node}
                   </div>
                 ))}
