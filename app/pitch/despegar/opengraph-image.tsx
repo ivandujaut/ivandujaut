@@ -5,7 +5,8 @@ import { hero, journey, og } from "./despegar.data";
 
 /**
  * La imagen del link compartido: el titular de la portada a la izquierda y el
- * pasaje dado vuelta a la derecha (USD 412 tachado, USD 486). Se genera una
+ * pasaje dado vuelta a la derecha (el precio del listado tachado y el que se
+ * paga, los del tablero de la portada). Se genera una
  * vez, en el build.
  *
  * Tipografías: Rubik, la de la página, se pide a Google Fonts sólo con los

@@ -4,11 +4,14 @@
  * cada cifra real tiene su fuente en `sources` y en el BRIEF
  * (`data/despegar/BRIEF.md`, fuera del repo).
  *
- * Tres tipos de número, y la página los muestra distinto:
+ * Cuatro tipos de número, y la página los muestra distinto:
  * - `dato`: sale de una fuente pública (`source`).
  * - `inferencia`: cuenta propia sobre datos públicos; lleva la cuenta en `how`.
- * - `ilustrativo`: inventado para la maqueta (tablero, mock del checkout); la
- *   página lo rotula "datos de ejemplo" y nunca lo mezcla con los otros dos.
+ * - `propio`: lo vi yo haciendo la compra hasta la pantalla de pago, sin pagar
+ *   (tablero de la portada y pasaje); la página lo rotula "recorrido propio".
+ * - `ilustrativo`: inventado para la maqueta (escenario del experimento,
+ *   tablero de medición); la página lo rotula "de ejemplo" y nunca lo mezcla
+ *   con los otros.
  *
  * La gramática visual de toda la página: el mismo vuelo leído dos veces. Lo
  * que ves (el precio del listado) y lo que pagás (el del último paso). La
@@ -98,10 +101,10 @@ export const meta = {
 /**
  * La imagen que acompaña al link cuando se comparte (LinkedIn, WhatsApp, mail).
  * Es lo primero que se ve, antes de abrir la página: el titular de la portada
- * y el pasaje dado vuelta, con el mismo vuelo de ejemplo.
+ * y el pasaje dado vuelta, con el mismo vuelo del tablero.
  */
 export const og = {
-  alt: "La app de Despegar ya trae a la gente. ¿Por qué la vuelta no crece? Al lado, un pasaje de ejemplo BUE a RIO: USD 412 en el listado, USD 486 al pagar.",
+  alt: "La app de Despegar ya trae a la gente. ¿Por qué la vuelta no crece? Al lado, el pasaje BUE a RIO que recorrí hasta el último paso: USD 658 en el listado, con débito, y USD 685 al pagar con crédito.",
   footer: "Iván Dujaut · ivandujaut.com/despegar",
 };
 
@@ -150,19 +153,22 @@ export const hero = {
     },
   ],
   /**
-   * Mock del tablero de partidas: el mismo vuelo en el listado y en el último
-   * paso. Ilustrativo, armado con el tipo de diferencia que cuentan las
-   * reseñas, no con un precio real.
+   * El tablero de partidas: el mismo vuelo en el listado y en el último paso.
+   * Recorrido propio en la app de Despegar el 21 de noviembre de 2026, hasta
+   * la pantalla de pago y sin pagar: BUE-RIO con Aerolíneas Argentinas, 14 al
+   * 21 de enero de 2027, tarifa Base, 1 adulto. El listado muestra grande
+   * USD 658 "con débito" (y USD 685 arriba, más chico); al elegir tarjeta de
+   * crédito, el total es USD 685. Capturas en
+   * `data/despegar/auditoria-checkout-capturas/` (fuera del repo).
    */
   board: {
-    illustrative: true as const,
-    label: "Datos de ejemplo",
+    label: "Recorrido propio",
     route: "BUE → RIO",
-    date: "Sáb 10 ene",
-    seen: { step: "Resultados", price: "USD 412" },
-    paid: { step: "Paso 4 de 4 · Pagar", price: "USD 486" },
-    reason: "El precio cambió por alta demanda",
-    timer: "Te quedan 6:12 para comprar",
+    date: "Jue 14 ene",
+    seen: { step: "Listado", price: "USD 658" },
+    paid: { step: "Pago con crédito", price: "USD 685" },
+    reason: "Sin el descuento por débito",
+    note: "App de Despegar, 21 nov 2026, sin pagar",
   },
   cue: "En toda la página, el violeta es el precio que ves en el listado y el rojo, el que pagás en el último paso.",
 };
@@ -324,7 +330,7 @@ export const journey = {
   heading: "Un mismo vuelo, de la búsqueda a la vuelta",
   intro:
     "Lo que se sabe desde afuera de cada etapa, en el orden en que la vive alguien que compra.",
-  /** El pasaje: el mismo vuelo de ejemplo que el tablero de la portada. */
+  /** El pasaje: el mismo vuelo que el tablero de la portada. */
   ticket: {
     label: "Pasaje",
     outbound: "Ida",
@@ -358,7 +364,11 @@ export const journey = {
       step: "Último paso",
       title: "En el último paso, el precio cambia",
       text: "Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de Despegar y en 2 de 191 de la app de Aerolíneas Argentinas.",
-      flip: { seen: "USD 412", paid: "USD 486", label: "Datos de ejemplo" },
+      flip: {
+        seen: hero.board.seen.price,
+        paid: hero.board.paid.price,
+        label: hero.board.label,
+      },
       source: "reviewsMethod" as SourceId,
     },
     {
