@@ -578,11 +578,21 @@ export const caseStudy = {
     "Que más gente que llega al checkout de la app termine comprando, sin comprar esa conversión con margen. Y que quien compra no tenga motivo para irse a la aerolínea la próxima vez.",
   problem:
     "Las reseñas cuentan tres cosas en el último paso: el precio sube con la tarjeta ya cargada, un pago rechazado obliga a rearmar la compra a otro precio y las cuotas del listado no aparecen al pagar. El 20 y 21 de noviembre hice la compra hasta la pantalla de pago, sin pagar, a Río y a Miami, en la web y en la app. La tarifa no se movió en ninguna de las cuatro. Lo que sí cambia es qué precio se muestra grande: en el listado es el precio con débito, y con tarjeta de crédito el total sube 4% (en Río, de USD 658 a 685). En Miami, además, el listado promete Cuotas Despegar y al pagar no aparece, ni en dólares ni en pesos. Por eso creo que el problema está más en cómo se muestra el precio que en la tarifa. Cuatro compras no alcanzan para descartar que la tarifa se mueva: eso se ve en los datos de adentro.",
+  /**
+   * En el orden de lo que vi en el recorrido propio: primero lo que se vio en
+   * las cuatro compras (el precio grande con débito), después lo que se vio en
+   * Miami (las cuotas) y al final lo que sólo cuentan las reseñas.
+   */
   pieces: [
     {
-      id: "antes",
-      title: "Confirmar el precio al elegir el vuelo",
-      text: "Revalidar la tarifa con la aerolínea al elegir el vuelo, antes de pedir los datos. Si cambió, avisarlo ahí, cuando el usuario todavía no invirtió diez minutos.",
+      id: "precio-grande",
+      title: "Mostrar grande el precio que se va a pagar",
+      text: "El número grande del listado es el del medio de pago que la persona va a usar: si tiene una tarjeta guardada, el de esa tarjeta; si no, el de crédito, con el débito como descuento. Tiene un costo: en el listado, Despegar va a parecer 4% más cara al lado de Turismocity o de Google Flights. Por eso el experimento mide también el clic desde el listado.",
+    },
+    {
+      id: "cuotas",
+      title: "Mostrar sólo las cuotas que aplican",
+      text: "El listado promete sólo las cuotas que la persona va a poder usar con su tarjeta. En Miami, Cuotas Despegar figura en el listado y no está al pagar. Va en otra prueba, para no mezclar efectos con la primera.",
     },
     {
       id: "contador",
@@ -590,9 +600,9 @@ export const caseStudy = {
       text: 'Si la app dice "tenés 9 minutos", el precio se sostiene esos 9 minutos, también si el pago se rechaza y prueba otra tarjeta. Si la aerolínea sube la tarifa, Despegar absorbe la diferencia hasta un tope o la compensa en puntos.',
     },
     {
-      id: "cuotas",
-      title: "Mostrar sólo las cuotas que aplican",
-      text: "Con la tarjeta guardada, el listado muestra las cuotas y promos que el usuario de verdad va a poder usar. Va como mejora aparte, para no mezclar efectos en el experimento.",
+      id: "antes",
+      title: "Revalidar la tarifa al elegir el vuelo",
+      text: "Confirmar la tarifa con la aerolínea antes de pedir los datos y, si cambió, avisarlo ahí, cuando el usuario todavía no invirtió diez minutos. Va última porque en mis cuatro compras la tarifa no se movió: entra si los datos de adentro muestran que cambia seguido.",
     },
   ],
   ai: {
