@@ -111,7 +111,7 @@ export function DepartureBoard() {
             <span aria-hidden className="inline-block size-1.5 rounded-full bg-(--paid)" />
             {board.reason}
           </p>
-          <p className="board-after mono text-xs text-white/60">{board.timer}</p>
+          <p className="board-after mono text-xs text-white/60">{board.note}</p>
         </div>
       </figure>
     </div>
