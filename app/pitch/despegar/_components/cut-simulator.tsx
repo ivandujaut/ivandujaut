@@ -14,9 +14,9 @@ const sim = caseStudy.simulator;
  * Las reglas de `caseStudy.cut`, en el orden en que se aplican: primero lo que
  * apaga (cualquiera de los tres frenos alcanza), después lo que lanza (tienen
  * que cumplirse todas) y, si no pasa ninguna de las dos, se itera.
- * `q` es cuánto suben las consultas a la aerolínea, en %: duplicarse es +100%.
- * Revenue total = (1 + conversión) × (1 + revenue por orden) − 1: es la forma
- * de ver si lo absorbido se come lo que se gana.
+ * `q` es cuánto cambia el clic desde el listado, en %: una caída de 5% o más
+ * apaga. Revenue total = (1 + conversión) × (1 + revenue por orden) − 1: es la
+ * forma de ver si lo que deja cada compra se come lo que se gana.
  */
 function decide({ c, interval, r, q }: Result) {
   const total = ((1 + c / 100) * (1 + r / 100) - 1) * 100;
@@ -24,7 +24,7 @@ function decide({ c, interval, r, q }: Result) {
   let reason: ReasonKey;
   if (c <= -1) [verdict, reason] = ["kill", "killConversion"];
   else if (r < -2) [verdict, reason] = ["kill", "killRevenue"];
-  else if (q >= 100) [verdict, reason] = ["kill", "killAirline"];
+  else if (q <= -5) [verdict, reason] = ["kill", "killListing"];
   else if (c >= 2 && interval && r >= -1 && total > 0) [verdict, reason] = ["ship", "ship"];
   else if (c >= 2 && !interval) [verdict, reason] = ["iterate", "iterateInterval"];
   else if (c < 2) [verdict, reason] = ["iterate", "iterateSmall"];
@@ -232,13 +232,13 @@ export function CutSimulator() {
               onChange={(r) => set({ r })}
             />
             <Range
-              label={sim.airline.label}
-              hint={sim.airline.hint}
+              label={sim.listing.label}
+              hint={sim.listing.hint}
               display={signed(res.q)}
               value={res.q}
-              min={sim.airline.min}
-              max={sim.airline.max}
-              step={sim.airline.step}
+              min={sim.listing.min}
+              max={sim.listing.max}
+              step={sim.listing.step}
               onChange={(q) => set({ q })}
             />
           </div>
