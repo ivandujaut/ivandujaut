@@ -143,7 +143,7 @@ export const hero = {
     },
     {
       label: "Dónde miraría primero",
-      text: "En el último paso de la compra. Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de la app de Despegar y en 2 de 191 de la app de Aerolíneas Argentinas.",
+      text: "En el último paso de la compra. Que el precio suba al pagar aparece en 22 de 170 reseñas negativas de la app de Despegar y en 2 de 191 de la de Aerolíneas Argentinas. Lo probé en Río y en Miami: la tarifa no se movió, pero el número grande del listado es el precio con débito, y con crédito se paga 4% más.",
       href: "#voz",
     },
     {
@@ -577,7 +577,7 @@ export const caseStudy = {
   objective:
     "Que más gente que llega al checkout de la app termine comprando, sin comprar esa conversión con margen. Y que quien compra no tenga motivo para irse a la aerolínea la próxima vez.",
   problem:
-    "Si mi lectura de las reseñas es correcta, en el último paso pasan tres cosas: la tarifa se mueve con la tarjeta ya cargada, un pago rechazado obliga a rearmar la compra a otro precio, y las cuotas del listado no existen para la tarjeta del usuario. Comprando directo en la aerolínea, lo primero casi no aparece en las quejas; por eso creo que tiene más que ver con cómo se muestra el precio en Despegar que con la tarifa en sí.",
+    "Las reseñas cuentan tres cosas en el último paso: el precio sube con la tarjeta ya cargada, un pago rechazado obliga a rearmar la compra a otro precio y las cuotas del listado no aparecen al pagar. El 20 y 21 de noviembre hice la compra hasta la pantalla de pago, sin pagar, a Río y a Miami, en la web y en la app. La tarifa no se movió en ninguna de las cuatro. Lo que sí cambia es qué precio se muestra grande: en el listado es el precio con débito, y con tarjeta de crédito el total sube 4% (en Río, de USD 658 a 685). En Miami, además, el listado promete Cuotas Despegar y al pagar no aparece, ni en dólares ni en pesos. Por eso creo que el problema está más en cómo se muestra el precio que en la tarifa. Cuatro compras no alcanzan para descartar que la tarifa se mueva: eso se ve en los datos de adentro.",
   pieces: [
     {
       id: "antes",
