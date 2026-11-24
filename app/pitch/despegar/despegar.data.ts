@@ -578,11 +578,21 @@ export const caseStudy = {
     "Que más gente que llega al checkout de la app termine comprando, sin comprar esa conversión con margen. Y que quien compra no tenga motivo para irse a la aerolínea la próxima vez.",
   problem:
     "Las reseñas cuentan tres cosas en el último paso: el precio sube con la tarjeta ya cargada, un pago rechazado obliga a rearmar la compra a otro precio y las cuotas del listado no aparecen al pagar. El 20 y 21 de noviembre hice la compra hasta la pantalla de pago, sin pagar, a Río y a Miami, en la web y en la app. La tarifa no se movió en ninguna de las cuatro. Lo que sí cambia es qué precio se muestra grande: en el listado es el precio con débito, y con tarjeta de crédito el total sube 4% (en Río, de USD 658 a 685). En Miami, además, el listado promete Cuotas Despegar y al pagar no aparece, ni en dólares ni en pesos. Por eso creo que el problema está más en cómo se muestra el precio que en la tarifa. Cuatro compras no alcanzan para descartar que la tarifa se mueva: eso se ve en los datos de adentro.",
+  /**
+   * En el orden de lo que vi en el recorrido propio: primero lo que se vio en
+   * las cuatro compras (el precio grande con débito), después lo que se vio en
+   * Miami (las cuotas) y al final lo que sólo cuentan las reseñas.
+   */
   pieces: [
     {
-      id: "antes",
-      title: "Confirmar el precio al elegir el vuelo",
-      text: "Revalidar la tarifa con la aerolínea al elegir el vuelo, antes de pedir los datos. Si cambió, avisarlo ahí, cuando el usuario todavía no invirtió diez minutos.",
+      id: "precio-grande",
+      title: "Mostrar grande el precio que se va a pagar",
+      text: "El número grande del listado es el del medio de pago que la persona va a usar: si tiene una tarjeta guardada, el de esa tarjeta; si no, el de crédito, con el débito como descuento. Tiene un costo: en el listado, Despegar va a parecer 4% más cara al lado de Turismocity o de Google Flights. Por eso el experimento mide también el clic desde el listado.",
+    },
+    {
+      id: "cuotas",
+      title: "Mostrar sólo las cuotas que aplican",
+      text: "El listado promete sólo las cuotas que la persona va a poder usar con su tarjeta. En Miami, Cuotas Despegar figura en el listado y no está al pagar. Va en otra prueba, para no mezclar efectos con la primera.",
     },
     {
       id: "contador",
@@ -590,9 +600,9 @@ export const caseStudy = {
       text: 'Si la app dice "tenés 9 minutos", el precio se sostiene esos 9 minutos, también si el pago se rechaza y prueba otra tarjeta. Si la aerolínea sube la tarifa, Despegar absorbe la diferencia hasta un tope o la compensa en puntos.',
     },
     {
-      id: "cuotas",
-      title: "Mostrar sólo las cuotas que aplican",
-      text: "Con la tarjeta guardada, el listado muestra las cuotas y promos que el usuario de verdad va a poder usar. Va como mejora aparte, para no mezclar efectos en el experimento.",
+      id: "antes",
+      title: "Revalidar la tarifa al elegir el vuelo",
+      text: "Confirmar la tarifa con la aerolínea antes de pedir los datos y, si cambió, avisarlo ahí, cuando el usuario todavía no invirtió diez minutos. Va última porque en mis cuatro compras la tarifa no se movió: entra si los datos de adentro muestran que cambia seguido.",
     },
   ],
   ai: {
@@ -610,54 +620,62 @@ export const caseStudy = {
       {
         label: "Población",
         value:
-          "Usuarios de la app en Argentina que eligen un vuelo o paquete y entran al checkout. Por usuario. Fuera: B2B, Travel Sale y Black Friday.",
+          "Usuarios de la app en Argentina que buscan un vuelo o paquete. Por usuario y desde la búsqueda, porque la pieza 1 cambia el listado. Fuera: B2B, Travel Sale y Black Friday.",
       },
-      { label: "Variante", value: "Piezas 1 y 2 juntas, con tope de absorción por orden." },
+      {
+        label: "Variante",
+        value: "Pieza 1 sola. Las cuotas que aplican van en otra prueba.",
+      },
       {
         label: "Métrica primaria",
-        value: "Conversión de checkout iniciado a orden confirmada, por usuario.",
+        value:
+          "Conversión de búsqueda a orden confirmada, por usuario. Medida desde el checkout daría bien aunque no funcione: con un precio más alto en el listado, al checkout llegan sólo los más decididos.",
+      },
+      {
+        label: "Secundarias",
+        value:
+          "Clic desde el listado y conversión del checkout, por separado: muestran dónde se gana y dónde se pierde.",
       },
       {
         label: "Guardarraíles",
-        value:
-          "Revenue neto por orden (incluye lo absorbido), consultas a la aerolínea por orden, contactos a atención por orden, sesiones sin crash.",
+        value: "Revenue neto por orden, contactos a atención por orden, sesiones sin crash.",
       },
       { label: "Duración", value: "4 semanas completas." },
       {
         label: "Tamaño",
         value:
-          "~41 mil usuarios por brazo para ver +3% relativo, con 30% de conversión supuesta. La app argentina hizo ~13 mil transacciones por semana en 2024: alcanza en 2-3 semanas.",
+          "~570 mil usuarios por brazo para ver +3% relativo, con 3% de conversión de búsqueda a compra supuesta. La app argentina hizo ~13 mil transacciones por semana en 2024: alcanza en unas 3 semanas.",
       },
     ],
     assumptionsNote:
-      "La conversión del checkout y la tasa de cambios de precio no son públicas: son supuestos, con la cuenta en la planilla. Con los datos reales, el tamaño se rehace solo.",
+      "La conversión de búsqueda a compra y cuántos pagan con crédito no son públicas: son supuestos. Con los datos reales, el tamaño se rehace.",
   },
   segments: {
     title: "Por segmento, con el corte fijado antes",
     rows: [
       {
         segment: "Internacional",
-        why: "Donde más se mueve la tarifa y donde está el rival directo.",
+        why: "Se paga en dólares, y es donde vi el número grande con débito, en Río y en Miami.",
         cut: "Se mira primero; si ahí no hay efecto, no lo hay en ningún lado.",
       },
       {
         segment: "Doméstico",
-        why: "Duopolio desde que salió Flybondi; menos variación de tarifa.",
-        cut: "Efecto esperado menor; no se lanza sólo por este segmento.",
+        why: "Se paga en pesos, con cuotas de los bancos. Todavía no recorrí una ruta nacional.",
+        cut: "Se mira aparte; no se lanza sólo por este segmento.",
       },
       {
         segment: "Nuevos vs. recurrentes",
-        why: "El nuevo es el que más se va a la aerolínea.",
-        cut: "Si sólo mejora en recurrentes, se revisa la pieza 1.",
+        why: "El nuevo no sabe que el número grande es con débito; el recurrente ya lo aprendió.",
+        cut: "Si mejora en recurrentes y no en nuevos, se revisa la pieza 1.",
       },
     ],
   },
   cut: {
     title: "Criterio de corte, escrito antes de empezar",
-    ship: "Se lanza si la conversión sube +2% relativo o más, con el intervalo fuera de cero, el revenue neto por orden no cae más de 1% y lo absorbido es menor que el revenue que se gana.",
+    ship: "Se lanza si la conversión de búsqueda a compra sube +2% relativo o más, con el intervalo fuera de cero, y el revenue neto por orden no cae más de 1%.",
     iterate:
       "Se itera si es neutro: se mira sólo internacional y paquetes. Si ahí tampoco hay efecto, se apaga.",
-    kill: "Se apaga si la conversión cae 1% o más, si el revenue neto por orden cae más de 2% o si las consultas a la aerolínea por orden se duplican.",
+    kill: "Se apaga si la conversión cae 1% o más, si el revenue neto por orden cae más de 2% o si el clic desde el listado cae 5% o más.",
   },
   /**
    * El criterio de corte, para probarlo: los controles son resultados
@@ -671,15 +689,15 @@ export const caseStudy = {
     example: "Resultado de ejemplo",
     scenariosLabel: "¿Qué salió?",
     scenarios: [
-      { id: "funciona", label: "Funciona", c: 3, interval: true, r: -0.5, q: 20 },
-      { id: "azar", label: "Puede ser azar", c: 2.5, interval: false, r: -0.5, q: 20 },
-      { id: "caro", label: "Sale caro", c: 3, interval: true, r: -2.5, q: 20 },
-      { id: "consultas", label: "Consultas caras", c: 2.5, interval: true, r: -0.5, q: 120 },
+      { id: "funciona", label: "Funciona", c: 3, interval: true, r: -0.5, q: -2 },
+      { id: "azar", label: "Puede ser azar", c: 2.5, interval: false, r: -0.5, q: -2 },
+      { id: "caro", label: "Sale caro", c: 3, interval: true, r: -2.5, q: -2 },
+      { id: "puerta", label: "Achica la puerta", c: 2.5, interval: true, r: -0.5, q: -8 },
     ],
     manual: "Ajustar los números a mano",
     conversion: {
       label: "¿Cuánto más compran?",
-      hint: "Conversión del checkout, contra el grupo de control",
+      hint: "Conversión de búsqueda a compra, contra el grupo de control",
       min: -4,
       max: 6,
       step: 0.5,
@@ -692,17 +710,17 @@ export const caseStudy = {
     },
     revenue: {
       label: "¿Cuánto deja cada compra?",
-      hint: "Revenue neto por orden, después de lo que Despegar pone para sostener el precio",
+      hint: "Revenue neto por orden: cambia si cambia con qué medio se paga",
       min: -4,
       max: 2,
       step: 0.5,
     },
-    airline: {
-      label: "¿Cuánto más le pregunta Despegar a la aerolínea?",
-      hint: "Revalidar la tarifa antes tiene un costo por consulta",
-      min: 0,
-      max: 150,
-      step: 10,
+    listing: {
+      label: "¿Cuántos entran desde el listado?",
+      hint: "Clic desde el listado: con el precio de crédito grande, Despegar parece más cara",
+      min: -15,
+      max: 5,
+      step: 1,
     },
     total: "Revenue total",
     totalNote: "compras × lo que deja cada una",
@@ -713,8 +731,8 @@ export const caseStudy = {
       killConversion: "Compran {ca} menos. Con una caída de 1% o más, se apaga.",
       killRevenue:
         "Cada compra deja {ra} menos. Con más de 2%, se apaga aunque se venda más: se estaría comprando la conversión con margen.",
-      killAirline:
-        "Las consultas a la aerolínea suben {qa}. Si se duplican, se apaga: revalidar el precio cuesta más de lo que se gana.",
+      killListing:
+        "Entran {qa} menos desde el listado. Con una caída de 5% o más, se apaga aunque se venda más: el vuelo barato es la puerta, y se estaría achicando.",
       ship: "Compran {ca} más, la diferencia es real y cada compra deja {rw} (el límite era 1% menos). En total entra {ta} más.",
       iterateInterval:
         "Compran {ca} más, pero puede ser azar: con estos datos no se puede decir que funcionó. Se mira por segmento antes de decidir.",
@@ -722,13 +740,13 @@ export const caseStudy = {
       iterateRevenue:
         "Compran {ca} más, pero cada compra deja {ra} menos: para lanzar no puede caer más de 1%.",
       iterateTotal:
-        "Compran {ca} más, pero lo que se pone para sostener el precio se come lo ganado: el total se mueve {t}.",
+        "Compran {ca} más, pero lo que deja cada compra se come lo ganado: el total se mueve {t}.",
     },
   },
   impact: {
     illustrative: true as const,
     label: "Escenario de ejemplo, no dato",
-    text: "Si 8% de los checkouts sufre un cambio de precio, esos convierten a 15% contra 32% del resto, y se recupera la mitad de la brecha: +0,7 puntos de conversión, unas 16 mil órdenes más por año en la app argentina, ~USD 1,3 M de revenue antes de restar lo absorbido.",
+    text: "Si 8% de los checkouts termina en un precio mayor que el número grande del listado, esos convierten a 15% contra 32% del resto, y se recupera la mitad de la brecha: +0,7 puntos de conversión del checkout, unas 16 mil órdenes más por año en la app argentina, ~USD 1,3 M de revenue.",
   },
   notToBuild: {
     title: "Qué no construiría",
@@ -739,7 +757,7 @@ export const caseStudy = {
     ],
   },
   firstQuestion:
-    "Lo primero que pediría: en qué porcentaje de los checkouts el precio final es mayor que el del listado, y cómo convierten esas sesiones. Si es menos de 2 o 3%, mi hipótesis se cae, y lo siguiente que miraría es la posventa.",
+    "Lo primero que pediría: en qué porcentaje de los checkouts el precio final es mayor que el número grande del listado, separando lo que cambia por la tarifa de lo que cambia por el medio de pago, y cómo convierten esas sesiones. Si es menos de 2 o 3%, mi hipótesis se cae, y lo siguiente que miraría es la posventa.",
 };
 
 // ---------------------------------------------------------------------------
@@ -794,30 +812,36 @@ export const dashboard = {
   sql: {
     title: "La consulta que más me importa",
     note: "Si esta diferencia es chica, la hipótesis se cae.",
-    code: `-- Conversión de checkout con y sin cambio de precio después de cargar la tarjeta
+    code: `-- Conversión de checkout cuando el precio final supera al número grande del
+-- listado, separando el cambio de tarifa del cambio por medio de pago
 WITH checkouts AS (
   SELECT
     c.checkout_id,
     c.user_id,
     c.product_type,
-    c.listed_price_usd,
-    MAX(p.quoted_price_usd) FILTER (WHERE p.after_payment_data) AS last_quote_usd,
+    c.listed_price_usd,      -- el número grande del listado
+    c.last_payment_method,   -- débito, crédito, Cuotas Despegar...
+    MAX(p.fare_usd) FILTER (WHERE p.is_first_quote) AS first_fare_usd,
+    MAX(p.fare_usd) FILTER (WHERE p.after_payment_data) AS last_fare_usd,
+    MAX(p.total_usd) FILTER (WHERE p.after_payment_data) AS last_total_usd,
     BOOL_OR(o.order_id IS NOT NULL) AS converted
   FROM checkout_started c
   LEFT JOIN price_quotes p USING (checkout_id)
   LEFT JOIN orders o USING (checkout_id)
   WHERE c.country = 'AR' AND c.platform IN ('ios', 'android')
     AND c.started_at >= DATE '2026-09-01'
-  GROUP BY 1, 2, 3, 4
+  GROUP BY 1, 2, 3, 4, 5
 )
 SELECT
   product_type,
-  last_quote_usd > listed_price_usd AS repriced,
+  last_payment_method,
+  last_fare_usd > first_fare_usd AS fare_changed,
+  last_total_usd > listed_price_usd AS paid_more_than_listed,
   COUNT(*) AS checkouts,
   AVG(converted::int) AS conversion
 FROM checkouts
-GROUP BY 1, 2
-ORDER BY 1, 2;`,
+GROUP BY 1, 2, 3, 4
+ORDER BY 1, 2, 3, 4;`,
   },
 };
 

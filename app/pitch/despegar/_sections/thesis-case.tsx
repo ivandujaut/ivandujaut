@@ -38,7 +38,7 @@ export function Case() {
       </p>
       <p className="reveal mt-6 max-w-3xl text-lg leading-relaxed text-(--ink-dim)">{c.problem}</p>
 
-      <ol className="mt-10 grid gap-8 md:grid-cols-3">
+      <ol className="mt-10 grid gap-8 md:grid-cols-2">
         {c.pieces.map((p, i) => (
           <li key={p.id} className="reveal border-t border-(--ink) pt-4">
             <h3 className="text-lg font-semibold">
