@@ -1,0 +1,378 @@
+---
+title: "Comprar pasajes con ChatGPT, SOFIA y Google: el análisis completo"
+tagline: "Las corridas, las cuentas, el experimento con su corte y lo que estos datos no pueden sostener, detrás de la versión corta."
+description: "Análisis independiente: pedí el mismo vuelo a ChatGPT, Gemini, Google AI Mode y SOFIA, el asistente de Despegar. Sólo llegaron a la pantalla de pago las rutas conectadas a un inventario con precio real. Propongo medir cada una con compradores nuevos y recompra a 12 meses."
+year: 2026
+date: "2026-11-25"
+status: "concept"
+kind: "case-study"
+subject: "external"
+topic: "viajes"
+featured: false
+cover:
+  src: ./cover.jpg
+  alt: "Ilustración en tinta y acuarela sobre papel blanco, no una fotografía: de izquierda a derecha, el Obelisco de Buenos Aires, el Puente de la Mujer, una torre de control y una terminal de aeropuerto, un avión que despega en diagonal hacia la derecha, el Pan de Azúcar y el Morro da Urca con el teleférico, palmeras y la vereda ondulada de Copacabana, todo sobre una línea de suelo que termina en espirales"
+entities:
+  - "Despegar"
+  - "Prosus"
+  - "OpenAI"
+  - "Google"
+  - "Booking Holdings"
+stack: ["Relevamiento de producto", "Resultados trimestrales", "Python", "matplotlib"]
+metrics:
+  - label: "Intentos de compra que llegaron a la pantalla de pago"
+    value: "3 de 7"
+  - label: "SOFIA en las reservas a viajeros, según Prosus"
+    value: "8,3%"
+    change: "+7,1 puntos en un año"
+    trend: "up"
+    sentiment: "good"
+  - label: "Visitas derivadas desde chatbots de IA, Argentina, octubre"
+    value: "0,07%"
+  - label: "Reseñas negativas de Despegar: el precio sube o cambia en la compra"
+    value: "12,9%"
+code:
+  - "scripts/analysis/pasajes-chatgpt.py"
+  - "scripts/analysis/pasajes-chatgpt-cuentas.py"
+  - "scripts/charts/pasajes-chatgpt.py"
+question: "El experimento que propongo tarda un año en dar la respuesta final, y la recompra por puerta de entrada no es pública. ¿Qué dato que Despegar ya tiene adentro adelantaría esa respuesta?"
+translationKey: "pasajes-chatgpt-analisis"
+parent: "pasajes-chatgpt"
+draft: false
+---
+
+{/* Todo número sale de data/pasajes-chatgpt/facts.md. */}
+
+<Abstract label="En resumen">
+
+Sí, se puede comprar un pasaje con ChatGPT, pero no con cualquiera. El 24 y 25 de noviembre de 2026
+pedí el mismo vuelo a cuatro asistentes (cinco superficies, contando ChatGPT con y sin la app) y **3 de 7
+intentos** llegaron a la pantalla de pago con el vuelo
+cargado: ChatGPT con la app de Despegar, SOFIA (el asistente propio de Despegar) y Google AI Mode a través
+de la tabla de Google Flights. Los tres estaban conectados a un inventario con precio; sin la app,
+ChatGPT no pasó del paso 2.
+
+</Abstract>
+
+<Thesis>
+
+La IA lleva a la pantalla de pago de un pasaje cuando está conectada al inventario de Despegar, y hoy eso pasa por tres
+puertas: SOFIA, su app en ChatGPT y la tabla de Google. Despegar ya sabe que los clientes que llegan
+por iFood vuelven más que los propios; la pregunta de Growth es la misma para cada puerta de IA:
+cuántos compradores nuevos trae y cuántos vuelven en un año.
+
+</Thesis>
+
+**Mi recomendación, en orden:** cortes de datos baratos, con la separación de las ventas de la app en
+ChatGPT primero; si el checkout no lo dice ya, una
+prueba A/B que avise en palabras el cambio de aeropuerto; SOFIA escribiendo primero, durante el viaje y
+después, a clientes nuevos que ya compraron, al azar (el control la tiene disponible como hoy); y recién entonces, si los cortes lo justifican, SOFIA
+como entrada de quienes nunca compraron, desde un 10%. En mi hipótesis, si un cambio llega a todos los
+clientes nuevos, cada punto de recompra vale unas 23 mil compras y entre USD 1,5 y 1,7 millones de
+ingreso neto por año, y perder el 1% de sus primeras compras cuesta esas mismas 23 mil más la recompra que no llega.
+
+## Qué es dato y qué es supuesto
+
+Lo que medí es una corrida con fecha; lo que Prosus (dueña de Despegar), Booking o Google dicen de sí
+mismos va atribuido, y mis hipótesis, marcadas. Cifras y fuentes, [al final](#cada-cifra-con-su-fuente).
+
+## Pedí el mismo vuelo a cuatro asistentes
+
+El pedido fue igual en todos: ida y vuelta de Buenos Aires a Río de Janeiro, del 15 al 22 de enero
+de 2027, una persona, "¿Me lo podés sacar?" y dos repreguntas fijas si no llegaba a la compra. La escala, escrita antes de empezar,
+va de 0 (no busca) a 5 (cobra dentro del chat). Nunca pagué.
+
+<Figure
+  src="/projects/pasajes-chatgpt/g1_escalera.png"
+  alt="Barras horizontales con el paso más lejano de cada intento de compra en una escala de 0 a 5. Llegan al paso 4, checkout con el vuelo cargado: SOFIA en 1 mensaje, ChatGPT con la app de Despegar en 2 y Google AI Mode con sesión en 3. Google AI Mode sin cuenta queda en el paso 3, y Gemini y ChatGPT sin la app, en dos corridas, quedan en el paso 2. Ninguno llega al paso 5, cobrar dentro del chat."
+  width={1495}
+  height={886}
+  caption="Relevamiento propio, 24 y 25 de noviembre de 2026, desde Argentina. Una corrida por superficie, salvo ChatGPT sin la app y Google AI Mode, que tienen dos. La escala se fijó antes de correr."
+/>
+
+**Sin la app, en mis dos corridas, ChatGPT no pasó del paso 2.** Sin cuenta, dio un precio de
+referencia que no era para las fechas pedidas y links a páginas de la ruta y a KAYAK, un metabuscador
+(en la segunda corrida, con las fechas cargadas), sin un vuelo elegido. Y lo dijo: "no tengo acceso para ingresar tus datos personales, pagar ni emitir el
+boleto en tu nombre". Gemini, sin cuenta, quedó en el mismo escalón.
+
+**Con la app de Despegar instalada, llegó al checkout en dos mensajes.** ChatGPT la llamó solo y me dio
+el link al checkout de Despegar: 760.871 pesos argentinos (ARS) en el chat y ARS 760.872 en el checkout,
+antes de elegir cómo pagar. El link llevaba `from=sofia`. Entre las corridas sin la app y ésta cambiaron
+la app y la cuenta; la que llama al
+inventario es la app.
+
+**SOFIA, en un mensaje.** En su web y sin cuenta, dio cuatro vuelos con botón "Comprar", y avisó sola que algunos vuelos
+llegan a un aeropuerto de Río y vuelven desde otro, y que las tarifas más baratas no incluyen equipaje.
+La app en ChatGPT también lo dijo. En la web, el 26 de noviembre, el paso de tarifa avisaba que la Base
+no incluía valija, y en los resultados los vuelos Ezeiza-Aeroparque tenían esos códigos destacados, sin
+texto a simple vista.
+
+**Google AI Mode llegó una vez sí y otra no.** Sin cuenta, el 24, cerró en Google Flights sin nombrar
+agencias. Con la sesión de Google abierta, el 25, mostró la tabla de reserva de Google Flights con cinco opciones, y
+"Reservar con Despegar" abrió el checkout con el itinerario cargado y el clic etiquetado `channel=google`.
+Despegar salía 2.510 pesos (0,3%) más cara que la aerolínea LATAM en dos boletos separados.
+
+## Lo que llega desde los asistentes ajenos todavía es poco
+
+Con un banco de 36 preguntas sin marcas, en las 12 de vuelos Gemini nombró a Despegar en 11 y ChatGPT en
+7, sin cuenta, el 24 de noviembre. Perplexity, con
+una cuenta gratuita, contestó 27 de las 36 el 25 y el 26, y la nombró en 1 de las 12 de vuelos.
+
+<Figure
+  src="/projects/pasajes-chatgpt/g4_menciones.png"
+  alt="Matriz de círculos con seis marcas en filas (Despegar, Google Flights, Skyscanner, Kayak, Turismocity y Almundo) y tres asistentes en columnas. Despegar aparece en 7 de 12 respuestas de vuelos de ChatGPT, 11 de 12 de Gemini y 1 de 12 de Perplexity. Google Flights aparece en 9 de 12, 10 de 12 y 9 de 12."
+  width={1495}
+  height={886}
+  caption="Relevamiento propio: preguntas de vuelos de un banco de 36 sin marcas, una corrida por pregunta. ChatGPT y Gemini sin cuenta (24 de noviembre de 2026), Perplexity con cuenta gratuita (25 y 26 de noviembre), 27 de las 36 respondidas. Mide quién aparece en el texto, no tráfico ni ventas."
+/>
+
+Según Statcounter, en octubre
+de 2026 los chatbots de IA generaron el 0,07% de las visitas derivadas a sitios web en Argentina,
+contra 72,7% de los buscadores. Booking dice que las referencias desde modelos de lenguaje
+son "significantly less than 1%" de sus noches reservadas. Puede cambiar: según Adobe, en sitios de viaje de Estados Unidos la
+brecha de conversión entre las visitas desde IA y el resto bajó de cerca de 86% en octubre de 2024 a 28%
+en mayo de 2026.
+
+## La puerta propia, según Prosus
+
+En su presentación del 23 de septiembre de 2026, Prosus muestra a SOFIA pasando de 0,6% a 7,7% de las
+reservas B2C de Despegar (las de venta al viajero) entre julio de 2025 y agosto de 2026, y en el
+comunicado del 25 de noviembre, 8,3% en septiembre, desde 1,2% un año antes.
+
+<Figure
+  src="/projects/pasajes-chatgpt/g2_sofia.png"
+  alt="Línea mensual de la participación de SOFIA en las reservas B2C de Despegar según Prosus: 0,6% en julio de 2025, 2,8% en enero de 2026, 4,9% en junio, 7,7% en agosto y 8,3% en septiembre, este último marcado como dato de otro documento."
+  width={1495}
+  height={886}
+  caption="Datos que la empresa publica sobre sí misma: Prosus, presentación sobre Despegar del 23 de septiembre de 2026 (serie de julio de 2025 a agosto de 2026) y comunicado de resultados del 25 de noviembre (septiembre). Elaboración propia del gráfico."
+/>
+
+Es la empresa hablando de sí misma, y una participación no dice
+cuántas de esas compras habrían pasado igual sin SOFIA ni cuántas son de clientes nuevos. Prosus tampoco
+define cuándo una reserva cuenta como de SOFIA, que según la misma presentación actúa también en la
+postventa.
+
+## La cuenta de Growth: nuevos por recompra
+
+Cada puerta se evalúa con una multiplicación; si una acción sube un factor y baja el otro, puede no
+mover nada:
+
+**compradores que vuelven en un año = compradores nuevos × recompra a 12 meses**
+
+En la misma presentación, Prosus muestra 741 mil clientes B2C en julio de
+2026, de los que 271 mil eran nuevos (37%; por mi lectura del gráfico, es el mes y no un acumulado). En
+julio de 2024, 2025 y 2026, dos de cada tres clientes del mes ya habían comprado antes. El gráfico no
+separa canales.
+
+Según Prosus, el margen de Despegar bajó a 9% en el semestre por "increased investment in customer
+acquisition". Con el último gasto comercial publicado (USD 250,7 millones en 2024, sobre unos 2,33
+millones de clientes nuevos), mi cuenta da un techo de unos USD 107 por cliente nuevo. Con lo que deja
+cada pedido según las planillas de Prosus, entre USD 64 y 74 de ingreso neto, mi hipótesis es que un
+cliente nuevo tiene que comprar entre 1,4 y 1,7 veces para devolver lo que costó traerlo, en ingreso y no en margen.
+
+Y cuánto vale mover la recompra: con esos clientes nuevos de 2024 y ese ingreso por pedido, mi hipótesis
+es que cada punto de recompra a 12 meses son unas 23 mil compras más y entre USD 1,5 y 1,7 millones de
+ingreso neto por año, contando una sola compra extra por cliente. Si el efecto queda sólo en quienes
+entran por SOFIA, es una fracción. Las dos cuentas mezclan años y sirven como orden de magnitud para comparar proyectos.
+
+Según Prosus, el 27% del ingreso neto B2C de Despegar en Brasil llega por iFood.
+
+## La hipótesis: los que entran por SOFIA vuelven más
+
+1. **Prosus ya compara la retención por canal.** Dice que los que llegan por iFood retienen mejor que los
+   de los canales propios; son otra población, así que la diferencia puede venir de quiénes son.
+2. **La confianza se rompe en el checkout.** En las reseñas de 1 y 2 estrellas de la app de Despegar
+   en el App Store de Argentina, "el precio sube o cambia durante la compra" aparece en 22 de 170
+   (12,9%); en la de Aerolíneas Argentinas, en 2 de 191 (1,0%), y los intervalos no se tocan.
+3. **En la ruta de SOFIA, el total subió 1 peso**, que cuenta como sorpresa, y sus avisos los dieron
+   también otros. El otro camino es el contacto: según Prosus, en agosto estaba en la mitad de las
+   interacciones del viaje y actúa en la postventa. La prueba de la postventa mide ese camino.
+4. **SOFIA ya es grande como para medirla** (8,3% de las reservas B2C según Prosus).
+
+<Figure
+  src="/projects/pasajes-chatgpt/g3_precio.png"
+  alt="Gráfico de puntos con intervalos de confianza. El precio sube o cambia durante la compra: Despegar 12,9% (22 de 170 reseñas negativas), Aerolíneas Argentinas 1,0% (2 de 191). Promesa rota al pagar, que suma precio, cargos, cuotas o promo y error de pago: Despegar 28,2% (48 de 170), Aerolíneas 10,5% (20 de 191). Los intervalos de los dos no se tocan."
+  width={1495}
+  height={886}
+  caption="Codificación propia de reseñas públicas de 1 y 2 estrellas con un libro de códigos cerrado antes de clasificar: Despegar en el App Store de Argentina (octubre de 2023 a noviembre de 2026) y Aerolíneas Argentinas en el App Store y Google Play (enero de 2024 a noviembre de 2026). Intervalos de Wilson al 95%. Son reseñas, no usuarios."
+/>
+
+La hipótesis, en una oración: **los clientes nuevos que hacen su primera compra con SOFIA vuelven a
+comprar más en los 12 meses siguientes que los del flujo de siempre.** El porqué que fijé antes, que
+SOFIA les evita la sorpresa en el checkout, se mide junto con el contacto posterior. La explicación
+rival, que quienes usan SOFIA ya eran más decididos, obliga a un experimento.
+
+## Cómo la probaría
+
+- **Antes, la postventa:** a clientes nuevos que ya hicieron su primera compra, al azar, SOFIA les escribe
+  primero durante el viaje y después; el control la tiene disponible como hoy. Sigue si los que vuelven a
+  comprar por cada 100 del grupo son más a 180 días, con un intervalo de 95% que no cruce el cero, y se
+  confirma a 12 meses; se corta si quedan igual o menos. Guardarraíles: contactos a atención, auditoría de
+  respuestas y quienes desactivan los mensajes. App y web se leen aparte; si no retiene, la entrada no se
+  prueba por retención.
+- **Después, la entrada. Población:** personas sin ninguna compra previa que empiezan a buscar vuelos en la app o la web de
+  Argentina; en Brasil, la vara es la retención de iFood que Prosus ya compara.
+- **Diseño:** al azar, entre quienes no tienen sesión o tienen una cuenta sin compras, declarando que
+  algunos ya compraron desde otro lado. El tratado ve SOFIA en lugar del buscador, con el buscador a un
+  toque; el control la tiene disponible. No entran quienes llegan con el itinerario armado desde Google o
+  ChatGPT. Dos semanas con el 10% y una inscripción con la mitad, por un plazo fijado antes y con la cohorte seguida después, sólo si la primera compra a 14
+  días, el costo por conversación, los contactos a atención y una auditoría de respuestas de SOFIA quedan
+  dentro de umbrales fijados antes. El análisis principal compara grupos enteros (intención de tratar).
+- **Tamaño:** n por grupo = 2 × (1,96 + 0,84)² × p × (1 − p) / Δ², con p la proporción de compradores que
+  vuelven por cada 100 que buscan, a 180 días, y Δ la diferencia mínima que vale la pena detectar.
+
+| Qué mide           | Métrica                                                                                         | Cuándo se lee    |
+| ------------------ | ----------------------------------------------------------------------------------------------- | ---------------- |
+| Compradores nuevos | % de los que buscan que compran por primera vez en 30 días                                      | día 30           |
+| Recompra           | % que vuelve a comprar en 180 días y en 12 meses                                                | día 180 y mes 12 |
+| Decisión           | Compradores que vuelven por cada 100 que empiezan a buscar                                      | día 180 y mes 12 |
+| Mecanismo          | % de checkouts con total mayor que el precio mostrado; contactos con SOFIA después de la compra | día 30 a mes 12  |
+| Señales tempranas  | % que vuelve a buscar; contactos a atención por pedido; abandono del checkout                   | semanas 4 y 8    |
+
+<TableCaption>
+  El precio sorpresa se define como un checkout cuyo total supera al precio mostrado en el listado o
+  en el chat antes de elegir medio de pago. Las señales tempranas sólo siguen el experimento; decide
+  una señal sólo si se validó antes en las cohortes.
+</TableCaption>
+
+**El corte, escrito antes de mirar.** Se decide con la cuenta del caso aplicada a cada grupo,
+compradores que vuelven por cada 100 que empiezan a buscar, para que una caída de primeras compras se
+descuente de la suba de recompra. Sigue si esa cifra a 180 días es mayor en el grupo tratado, con un intervalo de 95% que no cruce el
+cero, o, si se validó una señal en el primer paso, con esa señal, y la misma cifra a 180 días y a 12 meses
+la confirma. Se corta si esa cifra queda igual o cae. Se
+replantea si la recompra sube pero el precio sorpresa es igual en los dos grupos: el efecto existe, pero
+no viene del checkout.
+
+## Qué haría en el lugar del equipo de Growth de Despegar
+
+**El objetivo.** Más compradores que vuelven a comprar en la app, sin regalar margen.
+
+**Hacia dónde puede ir, y por qué puede.** Hacia SOFIA como vuelta a la compra y entrada: en mi prueba
+llegó al checkout en un mensaje y, según Prosus, estaba en el 50% de las interacciones del viaje en agosto.
+
+**El primer paso: los cortes de datos que pediría el primer día.**
+
+1. **Si las ventas de la app en ChatGPT se cuentan como SOFIA** (en mi prueba, su link llevaba
+   `from=sofia`): si se suman, el 8,3% mezcla dos puertas. También si el clic de Google AI Mode se
+   distingue del de Google Flights de siempre, cómo se reconoce a la misma persona entre compras y si quien entra por SOFIA termina en la app.
+2. **Qué parte de quienes usan SOFIA nunca compró.** Si es casi nadie, no se prueba la entrada.
+3. **La recompra a 12 meses por puerta de los clientes nuevos que ya cumplieron un año** (la app en
+   ChatGPT, de abril de 2026, todavía no tiene un año), y qué señal a 30 o 60 días la predice. Si no hay
+   diferencia entre puertas, se repiensa antes de construir.
+
+Después, la prueba A/B del aviso de aeropuerto, si el checkout no lo dice ya; la postventa; y al final,
+la entrada, que suma construir SOFIA como inicio de la búsqueda y la marca de la puerta en cada primera compra.
+
+**Las métricas, por segmento, con el corte escrito antes.** Cliente nuevo es una persona sin ninguna
+compra previa en Despegar; recompra a 12 meses es una segunda compra dentro de los 365 días de la
+primera.
+
+| Segmento                             | Pregunta de negocio                                 | Adelantada                                                     | Resultado           | Guardarraíl                                   |
+| ------------------------------------ | --------------------------------------------------- | -------------------------------------------------------------- | ------------------- | --------------------------------------------- |
+| Nuevos que entran por SOFIA          | ¿Trae gente que no iba a comprar?                   | Parte de sus compradores que son nuevos, contra el 37% general | Recompra a 12 meses | Ingreso neto por pedido; contactos a atención |
+| Nuevos por la app en ChatGPT         | ¿La puerta ajena con inventario propio trae nuevos? | Conversión de primera búsqueda a compra                        | Recompra a 12 meses | Total del checkout igual al del chat          |
+| Nuevos por Google (`channel=google`) | ¿Trae compradores que vuelven, o sólo precio?       | Costo por comprador nuevo                                      | Recompra a 12 meses | Precio contra la aerolínea en la tabla        |
+| Nuevos por iFood (Brasil)            | La vara que la empresa ya usa                       | Ya medida por Prosus                                           | Recompra a 12 meses | Ninguno nuevo                                 |
+| Nuevos por el resto                  | Grupo de comparación                                | Conversión de primera búsqueda a compra                        | Recompra a 12 meses | Contactos a atención por pedido               |
+
+<TableCaption>
+  Corte: cada puerta de IA tiene que retener a 12 meses más que los canales propios de Despegar,
+  como Prosus compara a iFood, con un intervalo de 95% que no cruce el cero.
+</TableCaption>
+
+**Qué tocaría en el flujo.** El aviso de aeropuerto en palabras (pedidos e ingreso por sesión de vuelo;
+contactos a atención como guardarraíl) mueve nuevos; SOFIA en la postventa mueve recompra, y en la
+entrada, nuevos. La inversión en las puertas externas, según cuánto vuelve cada cohorte. Para Google, mi
+hipótesis más débil es que esos compradores vuelvan menos que los de SOFIA porque eligieron por precio;
+sin sorteo, se compara con cohortes emparejadas por ruta, fecha y precio, y eso muestra asociación.
+
+**¿Canal o pérdida del cliente?** En mi lectura, es un canal mientras el cobro siga en Despegar: en mi
+prueba ningún asistente cobró dentro del chat. El riesgo es que pase a elegir el proveedor o a cobrar él;
+mi postura es integrarse mientras el pago y la cuenta del cliente queden en Despegar y, si eso cambia,
+seguir sólo si la cohorte de esa puerta, medida por la cuenta de Despegar asociada a la compra, paga lo
+que cuesta; sin cuenta, no se puede medir.
+
+**Qué no construiría.**
+
+- **Anuncios en ChatGPT a escala antes de un test chico.** Según Forbes Argentina, ChatGPT muestra
+  anuncios en Argentina desde el 21 de octubre y OpenAI sugiere una puja inicial de USD 3 a 5 por
+  clic, que no es una tarifa fija. Con eso y lo que deja un pedido, mi hipótesis es que entre 4 y 8 de
+  cada 100 clics tienen que terminar en compra sólo para recuperar el clic en ingreso, y no hay dato
+  público de esa conversión en la región.
+- **Más funciones o descuentos para SOFIA antes de tener la cohorte.** Los descuentos inflan la
+  participación sin probar nada, con el margen en 9% según Prosus.
+
+**Qué se decide, cuándo lo apagaría y qué se resigna.** En mi lectura, SOFIA no trae tráfico propio; se
+mide si convierte y retiene. Si la postventa retiene, SOFIA escribe primero a todos los clientes nuevos;
+si además pasa la entrada, se vuelve la entrada y se decide cuánto pagar por cliente nuevo en los canales
+pagos. Si ninguna pasa, queda como canal de servicio. El falso éxito: que su participación suba sin que crezcan
+los compradores totales de la app. Se resignan ventas del control.
+
+Conceptos: costo de adquisición, cohorte, incrementalidad, canibalización, atribución y take rate (lo
+que Despegar se queda de cada venta: 12,6% en el semestre, por mi cálculo sobre la planilla de Prosus).
+
+## Lo que este análisis no puede sostener
+
+El campo es una corrida: un viaje, tres días, desde Argentina, con cuentas distintas según la superficie;
+Perplexity cubre 27 de 36 preguntas. No sé cuánta gente compra por la app de Despegar en ChatGPT ni cómo
+se atribuyen esas ventas. Las cifras de SOFIA las publica la empresa. El 12,9% cuenta reseñas que no
+atribuyen la suba a un cargo o a un impuesto (esas van a otra categoría); no dice por qué subió ni cuántos
+abandonan. El costo de adquisición es un techo. De la web vi los resultados y
+el paso de tarifa de un vuelo directo, no el checkout: no sé si avisa en palabras el cambio de aeropuerto. No sé cuánto cuesta cada conversación de SOFIA ni
+si quien entra por ella termina usando la app. La prueba fue de un solo vuelo.
+
+## Qué me haría cambiar de opinión
+
+La tesis quedaría refutada si SOFIA dejara de crecer o retrocediera en su participación en las reservas B2C, si las
+ventas o visitas desde asistentes sin inventario conectado pasaran claramente del 1% en la región, o
+si ChatGPT sin la app, o Gemini, llegaran a la pantalla de pago con el vuelo cargado: ahí tener
+puerta propia dejaría de distinguir. La decisión de arriba quedaría sin sustento si ni la postventa ni la entrada sumaran compradores que vuelven. Los datos de este caso llegan
+hasta el 26 de noviembre de 2026.
+
+## Cada cifra con su fuente
+
+| Cifra                                                                                                                   | Estatus                                              | Fuente                                                    |
+| ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------- |
+| 3 de 7 intentos llegaron al checkout; SOFIA en 1 mensaje, ChatGPT con la app en 2                                       | Relevamiento propio                                  | Intento de compra, 24 y 25-nov-2026                       |
+| ARS 760.871 en el chat, 760.872 en el checkout, 1 peso de diferencia (SOFIA y app en ChatGPT)                           | Relevamiento propio                                  | Intento de compra, 25-nov-2026                            |
+| App de Despegar en ChatGPT anunciada en abril de 2026                                                                   | Versión periodística                                 | Panrotas, 29-abr-2026                                     |
+| Cuatro vuelos en SOFIA                                                                                                  | Relevamiento propio                                  | Intento de compra, 25-nov-2026                            |
+| Tabla de Google con cinco opciones; Despegar 2.510 pesos (0,3%) más cara que LATAM en boletos separados                 | Relevamiento propio y cálculo propio                 | Intento de compra, 25-nov-2026                            |
+| Despegar nombrada en vuelos en 11 de 12 (Gemini), 7 de 12 (ChatGPT) y 1 de 12 (Perplexity, 27 de 36 respondidas)        | Relevamiento propio                                  | Banco de 36 preguntas, 24 al 26-nov-2026                  |
+| 0,07% de las visitas derivadas desde chatbots; 72,7% desde buscadores                                                   | Cifra de un tercero                                  | Statcounter, Argentina, octubre de 2026                   |
+| "significantly less than 1%"                                                                                            | Lo que la empresa dice de sí misma                   | Booking, llamada del tercer trimestre de 2026             |
+| Brecha de conversión de cerca de 86% a 28%                                                                              | Cifra de un tercero                                  | Adobe, sitios de viaje de EE.UU.                          |
+| Anuncios en ChatGPT desde el 21-oct-2026; puja sugerida USD 3 a 5 por clic                                              | Versión periodística                                 | Forbes Argentina, con información de OpenAI               |
+| SOFIA de 0,6% a 7,7% (jul-2025 a ago-2026) y 8,3% en sep-2026, desde 1,2% (+7,1 puntos)                                 | Lo que la empresa dice de sí misma (la resta es mía) | Prosus, 23-sep y 25-nov-2026                              |
+| SOFIA en el 50% de las interacciones del viaje (agosto)                                                                 | Lo que la empresa dice de sí misma                   | Prosus, 23-sep-2026                                       |
+| 741 mil clientes B2C en julio de 2026, 271 mil nuevos (37%); dos de cada tres ya habían comprado (julio de 2024 a 2026) | Cálculo propio sobre datos de la empresa             | Prosus, 23-sep-2026                                       |
+| Margen de 9% por inversión en adquisición                                                                               | Lo que la empresa dice de sí misma                   | Prosus, 25-nov-2026                                       |
+| 27% del ingreso neto B2C de Brasil por iFood; mejor retención                                                           | Lo que la empresa dice de sí misma                   | Prosus, 25-nov-2026                                       |
+| USD 64 a 74 de ingreso neto por pedido; take rate 12,6%                                                                 | Cálculo propio sobre datos de la empresa             | Planillas de Prosus, junio y noviembre de 2026            |
+| Techo de USD 107 por cliente nuevo (USD 250,7 millones de gasto comercial sobre unos 2,33 millones)                     | Cálculo propio sobre datos de la empresa             | Despegar, 20-F 2024                                       |
+| Entre 1,4 y 1,7 compras para recuperar el costo de un cliente                                                           | Hipótesis mía                                        | Costo de 2024 sobre ingreso por pedido                    |
+| Entre 4 y 8 de cada 100 clics para recuperar un anuncio                                                                 | Hipótesis mía                                        | Puja sugerida sobre ingreso por pedido                    |
+| Por punto de recompra: unas 23 mil compras y USD 1,5 a 1,7 millones por año                                             | Hipótesis mía                                        | Clientes nuevos de 2024 sobre ingreso por pedido          |
+| La web avisó en palabras que la tarifa Base no incluía valija; el aeropuerto distinto, como código destacado            | Relevamiento propio                                  | despegar.com.ar, resultados y paso de tarifa, 26-nov-2026 |
+| 22 de 170 (12,9%) contra 2 de 191 (1,0%); 48 de 170 (28,2%) contra 20 de 191 (10,5%)                                    | Codificación propia                                  | Reseñas públicas de las apps                              |
+
+<TableCaption>
+  "Relevamiento propio" es una corrida con fecha. "Lo que la empresa dice de sí misma" es su
+  afirmación. Las hipótesis llevan su fórmula en el texto.
+</TableCaption>
+
+## Fuentes
+
+- [Statcounter: Search vs Social vs AI Chatbot Market Share in Argentina, octubre de 2026 (captura del Internet Archive)](https://web.archive.org/web/20261125234351/https://gs.statcounter.com/search-vs-social-vs-ai-chatbot-market-share/all/argentina)
+- [Booking Holdings: transcripción corregida de la llamada del tercer trimestre de 2026 (PDF)](https://web.archive.org/web/20261125234608/https://s25.q4cdn.com/383369491/files/content_files/CORRECTED-TRANSCRIPT-Booking-Holdings-Inc-BKNG-US-Q3-2026-Earnings-Call-3-November2026.pdf)
+- [Adobe: AI-sourced traffic insights, tercer trimestre de 2026 (PDF)](https://web.archive.org/web/20261125234649/https://s3.amazonaws.com/media.mediapost.com/uploads/ADOBE_q3-2026-ai-sourced-traffic-insights.pdf)
+- [Forbes Argentina: ChatGPT empieza a mostrar publicidad en Argentina](https://web.archive.org/web/20261125234408/https://www.forbesargentina.com/today/chatgpt-empieza-mostrar-publicidad-argentina-como-funciona-nuevo-negocio-openai-cuanto-cuesta-anunciar-n100809)
+- [Prosus: comunicado de resultados del semestre, 25 de noviembre de 2026 (PDF)](https://web.archive.org/web/20261125234822/https://www.prosus.com/~/media/Files/P/prosus-corp-v2/results-reports-and-events-archive/latest-results/hy2027/hy2027-media-release.pdf)
+- [Prosus: presentación de resultados del semestre (PDF)](https://web.archive.org/web/20261125234828/https://www.prosus.com/~/media/Files/P/prosus-corp-v2/results-reports-and-events-archive/latest-results/hy2027/hy2027-results-presentation.pdf) y [planilla de indicadores del semestre](https://web.archive.org/web/20261126072818/https://www.prosus.com/~/media/Files/P/prosus-corp-v2/results-reports-and-events-archive/latest-results/hy2027/hy2027-kpi-datasheet.xlsx)
+- [Prosus: planilla de indicadores del año fiscal 2026](https://web.archive.org/web/20261126030324/https://www.prosus.com/~/media/Files/P/prosus-corp-v2/results-reports-and-events-archive/annual-report/2026/fy2026-kpi-datasheet.xlsx)
+- [Panrotas: Decolar integra su app a ChatGPT, abril de 2026](https://web.archive.org/web/20260716174458/https://www.panrotas.com.br/agencias-de-viagens/mercado/2026/04/decolar-integra-app-ao-chatgpt-para-busca-e-planejamento-de-viagens_228109.html)
+- [Despegar: informe anual 20-F de 2024, ante la SEC](https://web.archive.org/web/20261126031449/https://www.sec.gov/Archives/edgar/data/1703141/000162828025020808/desp-20241231.htm)
+- [Prosus: presentación "Despegar deep dive", 23 de septiembre de 2026 (PDF)](https://web.archive.org/web/20261126030221/https://www.prosus.com/~/media/Files/P/prosus-corp-v2/investors/presentation-despegar-deep-dive-23-september-2026.pdf)
+- Scripts que reproducen cada cuenta y gráfico: `analysis/pasajes-chatgpt.py`, `analysis/pasajes-chatgpt-cuentas.py` y `charts/pasajes-chatgpt.py`.
+
+Análisis independiente, no afiliado a las empresas mencionadas.

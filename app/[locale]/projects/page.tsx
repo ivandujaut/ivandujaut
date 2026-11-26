@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: Props) {
 const FACETS = [
   { id: "salud", topics: ["salud"] },
   { id: "seguros", topics: ["seguros"] },
-  { id: "otros", topics: ["fintech", "proptech", "educacion", "web"] },
+  { id: "otros", topics: ["fintech", "proptech", "educacion", "viajes", "web"] },
 ] as const;
 
 const facetOf = (topic: string) =>
