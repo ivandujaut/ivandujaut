@@ -140,7 +140,7 @@ const projects = defineCollection({
       // terminaba un caso de seguros encontraba abajo uno de GLP-1. Sin
       // default y obligatorio por la misma razón que `subject`: un caso sin
       // tema aparecería como "siguiente" de cualquier otro.
-      topic: s.enum(["seguros", "salud", "fintech", "proptech", "educacion", "web"]),
+      topic: s.enum(["seguros", "salud", "fintech", "proptech", "educacion", "viajes", "web"]),
       // Marca de curaduría. Desde el 18/09/2026 no la lee ninguna página: la
       // home mostraba las tres piezas marcadas más nuevas y el flag se
       // desactualizaba solo (las cuatro piezas más recientes del sitio no

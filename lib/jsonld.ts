@@ -159,6 +159,10 @@ const TOPIC_SUBJECT: Record<string, { es: string; en: string }> = {
   fintech: { es: "Medios de pago en Brasil", en: "Payments in Brazil" },
   proptech: { es: "Proptech", en: "Proptech" },
   educacion: { es: "Educación", en: "Education" },
+  viajes: {
+    es: "Viajes e inteligencia artificial en América Latina",
+    en: "Travel and AI in Latin America",
+  },
   web: { es: "Desarrollo web", en: "Web development" },
 };
 
@@ -180,6 +184,10 @@ const TOPIC_KEYWORDS: Record<string, { es: string[]; en: string[] }> = {
     en: ["Proptech", "Real estate"],
   },
   educacion: { es: ["Educación"], en: ["Education"] },
+  viajes: {
+    es: ["Agencias de viajes online", "Inteligencia artificial", "América Latina"],
+    en: ["Online travel agencies", "Artificial intelligence", "Latin America"],
+  },
   web: { es: ["Desarrollo web"], en: ["Web development"] },
 };
 

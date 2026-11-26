@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local tooling and session worktrees: never committed, never linted.
+    ".claude/**",
   ]),
   {
     // Código vendorizado de Animate UI (`shadcn add @animate-ui/icons-*`).
