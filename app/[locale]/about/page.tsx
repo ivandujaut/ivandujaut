@@ -316,7 +316,10 @@ function AboutContent({ locale }: { locale: "es" | "en" }) {
           </Eyebrow>
           {cadencia && (
             <p className="mb-8 text-sm leading-relaxed text-muted-foreground">
-              {tWork("cadence", {
+              {tWork.rich("cadence", {
+                // El mensaje es el mismo de la home, que envuelve el total en
+                // <n> para el contador animado; acá va quieto.
+                n: (chunks) => <>{chunks}</>,
                 count: cadencia.count,
                 days: cadencia.everyDays,
                 since: new Date(cadencia.since).toLocaleDateString(locale, {
